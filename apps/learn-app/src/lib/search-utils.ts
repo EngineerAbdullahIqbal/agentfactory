@@ -11,6 +11,39 @@ export interface SearchResult {
   type?: string;
 }
 
+/**
+ * Calculate Levenshtein distance between two strings
+ * Used for fuzzy matching to handle typos and near-matches
+ */
+function levenshteinDistance(a: string, b: string): number {
+  const matrix: number[][] = [];
+
+  // Initialize matrix
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+
+  // Fill matrix
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1, // substitution
+          matrix[i][j - 1] + 1,     // insertion
+          matrix[i - 1][j] + 1      // deletion
+        );
+      }
+    }
+  }
+
+  return matrix[b.length][a.length];
+}
+
 let searchIndex: any = null;
 let searchIndexLoaded = false;
 let lunrLoaded = false;
@@ -167,7 +200,7 @@ export async function searchContent(query: string): Promise<SearchResult[]> {
     return [];
   }
 
-  // Try to use Lunr.js for full-text search
+  // Try to use Lunr.js for full-text search with fuzzy matching
   if (lunrIndex) {
     const lunrAvailable = await loadLunr();
 
@@ -179,7 +212,23 @@ export async function searchContent(query: string): Promise<SearchResult[]> {
       try {
         const lunr = (window as any).lunr;
         const idx = lunr.Index.load(lunrIndex);
-        const searchResults = idx.search(query);
+
+        // Enable fuzzy search with ~ for typo tolerance (allows 2 edits by default)
+        // Also enable wildcard * for partial word matching
+        const fuzzyQuery = query
+          .trim()
+          .split(/\s+/)
+          .filter((term) => term.length > 0)
+          .map((term) => {
+            // For short terms (<4 chars), use exact match or 1 edit
+            // For longer terms, allow 2 edits (fuzzy matching)
+            const edits = term.length < 4 ? 1 : 2;
+            // Add wildcard at end for partial matching: term*~2
+            return `${term}*~\${edits}`;
+          })
+          .join(' ');
+
+        const searchResults = idx.search(fuzzyQuery);
 
         // Map Lunr results to our format
         searchResults.forEach((result: any) => {
@@ -224,7 +273,7 @@ export async function searchContent(query: string): Promise<SearchResult[]> {
     }
   }
 
-  // Fallback: Simple text search through title and breadcrumbs
+  // Fallback: Simple text search through title and breadcrumbs with fuzzy matching
   documents.forEach((doc: any) => {
     const title = doc.t || doc.title || '';
     const url = doc.u || doc.url || doc.href || '';
@@ -247,31 +296,84 @@ export async function searchContent(query: string): Promise<SearchResult[]> {
       .toLowerCase();
 
     const titleLower = title.toLowerCase();
+    const titleWords = titleLower.split(/\s+/);
 
-    // Check if search terms match (use .some() for OR matching - any term matches)
-    const matches = searchTerms.some((term) => searchableText.includes(term));
+    // Check each search term with fuzzy matching
+    let hasMatch = false;
+    let totalScore = 0;
 
-    if (matches) {
-      // Calculate relevance score
-      let score = 0;
-      searchTerms.forEach((term) => {
-        if (titleLower.includes(term)) {
-          score += 10; // Title match is high priority
-        }
-        if (titleLower === term) {
-          score += 20; // Exact title match is highest priority
-        }
-        if (searchableText.includes(term)) {
-          score += 1; // Any match
-        }
-      });
+    for (const term of searchTerms) {
+      let termScore = 0;
+      let termMatched = false;
 
+      // 1. Exact match in title (highest priority)
+      if (titleLower === term) {
+        termScore += 100;
+        termMatched = true;
+      }
+
+      // 2. Title starts with term (e.g., "agent" matches "agent factory")
+      if (titleLower.startsWith(term)) {
+        termScore += 50;
+        termMatched = true;
+      }
+
+      // 3. Exact substring match in title
+      if (titleLower.includes(term)) {
+        termScore += 25;
+        termMatched = true;
+      }
+
+      // 4. Match any word in title (exact word match)
+      if (titleWords.some(word => word === term)) {
+        termScore += 20;
+        termMatched = true;
+      }
+
+      // 5. Partial word match in title (fuzzy partial)
+      if (titleWords.some(word => word.startsWith(term) && word.length > term.length)) {
+        termScore += 15;
+        termMatched = true;
+      }
+
+      // 6. Fuzzy match: calculate Levenshtein distance for title words
+      // Allow 1-2 character differences based on term length
+      const maxEdits = Math.max(1, Math.floor(term.length / 3));
+      for (const word of titleWords) {
+        const distance = levenshteinDistance(term, word);
+        if (distance <= maxEdits) {
+          termScore += Math.max(5, 10 - distance * 2); // Higher score for closer matches
+          termMatched = true;
+          break;
+        }
+      }
+
+      // 7. Match in breadcrumbs/content
+      if (searchableText.includes(term)) {
+        termScore += 5;
+        termMatched = true;
+      }
+
+      // 8. Partial match in breadcrumbs
+      const wordsInText = searchableText.split(/\s+/);
+      if (wordsInText.some(word => word.startsWith(term) && word.length >= term.length)) {
+        termScore += 2;
+        termMatched = true;
+      }
+
+      if (termMatched) {
+        totalScore += termScore;
+        hasMatch = true;
+      }
+    }
+
+    if (hasMatch) {
       results.push({
         title: title || url.split('/').pop() || 'Untitled',
         url: url,
         text: breadcrumbs.length > 0 ? breadcrumbs.join(' > ') : '',
         type: 'doc',
-        score: score,
+        score: totalScore,
       } as any);
     }
   });
