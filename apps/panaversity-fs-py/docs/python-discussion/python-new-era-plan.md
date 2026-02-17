@@ -1,6 +1,6 @@
 # Python for the New AI Era: Course Architecture Plan
 
-**Version:** 2.0
+**Version:** 2.5
 **Status:** Draft
 **Date:** 2026-02-17
 **Branch:** `learn-python`
@@ -818,7 +818,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 **Goal**: Student builds a complete, production-grade application using everything learned.
 
-**Project**: AI-Powered Document Assistant (or similar scope)
+**Project**: **Synapse** — the Personal AI Knowledge Base the student has been building since Phase 1, now fully integrated.
 
 | Component | Technologies | Chapters Applied |
 |---|---|---|
@@ -828,9 +828,9 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 | Data Layer | SQLite, repository pattern | Ch 18 |
 | Business Logic | Typed functions, composition | Ch 7, 19 |
 | Concurrency | async/await for API + SDK calls | Ch 21 |
-| CLI Interface | Unix-style tool | Ch 20 |
+| CLI Interface | `synapse` CLI tool | Ch 20 |
 | API Service | FastAPI (async) | Ch 22 |
-| AI Integration | Anthropic SDK (async) | Ch 10, 21 |
+| AI Integration | Anthropic SDK (async) — semantic search, summaries | Ch 10, 21 |
 | Test Suite | pytest (80%+ coverage) | Ch 9, 10 |
 | CI Pipeline | GitHub Actions | Ch 23 |
 | Observability | Structured logging | Ch 23 |
@@ -842,7 +842,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 - Test suites (passing, 80%+ coverage)
 - Implementation (AI-generated, student-reviewed)
 - CI pipeline (green)
-- Deployed application
+- Deployed Synapse application with CLI + API + AI features
 
 ---
 
@@ -1094,14 +1094,14 @@ If not → that's your next learning target.
 Exercises build on each other. Later chapters reference and extend earlier work:
 
 ```
-Ch 6:  Define an Order dataclass            → TDG: build order calculator
-Ch 9:  Write comprehensive tests for Order  → TDG: test edge cases
-Ch 12: Convert Order to a full class        → BUILD IT: add behavior
-Ch 13: Add inheritance (DiscountOrder)       → BUILD IT: design relationships
-Ch 14: Add __repr__, __eq__, __iter__       → BUILD IT: make it Pythonic
-Ch 18: Store Orders in SQLite               → TDG: repository pattern
-Ch 22: Expose Orders via FastAPI            → TDG: API service
-Ch 24: Full Order Management System         → CAPSTONE
+Ch 6:  Define a Note dataclass              → TDG: build note parser
+Ch 9:  Write comprehensive tests for Note   → TDG: test edge cases
+Ch 12: Convert Note to a full class         → BUILD IT: add behavior (tags, links)
+Ch 13: Add inheritance (SourceNote, etc.)   → BUILD IT: design note hierarchy
+Ch 14: Add __repr__, __eq__, __iter__       → BUILD IT: make notes Pythonic
+Ch 18: Store Notes in SQLite                → TDG: repository pattern
+Ch 22: Expose Notes via FastAPI             → TDG: knowledge API service
+Ch 24: Full Synapse Knowledge Base          → CAPSTONE
 ```
 
 This creates a **running project thread** that students evolve across the course.
@@ -1215,23 +1215,157 @@ Students get:
 
 ---
 
-## 15. Per-Phase Projects (Decision: Deferred)
+## 15. The Synapse Project — One Running Project Across All Phases
 
-**Key insight**: By Phase 7 (Ch 23-24), there are no beginners left. Every student — regardless of starting point — has 22 chapters of progression. The beginner/experienced distinction dissolves by Phase 4-5.
+### Why One Project, Not Seven
 
-**Direction decided**: Each phase should have its own project that exercises that phase's skills, not just one big capstone at the end. The final capstone integrates everything.
+Students don't build seven throwaway projects. They build **one real application** — **Synapse**, a Personal AI Knowledge Base — that grows with them across all 7 phases. Each phase adds a layer that exercises that phase's core skills.
 
-**To be designed later**: Specific project for each phase. Placeholder thinking:
+**Why Synapse?**:
+1. **Students USE it while learning** — they capture their own notes, code snippets, and learnings as they go through the course
+2. **AI integration is natural** — semantic search, auto-tagging, and summarization are genuine AI features (not bolted on)
+3. **It shows thinking to interviewers** — a portfolio project that demonstrates typed Python, testing, OOP design, async APIs, and AI integration
+4. **Every phase has a real deliverable** — not "exercise 3.2" but "my knowledge base now has search"
 
-| Phase | Role | Possible Project Scope | Details |
-|---|---|---|---|
-| Phase 1 (Ch 1-3) | Reader | Read and verify a small AI-generated program | TBD |
-| Phase 2 (Ch 4-7) | Specifier | Define types and models for a real domain | TBD |
-| Phase 3 (Ch 8-11) | Verifier | Write a complete test suite for an existing module | TBD |
-| Phase 4 (Ch 12-15) | Modeler | Design an object model with inheritance + composition | TBD |
-| Phase 5 (Ch 16-19) | Writer | Build a data processing pipeline (files, SQL, modules) | TBD |
-| Phase 6 (Ch 20-23) | Builder | Ship a CLI + async API service with CI | TBD |
-| Phase 7 (Ch 24-25) | Architect | Full AI-powered application integrating all phases | TBD |
+### Phase-by-Phase Synapse Evolution
+
+#### Phase 1: Read & Understand (Ch 1-3) — "Synapse v0.1: Explore"
+
+**Student role**: Reader — understand what AI generates
+
+**What students get**: A pre-built Synapse prototype (AI-generated, ~200 lines). Students DON'T build it yet. They:
+- Read the code: understand `Note` dataclass, `add_note()`, `search_notes()`
+- Predict behavior: "What does this function return for this input?"
+- Trace execution: follow `uv run synapse add "My first note" --tags python`
+- Verify with tests: run `uv run pytest` and read what each test checks
+
+**Deliverable**: An annotated code walkthrough — student adds comments explaining every function
+
+---
+
+#### Phase 2: Specify & Model (Ch 4-7) — "Synapse v0.2: Type It"
+
+**Student role**: Specifier — define the domain precisely
+
+**What students build**:
+- `Note` dataclass with typed fields: `title: str`, `body: str`, `tags: list[str]`, `created_at: datetime`
+- `NoteCollection` with typed methods: `add()`, `search()`, `filter_by_tag()`
+- Pydantic models for input validation: `NoteCreate`, `NoteUpdate`
+- Type-safe configuration: `SynapseConfig` dataclass
+
+**Key learning**: The types ARE the specification. Pyright enforces the contract before a single test is written.
+
+**Deliverable**: Typed data model that passes `pyright --strict` — zero implementation yet, just structure
+
+---
+
+#### Phase 3: Test & Verify (Ch 8-11) — "Synapse v0.3: Prove It"
+
+**Student role**: Verifier — prove correctness before implementation
+
+**What students build**:
+- Complete test suite for `NoteCollection` (happy path + edge cases)
+- Tests for search: exact match, partial match, no results, empty collection
+- Tests for tags: add tag, remove tag, filter by multiple tags
+- AI-generated implementation verified against student-written tests
+- Error handling: `NoteNotFoundError`, `DuplicateNoteError`
+
+**Key learning**: Tests written FIRST become the specification that AI implements against. This is TDG in practice.
+
+**Deliverable**: 30+ passing tests with 90%+ coverage of the core domain
+
+---
+
+#### Phase 4: Design & Model (Ch 12-15) — "Synapse v0.4: Architect"
+
+**Student role**: Modeler — design objects that represent real concepts
+
+**What students build**:
+- Convert `Note` dataclass → full `Note` class with behavior (`.summarize()`, `.add_tag()`, `.link_to()`)
+- Note hierarchy: `TextNote`, `CodeNote`, `LinkNote` (inheritance with composition)
+- `Repository` Protocol for storage abstraction (in-memory for now)
+- Special methods: `Note.__repr__()`, `Note.__eq__()`, `NoteCollection.__iter__()`
+- Decorators: `@log_action` for tracking changes, `@validate_input`
+
+**Key learning**: OOP is about modeling real domains, not abstract theory. Synapse notes ARE the domain.
+
+**Deliverable**: Refactored Synapse with proper object model, all previous tests still passing
+
+---
+
+#### Phase 5: Build & Persist (Ch 16-19) — "Synapse v0.5: Store It"
+
+**Student role**: Writer — write Python that handles real data
+
+**What students build**:
+- File-based export: save notes as Markdown files, JSON backup
+- SQLite persistence: `NoteRepository` with SQL storage (repository pattern)
+- Import/export: read notes from Markdown files, CSV, JSON
+- Modular architecture: `synapse/models/`, `synapse/storage/`, `synapse/export/`
+- Data transformations: filter, sort, group notes by date/tag/type
+
+**Key learning**: Real applications persist data. The `Repository` Protocol from Phase 4 now gets a real SQLite implementation.
+
+**Deliverable**: Synapse that persists to SQLite, imports/exports files, organized as a proper Python package
+
+---
+
+#### Phase 6: Ship & Serve (Ch 20-23) — "Synapse v0.6: Ship It"
+
+**Student role**: Builder — ship production software
+
+**What students build**:
+- `synapse` CLI tool: `synapse add`, `synapse search`, `synapse export` (using typer)
+- FastAPI async API: `POST /notes`, `GET /notes/search?q=`, `GET /notes/{id}`
+- Async AI integration: semantic search using embeddings, auto-summarization
+- CI pipeline: GitHub Actions running format → lint → type check → test on every push
+- Structured logging and health check endpoint
+
+**Key learning**: Everything connects. Types define API contracts. Tests verify endpoints. Async handles AI calls without blocking.
+
+**Deliverable**: Deployed Synapse with CLI + REST API + CI pipeline, all green
+
+---
+
+#### Phase 7: Integrate & Polish (Ch 24-25) — "Synapse v1.0: Complete"
+
+**Student role**: Architect — design and build complete systems
+
+**What students build**:
+- Full AI-powered features: semantic search, auto-tagging, note summarization, related notes suggestions
+- Complete specification → implementation → verification cycle for a new feature
+- Performance optimization and refactoring
+- Documentation and deployment
+
+**Deliverable**: Production-grade Synapse v1.0 — a portfolio-ready application demonstrating every skill in the course
+
+### The Synapse Stack (Final)
+
+```
+synapse/
+├── pyproject.toml          # uv project (Ch 1)
+├── src/synapse/
+│   ├── models/             # Note, NoteCollection, types (Ch 6, 12-14)
+│   ├── storage/            # Repository protocol + SQLite impl (Ch 15, 18)
+│   ├── search/             # AI-powered semantic search (Ch 10, 21)
+│   ├── export/             # Markdown, JSON, CSV (Ch 16)
+│   ├── api/                # FastAPI routes (Ch 22)
+│   └── cli/                # Typer CLI (Ch 20)
+├── tests/                  # pytest suite, 80%+ coverage (Ch 9-10)
+├── .github/workflows/      # CI pipeline (Ch 23)
+└── README.md               # Project documentation
+```
+
+### Why This Works
+
+| Concern | How Synapse Addresses It |
+|---|---|
+| "Exercises feel disconnected" | Every exercise adds to the same project |
+| "I never finish anything" | Each phase has a working, shippable version |
+| "Portfolio is empty" | One polished project > seven toy exercises |
+| "AI features feel bolted on" | Semantic search and summarization are core features |
+| "OOP feels abstract" | Notes, tags, collections ARE the domain objects |
+| "Testing feels pointless" | Tests protect YOUR knowledge base from regressions |
 
 ---
 
@@ -1240,8 +1374,7 @@ Students get:
 - [x] ~~Python Crash Course Bridge chapter?~~ → Resolved: No. Dual-track callouts within chapters are sufficient. No extra chapter needed.
 - [ ] Integration with the broader Agent Factory curriculum (Parts 1-6)?
 - [ ] Should metaclasses get a dedicated advanced appendix?
-- [ ] Specific project designs for each phase (Section 15)
-- [ ] Integration with broader Agent Factory curriculum Parts 1-6 (to be designed)
+- [x] ~~Specific project designs for each phase (Section 15)?~~ → Resolved: "Synapse" Personal AI Knowledge Base — one running project across all 7 phases
 - [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 21 (async/await + threading) placed before FastAPI
 - [x] ~~Exercises format: inline vs separate exercise packs?~~ → Resolved: inline + end-of-chapter (Section 13)
 - [x] ~~Python Quick Reference appendix?~~ → Resolved: per-chapter Syntax Cards + combined PDF (Section 14)
@@ -1259,3 +1392,4 @@ Students get:
 | 2.2 | 2026-02-17 | Added Syntax Card Strategy (Section 14): per-chapter half-page reference cards replacing traditional appendix, with combined downloadable PDF |
 | 2.3 | 2026-02-17 | Added Per-Phase Projects direction (Section 15): each phase gets its own project, capstone beginner/experienced question resolved |
 | 2.4 | 2026-02-17 | Added Concurrency chapter (Ch 21: async/await + threading), expanded to 25 chapters. Placed before FastAPI. Resolved Crash Course Bridge question (no). Added curriculum integration as open question. |
+| 2.5 | 2026-02-17 | Designed "Synapse" Personal AI Knowledge Base as the running project across all 7 phases. Updated Section 15 with phase-by-phase deliverables. Updated exercise thread from Order domain to Note/Synapse domain. Updated capstone to reference Synapse. |
