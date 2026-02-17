@@ -81,8 +81,8 @@ Phase 2 (Ch 4-7):    30% writes / 70% reads   ← "Specify with types"
 Phase 3 (Ch 8-11):   50% writes / 50% reads   ← "Test and verify"
 Phase 4 (Ch 12-15):  60% writes / 40% reads   ← "Understand the object model"
 Phase 5 (Ch 16-19):  70% writes / 30% reads   ← "Write real systems"
-Phase 6 (Ch 20-22):  80% writes / 20% reads   ← "Build production software"
-Phase 7 (Ch 23-24):  90% writes / 10% reads   ← "Architect complete systems"
+Phase 6 (Ch 20-23):  80% writes / 20% reads   ← "Build production software"
+Phase 7 (Ch 24-25):  90% writes / 10% reads   ← "Architect complete systems"
 ```
 
 By Phase 5, students have seen every Python feature 50+ times in AI output. Writing it themselves feels natural, not forced.
@@ -187,7 +187,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-## 7. Chapter Plan (24 Chapters, 7 Phases)
+## 7. Chapter Plan (25 Chapters, 7 Phases)
 
 ---
 
@@ -735,13 +735,53 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 21: FastAPI Services
+#### Chapter 21: Concurrency — async/await and Threading
 
-**Goal**: Student can build typed, tested API services.
+**Goal**: Student understands concurrent execution and can write async Python.
+
+**Covers Lutz**: Ch 31 partial (asyncio concepts), extends beyond Lutz into modern async patterns
+
+- **Why concurrency?** The real world doesn't wait — APIs, databases, file I/O all block
+- **Sync vs async**: what "blocking" means and why it matters
+- **Threading basics**:
+  - `threading.Thread`: running tasks in parallel
+  - The GIL (Global Interpreter Lock): what it means for Python threads
+  - When threads help (I/O-bound) vs when they don't (CPU-bound)
+  - `concurrent.futures.ThreadPoolExecutor`: managed thread pools
+- **async/await** (the main event):
+  - The event loop: one thread, many tasks
+  - `async def` and `await`: writing coroutines
+  - `asyncio.run()`: starting the event loop
+  - `asyncio.gather()`: running multiple tasks concurrently
+  - Async context managers: `async with`
+  - Async iteration: `async for`
+  - Typed async functions:
+    ```python
+    async def fetch_user(user_id: int) -> User:
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"/users/{user_id}")
+            return User.model_validate(response.json())
+    ```
+- **When to use what**:
+  - I/O-bound (API calls, DB queries, file reads) → `async/await`
+  - CPU-bound (data processing, calculations) → `multiprocessing` (awareness)
+  - Simple parallelism → `ThreadPoolExecutor`
+- **Testing async code**: `pytest-asyncio`, `@pytest.mark.asyncio`
+- **Why this matters for Part 5**: FastAPI is async, agent SDKs are async, MCP is async
+
+**Student writes**: Async functions, concurrent data fetchers, async tests
+**AI assists**: Event loop patterns, error handling in async code
+
+---
+
+#### Chapter 22: FastAPI Services
+
+**Goal**: Student can build typed, tested async API services.
 
 - FastAPI fundamentals: routes, request/response models
 - Pydantic integration (types define your API contract)
 - Request validation (automatic from type annotations)
+- **Async routes**: `async def` endpoints (building on Ch 21)
 - Dependency injection for testability (using Protocols from Ch 15)
 - Testing APIs with `TestClient`
 - Database integration (repository pattern from Ch 18)
@@ -753,7 +793,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 22: CI/CD, Git Workflows, and Observability
+#### Chapter 23: CI/CD, Git Workflows, and Observability
 
 **Goal**: Student can automate verification and monitor systems.
 
@@ -774,7 +814,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 > Student role: **Architect** — "I can design and build complete systems"
 
-#### Chapters 23-24: AI-Powered Application (Capstone)
+#### Chapters 24-25: AI-Powered Application (Capstone)
 
 **Goal**: Student builds a complete, production-grade application using everything learned.
 
@@ -787,12 +827,13 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 | Object Design | Inheritance, composition, protocols | Ch 13-15 |
 | Data Layer | SQLite, repository pattern | Ch 18 |
 | Business Logic | Typed functions, composition | Ch 7, 19 |
+| Concurrency | async/await for API + SDK calls | Ch 21 |
 | CLI Interface | Unix-style tool | Ch 20 |
-| API Service | FastAPI | Ch 21 |
-| AI Integration | Anthropic SDK | Ch 10 (TDG) |
+| API Service | FastAPI (async) | Ch 22 |
+| AI Integration | Anthropic SDK (async) | Ch 10, 21 |
 | Test Suite | pytest (80%+ coverage) | Ch 9, 10 |
-| CI Pipeline | GitHub Actions | Ch 22 |
-| Observability | Structured logging | Ch 22 |
+| CI Pipeline | GitHub Actions | Ch 23 |
+| Observability | Structured logging | Ch 23 |
 
 **Deliverables**:
 - Specification documents (Markdown)
@@ -813,8 +854,8 @@ Ch 4-7:    SPECIFIER   → "I can tell AI precisely what to build"
 Ch 8-11:   VERIFIER    → "I can prove code is correct"
 Ch 12-15:  MODELER     → "I can design objects that model real domains"
 Ch 16-19:  WRITER      → "I can write Python for real problems"
-Ch 20-22:  BUILDER     → "I can ship production software"
-Ch 23-24:  ARCHITECT   → "I can design and build complete systems"
+Ch 20-23:  BUILDER     → "I can ship production software"
+Ch 24-25:  ARCHITECT   → "I can design and build complete systems"
 ```
 
 ---
@@ -840,7 +881,7 @@ Ch 13 (Phase 4): Inheritance & composition   → Design relationships
 Ch 14 (Phase 4): Special methods             → Python object model depth
 Ch 15 (Phase 4): Decorators & patterns       → Advanced OOP in practice
 Ch 18 (Phase 5): Repository pattern          → OOP applied to data access
-Ch 21 (Phase 6): FastAPI dependency injection → OOP applied to services
+Ch 22 (Phase 6): FastAPI dependency injection → OOP applied to services
 ```
 
 ### What We Keep from Lutz (Deep Python Knowledge)
@@ -999,8 +1040,8 @@ END-OF-CHAPTER EXERCISES (after lesson content)
 | Phase 3 (Ch 8-11) | 3 | 3 | 1 | 1 | ~8 |
 | Phase 4 (Ch 12-15) | 3 | 2 | 1 | 1-2 | ~8 |
 | Phase 5 (Ch 16-19) | 2 | 2 | 1 | 2 | ~7 |
-| Phase 6 (Ch 20-22) | 2 | 2 | 1-2 | 1 | ~7 |
-| Phase 7 (Ch 23-24) | — | — | Full project | Full project | 1 large |
+| Phase 6 (Ch 20-23) | 2 | 2 | 1-2 | 1 | ~7 |
+| Phase 7 (Ch 24-25) | — | — | Full project | Full project | 1 large |
 
 **Total across course**: ~170-180 exercises
 
@@ -1059,8 +1100,8 @@ Ch 12: Convert Order to a full class        → BUILD IT: add behavior
 Ch 13: Add inheritance (DiscountOrder)       → BUILD IT: design relationships
 Ch 14: Add __repr__, __eq__, __iter__       → BUILD IT: make it Pythonic
 Ch 18: Store Orders in SQLite               → TDG: repository pattern
-Ch 21: Expose Orders via FastAPI            → TDG: API service
-Ch 23: Full Order Management System         → CAPSTONE
+Ch 22: Expose Orders via FastAPI            → TDG: API service
+Ch 24: Full Order Management System         → CAPSTONE
 ```
 
 This creates a **running project thread** that students evolve across the course.
@@ -1166,7 +1207,7 @@ class Counter:
 
 ### The Combined PDF
 
-All 24 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~12 pages). This is generated from the book content — no separate authoring needed.
+All 25 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~13 pages). This is generated from the book content — no separate authoring needed.
 
 Students get:
 - **In the book**: Per-chapter cards right where they need them
@@ -1189,18 +1230,19 @@ Students get:
 | Phase 3 (Ch 8-11) | Verifier | Write a complete test suite for an existing module | TBD |
 | Phase 4 (Ch 12-15) | Modeler | Design an object model with inheritance + composition | TBD |
 | Phase 5 (Ch 16-19) | Writer | Build a data processing pipeline (files, SQL, modules) | TBD |
-| Phase 6 (Ch 20-22) | Builder | Ship a CLI + API service with CI | TBD |
-| Phase 7 (Ch 23-24) | Architect | Full AI-powered application integrating all phases | TBD |
+| Phase 6 (Ch 20-23) | Builder | Ship a CLI + async API service with CI | TBD |
+| Phase 7 (Ch 24-25) | Architect | Full AI-powered application integrating all phases | TBD |
 
 ---
 
 ## 16. Open Questions
 
-- [ ] Should we include a "Python Crash Course Bridge" chapter for experienced Matthes readers?
+- [x] ~~Python Crash Course Bridge chapter?~~ → Resolved: No. Dual-track callouts within chapters are sufficient. No extra chapter needed.
 - [ ] Integration with the broader Agent Factory curriculum (Parts 1-6)?
 - [ ] Should metaclasses get a dedicated advanced appendix?
-- [ ] Concurrency chapter? (async/await, threading — needed for production but adds complexity)
 - [ ] Specific project designs for each phase (Section 15)
+- [ ] Integration with broader Agent Factory curriculum Parts 1-6 (to be designed)
+- [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 21 (async/await + threading) placed before FastAPI
 - [x] ~~Exercises format: inline vs separate exercise packs?~~ → Resolved: inline + end-of-chapter (Section 13)
 - [x] ~~Python Quick Reference appendix?~~ → Resolved: per-chapter Syntax Cards + combined PDF (Section 14)
 - [x] ~~Capstone for beginners vs experienced?~~ → Resolved: no beginners by capstone; per-phase projects instead (Section 15)
@@ -1216,3 +1258,4 @@ Students get:
 | 2.1 | 2026-02-17 | Added Exercise Strategy (Section 13): 5 exercise types, phase mix, per-chapter structure, TDG challenge template, cross-chapter exercise thread |
 | 2.2 | 2026-02-17 | Added Syntax Card Strategy (Section 14): per-chapter half-page reference cards replacing traditional appendix, with combined downloadable PDF |
 | 2.3 | 2026-02-17 | Added Per-Phase Projects direction (Section 15): each phase gets its own project, capstone beginner/experienced question resolved |
+| 2.4 | 2026-02-17 | Added Concurrency chapter (Ch 21: async/await + threading), expanded to 25 chapters. Placed before FastAPI. Resolved Crash Course Bridge question (no). Added curriculum integration as open question. |
