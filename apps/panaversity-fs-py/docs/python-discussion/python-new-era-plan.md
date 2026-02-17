@@ -1174,15 +1174,36 @@ Students get:
 
 ---
 
-## 15. Open Questions
+## 15. Per-Phase Projects (Decision: Deferred)
 
-- [ ] How to handle the capstone for beginners vs experienced coders?
+**Key insight**: By Phase 7 (Ch 23-24), there are no beginners left. Every student — regardless of starting point — has 22 chapters of progression. The beginner/experienced distinction dissolves by Phase 4-5.
+
+**Direction decided**: Each phase should have its own project that exercises that phase's skills, not just one big capstone at the end. The final capstone integrates everything.
+
+**To be designed later**: Specific project for each phase. Placeholder thinking:
+
+| Phase | Role | Possible Project Scope | Details |
+|---|---|---|---|
+| Phase 1 (Ch 1-3) | Reader | Read and verify a small AI-generated program | TBD |
+| Phase 2 (Ch 4-7) | Specifier | Define types and models for a real domain | TBD |
+| Phase 3 (Ch 8-11) | Verifier | Write a complete test suite for an existing module | TBD |
+| Phase 4 (Ch 12-15) | Modeler | Design an object model with inheritance + composition | TBD |
+| Phase 5 (Ch 16-19) | Writer | Build a data processing pipeline (files, SQL, modules) | TBD |
+| Phase 6 (Ch 20-22) | Builder | Ship a CLI + API service with CI | TBD |
+| Phase 7 (Ch 23-24) | Architect | Full AI-powered application integrating all phases | TBD |
+
+---
+
+## 16. Open Questions
+
 - [ ] Should we include a "Python Crash Course Bridge" chapter for experienced Matthes readers?
 - [ ] Integration with the broader Agent Factory curriculum (Parts 1-6)?
 - [ ] Should metaclasses get a dedicated advanced appendix?
 - [ ] Concurrency chapter? (async/await, threading — needed for production but adds complexity)
+- [ ] Specific project designs for each phase (Section 15)
 - [x] ~~Exercises format: inline vs separate exercise packs?~~ → Resolved: inline + end-of-chapter (Section 13)
 - [x] ~~Python Quick Reference appendix?~~ → Resolved: per-chapter Syntax Cards + combined PDF (Section 14)
+- [x] ~~Capstone for beginners vs experienced?~~ → Resolved: no beginners by capstone; per-phase projects instead (Section 15)
 
 ---
 
@@ -1194,3 +1215,4 @@ Students get:
 | 2.0 | 2026-02-17 | Added OOP Phase (Ch 12-15), expanded to 24 chapters, integrated Learning Python (Lutz) coverage, added modules chapter, OOP integration strategy, complete Lutz coverage map |
 | 2.1 | 2026-02-17 | Added Exercise Strategy (Section 13): 5 exercise types, phase mix, per-chapter structure, TDG challenge template, cross-chapter exercise thread |
 | 2.2 | 2026-02-17 | Added Syntax Card Strategy (Section 14): per-chapter half-page reference cards replacing traditional appendix, with combined downloadable PDF |
+| 2.3 | 2026-02-17 | Added Per-Phase Projects direction (Section 15): each phase gets its own project, capstone beginner/experienced question resolved |
