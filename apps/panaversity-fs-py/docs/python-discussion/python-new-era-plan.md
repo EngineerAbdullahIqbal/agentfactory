@@ -1,8 +1,8 @@
 # Python for the New AI Era: Course Architecture Plan
 
-**Version:** 2.6
+**Version:** 2.7
 **Status:** Draft
-**Date:** 2026-02-17
+**Date:** 2026-02-20
 **Branch:** `learn-python`
 
 ---
@@ -82,9 +82,9 @@ Phase 1 (Ch 1-3):    Read + Understand          ← "I can read AI output"
 Phase 2 (Ch 4-7):    Specify with types          ← "I can tell AI what shape data has"
 Phase 3 (Ch 8-11):   Specify with tests          ← "I can define what correct means"
 Phase 4 (Ch 12-15):  Design object models        ← "I can design systems for AI to implement"
-Phase 5 (Ch 16-19):  Architect components        ← "I can spec real-world features via TDG"
-Phase 6 (Ch 20-23):  Ship production systems     ← "I can spec + ship complete software via TDG"
-Phase 7 (Ch 24-25):  Full system architecture    ← "I can architect and deliver via TDG"
+Phase 5 (Ch 16-18):  Architect components        ← "I can spec real-world features via TDG"
+Phase 6 (Ch 19-21):  Ship production systems     ← "I can spec + ship complete software via TDG"
+Phase 7 (Ch 22-23):  Full system architecture    ← "I can architect and deliver via TDG"
 ```
 
 By Phase 5, students have seen every Python feature 50+ times in AI output. Specifying it precisely for AI feels natural, not forced.
@@ -131,9 +131,9 @@ All traditional Python features are taught. The **framing changes**, not the con
 | Ch 7: User Input & While | Input and while loops | Control flow through testing: loops that terminate | Ch 8 |
 | Ch 8: Functions | Defining functions | Contracts: what a function signature promises | Ch 7 |
 | Ch 9: Classes | OOP fundamentals | Domain models → Full OOP arc | Ch 6, 12-15 |
-| Ch 10: Files & Exceptions | File I/O | Files and data processing: JSON, CSV, text | Ch 16 |
+| Ch 10: Files & Exceptions | File I/O | Files and data processing: JSON, CSV, PostgreSQL intro | Ch 16 |
 | Ch 11: Testing | pytest basics | pytest as specification language (foundational) | Ch 3, 9 |
-| Chs 12-14: Projects | Alien game, data viz, web | CLI tools, FastAPI, AI-powered capstone | Ch 20-24 |
+| Chs 12-14: Projects | Alien game, data viz, web | CLI tools, async services, AI-powered capstone | Ch 19-23 |
 
 ### From Learning Python (Lutz) — OOP Chapters
 
@@ -189,7 +189,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-## 7. Chapter Plan (25 Chapters, 7 Phases)
+## 7. Chapter Plan (23 Chapters, 7 Phases)
 
 ---
 
@@ -610,9 +610,9 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 > Student role: **Practitioner** — "I can spec real-world features via TDG"
 
-#### Chapter 16: Files and Data Processing
+#### Chapter 16: Files, Data Processing, and PostgreSQL Introduction
 
-**Goal**: Student can read, process, and write real-world data.
+**Goal**: Student can read, process, and persist real-world data — from flat files to relational databases.
 
 **Covers Lutz**: Ch 9 partial (files), Ch 37 partial (unicode)
 
@@ -624,10 +624,20 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 - Processing pipelines: read → transform → write
 - `pickle` and `shelve` for object serialization (awareness, not preference)
 - Error handling for I/O operations
-- TDG exercise: build a data processing tool
+- **When files aren't enough → PostgreSQL introduction**:
+  - The problem: JSON grows to 2,000 records with relationships (reference Axiom VI)
+  - Why a real database? Files don't support concurrent access, queries, or relationships
+  - Setting up PostgreSQL (local install or cloud-hosted like Neon)
+  - Connecting with `psycopg` (the modern PostgreSQL adapter)
+  - Creating tables, inserting data, querying with SELECT
+  - Parameterized queries (SQL injection prevention)
+  - Context managers for database connections
+  - When to use JSON files vs a database (complexity threshold)
+  - *Full SQL coverage (JOINs, migrations, ORMs, advanced PostgreSQL) comes in later parts of the book*
+- TDG exercise: build a data processing tool that starts with JSON and graduates to PostgreSQL
 
-**Student does**: Specifies file processing pipelines (types + tests) → prompts AI to implement → verifies I/O correctness
-**AI role**: Generates file processing code; student designs the pipeline and verifies data integrity
+**Student does**: Specifies file/data processing pipelines (types + tests) → prompts AI to implement → verifies I/O and query correctness
+**AI role**: Generates file processing and PostgreSQL code; student designs the pipeline and verifies data integrity
 
 ---
 
@@ -665,32 +675,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 18: SQL and Python
-
-**Goal**: Student can work with structured relational data.
-
-- Why SQL (the Lindy effect: 50+ years and still dominant)
-- `sqlite3` in the standard library
-- Creating tables, inserting data, querying with SELECT
-- JOINs, WHERE, GROUP BY — the essential operations
-- Python + SQL: typed repository pattern using classes from Phase 4
-- Context managers for database connections
-- The repository pattern with Protocols:
-  ```python
-  class TaskRepository(Protocol):
-      def save(self, task: Task) -> None: ...
-      def find_by_id(self, task_id: int) -> Task | None: ...
-      def list_pending(self) -> list[Task]: ...
-  ```
-- Testing database code with fixtures and in-memory SQLite
-- When to use SQLite vs PostgreSQL (complexity threshold)
-
-**Student does**: Designs schemas + repository Protocol interfaces + writes database tests → prompts AI to implement → verifies queries
-**AI role**: Generates SQL implementations and repository code; student designs the data layer and verifies correctness
-
----
-
-#### Chapter 19: Comprehensions, Generators, and Functional Patterns
+#### Chapter 18: Comprehensions, Generators, and Functional Patterns
 
 **Goal**: Student masters Python's expressive power for data transformation.
 
@@ -719,7 +704,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 > Student role: **Builder** — "I can ship production software"
 
-#### Chapter 20: Unix-Style CLI Tools
+#### Chapter 19: Unix-Style CLI Tools
 
 **Goal**: Student can build professional command-line applications.
 
@@ -737,9 +722,9 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 21: Concurrency — async/await and Threading
+#### Chapter 20: Concurrency, async/await, and FastAPI Introduction
 
-**Goal**: Student understands concurrent execution and can write async Python.
+**Goal**: Student understands concurrent execution, can write async Python, and sees how it powers web services.
 
 **Covers Lutz**: Ch 31 partial (asyncio concepts), extends beyond Lutz into modern async patterns
 
@@ -769,33 +754,20 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
   - CPU-bound (data processing, calculations) → `multiprocessing` (awareness)
   - Simple parallelism → `ThreadPoolExecutor`
 - **Testing async code**: `pytest-asyncio`, `@pytest.mark.asyncio`
+- **Putting async to work → FastAPI introduction**:
+  - Why FastAPI: types + async + testing unified in one framework
+  - One route with Pydantic request/response models
+  - `async def` endpoints (the reason you learned async)
+  - Testing with `TestClient` — one integration test
+  - *Full API development (middleware, dependency injection, database integration, deployment) comes in later parts of the book*
 - **Why this matters for Part 5**: FastAPI is async, agent SDKs are async, MCP is async
 
-**Student does**: Specifies async interfaces (typed coroutines + tests) → prompts AI to implement concurrent logic → verifies async behavior
-**AI role**: Generates async implementations, event loop patterns; student designs concurrency architecture and verifies
+**Student does**: Specifies async interfaces (typed coroutines + tests) → prompts AI to implement concurrent logic → builds a minimal FastAPI endpoint → verifies async behavior
+**AI role**: Generates async implementations, event loop patterns, FastAPI route; student designs concurrency architecture and verifies
 
 ---
 
-#### Chapter 22: FastAPI Services
-
-**Goal**: Student can build typed, tested async API services.
-
-- FastAPI fundamentals: routes, request/response models
-- Pydantic integration (types define your API contract)
-- Request validation (automatic from type annotations)
-- **Async routes**: `async def` endpoints (building on Ch 21)
-- Dependency injection for testability (using Protocols from Ch 15)
-- Testing APIs with `TestClient`
-- Database integration (repository pattern from Ch 18)
-- Middleware and error handling
-- Full TDG cycle for API development
-
-**Student does**: Designs API contracts (Pydantic models + route specs + tests) → prompts AI to implement → verifies with TestClient
-**AI role**: Generates FastAPI routes, middleware, configuration; student designs the API contract and verifies
-
----
-
-#### Chapter 23: CI/CD, Git Workflows, and Observability
+#### Chapter 21: CI/CD, Git Workflows, and Observability
 
 **Goal**: Student can automate verification and monitor systems.
 
@@ -816,7 +788,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 > Student role: **Architect** — "I can design and build complete systems"
 
-#### Chapters 24-25: AI-Powered Application (Capstone)
+#### Chapters 22-23: AI-Powered Application (Capstone)
 
 **Goal**: Student builds a complete, production-grade application using everything learned.
 
@@ -827,15 +799,15 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 | Problem Specification | Markdown, requirements | Ch 2, 3, 10 |
 | Data Models | Dataclasses, Pydantic, Classes | Ch 6, 12-13 |
 | Object Design | Inheritance, composition, protocols | Ch 13-15 |
-| Data Layer | SQLite, repository pattern | Ch 18 |
-| Business Logic | Typed functions, composition | Ch 7, 19 |
-| Concurrency | async/await for API + SDK calls | Ch 21 |
-| CLI Interface | `smartnotes` CLI tool | Ch 20 |
-| API Service | FastAPI (async) | Ch 22 |
-| AI Integration | Anthropic SDK (async) — semantic search, summaries | Ch 10, 21 |
+| Data Layer | PostgreSQL, repository pattern | Ch 16 |
+| Business Logic | Typed functions, composition | Ch 7, 18 |
+| Concurrency | async/await for API + SDK calls | Ch 20 |
+| CLI Interface | `smartnotes` CLI tool | Ch 19 |
+| API Service | FastAPI (async) | Ch 20 |
+| AI Integration | Anthropic SDK (async) — semantic search, summaries | Ch 10, 20 |
 | Test Suite | pytest (80%+ coverage) | Ch 9, 10 |
-| CI Pipeline | GitHub Actions | Ch 23 |
-| Observability | Structured logging | Ch 23 |
+| CI Pipeline | GitHub Actions | Ch 21 |
+| Observability | Structured logging | Ch 21 |
 
 **Deliverables**:
 - Specification documents (Markdown)
@@ -855,9 +827,9 @@ Ch 1-3:    READER       → "I can read and understand AI-generated typed Python
 Ch 4-7:    SPECIFIER    → "I can tell AI precisely what to build using types"
 Ch 8-11:   VERIFIER     → "I can prove code is correct with tests"
 Ch 12-15:  MODELER      → "I can design object models for AI to implement"
-Ch 16-19:  PRACTITIONER → "I can spec real-world features via TDG"
-Ch 20-23:  BUILDER      → "I can spec + ship production software via TDG"
-Ch 24-25:  ARCHITECT    → "I can architect and deliver complete systems via TDG"
+Ch 16-18:  PRACTITIONER → "I can spec real-world features via TDG"
+Ch 19-21:  BUILDER      → "I can spec + ship production software via TDG"
+Ch 22-23:  ARCHITECT    → "I can architect and deliver complete systems via TDG"
 ```
 
 ---
@@ -882,8 +854,8 @@ Ch 12 (Phase 4): Classes and instances       → Full class syntax, behavior
 Ch 13 (Phase 4): Inheritance & composition   → Design relationships
 Ch 14 (Phase 4): Special methods             → Python object model depth
 Ch 15 (Phase 4): Decorators & patterns       → Advanced OOP in practice
-Ch 18 (Phase 5): Repository pattern          → OOP applied to data access
-Ch 22 (Phase 6): FastAPI dependency injection → OOP applied to services
+Ch 16 (Phase 5): Repository pattern          → OOP applied to data access (PostgreSQL intro)
+Ch 20 (Phase 6): FastAPI dependency injection → OOP applied to async services (FastAPI intro)
 ```
 
 ### What We Keep from Lutz (Deep Python Knowledge)
@@ -961,7 +933,7 @@ For tracking that all essential Learning Python content is covered:
 | **I: Getting Started** | Ch 1-3 | Ch 1-2 | Reframed: workbench + reading |
 | **II: Objects & Operations** | Ch 4-9 | Ch 4-5 | Reframed: typed collections |
 | **III: Statements & Syntax** | Ch 10-15 | Ch 8 | Reframed: through testing |
-| **IV: Functions & Generators** | Ch 16-21 | Ch 7, 19 | Reframed: contracts + generators |
+| **IV: Functions & Generators** | Ch 16-21 | Ch 7, 18 | Reframed: contracts + generators |
 | **V: Modules & Packages** | Ch 22-25 | Ch 17 | Reframed: project organization |
 | **VI: Classes & OOP** | Ch 26-32 | **Ch 12-15** | Full coverage, reframed |
 | **VII: Exceptions** | Ch 33-36 | Ch 11 | Reframed: typed error handling |
@@ -1041,9 +1013,9 @@ END-OF-CHAPTER EXERCISES (after lesson content)
 | Phase 2 (Ch 4-7) | 4 | 2-3 | 1 | 0 | ~8 |
 | Phase 3 (Ch 8-11) | 3 | 3 | 1 | 1 | ~8 |
 | Phase 4 (Ch 12-15) | 3 | 2 | 1 | 1-2 | ~8 |
-| Phase 5 (Ch 16-19) | 2 | 2 | 1 | 2 | ~7 |
-| Phase 6 (Ch 20-23) | 2 | 2 | 1-2 | 1 | ~7 |
-| Phase 7 (Ch 24-25) | — | — | Full project | Full project | 1 large |
+| Phase 5 (Ch 16-18) | 2 | 2 | 1 | 2 | ~7 |
+| Phase 6 (Ch 19-21) | 2 | 2 | 1-2 | 1 | ~7 |
+| Phase 7 (Ch 22-23) | — | — | Full project | Full project | 1 large |
 
 **Total across course**: ~170-180 exercises
 
@@ -1101,9 +1073,9 @@ Ch 9:  Write comprehensive tests for Note   → TDG: test edge cases
 Ch 12: Convert Note to a full class         → BUILD IT (TDG): add behavior (tags, links)
 Ch 13: Add inheritance (SourceNote, etc.)   → BUILD IT (TDG): design note hierarchy
 Ch 14: Add __repr__, __eq__, __iter__       → BUILD IT (TDG): make notes Pythonic
-Ch 18: Store Notes in SQLite                → TDG: repository pattern
-Ch 22: Expose Notes via FastAPI             → TDG: knowledge API service
-Ch 24: Full SmartNotes Knowledge Base       → CAPSTONE (full TDG orchestration)
+Ch 16: Store Notes in PostgreSQL             → TDG: file processing + database persistence
+Ch 20: Expose Notes via async FastAPI       → TDG: async service with API endpoint
+Ch 22: Full SmartNotes Knowledge Base       → CAPSTONE (full TDG orchestration)
 ```
 
 This creates a **running project thread** that students evolve across the course.
@@ -1209,7 +1181,7 @@ class Counter:
 
 ### The Combined PDF
 
-All 25 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~13 pages). This is generated from the book content — no separate authoring needed.
+All 23 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~13 pages). This is generated from the book content — no separate authoring needed.
 
 Students get:
 - **In the book**: Per-chapter cards right where they need them
@@ -1295,24 +1267,24 @@ Students don't build seven throwaway projects. They build **one real application
 
 ---
 
-#### Phase 5: Build & Persist (Ch 16-19) — "SmartNotes v0.5: Store It"
+#### Phase 5: Build & Persist (Ch 16-18) — "SmartNotes v0.5: Store It"
 
 **Student role**: Practitioner — spec real-world features via TDG
 
 **What students build**:
 - File-based export: save notes as Markdown files, JSON backup
-- SQLite persistence: `NoteRepository` with SQL storage (repository pattern)
+- PostgreSQL persistence: `NoteRepository` with SQL storage (repository pattern)
 - Import/export: read notes from Markdown files, CSV, JSON
 - Modular architecture: `smartnotes/models/`, `smartnotes/storage/`, `smartnotes/export/`
 - Data transformations: filter, sort, group notes by date/tag/type
 
-**Key learning**: Real applications persist data. The `Repository` Protocol from Phase 4 now gets a real SQLite implementation.
+**Key learning**: Real applications persist data. The `Repository` Protocol from Phase 4 now gets a real PostgreSQL implementation.
 
-**Deliverable**: SmartNotes that persists to SQLite, imports/exports files, organized as a proper Python package
+**Deliverable**: SmartNotes that persists to PostgreSQL, imports/exports files, organized as a proper Python package
 
 ---
 
-#### Phase 6: Ship & Serve (Ch 20-23) — "SmartNotes v0.6: Ship It"
+#### Phase 6: Ship & Serve (Ch 19-21) — "SmartNotes v0.6: Ship It"
 
 **Student role**: Builder — ship production software
 
@@ -1329,7 +1301,7 @@ Students don't build seven throwaway projects. They build **one real application
 
 ---
 
-#### Phase 7: Integrate & Polish (Ch 24-25) — "SmartNotes v1.0: Complete"
+#### Phase 7: Integrate & Polish (Ch 22-23) — "SmartNotes v1.0: Complete"
 
 **Student role**: Architect — design and build complete systems
 
@@ -1348,13 +1320,13 @@ smartnotes/
 ├── pyproject.toml          # uv project (Ch 1)
 ├── src/smartnotes/
 │   ├── models/             # Note, NoteCollection, types (Ch 6, 12-14)
-│   ├── storage/            # Repository protocol + SQLite impl (Ch 15, 18)
-│   ├── search/             # AI-powered semantic search (Ch 10, 21)
+│   ├── storage/            # Repository protocol + PostgreSQL impl (Ch 15, 16)
+│   ├── search/             # AI-powered semantic search (Ch 10, 20)
 │   ├── export/             # Markdown, JSON, CSV (Ch 16)
-│   ├── api/                # FastAPI routes (Ch 22)
-│   └── cli/                # Typer CLI (Ch 20)
+│   ├── api/                # FastAPI routes (Ch 20)
+│   └── cli/                # Typer CLI (Ch 19)
 ├── tests/                  # pytest suite, 80%+ coverage (Ch 9-10)
-├── .github/workflows/      # CI pipeline (Ch 23)
+├── .github/workflows/      # CI pipeline (Ch 21)
 └── README.md               # Project documentation
 ```
 
@@ -1377,7 +1349,7 @@ smartnotes/
 - [x] ~~Integration with the broader Agent Factory curriculum (Parts 1-6)?~~ → Resolved: Ch 14 (Ten Axioms) bridges Part 3 into this Python course; course output (typed Python + testing + OOP) feeds directly into Part 5 (building agents). No extra integration chapter needed.
 - [x] ~~Should metaclasses get a dedicated advanced appendix?~~ → Resolved: No. Reference-only coverage in Ch 15 is sufficient. Metaclasses are for framework authors, not our audience.
 - [x] ~~Specific project designs for each phase (Section 15)?~~ → Resolved: "SmartNotes" Personal AI Knowledge Base — one running project across all 7 phases
-- [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 21 (async/await + threading) placed before FastAPI
+- [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 20 (async/await + threading + FastAPI intro)
 - [x] ~~Exercises format: inline vs separate exercise packs?~~ → Resolved: inline + end-of-chapter (Section 13)
 - [x] ~~Python Quick Reference appendix?~~ → Resolved: per-chapter Syntax Cards + combined PDF (Section 14)
 - [x] ~~Capstone for beginners vs experienced?~~ → Resolved: no beginners by capstone; per-phase projects instead (Section 15)
@@ -1396,3 +1368,4 @@ smartnotes/
 | 2.4 | 2026-02-17 | Added Concurrency chapter (Ch 21: async/await + threading), expanded to 25 chapters. Placed before FastAPI. Resolved Crash Course Bridge question (no). Added curriculum integration as open question. |
 | 2.5 | 2026-02-17 | Designed "SmartNotes" Personal AI Knowledge Base as the running project across all 7 phases. Updated Section 15 with phase-by-phase deliverables. Updated exercise thread from Order domain to Note/SmartNotes domain. Updated capstone to reference SmartNotes. |
 | 2.6 | 2026-02-17 | AI-first philosophy applied throughout entire plan. Steps 4-5 of learning progression now explicitly done WITH AI. Renamed "Writing Gradient" to "Specification Sophistication Gradient". All chapter "Student writes/reads" lines replaced with "Student does/AI role" format reflecting TDG workflow. Phase 5 role renamed from "Writer" to "Practitioner". Exercise Type 5 "Build It" reframed from "no AI" to "full TDG ownership". "Build It Rule" rewritten. Student Journey Summary updated. |
+| 2.7 | 2026-02-20 | Folded SQL and FastAPI from standalone chapters into existing chapters per teacher directive. Ch 16 now includes PostgreSQL introduction (was separate Ch 18). Ch 20 (Concurrency) now includes FastAPI introduction (was separate Ch 22). Reduced from 25 to 23 chapters. Renumbered all cross-references: old Ch 19→18, 20→19, 21→20, 23→21, 24-25→22-23. Updated SmartNotes project phases, stack references, Syntax Cards count, exercise thread, and all section cross-references. Full SQL and FastAPI coverage deferred to later parts of the book. |
