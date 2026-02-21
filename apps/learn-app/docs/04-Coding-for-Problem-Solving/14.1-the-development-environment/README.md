@@ -55,7 +55,6 @@ Each tool in the discipline stack maps directly to an axiom you learned in Chapt
 | Tool | Axiom | Why It Matters |
 |------|-------|----------------|
 | uv | I -- Shell as Orchestrator | One command orchestrates Python versions, virtual environments, and dependencies |
-| pyproject.toml | II -- Knowledge is Markdown | Every project decision lives in one human-readable file |
 | pyright | V -- Types Are Guardrails | Catches type errors before your code runs |
 | ruff | IX -- Verification is a Pipeline | Automated style and correctness checks on every change |
 | pytest | VII -- Tests Are the Specification | Tests define what "correct" means -- not just that code runs |
