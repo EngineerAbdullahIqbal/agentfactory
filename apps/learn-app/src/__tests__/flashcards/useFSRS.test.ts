@@ -288,7 +288,8 @@ describe("useFSRS", () => {
     });
 
     expect(console.warn).toHaveBeenCalledWith(
-      expect.stringContaining("quota exceeded"),
+      expect.stringContaining("Failed to persist state"),
+      expect.anything(),
     );
   });
 

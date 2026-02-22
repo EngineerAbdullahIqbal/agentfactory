@@ -67,6 +67,7 @@
     "remark-flashcards",
     "plugin-og-image",
     "plugin-structured-data",
-    "summaries-plugin"
+    "summaries-plugin",
+    "docusaurus-shared"
   ]
 }

@@ -13,15 +13,33 @@ const yaml = require("yaml");
  * @returns {Array<{filePath: string, deck: object}>}
  */
 function loadAllDecks(docsDir) {
-  const yamlFiles = fs.globSync("**/*.flashcards.yaml", {
-    cwd: docsDir,
-  }).map((rel) => path.resolve(docsDir, rel));
+  // fs.readdirSync with recursive works on Node 18.17+ (covers Node 20 LTS)
+  const yamlFiles = fs
+    .readdirSync(docsDir, { recursive: true })
+    .filter((f) => typeof f === "string" && f.endsWith(".flashcards.yaml"))
+    .map((rel) => path.resolve(docsDir, rel));
 
-  return yamlFiles.map((filePath) => {
-    const content = fs.readFileSync(filePath, "utf-8");
-    const deck = yaml.parse(content);
-    return { filePath, deck };
-  });
+  const results = [];
+  const errors = [];
+
+  for (const filePath of yamlFiles) {
+    try {
+      const content = fs.readFileSync(filePath, "utf-8");
+      const deck = yaml.parse(content);
+      results.push({ filePath, deck });
+    } catch (err) {
+      errors.push({ filePath, error: err.message });
+    }
+  }
+
+  if (errors.length > 0) {
+    console.error("Failed to load flashcard files:");
+    for (const { filePath, error } of errors) {
+      console.error(`  ${filePath}: ${error}`);
+    }
+  }
+
+  return results;
 }
 
 /**
@@ -40,7 +58,12 @@ function loadDeckForFile(mdFilePath) {
   }
 
   const content = fs.readFileSync(yamlPath, "utf-8");
-  const deck = yaml.parse(content);
+  let deck;
+  try {
+    deck = yaml.parse(content);
+  } catch (err) {
+    throw new Error(`Failed to parse YAML in ${yamlPath}: ${err.message}`);
+  }
   return { filePath: yamlPath, deck };
 }
 

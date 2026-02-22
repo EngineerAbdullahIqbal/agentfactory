@@ -47,10 +47,15 @@ export default function FlashcardCard({
     (e: React.MouseEvent) => {
       e.stopPropagation();
       const text = isFlipped ? card.back : card.front;
-      navigator.clipboard.writeText(text).then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1500);
-      });
+      navigator.clipboard.writeText(text).then(
+        () => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1500);
+        },
+        () => {
+          // Clipboard unavailable (insecure context or permission denied)
+        },
+      );
     },
     [isFlipped, card.front, card.back],
   );

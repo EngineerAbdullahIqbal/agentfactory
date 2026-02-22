@@ -6,11 +6,8 @@ set -euo pipefail
 # Change to learn-app directory (parent of scripts/)
 cd "$(dirname "$0")/.."
 
-# Validate flashcard YAML schemas before build
-pnpm exec tsx scripts/validate-flashcards.ts
-
-# Generate Anki .apkg files + manifest before Docusaurus copies static/
-node scripts/generate-anki-decks.js
+# Flashcard validation + Anki generation run via nx dependsOn (project.json)
+# before this script is invoked — no need to duplicate here.
 
 NODE_VERSION=$(node -v | cut -d'.' -f1 | sed 's/v//')
 

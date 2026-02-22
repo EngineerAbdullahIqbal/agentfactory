@@ -87,22 +87,29 @@ function readPersistedState(deckId: string): {
     );
     try {
       localStorage.removeItem(storageKey(deckId));
-    } catch {
-      // ignore removal failure
+    } catch (removeErr) {
+      console.error(
+        `[flashcards] Failed to clear corrupted localStorage for deck "${deckId}".`,
+        removeErr,
+      );
     }
     return { state: null, wasReset: true };
   }
 }
 
-function writePersistedState(deckId: string, state: PersistedDeckState): void {
+function writePersistedState(deckId: string, state: PersistedDeckState): boolean {
   const json = JSON.stringify(state);
   try {
     localStorage.setItem(storageKey(deckId), json);
-  } catch {
+  } catch (err) {
+    const isQuota =
+      err instanceof DOMException &&
+      (err.name === "QuotaExceededError" || err.code === 22);
     console.warn(
-      `[flashcards] localStorage quota exceeded for deck "${deckId}".`,
+      `[flashcards] Failed to persist state for deck "${deckId}": ${isQuota ? "quota exceeded" : "storage unavailable"}.`,
+      err,
     );
-    return;
+    return false;
   }
 
   // Quota warning check
@@ -121,9 +128,11 @@ function writePersistedState(deckId: string, state: PersistedDeckState): void {
         `[flashcards] localStorage usage at ~${Math.round((usedBytes / ESTIMATED_QUOTA) * 100)}% of estimated quota.`,
       );
     }
-  } catch {
-    // ignore quota check errors
+  } catch (quotaErr) {
+    console.warn("[flashcards] Could not check localStorage quota usage.", quotaErr);
   }
+
+  return true;
 }
 
 // ---------------------------------------------------------------------------

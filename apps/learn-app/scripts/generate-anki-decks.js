@@ -43,8 +43,10 @@ function buildSourceUrl(yamlPath, docsDir) {
           route = slugMatch[1].trim().replace(/^["']|["']$/g, "");
         }
       }
-    } catch {
-      // Fall through to normalizeToDocId
+    } catch (err) {
+      console.warn(
+        `[generate-anki-decks] Could not read frontmatter from "${actualMdPath}", falling back to path-based URL: ${err.message}`,
+      );
     }
   }
 
@@ -95,6 +97,10 @@ async function main() {
   };
 
   for (const { filePath, deck } of decks) {
+    if (!deck?.deck?.id || !Array.isArray(deck?.cards)) {
+      console.error(`  Skipping ${filePath}: invalid deck structure (missing deck.id or cards array)`);
+      continue;
+    }
     const { deck: meta, cards } = deck;
     const deckId = meta.id;
     const apkg = createAnkiExport(meta.title);

@@ -12,8 +12,9 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   const [showToast, setShowToast] = useState(false);
   const [ankiUrl, setAnkiUrl] = useState<string | null>(null);
   const [showDownloadMenu, setShowDownloadMenu] = useState(false);
-  const [missedCount, setMissedCount] = useState(0);
-  const [gotItCount, setGotItCount] = useState(0);
+  const [ratedCards, setRatedCards] = useState<Map<string, "missed" | "gotit">>(
+    new Map(),
+  );
 
   const { cards, rateCard, wasReset } = useFSRS(deck ?? undefined);
 
@@ -52,7 +53,12 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
           setAnkiUrl(manifest.decks[deck.deck.id].apkgPath);
         }
       })
-      .catch(() => {});
+      .catch((err) => {
+        console.warn(
+          `[flashcards] Failed to fetch Anki manifest for deck "${deck.deck.id}":`,
+          err,
+        );
+      });
   }, [deck]);
 
   // Close download menu on outside click
@@ -77,9 +83,11 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     setIsFlipped(false);
   }, []);
 
-  // Keyboard navigation
+  // Keyboard navigation (skip when user is typing in inputs/textareas)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       if (e.key === " " || e.key === "Spacebar") {
         e.preventDefault();
         setIsFlipped((prev) => !prev);
@@ -104,11 +112,11 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
 
       rateCard(card.id, rating);
 
-      if (rating === Rating.Again) {
-        setMissedCount((prev) => prev + 1);
-      } else {
-        setGotItCount((prev) => prev + 1);
-      }
+      setRatedCards((prev) => {
+        const next = new Map(prev);
+        next.set(card.id, rating === Rating.Again ? "missed" : "gotit");
+        return next;
+      });
 
       // Advance to next card
       if (!isLastCard) {
@@ -135,9 +143,13 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     );
   }
 
-  // Session complete — rated last card
+  // Derive counts from rated cards map (prevents double-counting on re-rating)
+  const missedCount = [...ratedCards.values()].filter((v) => v === "missed").length;
+  const gotItCount = [...ratedCards.values()].filter((v) => v === "gotit").length;
+
+  // Session complete — every card rated at least once
   const sessionDone =
-    isLastCard && isFlipped === false && missedCount + gotItCount >= totalCards;
+    isLastCard && !isFlipped && ratedCards.size >= totalCards;
   if (sessionDone) {
     const total = missedCount + gotItCount;
     const pct = total > 0 ? Math.round((gotItCount / total) * 100) : 0;
@@ -159,8 +171,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
             onClick={() => {
               setCurrentIndex(0);
               setIsFlipped(false);
-              setMissedCount(0);
-              setGotItCount(0);
+              setRatedCards(new Map());
             }}
           >
             Review Again
