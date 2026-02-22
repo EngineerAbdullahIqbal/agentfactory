@@ -3,6 +3,9 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 import * as dotenv from "dotenv";
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const siteConfig = require("../../libs/docusaurus/shared/siteConfig");
+
 // Load environment variables from .env file (for local development)
 // Production uses actual environment variables set in CI/CD
 dotenv.config();
@@ -67,11 +70,10 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  // Set the production url of your site here
-  url: "https://agentfactory.panaversity.org",
+  // Set the production url of your site here (from shared siteConfig)
+  url: siteConfig.url,
   // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: "/",
+  baseUrl: siteConfig.baseUrl,
 
   // Sitemap is configured via the classic preset's sitemap option below
 
@@ -260,6 +262,8 @@ const config: Config = {
                 excludeMeta: ["nointeractive", "static"],
               },
             ],
+            // Flashcard YAML injection into <Flashcards /> components
+            require("../../libs/docusaurus/remark-flashcards"),
             // Metadata-driven content enhancements (slides, etc.)
             [
               require("../../libs/docusaurus/remark-content-enhancements"),

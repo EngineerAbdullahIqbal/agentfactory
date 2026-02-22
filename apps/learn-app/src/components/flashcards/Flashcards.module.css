@@ -1,0 +1,637 @@
+/* Flashcards — NotebookLM-inspired clean design */
+
+/* ===== Animations ===== */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ===== Container ===== */
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: 300px;
+  padding: 1.5rem 0;
+  animation: slideUp 0.4s ease;
+}
+
+.atmosphericGlow {
+  position: relative;
+}
+
+.atmosphericGlow::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: -60px;
+  right: -60px;
+  bottom: -40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 77, 153, 0.06) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+[data-theme="dark"] .atmosphericGlow::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 77, 153, 0.12) 0%,
+    transparent 70%
+  );
+}
+
+/* ===== Deck header — compact single row ===== */
+.deckHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.deckTitle {
+  font-size: var(--ifm-font-size-sm);
+  font-weight: var(--ifm-font-weight-semibold);
+  color: var(--ifm-color-emphasis-700);
+}
+
+.beginReviewButton {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: var(--ifm-font-weight-semibold);
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.beginReviewButton:hover {
+  opacity: 0.85;
+}
+
+.beginReviewButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ===== Browse layout: [◀] [CARD] [▶] ===== */
+.browseLayout {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.navArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--ifm-color-emphasis-600);
+  transition: all 0.15s ease;
+}
+
+.navArrow:hover:not(:disabled) {
+  background: var(--ifm-color-emphasis-200);
+  color: var(--ifm-color-primary);
+}
+
+.navArrow:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+[data-theme="dark"] .navArrow {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--ifm-color-emphasis-500);
+}
+
+[data-theme="dark"] .navArrow:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ifm-color-primary-lighter, var(--ifm-color-primary));
+}
+
+.cardArea {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== Progress bar ===== */
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.reviewProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.progressBar {
+  flex: 1;
+  height: 3px;
+  background: rgba(0, 77, 153, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .progressBar {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--ifm-color-primary);
+  transition: width 0.3s ease;
+}
+
+.cardCounter {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-500);
+  white-space: nowrap;
+}
+
+/* ===== Utility row (shuffle, anki) ===== */
+.utilityRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.utilityButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.65rem;
+  background: transparent;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 999px;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.utilityButton:hover {
+  background: var(--ifm-color-emphasis-100);
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+/* ===== Download dropdown ===== */
+.downloadWrapper {
+  position: relative;
+}
+
+.downloadMenu {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 0.35rem;
+  background: var(--ifm-background-surface-color, #fff);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-width: 160px;
+  z-index: 10;
+}
+
+[data-theme="dark"] .downloadMenu {
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.downloadOption {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  color: var(--ifm-font-color-base);
+  font-size: 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.1s;
+}
+
+.downloadOption:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+[data-theme="dark"] .downloadOption:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .utilityButton {
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--ifm-color-emphasis-400);
+}
+
+[data-theme="dark"] .utilityButton:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ===== Card flip ===== */
+.cardWrapper {
+  perspective: 1000px;
+}
+
+.card {
+  position: relative;
+  min-height: 260px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  background: var(--ifm-background-surface-color, #fff);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+[data-theme="dark"] .cardFace {
+  background: rgba(30, 30, 30, 0.8);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.cardFront {
+  z-index: 2;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+  z-index: 1;
+}
+
+.cardLabel {
+  font-size: 0.65rem;
+  color: var(--ifm-color-emphasis-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.cardContent {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ifm-font-color-base);
+}
+
+.cardContent p {
+  margin: 0 0 0.5rem;
+}
+
+.cardContent p:last-child {
+  margin-bottom: 0;
+}
+
+/* "See answer" hint */
+.seeAnswerHint {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-400);
+  text-align: center;
+}
+
+.seeAnswerHint.hidden {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+/* Copy button */
+.copyButton {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: transparent;
+  border: none;
+  color: var(--ifm-color-emphasis-300);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 0.85rem;
+  transition: color 0.15s;
+  z-index: 5;
+  line-height: 1;
+}
+
+.copyButton:hover {
+  color: var(--ifm-color-primary);
+}
+
+/* ===== Why section ===== */
+.whySection {
+  margin-top: 1rem;
+  padding: 0.6rem 0.75rem;
+  border-left: 3px solid var(--ifm-color-primary);
+  background: rgba(0, 77, 153, 0.03);
+  font-size: var(--ifm-font-size-sm);
+  color: var(--ifm-color-emphasis-700);
+  border-radius: 0 6px 6px 0;
+}
+
+[data-theme="dark"] .whySection {
+  background: rgba(0, 77, 153, 0.06);
+  color: var(--ifm-color-emphasis-500);
+}
+
+.whyLabel {
+  font-weight: var(--ifm-font-weight-semibold);
+  margin-bottom: 0.15rem;
+  color: var(--ifm-color-primary);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ===== Rating buttons: Missed It / Got It ===== */
+.ratingGroup {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.ratingButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: var(--ifm-font-size-sm);
+  font-weight: var(--ifm-font-weight-semibold);
+  transition: opacity 0.15s ease;
+}
+
+.ratingButton:hover {
+  opacity: 0.8;
+}
+
+.ratingCount {
+  font-size: 0.75rem;
+  font-weight: normal;
+  opacity: 0.7;
+}
+
+.ratingMissed {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+[data-theme="dark"] .ratingMissed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.ratingGotIt {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+[data-theme="dark"] .ratingGotIt {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+/* ===== Session complete ===== */
+.sessionComplete {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  animation: slideUp 0.4s ease;
+}
+
+.sessionCompleteTitle {
+  font-size: var(--ifm-h3-font-size);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--ifm-font-color-base);
+}
+
+.sessionStats {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.stat {
+  font-size: var(--ifm-font-size-sm);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.statMissed {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+[data-theme="dark"] .statMissed {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.statGotIt {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+[data-theme="dark"] .statGotIt {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+}
+
+.sessionPct {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 1.5rem;
+}
+
+.exitButton {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-white);
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: var(--ifm-font-size-sm);
+  font-weight: var(--ifm-font-weight-semibold);
+  transition: opacity 0.15s;
+}
+
+.exitButton:hover {
+  opacity: 0.85;
+}
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  z-index: 100;
+  animation: fadeInOut 5s ease-in-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .toast {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
+/* ===== Fallback ===== */
+.fallbackMessage {
+  color: var(--ifm-color-emphasis-500);
+  font-size: var(--ifm-font-size-sm);
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    animation: none;
+  }
+
+  .card {
+    transition: none;
+  }
+
+  .card.flipped {
+    transform: none;
+  }
+
+  .cardFace {
+    backface-visibility: visible;
+  }
+
+  .cardFront {
+    transition: opacity 0.2s;
+  }
+
+  .card.flipped .cardFront {
+    opacity: 0;
+  }
+
+  .cardBack {
+    transform: none;
+    transition: opacity 0.2s;
+    opacity: 0;
+  }
+
+  .card.flipped .cardBack {
+    opacity: 1;
+  }
+
+  .toast {
+    animation: none;
+    opacity: 1;
+  }
+
+  .sessionComplete {
+    animation: none;
+  }
+
+  .seeAnswerHint.hidden {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 599px) {
+  .container {
+    padding: 1rem 0;
+  }
+
+  .browseLayout {
+    gap: 0.5rem;
+  }
+
+  .navArrow {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 1rem;
+  }
+
+  .cardContent {
+    font-size: 1.05rem;
+  }
+
+  .card {
+    min-height: 220px;
+  }
+
+  .ratingButton {
+    padding: 0.4rem 1rem;
+  }
+}

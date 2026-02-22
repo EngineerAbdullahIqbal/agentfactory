@@ -15,6 +15,9 @@
 # Auto-generated OG images (generated during build)
 /static/img/og
 
+# Auto-generated Anki .apkg files + manifest (generated during build)
+/static/flashcards
+
 # TypeScript compiled output (should not be committed)
 docusaurus.config.js
 sidebars.js

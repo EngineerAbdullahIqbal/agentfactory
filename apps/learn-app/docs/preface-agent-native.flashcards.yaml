@@ -1,0 +1,71 @@
+deck:
+  id: "preface-agent-native"
+  title: "PREFACE: The AI Agent Factory"
+  description: "Key concepts from the preface — the SaaSpocalypse, why autonomous agents are disrupting enterprise software"
+  tags: ["preface", "agent-factory", "part-0"]
+  version: 1
+
+cards:
+  - id: "preface-001"
+    front: "What was the 'SaaSpocalypse' that triggered nearly $1 trillion in market value loss?"
+    back: "Anthropic released eleven open-source agentic plugins for Claude Cowork targeting legal, finance, sales, and more — proving autonomous agents can perform complex professional work that justified $200/month SaaS subscriptions."
+    tags: ["event", "market"]
+    difficulty: "basic"
+
+  - id: "preface-002"
+    front: "What is the core message of the SaaSpocalypse for SaaS companies?"
+    back: "Autonomous agents can now perform the complex professional work that justified expensive software subscriptions. The era of paying for a 'seat' so a human can click buttons in enterprise software is ending."
+    tags: ["paradigm-shift"]
+    difficulty: "intermediate"
+    why: "Why did investors react so dramatically to open-source agent plugins rather than the AI models themselves?"
+
+  - id: "preface-003"
+    front: "What does Spec-Driven Development (SDD) mean?"
+    back: "A development methodology where human-written specifications are the source of truth, and AI agents implement from those specs. The human specifies WHAT; the agent handles HOW."
+    tags: ["methodology", "sdd"]
+    difficulty: "intermediate"
+    why: "Why must the spec be human-written rather than AI-generated?"
+
+  - id: "preface-004"
+    front: "What are the three things this book teaches you to build?"
+    back: "AI agents (Digital FTEs), the factory infrastructure to manufacture them at scale, and the business model to monetize them as outcomes-as-a-service."
+    tags: ["book-structure"]
+    difficulty: "basic"
+
+  - id: "preface-005"
+    front: "What is the Agent Factory business model?"
+    back: "Instead of selling software subscriptions, sell verified outcomes delivered by manufactured AI employees. Revenue scales with outcomes delivered, not seats licensed."
+    tags: ["business-model"]
+    difficulty: "intermediate"
+
+  - id: "preface-006"
+    front: "Why is open-source agent infrastructure a threat to proprietary SaaS?"
+    back: "When agent plugins are free and open-source, the value shifts from tool access to outcome delivery. Companies can build their own agents instead of paying subscription fees for human-operated software."
+    tags: ["market", "strategy"]
+    difficulty: "advanced"
+    why: "What defensible advantage can companies build if the agent infrastructure is open-source?"
+
+  - id: "preface-007"
+    front: "What does it mean that 'buyers define intent, agents execute, humans supervise'?"
+    back: "The workflow shifts to: humans specify goals and constraints (intent), AI agents carry out the work autonomously, and humans verify the results. Execution is automated; judgment remains human."
+    tags: ["workflow", "core-concept"]
+    difficulty: "basic"
+
+  - id: "preface-008"
+    front: "What is a 'reusable skill' in the Agent Factory context?"
+    back: "A packaged capability that encapsulates domain expertise — including persona, logic, context, tool integrations, knowledge, and safety guardrails — that agents can invoke to perform specific types of work."
+    tags: ["definition", "skills"]
+    difficulty: "intermediate"
+
+  - id: "preface-009"
+    front: "What four elements does the Agent Factory use to industrialize execution?"
+    back: "Machine-readable specs, reusable skills, Standard Tool Protocols (MCP), and cloud-native infrastructure."
+    tags: ["architecture"]
+    difficulty: "intermediate"
+    why: "Why are all four needed — what breaks if you remove one?"
+
+  - id: "preface-010"
+    front: "What is the difference between the SaaS era focus and the Agent Factory era focus?"
+    back: "SaaS focused on HOW the work is done (tool interfaces). The Agent Factory focuses on THAT the work is done — verifiably correct outcomes."
+    tags: ["paradigm-shift"]
+    difficulty: "basic"

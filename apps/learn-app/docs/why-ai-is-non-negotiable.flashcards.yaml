@@ -1,0 +1,71 @@
+deck:
+  id: "why-ai-is-non-negotiable"
+  title: "Why AI Is Non-Negotiable"
+  description: "Key arguments from the AI debate lesson — why adopting AI is not optional and what it means for the workforce"
+  tags: ["ai-debate", "workforce", "part-0"]
+  version: 1
+
+cards:
+  - id: "non-negotiable-001"
+    front: "What historical pattern does the lesson use to argue AI adoption is inevitable?"
+    back: "Every major technology (fire, agriculture, printing press, steam engine, computer) was adopted by societies that flourished — those that resisted were absorbed. AI follows this same pattern of technological evolution."
+    tags: ["history", "argument"]
+    difficulty: "basic"
+
+  - id: "non-negotiable-002"
+    front: "How does AI differ from every previous technological revolution?"
+    back: "Previous tools augmented bodies or automated routine computation. AI augments cognition itself — the ability to reason, synthesize, create, and decide."
+    tags: ["distinction", "core-concept"]
+    difficulty: "intermediate"
+    why: "Why does augmenting cognition have broader implications than augmenting physical capability?"
+
+  - id: "non-negotiable-003"
+    front: "What are the two camps society has divided into regarding AI?"
+    back: "Those who view AI as an existential threat and demand we hit the brakes, and those who recognize it as the engine of future prosperity. The lesson argues the fears are real but must be answered, not used as an excuse to stand still."
+    tags: ["debate", "society"]
+    difficulty: "basic"
+
+  - id: "non-negotiable-004"
+    front: "What does 'capacity to serve' mean in the context of AI and the workforce?"
+    back: "AI expands the total capacity to serve human needs — creating abundance rather than just redistributing existing work. More capability means more problems can be addressed, not fewer jobs."
+    tags: ["economics", "workforce"]
+    difficulty: "intermediate"
+    why: "How does expanding capacity to serve differ from the zero-sum view of job displacement?"
+
+  - id: "non-negotiable-005"
+    front: "What is the lesson's response to the fear that AI will eliminate jobs?"
+    back: "AI unbundles jobs into tasks. Some tasks are automated, but unbundling creates new combinations — new roles, businesses, and markets that didn't exist when work was locked in rigid job titles."
+    tags: ["workforce", "jobs"]
+    difficulty: "intermediate"
+
+  - id: "non-negotiable-006"
+    front: "Why does the lesson argue that 'opting out is not a viable strategy' for AI?"
+    back: "Like every previous transformative technology, the competitive advantage goes to adopters. Societies, companies, and individuals who resist are absorbed by those who adapt."
+    tags: ["strategy", "argument"]
+    difficulty: "basic"
+
+  - id: "non-negotiable-007"
+    front: "What is the difference between AI risk and AI harm?"
+    back: "Risk is the probability of negative outcomes. Harm is actual damage done. The lesson argues we should manage risks through governance and guardrails, not avoid the technology entirely."
+    tags: ["risk", "governance"]
+    difficulty: "advanced"
+    why: "Why is managing risk more productive than avoiding it entirely?"
+
+  - id: "non-negotiable-008"
+    front: "What does it mean that AI represents a 'new evolutionary leap'?"
+    back: "AI is the first technology that augments cognition — not just muscle or calculation. This makes it qualitatively different from previous industrial revolutions, redefining what it means to be a productive human being."
+    tags: ["evolution", "core-concept"]
+    difficulty: "intermediate"
+
+  - id: "non-negotiable-009"
+    front: "How should professionals respond to the AI transformation according to the lesson?"
+    back: "Build dynamic skill portfolios, learn to think with AI, use AI tools daily, and collaborate with AI as a digital teammate. Adapt rather than resist."
+    tags: ["workforce", "strategy"]
+    difficulty: "basic"
+
+  - id: "non-negotiable-010"
+    front: "What is the honest answer to 'How is AI great for me'?"
+    back: "AI amplifies individual capability — one person with AI can deliver what previously required a team. But this only benefits those who learn to use it. The value accrues to adopters."
+    tags: ["personal", "value"]
+    difficulty: "intermediate"
+    why: "What happens to the gap between AI-adopters and non-adopters over time?"

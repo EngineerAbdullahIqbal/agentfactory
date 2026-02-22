@@ -72,15 +72,7 @@ function segmentToTitle(segment) {
     .join(" ");
 }
 
-/**
- * Normalize path to Docusaurus doc ID format (strips numeric prefixes)
- */
-function normalizeToDocId(filePath) {
-  return filePath
-    .split("/")
-    .map((segment) => segment.replace(/^\d+-/, ""))
-    .join("/");
-}
+const normalizeToDocId = require("../shared/normalizeToDocId");
 
 module.exports = function chapterManifestPlugin(context, options) {
   const { docsPath = "docs" } = options;

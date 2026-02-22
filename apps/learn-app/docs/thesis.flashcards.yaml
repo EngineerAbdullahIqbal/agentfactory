@@ -1,0 +1,83 @@
+deck:
+  id: "thesis"
+  title: "The Agent Factory Thesis"
+  description: "Core concepts from the Agent Factory thesis — the paradigm shift from SaaS tools to AI employees"
+  tags: ["thesis", "agent-factory", "part-0"]
+  version: 1
+
+cards:
+  - id: "thesis-001"
+    front: "What is a Digital FTE?"
+    back: "A role-based AI system that composes tools, spawns specialist agents, and delivers outcomes at scale — functioning as a full-time digital employee."
+    tags: ["definition", "core-concept"]
+    difficulty: "basic"
+
+  - id: "thesis-002"
+    front: "What is the primary product companies sell in the Agent Factory era?"
+    back: "AI employees — role-based systems that deliver outcomes, replacing the SaaS model of selling software tool subscriptions."
+    tags: ["paradigm-shift"]
+    difficulty: "basic"
+
+  - id: "thesis-003"
+    front: "How does the value metric change from the SaaS era to the Agent Factory era?"
+    back: "From per-seat subscriptions to per-outcome results. Buyers pay for verified results, not access to tools."
+    tags: ["paradigm-shift"]
+    difficulty: "basic"
+
+  - id: "thesis-004"
+    front: "What is the human role in the Agent Factory era?"
+    back: "Supervisor and verifier. Humans are promoted from operators to those who define intent, oversee agent execution, and verify outcomes."
+    tags: ["human-in-the-loop"]
+    difficulty: "basic"
+
+  - id: "thesis-005"
+    front: "What are the three layers of the Industrialized Stack?"
+    back: "Intent (goals, constraints, budgets), The Factory (production engine of agents), and Outcome (verified actions and artifacts delivered on demand)."
+    tags: ["architecture"]
+    difficulty: "intermediate"
+    why: "Why must these three layers remain separate rather than being combined into one system?"
+
+  - id: "thesis-006"
+    front: "What three mechanisms power The Factory?"
+    back: "Specs define the work, skills package how it gets done, and feedback loops ensure continuous improvement — with MCP connecting agents to tools."
+    tags: ["architecture", "factory"]
+    difficulty: "intermediate"
+    why: "What would happen if you removed any one of these three mechanisms?"
+
+  - id: "thesis-007"
+    front: "What is MCP in the Agent Factory context?"
+    back: "Model Context Protocol — a standard tool-connection protocol that enables universal connectivity, replacing rigid point-to-point API integrations."
+    tags: ["definition", "mcp"]
+    difficulty: "basic"
+
+  - id: "thesis-008"
+    front: "What is the difference between an AI tool and an AI employee?"
+    back: "An AI tool performs a single task when invoked. An AI employee operates autonomously within a role — managing context, composing tools, and delivering complete outcomes without step-by-step direction."
+    tags: ["distinction", "core-concept"]
+    difficulty: "intermediate"
+    why: "Why would a business pay 10x more for an AI employee than an AI tool?"
+
+  - id: "thesis-009"
+    front: "What does the thesis say about AI replacing people?"
+    back: "The evidence shows AI paired with a human outperforms either one working alone. The Agent Factory promotes humans from operators to supervisors, not replaces them."
+    tags: ["human-in-the-loop"]
+    difficulty: "intermediate"
+
+  - id: "thesis-010"
+    front: "What does 'capability on demand' mean in the Agent Factory model?"
+    back: "Shifting from manual workflows to agent-delivered capabilities that activate when requested — agents deliver results, not interfaces for humans to click through."
+    tags: ["paradigm-shift"]
+    difficulty: "intermediate"
+
+  - id: "thesis-011"
+    front: "What new roles does the Agent Factory era create?"
+    back: "Agent designers, outcome architects, verification specialists, and domain experts who teach machines what 'correct' looks like in their field."
+    tags: ["workforce"]
+    difficulty: "advanced"
+    why: "Why are domain experts more valuable in this era than in the SaaS era?"
+
+  - id: "thesis-012"
+    front: "What must future professionals build instead of relying on fixed career paths?"
+    back: "Dynamic skill portfolios — learning to think with AI, build using AI tools daily, and collaborate with AI as a digital teammate."
+    tags: ["workforce"]
+    difficulty: "intermediate"

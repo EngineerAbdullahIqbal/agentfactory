@@ -4,8 +4,23 @@
   "projectType": "application",
   "sourceRoot": "apps/learn-app",
   "targets": {
+    "validate-flashcards": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "pnpm exec tsx scripts/validate-flashcards.ts",
+        "cwd": "apps/learn-app"
+      }
+    },
+    "generate-anki": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node scripts/generate-anki-decks.js",
+        "cwd": "apps/learn-app"
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": ["validate-flashcards", "generate-anki"],
       "options": {
         "cwd": "apps/learn-app",
         "command": "pnpm build"
@@ -31,6 +46,7 @@
     },
     "lint": {
       "executor": "nx:run-commands",
+      "dependsOn": ["validate-flashcards"],
       "options": {
         "cwd": "apps/learn-app",
         "command": "pnpm typecheck"
@@ -48,6 +64,7 @@
   "implicitDependencies": [
     "remark-interactive-python",
     "remark-content-enhancements",
+    "remark-flashcards",
     "plugin-og-image",
     "plugin-structured-data",
     "summaries-plugin"

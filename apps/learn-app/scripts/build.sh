@@ -1,8 +1,16 @@
 #!/bin/bash
+set -euo pipefail
+
 # Build script that conditionally adds --localstorage-file flag for Node.js 25+
 
 # Change to learn-app directory (parent of scripts/)
 cd "$(dirname "$0")/.."
+
+# Validate flashcard YAML schemas before build
+pnpm exec tsx scripts/validate-flashcards.ts
+
+# Generate Anki .apkg files + manifest before Docusaurus copies static/
+node scripts/generate-anki-decks.js
 
 NODE_VERSION=$(node -v | cut -d'.' -f1 | sed 's/v//')
 
