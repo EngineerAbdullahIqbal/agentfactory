@@ -8,7 +8,6 @@
 
 const path = require("path");
 const fs = require("fs");
-const crypto = require("crypto");
 const { loadAllDecks } = require("../../../libs/docusaurus/shared/flashcardLoader");
 const normalizeToDocId = require("../../../libs/docusaurus/shared/normalizeToDocId");
 const siteConfig = require("../../../libs/docusaurus/shared/siteConfig");
@@ -61,20 +60,6 @@ function buildSourceUrl(yamlPath, docsDir) {
   const base = siteConfig.baseUrl.endsWith("/") ? siteConfig.baseUrl : siteConfig.baseUrl + "/";
   const cleanRoute = route.replace(/^\/+/, "");
   return `${siteConfig.url}${base}docs/${cleanRoute}`;
-}
-
-/**
- * Generate a stable GUID for an Anki note from deck+card IDs.
- * @param {string} deckId
- * @param {string} cardId
- * @returns {string} 10-char hex hash
- */
-function stableGuid(deckId, cardId) {
-  return crypto
-    .createHash("sha256")
-    .update(`${deckId}:${cardId}`)
-    .digest("hex")
-    .slice(0, 10);
 }
 
 async function main() {
@@ -147,4 +132,4 @@ main().catch((err) => {
 });
 
 // Export for testing
-module.exports = { buildSourceUrl, stableGuid };
+module.exports = { buildSourceUrl };

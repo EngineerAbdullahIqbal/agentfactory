@@ -18,13 +18,13 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
 
   const { cards, rateCard, wasReset } = useFSRS(deck ?? undefined);
 
-  // Shuffle seed — increment to reshuffle
-  const [shuffleSeed, setShuffleSeed] = useState(0);
+  // Shuffle counter — increment to reshuffle (not a deterministic seed)
+  const [shuffleCounter, setShuffleCounter] = useState(0);
 
   const shuffledIndices = useMemo(() => {
     if (!deck) return [];
     const indices = deck.cards.map((_, i) => i);
-    if (shuffleSeed === 0) return indices;
+    if (shuffleCounter === 0) return indices;
     // Fisher-Yates shuffle
     const shuffled = [...indices];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -32,7 +32,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
-  }, [deck, shuffleSeed]);
+  }, [deck, shuffleCounter]);
 
   // Show toast when localStorage was reset
   useEffect(() => {
@@ -90,7 +90,8 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       if (e.key === " " || e.key === "Spacebar") {
         e.preventDefault();
-        setIsFlipped((prev) => !prev);
+        // Only allow Space to flip front→back; rating buttons handle back→next
+        setIsFlipped((prev) => (prev ? prev : true));
       } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
         e.preventDefault();
         goToNext();
@@ -128,7 +129,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   );
 
   const handleShuffle = useCallback(() => {
-    setShuffleSeed((prev) => prev + 1);
+    setShuffleCounter((prev) => prev + 1);
     setCurrentIndex(0);
     setIsFlipped(false);
   }, []);
@@ -147,9 +148,10 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   const missedCount = [...ratedCards.values()].filter((v) => v === "missed").length;
   const gotItCount = [...ratedCards.values()].filter((v) => v === "gotit").length;
 
-  // Session complete — every card rated at least once
-  const sessionDone =
-    isLastCard && !isFlipped && ratedCards.size >= totalCards;
+  // Session complete — every card rated and user has moved past the last card
+  // (currentIndex stays on last card after rating, but isFlipped resets to false)
+  const allRated = ratedCards.size >= totalCards;
+  const sessionDone = allRated && isLastCard && !isFlipped;
   if (sessionDone) {
     const total = missedCount + gotItCount;
     const pct = total > 0 ? Math.round((gotItCount / total) * 100) : 0;

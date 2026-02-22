@@ -104,12 +104,12 @@ export function validateDecks(decks: LoadedDeck[]): {
   return { errors, warnings };
 }
 
-// CLI entry point
-if (
+// CLI entry point — runs when executed directly (not imported)
+const isDirectRun =
   process.argv[1] &&
-  (process.argv[1].endsWith("validate-flashcards.ts") ||
-    process.argv[1].endsWith("validate-flashcards"))
-) {
+  /validate-flashcards(?:\.ts)?$/.test(process.argv[1].replace(/\\/g, "/"));
+
+if (isDirectRun) {
   const docsDir = path.resolve(process.cwd(), "docs");
   const decks: LoadedDeck[] = loadAllDecks(docsDir);
 

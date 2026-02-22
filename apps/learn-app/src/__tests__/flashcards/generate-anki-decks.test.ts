@@ -1,6 +1,5 @@
 // @vitest-environment node
 import { describe, it, expect } from "vitest";
-import crypto from "crypto";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
@@ -20,7 +19,7 @@ const siteConfig = require_(
 );
 
 // Import the exported helpers from the generate script
-const { buildSourceUrl, stableGuid } = require_(
+const { buildSourceUrl } = require_(
   path.join(repoRoot, "apps/learn-app/scripts/generate-anki-decks"),
 );
 
@@ -33,34 +32,6 @@ describe("normalizeToDocId", () => {
 
   it("handles paths without numeric prefixes", () => {
     expect(normalizeToDocId("General/overview")).toBe("General/overview");
-  });
-});
-
-describe("stableGuid", () => {
-  it("produces same GUID for same input", () => {
-    const a = stableGuid("deck-1", "card-001");
-    const b = stableGuid("deck-1", "card-001");
-    expect(a).toBe(b);
-  });
-
-  it("produces different GUIDs for different inputs", () => {
-    const a = stableGuid("deck-1", "card-001");
-    const b = stableGuid("deck-1", "card-002");
-    expect(a).not.toBe(b);
-  });
-
-  it("returns 10-char hex string", () => {
-    const guid = stableGuid("deck-x", "card-y");
-    expect(guid).toMatch(/^[0-9a-f]{10}$/);
-  });
-
-  it("matches manual sha256 computation", () => {
-    const expected = crypto
-      .createHash("sha256")
-      .update("my-deck:my-card")
-      .digest("hex")
-      .slice(0, 10);
-    expect(stableGuid("my-deck", "my-card")).toBe(expected);
   });
 });
 

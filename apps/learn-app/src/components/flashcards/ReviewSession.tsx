@@ -41,8 +41,9 @@ export default function ReviewSession({
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const [missedCount, setMissedCount] = useState(0);
-  const [gotItCount, setGotItCount] = useState(0);
+  const [ratedCards, setRatedCards] = useState<Map<string, "missed" | "gotit">>(
+    new Map(),
+  );
   const ratingRef = useRef<HTMLDivElement>(null);
 
   const currentCard = reviewQueue[currentIndex];
@@ -60,16 +61,20 @@ export default function ReviewSession({
     (rating: Rating) => {
       if (!currentCard) return;
       rateCard(currentCard.id, rating);
-      if (rating === Rating.Again) {
-        setMissedCount((prev) => prev + 1);
-      } else {
-        setGotItCount((prev) => prev + 1);
-      }
+      setRatedCards((prev) => {
+        const next = new Map(prev);
+        next.set(currentCard.id, rating === Rating.Again ? "missed" : "gotit");
+        return next;
+      });
       setIsFlipped(false);
       setCurrentIndex((prev) => prev + 1);
     },
     [currentCard, rateCard],
   );
+
+  // Derive counts from rated cards map (prevents double-counting on re-rating)
+  const missedCount = [...ratedCards.values()].filter((v) => v === "missed").length;
+  const gotItCount = [...ratedCards.values()].filter((v) => v === "gotit").length;
 
   if (isComplete) {
     const total = missedCount + gotItCount;
@@ -105,7 +110,7 @@ export default function ReviewSession({
         />
       </div>
 
-      {isFlipped && (
+      {isFlipped && currentCard && (
         <RatingButtons
           onRate={handleRate}
           missedCount={missedCount}
