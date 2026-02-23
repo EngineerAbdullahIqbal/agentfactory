@@ -140,7 +140,7 @@ Your version number will likely be different from the one shown here -- and that
 
 ---
 
-## From Axiom to Practice
+## Axiom I in Action
 
 In Chapter 14, you learned Axiom I: **Shell as Orchestrator.** The shell coordinates programs; programs do computation. uv is this axiom made concrete for Python development.
 
@@ -278,6 +278,20 @@ smartnotes/
 **`uv.lock`** is the lockfile — a precise record of every dependency and its exact version. Right now it is nearly empty because SmartNotes has no dependencies. As you add packages in Lesson 3, this file will grow. It should be committed to Git so that every developer gets identical dependency versions.
 
 **Quick Check**: After running `uv run main.py`, two new items appeared: `.venv/` and `uv.lock`. One should be committed to Git and the other should not. Which is which, and why?
+
+:::info Checkpoint: Your SmartNotes project should now look like this
+```
+smartnotes/
+├── .gitignore
+├── .python-version
+├── .venv/              ← created by uv run
+├── README.md
+├── main.py
+├── pyproject.toml
+└── uv.lock             ← created by uv run
+```
+If you see all seven items, you are on track. If anything is missing, re-read the steps above before continuing.
+:::
 
 ---
 

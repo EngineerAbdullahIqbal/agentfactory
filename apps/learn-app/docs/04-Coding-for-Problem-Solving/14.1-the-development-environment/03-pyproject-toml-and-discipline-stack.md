@@ -281,6 +281,20 @@ testpaths = ["tests"]
 
 One file. Four tools configured. Every developer and every AI agent reading this file knows exactly how SmartNotes is built, what tools it uses, and how those tools are configured.
 
+:::info Checkpoint: Your SmartNotes project should now look like this
+```
+smartnotes/
+├── .gitignore
+├── .python-version
+├── .venv/
+├── README.md
+├── main.py
+├── pyproject.toml      ← now has [dependency-groups] and [tool.*] sections
+└── uv.lock             ← updated with exact versions of pytest, pyright, ruff
+```
+The file list has not changed since Lesson 2. What changed is the *content* of `pyproject.toml` (new sections) and `uv.lock` (new dependency versions).
+:::
+
 **Read and Predict**: Look at the `pyproject.toml` above and answer these questions:
 
 1. What happens if you try to use Python 3.11 with this project?

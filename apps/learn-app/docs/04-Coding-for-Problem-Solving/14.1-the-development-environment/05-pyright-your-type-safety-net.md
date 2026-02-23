@@ -179,7 +179,7 @@ Strict mode enables 29 additional diagnostic rules that are completely disabled 
 
 ---
 
-## From Axiom to Practice
+## Axiom V in Action
 
 In Axiom V from Chapter 14, you learned that types are guardrails -- not bureaucracy. They prevent your code from driving off a cliff by making the rules explicit. Pyright is the guardrail inspector. It walks along every type label in your code before it runs and tells you which guardrails are missing.
 
@@ -333,6 +333,14 @@ uv run pyright
 ```
 
 Clean. Every type label matches. Every piece of code receives the right kind of data. Every stored value has the right type. Pyright verified all of this in under a second, without executing the code.
+
+:::info Checkpoint: Verify your progress
+Run this command in the SmartNotes directory:
+```bash
+uv run pyright
+```
+You should see `0 errors, 0 warnings, 0 informations`. If you still see errors, compare your `main.py` against the corrected version above — every function and every call must have matching types.
+:::
 
 ### Strict Mode vs Standard Mode
 

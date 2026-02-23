@@ -102,9 +102,9 @@ Linting finds problems. Formatting enforces style. A linting error might be a re
 
 ---
 
-## From Axiom to Practice
+## Axiom IX in Action
 
-In Axiom IX from Chapter 14, you learned that verification is a pipeline -- not a manual checklist that depends on willpower, but an automated sequence that runs every time you change code. Ruff is the first stage of that pipeline.
+In Axiom IX from Chapter 14, you learned that verification is a pipeline -- not a manual checklist you remember to follow, but an automated sequence that runs every time you change code. Ruff is the first stage of that pipeline.
 
 Consider what happens without ruff. James finishes writing code. He runs it. It works. He commits. He opens a pull request. Emma reads the code and notices an unused library on line 3. She leaves a comment. James fixes it and pushes again. Emma notices inconsistent spacing on line 17. Another comment. Another fix. Another push. Three rounds of review for problems that have nothing to do with logic or design.
 
@@ -192,7 +192,7 @@ The rule code is the key to understanding what ruff found. Each code starts with
 | **B** | flake8-bugbear | Common programming mistakes and design problems | B006, B905 |
 | **SIM** | flake8-simplify | Code that can be written more simply | SIM102, SIM110 |
 
-In the SmartNotes output, all four errors use **F** (Pyflakes) rules: three unused imports (F401) and one unused local value (F841). Ruff calls stored values "local variables" — you will learn what that means in later chapters. For now, just know these are not style preferences. They are actual problems -- dead code that clutters the file and may indicate bugs.
+In the SmartNotes output, all four errors use **F** (Pyflakes) rules: three unused imports (F401) and one unused stored value (F841). The message says "Local variable `temp_result`" — that is the Python term for a value you store inside a function. In earlier lessons, we called this a "stored value" or a "stored-but-forgotten value." "Local variable" is just the technical name for the same thing. You will learn the full definition in a later chapter. For now, the important point is that these are not style preferences. They are actual problems -- dead code that clutters the file and may indicate bugs.
 
 **Read and Predict**: The output says `[*]` next to the F401 errors but not next to the F841 error (unused variable). What do you think `[*]` means for the auto-fix behavior? Why might ruff be willing to auto-fix an unused import but not an unused variable?
 
@@ -296,6 +296,15 @@ uv run ruff format --check .
 ```
 
 The `--check` flag tells ruff to verify formatting without making changes. If any file needed reformatting, ruff would report it and exit with a non-zero exit code -- useful in a CI pipeline where you want the build to fail if someone forgot to format their code.
+
+:::info Checkpoint: Verify your progress
+Run these two commands in the SmartNotes directory:
+```bash
+uv run ruff check .        # should show 1 error (the unused temp_result)
+uv run ruff format --check . # should show "1 file already formatted"
+```
+If you see these results, ruff is configured and working. Your `main.py` is formatted correctly with one known lint issue remaining (F841) that requires your judgment.
+:::
 
 ---
 

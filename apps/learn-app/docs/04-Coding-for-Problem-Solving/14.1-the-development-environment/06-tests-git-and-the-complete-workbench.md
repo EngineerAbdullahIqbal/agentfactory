@@ -114,15 +114,15 @@ A clean run shows dots. Any `F` means a test found a problem.
 
 ---
 
-## From Axiom to Practice
+## Axioms VII and VIII in Action
 
-Two axioms complete the discipline stack.
+Two axioms complete the workbench.
 
 **Axiom VII -- Tests Are the Specification.** pytest does not check that code runs. The Python interpreter already does that. pytest checks that code does *what you specified it should do*. When James writes `assert format_title("hello world") == "Hello World"`, he is not writing a test. He is writing a specification: this piece of code, given this input, must produce this output. The `assert` keyword is the specification expressed as code.
 
 **Axiom VIII -- Version Control is Memory.** Git tracks every change to every file. Every `git commit` creates a permanent checkpoint. If James had committed his working `format_title` code before rewriting it, he could have recovered it in seconds with `git log` and `git diff`. Without Git, memory is human and fallible. With Git, memory is digital and permanent.
 
-Together, these axioms close the final gaps in the discipline stack. Ruff checks style. Pyright checks types. pytest checks behavior. Git preserves history. Four tools, four axioms, four automated protections that replace willpower with infrastructure.
+Together, these axioms close the final gaps in the workbench. Ruff checks style. Pyright checks types. pytest checks behavior. Git preserves history. Four tools, four axioms, four automated protections -- each one doing the job so you do not have to remember to do it yourself.
 
 ---
 
@@ -282,6 +282,23 @@ a1b2c3d Initial SmartNotes project with discipline stack
 
 One commit. One checkpoint. The project's memory has begun.
 
+:::info Checkpoint: Your SmartNotes project should now look like this
+```
+smartnotes/
+├── .git/               ← created by git init
+├── .gitignore
+├── .python-version
+├── .venv/
+├── README.md
+├── main.py             ← returns "Hello from smartnotes!"
+├── pyproject.toml      ← all tools configured
+├── tests/
+│   └── test_main.py    ← one passing test
+└── uv.lock
+```
+Run `git log --oneline` — you should see one commit. Run `uv run pytest` — you should see one passing test. If both are true, you are ready for the final step.
+:::
+
 ### Step 6: Run the Complete Pipeline
 
 This is the moment the entire chapter has been building toward. Five tools, five axioms, one command chain. Run ruff, pyright, and pytest in sequence -- each step must pass before the next one starts:
@@ -301,7 +318,7 @@ tests/test_main.py .                                             [100%]
 
 Three tools. Three green outputs. The `&&` operator ensures that if ruff finds a lint error, the pipeline stops -- pyright never runs, pytest never runs, and the problem is clear. If ruff passes but pyright finds a type error, the pipeline stops at pyright. Only when all three tools pass do you have a verified, clean project ready for a commit.
 
-This is Axiom IX in its purest form: verification as a pipeline, not a checklist you remember to run. The command does not require willpower. It runs the same way every time.
+This is Axiom IX in its purest form: verification as a pipeline, not a checklist you remember to run. The command runs the same way every time, regardless of whether you are tired, distracted, or in a rush.
 
 ---
 
@@ -328,7 +345,7 @@ The fourth is **"Manual testing only."** James checks that code works by running
 
 ## Try With AI
 
-Open your AI coding assistant. Try these three prompts to deepen your understanding of testing, version control, and the verification pipeline.
+Open your AI coding assistant. The first two prompts deepen your understanding of testing and the pipeline. The third prompt is different: you will ask AI to generate code, then verify it yourself using the workbench you just built.
 
 ### Prompt 1: Write a Failing Test and Explain the Output
 
@@ -365,19 +382,24 @@ in the wrong order wastes time or misses a bug.
 
 **What you're learning:** You are understanding why the pipeline is ordered from fast-and-cheap checks (linting) to slow-and-expensive checks (testing). The AI's explanation will show you that catching a formatting issue before running the full test suite saves time, and that the `&&` operator is doing the work of Axiom IX -- stopping the pipeline at the first failure so you fix the simplest problem first.
 
-### Prompt 3: Generate a .gitignore for a Python Project
+### Prompt 3: Generate Code, Then Verify It With the Workbench
+
+This is the most important prompt in this chapter. It connects the discipline stack directly to AI-assisted development.
 
 ```
-Generate a .gitignore file for a Python project that uses uv as its
-package manager. For each line in the file, add a comment explaining
-what it ignores and why that file or directory should not be tracked
-in version control.
-
-Include entries for: virtual environments, Python bytecode, IDE files,
-OS-specific files, and pytest cache directories.
+Write a Python function called `count_words` that takes a string
+and returns a dictionary mapping each word to how many times it
+appears. Include type annotations for strict pyright mode.
+Also write one pytest test for this function.
 ```
 
-**What you're learning:** You are understanding the purpose of `.gitignore` -- not just what it does, but *why* specific files should never enter version control. The AI's annotated explanation will show you that `.venv/`, `__pycache__/`, and `.pytest_cache/` are generated artifacts that can be recreated from source, while `pyproject.toml` and `uv.lock` are source files that must be tracked. This distinction -- generated vs source -- is fundamental to version control.
+**After the AI responds**, do not just read the code. **Run it through your workbench:**
+
+1. Paste the AI's function into `main.py` (replace the current contents)
+2. Paste the AI's test into `tests/test_main.py`
+3. Run the full pipeline: `uv run ruff check . && uv run pyright && uv run pytest`
+
+**What you're learning:** This is the entire thesis of this chapter in action. AI generates code fast. Your job is not to read every line hoping to spot problems -- your job is to run the tools. Did ruff find unused imports the AI left in? Did pyright catch a missing type annotation? Did pytest reveal that the function does not handle edge cases? The workbench catches what reading alone cannot. This is how professional developers work with AI: generate, then verify automatically.
 
 ---
 
@@ -391,7 +413,7 @@ OS-specific files, and pytest cache directories.
 
 4. **The verification pipeline runs tools in order: lint, type check, test.** The `&&` operator stops at the first failure. Fix the simplest problem first (style), then the next (types), then the deepest (behavior). This is Axiom IX -- verification as infrastructure.
 
-5. **The discipline stack is now complete.** Five tools -- uv, ruff, pyright, pytest, Git -- each enforcing a specific axiom. Together, they replace willpower with automated checks. Every chapter from here forward starts with this workbench.
+5. **Your workbench is now complete.** Five tools -- uv, ruff, pyright, pytest, Git -- each enforcing a specific axiom. Together, they automate what used to depend on memory and good intentions. Every chapter from here forward starts with this workbench.
 
 ---
 

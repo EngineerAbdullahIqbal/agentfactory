@@ -230,12 +230,12 @@ reasoning behind each connection.
 
 4. **The SmartNotes project is your running example for the entire course.** Starting in Lesson 2, you will build and configure this project step by step. Every tool you install, every configuration you add, and every command you run applies to SmartNotes.
 
-5. **Anti-patterns are predictable and preventable.** "Just pip install," skipping virtual environments, ignoring linters, and deferring tests are the four mistakes that the discipline stack eliminates by design, not by discipline.
+5. **Anti-patterns are predictable and preventable.** "Just pip install," skipping virtual environments, ignoring linters, and deferring tests are the four mistakes that the workbench eliminates by design, not by discipline.
 
 ---
 
 ## Looking Ahead
 
-You now understand why the toolchain comes first and what each tool in the discipline stack does. The next step is to install the first and most foundational tool: **uv**, the package manager that replaces pip, pyenv, poetry, and virtualenv with a single command.
+You now understand why the toolchain comes first and what each tool in the workbench does. The next step is to install the first and most foundational tool: **uv**, the package manager that replaces pip, pyenv, poetry, and virtualenv with a single command.
 
 In Lesson 2, James will almost install Python the old way -- and Emma will stop him.
