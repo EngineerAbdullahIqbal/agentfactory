@@ -357,15 +357,6 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
             <div className={styles.downloadMenu}>
               <button
                 className={styles.downloadOption}
-                onClick={() => {
-                  setShowDownloadMenu(false);
-                  setTimeout(() => window.print(), 50);
-                }}
-              >
-                Print as PDF
-              </button>
-              <button
-                className={styles.downloadOption}
                 onClick={handleDownloadCSV}
               >
                 Download CSV

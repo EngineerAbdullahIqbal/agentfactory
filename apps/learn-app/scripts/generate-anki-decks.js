@@ -18,6 +18,157 @@ const siteConfig = require("../../../libs/docusaurus/shared/siteConfig");
 const createAnkiExport =
   require("anki-apkg-export").default || require("anki-apkg-export");
 
+/* ------------------------------------------------------------------ */
+/*  Card styling for Anki                                             */
+/* ------------------------------------------------------------------ */
+
+const ANKI_CSS = `
+.card {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #1a1a2e;
+  background: #fafafa;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5em;
+}
+
+/* ---------- Front ---------- */
+.af-front {
+  text-align: center;
+}
+.af-front .af-question {
+  font-size: 1.15em;
+  font-weight: 500;
+}
+.af-front .af-badge {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.15em 0.7em;
+  border-radius: 12px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.af-badge--basic        { background: #e0f2e9; color: #1b7340; }
+.af-badge--intermediate { background: #e0ecf8; color: #1a5296; }
+.af-badge--advanced     { background: #fce8e6; color: #a8301a; }
+
+/* ---------- Back ---------- */
+.af-back .af-answer {
+  font-size: 1.05em;
+  text-align: left;
+}
+.af-back .af-why {
+  margin-top: 1.2em;
+  padding: 0.8em 1em;
+  background: #f0edff;
+  border-left: 3px solid #7c5cfc;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #3d2e7c;
+  text-align: left;
+}
+.af-back .af-why strong {
+  display: block;
+  margin-bottom: 0.2em;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5a45b0;
+}
+.af-back .af-source {
+  margin-top: 1.4em;
+  text-align: center;
+  font-size: 0.75em;
+  color: #888;
+}
+.af-back .af-source a {
+  color: #7c5cfc;
+  text-decoration: none;
+}
+
+/* ---------- Night mode ---------- */
+.nightMode .card,
+.night_mode .card {
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+.nightMode .af-badge--basic,
+.night_mode .af-badge--basic        { background: #1b3d2a; color: #7ee0a8; }
+.nightMode .af-badge--intermediate,
+.night_mode .af-badge--intermediate { background: #1a2d4a; color: #7eb3e0; }
+.nightMode .af-badge--advanced,
+.night_mode .af-badge--advanced     { background: #3d1a1a; color: #e09090; }
+.nightMode .af-back .af-why,
+.night_mode .af-back .af-why {
+  background: #2a2540;
+  border-left-color: #9b7fff;
+  color: #c8b8ff;
+}
+.nightMode .af-back .af-why strong,
+.night_mode .af-back .af-why strong { color: #b8a0ff; }
+.nightMode .af-back .af-source,
+.night_mode .af-back .af-source     { color: #666; }
+.nightMode .af-back .af-source a,
+.night_mode .af-back .af-source a   { color: #9b7fff; }
+`;
+
+const ANKI_QUESTION_FMT = `<div class="af-front">{{Front}}</div>`;
+const ANKI_ANSWER_FMT = [
+  `<div class="af-front">{{Front}}</div>`,
+  `<hr id="answer">`,
+  `<div class="af-back">{{Back}}</div>`,
+].join("\n");
+
+/* ------------------------------------------------------------------ */
+/*  Helpers                                                            */
+/* ------------------------------------------------------------------ */
+
+/** Escape HTML special characters */
+function esc(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+/** Convert \n in YAML strings to <br> for HTML rendering */
+function nl2br(str) {
+  return esc(str).replace(/\\n/g, "<br>");
+}
+
+/** Build styled HTML for the Front field */
+function buildFrontHtml(card) {
+  const diffClass = card.difficulty ? `af-badge--${card.difficulty}` : "";
+  const badge = card.difficulty
+    ? `<span class="af-badge ${diffClass}">${card.difficulty}</span>`
+    : "";
+  return `<div class="af-question">${nl2br(card.front)}</div>${badge}`;
+}
+
+/** Build styled HTML for the Back field */
+function buildBackHtml(card, sourceUrl) {
+  let html = `<div class="af-answer">${nl2br(card.back)}</div>`;
+
+  if (card.why) {
+    html += `<div class="af-why"><strong>Think deeper</strong>${nl2br(card.why)}</div>`;
+  }
+
+  if (sourceUrl) {
+    html += `<div class="af-source"><a href="${esc(sourceUrl)}">View lesson on Agent Factory</a></div>`;
+  }
+
+  return html;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Source URL builder (unchanged logic)                               */
+/* ------------------------------------------------------------------ */
+
 /**
  * Build source URL for a flashcard deck based on its co-located .md file.
  * @param {string} yamlPath - Absolute path to the .flashcards.yaml file
@@ -25,7 +176,6 @@ const createAnkiExport =
  * @returns {string} Full URL to the lesson page
  */
 function buildSourceUrl(yamlPath, docsDir) {
-  // thesis.flashcards.yaml -> thesis.md
   const dir = path.dirname(yamlPath);
   const stem = path.basename(yamlPath).replace(".flashcards.yaml", "");
   const mdPath = path.join(dir, `${stem}.md`);
@@ -33,7 +183,6 @@ function buildSourceUrl(yamlPath, docsDir) {
 
   let route = "";
 
-  // Check for frontmatter slug override
   const actualMdPath = fs.existsSync(mdPath)
     ? mdPath
     : fs.existsSync(mdxPath)
@@ -57,13 +206,11 @@ function buildSourceUrl(yamlPath, docsDir) {
   }
 
   if (!route) {
-    // Compute from file path
     const relPath = path.relative(docsDir, yamlPath);
     const relNoExt = relPath.replace(".flashcards.yaml", "");
     route = normalizeToDocId(relNoExt);
   }
 
-  // Compose full URL, preventing double slashes
   const base = siteConfig.baseUrl.endsWith("/")
     ? siteConfig.baseUrl
     : siteConfig.baseUrl + "/";
@@ -71,11 +218,14 @@ function buildSourceUrl(yamlPath, docsDir) {
   return `${siteConfig.url}${base}docs/${cleanRoute}`;
 }
 
+/* ------------------------------------------------------------------ */
+/*  Main                                                               */
+/* ------------------------------------------------------------------ */
+
 async function main() {
   const docsDir = path.resolve(__dirname, "../docs");
   const outputDir = path.resolve(__dirname, "../static/flashcards");
 
-  // Ensure output directory exists
   fs.mkdirSync(outputDir, { recursive: true });
 
   const decks = loadAllDecks(docsDir);
@@ -102,27 +252,29 @@ async function main() {
     }
     const { deck: meta, cards } = deck;
     const deckId = meta.id;
-    const apkg = createAnkiExport(meta.title);
+    const sourceUrl = buildSourceUrl(filePath, docsDir);
+
+    const apkg = createAnkiExport(meta.title, {
+      questionFormat: ANKI_QUESTION_FMT,
+      answerFormat: ANKI_ANSWER_FMT,
+      css: ANKI_CSS,
+    });
 
     for (const card of cards) {
-      let backHtml = card.back;
-      if (card.why) {
-        backHtml += `<br><br><strong>Why?</strong> ${card.why}`;
-      }
+      const frontHtml = buildFrontHtml(card);
+      const backHtml = buildBackHtml(card, sourceUrl);
 
-      const tags = card.tags || [];
+      const tags = [...(card.tags || [])];
       if (card.difficulty) {
         tags.push(`difficulty:${card.difficulty}`);
       }
 
-      apkg.addCard(card.front, backHtml, { tags });
+      apkg.addCard(frontHtml, backHtml, { tags });
     }
 
     const zip = await apkg.save();
     const apkgPath = path.join(outputDir, `${deckId}.apkg`);
     fs.writeFileSync(apkgPath, zip, "binary");
-
-    const sourceUrl = buildSourceUrl(filePath, docsDir);
 
     manifest.decks[deckId] = {
       apkgPath: `/flashcards/${deckId}.apkg`,
