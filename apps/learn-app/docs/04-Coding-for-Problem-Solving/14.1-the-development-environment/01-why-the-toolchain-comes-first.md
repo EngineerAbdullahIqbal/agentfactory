@@ -99,7 +99,7 @@ These tools are not optional recommendations. They are the infrastructure that m
 
 ---
 
-## From Axiom to Practice
+## The Axiom-Tool Connection
 
 Each tool in the discipline stack is the physical implementation of an axiom from Chapter 14. The axioms describe *what matters*. The tools enforce *that it happens*. James already understands the principles. Now he sees what turns those principles into daily practice.
 

@@ -76,6 +76,10 @@ Your `pyproject.toml` has seven sections. Each one controls a specific part of t
 | `git commit -m "message"` | Record a snapshot |
 | `git log --oneline` | View commit history |
 
+## Test Your Understanding
+
+Ready to check what you learned? Take the [Chapter 14.1 Quiz](./07-chapter-14-1-quiz.md) -- it covers all six lessons and gives you immediate feedback on each answer.
+
 ## What Comes Next
 
 In Chapter 14.2, you will put this workbench to use. James and Emma will start reading Python -- learning how to store values, label their types, and combine them into expressions. Every line of code you encounter will be checked by ruff, type-checked by pyright, and tested by pytest. The workbench is no longer something you are building. It is something you are using.

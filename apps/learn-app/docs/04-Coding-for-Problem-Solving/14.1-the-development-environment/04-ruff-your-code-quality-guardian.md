@@ -364,25 +364,21 @@ these two commands, and why does the order matter?
 
 **What you're learning:** The architectural distinction between finding problems (linting) and enforcing style (formatting). These are two separate concerns even though they are both about code quality. Understanding the difference lets you prioritize: linting errors might be real bugs; formatting changes are never bugs. Running them in the right order (check first, format second) means you fix logic problems before style problems.
 
-### Prompt 3: Build a Rule Selection Strategy
+### Prompt 3: Generate Code, Then Lint It
 
 ```
-My SmartNotes project has this ruff configuration in pyproject.toml:
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
-
-I want to understand what I am checking for and what I am missing.
-For each rule prefix in my selection:
-1. What category of problems does it catch?
-2. Give me one concrete example of code it would flag
-
-Then tell me about three rule prefixes NOT in my selection
-(for example: S, T20, N) and explain what they catch.
-Should I add them? What are the tradeoffs of enabling more rules?
+Write a Python function called `find_duplicates` that takes a list of
+strings and returns only the strings that appear more than once.
 ```
 
-**What you're learning:** How to treat linter configuration as a deliberate design decision. The rules you enable define what "code quality" means for your project. Too few rules and real problems slip through. Too many rules and the linter becomes noisy, causing developers to ignore it. Learning to evaluate rule categories and make informed selections is a skill that applies to every linter in every language.
+**After the AI responds**, do not just read the code. Paste the AI's function into `main.py` (replacing the current contents) and run:
+
+```bash
+uv run ruff check .
+uv run ruff format --check .
+```
+
+**What you're learning:** This is a preview of the central skill in this chapter: using tools to verify AI-generated code instead of reading every line. Did the AI include unused imports? Did it format consistently with your project's settings? You will not know by reading alone -- you will know by running the tools. If ruff finds issues, try `uv run ruff check --fix .` and `uv run ruff format .` to clean them up. This habit -- generate, then verify -- is what separates using AI from trusting AI blindly.
 
 ---
 

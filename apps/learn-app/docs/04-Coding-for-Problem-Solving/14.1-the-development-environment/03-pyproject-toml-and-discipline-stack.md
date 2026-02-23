@@ -160,6 +160,8 @@ This single command performs three operations simultaneously:
 
 This is the "three steps in one" model. With pip, you would need to run `pip install`, then manually update `requirements.txt`, then hope your colleague installs the same versions. With uv, the config file, the lockfile, and the virtual environment are always in sync. One command, three results, zero drift.
 
+**Quick Check**: If a teammate runs `uv sync` on their machine after you committed `pyproject.toml` and `uv.lock`, will they get the exact same package versions you have? Which of the two files guarantees this?
+
 ### Examining pyproject.toml After Installation
 
 Open `pyproject.toml` again. A new section has appeared:
