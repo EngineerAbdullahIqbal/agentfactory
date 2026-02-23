@@ -51,11 +51,14 @@ export default function ReviewSession({
   const totalCards = reviewQueue.length;
 
   const handleFlip = useCallback(() => {
-    setIsFlipped((prev) => !prev);
-    if (!isFlipped) {
-      setTimeout(() => ratingRef.current?.focus(), 100);
-    }
-  }, [isFlipped]);
+    setIsFlipped((prev) => {
+      const next = !prev;
+      if (next) {
+        setTimeout(() => ratingRef.current?.focus(), 100);
+      }
+      return next;
+    });
+  }, []);
 
   const handleRate = useCallback(
     (rating: Rating) => {

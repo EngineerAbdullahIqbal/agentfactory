@@ -106,6 +106,20 @@ describe("remark-flashcards", () => {
     );
   });
 
+  it("throws when deck is missing cards array", () => {
+    mockLoader.mockReturnValue({
+      filePath: "/docs/lesson.flashcards.yaml",
+      deck: { deck: { id: "d1" } },
+    });
+
+    const tree = makeTree([makeFCNode()]);
+    const plugin = createPlugin();
+
+    expect(() => plugin(tree, makeFile("/docs/lesson.md"))).toThrow(
+      /missing required "cards" array/,
+    );
+  });
+
   it("normalizes backslashes in file paths", () => {
     const deck = {
       deck: { id: "d1", title: "D", version: 1 },

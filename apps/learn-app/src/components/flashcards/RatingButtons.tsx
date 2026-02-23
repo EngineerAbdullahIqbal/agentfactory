@@ -26,12 +26,16 @@ export default function RatingButtons({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
       if (e.key === "1") {
         e.preventDefault();
-        handleRateClick(Rating.Again);
+        setSelected(Rating.Again);
+        setTimeout(() => onRate(Rating.Again), 10);
       } else if (e.key === "2") {
         e.preventDefault();
-        handleRateClick(Rating.Good);
+        setSelected(Rating.Good);
+        setTimeout(() => onRate(Rating.Good), 10);
       }
     };
     window.addEventListener("keydown", handleKeyDown);

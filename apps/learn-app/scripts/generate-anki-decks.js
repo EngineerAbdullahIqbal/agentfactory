@@ -8,12 +8,15 @@
 
 const path = require("path");
 const fs = require("fs");
-const { loadAllDecks } = require("../../../libs/docusaurus/shared/flashcardLoader");
+const {
+  loadAllDecks,
+} = require("../../../libs/docusaurus/shared/flashcardLoader");
 const normalizeToDocId = require("../../../libs/docusaurus/shared/normalizeToDocId");
 const siteConfig = require("../../../libs/docusaurus/shared/siteConfig");
 
 // anki-apkg-export uses default export via babel
-const createAnkiExport = require("anki-apkg-export").default || require("anki-apkg-export");
+const createAnkiExport =
+  require("anki-apkg-export").default || require("anki-apkg-export");
 
 /**
  * Build source URL for a flashcard deck based on its co-located .md file.
@@ -31,7 +34,11 @@ function buildSourceUrl(yamlPath, docsDir) {
   let route = "";
 
   // Check for frontmatter slug override
-  const actualMdPath = fs.existsSync(mdPath) ? mdPath : fs.existsSync(mdxPath) ? mdxPath : null;
+  const actualMdPath = fs.existsSync(mdPath)
+    ? mdPath
+    : fs.existsSync(mdxPath)
+      ? mdxPath
+      : null;
   if (actualMdPath) {
     try {
       const content = fs.readFileSync(actualMdPath, "utf-8");
@@ -57,7 +64,9 @@ function buildSourceUrl(yamlPath, docsDir) {
   }
 
   // Compose full URL, preventing double slashes
-  const base = siteConfig.baseUrl.endsWith("/") ? siteConfig.baseUrl : siteConfig.baseUrl + "/";
+  const base = siteConfig.baseUrl.endsWith("/")
+    ? siteConfig.baseUrl
+    : siteConfig.baseUrl + "/";
   const cleanRoute = route.replace(/^\/+/, "");
   return `${siteConfig.url}${base}docs/${cleanRoute}`;
 }
@@ -81,9 +90,14 @@ async function main() {
     decks: {},
   };
 
+  let skipped = 0;
+
   for (const { filePath, deck } of decks) {
     if (!deck?.deck?.id || !Array.isArray(deck?.cards)) {
-      console.error(`  Skipping ${filePath}: invalid deck structure (missing deck.id or cards array)`);
+      console.error(
+        `  Skipping ${filePath}: invalid deck structure (missing deck.id or cards array)`,
+      );
+      skipped++;
       continue;
     }
     const { deck: meta, cards } = deck;
@@ -124,6 +138,11 @@ async function main() {
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   console.log(`\nManifest written to ${manifestPath}`);
   console.log(`Generated ${decks.length} deck(s).`);
+
+  if (skipped > 0) {
+    console.error(`\n${skipped} deck(s) skipped due to invalid structure.`);
+    process.exit(1);
+  }
 }
 
 main().catch((err) => {

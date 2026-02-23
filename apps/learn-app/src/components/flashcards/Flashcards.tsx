@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import type { FlashcardsProps } from "./types";
 import { Rating } from "ts-fsrs";
 import FlashcardCard from "./FlashcardCard";
@@ -117,6 +123,13 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   }, [goToNext, goToPrev]);
 
   const [isExiting, setIsExiting] = useState(false);
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+    };
+  }, []);
 
   const handleRate = useCallback(
     (rating: Rating) => {
@@ -137,7 +150,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
       setIsExiting(true);
 
       // Wait for CSS animation to finish before advancing
-      setTimeout(() => {
+      exitTimerRef.current = setTimeout(() => {
         if (!isLastCard) {
           setCurrentIndex((prev) => prev + 1);
         }
@@ -154,36 +167,41 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     setIsFlipped(false);
   }, []);
 
-  const handleDownloadCSV = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowDownloadMenu(false);
+  const handleDownloadCSV = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setShowDownloadMenu(false);
 
-    if (!deck || !deck.cards) return;
+      if (!deck || !deck.cards) return;
 
-    // Create a CSV string with a header row
-    const headers = "Front,Back\n";
-    const csvContent = deck.cards.map(card => {
-      // Escape quotes by doubling them, and wrap fields containing commas/newlines in quotes
-      const escapeField = (text: string) => `"${text.replace(/"/g, '""')}"`;
-      return `${escapeField(card.front)},${escapeField(card.back)}`;
-    }).join("\n");
+      // Create a CSV string with a header row
+      const headers = "Front,Back\n";
+      const csvContent = deck.cards
+        .map((card) => {
+          // Escape quotes by doubling them, and wrap fields containing commas/newlines in quotes
+          const escapeField = (text: string) => `"${text.replace(/"/g, '""')}"`;
+          return `${escapeField(card.front)},${escapeField(card.back)}`;
+        })
+        .join("\n");
 
-    const fullCsv = headers + csvContent;
-    const blob = new Blob([fullCsv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
+      const fullCsv = headers + csvContent;
+      const blob = new Blob([fullCsv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
 
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = `flashcards-${deck.deck.id}.csv`;
-    document.body.appendChild(link);
-    link.click();
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `flashcards-${deck.deck.id}.csv`;
+      document.body.appendChild(link);
+      link.click();
 
-    // Cleanup
-    setTimeout(() => {
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    }, 100);
-  }, [deck]);
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 100);
+    },
+    [deck],
+  );
 
   if (!deck) {
     return (
@@ -196,8 +214,12 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   }
 
   // Derive counts from rated cards map (prevents double-counting on re-rating)
-  const missedCount = [...ratedCards.values()].filter((v) => v === "missed").length;
-  const gotItCount = [...ratedCards.values()].filter((v) => v === "gotit").length;
+  const missedCount = [...ratedCards.values()].filter(
+    (v) => v === "missed",
+  ).length;
+  const gotItCount = [...ratedCards.values()].filter(
+    (v) => v === "gotit",
+  ).length;
 
   // Session complete — every card rated and user has moved past the last card
   // (currentIndex stays on last card after rating, but isFlipped resets to false)
@@ -207,7 +229,9 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     const total = missedCount + gotItCount;
     const pct = total > 0 ? Math.round((gotItCount / total) * 100) : 0;
     return (
-      <div className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}>
+      <div
+        className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}
+      >
         <div className={styles.sessionComplete}>
           <div className={styles.sessionCompleteTitle}>Session Complete</div>
           <div className={styles.sessionStats}>
@@ -239,7 +263,9 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   const progress = totalCards > 0 ? ((currentIndex + 1) / totalCards) * 100 : 0;
 
   return (
-    <div className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}>
+    <div
+      className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}
+    >
       <div className={styles.browseLayout}>
         <button
           className={styles.navArrow}
@@ -255,7 +281,9 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
             {/* Fullscreen toggle moved to bottom utility row to prevent layout breakage on mobile */}
           </div>
           {currentCard && (
-            <div className={`${styles.cardAnimator} ${isExiting ? styles.exiting : ""}`}>
+            <div
+              className={`${styles.cardAnimator} ${isExiting ? styles.exiting : ""}`}
+            >
               <FlashcardCard
                 card={currentCard}
                 isFlipped={isFlipped}

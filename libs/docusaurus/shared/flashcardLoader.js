@@ -37,6 +37,7 @@ function loadAllDecks(docsDir) {
     for (const { filePath, error } of errors) {
       console.error(`  ${filePath}: ${error}`);
     }
+    throw new Error(`Failed to load ${errors.length} flashcard file(s)`);
   }
 
   return results;

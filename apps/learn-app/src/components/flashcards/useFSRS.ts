@@ -240,20 +240,14 @@ export function useFSRS(deck: FlashcardDeck | undefined): UseFSRSReturn {
   const deckCards = deck?.cards ?? [];
   const deckId = deck?.deck.id;
 
-  const deckCardIds = useMemo(
-    () => new Set(deckCards.map((c) => c.id)),
-    [deckCards],
-  );
-
   const cards = useMemo<CardWithSRS[]>(
     () =>
       deckCards
-        .filter((c) => deckCardIds.has(c.id))
         .map((c) => ({
           ...c,
           srsState: cardStates[c.id] ?? createEmptyCard(),
         })),
-    [deckCards, cardStates, deckCardIds],
+    [deckCards, cardStates],
   );
 
   const dueCards = useMemo<CardWithSRS[]>(() => {

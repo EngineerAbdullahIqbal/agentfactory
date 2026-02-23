@@ -13,6 +13,7 @@
     },
     "generate-anki": {
       "executor": "nx:run-commands",
+      "dependsOn": ["validate-flashcards"],
       "options": {
         "command": "node scripts/generate-anki-decks.js",
         "cwd": "apps/learn-app"

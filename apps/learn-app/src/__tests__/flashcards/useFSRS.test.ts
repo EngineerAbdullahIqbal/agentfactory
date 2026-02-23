@@ -346,4 +346,11 @@ describe("useFSRS", () => {
     expect(dueIds).toContain("c2");
     expect(dueIds).toContain("c3");
   });
+
+  it("returns empty state when deck is undefined", () => {
+    const { result } = renderHook(() => useFSRS(undefined));
+    expect(result.current.cards).toHaveLength(0);
+    expect(result.current.dueCards).toHaveLength(0);
+    expect(result.current.deckVersion).toBe(0);
+  });
 });
