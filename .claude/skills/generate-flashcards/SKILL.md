@@ -118,7 +118,19 @@ Write `<lesson-basename>.flashcards.yaml` adjacent to the lesson `.md` file.
 
 Follow exact schema in `references/YAML-SCHEMA.md`.
 
-### 7. Report
+### 7. Lesson Heading Convention
+
+When flashcards are added to a lesson `.md` file, the section heading must be:
+
+```markdown
+## Flashcards Study Aid
+
+<Flashcards />
+```
+
+**Not** `## Flashcards`. The canonical title is "Flashcards Study Aid".
+
+### 8. Report
 
 After generation, output:
 
@@ -177,16 +189,16 @@ Why fields: N/total (XX%)
 
 ## Common Pitfalls
 
-| Pitfall                      | Fix                                                 |
-| ---------------------------- | --------------------------------------------------- |
-| All definition cards         | Convert 60%+ to Application or Comparison           |
-| `why` repeats the front      | Push further — ask about mechanisms or implications |
-| Front contains answer        | Rewrite as scenario or reversal                     |
-| Cards clustered by type      | Interleave — alternate types throughout deck        |
-| Unescaped YAML special chars | Quote strings containing `: # " '`                  |
-| Hallucinated facts           | Cross-check every claim against source lesson       |
-| Cards too long               | Split into multiple atomic cards                    |
-| Back starts with "Yes" / "No" | Schema validation fails. Rephrase answer directly  |
+| Pitfall                       | Fix                                                 |
+| ----------------------------- | --------------------------------------------------- |
+| All definition cards          | Convert 60%+ to Application or Comparison           |
+| `why` repeats the front       | Push further — ask about mechanisms or implications |
+| Front contains answer         | Rewrite as scenario or reversal                     |
+| Cards clustered by type       | Interleave — alternate types throughout deck        |
+| Unescaped YAML special chars  | Quote strings containing `: # " '`                  |
+| Hallucinated facts            | Cross-check every claim against source lesson       |
+| Cards too long                | Split into multiple atomic cards                    |
+| Back starts with "Yes" / "No" | Schema validation fails. Rephrase answer directly   |
 
 ## Chapter Mode
 

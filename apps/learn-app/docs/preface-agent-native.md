@@ -1326,6 +1326,6 @@ source: "Section: The Agent Factory Vision"
 
 ---
 
-## Flashcards
+## Flashcards Study Aid
 
 <Flashcards />

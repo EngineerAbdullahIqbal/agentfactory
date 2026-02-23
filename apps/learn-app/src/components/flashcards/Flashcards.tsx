@@ -207,7 +207,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     return (
       <div className={styles.container}>
         <p className={styles.fallbackMessage}>
-          Flashcards are not available for this lesson yet.
+          Flashcards Study Aid is not available for this lesson yet.
         </p>
       </div>
     );

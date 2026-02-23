@@ -839,6 +839,6 @@ source: "Section: Why None of These Are Reasons to Stop — Bias and Discriminat
 
 ---
 
-## Flashcards
+## Flashcards Study Aid
 
 <Flashcards />
