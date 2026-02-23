@@ -466,11 +466,11 @@
   /* Lists look better left aligned even in a centered card */
 }
 
-.cardContent>*:first-child {
+.safeCenter>*:first-child {
   margin-top: 0;
 }
 
-.cardContent>*:last-child {
+.safeCenter>*:last-child {
   margin-bottom: 0;
 }
 
