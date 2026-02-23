@@ -213,6 +213,8 @@ The `F` replaces the dot. pytest shows you exactly which line failed, what the a
 
 Change the test back to the correct expected value before continuing.
 
+**Quick Check**: In the passing output, pytest showed a single `.` character. In the failing output, it showed `F`. If you had three tests — two passing and one failing — what characters would pytest display?
+
 ### Step 4: Initialize Git
 
 Your SmartNotes project already has a `.gitignore` file -- `uv init` created it in Lesson 2. That file tells Git to ignore the `.venv/` directory and `__pycache__/` folders, which should never be committed. The lockfile `uv.lock`, however, *should* be committed -- it ensures every developer and every CI server gets exactly the same dependency versions.

@@ -196,6 +196,10 @@ In the SmartNotes output, all four errors use **F** (Pyflakes) rules: three unus
 
 **Read and Predict**: The output says `[*]` next to the F401 errors but not next to the F841 error (unused variable). What do you think `[*]` means for the auto-fix behavior? Why might ruff be willing to auto-fix an unused import but not an unused variable?
 
+:::tip AI in Practice
+When you ask an AI assistant to write Python code, it often includes extra imports or unused stored values -- just like the example above. This is exactly why the discipline stack exists. Instead of reading every generated line searching for problems, you run `uv run ruff check .` and the tool finds them in milliseconds. The faster code gets generated, the more you need automated verification.
+:::
+
 ### Step 3: Auto-fix With --fix
 
 Ruff can fix many issues automatically. Run:

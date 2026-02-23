@@ -119,6 +119,8 @@ Emma nods. "The axioms tell you what matters. The tools make sure you cannot for
 
 This is the central insight of this chapter: **the tools are not overhead added on top of coding. They are the environment in which coding happens.** A project without them is not simpler -- it is unprotected.
 
+**Quick Check**: Look at the axiom-to-tool table above. If you removed pyright from the discipline stack, which axiom would lose its enforcement? What category of bugs would slip through undetected?
+
 ---
 
 ## The SmartNotes Project

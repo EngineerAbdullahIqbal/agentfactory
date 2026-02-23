@@ -289,6 +289,8 @@ Break down the three errors:
 
 Each error points to the exact line, the exact mismatch, and the exact rule that caught it. No guessing. No searching through error messages. The errors appear before the code runs.
 
+**Quick Check**: Two of the three errors use the rule `reportArgumentType` and one uses `reportAssignmentType`. Based on the rule names alone, what is the difference — is `reportArgumentType` about data being passed in, or data being returned?
+
 ### Step 4: Fix the Type Errors
 
 Replace the buggy calls with corrected versions:
