@@ -200,23 +200,24 @@ Keep the explanation practical -- I haven't used either approach yet.
 
 **What you're learning:** You are understanding the specific problem that uv solves -- not just "it is faster" but the architectural fragmentation it eliminates. The AI's comparison will preview concepts from Lesson 2 (installing uv) and Lesson 3 (pyproject.toml), giving you a map of what is ahead.
 
-### Prompt 3: Connect Tools to Axioms
+### Prompt 3: Map the Tools From Memory, Then Check With AI
+
+**Before prompting**, close this lesson and write down the five tools and the axiom each one enforces. Do not look at the table. Just write what you remember -- even if some are wrong or blank.
+
+Now open your AI assistant:
 
 ```
-I learned these programming axioms:
-- Axiom I: Shell as Orchestrator
-- Axiom V: Types Are Guardrails
-- Axiom VII: Tests Are the Specification
-- Axiom VIII: Version Control is Memory
-- Axiom IX: Verification is a Pipeline
+I am learning a five-tool Python discipline stack. From memory, here
+is my mapping of tools to axioms:
 
-Now I'm learning about five Python tools: uv, pyright, ruff, pytest,
-and Git. For each tool, explain which axiom it implements and WHY that
-connection exists. Don't just state the mapping -- explain the
-reasoning behind each connection.
+[paste your handwritten list here]
+
+Check my mapping. For any I got wrong, explain why the correct
+connection exists. For any I got right, give me one concrete example
+of how the tool enforces that axiom in daily development.
 ```
 
-**What you're learning:** You are practicing the skill of connecting abstract principles to concrete implementations -- the core intellectual move of this entire chapter. The AI's reasoning will either confirm or extend your understanding of the axiom-tool mapping from the lesson. If the AI's explanation differs from the table in this lesson, examine both and determine which framing is clearer.
+**What you're learning:** Retrieval practice -- the act of pulling information from memory before checking it -- is one of the strongest learning techniques. By writing your mapping first, you discover which connections stuck and which are fuzzy. The AI then fills gaps with targeted explanations rather than repeating everything equally. This is the difference between passive review and active learning.
 
 ---
 

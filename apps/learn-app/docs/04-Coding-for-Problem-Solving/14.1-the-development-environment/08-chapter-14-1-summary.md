@@ -76,6 +76,18 @@ Your `pyproject.toml` has seven sections. Each one controls a specific part of t
 | `git commit -m "message"` | Record a snapshot |
 | `git log --oneline` | View commit history |
 
+## Self-Check: Can You Do These Five Things?
+
+Before moving on, verify that you can do each of these without looking at the lessons:
+
+- [ ] **Create a project**: Run `uv init` and explain what each generated file does
+- [ ] **Install dev tools**: Run `uv add --dev` and find the tools in `pyproject.toml`
+- [ ] **Read tool output**: Run `uv run ruff check .` or `uv run pyright` and explain what each warning means using the rule code
+- [ ] **Run the full pipeline**: Execute `uv run ruff check . && uv run pyright && uv run pytest` and explain why the order matters and what `&&` does
+- [ ] **Commit with Git**: Run `git add` and `git commit` and explain why small, frequent commits matter
+
+If any of these feel uncertain, revisit the specific lesson before continuing. The workbench you built here is the foundation for every chapter ahead.
+
 ## Test Your Understanding
 
 Ready to check what you learned? Take the [Chapter 14.1 Quiz](./07-chapter-14-1-quiz.md) -- it covers all six lessons and gives you immediate feedback on each answer.
