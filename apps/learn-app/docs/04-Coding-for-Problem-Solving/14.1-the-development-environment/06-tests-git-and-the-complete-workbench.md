@@ -48,7 +48,7 @@ learning_objectives:
 
 cognitive_load:
   new_concepts: 6
-  assessment: "6 concepts (test function, assert statement, pytest output, git init, git add/commit, pipeline execution) within A2 limit of 7. This is the capstone lesson; 2 of 6 concepts (git add, pipeline) build directly on patterns from earlier lessons rather than introducing fully independent material."
+  assessment: "6 concepts (writing a test, the assert keyword, pytest output, git init, git add/commit, pipeline execution) within A2 limit of 7. This is the capstone lesson; 2 of 6 concepts (git add, pipeline) build directly on patterns from earlier lessons rather than introducing fully independent material."
 
 differentiation:
   extension_for_advanced: "Add a second test file with a deliberately failing test. Run the pipeline and observe where it stops. Then fix the test, re-run, and trace the full green path. Compare this experience to debugging without tests."
@@ -71,7 +71,7 @@ Emma finds him rewriting code he already wrote. "How long have you been doing th
 
 ## The Problem Without Tests and Version Control
 
-James's deleted function is a small loss. Twenty minutes, one function. But the pattern scales dangerously. A developer who works without tests has no specification to check against when behavior changes. A developer who works without version control has no checkpoint to return to when an edit goes wrong. Together, these gaps create a compounding risk: code that nobody can prove is correct, and no way to recover when it breaks.
+James's deleted code is a small loss. Twenty minutes, one piece of code. But the pattern scales dangerously. Someone who works without tests has no specification to check against when behavior changes. Someone who works without version control has no checkpoint to return to when an edit goes wrong. Together, these gaps create a compounding risk: code that nobody can prove is correct, and no way to recover when it breaks.
 
 | Missing Tool | What Happens | The Real Cost |
 |---|---|---|
@@ -85,7 +85,7 @@ These are not theoretical risks. They are the daily reality of any project that 
 
 ## pytest and Git Defined
 
-> **pytest** is a testing framework that discovers test files, runs test functions, and reports which ones pass and which ones fail. It uses plain Python `assert` statements -- no special syntax required. A passing test means your code does what the test says it should.
+> **pytest** is a testing tool that discovers test files, runs them, and reports which ones pass and which ones fail. It uses a plain Python keyword called `assert` -- no special setup required. A passing test means your code does what the test says it should.
 
 > **Git** is a version control system that records every change you make to your project. Each `git commit` is a snapshot -- a checkpoint you can return to at any time. Git does not prevent mistakes. It makes them reversible.
 
@@ -95,8 +95,8 @@ pytest finds tests automatically using naming conventions:
 
 | Element | Convention | Example |
 |---|---|---|
-| Test files | `test_*.py` or `*_test.py` | `test_main.py` |
-| Test functions | `def test_*():` | `def test_greet():` |
+| Test files | Start with `test_` or end with `_test` | `test_main.py` |
+| Test names | Start with `test_` inside the file | `def test_greet():` |
 | Test directory | `tests/` (configured in pyproject.toml) | `tests/test_main.py` |
 
 ### pytest Output Characters
@@ -118,9 +118,9 @@ A clean run shows dots. Any `F` means a test found a problem.
 
 Two axioms complete the discipline stack.
 
-**Axiom VII -- Tests Are the Specification.** pytest does not check that code runs. The Python interpreter already does that. pytest checks that code does *what you specified it should do*. When James writes `assert format_title("hello world") == "Hello World"`, he is not writing a test. He is writing a specification: this function, given this input, must produce this output. The `assert` statement is the specification expressed as code.
+**Axiom VII -- Tests Are the Specification.** pytest does not check that code runs. The Python interpreter already does that. pytest checks that code does *what you specified it should do*. When James writes `assert format_title("hello world") == "Hello World"`, he is not writing a test. He is writing a specification: this piece of code, given this input, must produce this output. The `assert` keyword is the specification expressed as code.
 
-**Axiom VIII -- Version Control is Memory.** Git tracks every change to every file. Every `git commit` creates a permanent checkpoint. If James had committed his working `format_title` function before rewriting it, he could have recovered it in seconds with `git log` and `git diff`. Without Git, memory is human and fallible. With Git, memory is digital and permanent.
+**Axiom VIII -- Version Control is Memory.** Git tracks every change to every file. Every `git commit` creates a permanent checkpoint. If James had committed his working `format_title` code before rewriting it, he could have recovered it in seconds with `git log` and `git diff`. Without Git, memory is human and fallible. With Git, memory is digital and permanent.
 
 Together, these axioms close the final gaps in the discipline stack. Ruff checks style. Pyright checks types. pytest checks behavior. Git preserves history. Four tools, four axioms, four automated protections that replace willpower with infrastructure.
 
@@ -130,9 +130,13 @@ Together, these axioms close the final gaps in the discipline stack. Ruff checks
 
 ### Step 1: Write a Test File
 
-Your SmartNotes project has a `main.py` with a `main` function. You need a place for tests. Create a `tests` directory and a test file inside it.
+Your SmartNotes project has a `main.py` file. You need a place for tests. Create a `tests` directory and a test file inside it.
 
 Create the file `tests/test_main.py` with this content:
+
+:::note You do not need to understand this code yet
+This code uses Python features -- `def`, `import`, `assert`, type labels, and more -- that you will learn in later chapters. Right now, the goal is not to read the code. The goal is to see what pytest does with it. Just type the code exactly as shown, run the commands below, and focus on the tool's output.
+:::
 
 ```python static
 # tests/test_main.py
@@ -145,7 +149,7 @@ def test_main_returns_greeting() -> None:
     assert result == "Hello from smartnotes!"
 ```
 
-Before this test can work, the `main` function needs to *return* a string instead of printing it. Update `main.py`:
+Before this test can work, the `main` piece of code needs to *return* a string instead of printing it. Update `main.py`:
 
 ```python static
 # main.py
@@ -157,7 +161,7 @@ if __name__ == "__main__":
     print(main())
 ```
 
-Two things to notice about the test file. First, `assert` is a plain Python keyword -- pytest does not require special assertion methods or test classes. `assert result == "Hello from smartnotes!"` means: if this condition is false, the test fails. Second, the function name starts with `test_` and the file name starts with `test_`. These naming conventions are how pytest discovers what to run. No configuration needed beyond what is already in your `pyproject.toml`.
+Two things to notice about the test file. First, `assert` is a plain Python keyword -- pytest does not need any special setup. `assert result == "Hello from smartnotes!"` means: if this condition is false, the test fails. Second, the name starts with `test_` and the file name starts with `test_`. These naming conventions are how pytest discovers what to run. No configuration needed beyond what is already in your `pyproject.toml`.
 
 ### Step 2: Run pytest
 
@@ -205,7 +209,7 @@ E       AssertionError: assert 'Hello from smartnotes!' == 'Wrong value on purpo
 ========================= 1 failed in 0.15s ==========================
 ```
 
-The `F` replaces the dot. pytest shows you exactly which line failed, what the actual value was, and what the expected value was. This is the power of `assert` -- when it fails, pytest generates a clear diagnostic automatically.
+The `F` replaces the dot. pytest shows you exactly which line failed, what the actual value was, and what the expected value was. When `assert` fails, pytest generates a clear message automatically telling you what went wrong.
 
 Change the test back to the correct expected value before continuing.
 
