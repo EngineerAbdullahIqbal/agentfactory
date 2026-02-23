@@ -277,9 +277,6 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
         </button>
 
         <div className={`${styles.cardArea} ${styles.atmosphericGlow}`}>
-          <div className={styles.cardHeaderControls}>
-            {/* Fullscreen toggle moved to bottom utility row to prevent layout breakage on mobile */}
-          </div>
           {currentCard && (
             <div
               className={`${styles.cardAnimator} ${isExiting ? styles.exiting : ""}`}
