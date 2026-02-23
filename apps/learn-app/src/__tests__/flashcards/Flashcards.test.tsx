@@ -110,34 +110,9 @@ describe("Flashcards", () => {
     ).toBeInTheDocument();
   });
 
-  it("prev/next changes card", async () => {
-    render(<Flashcards cards={mockDeck} />);
-
-    expect(screen.getByText("1 / 3 cards")).toBeInTheDocument();
-
-    const nextBtn = screen.getByLabelText("Next card");
-    await userEvent.click(nextBtn);
-    expect(screen.getByText("2 / 3 cards")).toBeInTheDocument();
-
-    const prevBtn = screen.getByLabelText("Previous card");
-    await userEvent.click(prevBtn);
-    expect(screen.getByText("1 / 3 cards")).toBeInTheDocument();
-  });
-
-  it("Space flips card, then Missed It / Got It appear", async () => {
-    render(<Flashcards cards={mockDeck} />);
-
-    // Before flip — no rating buttons
-    expect(screen.queryByText("Missed It")).not.toBeInTheDocument();
-
-    await userEvent.keyboard(" ");
-
-    // After flip — rating buttons visible
-    expect(screen.getByText("Missed It")).toBeInTheDocument();
-    expect(screen.getByText("Got It")).toBeInTheDocument();
-  });
-
-  it("keyboard arrows navigate between cards", async () => {
+  it("prev/next changes card via keyboard", async () => {
+    // Nav buttons were replaced by Tracking Pillars.
+    // Navigation is now primarily keyboard driven or via swipe (in real devices).
     render(<Flashcards cards={mockDeck} />);
 
     expect(screen.getByText("1 / 3 cards")).toBeInTheDocument();
@@ -146,6 +121,31 @@ describe("Flashcards", () => {
     expect(screen.getByText("2 / 3 cards")).toBeInTheDocument();
 
     await userEvent.keyboard("{ArrowLeft}");
+    expect(screen.getByText("1 / 3 cards")).toBeInTheDocument();
+  });
+
+  it("Space flips card, then Missed It / Got It appear", async () => {
+    render(<Flashcards cards={mockDeck} />);
+
+    // Before flip — no rating buttons
+    expect(screen.queryByRole("button", { name: "Missed it" })).not.toBeInTheDocument();
+
+    await userEvent.keyboard(" ");
+
+    // After flip — rating buttons visible
+    expect(screen.getByRole("button", { name: "Missed it" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Got it" })).toBeInTheDocument();
+  });
+
+  it("keyboard arrows navigate between cards", async () => {
+    render(<Flashcards cards={mockDeck} />);
+
+    expect(screen.getByText("1 / 3 cards")).toBeInTheDocument();
+
+    await userEvent.keyboard("{ArrowDown}");
+    expect(screen.getByText("2 / 3 cards")).toBeInTheDocument();
+
+    await userEvent.keyboard("{ArrowUp}");
     expect(screen.getByText("1 / 3 cards")).toBeInTheDocument();
   });
 });

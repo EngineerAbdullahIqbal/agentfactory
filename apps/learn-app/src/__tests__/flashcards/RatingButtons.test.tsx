@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Rating } from "ts-fsrs";
 import RatingButtons from "@/components/flashcards/RatingButtons";
@@ -22,10 +22,14 @@ describe("RatingButtons", () => {
     );
 
     await userEvent.click(screen.getByText("Got It"));
-    expect(onRate).toHaveBeenCalledWith(Rating.Good);
+    await waitFor(() => {
+      expect(onRate).toHaveBeenCalledWith(Rating.Good);
+    });
 
     await userEvent.click(screen.getByText("Missed It"));
-    expect(onRate).toHaveBeenCalledWith(Rating.Again);
+    await waitFor(() => {
+      expect(onRate).toHaveBeenCalledWith(Rating.Again);
+    });
   });
 
   it("keyboard 1 triggers Missed It, 2 triggers Got It", async () => {
@@ -35,10 +39,14 @@ describe("RatingButtons", () => {
     );
 
     await userEvent.keyboard("1");
-    expect(onRate).toHaveBeenCalledWith(Rating.Again);
+    await waitFor(() => {
+      expect(onRate).toHaveBeenCalledWith(Rating.Again);
+    });
 
     await userEvent.keyboard("2");
-    expect(onRate).toHaveBeenCalledWith(Rating.Good);
+    await waitFor(() => {
+      expect(onRate).toHaveBeenCalledWith(Rating.Good);
+    });
   });
 
   it("displays counts from props", () => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Rating } from "ts-fsrs";
 import styles from "./Flashcards.module.css";
 
@@ -15,14 +15,23 @@ export default function RatingButtons({
   gotItCount,
   containerRef,
 }: RatingButtonsProps) {
+  const [selected, setSelected] = useState<Rating | null>(null);
+
+  const handleRateClick = (rating: Rating) => {
+    setSelected(rating);
+    // Give the React render cycle 1 tick to apply the CSS class before calling onRate 
+    // (which triggers the 250ms parent fade-out).
+    setTimeout(() => onRate(rating), 10);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "1") {
         e.preventDefault();
-        onRate(Rating.Again);
+        handleRateClick(Rating.Again);
       } else if (e.key === "2") {
         e.preventDefault();
-        onRate(Rating.Good);
+        handleRateClick(Rating.Good);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -37,22 +46,22 @@ export default function RatingButtons({
       ref={containerRef}
       tabIndex={-1}
     >
+      <span className={`${styles.trackerCount} ${styles.trackerMissed}`}>{missedCount}</span>
       <button
-        className={`${styles.ratingButton} ${styles.ratingMissed}`}
-        onClick={() => onRate(Rating.Again)}
+        className={`${styles.ratingButton} ${styles.ratingMissed} ${selected === Rating.Again ? styles.selected : ""}`}
+        onClick={() => handleRateClick(Rating.Again)}
         aria-label="Missed it"
       >
-        <span className={styles.ratingCount}>{missedCount}</span>
         Missed It
       </button>
       <button
-        className={`${styles.ratingButton} ${styles.ratingGotIt}`}
-        onClick={() => onRate(Rating.Good)}
+        className={`${styles.ratingButton} ${styles.ratingGotIt} ${selected === Rating.Good ? styles.selected : ""}`}
+        onClick={() => handleRateClick(Rating.Good)}
         aria-label="Got it"
       >
-        <span className={styles.ratingCount}>{gotItCount}</span>
         Got It
       </button>
+      <span className={`${styles.trackerCount} ${styles.trackerGotIt}`}>{gotItCount}</span>
     </div>
   );
 }

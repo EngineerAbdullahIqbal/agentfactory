@@ -116,6 +116,8 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goToNext, goToPrev]);
 
+  const [isExiting, setIsExiting] = useState(false);
+
   const handleRate = useCallback(
     (rating: Rating) => {
       if (!deck) return;
@@ -131,11 +133,17 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
         return next;
       });
 
-      // Advance to next card
-      if (!isLastCard) {
-        setCurrentIndex((prev) => prev + 1);
-      }
-      setIsFlipped(false);
+      // Trigger exit animation
+      setIsExiting(true);
+
+      // Wait for CSS animation to finish before advancing
+      setTimeout(() => {
+        if (!isLastCard) {
+          setCurrentIndex((prev) => prev + 1);
+        }
+        setIsFlipped(false);
+        setIsExiting(false);
+      }, 250);
     },
     [deck, shuffledIndices, currentIndex, isLastCard, rateCard],
   );
@@ -145,6 +153,37 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     setCurrentIndex(0);
     setIsFlipped(false);
   }, []);
+
+  const handleDownloadCSV = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowDownloadMenu(false);
+
+    if (!deck || !deck.cards) return;
+
+    // Create a CSV string with a header row
+    const headers = "Front,Back\n";
+    const csvContent = deck.cards.map(card => {
+      // Escape quotes by doubling them, and wrap fields containing commas/newlines in quotes
+      const escapeField = (text: string) => `"${text.replace(/"/g, '""')}"`;
+      return `${escapeField(card.front)},${escapeField(card.back)}`;
+    }).join("\n");
+
+    const fullCsv = headers + csvContent;
+    const blob = new Blob([fullCsv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `flashcards-${deck.deck.id}.csv`;
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }, 100);
+  }, [deck]);
 
   if (!deck) {
     return (
@@ -213,26 +252,18 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
 
         <div className={`${styles.cardArea} ${styles.atmosphericGlow}`}>
           <div className={styles.cardHeaderControls}>
-            <button
-              className={styles.fullscreenToggle}
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsFullscreen(prev => !prev);
-              }}
-              title={isFullscreen ? "Exit Full Screen" : "Full Screen"}
-              aria-label={isFullscreen ? "Exit Full Screen" : "Full Screen"}
-            >
-              {isFullscreen ? "\u21F2" : "\u2922"}
-            </button>
+            {/* Fullscreen toggle moved to bottom utility row to prevent layout breakage on mobile */}
           </div>
           {currentCard && (
-            <FlashcardCard
-              card={currentCard}
-              isFlipped={isFlipped}
-              onFlip={() => setIsFlipped((prev) => !prev)}
-              cardNumber={currentIndex + 1}
-              totalCards={totalCards}
-            />
+            <div className={`${styles.cardAnimator} ${isExiting ? styles.exiting : ""}`}>
+              <FlashcardCard
+                card={currentCard}
+                isFlipped={isFlipped}
+                onFlip={() => !isExiting && setIsFlipped((prev) => !prev)}
+                cardNumber={currentIndex + 1}
+                totalCards={totalCards}
+              />
+            </div>
           )}
         </div>
 
@@ -269,6 +300,17 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
       <div className={styles.utilityRow}>
         <button
           className={styles.utilityButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsFullscreen((prev) => !prev);
+          }}
+          title={isFullscreen ? "Exit Full Screen" : "Full Screen"}
+          aria-label={isFullscreen ? "Exit Full Screen" : "Full Screen"}
+        >
+          {isFullscreen ? "\u21F2 Exit Fullscreen" : "\u2922 Fullscreen"}
+        </button>
+        <button
+          className={styles.utilityButton}
           onClick={handleShuffle}
           aria-label="Shuffle cards"
         >
@@ -291,11 +333,17 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
               <button
                 className={styles.downloadOption}
                 onClick={() => {
-                  window.print();
                   setShowDownloadMenu(false);
+                  setTimeout(() => window.print(), 50);
                 }}
               >
                 Print as PDF
+              </button>
+              <button
+                className={styles.downloadOption}
+                onClick={handleDownloadCSV}
+              >
+                Download CSV
               </button>
               {ankiUrl && (
                 <a

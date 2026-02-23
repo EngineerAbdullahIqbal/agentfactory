@@ -80,8 +80,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 3rem 2rem 2rem 2rem;
+  /* Add extra top padding globally so the glow doesn't clip */
   margin: 0;
+  overflow-y: auto;
+  /* Allow scrolling if screen is too short */
 }
 
 [data-theme="dark"] .fullscreen {
@@ -227,6 +230,7 @@
 .cardArea {
   flex: 1;
   min-width: 0;
+  width: 100%;
 }
 
 /* ===== Progress bar ===== */
@@ -351,40 +355,49 @@
   cursor: pointer;
 }
 
-.card:hover {
+.card.exiting {
+  animation: slideOutCard 0.25s forwards cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+@keyframes slideOutCard {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
+.card:hover:not(.exiting) {
   transform: translateY(-4px) scale(1.02);
 }
 
-.card.flipped {
+.card.flipped:not(.exiting) {
   transform: rotateY(180deg) scale(1);
 }
 
 .cardFace {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   backface-visibility: hidden;
-  padding: 2.5rem;
+  background: var(--ifm-background-surface-color, #fff);
   border: 1px solid var(--ifm-color-emphasis-200);
-  border-radius: 24px;
-  background:
-    radial-gradient(120% 120% at 50% -20%, rgba(255, 255, 255, 1) 0%, var(--ifm-background-surface-color, #fff) 100%);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.8),
-    0 8px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 32px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+  /* elevated pop */
+  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   overflow: hidden;
-  /* Absolute hint stays at bottom, content scrolls independently */
-}
-
-/* Bulletproof vertical centering that doesn't clip scrolling overflow */
-.cardFace::before,
-.cardFace::after {
-  content: '';
-  flex: 1 1 auto;
-  min-height: 1rem;
 }
 
 [data-theme="dark"] .cardFace {
@@ -406,19 +419,21 @@
 }
 
 .cardContent {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  line-height: 1.5;
-  color: var(--ifm-font-color-base);
+  color: var(--ifm-color-emphasis-800);
+  line-height: 1.6;
   width: 100%;
   max-width: 100%;
-  padding: 0 1rem;
-  box-sizing: border-box;
   word-wrap: break-word;
-  overflow-wrap: break-word;
-
-  flex: 0 1 auto;
   overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: auto 0;
+  /* Safe centering: centers when short, top-aligns when tall */
+  box-sizing: border-box;
+  overflow-wrap: break-word;
   scrollbar-width: none;
   /* Firefox */
 }
@@ -430,6 +445,23 @@
 
 .cardContent p {
   margin: 0;
+  text-align: center;
+}
+
+.cardContent ol,
+.cardContent ul {
+  margin: 0;
+  padding-left: 1.5rem;
+  text-align: left;
+  /* Lists look better left aligned even in a centered card */
+}
+
+.cardContent>*:first-child {
+  margin-top: 0;
+}
+
+.cardContent>*:last-child {
+  margin-bottom: 0;
 }
 
 /* "See answer" hint */
@@ -538,22 +570,31 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.ratingCount {
+.trackerCount {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ifm-color-emphasis-100);
-  color: var(--ifm-font-color-base);
-  border-radius: 99px;
-  padding: 0.15rem 0.6rem;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  min-width: 24px;
-  transition: background 0.2s;
+  width: 24px;
 }
 
-[data-theme="dark"] .ratingCount {
-  background: rgba(255, 255, 255, 0.1);
+.trackerMissed {
+  color: #ef4444;
+  /* red */
+}
+
+.trackerGotIt {
+  color: #10b981;
+  /* green */
+}
+
+[data-theme="dark"] .trackerMissed {
+  color: #f87171;
+}
+
+[data-theme="dark"] .trackerGotIt {
+  color: #34d399;
 }
 
 /* Hover glow effects for buttons */
@@ -572,6 +613,45 @@
 [data-theme="dark"] .ratingMissed:hover {
   border-color: rgba(248, 113, 113, 0.6);
   box-shadow: 0 4px 20px rgba(248, 113, 113, 0.2);
+}
+
+/* Selected color fill states */
+.ratingMissed.selected {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);
+}
+
+.ratingMissed.selected .trackerCount {
+  background: white;
+  color: #ef4444;
+}
+
+.ratingGotIt.selected {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+}
+
+.ratingGotIt.selected .trackerCount {
+  background: white;
+  color: #10b981;
+}
+
+[data-theme="dark"] .ratingMissed.selected {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+[data-theme="dark"] .ratingGotIt.selected {
+  background: #10b981;
+  color: white;
+  border-color: #10b981;
 }
 
 [data-theme="dark"] .ratingGotIt:hover {
@@ -803,18 +883,32 @@
   }
 
   .fullscreen {
-    padding: 0.5rem;
+    padding: 2rem 1rem 1rem 1rem;
+    /* Extra top padding so it doesn't hit the notch/status bar */
+    justify-content: flex-start;
+    /* Push down instead of perfectly centering to favor top spacing */
+    overflow-y: auto;
   }
 
+  /* Stack card above arrows */
   .browseLayout {
-    gap: 0.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  /* Force card area to take full width of mobile screen, displacing arrows to next row */
+  .cardArea {
+    flex: 0 0 100%;
+    order: -1;
+    /* First visually (above arrows) */
   }
 
   .navArrow {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    font-size: 1.15rem;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 1.25rem;
   }
 
   .cardContent {
@@ -849,5 +943,49 @@
   .utilityRow {
     flex-wrap: wrap;
     gap: 1rem;
+  }
+}
+
+/* ===== Print Styles (For PDF Download) ===== */
+@media print {
+
+  /* Hide all Docusaurus navigation and sidebars */
+  nav,
+  aside,
+  footer,
+  .theme-doc-version-banner,
+  .theme-doc-content-header,
+  .doc-page-actions,
+  .pagination-nav,
+  .theme-doc-footer {
+    display: none !important;
+  }
+
+  /* Hide flashcard UI controls */
+  .utilityRow,
+  .navArrow,
+  .progressRow,
+  .ratingGroup,
+  .cardHeaderControls,
+  .copyButton,
+  .seeAnswerHint {
+    display: none !important;
+  }
+
+  /* Expand the card context to fit the printed page */
+  .container {
+    padding: 0 !important;
+    background: transparent !important;
+  }
+
+  .cardFace {
+    position: static !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    border-radius: 8px !important;
+    padding: 2rem !important;
+    background: #fff !important;
+    min-height: auto !important;
+    page-break-inside: avoid;
   }
 }

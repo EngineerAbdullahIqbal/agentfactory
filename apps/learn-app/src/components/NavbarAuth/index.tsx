@@ -119,7 +119,7 @@ export function NavbarAuth() {
       <div className="flex items-center gap-2">
         <Link
           to="/leaderboard"
-          className="flex items-center justify-center h-9 w-9 sm:w-auto sm:gap-1.5 sm:px-2.5 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded no-underline"
+          className="hidden sm:flex items-center justify-center h-9 w-auto gap-1.5 px-2.5 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded no-underline"
           title="Leaderboard"
           aria-label="Leaderboard"
         >
@@ -259,7 +259,7 @@ export function NavbarAuth() {
     <div className="flex items-center gap-2">
       <Link
         to="/leaderboard"
-        className="flex items-center justify-center h-9 w-9 sm:w-auto sm:gap-1.5 sm:px-2.5 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded no-underline"
+        className="hidden sm:flex items-center justify-center h-9 w-auto gap-1.5 px-2.5 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded no-underline"
         title="Leaderboard"
         aria-label="Leaderboard"
       >

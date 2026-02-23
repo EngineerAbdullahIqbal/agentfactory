@@ -80,7 +80,7 @@ describe("ReviewSession", () => {
     // Rate the card
     await userEvent.click(screen.getByText("Got It"));
 
-    expect(screen.getByText("Session Complete")).toBeInTheDocument();
+    expect(await screen.findByText("Session Complete")).toBeInTheDocument();
     expect(screen.getByText("1 got it")).toBeInTheDocument();
     expect(screen.getByText("Back to Deck")).toBeInTheDocument();
   });
@@ -105,6 +105,6 @@ describe("ReviewSession", () => {
     // Rate
     await userEvent.click(screen.getByText("Got It"));
 
-    expect(screen.getByText("2 / 2 cards")).toBeInTheDocument();
+    expect(await screen.findByText("2 / 2 cards")).toBeInTheDocument();
   });
 });

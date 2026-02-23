@@ -872,7 +872,7 @@ article {
    FLOATING ACTION BUTTONS — Bottom-right corner positioning
    ============================================================================ */
 
-/* Floating actions container - fixed to bottom-right */
+/* Floating actions container - fixed to bottom-right (Desktop) */
 .floating-actions {
   position: fixed !important;
   bottom: 2rem !important;
@@ -881,6 +881,22 @@ article {
   flex-direction: column !important;
   gap: 1rem !important;
   z-index: 100 !important;
+}
+
+/* Floating actions container - Bottom-inline (Mobile) */
+@media screen and (max-width: 768px) {
+  .floating-actions {
+    position: static !important;
+    /* Disables floating entirely */
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 2rem !important;
+    margin-bottom: 0.5rem !important;
+    width: 100% !important;
+  }
 }
 
 /* Shared button styles */
@@ -896,6 +912,19 @@ article {
   cursor: pointer !important;
   transition: all 150ms ease-out !important;
   box-shadow: 0 2px 8px oklch(0 0 0 / 0.1) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .floating-actions button {
+    /* Since we are an inline row, not a pill, we keep shadows and size */
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .floating-actions button svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
 }
 
 .floating-actions button:hover {
@@ -966,6 +995,17 @@ article {
 .study-mode-float:hover::after {
   opacity: 1;
   visibility: visible;
+}
+
+@media screen and (max-width: 768px) {
+
+  /* Hide tooltips on mobile since they would overflow or get clipped */
+  .study-mode-float::after,
+  .ask-mode-float::after,
+  .teaching-guide-float::after,
+  .speaker-float::after {
+    display: none !important;
+  }
 }
 
 .study-mode-float:hover {
@@ -1669,12 +1709,14 @@ article.voice-reading-active::before {
    ============================================================================ */
 
 @media screen and (max-width: 768px) {
+
   /* Bug 4 fix: Mobile-specific keyframes to prevent horizontal jump */
   @keyframes slideUpMobile {
     from {
       opacity: 0;
       transform: translateY(12px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -2936,6 +2978,7 @@ body.practice-split-active article {
   color: #565f89;
   font-size: 0.85rem;
 }
+
 .practice-terminal-loading::before {
   content: '';
   width: 14px;
@@ -2947,8 +2990,15 @@ body.practice-split-active article {
 }
 
 @keyframes practice-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
 }
 
 /* ── Reset button (mirrors .practice-terminal-close) ── */
@@ -2963,14 +3013,17 @@ body.practice-split-active article {
   align-items: center;
   transition: color 0.15s, background 0.15s;
 }
+
 .practice-terminal-reset:hover {
   color: #c0caf5;
   background: rgba(255, 255, 255, 0.08);
 }
+
 .practice-terminal-reset:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
 .practice-terminal-reset:disabled svg {
   animation: doc-actions-spin 1s linear infinite;
 }
@@ -2987,17 +3040,20 @@ body.practice-split-active article {
   color: #a9b1d6;
   gap: 0.25rem;
 }
+
 .practice-setup-card h3 {
   color: #c0caf5;
   margin: 0 0 0.25rem;
   font-size: 1rem;
   font-weight: 600;
 }
+
 .practice-setup-card p {
   color: #565f89;
   font-size: 0.8rem;
   margin: 0 0 0.75rem;
 }
+
 .practice-setup-cmd {
   display: flex;
   align-items: center;
@@ -3014,14 +3070,17 @@ body.practice-split-active article {
   width: 100%;
   max-width: 320px;
 }
+
 .practice-setup-cmd:hover {
   background: rgba(255, 255, 255, 0.08);
 }
+
 .practice-setup-copy {
   font-size: 0.65rem;
   color: #565f89;
   white-space: nowrap;
 }
+
 .practice-setup-waiting {
   display: flex;
   align-items: center;
@@ -3030,6 +3089,7 @@ body.practice-split-active article {
   color: #565f89;
   margin-top: 0.75rem;
 }
+
 .practice-setup-dot {
   width: 6px;
   height: 6px;
@@ -3037,6 +3097,7 @@ body.practice-split-active article {
   background: #e0af68;
   animation: practice-pulse 1.5s infinite;
 }
+
 .practice-setup-expand {
   background: none;
   border: none;
@@ -3047,9 +3108,11 @@ body.practice-split-active article {
   padding: 0.25rem 0.5rem;
   transition: color 0.15s;
 }
+
 .practice-setup-expand:hover {
   color: #a9b1d6;
 }
+
 .practice-setup-info {
   margin-top: 0.5rem;
   padding: 0.75rem 1rem;
@@ -3058,18 +3121,22 @@ body.practice-split-active article {
   border: 1px solid #292e42;
   max-width: 320px;
 }
+
 .practice-setup-info p {
   margin: 0;
   font-size: 0.75rem;
   color: #565f89;
 }
+
 .practice-setup-info a {
   color: #7aa2f7;
   text-decoration: none;
 }
+
 .practice-setup-info a:hover {
   text-decoration: underline;
 }
+
 .practice-setup-retry {
   margin-top: 0.75rem;
   padding: 0.4rem 1rem;
@@ -3081,6 +3148,7 @@ body.practice-split-active article {
   font-size: 0.8rem;
   transition: background 0.15s;
 }
+
 .practice-setup-retry:hover {
   background: rgba(255, 255, 255, 0.08);
 }
@@ -3096,6 +3164,7 @@ body.practice-split-active article {
   padding: 2rem;
   text-align: center;
 }
+
 .practice-error-icon {
   width: 36px;
   height: 36px;
@@ -3108,34 +3177,40 @@ body.practice-split-active article {
   font-weight: 700;
   font-size: 1.1rem;
 }
+
 .practice-error-content {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
   max-width: 320px;
 }
+
 .practice-error-message {
   color: #c0caf5;
   font-size: 0.85rem;
   font-weight: 500;
   margin: 0;
 }
+
 .practice-error-action {
   color: #565f89;
   font-size: 0.75rem;
   margin: 0;
 }
+
 .practice-error-guidance {
   color: #565f89;
   font-size: 0.7rem;
   margin: 0;
   font-style: italic;
 }
+
 .practice-error-actions {
   display: flex;
   gap: 0.5rem;
   margin-top: 0.25rem;
 }
+
 .practice-error-btn {
   padding: 0.4rem 1rem;
   border-radius: 6px;
@@ -3146,19 +3221,24 @@ body.practice-split-active article {
   font-size: 0.8rem;
   transition: background 0.15s, border-color 0.15s;
 }
+
 .practice-error-btn:hover {
   background: rgba(255, 255, 255, 0.08);
 }
+
 .practice-error-btn-retry {
   border-color: rgba(247, 118, 142, 0.3);
 }
+
 .practice-error-btn-retry:hover {
   border-color: #f7768e;
 }
+
 .practice-error-btn-restart {
   border-color: rgba(122, 162, 247, 0.3);
   color: #7aa2f7;
 }
+
 .practice-error-btn-restart:hover {
   border-color: #7aa2f7;
   background: rgba(122, 162, 247, 0.1);
@@ -3166,6 +3246,7 @@ body.practice-split-active article {
 
 /* Mobile: practice overlay stacks below */
 @media screen and (max-width: 996px) {
+
   body.practice-split-active main[class*='docMainContainer'],
   body.practice-split-active [class*='docMainContainer'] {
     max-width: 100% !important;
