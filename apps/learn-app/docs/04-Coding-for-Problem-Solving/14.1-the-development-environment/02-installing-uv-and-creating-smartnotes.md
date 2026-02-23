@@ -238,7 +238,7 @@ if __name__ == "__main__":
     main()
 ```
 
-A function called `main` that prints a greeting. The `if __name__ == "__main__"` guard ensures the function only runs when you execute this file directly, not when another file imports it. This is a Python convention you will see in every project.
+This file uses two Python features — `def` and the `if __name__` guard — that you will learn about in later chapters. For now, the only line that matters is `print("Hello from smartnotes!")`. That is the line that produces the greeting you see in the terminal. When you run `uv run main.py`, Python executes this file and prints the message. You will understand every line of this file by the end of Chapter 14.2.
 
 **`.gitignore`** tells Git which files to exclude from version control. uv generates a default that excludes virtual environments and Python cache files — things that should never be committed to a repository.
 
