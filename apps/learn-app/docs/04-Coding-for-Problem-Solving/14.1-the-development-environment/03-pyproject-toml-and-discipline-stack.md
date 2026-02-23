@@ -144,7 +144,7 @@ Installed 9 packages in 28ms
  + typing-extensions==4.12.2
 ```
 
-Three tools and their transitive dependencies, installed in under a second. The `--dev` flag is important: it tells uv these tools are for development, not for running the application in production. A user installing your SmartNotes app does not need ruff or pytest -- those are for you, the developer.
+Three tools and their transitive dependencies (packages that your packages depend on), installed in under a second. The `--dev` flag is important: it tells uv these tools are for development, not for running the application in production. A user installing your SmartNotes app does not need ruff or pytest -- those are for you, the developer.
 
 ### What uv add --dev Actually Does
 
@@ -179,7 +179,7 @@ The `[dependency-groups]` section is where development dependencies live. The `d
 
 ### The Lockfile: uv.lock
 
-Look at the new `uv.lock` file that uv created. This file records the exact version of every package installed, including transitive dependencies (packages that your packages depend on). While `pyproject.toml` says `"pytest>=9.0.2"` (any version 9.0.2 or higher), the lockfile says exactly which version was resolved.
+Look at the new `uv.lock` file that uv created. This file records the exact version of every package installed, including transitive dependencies. While `pyproject.toml` says `"pytest>=9.0.2"` (any version 9.0.2 or higher), the lockfile says exactly which version was resolved.
 
 The lockfile is a cross-platform reproducibility guarantee. When another developer runs `uv sync` on their machine -- whether that machine runs Windows, macOS, or Linux -- they get the exact same package versions. No "it works on my machine" surprises.
 
