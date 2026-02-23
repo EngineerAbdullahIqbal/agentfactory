@@ -90,7 +90,7 @@ uv replaces all five. One binary, written in Rust, maintained by Astral (the sam
 
 ## Installing uv
 
-Installation takes one command. The command differs by platform.
+Installation takes one command. The command differs by platform. For the latest instructions, see the [official uv installation guide](https://docs.astral.sh/uv/getting-started/installation/).
 
 :::tip Windows (PowerShell)
 ```powershell
@@ -111,8 +111,16 @@ brew install uv
 :::
 
 :::tip Windows (WinGet alternative)
+Requires [Windows App Installer](https://apps.microsoft.com/detail/9nblggh4nns1) (pre-installed on Windows 11, may need manual install on Windows 10).
 ```powershell
 winget install --id=astral-sh.uv -e
+```
+:::
+
+:::tip Any platform — pip fallback
+If you already have Python installed, you can bootstrap uv with pip. You are using pip to install the tool that replaces pip — this is fine as a one-time bootstrap.
+```bash
+pip install uv
 ```
 :::
 
