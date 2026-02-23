@@ -7,77 +7,75 @@ deck:
 
 cards:
   - id: "thesis-001"
-    front: "What is a Digital FTE?"
-    back: "A role-based AI system that composes tools, spawns specialist agents, and delivers outcomes at scale — functioning as a full-time digital employee."
+    front: "Digital FTE"
+    back: "A role-based AI system that acts as a full-time digital employee, composing tools to deliver outcomes."
     tags: ["definition", "core-concept"]
     difficulty: "basic"
 
   - id: "thesis-002"
-    front: "What is the primary product companies sell in the Agent Factory era?"
-    back: "AI employees — role-based systems that deliver outcomes, replacing the SaaS model of selling software tool subscriptions."
+    front: "Agent Factory Era vs. SaaS Era"
+    back: "Selling AI employees (outcomes) instead of software tool subscriptions (access)."
     tags: ["paradigm-shift"]
     difficulty: "basic"
 
   - id: "thesis-003"
-    front: "How does the value metric change from the SaaS era to the Agent Factory era?"
-    back: "From per-seat subscriptions to per-outcome results. Buyers pay for verified results, not access to tools."
+    front: "Value Metric Shift"
+    back: "From per-seat subscriptions → to per-outcome results."
     tags: ["paradigm-shift"]
     difficulty: "basic"
 
   - id: "thesis-004"
-    front: "What is the human role in the Agent Factory era?"
-    back: "Supervisor and verifier. Humans are promoted from operators to those who define intent, oversee agent execution, and verify outcomes."
+    front: "Human Role in Agent Factory"
+    back: "Supervisor & Verifier. Defines intent and oversees agent execution."
     tags: ["human-in-the-loop"]
     difficulty: "basic"
 
   - id: "thesis-005"
-    front: "What are the three layers of the Industrialized Stack?"
-    back: "Intent (goals, constraints, budgets), The Factory (production engine of agents), and Outcome (verified actions and artifacts delivered on demand)."
+    front: "3 Layers of the Industrialized Stack"
+    back: "1. Intent (Goals)\n2. The Factory (Agents)\n3. Outcome (Verified artifacts)"
     tags: ["architecture"]
     difficulty: "intermediate"
-    why: "Why must these three layers remain separate rather than being combined into one system?"
+    why: "Why keep the Intent layer separate from The Factory layer?"
 
   - id: "thesis-006"
-    front: "What three mechanisms power The Factory?"
-    back: "Specs define the work, skills package how it gets done, and feedback loops ensure continuous improvement — with MCP connecting agents to tools."
+    front: "Mechanisms Powering The Factory"
+    back: "Specs (define work), Skills (package how-to), and Feedback loops (continuous improvement)."
     tags: ["architecture", "factory"]
     difficulty: "intermediate"
-    why: "What would happen if you removed any one of these three mechanisms?"
 
   - id: "thesis-007"
-    front: "What is MCP in the Agent Factory context?"
-    back: "Model Context Protocol — a standard tool-connection protocol that enables universal connectivity, replacing rigid point-to-point API integrations."
+    front: "MCP (Model Context Protocol)"
+    back: "A standard tool-connection protocol enabling universal connectivity between agents and tools."
     tags: ["definition", "mcp"]
     difficulty: "basic"
 
   - id: "thesis-008"
-    front: "What is the difference between an AI tool and an AI employee?"
-    back: "An AI tool performs a single task when invoked. An AI employee operates autonomously within a role — managing context, composing tools, and delivering complete outcomes without step-by-step direction."
+    front: "AI Tool vs. AI Employee"
+    back: "AI Tool: Performs a single requested task.\nAI Employee: Operates autonomously within a role to deliver a complete outcome."
     tags: ["distinction", "core-concept"]
     difficulty: "intermediate"
-    why: "Why would a business pay 10x more for an AI employee than an AI tool?"
+    why: "Why does an AI employee eliminate 'glue work' compared to an AI tool?"
 
   - id: "thesis-009"
-    front: "What does the thesis say about AI replacing people?"
-    back: "The evidence shows AI paired with a human outperforms either one working alone. The Agent Factory promotes humans from operators to supervisors, not replaces them."
+    front: "AI Replacement Myth"
+    back: "AI pairs with humans to outperform either alone. Humans are promoted to supervisors, not replaced."
     tags: ["human-in-the-loop"]
     difficulty: "intermediate"
 
   - id: "thesis-010"
-    front: "What does 'capability on demand' mean in the Agent Factory model?"
-    back: "Shifting from manual workflows to agent-delivered capabilities that activate when requested — agents deliver results, not interfaces for humans to click through."
+    front: "Capability on Demand"
+    back: "Agent-delivered capabilities that activate instantly when requested, skipping manual software workflows."
     tags: ["paradigm-shift"]
-    difficulty: "intermediate"
+    difficulty: "basic"
 
   - id: "thesis-011"
-    front: "What new roles does the Agent Factory era create?"
-    back: "Agent designers, outcome architects, verification specialists, and domain experts who teach machines what 'correct' looks like in their field."
+    front: "New Roles in Agent Factory Era"
+    back: "Agent Designers, Outcome Architects, Verification Specialists, and Domain Experts."
     tags: ["workforce"]
     difficulty: "advanced"
-    why: "Why are domain experts more valuable in this era than in the SaaS era?"
 
   - id: "thesis-012"
-    front: "What must future professionals build instead of relying on fixed career paths?"
-    back: "Dynamic skill portfolios — learning to think with AI, build using AI tools daily, and collaborate with AI as a digital teammate."
+    front: "Dynamic Skill Portfolios"
+    back: "Learning to think and build with AI as a digital teammate, rather than relying on fixed manual career paths."
     tags: ["workforce"]
     difficulty: "intermediate"

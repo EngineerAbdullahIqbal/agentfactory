@@ -68,14 +68,6 @@ export function validateDecks(decks: LoadedDeck[]): {
       }
       globalCardIds.set(card.id, rel);
 
-      // 4. Card front must end with "?"
-      if (!card.front.endsWith("?")) {
-        errors.push({
-          file: rel,
-          message: `Card "${card.id}": front must end with "?" — got "${card.front.slice(-20)}"`,
-        });
-      }
-
       // 5. Card back must not start with "Yes" or "No"
       if (/^(Yes|No)\b/i.test(card.back)) {
         errors.push({

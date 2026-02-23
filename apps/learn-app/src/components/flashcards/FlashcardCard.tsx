@@ -95,12 +95,11 @@ export default function FlashcardCard({
           >
             {copied ? "\u2713" : "\u2398"}
           </button>
-          <div className={styles.cardLabel}>Question</div>
           <div className={styles.cardContent}>
             <Markdown>{card.front}</Markdown>
           </div>
           {!hasFlippedOnce && (
-            <div className={styles.seeAnswerHint}>See answer</div>
+            <div className={styles.seeAnswerHint}>Click to flip</div>
           )}
         </div>
         <div
@@ -115,7 +114,6 @@ export default function FlashcardCard({
           >
             {copied ? "\u2713" : "\u2398"}
           </button>
-          <div className={styles.cardLabel}>Answer</div>
           <div className={styles.cardContent}>
             <Markdown>{card.back}</Markdown>
           </div>

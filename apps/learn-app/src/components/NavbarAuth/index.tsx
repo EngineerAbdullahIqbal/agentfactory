@@ -101,7 +101,7 @@ export function NavbarAuth() {
     const initials = getInitials(session.user.name, session.user.email);
     const software = session.user.softwareBackground
       ? session.user.softwareBackground.charAt(0).toUpperCase() +
-        session.user.softwareBackground.slice(1)
+      session.user.softwareBackground.slice(1)
       : null;
     const hardware = session.user.hardwareTier;
     const hardwareLabel =

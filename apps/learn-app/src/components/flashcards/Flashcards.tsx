@@ -12,9 +12,21 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   const [showToast, setShowToast] = useState(false);
   const [ankiUrl, setAnkiUrl] = useState<string | null>(null);
   const [showDownloadMenu, setShowDownloadMenu] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [ratedCards, setRatedCards] = useState<Map<string, "missed" | "gotit">>(
     new Map(),
   );
+
+  // Close fullscreen on Escape
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [isFullscreen]);
 
   const { cards, rateCard, wasReset } = useFSRS(deck ?? undefined);
 
@@ -156,7 +168,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
     const total = missedCount + gotItCount;
     const pct = total > 0 ? Math.round((gotItCount / total) * 100) : 0;
     return (
-      <div className={styles.container}>
+      <div className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}>
         <div className={styles.sessionComplete}>
           <div className={styles.sessionCompleteTitle}>Session Complete</div>
           <div className={styles.sessionStats}>
@@ -188,7 +200,7 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   const progress = totalCards > 0 ? ((currentIndex + 1) / totalCards) * 100 : 0;
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}>
       <div className={styles.browseLayout}>
         <button
           className={styles.navArrow}
@@ -200,6 +212,19 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
         </button>
 
         <div className={`${styles.cardArea} ${styles.atmosphericGlow}`}>
+          <div className={styles.cardHeaderControls}>
+            <button
+              className={styles.fullscreenToggle}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFullscreen(prev => !prev);
+              }}
+              title={isFullscreen ? "Exit Full Screen" : "Full Screen"}
+              aria-label={isFullscreen ? "Exit Full Screen" : "Full Screen"}
+            >
+              {isFullscreen ? "\u21F2" : "\u2922"}
+            </button>
+          </div>
           {currentCard && (
             <FlashcardCard
               card={currentCard}
