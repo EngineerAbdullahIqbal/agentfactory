@@ -66,7 +66,7 @@ James's code ran. Python did not complain. But the code had three problems that 
 
 **The unused library.** One line loaded an external library that was never used anywhere in the file. In a small file, this is clutter. In a large project with hundreds of files, unused libraries slow things down, confuse readers about what the file actually needs, and create false leads when debugging.
 
-**The stored-but-forgotten value.** One line saved a result that was never looked at again. This is almost always a bug. Either the developer forgot to use it (the work is wasted), or they made a typo and used a different name later (the result is lost). Python will never tell you. The code runs. The bug hides.
+**The stored-but-forgotten value.** One line saved a result that was never looked at again. This is almost always a bug. Either James forgot to use it (the work is wasted), or he made a typo and used a different name later (the result is lost). Python will never tell you. The code runs. The bug hides.
 
 **The inconsistent spacing.** Some lines had spaces around the equals sign and others did not. Mixed spacing makes code harder to read, and on a team of five developers, each person's style creates conflicts over appearance -- not over logic.
 
@@ -98,7 +98,7 @@ Two concepts are central to understanding ruff, and they are different from each
 | **Linting** | Finds problems: bugs, unused code, style violations, import order | A building inspector checking for code violations |
 | **Formatting** | Fixes style: spacing, indentation, quote style, line length | A copy editor making every page look consistent |
 
-Linting finds problems. Formatting enforces style. A linting error might be a real bug (an undefined variable). A formatting change is never a bug -- it is a style preference (single quotes vs double quotes). Both matter, but for different reasons.
+Linting finds problems. Formatting enforces style. A linting error might be a real bug (a name that does not exist anywhere in the code). A formatting change is never a bug -- it is a style preference (single quotes vs double quotes). Both matter, but for different reasons.
 
 ---
 
@@ -106,9 +106,9 @@ Linting finds problems. Formatting enforces style. A linting error might be a re
 
 In Axiom IX from Chapter 14, you learned that verification is a pipeline -- not a manual checklist that depends on willpower, but an automated sequence that runs every time you change code. Ruff is the first stage of that pipeline.
 
-Consider what happens without ruff. A developer finishes writing code. They run it. It works. They commit. They open a pull request. A reviewer reads the code and notices an unused import on line 3. They leave a comment. The developer fixes it and pushes again. The reviewer notices inconsistent spacing on line 17. Another comment. Another fix. Another push. Three rounds of review for problems that have nothing to do with logic or architecture.
+Consider what happens without ruff. James finishes writing code. He runs it. It works. He commits. He opens a pull request. Emma reads the code and notices an unused library on line 3. She leaves a comment. James fixes it and pushes again. Emma notices inconsistent spacing on line 17. Another comment. Another fix. Another push. Three rounds of review for problems that have nothing to do with logic or design.
 
-With ruff, those problems never reach the reviewer. The developer runs `uv run ruff check .` before committing. The unused import is flagged. The inconsistent spacing is caught. The developer fixes both in seconds. The pull request arrives clean. The reviewer spends their time on what matters: design, correctness, and edge cases.
+With ruff, those problems never reach Emma. James runs `uv run ruff check .` before committing. The unused library is flagged. The inconsistent spacing is caught. James fixes both in seconds. The pull request arrives clean. Emma spends her time on what matters: design, correctness, and edge cases.
 
 This is Axiom IX in action. The verification is automated. The pipeline catches mechanical problems so that humans can focus on judgment problems.
 
@@ -188,7 +188,7 @@ The rule code is the key to understanding what ruff found. Each code starts with
 | **B** | flake8-bugbear | Common programming mistakes and design problems | B006, B905 |
 | **SIM** | flake8-simplify | Code that can be written more simply | SIM102, SIM110 |
 
-In the SmartNotes output, all four errors use **F** (Pyflakes) rules: three unused imports (F401) and one unused variable (F841). These are not style preferences. They are actual problems -- dead code that clutters the file and may indicate bugs.
+In the SmartNotes output, all four errors use **F** (Pyflakes) rules: three unused imports (F401) and one unused local value (F841). Ruff calls stored values "local variables" — you will learn what that means in later chapters. For now, just know these are not style preferences. They are actual problems -- dead code that clutters the file and may indicate bugs.
 
 **Read and Predict**: The output says `[*]` next to the F401 errors but not next to the F841 error (unused variable). What do you think `[*]` means for the auto-fix behavior? Why might ruff be willing to auto-fix an unused import but not an unused variable?
 
@@ -206,9 +206,9 @@ uv run ruff check --fix .
 Found 4 errors (3 fixed, 1 remaining).
 ```
 
-Open `src/smartnotes/main.py` again. The three unused import lines are gone. The file now starts directly with the `def add_note` function. Ruff removed the dead imports automatically.
+Open `src/smartnotes/main.py` again. The three unused import lines are gone. Ruff removed the dead imports automatically.
 
-The unused variable `temp_result` on line 6 is still there. Ruff flagged it but did not remove it because removing an assignment could change the program's behavior -- the `len(content)` call might have side effects in other contexts. Ruff is conservative: it auto-fixes problems where the fix is safe (removing imports that are never used), and it flags problems where human judgment is needed (removing code that might be intentional).
+The line `temp_result = len(content)` on line 6 is still there. Ruff flagged it but did not remove it because removing that line could change how the program behaves -- the code on the right side of the `=` might do something important in other situations. Ruff is conservative: it auto-fixes problems where the fix is safe (removing imports that are never used), and it flags problems where human judgment is needed (removing code that might be intentional).
 
 ### Step 4: Run ruff format
 
@@ -240,7 +240,7 @@ def search_notes(notes, query):
     results = []
 ```
 
-Ruff added a space after the comma in the parameter list (`notes,query` became `notes, query`) and spaces around the assignment operator (`results=[]` became `results = []`). These changes do not affect how the code runs. They affect how the code reads. Consistent spacing makes code scannable -- your eyes can parse structure without stumbling over inconsistencies.
+Ruff added a space after the comma (`notes,query` became `notes, query`) and spaces around the `=` sign (`results=[]` became `results = []`). These changes do not affect how the code runs. They affect how the code reads. Consistent spacing makes code scannable -- your eyes can parse structure without stumbling over inconsistencies.
 
 The formatting rules come from the `[tool.ruff.format]` section in your `pyproject.toml`:
 
@@ -273,7 +273,7 @@ uv run ruff check .
 Found 1 error.
 ```
 
-The remaining error is the unused variable `temp_result`. In real development, you would either use this variable or remove the assignment. For now, you know the difference: ruff check found the problems, ruff format fixed the style, and one issue remains that requires your judgment.
+The remaining error is the unused `temp_result` line. In real development, you would either use that stored value or remove the line entirely. For now, you know the difference: ruff check found the problems, ruff format fixed the style, and one issue remains that requires your judgment.
 
 Run the formatter check to confirm formatting is consistent:
 
@@ -297,9 +297,9 @@ Emma showed James these patterns after his first ruff session. Each one undermin
 
 | Anti-Pattern | What Happens | Why It Fails | The Fix |
 |---|---|---|---|
-| **Ignoring lint warnings** | Developer sees warnings, decides "it still runs," and commits anyway | Warnings accumulate; 3 become 30 become 300; nobody reads them anymore | Fix every warning before committing; use `--fix` for auto-fixable issues |
-| **Formatting by hand** | Developer adjusts spacing and quotes manually to match team style | Slow, inconsistent, and triggers style debates in code review | Run `uv run ruff format .` once; the tool is faster and more consistent than any human |
-| **`# noqa` everywhere** | Developer suppresses warnings by adding `# noqa: F401` to every flagged line | The warnings exist for a reason; suppressing them hides real problems | Only use `# noqa` when you have a documented reason to keep the flagged code |
+| **Ignoring lint warnings** | James sees warnings, decides "it still runs," and commits anyway | Warnings accumulate; 3 become 30 become 300; nobody reads them anymore | Fix every warning before committing; use `--fix` for auto-fixable issues |
+| **Formatting by hand** | James adjusts spacing and quotes manually to match team style | Slow, inconsistent, and triggers style debates in code review | Run `uv run ruff format .` once; the tool is faster and more consistent than any human |
+| **`# noqa` everywhere** | James suppresses warnings by adding `# noqa: F401` to every flagged line | The warnings exist for a reason; suppressing them hides real problems | Only use `# noqa` when you have a documented reason to keep the flagged code |
 | **No rule selection in config** | Project uses ruff's defaults (only `E4`, `E7`, `E9`, and `F` rules) without expanding | Misses import sorting, modernization, common bugs, and simplification opportunities | Configure `[tool.ruff.lint] select` with the rules that match your project's standards |
 
 ---
@@ -371,7 +371,7 @@ Should I add them? What are the tradeoffs of enabling more rules?
 
 ## Key Takeaways
 
-1. **A linter finds problems that the Python interpreter ignores.** Unused imports, unused variables, style violations, and common bugs all slip past Python silently. Ruff catches them before they accumulate into technical debt.
+1. **A linter finds problems that Python ignores.** Unused libraries, forgotten values, style violations, and common bugs all slip past Python silently. Ruff catches them before they accumulate.
 
 2. **Linting and formatting are different concerns.** `ruff check` finds bugs and violations (some are real problems). `ruff format` enforces consistent style (never a bug, always a readability improvement). Both matter, for different reasons.
 
@@ -385,6 +385,6 @@ Should I add them? What are the tradeoffs of enabling more rules?
 
 ## Looking Ahead
 
-Ruff guards your code's style and structure. But there is a category of problems it cannot catch: type errors. An unused import is clutter. A wrong data type is a crash. When James passes an integer where a function expects a string, ruff will not say a word. Python will not complain either -- until the code fails at runtime, possibly at 2am in production.
+Ruff guards your code's style and structure. But there is a category of problems it cannot catch: type errors. An unused library is clutter. A wrong kind of data is a crash. When James passes a number where the code expects text, ruff will not say a word. Python will not complain either -- until the code fails while it is running.
 
 In Lesson 5, pyright enters the picture. It reads your code without running it and tells you exactly where the types do not match -- before a single line executes.
