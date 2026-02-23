@@ -148,6 +148,7 @@ Why fields: N/total (XX%)
 - Under 60 words
 - Concise but complete — no filler
 - Use `\n` for visual structure in comparisons and lists
+- **NEVER start the answer with "Yes" or "No"** (this fails our strict YAML schema validation). Rephrase to be direct (e.g., instead of "No, societies that...", use "Historically, societies that...").
 
 ### Why Field
 
@@ -185,6 +186,7 @@ Why fields: N/total (XX%)
 | Unescaped YAML special chars | Quote strings containing `: # " '`                  |
 | Hallucinated facts           | Cross-check every claim against source lesson       |
 | Cards too long               | Split into multiple atomic cards                    |
+| Back starts with "Yes" / "No" | Schema validation fails. Rephrase answer directly  |
 
 ## Chapter Mode
 
