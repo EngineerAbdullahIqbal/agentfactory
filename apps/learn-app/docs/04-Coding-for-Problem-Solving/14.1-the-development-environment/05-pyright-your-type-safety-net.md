@@ -215,6 +215,10 @@ The typed version tells you everything upfront: `process` expects text and gives
 
 Open the SmartNotes `main.py` and replace its contents with the following code. This version has deliberate type problems that Python will run without complaint but pyright will catch:
 
+:::note You do not need to understand this code yet
+This code uses Python features — type labels and more — that you will learn in later chapters. Right now, the goal is to see what pyright does with it. Just type the code exactly as shown, run the commands below, and focus on pyright's output.
+:::
+
 ```python
 def greet(name: str) -> str:
     return f"Hello, {name}"
@@ -230,19 +234,19 @@ def format_title(title: str, prefix: str | None = None) -> str:
     return title
 
 
-# Bug 1: passing an int where str is expected
+# Bug 1: passing a number where text is expected
 greeting = greet(42)
 
-# Bug 2: passing a str where int is expected
+# Bug 2: passing text where a number is expected
 total = add_numbers("five", 10)
 
-# Bug 3: using the result as wrong type
+# Bug 3: the result is text, but the label says number
 length: int = format_title("My Note")
 ```
 
-The function definitions at the top are correct -- they have proper type annotations. The bugs are in the *calls* at the bottom, where the wrong types are passed or assigned.
+The code at the top is correct -- it has type labels (`: str`, `: int`) that tell pyright what kind of data each piece expects. The bugs are at the bottom, where the wrong kinds of data are passed or stored.
 
-Note the `str | None` annotation on the `prefix` parameter in `format_title`. This is a **union type** -- it means the parameter accepts either a `str` or `None`. The `| None` part makes the parameter explicitly optional. Without it, passing `None` would be a type error.
+Note the `str | None` label on `prefix`. This is a **union type** -- it means the code accepts either text (`str`) or nothing (`None`). The `| None` part makes it explicitly optional. Without it, passing `None` would be a type error.
 
 ### Step 2: Run Pyright
 
@@ -279,11 +283,11 @@ Break down the three errors:
 
 | Error | Line | What Pyright Found | Rule |
 |-------|------|-------------------|------|
-| 1 | 16 | `42` (int) passed to `name` (str) | `reportArgumentType` |
-| 2 | 19 | `"five"` (str) passed to `a` (int) | `reportArgumentType` |
-| 3 | 22 | `format_title` returns str, assigned to `length: int` | `reportAssignmentType` |
+| 1 | 16 | `42` is a number (`int`), but `name` expects text (`str`) | `reportArgumentType` |
+| 2 | 19 | `"five"` is text (`str`), but `a` expects a number (`int`) | `reportArgumentType` |
+| 3 | 22 | `format_title` returns text (`str`), but `length` is labeled as number (`int`) | `reportAssignmentType` |
 
-Each error points to the exact line, the exact mismatch, and the exact rule that caught it. No guessing. No digging through stack traces. The errors appear before the code runs.
+Each error points to the exact line, the exact mismatch, and the exact rule that caught it. No guessing. No searching through error messages. The errors appear before the code runs.
 
 ### Step 4: Fix the Type Errors
 
@@ -304,13 +308,13 @@ def format_title(title: str, prefix: str | None = None) -> str:
     return title
 
 
-# Fixed: passing str where str is expected
+# Fixed: passing text where text is expected
 greeting = greet("James")
 
-# Fixed: passing int where int is expected
+# Fixed: passing numbers where numbers are expected
 total = add_numbers(5, 10)
 
-# Fixed: result is str, so variable should be str
+# Fixed: result is text, so the label should say text
 title: str = format_title("My Note")
 ```
 
@@ -326,24 +330,24 @@ uv run pyright
 0 errors, 0 warnings, 0 informations
 ```
 
-Clean. Every type annotation matches. Every function call passes the right data. Every assignment stores the right type. Pyright verified all of this in under a second, without executing the code.
+Clean. Every type label matches. Every piece of code receives the right kind of data. Every stored value has the right type. Pyright verified all of this in under a second, without executing the code.
 
 ### Strict Mode vs Standard Mode
 
 Your SmartNotes project uses `typeCheckingMode = "strict"`. What would happen with standard mode instead?
 
-In standard mode, pyright would still catch the three explicit type errors above (passing `int` to `str`, etc.) -- those are basic mismatches. But standard mode would NOT catch functions that are missing annotations entirely.
+In standard mode, pyright would still catch the three explicit type errors above (passing a number where text is expected, etc.) -- those are basic mismatches. But standard mode would NOT catch code that is missing type labels entirely.
 
 Consider this code:
 
 ```python
-# Standard mode: no error (annotations not required)
+# Standard mode: no error (type labels not required)
 # Strict mode: error -- reportUnknownParameterType
 def process(data):
     return data.strip()
 ```
 
-In standard mode, pyright ignores this function because it has no type annotations to check. In strict mode, pyright reports an error: the parameter `data` has an unknown type. Strict mode requires you to declare your intent for every function. This is why the course uses strict -- it ensures complete coverage, leaving no function unchecked.
+In standard mode, pyright ignores this code because it has no type labels to check. In strict mode, pyright reports an error: `data` has an unknown type. Strict mode requires you to declare what kind of data every piece of code expects. This is why the course uses strict -- it ensures complete coverage, leaving nothing unchecked.
 
 ---
 
@@ -353,10 +357,10 @@ James now understands what pyright catches and why the course runs in strict mod
 
 | Anti-Pattern | What Happens | The Fix |
 |-------------|-------------|---------|
-| **Ignoring type errors** | You run pyright, see 12 errors, and skip them because "the code works." The errors accumulate. Eventually a type mismatch causes a production crash. | Fix every error before committing. Pyright errors are not suggestions -- they are guardrails reporting missing protection. |
-| **Using `Any` everywhere** | You annotate parameters as `Any` to silence pyright. Every function accepts everything, which means pyright checks nothing. | Use the most specific type possible. `str`, `int`, `list[str]`. Reserve `Any` for genuinely dynamic cases (rare in application code). |
-| **Disabling strict mode** | You switch to basic or standard mode because strict "has too many errors." Those errors represent real coverage gaps. | Start with strict mode on a new project (like SmartNotes). Fix errors as you write. Strict mode is harder to retrofit than to start with. |
-| **Types as afterthought** | You write all functions without types, then add annotations later as a chore. The annotations become inaccurate because they describe what you intended, not what the code does. | Add types as you write each function. The annotation is part of the function's design, not a comment added later. |
+| **Ignoring type errors** | James runs pyright, sees 12 errors, and skips them because "the code works." The errors accumulate. Eventually a type mismatch causes a crash. | Fix every error before committing. Pyright errors are not suggestions -- they are guardrails reporting missing protection. |
+| **Using `Any` everywhere** | James labels everything as `Any` to silence pyright. Every piece of code accepts everything, which means pyright checks nothing. | Use the most specific type possible: `str`, `int`, `list[str]`. Reserve `Any` for genuinely dynamic cases. |
+| **Disabling strict mode** | James switches to basic or standard mode because strict "has too many errors." Those errors represent real coverage gaps. | Start with strict mode on a new project (like SmartNotes). Fix errors as you write. Strict mode is harder to add later than to start with. |
+| **Types as afterthought** | James writes all his code without types, then adds labels later as a chore. The labels become inaccurate because they describe what he intended, not what the code does. | Add types as you write. The type label is part of the design, not a comment added afterward. |
 
 ---
 
@@ -371,21 +375,22 @@ I ran uv run pyright on my Python file and got this error:
   assignable to parameter "a" of type "int"
   "str" is not assignable to "int" (reportArgumentType)
 
-Explain this error to me step by step:
+I am new to Python and do not fully understand types yet.
+Explain this error to me step by step in simple terms:
 1. What file and line is the error on?
 2. What did I write that caused the error?
-3. What type did pyright expect?
-4. What type did I actually pass?
+3. What kind of data did pyright expect? (Explain what "str" and "int" mean)
+4. What kind of data did I actually pass?
 5. What is "reportArgumentType" -- what category of error is this?
 6. How would I fix this error?
 ```
 
-**What you're learning:** How to read pyright error messages systematically. Every pyright error follows the same format -- file, line, column, description, rule name. By asking AI to break down a real error, you are building the pattern recognition to read these messages independently. This is the most practical type-checking skill: not writing types, but reading what pyright tells you when types are wrong.
+**What you're learning:** How to read pyright error messages step by step. Every pyright error follows the same format -- file, line, column, description, rule name. By asking AI to break down a real error in simple terms, you are building the pattern recognition to read these messages on your own. This is the most practical type-checking skill: not writing types, but understanding what pyright tells you when types are wrong.
 
-### Prompt 2: Add Type Annotations to Untyped Code
+### Prompt 2: Add Type Labels to Unlabeled Code
 
 ```
-Here is a Python function without type annotations:
+Here is a piece of Python code without type labels:
 
 def calculate_total(items, tax_rate, discount):
     subtotal = sum(item["price"] * item["quantity"] for item in items)
@@ -393,16 +398,19 @@ def calculate_total(items, tax_rate, discount):
     discounted = subtotal - discount
     return discounted + tax
 
-The function is called like this:
+It is called like this:
 items = [{"price": 9.99, "quantity": 2}, {"price": 4.50, "quantity": 1}]
 result = calculate_total(items, 0.08, 5.00)
 
-Add complete type annotations to this function so it would pass
-pyright in strict mode. Explain each annotation you add and why
-you chose that type.
+I am new to Python and learning about type labels for the first time.
+Add type labels to this code so it would pass pyright in strict mode.
+For each label you add, explain in simple terms:
+1. What kind of data it describes
+2. Why you chose that type
+3. What would go wrong if someone passed the wrong kind of data
 ```
 
-**What you're learning:** How type annotations describe data flow through a function. By seeing AI add annotations to real code, you learn to read what each annotation means: `items: list[dict[str, float]]` tells you the function expects a list of dictionaries with string keys and float values. You are not writing these annotations yourself yet -- you are learning to read and understand them, which is the foundation for every typed Python chapter ahead.
+**What you're learning:** How type labels describe what kind of data flows through your code. By seeing AI add labels and explain each one in plain language, you start to read what labels like `: str`, `: int`, and `: float` mean. You are not writing these labels yourself yet -- you are learning to read and understand them, which is the foundation for every typed Python chapter ahead.
 
 ### Prompt 3: Compare Strict Mode vs Standard Mode
 
@@ -431,15 +439,15 @@ shows too many errors. Explain:
 
 ## Key Takeaways
 
-1. **A static type checker analyzes code without running it.** Pyright reads type annotations, traces data flow, and reports every type mismatch before your program executes.
+1. **A static type checker analyzes code without running it.** Pyright reads type labels, traces how data moves through your code, and reports every type mismatch before your program executes.
 
-2. **Type annotations serve double duty.** They document what data each function expects (for humans and AI to read) and they enable automated verification (for pyright to check). One annotation, two benefits.
+2. **Type labels serve double duty.** They document what kind of data your code expects (for humans and AI to read) and they enable automated checking (for pyright to verify). One label, two benefits.
 
 3. **Every pyright error follows the same format:** file path, line number, column, description, and rule name in parentheses. Learning to read this format is the key skill.
 
-4. **Strict mode requires complete type annotations.** It enables 28 additional rules beyond standard mode, catching missing annotations, unknown types, and unused code. New projects should start in strict mode.
+4. **Strict mode requires complete type labels.** It enables 28 additional rules beyond standard mode, catching missing labels, unknown types, and unused code. New projects should start in strict mode.
 
-5. **`str | None` is a union type.** It means a parameter or variable can hold either a `str` or `None`. This pattern appears throughout typed Python to make optional values explicit.
+5. **`str | None` is a union type.** It means a value can hold either text (`str`) or nothing (`None`). This pattern appears throughout typed Python to make optional values explicit.
 
 ---
 
