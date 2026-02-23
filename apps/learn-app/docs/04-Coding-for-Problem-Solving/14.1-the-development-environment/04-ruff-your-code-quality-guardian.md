@@ -52,7 +52,7 @@ differentiation:
 
 In Lesson 3, James installed the discipline stack and configured every tool inside `pyproject.toml`. SmartNotes now has pytest, pyright, and ruff listed as dev dependencies, each with its own configuration section. But none of the tools have actually run yet. The configuration is in place. The verification has not started.
 
-Emma decides to test whether James understands the difference. She gives James a small block of Python code and asks him to type it into `src/smartnotes/main.py`. James types exactly what she says -- including a line that loads a library he never uses, a line that stores a value he never looks at again, and messy spacing that changes from line to line. He runs the file: `uv run python src/smartnotes/main.py`. It prints the expected output. James leans back. "Works fine."
+Emma decides to test whether James understands the difference. She gives James a small block of Python code and asks him to type it into `main.py`. James types exactly what she says -- including a line that loads a library he never uses, a line that stores a value he never looks at again, and messy spacing that changes from line to line. He runs the file: `uv run python main.py`. It prints the expected output. James leans back. "Works fine."
 
 Emma does not argue. She types one command into his terminal: `uv run ruff check .`. The screen fills with warnings. Five lines, each pointing to a specific problem that Python's interpreter silently ignored. James stares at the output. "But... it ran."
 
@@ -118,7 +118,7 @@ This is Axiom IX in action. The verification is automated. The pipeline catches 
 
 ### Step 1: Create a File With Problems
 
-To see ruff in action, you need a file with problems for it to find. Create the file `src/smartnotes/main.py` with the following content. (If the `src/smartnotes/` directory does not exist yet, create it along with an empty `__init__.py` file.)
+To see ruff in action, you need a file with problems for it to find. Open `main.py` in your SmartNotes project and replace its contents with the following code.
 
 ```python static
 import os
@@ -162,19 +162,19 @@ uv run ruff check .
 **Output:**
 
 ```
-src/smartnotes/main.py:1:8: F401 [*] `os` imported but unused
-src/smartnotes/main.py:2:8: F401 [*] `sys` imported but unused
-src/smartnotes/main.py:3:25: F401 [*] `collections.OrderedDict` imported but unused
-src/smartnotes/main.py:6:5: F841 Local variable `temp_result` is assigned to but never used
+main.py:1:8: F401 [*] `os` imported but unused
+main.py:2:8: F401 [*] `sys` imported but unused
+main.py:3:25: F401 [*] `collections.OrderedDict` imported but unused
+main.py:6:5: F841 Local variable `temp_result` is assigned to but never used
 Found 4 errors.
 [*] 3 fixable with the `--fix` option.
 ```
 
-Every line follows the same format: **file:line:column: RULE_CODE message**. Read the first line: `src/smartnotes/main.py:1:8: F401 [*] 'os' imported but unused`. This tells you:
+Every line follows the same format: **file:line:column: RULE_CODE message**. Read the first line: `main.py:1:8: F401 [*] 'os' imported but unused`. This tells you:
 
 | Part | Meaning |
 |------|---------|
-| `src/smartnotes/main.py` | The file with the problem |
+| `main.py` | The file with the problem |
 | `1:8` | Line 1, column 8 |
 | `F401` | The rule code (Pyflakes rule 401: unused import) |
 | `[*]` | This issue can be auto-fixed |
@@ -210,7 +210,7 @@ uv run ruff check --fix .
 Found 4 errors (3 fixed, 1 remaining).
 ```
 
-Open `src/smartnotes/main.py` again. The three unused import lines are gone. Ruff removed the dead imports automatically.
+Open `main.py` again. The three unused import lines are gone. Ruff removed the dead imports automatically.
 
 The line `temp_result = len(content)` on line 6 is still there. Ruff flagged it but did not remove it because removing that line could change how the program behaves -- the code on the right side of the `=` might do something important in other situations. Ruff is conservative: it auto-fixes problems where the fix is safe (removing imports that are never used), and it flags problems where human judgment is needed (removing code that might be intentional).
 
@@ -228,7 +228,7 @@ uv run ruff format .
 1 file reformatted
 ```
 
-Open `src/smartnotes/main.py` and compare the `search_notes` function before and after formatting:
+Open `main.py` and compare the `search_notes` function before and after formatting:
 
 **Before ruff format:**
 
@@ -315,7 +315,7 @@ Emma showed James these patterns after his first ruff session. Each one undermin
 ```
 I ran ruff check on my Python project and got this error:
 
-src/smartnotes/main.py:1:8: F401 [*] `os` imported but unused
+main.py:1:8: F401 [*] `os` imported but unused
 
 Explain:
 1. What does each part of this line mean? (file, line, column, code, message)

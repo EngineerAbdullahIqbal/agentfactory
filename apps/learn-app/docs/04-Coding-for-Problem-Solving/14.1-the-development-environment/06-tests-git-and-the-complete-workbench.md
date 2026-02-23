@@ -140,7 +140,7 @@ This code uses Python features -- `def`, `import`, `assert`, type labels, and mo
 
 ```python static
 # tests/test_main.py
-from smartnotes.main import main
+from main import main
 
 
 def test_main_returns_greeting() -> None:
