@@ -56,6 +56,13 @@
 }
 
 /* ===== Container ===== */
+.container,
+.container *,
+.container *::before,
+.container *::after {
+  box-sizing: border-box;
+}
+
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -874,25 +881,22 @@
     /* Ensure the glow element doesn't bleed left/right to cause horizontal scrollbars */
   }
 
-  /* Stack card above arrows */
   .browseLayout {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  /* Force card area to take full width of mobile screen, displacing arrows to next row */
-  .cardArea {
-    flex: 0 0 100%;
-    order: -1;
-    /* First visually (above arrows) */
+    gap: 0.5rem;
+    max-width: 100%;
+    /* Keep arrows on the sides, but reduce gap so they fit */
   }
 
   .navArrow {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    font-size: 1.25rem;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 1.1rem;
+  }
+
+  .cardArea {
+    flex: 1;
+    min-width: 0;
   }
 
   .cardContent {
