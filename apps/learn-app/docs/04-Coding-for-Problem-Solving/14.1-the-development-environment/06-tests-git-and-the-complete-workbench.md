@@ -163,6 +163,10 @@ if __name__ == "__main__":
 
 Two things to notice about the test file. First, `assert` is a plain Python keyword -- pytest does not need any special setup. `assert result == "Hello from smartnotes!"` means: if this condition is false, the test fails. Second, the name starts with `test_` and the file name starts with `test_`. These naming conventions are how pytest discovers what to run. No configuration needed beyond what is already in your `pyproject.toml`.
 
+:::tip If you see an import error
+The line `from main import main` works because SmartNotes uses a flat project layout -- `main.py` sits in the project root, and pytest knows how to find it. If you ever see `ModuleNotFoundError: No module named 'main'`, create an empty file called `__init__.py` inside the `tests/` directory. This tells Python to treat `tests/` as a package and helps it locate files in the project root. For SmartNotes, this should not be necessary, but it is a common fix if your setup differs slightly.
+:::
+
 ### Step 2: Run pytest
 
 ```bash
@@ -197,19 +201,25 @@ uv run pytest
 **Output (failing):**
 
 ```
-tests/test_main.py F                                             [100%]
-================================ FAILURES =================================
-___________________________ test_main_returns_greeting ____________________________
+tests/test_main.py F                                                [100%]
+=================================== FAILURES ===================================
+_________________________ test_main_returns_greeting ___________________________
 
     def test_main_returns_greeting() -> None:
         result: str = main()
 >       assert result == "Wrong value on purpose"
 E       AssertionError: assert 'Hello from smartnotes!' == 'Wrong value on purpose'
+E
+E         - Wrong value on purpose
+E         + Hello from smartnotes!
 
-========================= 1 failed in 0.15s ==========================
+tests/test_main.py:3: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_main.py::test_main_returns_greeting - AssertionError: ...
+============================== 1 failed in 0.15s ===============================
 ```
 
-The `F` replaces the dot. pytest shows you exactly which line failed, what the actual value was, and what the expected value was. When `assert` fails, pytest generates a clear message automatically telling you what went wrong.
+The `F` replaces the dot. pytest shows you exactly which line failed, what the actual value was, and what the expected value was. The lines starting with `E` are the explanation: the `-` line shows what you wrote in the test (the expected value), and the `+` line shows what the code actually returned. When `assert` fails, pytest generates this comparison automatically -- you do not need to write error messages yourself.
 
 Change the test back to the correct expected value before continuing.
 

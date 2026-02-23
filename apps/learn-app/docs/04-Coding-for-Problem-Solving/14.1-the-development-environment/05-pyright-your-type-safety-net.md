@@ -44,7 +44,7 @@ cognitive_load:
   assessment: "5 concepts (static type checker, type annotation, str | None union type, strict mode, type error message reading) within A2 limit of 7"
 
 differentiation:
-  extension_for_advanced: "Explore pyright's diagnostic rule list at github.com/microsoft/pyright and identify which of the 28 strict-mode rules apply to common Python patterns like decorators, generics, and match statements"
+  extension_for_advanced: "Explore pyright's diagnostic rule list at github.com/microsoft/pyright and identify which of the 29 strict-mode-only rules apply to common Python patterns like decorators, generics, and match statements"
   remedial_for_struggling: "Focus on the single before/after example (greet function). Run pyright on just that one file until the error message format becomes familiar before examining strict vs standard differences"
 ---
 
@@ -169,7 +169,7 @@ typeCheckingMode = "strict"
 pythonVersion = "3.12"
 ```
 
-Strict mode enables 28 additional rules beyond standard. The most important ones fall into three categories:
+Strict mode enables 29 additional diagnostic rules that are completely disabled in standard mode, plus escalates 7 more rules from warnings to errors. The most important ones fall into three categories:
 
 | Category | What Strict Mode Catches | Example |
 |----------|------------------------|---------|
@@ -447,7 +447,7 @@ shows too many errors. Explain:
 
 3. **Every pyright error follows the same format:** file path, line number, column, description, and rule name in parentheses. Learning to read this format is the key skill.
 
-4. **Strict mode requires complete type labels.** It enables 28 additional rules beyond standard mode, catching missing labels, unknown types, and unused code. New projects should start in strict mode.
+4. **Strict mode requires complete type labels.** It enables 29 additional diagnostic rules beyond standard mode, catching missing labels, unknown types, and unused code. New projects should start in strict mode.
 
 5. **`str | None` is a union type.** It means a value can hold either text (`str`) or nothing (`None`). This pattern appears throughout typed Python to make optional values explicit.
 
