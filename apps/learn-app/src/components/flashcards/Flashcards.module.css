@@ -436,15 +436,16 @@
   /* Firefox */
 }
 
-/* Front card should always be perfectly centered, even if it's short text */
-.cardFront .cardContent {
-  margin: auto 0;
-  justify-content: center;
+@media (min-width: 768px) {
+  .cardContent {
+    font-size: 1.45rem;
+    line-height: 1.7;
+  }
 }
 
-/* Back card uses 'margin: auto 0' to safely top-align long scrolling text but format nicely for short text */
-.cardBack .cardContent {
+.safeCenter {
   margin: auto 0;
+  width: 100%;
 }
 
 .cardContent::-webkit-scrollbar {
