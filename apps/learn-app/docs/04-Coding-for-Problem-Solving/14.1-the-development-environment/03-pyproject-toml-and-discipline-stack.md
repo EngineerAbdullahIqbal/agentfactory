@@ -111,7 +111,7 @@ This is the project's identity card. Every field answers a specific question:
 | `requires-python` | What Python versions are supported? | `">=3.11"` |
 | `dependencies` | What packages does the project need to run? | `[]` (empty for now) |
 
-This is the `[project]` section. It follows PEP 621, a Python standard that all modern tools agree on. Poetry reads it. Hatch reads it. uv reads it. pip reads it. No tool-specific format, no lock-in.
+This is the `[project]` section. It follows a standard called PEP 621 — a set of rules that the Python community agreed on so that every tool reads project files the same way. Before this standard, different tools like Poetry, Hatch, and pip each had their own format, and switching between them meant rewriting your configuration. With PEP 621, you write your project details once and every tool understands it — no matter which tool you or your team prefers.
 
 ## From Scattered Files to One Source of Truth
 
