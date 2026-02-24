@@ -289,6 +289,43 @@ Also write one pytest test for this function.
 
 ---
 
+## Command Reference
+
+Every command from this chapter in one place. You can copy any command directly into your terminal.
+
+```bash
+# Project setup (Lesson 2)
+uv init smartnotes              # Create a new project
+uv run main.py                  # Run a file inside the project environment
+
+# Dependencies (Lesson 3)
+uv add --dev pytest pyright ruff  # Install dev tools (updates pyproject.toml + uv.lock + .venv)
+uv sync                          # Sync environment from lockfile (for teammates)
+
+# Linting and formatting (Lesson 4)
+uv run ruff check .              # Find bugs and style violations
+uv run ruff check --fix .        # Auto-fix safe issues
+uv run ruff format .             # Format code consistently
+uv run ruff format --check .     # Check formatting without changing files
+
+# Type checking (Lesson 5)
+uv run pyright                   # Check all type annotations
+
+# Testing (Lesson 6)
+uv run pytest                    # Run all tests
+
+# Version control (Lesson 7)
+git init                         # Initialize a repository
+git add .                        # Stage all files
+git commit -m "message"          # Record a snapshot
+git log --oneline                # View commit history
+
+# The complete verification pipeline (Lesson 7)
+uv run ruff check . && uv run pyright && uv run pytest
+```
+
+---
+
 ## Looking Ahead
 
 Your workbench is built. uv manages your project. pyproject.toml holds your configuration. ruff checks your style. pyright checks your types. pytest checks your behavior. Git records your history. Five tools, five axioms, one unified system protecting your code from the moment you start writing it.
