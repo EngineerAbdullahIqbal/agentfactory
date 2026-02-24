@@ -1,0 +1,420 @@
+---
+sidebar_position: 4
+title: "Ruff -- Your Code Quality Guardian"
+description: "Run ruff check and ruff format on your SmartNotes project to discover the difference between code that runs and code that is correct"
+keywords: ["ruff", "linter", "formatter", "ruff check", "ruff format", "F401", "E501", "I001", "code quality", "pycodestyle", "pyflakes", "isort", "auto-fix", "verification pipeline"]
+chapter: 15
+lesson: 4
+duration_minutes: 22
+
+# HIDDEN SKILLS METADATA
+skills:
+  - name: "Linter Output Reading"
+    proficiency_level: "A2"
+    category: "Technical"
+    bloom_level: "Apply"
+    digcomp_area: "Computational Thinking"
+    measurable_at_this_level: "Student can run uv run ruff check on a Python file, read the output lines, and explain what each rule code (F401, E501, I001) means by matching the prefix to its rule category"
+
+  - name: "Code Formatting Workflow"
+    proficiency_level: "A1"
+    category: "Technical"
+    bloom_level: "Apply"
+    digcomp_area: "Problem Solving"
+    measurable_at_this_level: "Student can run uv run ruff format on a Python file and describe what changed by comparing the before and after versions"
+
+learning_objectives:
+  - objective: "Run ruff check and interpret error codes in the output"
+    proficiency_level: "A2"
+    bloom_level: "Apply"
+    assessment_method: "Student runs uv run ruff check . on SmartNotes, reads each warning line, and matches the rule code prefix (F, E, I) to the correct rule category from the reference table"
+
+  - objective: "Run ruff format and explain the before-and-after changes"
+    proficiency_level: "A2"
+    bloom_level: "Understand"
+    assessment_method: "Student runs uv run ruff format . on a file with inconsistent style, then describes at least two specific formatting changes ruff applied"
+
+  - objective: "Distinguish linting errors from formatting preferences"
+    proficiency_level: "A1"
+    bloom_level: "Understand"
+    assessment_method: "Given a list of ruff outputs, student correctly classifies each as a linting issue (potential bug or logic problem) or a formatting issue (style preference with no impact on behavior)"
+
+cognitive_load:
+  new_concepts: 5
+  assessment: "5 concepts (linter defined, formatter defined, ruff check command and output, ruff format command and output, rule codes like F401/E501/I001) within A2 limit of 7"
+
+differentiation:
+  extension_for_advanced: "Explore ruff's full rule index at docs.astral.sh/ruff/rules and count how many rules exist. Compare the default rule set (E4, E7, E9, F) to the expanded set in SmartNotes and explain why the project enables more rules than the default."
+  remedial_for_struggling: "Focus on ruff check only. Run it once, read one warning, look up that single rule code. Ignore ruff format until the linting output makes sense."
+---
+
+# Ruff -- Your Code Quality Guardian
+
+In Lesson 3, James installed the discipline stack and configured every tool inside `pyproject.toml`. SmartNotes now has pytest, pyright, and ruff listed as dev dependencies, each with its own configuration section. But none of the tools have actually run yet. The configuration is in place. The verification has not started.
+
+Emma decides to test whether James understands the difference. She gives James a small block of Python code and asks him to type it into `main.py`. James types exactly what she says -- including a line that loads a library he never uses, a line that stores a value he never looks at again, and messy spacing that changes from line to line. He runs the file: `uv run main.py`. It prints the expected output. James leans back. "Works fine."
+
+Emma does not argue. She types one command into his terminal: `uv run ruff check .`. The screen fills with warnings. Five lines, each pointing to a specific problem that Python's interpreter silently ignored. James stares at the output. "But... it ran."
+
+"Running and being correct are different things," Emma says. "Python will execute code with unused libraries, forgotten values, and messy spacing. It does not care. Ruff does. Ruff catches what Python ignores -- before those small problems become big ones."
+
+---
+
+## The Problem Without a Linter
+
+James's code ran. Python did not complain. But the code had three problems that would cause real trouble on a team:
+
+**The unused library.** One line loaded an external library that was never used anywhere in the file. In a small file, this is clutter. In a large project with hundreds of files, unused libraries slow things down, confuse readers about what the file actually needs, and create false leads when debugging.
+
+**The stored-but-forgotten value.** One line saved a result that was never looked at again. This is almost always a bug. Either James forgot to use it (the work is wasted), or he made a typo and used a different name later (the result is lost). Python will never tell you. The code runs. The bug hides.
+
+**The inconsistent spacing.** Some lines had spaces around the equals sign and others did not. Mixed spacing makes code harder to read, and on a team of five developers, each person's style creates conflicts over appearance -- not over logic.
+
+These are not theoretical problems. They are the daily reality of every team that writes Python without automated quality checks. The solution is a **linter**: a tool that reads your code and reports problems that the language itself does not catch.
+
+---
+
+## Ruff Defined
+
+> **Ruff** is a Python linter and formatter written in Rust. It checks your code for bugs, style violations, and structural problems (linting), and it reformats your code to follow a consistent style (formatting). One tool replaces an entire ecosystem of older Python quality tools.
+
+Before ruff existed, a Python project that wanted thorough quality checks needed to install and configure multiple tools:
+
+| Old Tool | What It Did | Ruff Replacement |
+|----------|------------|------------------|
+| Flake8 | Linting (style + bugs) | `ruff check` |
+| Black | Formatting (consistent style) | `ruff format` |
+| isort | Import sorting | `ruff check` with `I` rules |
+| pyupgrade | Modernize old syntax | `ruff check` with `UP` rules |
+| autoflake | Remove unused imports | `ruff check --fix` with `F` rules |
+| flake8-bugbear | Common bug patterns | `ruff check` with `B` rules |
+
+Six tools, six configurations, six installation steps, six places where versions could conflict. Ruff replaces all of them with a single binary. It runs 10 to 100 times faster than these tools because it is written in Rust, not Python. And it is made by Astral -- the same company that built uv.
+
+Two concepts are central to understanding ruff, and they are different from each other:
+
+| Concept | What It Does | Analogy |
+|---------|-------------|---------|
+| **Linting** | Finds problems: bugs, unused code, style violations, import order | A building inspector checking for code violations |
+| **Formatting** | Fixes style: spacing, indentation, quote style, line length | A copy editor making every page look consistent |
+
+Linting finds problems. Formatting enforces style. A linting error might be a real bug (a name that does not exist anywhere in the code). A formatting change is never a bug -- it is a style preference (single quotes vs double quotes). Both matter, but for different reasons.
+
+---
+
+## Axiom IX in Action
+
+In Axiom IX from Chapter 14, you learned that verification is a pipeline -- not a manual checklist you remember to follow, but an automated sequence that runs every time you change code. Ruff is the first stage of that pipeline.
+
+Consider what happens without ruff. James finishes writing code. He runs it. It works. He commits. He opens a pull request. Emma reads the code and notices an unused library on line 3. She leaves a comment. James fixes it and pushes again. Emma notices inconsistent spacing on line 17. Another comment. Another fix. Another push. Three rounds of review for problems that have nothing to do with logic or design.
+
+With ruff, those problems never reach Emma. James runs `uv run ruff check .` before committing. The unused library is flagged. The inconsistent spacing is caught. James fixes both in seconds. The pull request arrives clean. Emma spends her time on what matters: design, correctness, and edge cases.
+
+This is Axiom IX in action. The verification is automated. The pipeline catches mechanical problems so that humans can focus on judgment problems.
+
+---
+
+## Practical Application
+
+### Step 1: Create a File With Problems
+
+To see ruff in action, you need a file with problems for it to find. Open `main.py` in your SmartNotes project and replace its contents with the following code.
+
+```python static
+import os
+import sys
+from collections import OrderedDict
+
+def add_note(title, content):
+    temp_result = len(content)
+    note = {"title": title, "content": content}
+    return note
+
+def search_notes(notes,query):
+    results=[]
+    for note in notes:
+        if query.lower() in note["title"].lower():
+            results.append(note)
+    return results
+
+if __name__ == "__main__":
+    my_notes = []
+    my_notes.append(add_note("Meeting", "Discuss project timeline"))
+    my_notes.append(add_note("Shopping", "Buy groceries"))
+    found = search_notes(my_notes, "meeting")
+    print(found)
+```
+
+:::note You do not need to understand this code yet
+This code uses Python features — functions, loops, lists, and more — that you will learn in later chapters. Right now, the goal is not to read the code. The goal is to see what ruff does with it. Just type the code exactly as shown, run the commands below, and focus on the tool's output.
+:::
+
+This code runs without errors. Python will execute it and produce the correct output. But it has problems that ruff will catch.
+
+### Step 2: Run ruff check
+
+Run the linter from the SmartNotes project root:
+
+```bash
+uv run ruff check .
+```
+
+**Output:**
+
+```
+main.py:1:8: F401 [*] `os` imported but unused
+main.py:2:8: F401 [*] `sys` imported but unused
+main.py:3:25: F401 [*] `collections.OrderedDict` imported but unused
+main.py:6:5: F841 Local variable `temp_result` is assigned to but never used
+Found 4 errors.
+[*] 3 fixable with the `--fix` option.
+```
+
+Every line follows the same format: **file:line:column: RULE_CODE message**. Read the first line: `main.py:1:8: F401 [*] 'os' imported but unused`. This tells you:
+
+| Part | Meaning |
+|------|---------|
+| `main.py` | The file with the problem |
+| `1:8` | Line 1, column 8 |
+| `F401` | The rule code (Pyflakes rule 401: unused import) |
+| `[*]` | This issue can be auto-fixed |
+| `` `os` imported but unused `` | The human-readable explanation |
+
+The rule code is the key to understanding what ruff found. Each code starts with a letter prefix that tells you which category of rules caught the problem:
+
+| Prefix | Rule Category | What It Catches | Example Code |
+|--------|--------------|-----------------|-------------|
+| **F** | Pyflakes | Unused imports, undefined names, unused variables | F401, F841 |
+| **E** | pycodestyle (errors) | PEP 8 style violations: indentation, whitespace, line length | E501, E711 |
+| **W** | pycodestyle (warnings) | PEP 8 warnings: whitespace, deprecated features | W291, W605 |
+| **I** | isort | Import sorting order | I001 |
+| **UP** | pyupgrade | Old Python syntax that can be modernized | UP006, UP035 |
+| **B** | flake8-bugbear | Common programming mistakes and design problems | B006, B905 |
+| **SIM** | flake8-simplify | Code that can be written more simply | SIM102, SIM110 |
+
+In the SmartNotes output, all four errors use **F** (Pyflakes) rules: three unused imports (F401) and one unused stored value (F841). The message says "Local variable `temp_result`" — that is the Python term for a value you store inside a function. In earlier lessons, we called this a "stored value" or a "stored-but-forgotten value." "Local variable" is the technical name for the same thing.
+
+You will learn the full definition in a later chapter. For now, the important point is that these are not style preferences. They are actual problems -- dead code that clutters the file and may indicate bugs.
+
+**Read and Predict**: The output says `[*]` next to the F401 errors but not next to the F841 error (unused variable). What do you think `[*]` means for the auto-fix behavior? Why might ruff be willing to auto-fix an unused import but not an unused variable?
+
+:::tip AI in Practice
+When you ask an AI assistant to write Python code, the result is not guaranteed to be clean. AI-generated code often includes extra imports, unused stored values, and inconsistent formatting -- exactly the problems ruff was built to catch. The AI is not wrong on purpose; it optimizes for working code, not clean code. That is why you never trust generated code by reading it. You run `uv run ruff check .` and let the tool verify what your eyes cannot. The faster code gets generated, the more you need automated verification.
+:::
+
+**Spot the Bug**: James asks an AI assistant to write a utility function. The AI generates this code:
+
+```python static
+import json
+import re
+
+def clean_title(title):
+    cleaned = re.sub(r'[^\w\s]', '', title)
+    return cleaned.strip()
+```
+
+Before running any tool, read the code yourself. Look at the two imports at the top and the function body below. Which import is never used in the function body? What ruff rule code would flag it? (Hint: check the rule prefix table above.)
+
+### Step 3: Auto-fix With --fix
+
+Ruff can fix many issues automatically. Run:
+
+```bash
+uv run ruff check --fix .
+```
+
+**Output:**
+
+```
+Found 4 errors (3 fixed, 1 remaining).
+```
+
+Open `main.py` again. The three unused import lines are gone. Ruff removed the dead imports automatically.
+
+The line `temp_result = len(content)` on line 6 is still there. Ruff flagged it but did not remove it because removing that line could change how the program behaves -- the code on the right side of the `=` might do something important in other situations. Ruff is conservative: it auto-fixes problems where the fix is safe (removing imports that are never used), and it flags problems where human judgment is needed (removing code that might be intentional).
+
+### Step 4: Run ruff format
+
+Linting found bugs. Now formatting fixes style. Run:
+
+```bash
+uv run ruff format .
+```
+
+**Output:**
+
+```
+1 file reformatted
+```
+
+Open `main.py` and compare the `search_notes` function before and after formatting:
+
+**Before ruff format:**
+
+```python static
+def search_notes(notes,query):
+    results=[]
+```
+
+**After ruff format:**
+
+```python static
+def search_notes(notes, query):
+    results = []
+```
+
+Ruff added a space after the comma (`notes,query` became `notes, query`) and spaces around the `=` sign (`results=[]` became `results = []`). These changes do not affect how the code runs. They affect how the code reads. Consistent spacing makes code scannable -- your eyes can parse structure without stumbling over inconsistencies.
+
+The formatting rules come from the `[tool.ruff.format]` section in your `pyproject.toml`:
+
+```toml
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+```
+
+Ruff formats with double quotes and spaces (not tabs). The line length limit comes from `[tool.ruff]`:
+
+```toml
+[tool.ruff]
+line-length = 88
+```
+
+Any line longer than 88 characters will be wrapped. The number 88 is a convention borrowed from Black, the Python formatter that ruff replaces.
+
+### Step 5: Verify Clean
+
+Run both commands again to confirm everything is resolved:
+
+```bash
+uv run ruff check .
+```
+
+**Output:**
+
+```
+Found 1 error.
+```
+
+The remaining error is the unused `temp_result` line. In real development, you would either use that stored value or remove the line entirely. For now, you know the difference: ruff check found the problems, ruff format fixed the style, and one issue remains that requires your judgment.
+
+Run the formatter check to confirm formatting is consistent:
+
+```bash
+uv run ruff format --check .
+```
+
+**Output:**
+
+```
+1 file already formatted
+```
+
+The `--check` flag tells ruff to verify formatting without making changes. If any file needed reformatting, ruff would report it and exit with a non-zero exit code -- useful in a CI pipeline where you want the build to fail if someone forgot to format their code.
+
+:::info Checkpoint: Verify your progress
+Run these two commands in the SmartNotes directory:
+```bash
+uv run ruff check .        # should show 1 error (the unused temp_result)
+uv run ruff format --check . # should show "1 file already formatted"
+```
+If you see these results, ruff is configured and working. Your `main.py` is formatted correctly with one known lint issue remaining (F841) that requires your judgment.
+:::
+
+---
+
+## Anti-Patterns
+
+Emma showed James these patterns after his first ruff session. Each one undermines the value of having a linter:
+
+| Anti-Pattern | What Happens | Why It Fails | The Fix |
+|---|---|---|---|
+| **Ignoring lint warnings** | James sees warnings, decides "it still runs," and commits anyway | Warnings accumulate; 3 become 30 become 300; nobody reads them anymore | Fix every warning before committing; use `--fix` for auto-fixable issues |
+| **Formatting by hand** | James adjusts spacing and quotes manually to match team style | Slow, inconsistent, and triggers style debates in code review | Run `uv run ruff format .` once; the tool is faster and more consistent than any human |
+| **`# noqa` everywhere** | James suppresses warnings by adding `# noqa: F401` to every flagged line | The warnings exist for a reason; suppressing them hides real problems | Only use `# noqa` when you have a documented reason to keep the flagged code |
+| **No rule selection in config** | Project uses ruff's defaults (only `E4`, `E7`, `E9`, and `F` rules) without expanding | Misses import sorting, modernization, common bugs, and simplification opportunities | Configure `[tool.ruff.lint] select` with the rules that match your project's standards |
+
+---
+
+## Try With AI
+
+### Prompt 1: Decode a Ruff Error Code
+
+```
+I ran ruff check on my Python project and got this error:
+
+main.py:1:8: F401 [*] `os` imported but unused
+
+Explain:
+1. What does each part of this line mean? (file, line, column, code, message)
+2. What is the F401 rule and why does it exist?
+3. What does the [*] symbol mean?
+4. If I wanted to see ALL pyflakes rules (not just F401), where would I look?
+5. What is the difference between F rules (Pyflakes) and E rules (pycodestyle)?
+```
+
+**What you're learning:** How to read linter output as a diagnostic tool, not a wall of noise. Every part of a ruff warning carries information -- the file path, the exact location, the rule category, and the auto-fix status. Learning to parse this format lets you quickly triage warnings by severity and category, the same way a doctor reads lab results by knowing which numbers matter.
+
+### Prompt 2: Linting vs Formatting
+
+```
+I am confused about the difference between ruff check and ruff format.
+
+Here is a Python function:
+
+def calculate_total(items,tax_rate):
+    import math
+    total=sum(items)
+    result = total * (1+tax_rate)
+    return result
+
+If I run ruff check, what will it find?
+If I run ruff format, what will it change?
+Are there any issues that BOTH commands would address?
+
+Explain the difference between a linting issue and a formatting issue
+using this specific code. Then tell me: in what order should I run
+these two commands, and why does the order matter?
+```
+
+**What you're learning:** The architectural distinction between finding problems (linting) and enforcing style (formatting). These are two separate concerns even though they are both about code quality. Understanding the difference lets you prioritize: linting errors might be real bugs; formatting changes are never bugs. Running them in the right order (check first, format second) means you fix logic problems before style problems.
+
+### Prompt 3: Generate Code, Then Lint It
+
+```
+Write a Python function called `find_duplicates` that takes a list of
+strings and returns only the strings that appear more than once.
+```
+
+**After the AI responds**, do not read the code looking for problems. Paste the AI's function into `main.py` (replacing the current contents) and run:
+
+```bash
+uv run ruff check .
+uv run ruff format --check .
+```
+
+If ruff reports issues, do not fix them by hand yet. First, ask the AI: *"Ruff found these issues in your code: [paste ruff output]. Why did you include these, and how should I fix them?"* Compare the AI's explanation to what you learned about rule codes in this lesson. Then run `uv run ruff check --fix .` and `uv run ruff format .` to clean up.
+
+**What you're learning:** This is the iterative cycle you will use throughout the course: generate code with AI, verify it with tools, ask AI to explain what the tools found, then fix and re-verify. You are not trusting the AI blindly, and you are not ignoring it either. The tools catch what reading alone cannot, and the AI helps you understand what the tools report. This three-way collaboration -- you, AI, and tools -- is how professional developers work.
+
+---
+
+## Key Takeaways
+
+1. **A linter finds problems that Python ignores.** Unused libraries, forgotten values, style violations, and common bugs all slip past Python silently. Ruff catches them before they accumulate.
+
+2. **Linting and formatting are different concerns.** `ruff check` finds bugs and violations (some are real problems). `ruff format` enforces consistent style (never a bug, always a readability improvement). Both matter, for different reasons.
+
+3. **Rule codes tell you exactly what ruff found.** Every warning starts with a prefix: `F` for Pyflakes (unused code, undefined names), `E` for pycodestyle (style violations), `I` for isort (import order), and so on. The prefix is your first triage step.
+
+4. **`--fix` is conservative by design.** Ruff auto-fixes problems where the fix is safe (removing unused imports) and flags problems where human judgment is needed (removing assignments that might be intentional). Trust the auto-fix; investigate what remains.
+
+5. **This is Axiom IX in practice.** Ruff is not a suggestion. It is the first stage of an automated verification pipeline. Run it before every commit, and mechanical quality problems never reach code review.
+
+---
+
+## Looking Ahead
+
+Ruff guards your code's style and structure. But there is a category of problems it cannot catch: type errors. An unused library is clutter. A wrong kind of data is a crash. When James passes a number where the code expects text, ruff will not say a word. Python will not complain either -- until the code fails while it is running.
+
+In Lesson 5, pyright enters the picture. It reads your code without running it and tells you exactly where the types do not match -- before a single line executes.

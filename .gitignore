@@ -65,6 +65,7 @@ local/api/chatkit-server/.env
 .claude/logs/
 .claude/context/
 .claude/handoffs/
+.mcp.json
 .env
 
 
