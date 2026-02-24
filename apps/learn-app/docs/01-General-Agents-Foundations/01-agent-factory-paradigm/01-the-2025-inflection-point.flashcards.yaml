@@ -1,0 +1,137 @@
+deck:
+  id: "ch01-2025-inflection-point"
+  title: "The 2025 Inflection Point and The Agent Maturity Model"
+  description: "Convergent evidence for the 2025 AI transformation and the Incubator-to-Specialist maturity model that structures AI-native development."
+  tags: ["inflection-point", "agent-maturity-model", "general-agents", "custom-agents"]
+  version: 1
+
+cards:
+  - id: "ch01-2025-inflection-point-001"
+    front: "In the 2025 inflection point, what three independent trends converged simultaneously?"
+    back: "1. AI capability reached production quality\n2. Mainstream adoption passed the tipping point\n3. Enterprises bet billions on AI-native architecture"
+    tags: ["inflection-point", "convergent-evidence"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-002"
+    front: "Why is convergent validation from independent sources stronger than evidence from a single source?"
+    back: "Independent sources (academia, surveys, startups, corporations) have different incentives and methodologies. When they all reach the same conclusion, it eliminates the possibility that one source's bias or agenda is driving the signal."
+    tags: ["convergent-evidence", "critical-thinking"]
+    difficulty: "intermediate"
+    why: "How would you evaluate a technology claim that comes from only one category of source?"
+
+  - id: "ch01-2025-inflection-point-003"
+    front: "At the 2025 ICPC World Finals, what unprecedented result did the OpenAI ensemble achieve?"
+    back: "A perfect score — solving all 12 problems correctly within the 5-hour time limit, surpassing the winning human team (11 of 12)."
+    tags: ["icpc", "capability-breakthroughs"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-004"
+    front: "Why does software self-disruption move faster and more completely than external disruption of other industries?"
+    back: "In other industries (agriculture, manufacturing), disruption comes from outside — affected workers can adapt gradually. In software, the tools that build software change how software gets built, so development tools, workflows, and mental models all shift simultaneously with no gradual adaptation option."
+    tags: ["self-disruption", "paradigm-shift"]
+    difficulty: "intermediate"
+    why: "What happens to developers who treat AI tools as optional add-ons rather than fundamental workflow changes?"
+
+  - id: "ch01-2025-inflection-point-005"
+    front: "How is the $3 trillion developer economy calculated?"
+    back: "30 million professional developers globally × $100,000 average annual economic value (salary, benefits, productivity multipliers) = $3 trillion."
+    tags: ["developer-economy", "market-size"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-006"
+    front: "Why do General Agents build Custom Agents rather than competing with them?"
+    back: "They serve different stages of a progression. General Agents explore requirements and prototype solutions (incubation). Once patterns stabilize and requirements crystallize, that understanding becomes the specification for a Custom Agent optimized for reliability and scale. The incubator gives birth to the specialist."
+    tags: ["agent-maturity-model", "general-agents", "custom-agents"]
+    difficulty: "intermediate"
+    why: "What would go wrong if you tried to build a Custom Agent without any incubation phase?"
+
+  - id: "ch01-2025-inflection-point-007"
+    front: "What are the two stages of the Agent Maturity Model?"
+    back: "1. Incubation (General Agents) — explore and prototype\n2. Specialization (Custom Agents) — execute at scale with reliability"
+    tags: ["agent-maturity-model"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-008"
+    front: "Why does premature specialization — building a Custom Agent before requirements stabilize — lead to failure?"
+    back: "Without incubation, you don't yet understand the true requirements, edge cases, or architecture decisions. You end up over-engineering a solution to the wrong problem, building constraints around undiscovered needs, and shipping a brittle system that must be rebuilt."
+    tags: ["anti-patterns", "premature-specialization"]
+    difficulty: "intermediate"
+    why: "How would you recognize that you're prematurely specializing in a real project?"
+
+  - id: "ch01-2025-inflection-point-009"
+    front: "In the Agent Maturity Model, what are the Director's four responsibilities when working with General Agents?"
+    back: "1. Set the Intent (describe the goal)\n2. Provide Access (give the agent your codebase context)\n3. Review the Work (evaluate what the agent builds)\n4. Course Correct (provide feedback for adaptation)"
+    tags: ["director-role", "general-agents"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-010"
+    front: "How does dynamic planning in General Agents differ from the old approach of micromanaging AI?"
+    back: "In the old approach, you created the plan yourself and fed AI specific instructions step-by-step. With dynamic planning, you provide just a goal and the agent decomposes it into subtasks on the fly, adapting the plan as new information emerges. Your focus shifts from syntax and code lines to features and user experience."
+    tags: ["dynamic-planning", "general-agents"]
+    difficulty: "intermediate"
+    why: "Why does dynamic planning require stronger specification skills from the developer than micromanaging does?"
+
+  - id: "ch01-2025-inflection-point-011"
+    front: "In the Agent Maturity Model, what is a General Agent optimized for versus a Custom Agent?"
+    back: "General Agent: optimized for flexibility and exploration.\nCustom Agent: optimized for reliability and efficiency."
+    tags: ["agent-maturity-model", "optimization"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-012"
+    front: "Why do Custom Agents (Specialists) exist when General Agents are more powerful and flexible?"
+    back: "General Agent power comes with costs that don't scale: slower speed (dynamic reasoning), higher cost per request, variable reliability, and harder governance. Custom Agents solve these production problems by executing predefined workflows with consistency, speed, and built-in guardrails — at a fraction of the cost and at volume."
+    tags: ["custom-agents", "production", "scaling"]
+    difficulty: "intermediate"
+    why: "What production metrics would signal it's time to evolve from a General Agent to a Custom Agent?"
+
+  - id: "ch01-2025-inflection-point-013"
+    front: "According to the Stack Overflow 2025 Developer Survey, what percentage of professional developers use or plan to use AI coding tools?"
+    back: "84%, with 51% reporting daily use."
+    tags: ["adoption", "stack-overflow"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-014"
+    front: "How does context-aware reasoning in modern General Agents differ from the old way of working with AI?"
+    back: "Old way: you manually pasted files and spoon-fed context; AI failed if it needed information from a different file. New way: the agent scans your entire repository, observes your tech stack and patterns, then plans accordingly — reasoning about your specific codebase without you explaining it."
+    tags: ["context-awareness", "general-agents"]
+    difficulty: "intermediate"
+    why: "Why does repository-level context make specification writing more important, not less?"
+
+  - id: "ch01-2025-inflection-point-015"
+    front: "According to the DORA 2025 Report, what is the median daily AI tool usage among development professionals?"
+    back: "2 hours per day — roughly one-quarter of the workday."
+    tags: ["adoption", "dora-report"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-016"
+    front: "Why is the output of successful incubation described as 'crystallized understanding' rather than just 'working code'?"
+    back: "Incubation produces more than code: it reveals discovered requirements you didn't anticipate, patterns worth preserving, edge cases worth handling, and architecture decisions that proved themselves. This crystallized understanding becomes the specification — the 'genetic material' — for building the Custom Agent."
+    tags: ["incubation", "crystallization"]
+    difficulty: "advanced"
+    why: "How would the quality of a Custom Agent differ if built from crystallized understanding versus from an initial requirements document?"
+
+  - id: "ch01-2025-inflection-point-017"
+    front: "What are the three anti-patterns in the Agent Maturity Model?"
+    back: "1. Premature Specialization — building Custom Agents before requirements stabilize\n2. Perpetual Incubation — using General Agents for production workloads indefinitely\n3. Skipping Incubation — specifying Custom Agents without exploration first"
+    tags: ["anti-patterns", "agent-maturity-model"]
+    difficulty: "intermediate"
+
+  - id: "ch01-2025-inflection-point-018"
+    front: "Why do technology transition opportunity windows typically close within 3-5 years?"
+    back: "Early adopters shape best practices, build compounding expertise, and define conventions. By year 3-5, practices have settled — late arrivals learn someone else's conventions instead of contributing to them, and compete against people with years of built intuition."
+    tags: ["opportunity-window", "career-strategy"]
+    difficulty: "intermediate"
+    why: "How does contributing to shaping a methodology differ from learning an established one?"
+
+  - id: "ch01-2025-inflection-point-019"
+    front: "In the Agent Maturity Model, what are the Builder's four responsibilities when creating Custom Agents?"
+    back: "1. Define Purpose Precisely (scope, constraints, success criteria)\n2. Build Guardrails (hard safety limits, not suggestions)\n3. Create Specialized Components (optimized prompts, tools, workflows)\n4. Deploy as Product (monitoring, logging, operational excellence)"
+    tags: ["builder-role", "custom-agents"]
+    difficulty: "basic"
+
+  - id: "ch01-2025-inflection-point-020"
+    front: "Why does the Agent Factory feedback loop — where production data feeds back into the Incubator — create a compounding advantage?"
+    back: "Each deployed Specialist generates real usage data revealing gaps, new requirements, and failure patterns. The Incubator uses this data to improve existing Specialists and prototype new ones. Each cycle produces better agents faster, creating a flywheel where operational experience accelerates development."
+    tags: ["agent-factory", "feedback-loop"]
+    difficulty: "advanced"
+    why: "What breaks if a company deploys Custom Agents but never feeds production data back to their General Agent workflow?"
