@@ -4,8 +4,8 @@ export const CardSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/, "Must be kebab-case"),
   front: z.string().min(10).max(300),
   back: z.string().min(10).max(500),
-  tags: z.array(z.string()).optional(),
-  difficulty: z.enum(["basic", "intermediate", "advanced"]).optional(),
+  tags: z.array(z.string()).min(1),
+  difficulty: z.enum(["basic", "intermediate", "advanced"]),
   why: z.string().max(200).optional(),
 });
 

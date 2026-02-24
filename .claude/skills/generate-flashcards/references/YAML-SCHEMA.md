@@ -68,7 +68,7 @@ cards:
 
 - Plain text with `\n` for line breaks
 - Concise but complete
-- **Must NOT start with "Yes" or "No"** (schema validation rejects these)
+- **Must NOT start with "Yes" or "No"** (the validator script rejects these)
 
 ### card.tags
 

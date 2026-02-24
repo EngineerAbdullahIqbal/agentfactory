@@ -80,7 +80,7 @@ export function validateDecks(decks: LoadedDeck[]): {
     // 6. Difficulty distribution warning
     const diffCounts: Record<string, number> = {};
     for (const card of parsed.cards) {
-      const d = card.difficulty ?? "basic";
+      const d = card.difficulty;
       diffCounts[d] = (diffCounts[d] || 0) + 1;
     }
     const total = parsed.cards.length;

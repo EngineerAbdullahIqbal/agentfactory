@@ -101,8 +101,8 @@ Every card must make sense in isolation. A student reviewing cards 3 weeks later
 ### 1. Find the Lesson
 
 ```bash
-# "ch 5" or "chapter 5":
-ls -d apps/learn-app/docs/*/05-*/
+# "ch N" or "chapter N" — substitute the chapter number:
+ls -d apps/learn-app/docs/*/NN-*/
 
 # Bare lesson name:
 find apps/learn-app/docs -name "*lesson-slug*" -name "*.md"
@@ -167,7 +167,7 @@ Read through your cards as if you're a student who read the lesson last month:
 - [ ] Are the thinking cards actually testing understanding, or just recall with extra words?
 - [ ] Did I skip any concept that a student would be embarrassed not to know?
 - [ ] Is any card testing two things? Split it.
-- [ ] Does any back start with "Yes" or "No"? Rephrase. (Schema validation rejects these.)
+- [ ] Does any back start with "Yes" or "No"? Rephrase. (The validator script rejects these.)
 
 ### 6. Write the YAML
 
@@ -230,7 +230,7 @@ When generating for an entire chapter:
 | `why` repeats the front                   | Push to a different dimension: implications, prevention, adjacent concepts |
 | Too many cards about minor details        | Would a student be embarrassed not to know this? If not, cut it.           |
 | YAML special chars break parsing          | Quote strings with `: # " '`                                               |
-| Card back starts with "Yes"/"No"          | Schema validation fails. Rephrase directly.                                |
+| Card back starts with "Yes"/"No"          | Validator rejects these. Rephrase directly.                                |
 
 ## Report
 
