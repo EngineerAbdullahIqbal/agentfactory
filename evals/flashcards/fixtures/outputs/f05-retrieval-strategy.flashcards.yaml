@@ -14,7 +14,7 @@ cards:
 
   - id: "eval-f05-retrieval-strategy-002"
     front: "Why does vector retrieval help conceptual queries?"
-    back: "It captures semantic similarity, surfacing relevant ideas even when query and document wording differ significantly."
+    back: "It captures semantic similarity between concepts, surfacing relevant ideas even when the query and document use significantly different wording or terminology."
     tags: ["vector-retrieval", "semantics"]
     difficulty: "intermediate"
     why: "How would you verify semantic relevance quality in production?"
@@ -23,24 +23,24 @@ cards:
     front: "What is the purpose of hybrid retrieval?"
     back: "To combine exact keyword matches with semantically similar candidates in one retrieval flow."
     tags: ["hybrid-retrieval"]
-    difficulty: "basic"
+    difficulty: "intermediate"
 
   - id: "eval-f05-retrieval-strategy-004"
     front: "How does two-stage retrieval balance recall and precision?"
-    back: "Broad candidate generation maximizes recall, then reranking increases precision by prioritizing truly relevant evidence."
+    back: "Broad candidate generation maximizes recall by casting a wide net, then reranking increases precision by prioritizing truly relevant evidence for the final context window."
     tags: ["two-stage", "ranking"]
     difficulty: "intermediate"
     why: "Why is reranking valuable when context window is limited?"
 
   - id: "eval-f05-retrieval-strategy-005"
-    front: "Name the two stages in the recommended retrieval pipeline."
+    front: "What are the two stages in the recommended retrieval pipeline?"
     back: "Candidate generation followed by reranking."
     tags: ["pipeline", "stages"]
     difficulty: "basic"
 
   - id: "eval-f05-retrieval-strategy-006"
     front: "Why can skipping reranking degrade answer quality?"
-    back: "Loose candidates can flood prompt context, pushing out high-signal evidence and increasing irrelevant or inconsistent responses."
+    back: "Loose candidates can flood prompt context, pushing out high-signal evidence and increasing irrelevant or inconsistent responses that reduce the model's answer reliability."
     tags: ["reranking", "quality"]
     difficulty: "intermediate"
     why: "How would you identify this failure pattern from logs?"

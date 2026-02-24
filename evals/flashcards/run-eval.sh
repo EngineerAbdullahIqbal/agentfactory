@@ -16,6 +16,7 @@ BASELINE_PATH=""
 WRITE_BASELINE_PATH=""
 ONLY_CASE=""
 TRIALS_LIMIT=""
+GRADE_LIVE=false
 
 usage() {
   cat <<USAGE
@@ -25,6 +26,7 @@ Options:
   --cases <path>            Dataset cases JSON (default: $CASES_PATH)
   --manifest <path>         Run manifest JSON (default: $MANIFEST_PATH)
   --run-id <id>             Run id label
+  --grade-live              Use live dataset + live manifest automatically
   --with-llm <mode>         auto|always|never (default: $WITH_LLM)
   --judge-model <model>     LLM judge model (default: $JUDGE_MODEL)
   --judge-cmd <cmd>         Custom judge command that reads prompt from stdin
@@ -70,6 +72,10 @@ while [[ $# -gt 0 ]]; do
       WRITE_BASELINE_PATH="$2"
       shift 2
       ;;
+    --grade-live)
+      GRADE_LIVE=true
+      shift 1
+      ;;
     --only-case)
       ONLY_CASE="$2"
       shift 2
@@ -89,6 +95,14 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ "$GRADE_LIVE" == true ]]; then
+  CASES_PATH="evals/flashcards/datasets/live-docs-2026-02-24.json"
+  MANIFEST_PATH="evals/flashcards/fixtures/manifests/live-run-2026-02-24.json"
+  if [[ "$RUN_ID" == flashcards-eval-* ]]; then
+    RUN_ID="live-$(date +%Y%m%d-%H%M%S)"
+  fi
+fi
 
 RESULTS_DIR="evals/flashcards/reports/$RUN_ID"
 DET_DIR="$RESULTS_DIR/deterministic"

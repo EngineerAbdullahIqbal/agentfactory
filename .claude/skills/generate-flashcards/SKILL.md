@@ -11,7 +11,7 @@ description: >-
 
 # Generate Flashcards
 
-Generate two kinds of cards from lesson content — **recall cards** that lock in critical facts, and **thinking cards** that force genuine understanding. Half and half. That's it.
+Generate two kinds of cards from lesson content — **recall cards** that lock in critical facts, and **thinking cards** that force genuine understanding. Half and half. That's it. Always plan first, use your tasks tool to organize the plan and track your progress.
 
 ## What Makes a Good Card
 
@@ -173,9 +173,46 @@ Skip: anecdotes, historical color, motivational asides, repeated explanations of
 
 **Card density**: Aim for ~1 card per 150-200 words of prose content (don't count code blocks or configuration examples). Floor: 8 cards (thinner lessons still have core concepts). Ceiling: 25 cards (longer lessons — pick the most important, don't exhaustively card everything). If a lesson has fewer than 8 card-worthy concepts, generate fewer cards — never pad a deck with filler.
 
+**Enumeration rule**: When a lesson is structured around a numbered list (e.g., "8 objections", "5 deployment stages", "4 monetization models"), each item deserves at least one card — either recall (name/define it) or thinking (test understanding of it). Don't summarize N items into 2 cards. A student who "sort of remembers 3 of the 8" has failed to learn the framework.
+
+### 3.5 Extract Concept List
+
+**Before writing any cards**, produce a numbered list of every card-worthy concept from the lesson. Tag each as a recall or thinking candidate:
+
+- **R** = recall candidate (definition, named framework, enumeration, key term)
+- **T** = thinking candidate (causal mechanism, tradeoff, decision, "why X and not Y")
+
+Example:
+
+```
+1. [R] SaaSpocalypse — definition and trigger event
+2. [R] Agent Triangle — three deployment paths
+3. [T] Why legal tech got hit hardest
+4. [R] Digital FTE hours vs Human FTE hours
+5. [T] Why skipping Incubator stage fails
+6. [R] Golden Dataset — definition and threshold
+7. [T] Why open-source plugins were more threatening than proprietary ones
+```
+
+**Validation checks on the concept list:**
+
+- Does every H2/H3 heading in the lesson have at least one concept?
+- Are any key terms defined in the lesson but missing from the list?
+- If the lesson introduces a numbered framework (e.g., "8 objections"), is each item represented?
+- Is the R/T split roughly balanced?
+
+**Only then proceed to card generation, working from this list.** Every card you write must trace back to a concept on this list. If you generate a card that doesn't map to a listed concept, either add the concept to the list (it was genuinely missing) or cut the card (it's filler).
+
 ### 4. Generate Cards
 
-Write **recall cards** for things worth memorizing. Write **thinking cards** for things worth understanding. Aim for roughly half and half. Apply the three learning science principles from `references/LEARNING-SCIENCE.md`: **Minimum Information** (one concept per card), **Retrieval Practice** (force recall, never hint at the answer), and **Elaborative Interrogation** (thinking cards push deeper with `why`).
+Work through your concept list from step 3.5. For each concept, **commit to the card type BEFORE writing**:
+
+1. Read the concept and its R/T tag
+2. **Declare**: "This is a RECALL card" or "This is a THINKING card"
+3. Apply the corresponding rules below — no mixing
+4. If you find yourself writing a recall front with a thinking-length back, **STOP**. Either trim the back to a fact (recall) or rewrite the front as a Why/How question (thinking). Never let type emerge implicitly from what you happened to write.
+
+Apply the three learning science principles from `references/LEARNING-SCIENCE.md`: **Minimum Information** (one concept per card), **Retrieval Practice** (force recall, never hint at the answer), and **Elaborative Interrogation** (thinking cards push deeper with `why`).
 
 **Recall cards**:
 
@@ -217,6 +254,36 @@ Read through your cards as if you're a student who read the lesson last month:
 - [ ] Are recall/thinking counts roughly 50/50 (target band: 45%-55% each)?
 - [ ] Do **no more than 2** thinking fronts use "Why does the [source] argue/say/recommend..."?
 - [ ] Difficulty distribution: basic 25-35%, intermediate 45-55%, advanced 15-25%? (If basic >40%, promote some cards.)
+- [ ] Every number, percentage, and proper noun on a card appears **verbatim in the source lesson**. If you inferred or calculated a figure, either verify it against the text or remove it.
+
+### 5.5 Coverage Audit
+
+After generating all cards, re-read the lesson's headings and key lists. Check each:
+
+- [ ] Every H2/H3 heading has at least one card
+- [ ] Every numbered list in the lesson (e.g., "eight objections", "three pillars", "four monetization models") has:
+  - One recall card that names/enumerates the items
+  - At least one thinking card that tests understanding of an individual item
+- [ ] If the lesson introduces N named concepts and your deck has fewer than N/2 cards, you're under-covering
+- [ ] Cross-reference against your concept list from step 3.5 — any uncarded concepts?
+
+If a section is deliberately skipped (anecdote, motivational aside), note it in the report. Otherwise, add cards.
+
+### 5.6 Type Purity Check
+
+Run a focused pass on every card to catch hybrids:
+
+**For each thinking card**, read ONLY the back:
+
+1. Does it contain a BECAUSE, THEREFORE, or causal link?
+2. Could someone memorize this back as a bullet point? If yes → reclassify as recall (trim back, remove `why`).
+
+**For each recall card**, read ONLY the back:
+
+1. Is it under 15 words?
+2. Does it contain "because" or an explanation? If yes → reclassify as thinking (add `why`, rewrite front as Why/How).
+
+If any card changes type, update its difficulty accordingly (recall defaults to basic/intermediate, thinking defaults to intermediate/advanced).
 
 ### 6. Write the YAML
 
@@ -299,23 +366,28 @@ When generating for related lessons (same chapter, same part, or book-level page
 
 ## Common Mistakes
 
-| What goes wrong                                | How to fix it                                                                 |
-| ---------------------------------------------- | ----------------------------------------------------------------------------- |
-| All cards feel the same                        | Check: is each card clearly recall OR thinking? Not a muddy mix.              |
-| Cards aren't self-contained                    | Add context to the front: "In the Agent Factory model, ..."                   |
-| Thinking cards are just recall with "Why"      | Read the back: does it have BECAUSE/THEREFORE reasoning? If not, it's recall. |
-| Recall back is a paragraph                     | Under 15 words. Just the fact. No "because", no elaboration.                  |
-| Thinking back is an essay                      | 20-40 words. Key insight + one reasoning step. Split if longer.               |
-| Front has "X and Y?" compound question         | Split into two cards. One concept per card, always.                           |
-| All thinking fronts say "Why does the text..." | Max 2 per deck. Use scenarios, counterfactuals, comparisons instead.          |
-| 50% basic difficulty                           | Target: 25-35% basic. Promote complex recall to intermediate.                 |
-| 0% advanced cards                              | Target: 15-25%. Promote deepest thinking cards.                               |
-| `why` repeats the front                        | Push to a different dimension: implications, prevention, adjacent concepts    |
-| Too many cards about minor details             | Would a student be embarrassed not to know this? If not, cut it.              |
-| ID uses shortened prefix (e.g. `preface-001`)  | Card IDs must be `deck.id-NNN` (full prefix, no abbreviations).               |
-| YAML special chars break parsing               | Quote strings with `: # " '`                                                  |
-| Card back starts with "Yes"/"No"               | Validator rejects these. Rephrase directly.                                   |
-| Same concept in two sibling decks              | Skip or card from a different angle. Never duplicate.                         |
+| What goes wrong                                 | How to fix it                                                                             |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| All cards feel the same                         | Check: is each card clearly recall OR thinking? Not a muddy mix.                          |
+| Cards aren't self-contained                     | Add context to the front: "In the Agent Factory model, ..."                               |
+| Thinking cards are just recall with "Why"       | Read the back: does it have BECAUSE/THEREFORE reasoning? If not, it's recall.             |
+| Recall back is a paragraph                      | Under 15 words. Just the fact. No "because", no elaboration.                              |
+| Thinking back is an essay                       | 20-40 words. Key insight + one reasoning step. Split if longer.                           |
+| Front has "X and Y?" compound question          | Split into two cards. One concept per card, always.                                       |
+| All thinking fronts say "Why does the text..."  | Max 2 per deck. Use scenarios, counterfactuals, comparisons instead.                      |
+| 50% basic difficulty                            | Target: 25-35% basic. Promote complex recall to intermediate.                             |
+| 0% advanced cards                               | Target: 15-25%. Promote deepest thinking cards.                                           |
+| `why` repeats the front                         | Push to a different dimension: implications, prevention, adjacent concepts                |
+| Too many cards about minor details              | Would a student be embarrassed not to know this? If not, cut it.                          |
+| ID uses shortened prefix (e.g. `preface-001`)   | Card IDs must be `deck.id-NNN` (full prefix, no abbreviations).                           |
+| YAML special chars break parsing                | Quote strings with `: # " '`                                                              |
+| Card back starts with "Yes"/"No"                | Validator rejects these. Rephrase directly.                                               |
+| Same concept in two sibling decks               | Skip or card from a different angle. Never duplicate.                                     |
+| Thinking card back is a memorizable list        | Disguised recall. Read the back: is there BECAUSE/THEREFORE? If not, reclassify.          |
+| Recall back over 15 words                       | It's either a thinking card in disguise (add `why`, rewrite front) or too verbose (trim). |
+| Skipped entire sections of a numbered framework | Enumeration rule: N items = N cards minimum. Don't summarize 8 things into 2 cards.       |
+| No concept list before generation               | Always extract concepts first (step 3.5). Cards without a concept map drift.              |
+| Unverified numbers on cards                     | Every stat must appear verbatim in the source. Don't infer or calculate figures.          |
 
 ## Report
 
@@ -328,11 +400,14 @@ Why fields: N
 Ratios: recall=<0.00>, thinking=<0.00>, thinking-fronts-with-why/how=<0.00>
 ID format: PASS/FAIL (`deck.id-NNN`)
 Fronts end with '?': PASS/FAIL
-Recall backs ≤15 words: PASS/FAIL (longest: N words)
-Thinking backs 20-40 words: PASS/FAIL (longest: N words)
+Recall backs ≤15 words: PASS/FAIL (longest: N words, card: <id>)
+Thinking backs 20-40 words: PASS/FAIL (shortest: N, longest: N, violators: <ids>)
 Compound questions: PASS/FAIL (N found)
 "Why does the [source]..." fronts: N (max 2)
 Difficulty: basic: N (NN%), intermediate: N (NN%), advanced: N (NN%)
+Factual verification: PASS/FAIL (unverified figures: <ids>)
+Type purity: PASS/FAIL (hybrids reclassified: N)
+Coverage: N concepts extracted, N carded, N skipped (list skipped sections if any)
 ```
 
 ## References

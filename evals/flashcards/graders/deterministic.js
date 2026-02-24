@@ -46,14 +46,7 @@ function safeWordCount(text) {
 }
 
 function isThinkingCard(card) {
-  if (card && typeof card.why === "string" && card.why.trim()) {
-    return true;
-  }
-  const front = String(card?.front || "");
-  if (/\b(why|how)\b/i.test(front)) {
-    return true;
-  }
-  return false;
+  return card && typeof card.why === "string" && card.why.trim().length > 0;
 }
 
 function hasFormula(text) {
@@ -87,7 +80,9 @@ function sumWeights(checks, onlyPassed = false) {
 function evaluateCase(caseDef, trialDef, repoRoot) {
   const yaml = loadYamlModule(repoRoot);
   const expected = caseDef.expected || {};
-  const deckPaths = Array.isArray(trialDef?.deck_paths) ? trialDef.deck_paths : [];
+  const deckPaths = Array.isArray(trialDef?.deck_paths)
+    ? trialDef.deck_paths
+    : [];
   const checks = [];
 
   const shouldGenerate = Boolean(expected.should_generate);
@@ -122,7 +117,8 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
   if (!shouldGenerate) {
     const totalWeight = sumWeights(checks);
     const passedWeight = sumWeights(checks, true);
-    const deterministicScore = totalWeight === 0 ? 0 : Math.round((passedWeight / totalWeight) * 100);
+    const deterministicScore =
+      totalWeight === 0 ? 0 : Math.round((passedWeight / totalWeight) * 100);
     const hardPass = checks.every((c) => !c.hard || c.pass);
 
     return {
@@ -186,6 +182,9 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
   let relationshipCardCount = 0;
   let recallCount = 0;
   let thinkingCount = 0;
+  let basicCount = 0;
+  let intermediateCount = 0;
+  let advancedCount = 0;
 
   const globalCardIds = new Set();
   const frontBackSeen = new Set();
@@ -197,6 +196,10 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
   let recallNoWhyCount = 0;
   let recallTotalForNoWhy = 0;
   let thinkingWhyHowFrontCount = 0;
+  const recallBackOverLimit = [];
+  const thinkingBackOutOfRange = [];
+  const compoundQuestionErrors = [];
+  const sourceArguePerDeck = new Map();
 
   for (const deck of parsedDecks) {
     const obj = deck.parsed;
@@ -242,12 +245,16 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
         typeof card.difficulty === "string";
 
       if (!requiredFieldsPresent) {
-        cardFieldErrors.push(`${deck.relPath} has card with missing required fields`);
+        cardFieldErrors.push(
+          `${deck.relPath} has card with missing required fields`,
+        );
         continue;
       }
 
       if (!card.front.trim().endsWith("?")) {
-        noQuestionMarkErrors.push(`${deck.relPath}:${card.id} front should end with '?'`);
+        noQuestionMarkErrors.push(
+          `${deck.relPath}:${card.id} front should end with '?'`,
+        );
       }
 
       if (!localIds.has(card.id)) {
@@ -265,7 +272,9 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
       const escapedDeckId = deckObj.id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const prefixPattern = new RegExp(`^${escapedDeckId}-\\d{3}$`);
       if (!prefixPattern.test(card.id)) {
-        cardIdPatternErrors.push(`${deck.relPath}:${card.id} should match ${deckObj.id}-NNN`);
+        cardIdPatternErrors.push(
+          `${deck.relPath}:${card.id} should match ${deckObj.id}-NNN`,
+        );
       }
 
       if (!Array.isArray(card.tags) || card.tags.length < 1) {
@@ -273,11 +282,15 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
       }
 
       if (!["basic", "intermediate", "advanced"].includes(card.difficulty)) {
-        invalidDifficultyErrors.push(`${deck.relPath}:${card.id} has invalid difficulty`);
+        invalidDifficultyErrors.push(
+          `${deck.relPath}:${card.id} has invalid difficulty`,
+        );
       }
 
       if (/^(yes|no)\b/i.test(card.back.trim())) {
-        yesNoBackErrors.push(`${deck.relPath}:${card.id} back starts with Yes/No`);
+        yesNoBackErrors.push(
+          `${deck.relPath}:${card.id} back starts with Yes/No`,
+        );
       }
 
       const frontNorm = normalizeText(card.front);
@@ -289,7 +302,13 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
         duplicateFrontBackCount += 1;
       }
 
+      // Difficulty counting
+      if (card.difficulty === "basic") basicCount += 1;
+      else if (card.difficulty === "intermediate") intermediateCount += 1;
+      else if (card.difficulty === "advanced") advancedCount += 1;
+
       const thinking = isThinkingCard(card);
+      const backWordCount = safeWordCount(card.back);
       if (thinking) {
         thinkingCount += 1;
         thinkingTotalForWhy += 1;
@@ -298,6 +317,11 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
         }
         if (/\b(why|how)\b/i.test(card.front)) {
           thinkingWhyHowFrontCount += 1;
+        }
+        if (backWordCount < 20 || backWordCount > 40) {
+          thinkingBackOutOfRange.push(
+            `${deck.relPath}:${card.id} back=${backWordCount}w`,
+          );
         }
       } else {
         recallCount += 1;
@@ -309,27 +333,132 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
         if (safeWordCount(card.front) < 40) {
           recallUnder40Count += 1;
         }
+        if (backWordCount > 15) {
+          recallBackOverLimit.push(
+            `${deck.relPath}:${card.id} back=${backWordCount}w`,
+          );
+        }
+      }
+
+      // Compound question detection: front has two question-word clauses joined by "and"
+      const front = card.front;
+      if (
+        /\band\b/i.test(front) &&
+        /\b(what|why|how|which|when|where|who)\b.*\band\b.*\b(what|why|how|which|when|where|who)\b/i.test(
+          front,
+        )
+      ) {
+        compoundQuestionErrors.push(`${deck.relPath}:${card.id}`);
+      }
+
+      // "Why does the [source]..." template tracking per deck
+      if (
+        /why does the\s+(text|lesson|source|preface|chapter|book|thesis|argument)\s+(argue|say|recommend|claim|state)/i.test(
+          front,
+        )
+      ) {
+        const deckKey = deck.relPath;
+        sourceArguePerDeck.set(
+          deckKey,
+          (sourceArguePerDeck.get(deckKey) || 0) + 1,
+        );
       }
 
       if (hasFormula(card.front) || hasFormula(card.back)) {
         formulaCardCount += 1;
       }
 
-      if (/\b(vs\.?|versus|compare|difference|relationship|leads to|because|tradeoff|trade-off)\b/i.test(`${card.front} ${card.back}`)) {
+      if (
+        /\b(vs\.?|versus|compare|difference|relationship|leads to|because|tradeoff|trade-off)\b/i.test(
+          `${card.front} ${card.back}`,
+        )
+      ) {
         relationshipCardCount += 1;
       }
     }
   }
 
-  checks.push(check(deckSchemaErrors.length === 0, "deck_schema_valid", true, 8, deckSchemaErrors.join(" | ")));
-  checks.push(check(cardFieldErrors.length === 0, "card_required_fields_present", true, 8, cardFieldErrors.join(" | ")));
-  checks.push(check(cardIdPatternErrors.length === 0, "card_id_pattern_full_prefix", true, 8, cardIdPatternErrors.join(" | ")));
-  checks.push(check(localDupErrors.length === 0, "card_id_unique_within_deck", true, 6, localDupErrors.join(" | ")));
-  checks.push(check(globalDupErrors.length === 0, "card_id_unique_across_trial", true, 6, globalDupErrors.join(" | ")));
-  checks.push(check(missingTagsErrors.length === 0, "tags_present_each_card", true, 4, missingTagsErrors.join(" | ")));
-  checks.push(check(invalidDifficultyErrors.length === 0, "difficulty_values_valid", true, 4, invalidDifficultyErrors.join(" | ")));
-  checks.push(check(yesNoBackErrors.length === 0, "back_not_yes_no", true, 6, yesNoBackErrors.join(" | ")));
-  checks.push(check(noQuestionMarkErrors.length === 0, "fronts_end_with_question_mark", false, 3, noQuestionMarkErrors.join(" | ")));
+  checks.push(
+    check(
+      deckSchemaErrors.length === 0,
+      "deck_schema_valid",
+      true,
+      8,
+      deckSchemaErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      cardFieldErrors.length === 0,
+      "card_required_fields_present",
+      true,
+      8,
+      cardFieldErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      cardIdPatternErrors.length === 0,
+      "card_id_pattern_full_prefix",
+      true,
+      8,
+      cardIdPatternErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      localDupErrors.length === 0,
+      "card_id_unique_within_deck",
+      true,
+      6,
+      localDupErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      globalDupErrors.length === 0,
+      "card_id_unique_across_trial",
+      true,
+      6,
+      globalDupErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      missingTagsErrors.length === 0,
+      "tags_present_each_card",
+      true,
+      4,
+      missingTagsErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      invalidDifficultyErrors.length === 0,
+      "difficulty_values_valid",
+      true,
+      4,
+      invalidDifficultyErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      yesNoBackErrors.length === 0,
+      "back_not_yes_no",
+      true,
+      6,
+      yesNoBackErrors.join(" | "),
+    ),
+  );
+  checks.push(
+    check(
+      noQuestionMarkErrors.length === 0,
+      "fronts_end_with_question_mark",
+      false,
+      3,
+      noQuestionMarkErrors.join(" | "),
+    ),
+  );
 
   const recallRatio = totalCards === 0 ? 0 : recallCount / totalCards;
   const thinkingRatio = totalCards === 0 ? 0 : thinkingCount / totalCards;
@@ -341,7 +470,10 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
 
   checks.push(
     check(
-      recallRatio >= recallMin && recallRatio <= recallMax && thinkingRatio >= thinkingMin && thinkingRatio <= thinkingMax,
+      recallRatio >= recallMin &&
+        recallRatio <= recallMax &&
+        thinkingRatio >= thinkingMin &&
+        thinkingRatio <= thinkingMax,
       "recall_thinking_balance",
       false,
       8,
@@ -349,7 +481,8 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
     ),
   );
 
-  const recallUnder40Ratio = recallTotalForLimit === 0 ? 1 : recallUnder40Count / recallTotalForLimit;
+  const recallUnder40Ratio =
+    recallTotalForLimit === 0 ? 1 : recallUnder40Count / recallTotalForLimit;
   checks.push(
     check(
       recallUnder40Ratio >= 1,
@@ -360,7 +493,8 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
     ),
   );
 
-  const thinkingWhyRatio = thinkingTotalForWhy === 0 ? 0 : thinkingHasWhyCount / thinkingTotalForWhy;
+  const thinkingWhyRatio =
+    thinkingTotalForWhy === 0 ? 0 : thinkingHasWhyCount / thinkingTotalForWhy;
   checks.push(
     check(
       thinkingWhyRatio >= 1,
@@ -371,7 +505,8 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
     ),
   );
 
-  const recallNoWhyRatio = recallTotalForNoWhy === 0 ? 1 : recallNoWhyCount / recallTotalForNoWhy;
+  const recallNoWhyRatio =
+    recallTotalForNoWhy === 0 ? 1 : recallNoWhyCount / recallTotalForNoWhy;
   checks.push(
     check(
       recallNoWhyRatio >= 1,
@@ -382,7 +517,8 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
     ),
   );
 
-  const thinkingWhyHowRatio = thinkingCount === 0 ? 0 : thinkingWhyHowFrontCount / thinkingCount;
+  const thinkingWhyHowRatio =
+    thinkingCount === 0 ? 0 : thinkingWhyHowFrontCount / thinkingCount;
   const minWhyHowRatio = Number(expected.thinking_front_why_how_ratio_min ?? 0);
   checks.push(
     check(
@@ -417,7 +553,13 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
     );
   } else {
     checks.push(
-      check(true, "formula_focus_coverage", false, 2, `formula_cards=${formulaCardCount}`),
+      check(
+        true,
+        "formula_focus_coverage",
+        false,
+        2,
+        `formula_cards=${formulaCardCount}`,
+      ),
     );
   }
 
@@ -434,13 +576,104 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
     );
   } else {
     checks.push(
-      check(true, "relationship_focus_coverage", false, 2, `relationship_cards=${relationshipCardCount}`),
+      check(
+        true,
+        "relationship_focus_coverage",
+        false,
+        2,
+        `relationship_cards=${relationshipCardCount}`,
+      ),
     );
   }
 
+  // --- NEW CHECKS (v2) ---
+
+  // (a) recall_back_max_15_words — hard gate, weight 6
+  checks.push(
+    check(
+      recallBackOverLimit.length === 0,
+      "recall_back_max_15_words",
+      true,
+      6,
+      recallBackOverLimit.length === 0
+        ? `all ${recallCount} recall backs <=15 words`
+        : `${recallBackOverLimit.length} recall backs >15 words: ${recallBackOverLimit.join(" | ")}`,
+    ),
+  );
+
+  // (b) thinking_back_20_40_words — soft gate, weight 5
+  checks.push(
+    check(
+      thinkingBackOutOfRange.length === 0,
+      "thinking_back_20_40_words",
+      false,
+      5,
+      thinkingBackOutOfRange.length === 0
+        ? `all ${thinkingCount} thinking backs in 20-40 words`
+        : `${thinkingBackOutOfRange.length} thinking backs outside 20-40w: ${thinkingBackOutOfRange.join(" | ")}`,
+    ),
+  );
+
+  // (c) no_compound_questions — soft gate, weight 4
+  checks.push(
+    check(
+      compoundQuestionErrors.length === 0,
+      "no_compound_questions",
+      false,
+      4,
+      compoundQuestionErrors.length === 0
+        ? "no compound questions detected"
+        : `${compoundQuestionErrors.length} compound questions: ${compoundQuestionErrors.join(" | ")}`,
+    ),
+  );
+
+  // (d) source_argue_template_max_2 — soft gate, weight 3
+  const sourceArgueViolations = [];
+  for (const [deckPath, count] of sourceArguePerDeck.entries()) {
+    if (count > 2) {
+      sourceArgueViolations.push(
+        `${deckPath}: ${count} "Why does the [source]..." cards`,
+      );
+    }
+  }
+  checks.push(
+    check(
+      sourceArgueViolations.length === 0,
+      "source_argue_template_max_2",
+      false,
+      3,
+      sourceArgueViolations.length === 0
+        ? "source argue template <=2 per deck"
+        : sourceArgueViolations.join(" | "),
+    ),
+  );
+
+  // (e) difficulty_distribution — soft gate, weight 5
+  const basicPct = totalCards === 0 ? 0 : basicCount / totalCards;
+  const intPct = totalCards === 0 ? 0 : intermediateCount / totalCards;
+  const advPct = totalCards === 0 ? 0 : advancedCount / totalCards;
+  const diffDistOk =
+    totalCards === 0 ||
+    (basicPct >= 0.2 &&
+      basicPct <= 0.4 &&
+      intPct >= 0.4 &&
+      intPct <= 0.6 &&
+      advPct >= 0.1 &&
+      advPct <= 0.3);
+  checks.push(
+    check(
+      diffDistOk,
+      "difficulty_distribution",
+      false,
+      5,
+      `basic=${(basicPct * 100).toFixed(0)}% int=${(intPct * 100).toFixed(0)}% adv=${(advPct * 100).toFixed(0)}% (target: 20-40/40-60/10-30)`,
+    ),
+  );
+
   const totalWeight = sumWeights(checks);
   const passedWeight = sumWeights(checks, true);
-  const deterministicScore = totalWeight === 0 ? 0 : Math.round((passedWeight / totalWeight) * 100);
+  const deterministicScore =
+    totalWeight === 0 ? 0 : Math.round((passedWeight / totalWeight) * 100);
   const hardPass = checks.every((c) => !c.hard || c.pass);
 
   return {
@@ -458,6 +691,13 @@ function evaluateCase(caseDef, trialDef, repoRoot) {
       relationship_card_count: relationshipCardCount,
       thinking_why_how_ratio: Number(thinkingWhyHowRatio.toFixed(4)),
       duplicate_front_back_pairs: duplicateFrontBackCount,
+      recall_back_over_15: recallBackOverLimit.length,
+      thinking_back_out_of_range: thinkingBackOutOfRange.length,
+      compound_questions: compoundQuestionErrors.length,
+      source_argue_violations: sourceArgueViolations.length,
+      difficulty_basic_pct: Number((basicPct * 100).toFixed(1)),
+      difficulty_intermediate_pct: Number((intPct * 100).toFixed(1)),
+      difficulty_advanced_pct: Number((advPct * 100).toFixed(1)),
     },
   };
 }
@@ -471,7 +711,14 @@ function main() {
   const outputPath = args.output;
   const repoRoot = path.resolve(args["repo-root"] || process.cwd());
 
-  if (!casesPath || !manifestPath || !caseId || !outputPath || !Number.isInteger(trialIndex) || trialIndex < 1) {
+  if (
+    !casesPath ||
+    !manifestPath ||
+    !caseId ||
+    !outputPath ||
+    !Number.isInteger(trialIndex) ||
+    trialIndex < 1
+  ) {
     console.error(
       "Usage: deterministic.js --cases <cases.json> --manifest <manifest.json> --case-id <id> --trial-index <n> --output <file> [--repo-root <root>]",
     );

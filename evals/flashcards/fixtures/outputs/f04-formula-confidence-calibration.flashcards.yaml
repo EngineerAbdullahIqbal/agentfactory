@@ -14,7 +14,7 @@ cards:
 
   - id: "eval-f04-formula-confidence-calibration-002"
     front: "Why should confidence drop when retrieval evidence is weak?"
-    back: "Low retrieval evidence indicates weak grounding, so model certainty alone is not enough to justify strong confidence in correctness."
+    back: "Low retrieval evidence indicates weak grounding, so model certainty alone is insufficient to justify strong confidence in correctness and may lead to overconfident incorrect answers."
     tags: ["grounding", "confidence"]
     difficulty: "intermediate"
     why: "How would weak evidence change answer style at runtime?"
@@ -23,7 +23,7 @@ cards:
     front: "What is the ECE equation used for calibration quality?"
     back: "ECE = sum_k (|acc(k) - conf(k)| * n(k) / N)"
     tags: ["ece", "formula"]
-    difficulty: "basic"
+    difficulty: "intermediate"
 
   - id: "eval-f04-formula-confidence-calibration-004"
     front: "How does lower ECE relate to real-world answer reliability?"
@@ -40,7 +40,7 @@ cards:
 
   - id: "eval-f04-formula-confidence-calibration-006"
     front: "Why should an agent abstain when C < 0.4?"
-    back: "At low confidence, direct answers risk confident mistakes, so abstaining or asking clarification reduces harm and improves downstream accuracy."
+    back: "At low confidence, direct answers risk confident mistakes, so abstaining or asking for clarification reduces harm, improves downstream accuracy, and builds user trust in the system."
     tags: ["policy", "abstention"]
     difficulty: "advanced"
     why: "How would you log abstentions to improve future calibration?"
@@ -53,7 +53,7 @@ cards:
 
   - id: "eval-f04-formula-confidence-calibration-008"
     front: "How do confidence bands improve user-facing safety decisions?"
-    back: "They map uncertainty to explicit behaviors, creating predictable escalation paths rather than ad-hoc responses under uncertain conditions."
-    tags: ["safety", "decision-policy"]
+    back: "They map uncertainty to explicit behaviors, creating predictable escalation paths versus ad-hoc responses under uncertain conditions, which reduces inconsistency and builds reliable user expectations."
+    tags: ["safety", "decision-policy", "relationships"]
     difficulty: "intermediate"
     why: "Why do explicit thresholds outperform informal intuition in production?"

@@ -64,6 +64,11 @@ The deterministic grader evaluates these checks per trial:
 17. no duplicate front/back pairs
 18. formula coverage (for formula-focused cases)
 19. relationship/mechanism coverage (when required)
+20. recall card backs ≤15 words (hard gate)
+21. thinking card backs 20-40 words (soft gate)
+22. no compound questions (two question words joined by "and")
+23. "Why does the [source]..." template ≤2 per deck
+24. difficulty distribution: 20-40% basic, 40-60% intermediate, 10-30% advanced
 
 Hard-gate failures mark the trial as failed.
 
@@ -122,6 +127,16 @@ Critical criteria must score >= 8, and overall LLM score must be >= 82 for criti
 ```
 
 ## Evaluating Live Outputs
+
+### Quick: use `--grade-live`
+
+```bash
+./evals/flashcards/run-eval.sh --grade-live --with-llm never
+```
+
+This automatically uses the live dataset and manifest files.
+
+### Manual: custom live manifests
 
 1. Copy `live-template.json` to a live manifest path.
 2. Record each generated trial output with `upsert-live-trial.js`.

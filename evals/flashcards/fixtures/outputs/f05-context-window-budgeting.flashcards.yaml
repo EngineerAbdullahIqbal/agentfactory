@@ -23,11 +23,11 @@ cards:
     front: "What are the three semantic compression steps?"
     back: "Keep hard constraints verbatim, summarize low-risk narrative, and drop redundant examples."
     tags: ["compression", "steps"]
-    difficulty: "basic"
+    difficulty: "intermediate"
 
   - id: "eval-f05-context-window-budgeting-004"
     front: "How does semantic compression outperform blunt truncation?"
-    back: "It preserves decision-critical constraints while reducing low-value text, lowering failure risk without losing operational signal."
+    back: "It preserves decision-critical constraints while reducing low-value text, lowering failure risk without losing operational signal that governs agent behavior and safety compliance."
     tags: ["compression", "strategy"]
     difficulty: "intermediate"
     why: "Why should hard constraints remain verbatim during compression?"
@@ -40,20 +40,20 @@ cards:
 
   - id: "eval-f05-context-window-budgeting-006"
     front: "Why does token budgeting reduce instruction collisions?"
-    back: "A clear allocation prevents uncontrolled context growth that can introduce contradictory instructions and degrade model adherence."
+    back: "A clear allocation prevents uncontrolled context growth that can introduce contradictory instructions and degrade model adherence, keeping the prompt internally consistent and reliable."
     tags: ["collisions", "budgeting"]
     difficulty: "intermediate"
     why: "How would collision incidents appear in agent behavior logs?"
 
   - id: "eval-f05-context-window-budgeting-007"
-    front: "Name one operational benefit of disciplined token budgeting."
+    front: "What is one operational benefit of disciplined token budgeting?"
     back: "Improved latency from smaller, more relevant prompts."
     tags: ["latency", "operations"]
     difficulty: "basic"
 
   - id: "eval-f05-context-window-budgeting-008"
     front: "How should budgeting adapt when tool outputs spike unexpectedly?"
-    back: "Rebalance by compressing lower-risk narrative and preserving hard constraints, rather than dropping safety or task-critical instructions."
+    back: "Rebalance by compressing lower-risk narrative and preserving hard constraints, rather than dropping safety or task-critical instructions that govern agent reliability and compliance."
     tags: ["adaptation", "tool-outputs"]
     difficulty: "advanced"
     why: "Why is policy context usually the last segment to cut?"
