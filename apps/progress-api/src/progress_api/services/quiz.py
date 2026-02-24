@@ -151,12 +151,17 @@ async def submit_quiz(
         )
 
     # 11. UPDATE user_progress summary
-    perfect_delta = 1 if request.score_pct == 100 else 0
+    perfect_delta = (
+        1
+        if request.score_pct == 100
+        and (best_previous_score is None or best_previous_score < 100)
+        else 0
+    )
     progress = await update_user_progress(
         session,
         user.id,
         xp_delta=xp_earned,
-        quizzes_delta=1,
+        quizzes_delta=1 if attempt_number == 1 else 0,
         perfect_scores_delta=perfect_delta,
         badge_count_delta=len(new_badge_ids),
         current_streak=current_streak,
