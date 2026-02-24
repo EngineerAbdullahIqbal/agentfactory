@@ -97,6 +97,10 @@ The five tools form a system. Removing any one of them leaves a gap that willpow
 
 These tools are not optional recommendations. They are the infrastructure that makes professional Python development possible. A carpenter does not decide whether to use a workbench -- the workbench is where the work happens. The discipline stack is where Python development happens. Every chapter from here forward assumes all five tools are installed and working.
 
+:::note If you've coded before
+You may have used pip, venv, and pyenv as separate tools -- or poetry, conda, or pipenv as alternatives. This chapter replaces all of them with one unified stack. The workflow is fundamentally different, not just faster. Even if you have a working Python setup, follow along from scratch to see how the pieces connect.
+:::
+
 ---
 
 ## The Axiom-Tool Connection

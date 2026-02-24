@@ -86,6 +86,10 @@ The old workflow required five separate tools: python.org installer, venv, pip, 
 
 uv replaces all five. One binary, written in Rust, maintained by Astral (the same company that builds ruff). It installs Python, creates virtual environments, manages dependencies, generates lockfiles, and runs project code. All through a single command-line interface.
 
+:::note If you're new to programming
+A **virtual environment** is like a private toolbox for one project. The tools in one toolbox do not interfere with tools in another. Without it, installing a library for one project can break a different project that needs a different version. You never need to manage this toolbox yourself -- uv creates it and keeps it organized automatically.
+:::
+
 ---
 
 ## Installing uv

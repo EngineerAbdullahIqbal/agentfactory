@@ -88,6 +88,10 @@ This is the world James narrowly avoided by not typing `pip install pytest`.
 
 The name is precise: `pyproject` means "Python project" and `.toml` is the format -- Tom's Obvious Minimal Language, a configuration format designed to be easy for humans to read and easy for machines to parse. It has the structured precision of JSON without the visual clutter of braces and quotes.
 
+:::note If you're new to programming
+TOML is just a way to write settings in a file. Each line is a label and a value, like filling out a form. Section headers in square brackets (`[project]`, `[tool.ruff]`) group related settings together. You do not need to memorize the format -- just recognize the pattern of `key = value` inside named sections.
+:::
+
 After running `uv init smartnotes` in the previous lesson, your `pyproject.toml` looks like this:
 
 ```toml

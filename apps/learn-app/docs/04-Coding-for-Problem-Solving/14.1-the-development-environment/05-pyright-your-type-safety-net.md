@@ -121,6 +121,10 @@ The common thread: bugs hide. They do not surface at the point where the mistake
 
 A **static type checker** solves this by analyzing code *without running it*. It reads type annotations — those labels like `: str` and `: int` — traces how data moves through your code, and reports every place where the declared types do not match the actual usage. Errors appear in your terminal seconds after you save the file -- not hours later in a crash.
 
+:::note If you've coded before
+You may know Python as "dynamically typed" -- a language where variables can hold any kind of data without declaring types. This course adds static type annotations checked by pyright in strict mode. The annotations are not optional documentation -- they are required guardrails that catch an entire category of bugs before code runs. If you have written Python without types, the workflow here will feel different by design.
+:::
+
 ---
 
 ## Pyright Defined
