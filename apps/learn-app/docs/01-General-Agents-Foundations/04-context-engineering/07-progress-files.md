@@ -79,6 +79,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Implement automated progress file updates using Claude Code hooks that trigger on session end; explore distributed progress coordination for multi-person teams"
   remedial_for_struggling: "Start with a simple 3-task project instead of 10-15; focus on the checkpoint pattern first, then add progress files once that habit is solid"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 3
+  session_title: "Long-Horizon Work and Memory Systems"
+  key_points:
+    - "The harness architecture replaces continuous conversation with session-independent work coordinated through a shared progress file — each session reads state from the file, not from conversation history"
+    - "The Decisions Made section is the most undervalued part of the progress file — without it, teams revisit settled decisions and lose consistency across sessions"
+    - "Task decomposition follows the 10-15 rule: for a 5-hour project, aim for 10-15 tasks each completable in 30-90 minutes — fewer is too coarse, more creates overhead"
+    - "Session protocols (5-step initialization, 2-step exit) are the discipline that makes multi-session work reliable — consistency prevents context-reconstruction delays"
+  misconceptions:
+    - "Students think --continue is sufficient for multi-session work — sessions accumulate context rot after 3-4 days, making the harness architecture necessary for anything spanning more than a few days"
+    - "Students create vague tasks like 'do the research' that never complete — emphasize concrete, verifiable task descriptions with clear completion criteria"
+    - "Students skip the session exit protocol because they plan to continue tomorrow — the gap between sessions causes forgotten decisions, lost progress, and duplicated work"
+    - "Students see progress files as extra overhead rather than a time-saving tool — the 30 minutes spent maintaining the file saves 30+ minutes of context reconstruction per session"
+  discussion_prompts:
+    - "Think of your last multi-day project — how much time did you spend re-establishing context at each work session? What would a progress file have saved you?"
+    - "What decisions have you revisited or reversed because you forgot the reasoning behind the original choice?"
+  teaching_tips:
+    - "The opening scenario (closing the laptop after 90 minutes) resonates with everyone — ask students to share their own experience with losing context between sessions"
+    - "Have students decompose a real project during the lesson, not a hypothetical — the domain-specific examples (legal, marketing, research, consulting, software) help each student find their starting point"
+    - "The 5-session lab is the core learning experience — emphasize that the retrospective at the end is where the real insight happens, when students see their actual context reconstruction times"
+    - "Walk through the Decisions Made format with a real example — the 'rationale + alternatives considered' structure prevents the 'why did we do this?' problem"
+  assessment_quick_check:
+    - "What are the five required sections of a progress file and what purpose does each serve?"
+    - "Decompose a simple project into 5 tasks that meet the concrete, verifiable, completable criteria"
+    - "Describe the five-step session initialization protocol from memory"
 ---
 
 # Long-Horizon Work: Progress Files and Session Architecture

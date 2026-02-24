@@ -15,7 +15,7 @@ keywords:
   - Email Digital FTE
   - Claude Code
   - workflow automation
-chapter: 10
+chapter: 13
 lesson: 7
 duration_minutes: 40
 
@@ -112,6 +112,34 @@ differentiation:
   extension_for_advanced: "Add conditional workflow branching based on email priority level; implement feedback loop that improves triage accuracy over time"
   remedial_for_struggling: "Focus on basic two-component orchestration (email-drafter + email-templates) before adding subagents and MCP"
 
+teaching_guide:
+  lesson_type: "capstone"
+  session_group: 3
+  session_title: "Bronze Capstone - Email Digital FTE"
+  key_points:
+    - "A master skill does not do work itself — it interprets intent, selects workflow, coordinates components, manages state, and handles failures"
+    - "The delegation decision tree (content→skill, classification→subagent, external→MCP) is the core orchestration pattern that applies to any domain beyond email"
+    - "Graceful degradation means the system continues functioning when components fail — skills work without MCP, subagents work with pasted data"
+    - "Four workflow modes (Inbox Management, Composition, Thread Response, Follow-Up Check) show that one entry point can serve multiple user intents"
+  misconceptions:
+    - "Students think the master skill replaces the component skills — it orchestrates them, each component still does its own work"
+    - "Students expect the orchestrator to always use ALL components — each workflow mode uses only the relevant subset"
+    - "Students think graceful degradation means 'nothing works' — it means reduced but still functional capability with clear user communication"
+    - "Students try to put all logic in the master SKILL.md — the orchestration-logic.md reference file separates coordination rules from the skill definition"
+  discussion_prompts:
+    - "The master skill has 4 workflow modes. If you could only keep 2, which would you choose for YOUR work and why?"
+    - "Graceful degradation provides email content for clipboard when Gmail MCP is offline. What other fallback strategies could you design?"
+    - "The delegation decision tree applies beyond email. Map it to a domain you know — what would skills, subagents, and MCP handle in customer support? Content creation?"
+  teaching_tips:
+    - "Have students draw the component architecture diagram from memory before revealing it — this tests whether they understand the system they have been building"
+    - "Test graceful degradation FIRST (Test 5) before testing normal operation — it validates the most important engineering principle and gives students confidence"
+    - "The delegation logic decision tree is the best whiteboard exercise — walk through 3-4 user requests and trace which components activate"
+    - "Celebrate this milestone explicitly — students have built a complete Digital FTE from scratch across 7 lessons"
+  assessment_quick_check:
+    - "Name the 4 workflow modes and give one trigger phrase for each"
+    - "What happens when you invoke /email-assistant and Gmail MCP is offline? Walk through the graceful degradation path."
+    - "Draw the delegation decision tree: content→skill, classification→subagent, external→MCP"
+
 # Generation metadata
 generated_by: "content-implementer (autonomous execution)"
 created: "2026-01-01"
@@ -156,12 +184,12 @@ Email Assistant System
 
 Each component has a specific role:
 
-| Component Type | Purpose | Examples |
-|----------------|---------|----------|
-| **Skills** | Provide expertise and templates | Email tone, template structures |
-| **Subagents** | Autonomous reasoning and classification | Priority decisions, response suggestions |
-| **MCP** | External system operations | Gmail read/send/search |
-| **Orchestrator** | Workflow coordination | Deciding what to invoke when |
+| Component Type   | Purpose                                 | Examples                                 |
+| ---------------- | --------------------------------------- | ---------------------------------------- |
+| **Skills**       | Provide expertise and templates         | Email tone, template structures          |
+| **Subagents**    | Autonomous reasoning and classification | Priority decisions, response suggestions |
+| **MCP**          | External system operations              | Gmail read/send/search                   |
+| **Orchestrator** | Workflow coordination                   | Deciding what to invoke when             |
 
 ---
 
@@ -188,6 +216,7 @@ mkdir -p .claude/skills/email-assistant/references
 ```
 
 **Output:**
+
 ```
 (no output - directory created silently)
 ```
@@ -229,6 +258,7 @@ email-assistant/
 ## Building the Master SKILL.md
 
 The master skill is your most complex SKILL.md. It needs to:
+
 - Reference all component skills and subagents
 - Define multiple workflow modes
 - Include delegation logic
@@ -427,15 +457,15 @@ The master skill references an orchestration-logic.md file that provides detaile
 
 ## Component Selection Matrix
 
-| User Request Pattern | Primary Component | Supporting Components |
-|---------------------|-------------------|----------------------|
-| "Write an email" | email-drafter | email-templates, Gmail MCP |
-| "Use the follow-up template" | email-templates | email-drafter, Gmail MCP |
-| "Summarize this thread" | email-summarizer | - |
-| "Triage my inbox" | inbox-triager | email-summarizer, Gmail MCP |
-| "Suggest a response" | response-suggester | email-drafter |
-| "What needs follow-up?" | follow-up-tracker | email-templates, Gmail MCP |
-| "Help me manage email" | ORCHESTRATOR | ALL components |
+| User Request Pattern         | Primary Component  | Supporting Components       |
+| ---------------------------- | ------------------ | --------------------------- |
+| "Write an email"             | email-drafter      | email-templates, Gmail MCP  |
+| "Use the follow-up template" | email-templates    | email-drafter, Gmail MCP    |
+| "Summarize this thread"      | email-summarizer   | -                           |
+| "Triage my inbox"            | inbox-triager      | email-summarizer, Gmail MCP |
+| "Suggest a response"         | response-suggester | email-drafter               |
+| "What needs follow-up?"      | follow-up-tracker  | email-templates, Gmail MCP  |
+| "Help me manage email"       | ORCHESTRATOR       | ALL components              |
 
 ## Workflow Sequencing
 
@@ -503,12 +533,12 @@ The delegation logic determines which component handles each task. This is the i
 
 **Skills vs Subagents vs MCP — When to Use Each:**
 
-| Characteristic | Use Skill | Use Subagent | Use MCP |
-|----------------|-----------|--------------|---------|
-| **Decision Points** | 2-4 | 5+ | N/A |
+| Characteristic            | Use Skill             | Use Subagent               | Use MCP                   |
+| ------------------------- | --------------------- | -------------------------- | ------------------------- |
+| **Decision Points**       | 2-4                   | 5+                         | N/A                       |
 | **Output Predictability** | High (template-based) | Variable (reasoning-based) | Deterministic (API-based) |
-| **Processing Type** | Content generation | Classification/analysis | External operations |
-| **Example** | Draft email with tone | Classify priority level | Fetch from Gmail |
+| **Processing Type**       | Content generation    | Classification/analysis    | External operations       |
+| **Example**               | Draft email with tone | Classify priority level    | Fetch from Gmail          |
 
 **The key insight:** Skills provide guidance. Subagents provide reasoning. MCP provides integration. The orchestrator provides coordination.
 
@@ -527,6 +557,7 @@ I want to triage my inbox. Show me what needs attention.
 ```
 
 **Expected behavior:**
+
 1. Gmail MCP fetches unread emails (or skill asks for email content if offline)
 2. inbox-triager classifies each email (urgent/respond/defer/archive)
 3. email-summarizer provides summaries of important threads
@@ -535,6 +566,7 @@ I want to triage my inbox. Show me what needs attention.
 6. email-drafter/email-templates create draft responses
 
 **Verification points:**
+
 - Are emails correctly categorized by priority?
 - Do summaries capture key information?
 - Are response suggestions contextually appropriate?
@@ -548,12 +580,14 @@ Write a follow-up email to Sarah Chen about the data partnership we discussed at
 ```
 
 **Expected behavior:**
+
 1. Orchestrator recognizes this as Mode 2 (composition) with follow-up type
 2. email-templates skill provides follow-up template structure
 3. email-drafter applies tone guidelines and personalizes content
 4. Gmail MCP creates draft (or provides clipboard content if offline)
 
 **Verification points:**
+
 - Did orchestrator select the correct workflow mode?
 - Was the follow-up template applied?
 - Does the draft match your tone guidelines?
@@ -571,12 +605,14 @@ Help me craft a response.
 ```
 
 **Expected behavior:**
+
 1. email-summarizer extracts key points and action items
 2. response-suggester generates 3 response options with different tones
 3. User selects preferred approach
 4. email-drafter creates full response based on selection
 
 **Verification points:**
+
 - Are all action items extracted from the thread?
 - Do the 3 response options offer meaningfully different approaches?
 - Does the final draft address all required points?
@@ -590,12 +626,14 @@ What emails need follow-up? Check my sent folder.
 ```
 
 **Expected behavior:**
+
 1. Gmail MCP searches sent emails from past 7-14 days
 2. follow-up-tracker analyzes for awaiting responses
 3. Items past expected response window are flagged
 4. email-templates generates follow-up drafts for flagged items
 
 **Verification points:**
+
 - Is the lookback period appropriate (7-14 days)?
 - Are awaited responses correctly identified?
 - Do follow-up drafts add new value (not just "checking in")?
@@ -617,12 +655,14 @@ Write a cold outreach email to Marcus Rodriguez, CEO of DataFlow Inc. I want to 
 ```
 
 **Expected behavior:**
+
 1. Orchestrator detects Gmail MCP is unavailable
 2. Skills (email-templates, email-drafter) work normally
 3. Instead of creating Gmail draft, email content is provided for clipboard
 4. Clear message: "Gmail MCP offline. Here's your email for manual sending."
 
 **Verification points:**
+
 - Does the skill workflow complete successfully?
 - Is the degradation clearly communicated?
 - Is the email content complete and usable?
@@ -633,14 +673,15 @@ Write a cold outreach email to Marcus Rodriguez, CEO of DataFlow Inc. I want to 
 
 With the email-assistant master skill, you now have:
 
-| Component | Count | Purpose |
-|-----------|-------|---------|
-| **Skills** | 4 | email-drafter, email-templates, email-summarizer, email-assistant |
-| **Subagents** | 3 | inbox-triager, response-suggester, follow-up-tracker |
-| **MCP Integration** | 1 | Gmail MCP with 19 tools |
-| **Workflow Modes** | 4 | Inbox management, composition, thread response, follow-up check |
+| Component           | Count | Purpose                                                           |
+| ------------------- | ----- | ----------------------------------------------------------------- |
+| **Skills**          | 4     | email-drafter, email-templates, email-summarizer, email-assistant |
+| **Subagents**       | 3     | inbox-triager, response-suggester, follow-up-tracker              |
+| **MCP Integration** | 1     | Gmail MCP with 19 tools                                           |
+| **Workflow Modes**  | 4     | Inbox management, composition, thread response, follow-up check   |
 
 This is a **Digital FTE** — a complete system that can:
+
 - Understand user intent from natural language
 - Select appropriate workflows automatically
 - Coordinate multiple components seamlessly

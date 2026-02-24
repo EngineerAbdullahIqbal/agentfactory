@@ -81,6 +81,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Implement automatic context monitoring that warns at 70% utilization and suggests compaction instructions based on conversation analysis. Explore the tradeoffs between aggressive compaction (frequent, lose less) vs conservative compaction (infrequent, lose more per event)."
   remedial_for_struggling: "Focus on the Zone colors as a traffic light system: Green = go freely, Yellow = slow down and monitor, Orange = take action now, Red = emergency, Black = too late. Practice just recognizing zones before learning the actions."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Persistent State and Knowledge Transfer"
+  key_points:
+    - "The Context Zones Framework (Green/Yellow/Orange/Red/Black) gives students actionable thresholds — 70% is the critical cliff where quality starts degrading"
+    - "The /clear vs /compact decision hinges on context quality, not just size — poisoned context (outdated decisions, wrong directions) should be cleared, not compacted"
+    - "Custom compaction instructions are the power move — telling Claude exactly what to preserve and discard prevents losing critical decisions during compression"
+    - "The save checkpoint pattern (externalize progress, then compact) combines with session persistence (--continue, --resume) for work spanning multiple sessions"
+  misconceptions:
+    - "Students think /compact is always better than /clear because it preserves more — but compacting poisoned context preserves the poison along with useful information"
+    - "Students wait until Red/Black zone to act — emphasize that Orange (70%) is the optimal intervention point, not an early warning"
+    - "Students assume compaction preserves everything important automatically — without custom instructions, Claude uses its own judgment which may miss domain-specific priorities"
+    - "Students think the 3-day rule is arbitrary — old sessions accumulate drift, implicit assumptions, and stale references that make resuming harder than starting fresh"
+  discussion_prompts:
+    - "Think of a time your AI session degraded in quality. At what point did you notice? Was it too late to compact effectively?"
+    - "In your domain, what specific decisions or findings would you ALWAYS want to preserve during compaction? What would you always discard?"
+  teaching_tips:
+    - "The Context Zones ASCII diagram is a strong visual anchor — redraw it on the board with colors and have students identify which zone they are usually in when they notice problems"
+    - "Walk through the decision tree step by step with a real scenario — the branching logic (is task complete? is context poisoned?) makes the /clear vs /compact choice concrete"
+    - "The domain-specific compaction examples (legal, marketing, research, consulting, development) are essential — have each student write their own custom compaction template"
+    - "The monitoring lab should be done with real work — tracking context growth over 30+ minutes creates the urgency that abstract teaching cannot"
+  assessment_quick_check:
+    - "Name the five context zones and the action required for each"
+    - "Given a scenario where you changed direction mid-session, should you /clear or /compact? Why?"
+    - "Write a one-line custom compaction instruction for your current project that specifies what to preserve and discard"
 ---
 
 # Context Lifecycle: Knowing When to Reset vs Compress

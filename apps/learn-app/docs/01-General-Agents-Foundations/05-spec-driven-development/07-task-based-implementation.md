@@ -76,6 +76,31 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design custom task dependency graphs with conditional execution paths based on intermediate results"
   remedial_for_struggling: "Focus on the core prompt pattern first, then gradually introduce context isolation and backpressure concepts"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 3
+  session_title: "Implementation and Judgment"
+  key_points:
+    - "The core prompt ('You are the main agent and your subagents are your devs') transforms Claude from solo coder to orchestrated development team"
+    - "Context isolation solves two named problems: Agent Amnesia (progress lost on restart) and Context Pollution (accumulated errors contaminate later work)"
+    - "Atomic commits per task create rollback boundaries — if task 7 fails, tasks 1-6 are safely committed"
+    - "Backpressure via pre-commit hooks ensures even AI-written code passes quality gates before entering the repository"
+  misconceptions:
+    - "Students think subagents share context with the main agent — each subagent starts completely fresh, which is the entire point"
+    - "Students assume more tasks means better decomposition — tasks should be 5-15 minutes each; too granular creates coordination overhead"
+    - "Students think task-based implementation is always better — for a two-line bug fix, the overhead of task extraction isn't justified"
+  discussion_prompts:
+    - "Looking at the alexop.dev results (14 tasks, 45 minutes, 0 rollbacks), what would have happened in a single-session approach if task 10 introduced a bug?"
+    - "When does the overhead of task extraction and subagent coordination NOT pay off?"
+  teaching_tips:
+    - "The contamination timeline (minute 10 assumption → minute 55 failure) vs isolation timeline is the best visual to draw on the whiteboard"
+    - "Have students set up a real pre-commit hook with husky — the hands-on experience of seeing a commit rejected is memorable"
+    - "The alexop.dev results table is concrete proof — 14 commits in 45 minutes with zero rollbacks makes the pattern real"
+    - "Walk through the dependency graph drawing exercise from the lab — students need to see parallel vs sequential visually"
+  assessment_quick_check:
+    - "What's the implementation prompt pattern, and what does 'You are the main agent' specifically trigger?"
+    - "Explain how atomic commits per task enable surgical rollbacks that single-session implementation cannot"
 ---
 
 # Phase 4: Task-Based Implementation

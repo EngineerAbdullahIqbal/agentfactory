@@ -1,6 +1,6 @@
 """Tests for ChatKit server and Study Mode integration.
 
-Tests the chatkit_server module and request context handling.
+Tests the chatkit_server module and agent-native teach mode.
 """
 
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -11,138 +11,81 @@ from study_mode_api.chatkit_server import StudyModeChatKitServer
 from study_mode_api.chatkit_store import RequestContext
 from study_mode_api.fte import (
     ASK_PROMPT,
-    TEACH_PROMPT,
+    TeachContext,
     ask_agent,
-    create_agent,
+    create_teach_agent,
 )
 
 
-class TestAgentCreation:
-    """Test agent creation with different modes."""
+class TestAgentNativeTeachMode:
+    """Test agent-native teach mode architecture."""
 
     def test_create_teach_agent(self):
-        """Test creating agent in teach mode."""
-        agent = create_agent(
-            title="Test Lesson",
-            content="This is test content about AI agents.",
-            mode="teach",
-        )
+        """Test creating teach agent with function tools."""
+        agent = create_teach_agent()
 
-        assert agent.name == "study_tutor_teach"
-        assert "teaching agent" in agent.instructions
-        assert "Test Lesson" in agent.instructions
-        assert "LESSON CONTENT" in agent.instructions
-
-    def test_create_ask_agent_returns_singleton(self):
-        """Test creating agent in ask mode returns the singleton."""
-        agent = create_agent(
-            title="Test Lesson",
-            content="This is test content about AI agents.",
-            mode="ask",
-        )
-
-        # Ask mode returns the singleton with dynamic instructions
-        assert agent is ask_agent
-        assert agent.name == "study_tutor_ask"
-        # Instructions are a callable, not a string (built at runtime from context)
+        assert agent.name == "SocraticTutor"
+        # Agent has dynamic instructions (callable)
         assert callable(agent.instructions)
+        # Agent has 4 function tools
+        assert len(agent.tools) == 4
+        tool_names = [t.name for t in agent.tools]
+        assert "verify_answer" in tool_names
+        assert "advance_to_next_chunk" in tool_names
+        assert "record_incorrect_attempt" in tool_names
+        assert "store_correct_answer" in tool_names
 
-    def test_create_agent_with_user_name(self):
-        """Test creating agent with user personalization."""
-        agent = create_agent(
-            title="Test Lesson",
-            content="This is test content.",
-            mode="teach",
-            user_name="Alice",
-        )
+    def test_teach_agent_has_output_guardrails(self):
+        """Test teach agent has output guardrails."""
+        agent = create_teach_agent()
 
-        assert "STUDENT NAME: Alice" in agent.instructions
+        assert len(agent.output_guardrails) == 2
 
-    def test_create_agent_without_user_name(self):
-        """Test creating agent without user name."""
-        agent = create_agent(
-            title="Test Lesson",
-            content="This is test content.",
-            mode="teach",
-            user_name=None,
-        )
+    def test_teach_context_creation(self):
+        """Test TeachContext dataclass."""
+        chunks = [
+            {"index": 0, "title": "Intro", "content": "Test content", "chunk_type": "intro"},
+            {"index": 1, "title": "Concept", "content": "More content", "chunk_type": "concept"},
+        ]
 
-        # Without user name, no STUDENT NAME line should be present
-        assert "STUDENT NAME:" not in agent.instructions
-
-    def test_content_truncation_teach_mode(self):
-        """Test content is truncated in teach mode (8000 chars)."""
-        long_content = "A" * 10000
-        agent = create_agent(
-            title="Test",
-            content=long_content,
-            mode="teach",
-        )
-
-        # Content should be truncated to 8000 chars
-        assert "A" * 8000 in agent.instructions
-        assert "A" * 10000 not in agent.instructions
-
-    def test_ask_mode_uses_dynamic_instructions(self):
-        """Test ask mode agent has dynamic instructions from context.
-
-        Ask mode uses a singleton agent with callable instructions that
-        read from context.metadata at runtime. Parameters like selected_text
-        are passed via context, not at agent creation time.
-        """
-        agent = create_agent(
-            title="Test",
-            content="Test content",
-            mode="ask",
-        )
-
-        # Verify it's the singleton with callable instructions
-        assert agent is ask_agent
-        assert callable(agent.instructions)
-
-        # Verify the prompt template has required placeholders
-        from study_mode_api.fte.ask_agent import ASK_PROMPT
-
-        assert "{content}" in ASK_PROMPT
-        assert "{selected_text_section}" in ASK_PROMPT
-
-    def test_create_agent_first_message_greeting(self):
-        """Test agent includes greeting instruction for first message."""
-        agent = create_agent(
-            title="Test Lesson",
-            content="This is test content.",
-            mode="teach",
-            user_name="Alice",
+        ctx = TeachContext(
+            chunks=chunks,
+            current_chunk_index=0,
+            total_chunks=2,
+            lesson_title="Test Lesson",
+            attempt_count=0,
+            max_attempts=3,
             is_first_message=True,
-        )
-
-        assert "FIRST message" in agent.instructions
-
-    def test_create_agent_follow_up_no_greeting(self):
-        """Test agent excludes greeting for follow-up messages."""
-        agent = create_agent(
-            title="Test Lesson",
-            content="This is test content.",
-            mode="teach",
+            thread_id="test-123",
             user_name="Alice",
-            is_first_message=False,
         )
 
-        # Follow-up uses FOLLOW_UP_UNKNOWN instruction, not first message greeting
-        assert "FIRST message" not in agent.instructions
-        assert "Continue the teaching flow" in agent.instructions
+        assert ctx.current_chunk == chunks[0]
+        assert ctx.total_chunks == 2
+        assert ctx.lesson_title == "Test Lesson"
+        assert ctx.user_name == "Alice"
+
+    def test_teach_context_current_chunk_none_when_complete(self):
+        """Test current_chunk is None when lesson is complete."""
+        chunks = [{"index": 0, "title": "Only", "content": "Content", "chunk_type": "intro"}]
+
+        ctx = TeachContext(
+            chunks=chunks,
+            current_chunk_index=1,  # Past the end
+            total_chunks=1,
+            lesson_title="Test",
+        )
+
+        assert ctx.current_chunk is None
 
 
-class TestPromptTemplates:
-    """Test prompt template structure."""
+class TestAskAgent:
+    """Test ask mode agent."""
 
-    def test_teach_prompt_has_required_elements(self):
-        """Test teach prompt contains required instructional elements."""
-        assert "{title}" in TEACH_PROMPT
-        assert "{content}" in TEACH_PROMPT
-        assert "TEACHING APPROACH" in TEACH_PROMPT
-        assert "QUESTION DESIGN" in TEACH_PROMPT
-        assert "NEVER DO" in TEACH_PROMPT
+    def test_ask_agent_is_singleton(self):
+        """Test ask agent is a singleton with dynamic instructions."""
+        assert ask_agent.name == "study_tutor_ask"
+        assert callable(ask_agent.instructions)
 
     def test_ask_prompt_has_required_elements(self):
         """Test ask prompt contains direct answer instructions."""

@@ -82,6 +82,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Implement automated quality regression testing that runs the four assessment criteria on every deployment; build a context engineering dashboard that visualizes budget allocation and quality metrics over time"
   remedial_for_struggling: "Focus on the decision tree and one technique per branch; build a simpler agent using only CLAUDE.md optimization and progress files before adding memory injection or subagent coordination"
+
+teaching_guide:
+  lesson_type: "capstone"
+  session_group: 4
+  session_title: "Capstone: Production-Quality Agents"
+  key_points:
+    - "The decision tree maps specific symptoms to specific techniques — 'context > 70%' leads to compaction, 'multi-session' leads to progress files, 'workflow drift' leads to memory injection, 'multi-agent conflicts' leads to context isolation"
+    - "Message history dominates late sessions (50%+ of context budget), which is why conversations degrade — this quantifies the need for compaction and progress file architectures"
+    - "Four quality criteria (Consistency, Persistence, Scalability, Knowledge) define production-readiness — score below 3/5 on any means not ready for client deployment"
+    - "The difference between a $50/month chatbot and a $5,000/month Digital FTE is context engineering discipline, not model access — this connects the entire chapter back to the Agent Factory thesis"
+  misconceptions:
+    - "Students think they need to apply all techniques to every project — the decision tree exists specifically to diagnose which technique matches which problem"
+    - "Students conflate 'production-quality' with 'technically complex' — a well-optimized CLAUDE.md with progress files can outscore a system with vector databases but poor signal-to-noise ratio"
+    - "Students expect perfect quality scores (5/5) — production-ready means 3+ on all criteria with a plan for improvement, not perfection"
+  discussion_prompts:
+    - "If you were pitching your agent to a paying client in your domain, which quality criterion would matter most to them? Which would they never think to ask about?"
+    - "Walk through the decision tree with a real problem you have experienced — which branch did the diagnosis lead you to?"
+  teaching_tips:
+    - "Have students trace through all five domain scenarios (legal, marketing, research, consulting, development) in the decision tree — the repetition builds pattern recognition"
+    - "The budget allocation table showing how message history grows from 10% to 50% is a strong visual — draw the shift on a whiteboard"
+    - "The production agent lab should be started in class but continued across sessions — this demonstrates the multi-session techniques being taught"
+    - "The client pitch exercise (Prompt 2) forces students to translate technical quality into business value — this is the bridge to the Agent Factory thesis"
+  assessment_quick_check:
+    - "Given a scenario where context is at 78% and you are mid-task, trace through the decision tree and state the recommended action"
+    - "Name the four quality criteria and give one thing that affects each"
+    - "Why does message history dominating late sessions explain quality degradation?"
 ---
 
 # The Context Engineering Playbook: Decision Frameworks for Quality

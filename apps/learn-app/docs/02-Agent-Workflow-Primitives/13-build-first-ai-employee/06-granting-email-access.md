@@ -14,7 +14,7 @@ keywords:
   - email automation
   - Gmail API
   - AI email assistant
-chapter: 10
+chapter: 13
 lesson: 6
 duration_minutes: 30
 
@@ -88,6 +88,34 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Configure OAuth with multiple scopes, create custom filters programmatically, integrate Gmail MCP with email-assistant orchestrator skill"
   remedial_for_struggling: "Focus on SMTP App Password method only (simpler), test with list_email_labels before attempting send operations"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 2
+  session_title: "Gmail MCP Integration"
+  key_points:
+    - "Gmail MCP is the Action Layer from L00's architecture — it bridges the gap between 'Claude can draft emails' and 'Claude can actually read/send emails'"
+    - "Two auth paths serve different needs: SMTP App Password (2 min, basic) for testing vs OAuth (10 min, full API) for production — students should start with SMTP"
+    - "The draft-first rule is the most important safety protocol — important emails go through draft_email, not send_email, so humans review before sending"
+    - "The integration diagram showing Skills + MCP + Subagents working together is the first complete view of how all Bronze tier components connect"
+  misconceptions:
+    - "Students think they are giving Claude their Gmail password — App Passwords and OAuth tokens are limited-access credentials, not the account password"
+    - "Students assume SMTP and OAuth are interchangeable — SMTP only supports send/receive, while OAuth unlocks all 19 tools including labels and filters"
+    - "Students skip the safety protocols section thinking it is just warnings — the draft-first workflow and sensitive data handling rules are essential for real use"
+    - "Students expect Gmail MCP to work offline — it requires active internet and valid authentication; the lesson covers what happens when it is unavailable"
+  discussion_prompts:
+    - "The draft-first rule table categorizes which emails to draft vs send directly. Where would YOU draw the line for your own email categories?"
+    - "Why does the lesson recommend starting with SMTP for testing even though OAuth is more powerful? What does this teach about integration strategy?"
+    - "The sensitive data handling section says to 'reference information by description, not value.' What other categories of data should never appear in AI prompts?"
+  teaching_tips:
+    - "Do the SMTP App Password setup as a live walkthrough — most students hit 2FA issues or cannot find the App Passwords page"
+    - "Test with list_email_labels FIRST (read-only, harmless) before attempting any write operations — this builds confidence and catches auth errors early"
+    - "The troubleshooting section covers the 4 most common errors — review these BEFORE students start setup to set expectations"
+    - "Skip OAuth in class unless students specifically need label/filter management — the 10-minute path often takes 20+ minutes with Google Cloud Console navigation"
+  assessment_quick_check:
+    - "What is the difference between SMTP App Password and OAuth authentication? When would you choose each?"
+    - "Name three Gmail MCP tools and explain when each would be used"
+    - "What is the draft-first rule and why is it important for email automation safety?"
 
 # Generation metadata
 generated_by: "content-implementer v1.0.0"
@@ -509,6 +537,10 @@ Email automation is powerful but risky. A typo in a recipient address or an AI-g
 | Internal team updates      | Send directly (lower risk)                |
 | Anything with attachments  | Draft → Verify attachment → Send manually |
 | Emails to executives       | Draft → Review tone → Send manually       |
+
+:::tip Defining "Known Contacts"
+The L00 specification says email replies to "known contacts" can be auto-approved. Define this explicitly for your employee: known contacts are people you've exchanged **3+ emails with** in the past 90 days AND whose email address is in your contacts or CRM. Everyone else is a "new contact" requiring draft review. Encode this definition in your `Company_Handbook.md` or `AGENTS.md` so your employee applies it consistently.
+:::
 
 **Implementation**: Tell Claude your preference:
 

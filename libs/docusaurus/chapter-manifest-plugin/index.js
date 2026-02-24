@@ -28,10 +28,10 @@
  * - Access in components via: useGlobalData()['docusaurus-chapter-manifest-plugin']
  */
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const matter = require('gray-matter');
+const fs = require("fs");
+const path = require("path");
+const glob = require("glob");
+const matter = require("gray-matter");
 
 /**
  * Extract title from frontmatter or derive from path segment
@@ -43,12 +43,12 @@ function extractTitle(filePath, frontmatter) {
   }
 
   // Derive from filename: "01-origin-story.md" -> "Origin Story"
-  const basename = path.basename(filePath, '.md');
+  const basename = path.basename(filePath, ".md");
   return basename
-    .replace(/^\d+-/, '') // Remove leading numbers
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .replace(/^\d+-/, "") // Remove leading numbers
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
 /**
@@ -66,29 +66,19 @@ function extractOrder(segment) {
  */
 function segmentToTitle(segment) {
   return segment
-    .replace(/^\d+-/, '')
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .replace(/^\d+-/, "")
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
 
-/**
- * Normalize path to Docusaurus doc ID format (strips numeric prefixes)
- */
-function normalizeToDocId(filePath) {
-  return filePath
-    .split('/')
-    .map(segment => segment.replace(/^\d+-/, ''))
-    .join('/');
-}
+const normalizeToDocId = require("../shared/normalizeToDocId");
 
 module.exports = function chapterManifestPlugin(context, options) {
-  const {
-    docsPath = 'docs',
-  } = options;
+  const { docsPath = "docs" } = options;
 
   return {
-    name: 'docusaurus-chapter-manifest-plugin',
+    name: "docusaurus-chapter-manifest-plugin",
 
     async loadContent() {
       const docsDir = path.join(context.siteDir, docsPath);
@@ -96,10 +86,10 @@ module.exports = function chapterManifestPlugin(context, options) {
       const docToChapter = {};
 
       // Find all markdown files (excluding .summary.md)
-      const mdFiles = glob.sync('**/*.md', {
+      const mdFiles = glob.sync("**/*.md", {
         cwd: docsDir,
         absolute: false,
-        ignore: ['**/*.summary.md'],
+        ignore: ["**/*.summary.md"],
       });
 
       console.log(`[Chapter Manifest] Found ${mdFiles.length} doc files`);
@@ -107,13 +97,13 @@ module.exports = function chapterManifestPlugin(context, options) {
       for (const relativePath of mdFiles) {
         try {
           const fullPath = path.join(docsDir, relativePath);
-          const content = fs.readFileSync(fullPath, 'utf-8');
+          const content = fs.readFileSync(fullPath, "utf-8");
           const { data: frontmatter } = matter(content);
 
           // Parse path structure: "Part/Chapter/Lesson.md" or "Part/Chapter/README.md"
-          const segments = relativePath.split('/');
+          const segments = relativePath.split("/");
           const filename = path.basename(relativePath);
-          const isReadme = filename.toLowerCase() === 'readme.md';
+          const isReadme = filename.toLowerCase() === "readme.md";
 
           // Skip files not in chapter structure (e.g., root-level files like preface.md)
           // README.md at Part/Chapter level needs exactly 3 segments
@@ -140,7 +130,7 @@ module.exports = function chapterManifestPlugin(context, options) {
           }
 
           // Build the slug (URL path) - Docusaurus normalizes this
-          const docIdRaw = relativePath.replace(/\.md$/, '');
+          const docIdRaw = relativePath.replace(/\.md$/, "");
           const docId = normalizeToDocId(docIdRaw);
 
           // Map doc to its chapter (including README.md)
@@ -152,10 +142,10 @@ module.exports = function chapterManifestPlugin(context, options) {
             continue;
           }
 
-          const lessonFile = segments.slice(2).join('/'); // e.g., "01-origin-story.md"
+          const lessonFile = segments.slice(2).join("/"); // e.g., "01-origin-story.md"
 
           // Extract lesson info
-          const lessonBasename = path.basename(lessonFile, '.md');
+          const lessonBasename = path.basename(lessonFile, ".md");
           const lessonOrder = extractOrder(lessonBasename);
           const lessonTitle = extractTitle(fullPath, frontmatter);
 
@@ -164,12 +154,16 @@ module.exports = function chapterManifestPlugin(context, options) {
             id: docIdRaw, // Original ID with numeric prefixes
             normalizedId: docId, // Normalized ID (Docusaurus format)
             title: lessonTitle,
-            slug: `/docs/${docId}`,
+            slug: frontmatter.slug
+              ? `/docs${frontmatter.slug}`
+              : `/docs/${docId}`,
             order: lessonOrder,
           });
-
         } catch (err) {
-          console.warn(`[Chapter Manifest] Failed to process ${relativePath}:`, err.message);
+          console.warn(
+            `[Chapter Manifest] Failed to process ${relativePath}:`,
+            err.message,
+          );
         }
       }
 
@@ -178,7 +172,9 @@ module.exports = function chapterManifestPlugin(context, options) {
         chapters[chapterKey].lessons.sort((a, b) => a.order - b.order);
       }
 
-      console.log(`[Chapter Manifest] Built manifest with ${Object.keys(chapters).length} chapters`);
+      console.log(
+        `[Chapter Manifest] Built manifest with ${Object.keys(chapters).length} chapters`,
+      );
 
       return { chapters, docToChapter };
     },
@@ -191,7 +187,9 @@ module.exports = function chapterManifestPlugin(context, options) {
         docToChapter: content?.docToChapter || {},
       });
 
-      console.log(`[Chapter Manifest] Set global data with ${Object.keys(content?.chapters || {}).length} chapters`);
+      console.log(
+        `[Chapter Manifest] Set global data with ${Object.keys(content?.chapters || {}).length} chapters`,
+      );
     },
   };
 };

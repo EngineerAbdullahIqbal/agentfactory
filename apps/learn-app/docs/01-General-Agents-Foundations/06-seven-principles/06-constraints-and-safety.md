@@ -5,7 +5,15 @@ chapter: 6
 lesson: 6
 duration_minutes: 30
 description: "Safety measures and constraints that make agentic workflows reliable and trustworthy"
-keywords: ["safety", "constraints", "guardrails", "permission", "destructive operations", "sandboxing"]
+keywords:
+  [
+    "safety",
+    "constraints",
+    "guardrails",
+    "permission",
+    "destructive operations",
+    "sandboxing",
+  ]
 
 # HIDDEN SKILLS METADATA
 skills:
@@ -53,6 +61,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a comprehensive safety framework for a team AI workflow including audit logging, rate limiting, and approval hierarchies for different risk levels."
   remedial_for_struggling: "Focus on concrete examples: Show safe vs unsafe configurations, demonstrate what can go wrong with poor safety practices, and provide simple rules to follow."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 3
+  session_title: "Safety and Integration"
+  key_points:
+    - "The safety paradox: constraints ENABLE autonomy — you give AI more freedom precisely because you have guardrails in place"
+    - "The simplest sandbox is a git branch — students don't need Docker or staging environments to work safely"
+    - "Five-layer defense in depth (technical limits → permissions → environment → process → human) means no single failure is catastrophic"
+    - "The emergency cheat sheet (Ctrl+C, git status, git checkout -- ., git reset --hard) should be memorized or printed"
+  misconceptions:
+    - "Students think safety measures slow them down — the trust gradualism section shows that good safety actually accelerates work by enabling more autonomy over time"
+    - "Students assume they need Docker/staging for sandboxing — git branch is 90% of the safety most people need, emphasized in the lesson"
+    - "Students think 'Permissive' mode means 'no safety' — even permissive mode requires approval for destructive operations"
+  discussion_prompts:
+    - "Have you ever had an AI tool do something you didn't expect or approve? Which layer of defense would have caught it?"
+    - "Why is 'constraints enable autonomy' paradoxical but true — and can you think of non-AI examples of this principle?"
+  teaching_tips:
+    - "The emergency cheat sheet is the most immediately useful takeaway — have students print it or screenshot it during class"
+    - "The defense-in-depth diagram is worth drawing layer by layer, explaining what each protects against"
+    - "Walk through the 'AI deleted wrong directory' incident example step by step — students learn from near-disasters better than from theory"
+    - "Trust gradualism (4 phases over 3+ months) sets realistic expectations — don't rush to full autonomy"
+  assessment_quick_check:
+    - "Name the five layers of defense in depth and what each protects against"
+    - "What's the simplest sandboxing approach, and why is it sufficient for most use cases?"
+    - "Recite the four-step emergency response: what commands do you run when AI makes an unwanted change?"
 ---
 
 # Principle 6: Constraints and Safety
@@ -72,6 +106,7 @@ Before designing safety measures, understand what you're protecting against.
 ### Category 1: Data Loss (Destructive Operations)
 
 AI deletes or overwrites important data:
+
 - `rm -rf` on the wrong directory
 - Overwriting files without confirmation
 - Git operations that discard work
@@ -83,6 +118,7 @@ AI deletes or overwrites important data:
 ### Category 2: Security Vulnerabilities
 
 AI introduces security issues:
+
 - Hardcoded credentials in code
 - Insecure authentication implementations
 - SQL injection vulnerabilities
@@ -94,6 +130,7 @@ AI introduces security issues:
 ### Category 3: Cost Overruns
 
 AI generates expensive operations:
+
 - Infinite loops in cloud resources
 - API calls without rate limiting
 - Inefficient algorithms consuming compute
@@ -105,6 +142,7 @@ AI generates expensive operations:
 ### Category 4: Reputation Damage
 
 AI makes changes that affect users:
+
 - Offensive content in user-facing materials
 - Bugs that corrupt user data
 - Performance issues that cause downtime
@@ -116,6 +154,7 @@ AI makes changes that affect users:
 ### Category 5: Workflow Disruption
 
 AI interferes with team processes:
+
 - Commits that break CI/CD
 - Changes that conflict with others' work
 - Alters agreed-upon conventions
@@ -152,6 +191,7 @@ No single safety measure is sufficient. You need layers—each protecting agains
 **What**: Hard limits on what AI can do
 
 **Examples**:
+
 ```bash
 # Read-only filesystem access (sandbox)
 # Network restrictions (no external API calls)
@@ -166,6 +206,7 @@ No single safety measure is sufficient. You need layers—each protecting agains
 **What**: Require approval for certain actions
 
 **Examples**:
+
 ```
 # Approve before: deleting files
 # Approve before: running git push
@@ -180,6 +221,7 @@ No single safety measure is sufficient. You need layers—each protecting agains
 **What**: Separate AI work from production
 
 **Examples**:
+
 ```
 # AI works in staging/sandbox environment
 # Production requires manual deployment
@@ -194,6 +236,7 @@ No single safety measure is sufficient. You need layers—each protecting agains
 **What**: Workflow that incorporates safety
 
 **Examples**:
+
 ```
 # Always review diffs before applying
 # Run tests before committing
@@ -208,6 +251,7 @@ No single safety measure is sufficient. You need layers—each protecting agains
 **What**: Human review before impact
 
 **Examples**:
+
 ```
 # Review AI suggestions before accepting
 # Manual approval for deployments
@@ -228,6 +272,7 @@ Different AI tools offer different permission models. Understanding them helps y
 **Best for**: Experienced users, trusted AI, familiar codebase
 
 **Example configuration**:
+
 ```
 Auto-approve:
 - Read operations (cat, grep, find)
@@ -249,6 +294,7 @@ Require approval:
 **Best for**: New AI collaboration, unfamiliar codebase, learning phase
 
 **Example configuration**:
+
 ```
 Auto-approve:
 - Read operations only
@@ -266,6 +312,7 @@ Require approval:
 **Best for**: Exploration, code review, understanding unfamiliar codebases
 
 **Example configuration**:
+
 ```
 Auto-approve:
 - Read operations only
@@ -278,19 +325,20 @@ Blocked:
 
 ### Choosing Your Model
 
-| Situation | Recommended Model | Rationale |
-|-----------|------------------|-----------|
-| **First time with AI** | Confirming | Build trust before autonomy |
-| **Routine work on familiar project** | Permissive | Efficiency for safe operations |
-| **Exploring unfamiliar code** | Restricted | Understand before modifying |
-| **Production systems** | Confirming + Staging | Extra caution for critical systems |
-| **Prototype/experimental work** | Permissive | Speed over caution, rollback available |
+| Situation                            | Recommended Model    | Rationale                              |
+| ------------------------------------ | -------------------- | -------------------------------------- |
+| **First time with AI**               | Confirming           | Build trust before autonomy            |
+| **Routine work on familiar project** | Permissive           | Efficiency for safe operations         |
+| **Exploring unfamiliar code**        | Restricted           | Understand before modifying            |
+| **Production systems**               | Confirming + Staging | Extra caution for critical systems     |
+| **Prototype/experimental work**      | Permissive           | Speed over caution, rollback available |
 
 ## The Destructive Operations List
 
 Know which commands require extra scrutiny. These should always trigger confirmation:
 
 ### File Operations
+
 ```bash
 rm, rm -rf              # Delete files/directories
 mv                      # Move (can overwrite)
@@ -300,6 +348,7 @@ dd                      # Low-level disk write
 ```
 
 ### Version Control
+
 ```bash
 git reset --hard        # Discard all changes
 git rebase              # Rewrite history
@@ -309,6 +358,7 @@ git checkout -- .       # Discard working directory changes
 ```
 
 ### Package Management
+
 ```bash
 npm install             # Can change dependencies
 pip install             # Can change dependencies
@@ -317,6 +367,7 @@ brew install            # System-level changes
 ```
 
 ### System Operations
+
 ```bash
 sudo                    # Elevated privileges
 systemctl               # Service management
@@ -325,6 +376,7 @@ reboot, shutdown        # System operations
 ```
 
 ### Data Operations
+
 ```bash
 DROP DATABASE           # Database destruction
 DELETE FROM            # Data deletion (without WHERE)
@@ -428,6 +480,7 @@ Don't go from zero autonomy to full autonomy overnight. Build trust gradually.
 ### Trust Signals to Track
 
 Track these to decide when to increase autonomy:
+
 - **Error rate**: How often does AI make mistakes?
 - **Correction ease**: How easy is it to fix AI mistakes?
 - **Pattern adherence**: Does AI follow project conventions?
@@ -438,18 +491,21 @@ Track these to decide when to increase autonomy:
 Before starting an AI session, verify:
 
 **Environment**:
+
 - [ ] Working in correct directory (not production)
 - [ ] On correct branch (feature branch, not main)
 - [ ] Environment variables set correctly (sandbox credentials)
 - [ ] Uncommitted work is backed up or committed
 
 **Tool Configuration**:
+
 - [ ] Permission mode appropriate for task
 - [ ] Destructive operations require approval
 - [ ] Read-only mode if just exploring
 - [ ] Logging enabled for audit trail
 
 **Mental Model**:
+
 - [ ] Clear task scope (what AI should and shouldn't do)
 - [ ] Identified high-risk operations to watch for
 - [ ] Rollback plan if things go wrong
@@ -461,13 +517,13 @@ Despite all precautions, things will go wrong. Have a plan.
 
 ### Emergency Cheat Sheet (Memorize This)
 
-| Situation | Command | What It Does |
-|-----------|---------|--------------|
-| **Stop AI immediately** | `Ctrl+C` | Kills the current operation |
-| **See what changed** | `git status` | Shows modified/deleted files |
-| **Undo uncommitted changes** | `git checkout -- .` | Restores all files to last commit |
-| **Nuclear reset** | `git reset --hard HEAD` | Discards everything since last commit |
-| **Undo last commit** | `git reset --hard HEAD~1` | Removes the most recent commit entirely |
+| Situation                    | Command                   | What It Does                            |
+| ---------------------------- | ------------------------- | --------------------------------------- |
+| **Stop AI immediately**      | `Ctrl+C`                  | Kills the current operation             |
+| **See what changed**         | `git status`              | Shows modified/deleted files            |
+| **Undo uncommitted changes** | `git checkout -- .`       | Restores all files to last commit       |
+| **Nuclear reset**            | `git reset --hard HEAD`   | Discards everything since last commit   |
+| **Undo last commit**         | `git reset --hard HEAD~1` | Removes the most recent commit entirely |
 
 Print this. Tape it to your monitor. When panic hits, you won't remember—but you can read.
 
@@ -493,6 +549,7 @@ git reset --hard HEAD~1  # Or remove commit entirely
 ### Post-Incident Review
 
 After an incident, ask:
+
 - What happened?
 - Why did safeguards fail?
 - What constraint would have prevented this?
@@ -507,6 +564,7 @@ After an incident, ask:
 **Recovery**: `git checkout -- .` to restore from git.
 
 **Prevention for next time**:
+
 - Add safeguard: AI must `pwd` before destructive operations
 - Change permission mode: require approval for all `rm` commands
 - Add alias: `rm` → `rm -i` (interactive mode)
@@ -514,6 +572,7 @@ After an incident, ask:
 ## Why This Principle Matters: Trust Through Safety
 
 Paradoxically, **constraints enable autonomy**. When you have good safety measures:
+
 - You feel comfortable giving AI more autonomy
 - You can focus on high-level direction rather than worrying
 - AI can be more effective without risking disaster

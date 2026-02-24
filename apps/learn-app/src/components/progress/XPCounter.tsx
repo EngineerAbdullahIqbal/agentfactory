@@ -120,7 +120,10 @@ export default function XPCounter({ className }: XPCounterProps) {
             </span>
           </div>
 
-          <div className="flex flex-col items-center p-2 rounded-md border border-border bg-background">
+          <Link
+            to="/leaderboard"
+            className="flex flex-col items-center p-2 rounded-md border border-border bg-background hover:bg-accent transition-colors no-underline"
+          >
             <Trophy className="h-5 w-5 text-primary mb-1" />
             <span className="text-lg font-bold tabular-nums text-foreground">
               {rank ? `#${rank}` : "--"}
@@ -128,7 +131,7 @@ export default function XPCounter({ className }: XPCounterProps) {
             <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
               Rank
             </span>
-          </div>
+          </Link>
 
           <div className="flex flex-col items-center p-2 rounded-md border border-border bg-background">
             <Flame

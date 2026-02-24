@@ -62,6 +62,31 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design custom interview questions for domain-specific specifications beyond the standard checklist"
   remedial_for_struggling: "Focus on the five ambiguity categories first, then practice the prompt pattern"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Deep-Dive into SDD Phases"
+  key_points:
+    - "The role reversal is the key insight — in refinement, Claude asks questions and you answer, which surfaces gaps you didn't know existed"
+    - "The 10x cost multiplier table (5 min during spec → 8-16 hours in production) is the most persuasive argument for why this phase can't be skipped"
+    - "Five ambiguity categories (data decisions, conflict resolution, pattern selection, failure recovery, boundary conditions) give students a repeatable checklist"
+    - "The 'handle conflicts optimistically' example shows how a two-word ambiguity can cost three days of refactoring"
+  misconceptions:
+    - "Students think refinement means 'Claude proofreading the spec' — it's Claude interrogating your unstated assumptions, not checking grammar"
+    - "Students skip refinement because their spec 'feels complete' — the whole point is surfacing assumptions so natural you didn't think to write them down"
+    - "Students get annoyed by Claude's questions and cut the interview short — annoyance often signals you haven't thought through those decisions"
+  discussion_prompts:
+    - "Think of a project where a 'small detail' you didn't specify upfront caused a major rework — which ambiguity category did it fall into?"
+    - "Why is it harder to find your own unstated assumptions than to find someone else's?"
+  teaching_tips:
+    - "Have students run the interview prompt live on their Lesson 5 spec — the experience of Claude finding real gaps is more convincing than any lecture"
+    - "The cost multiplier table is worth dwelling on — ask students to estimate their own 'most expensive late-found ambiguity'"
+    - "Walk through the report-spec interview example step by step: question → answer → spec update. Show how three questions prevented three rewrites"
+    - "The 'when to stop' section prevents analysis paralysis — emphasize that implementation details are not design decisions"
+  assessment_quick_check:
+    - "Name the five ambiguity categories and give an example question for each"
+    - "What's the prompt pattern that triggers Claude's interview mode, and why does the role reversal matter?"
 ---
 
 # Phase 3: Refinement via Interview

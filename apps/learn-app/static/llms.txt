@@ -1,48 +1,86 @@
-# Agent Factory
+# The AI Agent Factory
 
-> The Spec-Driven Blueprint for Building and Monetizing Digital FTEs
+> The Spec-Driven Blueprint for Building and Monetizing Digital FTEs (Full-Time Equivalent Reliable AI Agents). 86 chapters across 9 parts. Published February 2026 by Panaversity.
 
-## About
+The AI Agent Factory teaches domain experts how to build sellable AI agents using Claude Code, MCP, and agent SDKs. It covers the full journey from understanding AI agents to building, deploying, and monetizing them at scale. The book is grounded in the February 2026 "SaaSpocalypse" — nearly $1 trillion erased from software stocks when Anthropic's Claude Cowork proved autonomous agents can perform complex professional work that justified $200/month SaaS subscriptions.
 
-Agent Factory teaches domain experts how to build sellable AI agents using Claude Code, MCP, and agent SDKs. Transform expertise into AI employees that work 24/7.
+Core thesis: In the AI era, the most valuable companies won't sell software — they'll manufacture AI employees. The SaaS era sold subscriptions; the Agent Factory era sells results. Buyers define intent. Agents execute. Humans supervise and verify.
 
-## Key Topics
+Key concepts: Digital FTE (AI employee working 168 hours/week under human supervision), Spec-Driven Development (specs as source of truth, AI generates code from specs), Agent Skills (reusable intelligence in SKILL.md format), MCP (Model Context Protocol — universal tool connectivity standard), The Agent Triangle (General Agents vs Custom-Built vs Pre-Built AI Employees).
 
-- **Digital FTE**: AI employees performing real work autonomously under human supervision
-- **General Agents**: Claude Code, Gemini CLI, Codex CLI for AI-driven development
-- **Custom Agents**: OpenAI Agents SDK, Claude Agent SDK, Google ADK
-- **MCP**: Model Context Protocol for universal tool connectivity
-- **Agent Skills**: Reusable intelligence packaging in SKILL.md format
-- **Spec-Driven Development**: AI-native software methodology with specs as source of truth
+Pedagogical approach: YAML frontmatter with Bloom's taxonomy objectives, CEFR A1-C2 skill scaffolding, interactive "Try With AI" prompts, 4-layer teaching method (Manual Foundation → AI Collaboration → Intelligence Building → Spec-Driven Capstones).
 
-## Documentation Structure
+## Core
 
-- /docs/01-General-Agents-Foundations/ - Core concepts, Claude Code mastery
-- /docs/02-Applied-General-Agent-Workflows/ - Practical workflows and digital FTE creation
-- /docs/03-SDD-RI-Fundamentals/ - Spec-driven development methodology
-- /docs/04-Coding-for-Problem-Solving/ - Python fundamentals for AI development
-- /docs/05-Building-Custom-Agents/ - SDK-based agent construction
-- /docs/06-AI-Cloud-Native-Development/ - Kubernetes, Docker, Helm deployment
+- [Thesis](https://agentfactory.panaversity.org/docs/thesis): The Agent Factory thesis — paradigm shift from SaaS tools to AI employees
+- [Preface](https://agentfactory.panaversity.org/docs/preface-agent-native): The SaaSpocalypse, three strategic presentations, and why this book exists
+- [Chapter 1: Agent Factory Paradigm](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/agent-factory-paradigm): First chapter — the 2025 inflection point, Digital FTE business strategy, spec-driven development
 
-## Getting Started
+## Part 1: General Agents Foundations
 
-Start with the Thesis: /docs/thesis
-Then continue to the Preface: /docs/preface-agent-native
-Begin learning with Chapter 1: /docs/01-General-Agents-Foundations/01-agent-factory-paradigm/
+- [Chapter 1: Agent Factory Paradigm](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/agent-factory-paradigm): Digital FTE revolution, business strategy, seven principles
+- [Chapter 2: Markdown Writing Instructions](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/markdown-writing-instructions): Foundation writing skills for AI-native workflows
+- [Chapter 3: General Agents](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/general-agents): Claude Code, Gemini CLI, Codex CLI mastery
+- [Chapter 4: Context Engineering](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/context-engineering): Providing effective context to AI systems
+- [Chapter 5: Spec-Driven Development](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/spec-driven-development): AI-native methodology with specs as source of truth
+- [Chapter 6: Seven Principles](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/seven-principles): Seven principles of agent work
+- [Chapter 7: Meet Your First AI Employee](https://agentfactory.panaversity.org/docs/General-Agents-Foundations/meet-your-first-ai-employee): Hands-on first Digital FTE experience
 
-## Key Concepts
+## Part 2: Agent Workflow Primitives
 
-### What is a Digital FTE?
-A Digital FTE (Full-Time Equivalent) is an AI employee that performs real work autonomously under human supervision. Unlike traditional software, Digital FTEs work 168 hours per week at a fraction of human cost.
+- [Chapter 8: File Processing](https://agentfactory.panaversity.org/docs/Agent-Workflow-Primitives/file-processing): File processing workflows
+- [Chapter 9: Computation and Data Extraction](https://agentfactory.panaversity.org/docs/Agent-Workflow-Primitives/computation-data-extraction): Data extraction patterns
+- [Chapter 10: Structured Data](https://agentfactory.panaversity.org/docs/Agent-Workflow-Primitives/structured-data-persistent-storage): Persistent storage patterns
+- [Chapter 11: Linux Mastery](https://agentfactory.panaversity.org/docs/Agent-Workflow-Primitives/linux-mastery): Linux for AI development
+- [Chapter 12: Version Control](https://agentfactory.panaversity.org/docs/Agent-Workflow-Primitives/version-control): Git workflows
+- [Chapter 13: Build Your First AI Employee](https://agentfactory.panaversity.org/docs/Agent-Workflow-Primitives/build-first-ai-employee): End-to-end AI employee construction
 
-### What is Spec-Driven Development?
-Spec-Driven Development treats specifications as the source of truth. Humans write specs, AI generates code, tests, and documentation from those specs. This enables AI-native software development.
+## Part 3: Applied Domain Workflows
 
-### What is an Agent Skill?
-An Agent Skill is a reusable package of intelligence defined in SKILL.md format. Skills contain persona, logic, context, MCP integrations, and safety guardrails.
+- [Chapter 14: Ten Axioms of AI-Driven Development](https://agentfactory.panaversity.org/docs/Applied-Domain-Workflows/ten-axioms-of-programming-in-ai-driven-development): Axioms and SpecKit hands-on
 
-## Contact
+## Part 4: Coding for Problem Solving
 
-- Website: https://panaversity.org
-- GitHub: https://github.com/panaversity
-- Book: https://agentfactory.panaversity.org
+- [Chapter 15: Python UV Package Manager](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/python-uv-package-manager): Modern Python tooling
+- [Chapter 16: Introduction to Python](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/introduction-to-python): Python fundamentals
+- [Chapter 17: Data Types](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/data-types): Python data types
+- [Chapter 18: Operators and Variables](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/operators-keywords-variables): Operators, keywords, variables
+- [Chapter 19: Strings](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/strings-type-casting): Strings and type casting
+- [Chapter 20: Control Flow](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/control-flow-loops): Control flow and loops
+- [Chapter 21: Collections](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/lists-tuples-dictionary): Lists, tuples, dictionaries
+- [Chapter 22: Sets and Memory](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/set-frozenset-gc): Sets, frozensets, garbage collection
+- [Chapter 23: Modules and Functions](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/module-functions): Modules and functions
+- [Chapter 24: Exception Handling](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/exception-handling): Exception handling
+- [Chapter 25: File I/O](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/io-file-handling): I/O and file handling
+- [Chapter 26: Math and Datetime](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/math-datetime-calendar): Math, datetime, calendar
+- [Chapter 27: OOP Part 1](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/oop-part-1): Object-oriented programming fundamentals
+- [Chapter 28: OOP Part 2](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/oop-part-2): Advanced OOP patterns
+- [Chapter 29: Metaclasses](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/metaclasses-dataclasses): Metaclasses and dataclasses
+- [Chapter 30: Pydantic](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/pydantic-generics): Pydantic and generics
+- [Chapter 31: AsyncIO](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/asyncio): Asynchronous programming
+- [Chapter 32: CPython and GIL](https://agentfactory.panaversity.org/docs/Coding-for-Problem-Solving/cpython-gil): CPython internals
+
+## Part 5: Building Custom Agents (Chapters 33–48)
+
+- [Part 5 Overview](https://agentfactory.panaversity.org/docs/Building-Custom-Agents/introduction-to-ai-agents): Agent SDKs (OpenAI, Google ADK, Anthropic), MCP servers, FastAPI, RAG, databases, TDD, evals, knowledge graphs
+
+## Part 6: AI Cloud-Native Development (Chapters 49–60)
+
+- [Part 6 Overview](https://agentfactory.panaversity.org/docs/AI-Cloud-Native-Development/docker-for-ai-services): Docker, Kubernetes, Helm, Kafka, Dapr, CI/CD with ArgoCD, observability, traffic engineering, production security, disaster recovery
+
+## Part 7: LLMOps and Proprietary Intelligence (Chapters 61–72)
+
+- [Part 7 Overview](https://agentfactory.panaversity.org/docs/Turing-LLMOps-Proprietary-Intelligence/introduction-to-llmops): LLM architecture, fine-tuning, identity tuning, function calling, model merging, alignment, evaluation gates, deployment
+
+## Part 8: TypeScript and Realtime Interaction (Chapters 73–78)
+
+- [Part 8 Overview](https://agentfactory.panaversity.org/docs/TypeScript-Language-Realtime-Interaction/typescript-fundamentals): TypeScript fundamentals, async streaming, runtime environments, type-safe SDKs, testing, CLI tools
+
+## Part 9: Building Realtime Voice Agents (Chapters 79–85)
+
+- [Part 9 Overview](https://agentfactory.panaversity.org/docs/Building-Realtime-Voice-Agents/voice-ai-fundamentals): Voice AI, LiveKit, Pipecat, OpenAI Realtime API, Gemini Live API, phone/browser integration
+
+## Optional
+
+- [Website](https://panaversity.org): Panaversity organization
+- [GitHub](https://github.com/panaversity): Source code and projects

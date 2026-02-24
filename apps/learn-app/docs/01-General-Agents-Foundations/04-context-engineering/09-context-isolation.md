@@ -94,6 +94,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Implement a hybrid architecture combining Stateless subagents with a Shared memory layer for context that genuinely needs to persist across agent boundaries"
   remedial_for_struggling: "Start with a simple two-agent orchestrator (Research → Write) before attempting three-agent patterns; focus on the summary-return mechanism first"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 3
+  session_title: "Long-Horizon Work and Memory Systems"
+  key_points:
+    - "The dirty slate problem explains why multi-agent pipelines often produce worse results than single agents — context pollution from accumulated process artifacts overwhelms attention budget"
+    - "The clean context pattern (orchestrator + isolated subagents returning summaries) gives each agent its full attention budget and enables parallel execution"
+    - "Three subagent patterns serve different needs: Stateless for independent tasks, Stateful for genuine sequential dependencies, Shared (Network) for persistent multi-session coordination"
+    - "Agent teams are the practical implementation of the Network pattern — the key difference from subagents is that teammates can message each other directly without routing through the orchestrator"
+  misconceptions:
+    - "Students think more agents equals better results — without context isolation, adding agents makes quality worse because each inherits accumulated pollution"
+    - "Students default to Stateful (handoff) patterns because they feel natural — but most multi-agent work benefits from Stateless isolation with summary returns"
+    - "Students confuse context amnesia (the price of isolation) with a design flaw — it is an intentional tradeoff, and the three workaround strategies (Skills, Master-Clone, Delegation Prompt Enrichment) address it"
+    - "Students assume agent teams are always better than subagents — agent teams add significant coordination overhead and token cost, and should only be used when workers genuinely need to communicate with each other"
+  discussion_prompts:
+    - "In your domain, what information from the research phase would actively hurt the writing phase if it remained in context?"
+    - "If you had three agents working on a deliverable, would they need to talk to each other (agent teams) or just report back to you (subagents)?"
+  teaching_tips:
+    - "The dirty slate diagram (Agent A -> B -> C with accumulating context) is the key visualization — draw it on the board and have students calculate attention budget consumption at each stage"
+    - "The lab comparing dirty slate vs clean context with the same task is the strongest persuasion tool — students see the quality difference firsthand"
+    - "Use the 16-agent compiler case study to show that context engineering principles scale — the same techniques work whether coordinating 3 agents or 16"
+    - "The pattern selection table (do tasks have sequential dependencies? must agents operate independently? etc.) should be a reference students keep handy"
+  assessment_quick_check:
+    - "Explain why Agent C in a 3-agent linear pipeline produces worse results than a single agent given the same task"
+    - "When would you use Stateless subagents vs Agent Teams, and what is the deciding factor?"
+    - "Name the three context amnesia workaround strategies and when each is appropriate"
 ---
 
 # Context Isolation: Why Clean Slates Beat Dirty States

@@ -23,11 +23,12 @@ from fastapi import FastAPI, HTTPException, Request  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
 from fastapi.responses import Response, StreamingResponse  # noqa: E402
 
-from .auth import CurrentUser, verify_jwt  # noqa: E402
+from api_infra.auth import CurrentUser, verify_jwt  # noqa: E402
+from api_infra.core.rate_limit import RateLimitConfig, RateLimiter  # noqa: E402
+
 from .chatkit_store import RequestContext  # noqa: E402
 from .config import settings  # noqa: E402
 from .core.lifespan import lifespan  # noqa: E402
-from .core.rate_limit import RateLimitConfig, RateLimiter  # noqa: E402
 
 # Default organization ID for Panaversity
 DEFAULT_ORGANIZATION_ID = "panaversity-default-org-id"
@@ -80,6 +81,8 @@ async def chatkit_endpoint(request: Request):
     Requires Authorization header with Bearer token (JWT verified via JWKS).
     In dev mode, falls back to X-User-ID header.
     """
+    logger.debug("[CHATKIT ENDPOINT] Request received")
+
     # Get server from app state
     chatkit_server = getattr(request.app.state, "chatkit_server", None)
     if not chatkit_server:
@@ -251,7 +254,7 @@ async def health_check(request: Request):
         status["status"] = "degraded"
 
     # Check Redis
-    from .core.redis_cache import get_redis
+    from api_infra.core.redis_cache import get_redis
 
     redis_client = get_redis()
     if redis_client:
@@ -281,7 +284,7 @@ async def invalidate_cache(
         paths: Optional list of lesson paths to invalidate.
                If None, invalidates all content cache.
     """
-    from .core.redis_cache import get_redis
+    from api_infra.core.redis_cache import get_redis
 
     # Verify admin secret
     admin_secret = os.getenv("ADMIN_SECRET", "")

@@ -10,7 +10,7 @@ keywords:
   - AGENTS.md
   - CLAUDE.md
   - professional workspace
-chapter: 10
+chapter: 13
 lesson: 1
 duration_minutes: 25
 
@@ -77,6 +77,34 @@ differentiation:
   extension_for_advanced: "Add git version control; configure additional governance rules"
   remedial_for_struggling: "Use folder-only approach without Obsidian"
 
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 1
+  session_title: "Setting Up the Memory Layer"
+  key_points:
+    - "Memory/reasoning separation is the core insight — vault is memory (SOPs + knowledge), Claude Code is reasoning; this pattern recurs in every subsequent lesson"
+    - "AGENTS.md is governance (rules of engagement), CLAUDE.md is the entry point — students must understand the difference before creating skills in L02"
+    - "Obsidian MCP makes the Memory Bank location-independent — this is essential for Silver tier Watchers that run from outside the vault"
+    - "The 'Without Vault vs With Vault' table is the motivating comparison — Claude without vault is amnesia, with vault is a stateful partner"
+  misconceptions:
+    - "Students think CLAUDE.md and AGENTS.md do the same thing — CLAUDE.md is the entry point Claude reads first, AGENTS.md is the governance rulebook it references"
+    - "Students assume Claude Code remembers previous sessions automatically — it reads files each time, so the vault IS the memory mechanism"
+    - "Students skip MCP setup thinking it is optional — without MCP, watchers in Silver tier cannot access the vault from outside the directory"
+    - "Students confuse Obsidian (the UI tool) with the vault (the folder of markdown files) — Obsidian is just one way to edit the vault"
+  discussion_prompts:
+    - "What professional knowledge lives in your head right now that you re-explain to colleagues? How would encoding it as vault files change your workflow?"
+    - "The lesson says Claude Code is a 'junior professional with access to your shared drive.' What are the limits of this analogy — where does it break down?"
+    - "Why do you think the spec chose plain markdown files instead of a database for the Memory Bank?"
+  teaching_tips:
+    - "Do the MCP setup live in class — students hit configuration issues (wrong API key, Obsidian not running) that are easier to debug together"
+    - "Have students test from OUTSIDE the vault directory (Step 7 Part D) before moving on — this catches MCP misconfigurations early"
+    - "Emphasize the 'Without Vault vs With Vault' table as the lesson's thesis — return to it when students question why setup matters"
+    - "Spend minimal time on the optional hidden files plugin (Step 8) — most students can edit via terminal and it is not needed for later lessons"
+  assessment_quick_check:
+    - "Ask students to explain the difference between CLAUDE.md and AGENTS.md in one sentence each"
+    - "Have students run a Claude Code command from outside the vault directory using MCP — if it returns vault content, setup is correct"
+    - "What are the three components of the memory/reasoning separation? (Vault=memory, Claude Code=reasoning, Skills=training)"
+
 # Generation metadata
 generated_by: "manual creation"
 created: "2026-01-03"
@@ -114,7 +142,7 @@ Even advanced users copy-paste context, re-explain their rules, and lose knowled
 
 **The question**: How do we make AI work like a **trained professional**, not a clever chat agent without context about your professional work?
 
-**The answer**: Give it a filesystem. A folder of markdown files solves the memory limitation of chat-only models. Claude Code reads files before every conversation, so it *thinks beyond a single session*. Your vault becomes Claude's long-term memory.
+**The answer**: Give it a filesystem. A folder of markdown files solves the memory limitation of chat-only models. Claude Code reads files before every conversation, so it _thinks beyond a single session_. Your vault becomes Claude's long-term memory.
 
 ---
 
@@ -122,28 +150,28 @@ Even advanced users copy-paste context, re-explain their rules, and lose knowled
 
 **Separate memory from reasoning.**
 
-| Role | Tool | What It Does |
-|------|------|--------------|
-| **Memory** | Obsidian Vault | Source of truth you curate (notes, rules, SOPs) |
-| **Reasoning** | Claude Code | Reads memory, follows rules, produces work |
-| **Training** | Skills | Explicit teaching — repeatable, reviewable, auditable |
+| Role          | Tool           | What It Does                                          |
+| ------------- | -------------- | ----------------------------------------------------- |
+| **Memory**    | Obsidian Vault | Source of truth you curate (notes, rules, SOPs)       |
+| **Reasoning** | Claude Code    | Reads memory, follows rules, produces work            |
+| **Training**  | Skills         | Explicit teaching — repeatable, reviewable, auditable |
 
 **Mental model**: Claude Code is a junior professional with access to your shared drive. Not autonomous. Not magical. Just capable and fast — and it follows your written instructions.
 
-**Key shift**: Skills are *teaching*, not prompting. You write what the skill does, when to use it, how to do it, what not to do. This makes behavior predictable.
+**Key shift**: Skills are _teaching_, not prompting. You write what the skill does, when to use it, how to do it, what not to do. This makes behavior predictable.
 
 ---
 
 ## Why This Matters
 
-| Aspect | Without Vault | With Vault |
-|--------|---------------|------------|
-| Context per session | Zero | Full |
-| Re-explaining needed | Every time | Never |
-| Memory | None | Persistent |
-| Aligned advice | Generic | Your goals |
-| Pattern detection | Impossible | Automatic |
-| Institutional knowledge | Lost | Accumulated |
+| Aspect                  | Without Vault | With Vault  |
+| ----------------------- | ------------- | ----------- |
+| Context per session     | Zero          | Full        |
+| Re-explaining needed    | Every time    | Never       |
+| Memory                  | None          | Persistent  |
+| Aligned advice          | Generic       | Your goals  |
+| Pattern detection       | Impossible    | Automatic   |
+| Institutional knowledge | Lost          | Accumulated |
 
 **Claude Code without vault** = Smart agent with amnesia
 
@@ -188,11 +216,11 @@ This vault is where I (human) and Claude Code (General Agent) work together on b
 
 ai-vault/
 ├── .claude/
-│   ├── skills/        # Reusable expertise (SKILL.md format)
-│   └── agents/        # Autonomous workers
-├── references/        # Supporting documents
-├── CLAUDE.md          # Project context (references this file)
-└── AGENTS.md          # This file (governance)
+│ ├── skills/ # Reusable expertise (SKILL.md format)
+│ └── agents/ # Autonomous workers
+├── references/ # Supporting documents
+├── CLAUDE.md # Project context (references this file)
+└── AGENTS.md # This file (governance)
 
 ## Governance Rules
 
@@ -203,8 +231,8 @@ ai-vault/
 
 ## Active Projects
 
-| Project | Series | Status |
-|---------|--------|--------|
+| Project         | Series             | Status   |
+| --------------- | ------------------ | -------- |
 | Email Assistant | Email-1 to Email-7 | Starting |
 ```
 
@@ -216,14 +244,14 @@ Save the file. Now if you open vault folder you will notice an AGENTS.md file th
 
 Your vault isn't just governance files. It's your **professional memory**:
 
-| Content Type | Example | How Claude Uses It |
-|--------------|---------|-------------------|
-| **SOPs** | `sops/client-onboarding.md` | Follows your documented process |
-| **Client Notes** | `clients/acme-corp.md` | Knows context when writing emails |
-| **Task Lists** | `tasks/this-week.md` | Prioritizes based on your priorities |
-| **Templates** | `templates/weekly-report.md` | Uses your established formats |
-| **Meeting Notes** | `meetings/2026-01-03-standup.md` | Remembers decisions and action items |
-| **Reference Docs** | `references/pricing-tiers.md` | Gives accurate answers about your business |
+| Content Type       | Example                          | How Claude Uses It                         |
+| ------------------ | -------------------------------- | ------------------------------------------ |
+| **SOPs**           | `sops/client-onboarding.md`      | Follows your documented process            |
+| **Client Notes**   | `clients/acme-corp.md`           | Knows context when writing emails          |
+| **Task Lists**     | `tasks/this-week.md`             | Prioritizes based on your priorities       |
+| **Templates**      | `templates/weekly-report.md`     | Uses your established formats              |
+| **Meeting Notes**  | `meetings/2026-01-03-standup.md` | Remembers decisions and action items       |
+| **Reference Docs** | `references/pricing-tiers.md`    | Gives accurate answers about your business |
 
 **Start simple**: Begin with just governance files (AGENTS.md, CLAUDE.md). Add knowledge as you work. Every note you add makes Claude smarter about your specific domain.
 
@@ -359,6 +387,7 @@ The most popular Obsidian MCP server ([2.7k+ stars](https://github.com/MarkusPfu
 4. Go to the plugin settings and copy your **API Key**
 
 **Default settings:**
+
 - Host: `127.0.0.1`
 - Port: `27124`
 - Protocol: HTTPS (the MCP handles this automatically)
@@ -398,6 +427,7 @@ claude mcp list
 ```
 
 **Expected output:**
+
 ```
 mcp-obsidian: connected
   Transport: stdio
@@ -406,14 +436,14 @@ mcp-obsidian: connected
 
 ### What Obsidian MCP Provides
 
-| Tool | What It Does |
-|------|--------------|
-| `list_files_in_vault` | List all files in vault |
-| `get_file_contents` | Read any note |
-| `search` | Search across all notes |
-| `patch_content` | Update specific sections |
-| `append_content` | Add to existing notes |
-| `delete_file` | Remove notes |
+| Tool                  | What It Does             |
+| --------------------- | ------------------------ |
+| `list_files_in_vault` | List all files in vault  |
+| `get_file_contents`   | Read any note            |
+| `search`              | Search across all notes  |
+| `patch_content`       | Update specific sections |
+| `append_content`      | Add to existing notes    |
+| `delete_file`         | Remove notes             |
 
 :::info Vault Switching
 The MCP connects to **whichever vault is currently open in Obsidian** — not to a specific vault path. To access a different vault:
@@ -432,6 +462,7 @@ claude
 ```
 
 Then ask:
+
 ```
 Using mcp-obsidian, get the contents of AGENTS.md and tell me my governance rules.
 ```
@@ -445,6 +476,62 @@ Without MCP, your AI Employee is "stuck" in the vault directory. With MCP, Claud
 :::warning Obsidian Must Be Running
 The REST API plugin requires Obsidian to be open. For always-on access (Silver tier watchers), keep Obsidian running in the background.
 :::
+
+### Troubleshooting MCP Connection
+
+**"uvx: command not found"**
+
+Install `uv` first (the Python package manager):
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then restart your terminal and retry the `claude mcp add` command.
+
+**"Connection refused" or "MCP server failed to start"**
+
+1. Verify Obsidian is running with the vault open
+2. Check the REST API plugin is enabled: Settings > Community plugins > Local REST API (toggle ON)
+3. Test the API directly: `curl -k https://127.0.0.1:27124/` — should return JSON with `"status": "OK"`
+4. If port 27124 is in use, check plugin settings for the correct port
+
+**"Authentication failed" or "403 Forbidden"**
+
+1. Open REST API plugin settings in Obsidian
+2. Copy the API key again (it may have changed)
+3. Update `~/.claude.json` with the new key
+4. Restart Claude Code: exit and run `claude` again
+
+**MCP shows "connected" but tools return empty results**
+
+1. Confirm you have the correct vault open in Obsidian (the REST API connects to the active vault)
+2. Verify files exist: check that `AGENTS.md` appears in Obsidian's file explorer
+3. Try: `claude mcp list` — verify `mcp-obsidian` shows with tools available
+
+### Vault Security: Protecting Credentials
+
+Your vault will eventually contain references to API keys, OAuth tokens, and other credentials. Keep them safe:
+
+**Rule 1: Never store secrets in vault files.**
+
+Store credentials in environment variables via a `.env` file **outside** the vault:
+
+```bash
+# ~/.env or ~/projects/ai-vault/.env
+OBSIDIAN_API_KEY=your-key-here
+GMAIL_APP_PASSWORD=xxxx-xxxx-xxxx-xxxx
+```
+
+**Rule 2: Add `.env` to `.gitignore` immediately.**
+
+```bash
+echo ".env" >> ~/projects/ai-vault/.gitignore
+```
+
+**Rule 3: Reference secrets by name, never by value.**
+
+In your vault files, write "use the Gmail App Password from .env" — never paste the actual credential into a markdown file.
 
 ---
 
@@ -477,11 +564,7 @@ The `.claude` folder is hidden by default in Obsidian. This step lets you see an
   "openChangelogOnUpdate": true,
   "showConfigurationFolder": true,
   "showHiddenFiles": true,
-  "showingRules": [
-    "+/",
-    "-/\\.git(?:\\/|$)/u",
-    "-/\\.venv(?:\\/|$)/u"
-  ]
+  "showingRules": ["+/", "-/\\.git(?:\\/|$)/u", "-/\\.venv(?:\\/|$)/u"]
 }
 ```
 
@@ -529,13 +612,13 @@ ai-vault/                        (Your Employee's Memory Bank)
 
 **What you have:**
 
-| Component | Role | Why It Matters |
-|-----------|------|----------------|
-| **Obsidian** | Human interface | Edit Memory Bank visually |
-| **Memory Bank** | SOPs + Knowledge Base | Your employee's long-term memory |
+| Component        | Role                        | Why It Matters                            |
+| ---------------- | --------------------------- | ----------------------------------------- |
+| **Obsidian**     | Human interface             | Edit Memory Bank visually                 |
+| **Memory Bank**  | SOPs + Knowledge Base       | Your employee's long-term memory          |
 | **Obsidian MCP** | Location-independent access | Watchers can trigger Claude from anywhere |
-| **AGENTS.md** | Governance rules | Your employee follows your SOPs |
-| **Claude Code** | Reasoning engine | Reads Memory Bank, executes actions |
+| **AGENTS.md**    | Governance rules            | Your employee follows your SOPs           |
+| **Claude Code**  | Reasoning engine            | Reads Memory Bank, executes actions       |
 
 **The architecture in one sentence**: Watchers (perception) trigger Claude Code (reasoning) which reads your Memory Bank via MCP and takes actions via other MCP servers (Gmail, browser, etc.).
 

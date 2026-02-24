@@ -60,6 +60,7 @@ interface QuizXPModalProps {
   totalXp: number;
   newBadges: BadgeEarned[];
   attemptNumber: number;
+  rank?: number | null;
   chapterTitle?: string;
 }
 
@@ -71,6 +72,7 @@ export default function QuizXPModal({
   totalXp,
   newBadges,
   attemptNumber,
+  rank,
   chapterTitle,
 }: QuizXPModalProps) {
   const displayScore = useAnimatedNumber(scorePercentage, 1000, 200);
@@ -198,6 +200,16 @@ export default function QuizXPModal({
           <span className="font-semibold text-foreground tabular-nums">
             {totalXp.toLocaleString()}
           </span>
+          {rank != null && (
+            <>
+              <span className="text-border">·</span>
+              <Trophy className="h-3.5 w-3.5 text-primary" />
+              <span>Rank:</span>
+              <span className="font-semibold text-foreground tabular-nums">
+                #{rank}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Actions */}
@@ -206,8 +218,8 @@ export default function QuizXPModal({
             Close
           </Button>
           <Button asChild className="flex-1">
-            <Link to="/progress">
-              View Progress
+            <Link to="/leaderboard">
+              View Leaderboard
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>
           </Button>

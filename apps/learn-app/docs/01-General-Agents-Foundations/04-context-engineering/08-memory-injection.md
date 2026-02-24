@@ -63,6 +63,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Implement a simple PreToolUse hook that reads a memory file and injects it via additionalContext"
   remedial_for_struggling: "Focus on the conceptual understanding of workflow drift; skip technical implementation"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 3
+  session_title: "Long-Horizon Work and Memory Systems"
+  key_points:
+    - "Workflow drift is the core problem — memories injected at turn 1 become irrelevant by turn 20 because the AI's intent evolves during multi-step reasoning"
+    - "Two injection timing strategies serve different purposes: UserPromptSubmit for session-wide baseline context, PreToolUse for execution-time relevance that adapts as work evolves"
+    - "The AI's thinking blocks are the ideal query for semantic memory retrieval — they contain current intent, not the original prompt"
+    - "A focused memory corpus of 10-20 high-value memories outperforms a large collection of noise — specificity beats comprehensiveness"
+  misconceptions:
+    - "Students think injecting more context at the start solves the relevance problem — it actually makes it worse by consuming attention budget with information that becomes irrelevant"
+    - "Students confuse memory injection with CLAUDE.md — CLAUDE.md is static context loaded at session start, memory injection is dynamic context loaded at the moment of relevance"
+    - "Students want to build complex vector database systems before understanding the concept — the 25-line Python script demonstrates the pattern; complexity can come later"
+  discussion_prompts:
+    - "Think of your last complex AI workflow — at what point did the AI start ignoring your initial instructions? That is likely where workflow drift took over."
+    - "What domain knowledge would be most valuable if it appeared exactly when you needed it, rather than being present the entire session?"
+  teaching_tips:
+    - "The employee analogy (9am briefing vs just-in-time colleague) is the strongest opening — it makes workflow drift intuitive before the technical explanation"
+    - "Walk through the legal or marketing multi-turn example step by step — have students identify at each turn what memories would be most relevant vs what was originally injected"
+    - "The memory corpus design exercise is where learning solidifies — have students write 3 memories from their own domain using the Summary/Context/Pattern/When to Apply structure"
+    - "For the optional technical track, the 25-line Python hook is intentionally simple — resist the urge to add complexity until students see the basic pattern working"
+  assessment_quick_check:
+    - "Explain workflow drift in one sentence using an example from your domain"
+    - "When would you use UserPromptSubmit vs PreToolUse injection timing, and why?"
+    - "Describe one high-value memory from your domain and explain when it would be injected"
 ---
 
 # Mid-Stream Memory: Injecting Context at Execution Time

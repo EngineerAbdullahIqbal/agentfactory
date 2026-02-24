@@ -5,7 +5,15 @@ chapter: 6
 lesson: 3
 duration_minutes: 25
 description: "Why verification and testing must be integrated into agentic workflows, not treated as afterthoughts"
-keywords: ["verification", "testing", "trust", "validation", "agentic workflows", "quality assurance"]
+keywords:
+  [
+    "verification",
+    "testing",
+    "trust",
+    "validation",
+    "agentic workflows",
+    "quality assurance",
+  ]
 
 # HIDDEN SKILLS METADATA
 skills:
@@ -53,6 +61,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a verification framework for a specific domain (web development, data science, DevOps) that maps task types to appropriate verification strategies with automation opportunities."
   remedial_for_struggling: "Focus on concrete examples: show a task with no verification (and its consequences), the same task with basic verification, and the task with comprehensive verification. Emphasize the difference in outcomes."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Foundation Principles"
+  key_points:
+    - "Verification is continuous, not final — the Generate → Verify → Generate → Verify loop catches errors before they compound"
+    - "Trust zones (1-4) give students a framework: start strict, accelerate with evidence, but NEVER fully trust critical systems like payments or security"
+    - "Verification vs validation are different questions: 'did we build it right' vs 'did we build the right thing' — AI can pass all tests but solve the wrong problem"
+    - "The 80/20 rule makes verification practical: 3 minutes of automated checks (lint + type-check + tests + grep) catches 90% of issues"
+  misconceptions:
+    - "Students think verification means 'running tests at the end' — emphasize the continuous loop where each generation is immediately verified"
+    - "Students trust AI more after seeing it produce correct output a few times — Zone 4 (Critical) areas never earn full trust regardless of track record"
+    - "Students think they need to understand every line of code to verify it — the red flags cheat sheet (secrets, silent errors, missing validation) catches the most dangerous issues in 30 seconds"
+  discussion_prompts:
+    - "Have you ever deployed AI-generated code without testing it? What happened — and which trust zone were you operating in?"
+    - "Why should payment processing ALWAYS stay in Zone 4, even if the AI gets it right 100 times in a row?"
+  teaching_tips:
+    - "The CSV parser before/after example is the perfect opening — students feel the pain of the unverified version and the relief of the verified one"
+    - "Draw the trust zones diagram on the whiteboard and have students classify their own AI interactions into zones"
+    - "The risk assessment matrix is the most practical takeaway — have students create one for their own work domain"
+    - "The verification vs validation distinction catches students off guard — use the CSV parser organized-by-date-vs-size example to make it concrete"
+  assessment_quick_check:
+    - "Explain the difference between verification and validation with an example"
+    - "Name the four trust zones and give an example task for each"
+    - "What three red flags should you always scan for in AI-generated code?"
 ---
 
 # Principle 3: Verification as Core Step
@@ -73,7 +107,7 @@ AI systems are confident—even when they're wrong. They'll generate incorrect A
 
 Consider this interaction:
 
-```
+````
 You: "Add a function to parse CSV files"
 
 AI: [Generates function]
@@ -81,7 +115,7 @@ AI: [Generates function]
 def parse_csv(file_path):
     with open(file_path, 'r') as f:
         return [line.split(',') for line in f.readlines()]
-```
+````
 
 You: "Looks good, thanks."
 
@@ -89,6 +123,7 @@ You: "Looks good, thanks."
 You: "Why are quoted fields with embedded commas breaking?"
 
 The AI's solution looked correct but failed on:
+
 - Quoted fields containing commas: `"Smith, John",123,manager`
 - Empty fields: `Jane,,Doe`
 - Newlines within quoted fields
@@ -100,7 +135,7 @@ The AI didn't lie—it provided a reasonable starting point. But **you accepted 
 
 Now watch the same task with verification built in:
 
-```
+````
 You: "Add a function to parse CSV files"
 
 AI: [Generates the same naive function]
@@ -120,17 +155,18 @@ def parse_csv(file_path):
     with open(file_path, 'r') as f:
         reader = csv.reader(f)
         return [row for row in reader]
-```
+````
 
 You: "Test it again with quoted commas, empty fields, and Windows line endings."
 
 AI: [Runs tests]
-    ✓ Quoted commas: Passed
-    ✓ Empty fields: Passed
-    ✓ Windows line endings: Passed
+✓ Quoted commas: Passed
+✓ Empty fields: Passed
+✓ Windows line endings: Passed
 
 You: "Now it's production-ready."
-```
+
+````
 
 **The difference**: Same starting point, completely different outcome. Verification turned a bug into a fix in under 2 minutes. Without verification, that bug would have surfaced in production—possibly weeks later, possibly at 2 AM.
 
@@ -163,7 +199,7 @@ grep -rn "api_key\|password\|secret\|token" --include="*.py" --include="*.js"
 
 # Find empty exception handlers
 grep -rn "except.*pass\|catch.*{}" --include="*.py" --include="*.js"
-```
+````
 
 These three checks take 30 seconds and catch the most dangerous issues. Make them a habit.
 
@@ -171,14 +207,15 @@ These three checks take 30 seconds and catch the most dangerous issues. Make the
 
 Engineers distinguish between two types of checking:
 
-| Type | Question | Example |
-|------|----------|---------|
-| **Verification** | "Did we build it right?" | Code runs without errors, tests pass, syntax is correct |
-| **Validation** | "Did we build the right thing?" | Code actually solves the user's problem |
+| Type             | Question                        | Example                                                 |
+| ---------------- | ------------------------------- | ------------------------------------------------------- |
+| **Verification** | "Did we build it right?"        | Code runs without errors, tests pass, syntax is correct |
+| **Validation**   | "Did we build the right thing?" | Code actually solves the user's problem                 |
 
-An AI can write a *perfect* CSV parser that organizes files by date—when you actually wanted them organized by size. That's a **validation failure**: the code works correctly but solves the wrong problem.
+An AI can write a _perfect_ CSV parser that organizes files by date—when you actually wanted them organized by size. That's a **validation failure**: the code works correctly but solves the wrong problem.
 
 **Always check both:**
+
 - Verification: Does it run? Does it pass tests?
 - Validation: Does it do what I actually asked for?
 
@@ -198,6 +235,7 @@ The most important mindset shift: **Verification is not the final step. It's con
 ```
 
 This fails because:
+
 - Errors compound over time
 - Context is lost between generation and verification
 - Fixing problems requires re-understanding old code
@@ -213,6 +251,7 @@ Generate → Verify → Generate → Verify → Generate → Verify
 ```
 
 Each generation is immediately verified:
+
 - Errors caught before they compound
 - Context is fresh for corrections
 - Learning happens incrementally
@@ -220,13 +259,13 @@ Each generation is immediately verified:
 
 ### Why Continuous Works Better
 
-| Aspect | Final Verification | Continuous Verification |
-|--------|-------------------|-------------------------|
+| Aspect              | Final Verification     | Continuous Verification       |
+| ------------------- | ---------------------- | ----------------------------- |
 | **Error detection** | After all code written | Immediately after each change |
-| **Fix cost** | High (context lost) | Low (context fresh) |
-| **Learning** | Delayed, abstract | Immediate, concrete |
-| **Feedback to AI** | Aggregate, vague | Specific, actionable |
-| **Confidence** | Low (unverified) | High (continually tested) |
+| **Fix cost**        | High (context lost)    | Low (context fresh)           |
+| **Learning**        | Delayed, abstract      | Immediate, concrete           |
+| **Feedback to AI**  | Aggregate, vague       | Specific, actionable          |
+| **Confidence**      | Low (unverified)       | High (continually tested)     |
 
 ## Verification Strategies: What to Verify When
 
@@ -237,6 +276,7 @@ Not all verification is equal. Different tasks require different approaches.
 **What**: Does the code run?
 
 **How**:
+
 - Run linter/formatter (eslint, black, rustfmt)
 - Execute compile/type-check command
 - Load the file in the interpreter
@@ -244,6 +284,7 @@ Not all verification is equal. Different tasks require different approaches.
 **Verifies**: No syntax errors, correct types, proper formatting
 
 **Example**:
+
 ```bash
 # Syntax check only—doesn't verify correctness
 python -m py_compile generated_file.py
@@ -255,6 +296,7 @@ npm run type-check
 **What**: Do individual functions work as expected?
 
 **How**:
+
 - Run existing tests
 - Create targeted unit tests
 - Test with example inputs
@@ -262,6 +304,7 @@ npm run type-check
 **Verifies**: Function behavior matches expectations for specific cases
 
 **Example**:
+
 ```python
 # Test the CSV parser with a simple case
 result = parse_csv("name,age\nJohn,30")
@@ -273,6 +316,7 @@ assert result == [["name", "age"], ["John", "30"]]
 **What**: Does the new code work with the existing system?
 
 **How**:
+
 - Run the full test suite
 - Test actual user workflows
 - Check for breaking changes
@@ -280,6 +324,7 @@ assert result == [["name", "age"], ["John", "30"]]
 **Verifies**: No regressions, compatible with existing code
 
 **Example**:
+
 ```bash
 # Full test suite catches integration issues
 npm test
@@ -291,6 +336,7 @@ pytest
 **What**: Does it solve the actual problem?
 
 **How**:
+
 - Manual testing of user workflows
 - Code review for logic and security
 - Performance testing under load
@@ -298,6 +344,7 @@ pytest
 **Verifies**: Real-world behavior, not just test passing
 
 **Example**:
+
 ```
 Actually run the application and try:
 - Import a CSV with quoted commas
@@ -311,16 +358,17 @@ You can't verify everything thoroughly. You need to triage based on risk.
 
 ### Risk Assessment Matrix
 
-| Consequence of Failure | Example | Verification Approach |
-|------------------------|---------|----------------------|
-| **Catastrophic** | Data loss, security breach, financial transaction errors | Thorough verification: tests + manual review + security audit |
-| **Significant** | Feature broken for users, data corruption, performance degradation | Standard verification: tests + integration checks |
-| **Moderate** | Minor bugs, workaround exists | Basic verification: tests |
-| **Low** | Cosmetic issues, internal tools | Quick verification: syntax check |
+| Consequence of Failure | Example                                                            | Verification Approach                                         |
+| ---------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------- |
+| **Catastrophic**       | Data loss, security breach, financial transaction errors           | Thorough verification: tests + manual review + security audit |
+| **Significant**        | Feature broken for users, data corruption, performance degradation | Standard verification: tests + integration checks             |
+| **Moderate**           | Minor bugs, workaround exists                                      | Basic verification: tests                                     |
+| **Low**                | Cosmetic issues, internal tools                                    | Quick verification: syntax check                              |
 
 ### Application Examples
 
 **High Risk (Payment Processing)**:
+
 ```javascript
 // AI generates payment processing code
 // Verification required:
@@ -333,6 +381,7 @@ You can't verify everything thoroughly. You need to triage based on risk.
 ```
 
 **Medium Risk (User Profile Update)**:
+
 ```javascript
 // AI generates profile update code
 // Verification required:
@@ -342,6 +391,7 @@ You can't verify everything thoroughly. You need to triage based on risk.
 ```
 
 **Low Risk (Internal Admin Tool)**:
+
 ```javascript
 // AI generates admin dashboard
 // Verification required:
@@ -409,6 +459,7 @@ Trust Level
 ### Why Trust Zones Matter
 
 Blind trust is always wrong. Trust zones help you:
+
 - Start strict, accelerate over time
 - Maintain appropriate skepticism for high-risk areas
 - Focus verification where it provides the most value
@@ -417,6 +468,7 @@ Blind trust is always wrong. Trust zones help you:
 ## Making Verification Practical: The 80/20 Rule
 
 You can't verify everything perfectly. Aim for:
+
 - **20% of effort** to catch **80% of issues**
 - Focus verification on high-risk, high-value areas
 - Use automation to make verification cheap
@@ -449,6 +501,7 @@ Issues caught: ~90%
 ### Manual Verification Focus
 
 Manual verification should focus on what automation can't catch:
+
 - Security issues (authentication, authorization, input validation)
 - Business logic correctness (does it match requirements?)
 - User experience (does it feel right?)
@@ -460,24 +513,28 @@ Manual verification should focus on what automation can't catch:
 When reviewing AI-generated work, ask these questions:
 
 ### Functional Correctness
+
 - Does it solve the stated problem?
 - What happens if X fails? (database, API, file system)
 - What if the input is empty/null/invalid?
 - What if the user is malicious?
 
 ### Integration
+
 - Does it break existing functionality?
 - Does it follow project patterns?
 - Does it handle errors consistently?
 - Is it compatible with dependencies?
 
 ### Security
+
 - Are user inputs validated?
 - Are secrets properly managed?
 - Is there proper authentication/authorization?
 - Could this be exploited?
 
 ### Maintainability
+
 - Is it readable and understandable?
 - Is it appropriately modular?
 - Are there appropriate comments?
@@ -486,12 +543,14 @@ When reviewing AI-generated work, ask these questions:
 ## Why This Principle Matters: Reliability at Scale
 
 Without verification, agentic workflows don't scale:
+
 - One script: You can catch problems manually
 - Ten scripts: Problems slip through
 - Hundred scripts: You're constantly debugging
 - Thousand scripts: The system is unreliable
 
 With continuous verification:
+
 - Each change is validated before building on it
 - Problems caught early, fixed cheaply
 - Confidence compounds with each verified success
@@ -503,13 +562,13 @@ Verification is what transforms AI from a novelty into a reliable tool for produ
 
 Verification isn't just "running tests." It's the general practice of confirming that AI actions produced the intended result—applicable in any General Agent workflow.
 
-| Verification Type | Claude Code | Claude Cowork |
-|-------------------|-------------|---------------|
-| **Syntax check** | Linter, compiler, type-check | File format validation, template conformance |
-| **Unit check** | Run specific test | Review specific section of output |
-| **Integration check** | Full test suite | Complete document review against requirements |
-| **Existence check** | `ls`, `cat` to confirm file exists | Check output in artifacts panel |
-| **Content check** | `grep` for expected patterns | Read generated content for accuracy |
+| Verification Type     | Claude Code                        | Claude Cowork                                 |
+| --------------------- | ---------------------------------- | --------------------------------------------- |
+| **Syntax check**      | Linter, compiler, type-check       | File format validation, template conformance  |
+| **Unit check**        | Run specific test                  | Review specific section of output             |
+| **Integration check** | Full test suite                    | Complete document review against requirements |
+| **Existence check**   | `ls`, `cat` to confirm file exists | Check output in artifacts panel               |
+| **Content check**     | `grep` for expected patterns       | Read generated content for accuracy           |
 
 **In Cowork**: When you ask Cowork to create a report, verification means checking that all requested sections exist, data is accurate, and formatting is correct. The principle is identical—you never blindly accept output.
 
@@ -517,13 +576,13 @@ Verification isn't just "running tests." It's the general practice of confirming
 
 For non-code AI output (documents, reports, content), use this quick checklist:
 
-| Check | Question to Ask | Common AI Mistakes |
-|-------|-----------------|-------------------|
-| **Fact-Check** | Did the AI hallucinate statistics or dates? | Inventing plausible-sounding but false data |
-| **Tone-Check** | Is the language appropriate for the audience? | Too formal, too casual, or inconsistent voice |
-| **Completeness** | Did it include everything I asked for? | Skipping sections, ignoring specific requests |
-| **Accuracy** | Are names, quotes, and references correct? | Misattributing quotes, wrong spellings |
-| **Logic** | Does the argument/structure make sense? | Non-sequiturs, circular reasoning |
+| Check            | Question to Ask                               | Common AI Mistakes                            |
+| ---------------- | --------------------------------------------- | --------------------------------------------- |
+| **Fact-Check**   | Did the AI hallucinate statistics or dates?   | Inventing plausible-sounding but false data   |
+| **Tone-Check**   | Is the language appropriate for the audience? | Too formal, too casual, or inconsistent voice |
+| **Completeness** | Did it include everything I asked for?        | Skipping sections, ignoring specific requests |
+| **Accuracy**     | Are names, quotes, and references correct?    | Misattributing quotes, wrong spellings        |
+| **Logic**        | Does the argument/structure make sense?       | Non-sequiturs, circular reasoning             |
 
 **Quick verification habit**: Before accepting any AI-generated document, scan for one made-up statistic, one tone mismatch, and one missing element. This 60-second check catches most issues.
 
@@ -600,6 +659,7 @@ Then, let's try this with actual code I'm working on. Help me build the verifica
 ### Safety Note
 
 Verification is your safety net. Never skip verification for code that will:
+
 - Handle user data (privacy/security risk)
 - Process payments or financial transactions (financial risk)
 - Modify production systems directly (operational risk)

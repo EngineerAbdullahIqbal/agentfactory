@@ -50,8 +50,8 @@
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "apps/study-mode-api",
-        "command": "uv run uvicorn study_mode_api.main:app --reload --port 8000"
+        "cwd": "apps/study-mode-api/src",
+        "command": "uv run python -m uvicorn study_mode_api.main:app --reload --host 127.0.0.1 --port 8000 --log-level info"
       }
     },
     "build": {

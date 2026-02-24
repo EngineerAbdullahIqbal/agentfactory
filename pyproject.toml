@@ -14,9 +14,11 @@ dependencies = []
 # Explicitly list Python projects (apps/* would catch JS projects too)
 members = [
     "apps/panaversity-fs-py",
-    # Add new Python projects here:
-    # "apps/sso-py",
-    # "libs/auth-common-py",
+    # study-mode-api and content-api are self-contained (own api_infra copy)
+    # Re-add when GCP Cloud Build supports monorepo context
+    # "apps/study-mode-api",
+    # "apps/content-api",
+    # "libs/api-infra",
 ]
 
 # Shared tool configuration for all Python projects

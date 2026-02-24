@@ -138,7 +138,8 @@ async def get_leaderboard(
     # Only cache non-empty results — empty results should trigger lazy refresh next time
     if entries:
         entry_dicts = [e.model_dump() for e in entries]
-        logger.debug(f"[Leaderboard] caching {len(entry_dicts)} entries (redis={'connected' if redis else 'None'})")
+        redis_status = "connected" if redis else "None"
+        logger.debug(f"[Leaderboard] caching {len(entry_dicts)} entries (redis={redis_status})")
         await set_leaderboard_cache(redis, entry_dicts)
 
     return LeaderboardResponse(

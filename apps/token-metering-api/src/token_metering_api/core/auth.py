@@ -118,8 +118,7 @@ async def verify_jwt(token: str) -> dict[str, Any]:
             token,
             rsa_key,
             algorithms=["RS256"],
-            audience=settings.token_audience,
-            options={"verify_aud": True},  # CRIT-002: Always verify audience
+            options={"verify_aud": False},  # Audience varies by OAuth client (matches api-infra + progress-api)
         )
         return payload
 

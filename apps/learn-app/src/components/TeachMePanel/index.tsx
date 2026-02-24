@@ -104,14 +104,7 @@ function ChatKitWrapper({
   const userName = useUserDisplayName();
 
   const apiUrl = useMemo(
-    () =>
-      getChatKitUrl(
-        apiBase,
-        lessonPath,
-        userId,
-        userName,
-        selectedContext,
-      ),
+    () => getChatKitUrl(apiBase, lessonPath, userId, userName, selectedContext),
     [apiBase, lessonPath, userId, userName, selectedContext],
   );
 
@@ -156,7 +149,8 @@ function ChatKitWrapper({
         {
           id: "teach",
           label: "Teach Me",
-          description: "Socratic tutoring with questions to check understanding",
+          description:
+            "Socratic tutoring with questions to check understanding",
           default: mode === "teach",
         },
         {
@@ -177,51 +171,51 @@ function ChatKitWrapper({
       prompts:
         mode === "teach"
           ? [
-            {
-              icon: "circle-question",
-              label: "What should I understand?",
-              prompt: selectedContext
-                ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nWhat are the key things I should understand from this? Ask me questions to check my understanding.`
-                : "What are the key things I should understand from this lesson? Ask me questions to check my understanding.",
-            },
-            {
-              icon: "lightbulb",
-              label: "Walk me through it",
-              prompt: selectedContext
-                ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nWalk me through this step by step. Pause to ask if I understand before moving on.`
-                : "Walk me through the main concept step by step. Pause to ask if I understand before moving on.",
-            },
-            {
-              icon: "circle-question",
-              label: "Help me think about this",
-              prompt: selectedContext
-                ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nHelp me think through this. What questions should I be asking myself?`
-                : "Help me think through this topic. What questions should I be asking myself?",
-            },
-            {
-              icon: "lightbulb",
-              label: "Quiz me",
-              prompt: selectedContext
-                ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nQuiz me on this to test my understanding. Ask one question at a time.`
-                : "Quiz me on this topic to test my understanding. Ask one question at a time.",
-            },
-          ]
+              {
+                icon: "circle-question",
+                label: "What should I understand?",
+                prompt: selectedContext
+                  ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nWhat are the key things I should understand from this? Ask me questions to check my understanding.`
+                  : "What are the key things I should understand from this lesson? Ask me questions to check my understanding.",
+              },
+              {
+                icon: "lightbulb",
+                label: "Walk me through it",
+                prompt: selectedContext
+                  ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nWalk me through this step by step. Pause to ask if I understand before moving on.`
+                  : "Walk me through the main concept step by step. Pause to ask if I understand before moving on.",
+              },
+              {
+                icon: "circle-question",
+                label: "Help me think about this",
+                prompt: selectedContext
+                  ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nHelp me think through this. What questions should I be asking myself?`
+                  : "Help me think through this topic. What questions should I be asking myself?",
+              },
+              {
+                icon: "lightbulb",
+                label: "Quiz me",
+                prompt: selectedContext
+                  ? `Regarding this text: "${selectedContext.slice(0, 200)}"\n\nQuiz me on this to test my understanding. Ask one question at a time.`
+                  : "Quiz me on this topic to test my understanding. Ask one question at a time.",
+              },
+            ]
           : [
-            {
-              icon: "circle-question",
-              label: "Quick summary",
-              prompt: selectedContext
-                ? "Summarize the highlighted text in 2-3 sentences."
-                : "Give me a quick summary in 2-3 sentences",
-            },
-            {
-              icon: "lightbulb",
-              label: "Define this concept",
-              prompt: selectedContext
-                ? "Define the highlighted text briefly."
-                : "Define this concept briefly",
-            },
-          ],
+              {
+                icon: "circle-question",
+                label: "Quick summary",
+                prompt: selectedContext
+                  ? "Summarize the highlighted text in 2-3 sentences."
+                  : "Give me a quick summary in 2-3 sentences",
+              },
+              {
+                icon: "lightbulb",
+                label: "Define this concept",
+                prompt: selectedContext
+                  ? "Define the highlighted text briefly."
+                  : "Define this concept briefly",
+              },
+            ],
     },
   });
 
@@ -257,7 +251,13 @@ function ChatKitWrapper({
 
 export function TeachMePanel({ lessonPath }: TeachMePanelProps) {
   const { siteConfig } = useDocusaurusContext();
-  const { isOpen, closePanel, openPanel, mode, setMode } = useStudyMode();
+  const {
+    isOpen,
+    closePanel,
+    openPanel,
+    mode,
+    setMode,
+  } = useStudyMode();
   const { session } = useAuth();
   const [chatKey, setChatKey] = useState(0);
   // Mode is now managed by context (useStudyMode)
@@ -278,7 +278,9 @@ export function TeachMePanel({ lessonPath }: TeachMePanelProps) {
 
   // Auth config for login redirect
   const authUrl = siteConfig.customFields?.authUrl as string | undefined;
-  const oauthClientId = siteConfig.customFields?.oauthClientId as string | undefined;
+  const oauthClientId = siteConfig.customFields?.oauthClientId as
+    | string
+    | undefined;
 
   // Login redirect handler for non-logged-in users
   const handleLoginRedirect = useCallback(async () => {
@@ -436,7 +438,6 @@ export function TeachMePanel({ lessonPath }: TeachMePanelProps) {
             <span className="sr-only">Close</span>
           </SheetClose>
 
-          {/* ChatKit Component - full height */}
           <div className={styles.chatContainer}>
             <ChatKitWrapper
               key={`${lessonPath}-${chatKey}-${mode}`}
@@ -449,8 +450,6 @@ export function TeachMePanel({ lessonPath }: TeachMePanelProps) {
               onInitialMessageSent={() => setInitialMessage(undefined)}
               selectedContext={selectedContext}
             />
-
-            {/* Context chip — positioned at bottom, above input area */}
             {selectedContext && (
               <div className={styles.contextChip}>
                 <div className={styles.contextLabel}>Asking about</div>

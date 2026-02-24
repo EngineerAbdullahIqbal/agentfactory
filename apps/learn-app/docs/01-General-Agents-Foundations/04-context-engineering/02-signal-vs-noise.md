@@ -62,6 +62,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Research token-level attention patterns to quantify exactly how much attention budget each CLAUDE.md section consumes; build a measurement tool that reports attention allocation per section"
   remedial_for_struggling: "Start with just the first 2 audit questions (Would Claude ask? Could Claude infer?) and classify 3 sections before attempting the full audit. Focus on removing obvious noise first"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 1
+  session_title: "Understanding Context Engineering"
+  key_points:
+    - "The 150-200 instruction limit is a hard cognitive ceiling for LLMs — Claude Code's system prompt already consumes ~50, leaving only 100-150 for CLAUDE.md"
+    - "The 4-question audit framework (Would Claude ask? Could Claude infer? Does it change? Is it a default?) is a reusable tool applied repeatedly in later lessons"
+    - "Progressive disclosure via file references is the key pattern — keep CLAUDE.md under 60 lines and let Claude read detailed files on demand"
+    - "The three-zone strategy (primacy/middle/recency) means position in CLAUDE.md matters as much as content — critical rules go top, workflows go bottom"
+  misconceptions:
+    - "Students think more instructions means better AI output — the instruction limit means excess rules actively degrade compliance"
+    - "Students resist deleting CLAUDE.md content because it feels like losing control — emphasize moved-to-file content is still accessible, just not consuming budget"
+    - "Students confuse 'Claude knows this convention' with 'Claude will follow my specific version' — defaults need overriding only when your convention differs"
+  discussion_prompts:
+    - "If 30-60% of enterprise context tokens add no value, what does that tell you about how most people use AI tools today?"
+    - "Which of the four audit questions do you think would eliminate the most noise from YOUR current CLAUDE.md?"
+    - "Why might a 50-line CLAUDE.md outperform a 300-line one even though it contains less information?"
+  teaching_tips:
+    - "Start by having students count their current CLAUDE.md lines and instruction count — the gap between their count and the 150-200 ceiling creates urgency"
+    - "Walk through the audit table example as a class exercise before students do it solo — the SIGNAL/NOISE/PARTIAL classification needs calibration"
+    - "The before/after CLAUDE.md examples are the strongest teaching moments — show the 5-line review process vs the 1-line version side by side"
+    - "Budget 30+ minutes for the lab — students consistently underestimate how long a thorough audit takes"
+  assessment_quick_check:
+    - "State the four audit questions from memory and apply one to a sample CLAUDE.md section"
+    - "Explain progressive disclosure in one sentence and give an example of moving content to a reference file"
+    - "What goes in Zone 1 vs Zone 3 of a CLAUDE.md, and why?"
 ---
 
 # Signal vs Noise: Auditing Your Context for Quality

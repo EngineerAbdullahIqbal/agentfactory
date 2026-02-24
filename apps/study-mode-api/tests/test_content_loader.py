@@ -152,7 +152,7 @@ class TestLoadLessonContent:
             return_value=(mock_content, True),
         ):
             # Disable caching for this test by patching the redis_cache module
-            with patch("study_mode_api.core.redis_cache._aredis", None):
+            with patch("api_infra.core.redis_cache._aredis", None):
                 result = await load_lesson_content("docs/test-lesson")
 
         assert result["content"] == mock_content
@@ -161,7 +161,7 @@ class TestLoadLessonContent:
     @pytest.mark.asyncio
     async def test_load_lesson_content_empty_path(self):
         """Test loading with empty path returns default."""
-        with patch("study_mode_api.core.redis_cache._aredis", None):
+        with patch("api_infra.core.redis_cache._aredis", None):
             result = await load_lesson_content("")
 
         assert result["content"] == ""
@@ -174,7 +174,7 @@ class TestLoadLessonContent:
             "study_mode_api.services.content_loader.fetch_from_github",
             return_value=("", False),
         ):
-            with patch("study_mode_api.core.redis_cache._aredis", None):
+            with patch("api_infra.core.redis_cache._aredis", None):
                 result = await load_lesson_content("nonexistent/path")
 
         assert result["content"] == ""
@@ -195,7 +195,7 @@ class TestLoadLessonContent:
         mock_redis = AsyncMock()
         mock_redis.get = AsyncMock(return_value=cached_data)
 
-        with patch("study_mode_api.core.redis_cache._aredis", mock_redis):
+        with patch("api_infra.core.redis_cache._aredis", mock_redis):
             start = time.time()
             result = await load_lesson_content("docs/cached-lesson")
             elapsed_ms = (time.time() - start) * 1000

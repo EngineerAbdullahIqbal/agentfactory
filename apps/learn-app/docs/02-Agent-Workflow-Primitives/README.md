@@ -5,11 +5,11 @@ title: "Part 2: Agent Workflow Primitives"
 
 # Part 2: Agent Workflow Primitives
 
-You understand the paradigm. You know the Seven Principles. You've seen what General Agents can do.
+You understand the paradigm. You know the Seven Principles. You've seen what an AI Employee can do (Chapter 7).
 
-**Now it's time to use them on real problems.**
+**Now it's time to build the skills to create your own.**
 
-This part is a progressive skills lab. Each chapter tackles a specific problem domain — organizing files, synthesizing research, analyzing data, generating documents, and managing versions. By the end, you combine everything into a working AI Employee that operates autonomously on your behalf.
+This part is a progressive skills lab. Each chapter tackles a specific problem domain — organizing files, synthesizing research, analyzing data, generating documents, and managing versions. By Chapter 13, you combine everything to build your own AI Employee.
 
 ## The Progressive Arc
 
@@ -22,7 +22,7 @@ Throughout this part, you'll use your General Agent through two interfaces:
 - **Code** (Claude Code): For precise operations — file processing, data analysis, version control, automation scripts
 - **Cowork** (Claude Desktop): For iterative work — research synthesis, document generation, planning strategies
 
-Each chapter specifies which interface suits the problem. By Chapter 11, you'll fluidly switch between both.
+Each chapter specifies which interface suits the problem. By Chapter 12, you'll fluidly switch between both.
 
 ## A Note on Mindset
 

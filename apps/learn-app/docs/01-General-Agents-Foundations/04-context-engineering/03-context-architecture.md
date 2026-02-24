@@ -62,6 +62,31 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design multi-layer architecture with Skills that invoke Subagents"
   remedial_for_struggling: "Focus on the decision framework table first, then practice with concrete examples"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Understanding Context Engineering"
+  key_points:
+    - "Four tools have four distinct loading patterns — CLAUDE.md always loads, Skills on-demand, Subagents in isolated context, Hooks externally with zero context cost"
+    - "The decision framework maps information type to tool: always-needed to CLAUDE.md, sometimes-needed to Skills, fresh-analysis to Subagents, deterministic to Hooks"
+    - "The marketing consultant example shows a 13x reduction in baseline context (7,300 to 550 tokens) — this quantifies why architecture matters"
+  misconceptions:
+    - "Students think putting everything in CLAUDE.md is safest because Claude 'always sees it' — this actually dilutes attention and causes Claude to ignore important instructions"
+    - "Students confuse Skills with Subagents — Skills load into YOUR context on demand, Subagents run in their OWN isolated context and return summaries"
+    - "Students assume Hooks are advanced/optional — they are the simplest tool (zero context cost, deterministic) and should be the first choice for validation tasks"
+  discussion_prompts:
+    - "In your own project, what information does Claude need for EVERY task vs only SOME tasks? How would you split it across tools?"
+    - "Why would a 300-line CLAUDE.md with everything in it perform WORSE than a 50-line one with Skills handling the rest?"
+  teaching_tips:
+    - "The four-tool loading table is the anchor of this lesson — have students copy it and reference it during the lab exercise"
+    - "Walk through the marketing consultant example end-to-end: inventory, tool assignment, cost calculation — this makes the abstract framework concrete"
+    - "Common mistake 1 (everything in CLAUDE.md) resonates with most students — ask who has a CLAUDE.md over 100 lines before presenting the fix"
+    - "The 13x reduction math is a strong persuasion moment — write the two numbers (7,300 vs 550) on the board side by side"
+  assessment_quick_check:
+    - "Name the four context tools and their loading patterns (when and what they load)"
+    - "Given a piece of information, explain which tool you would use and why"
+    - "What is the context cost of a Subagent in the main session, and why is this significant?"
 ---
 
 # Context Architecture: The Complete System

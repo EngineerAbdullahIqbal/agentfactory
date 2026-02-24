@@ -5,7 +5,15 @@ chapter: 6
 lesson: 7
 duration_minutes: 25
 description: "Seeing what AI agents are doing—why observability is essential for trust and effective collaboration"
-keywords: ["observability", "transparency", "logs", "visibility", "debugging", "agent behavior"]
+keywords:
+  [
+    "observability",
+    "transparency",
+    "logs",
+    "visibility",
+    "debugging",
+    "agent behavior",
+  ]
 
 # HIDDEN SKILLS METADATA
 skills:
@@ -53,6 +61,31 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a comprehensive observability framework including structured logging, metrics collection, and visualization for AI-powered workflows."
   remedial_for_struggling: "Focus on concrete examples: Show logs from a successful AI task vs. a failed one, and demonstrate how to read logs to understand what happened."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 3
+  session_title: "Safety and Integration"
+  key_points:
+    - "Observability has three pillars: action visibility (what it did), rationale visibility (why it did it), and result visibility (what happened)"
+    - "The 'scan for verbs' technique lets students quickly parse agent logs to reconstruct what happened"
+    - "Observability and Verification (Principle 3) are partners: observability provides evidence, verification acts on it"
+    - "The 2-minute audit habit (reviewing last 10 actions after each task) builds trust incrementally"
+  misconceptions:
+    - "Students may think observability means watching every action in real time, when post-mortem log analysis is equally valuable"
+    - "Some assume verbose logging equals good observability, but structured logs with action-rationale-result triples are what matters"
+    - "Students may conflate observability with verification: observability is seeing what happened, verification is checking if it was correct"
+  discussion_prompts:
+    - "When you delegate a task to a colleague, what information do you need to trust the work was done correctly? How does that parallel AI observability?"
+    - "If you could only see one thing about what an AI agent did, would you choose the actions it took, the reasoning behind them, or the results? Why?"
+  teaching_tips:
+    - "Show a real Claude Code session log side-by-side with a 'black box' session where output appears with no explanation, and ask students which they would trust more"
+    - "Have students practice the 'scan for verbs' technique on a sample activity log before discussing the theory"
+    - "Connect to Principle 6 (Constraints and Safety): observability is how you verify that constraints are being respected"
+  assessment_quick_check:
+    - "What are the three pillars of observability for AI agent workflows?"
+    - "Given a sample activity log, can you identify where something went wrong and what information is missing?"
+    - "How does observability differ from verification, and why do you need both?"
 ---
 
 # Principle 7: Observability
@@ -63,7 +96,7 @@ This is the observability problem: **if you can't see what the AI is doing, you 
 
 Observability means seeing into the black box. It's understanding what actions the AI took, in what order, with what results. This principle is about making AI workflows transparent, traceable, and debuggable.
 
-> **Synergy with Principle 3**: Observability and Verification are partners. Verification (Principle 3) is the *act* of checking; Observability (this principle) provides the *evidence* that makes checking possible. Without observability, verification is guesswork. Observability gives you the map; Verification tells you if you've arrived at the right destination.
+> **Synergy with Principle 3**: Observability and Verification are partners. Verification (Principle 3) is the _act_ of checking; Observability (this principle) provides the _evidence_ that makes checking possible. Without observability, verification is guesswork. Observability gives you the map; Verification tells you if you've arrived at the right destination.
 
 ## The Black Box Problem: What Happens When You Can't See
 
@@ -177,21 +210,27 @@ Typical activity log structure:
 ### What to Look For
 
 **Success Pattern**:
+
 ```
 READ → ANALYZE → EDIT → VERIFY → COMPLETE
 ```
+
 Each step logically follows the previous one. Verification happens after changes.
 
 **Warning Pattern**:
+
 ```
 READ → EDIT → EDIT → EDIT → [NO VERIFICATION] → COMPLETE
 ```
+
 Multiple edits without verification. No testing. High risk of problems.
 
 **Failure Pattern**:
+
 ```
 READ → EDIT → VERIFY → [TESTS FAIL] → EDIT → [TESTS FAIL AGAIN] → GAVE UP
 ```
+
 AI tried but couldn't solve the problem. Needs human intervention.
 
 ### The "Scan for Verbs" Technique
@@ -338,26 +377,31 @@ Different AI tools provide different observability features.
 ### Claude Code
 
 **Activity Logs**: `.claude/activity-logs/prompts.jsonl`
+
 - Records all prompts and responses
 - Can review past sessions
 - Full conversation history
 
 **Subagent Logs**: `.claude/activity-logs/subagent-usage.jsonl`
+
 - Tracks when Claude delegated to specialized agents
 - Shows which subagent handled what task
 
 ### Cursor
 
 **History Panel**: Shows all AI interactions in current session
+
 - Can review each suggestion
 - See diffs before accepting
 
 **Cmd+K Quick Actions**: Contextual suggestions with preview
+
 - See what will change before accepting
 
 ### GitHub Copilot
 
 **Copilot Workspace**: Full AI project work with visible steps
+
 - Shows plan before executing
 - Displays file changes
 - Provides test results
@@ -484,20 +528,21 @@ function logAIAction(action, details) {
     action: action,
     details: details,
     user: process.env.USER,
-    workingDirectory: process.cwd()
+    workingDirectory: process.cwd(),
   };
 
-  fs.appendFileSync('.ai-activity.log', JSON.stringify(logEntry) + '\n');
+  fs.appendFileSync(".ai-activity.log", JSON.stringify(logEntry) + "\n");
 }
 
 // Use in workflow
-logAIAction('READ', { file: 'src/auth/login.js' });
-logAIAction('EDIT', { file: 'src/auth/login.js', changes: '+5 -1' });
+logAIAction("READ", { file: "src/auth/login.js" });
+logAIAction("EDIT", { file: "src/auth/login.js", changes: "+5 -1" });
 ```
 
 ## Why Observability Enables Trust
 
 Trust isn't given—it's earned through transparency. When you can see what AI is doing:
+
 - You understand its decisions
 - You can correct mistakes early
 - You learn its patterns
@@ -509,11 +554,11 @@ Without observability, you're always second-guessing. With it, you can build gen
 
 After every AI task, spend exactly 2 minutes on this checklist:
 
-| Check | Command | What You're Looking For |
-|-------|---------|------------------------|
-| **1. Git diff** | `git diff` | Do the changes match what AI claimed it did? |
-| **2. AI summary** | (review AI's final message) | Does its summary match the diff? |
-| **3. Quick test** | `npm test` or equivalent | Do tests still pass? |
+| Check             | Command                     | What You're Looking For                      |
+| ----------------- | --------------------------- | -------------------------------------------- |
+| **1. Git diff**   | `git diff`                  | Do the changes match what AI claimed it did? |
+| **2. AI summary** | (review AI's final message) | Does its summary match the diff?             |
+| **3. Quick test** | `npm test` or equivalent    | Do tests still pass?                         |
 
 **The catch**: If the git diff doesn't match the AI's summary, you've found a "silent failure"—the AI said it did X but actually did Y. These are the dangerous bugs.
 

@@ -79,6 +79,34 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Implement a memory consolidation workflow that automatically extracts and categorizes tacit knowledge from conversation transcripts using semantic analysis"
   remedial_for_struggling: "Focus on the verbal explanation exercise: record yourself explaining one decision to a colleague, then convert that explanation into a CLAUDE.md section"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Persistent State and Knowledge Transfer"
+  key_points:
+    - "The Two-Way Problem is bidirectional: Professional -> AI (transfer tacit knowledge) AND AI -> Professional (extract understanding) — most students only think about the first direction"
+    - "Tacit knowledge is what experienced professionals carry but never document — the unwritten rules, historical context, and relationship dynamics that shape real decisions"
+    - "Documents for AI consumption must be structurally different from human documents — explicit constraints, the 'why' behind decisions, and concrete examples instead of references to shared experience"
+    - "Memory scoping (global vs session) prevents both noise accumulation (too much persisted) and repetitive re-explanation (too little persisted)"
+  misconceptions:
+    - "Students think all their knowledge is already in their documentation — the verbal exercise reveals huge amounts of undocumented expertise they did not realize they had"
+    - "Students focus only on getting knowledge INTO the AI and neglect the extraction direction — they accept AI deliverables without understanding the reasoning behind them"
+    - "Students want to persist everything as global memory — emphasize that 'we are reviewing the Johnson contract' is session context that becomes noise tomorrow"
+    - "Students think examples-based encoding is more work than rules — it is actually more effective because AI pattern-matches better against concrete examples than vague principles"
+  discussion_prompts:
+    - "What would go wrong in your work if a competent new colleague started without any verbal briefing from you? That gap is your tacit knowledge."
+    - "Have you ever used an AI-generated deliverable you could not fully explain to a colleague? What was the risk in that?"
+    - "In your domain, what is the most dangerous piece of tacit knowledge — the one that causes the biggest problems when someone does not have it?"
+  teaching_tips:
+    - "The verbal recording exercise is the highest-impact activity in this lesson — budget 10+ minutes and have students actually record themselves explaining their project to an imaginary new colleague"
+    - "Use the 'For Humans' vs 'For AI' document comparisons as a side-by-side exercise — have students identify what changed and why"
+    - "The Rubber Duck Test (explain it back to the AI) is powerful for the extraction direction — demonstrate it live with a complex AI-generated output"
+    - "Start with domain examples closest to your audience — legal, marketing, research, or software — so tacit knowledge feels concrete rather than abstract"
+  assessment_quick_check:
+    - "Name both directions of the Two-Way Problem and explain why each is challenging"
+    - "Give one example of tacit knowledge from your domain that is NOT in any documentation"
+    - "Classify these three items as global or session memory and explain your reasoning"
 ---
 
 # The Two-Way Problem: Getting Tacit Knowledge In and Out

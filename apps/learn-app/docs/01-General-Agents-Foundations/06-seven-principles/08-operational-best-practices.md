@@ -61,6 +61,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a personal workflow checklist for your domain that maps each failure pattern to your specific warning signs"
   remedial_for_struggling: "Focus on Plan Mode and the Esc key for course correction; other patterns can be learned incrementally through practice"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 3
+  session_title: "Safety and Integration"
+  key_points:
+    - "The four-phase workflow (Explore, Plan, Implement, Commit) transforms ad-hoc AI sessions into structured, productive work"
+    - "Esc is a steering wheel (stops mid-response), double-Esc or /rewind is a time machine (restores checkpoints)"
+    - "The interview pattern ('Don't code yet. Interview me until you have a 100% clear spec.') front-loads clarity and prevents rework"
+    - "Five failure patterns to recognize: Kitchen Sink Session, Correction Loop, Bloated CLAUDE.md, Trust-Then-Verify Gap, Infinite Exploration Spiral"
+  misconceptions:
+    - "Students may think Plan Mode is only for beginners, when even experienced users benefit from read-only exploration before making changes"
+    - "The Rule of Two (stop after 2 failed correction attempts) feels counterintuitive because students want to keep trying instead of starting fresh"
+    - "Students often confuse 'loose permissions' with 'no safety' when loose permissions inside a sandbox are actually safe"
+  discussion_prompts:
+    - "Think about your last frustrating AI session. Which of the five failure patterns was at play? What would you do differently now?"
+    - "When is it better to start a fresh session with a clean spec (the Golden Reset) versus continuing in the same session?"
+    - "How do you decide when a task is simple enough to skip the planning phase?"
+  teaching_tips:
+    - "Have students attempt a task WITHOUT Plan Mode first, then redo it WITH Plan Mode, and compare the experience and quality of results"
+    - "Demonstrate the Rule of Two live: show a correction loop spiraling, then show how /clear plus a better prompt produces a clean result"
+    - "Walk through each failure pattern with a concrete example before asking students to identify patterns in their own experience"
+    - "The permission configuration section is best taught as a hands-on exercise where students configure their own allowlists"
+  assessment_quick_check:
+    - "What are the four phases of the structured workflow, and what mode (Plan/Normal) is each phase in?"
+    - "You have corrected Claude twice on the same issue and it still gets it wrong. What should you do next?"
+    - "Name two of the five failure patterns and describe their fix."
 ---
 
 # Operational Best Practices

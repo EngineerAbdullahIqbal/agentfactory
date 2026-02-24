@@ -53,6 +53,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a comprehensive context file system for a complex project, including architecture diagrams, decision records, and automated context generation from project structure."
   remedial_for_struggling: "Focus on practical examples: show a project without context files (and the resulting repetitive explanations) versus the same project with well-maintained context files."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Workflow Principles"
+  key_points:
+    - "AI is stateless between sessions — CLAUDE.md is the 'handshake' that gives every session the same project knowledge automatically"
+    - "The ROI table (10 min re-explaining x 20 sessions = 3+ hours wasted vs 20 min writing CLAUDE.md once) makes the economic case concrete"
+    - "State hierarchy (ephemeral → session → project → permanent) helps students decide WHAT to persist and WHERE"
+    - "ADRs capture the 'why' behind decisions — six months later, neither you nor the AI will remember why you chose PostgreSQL without one"
+  misconceptions:
+    - "Students think CLAUDE.md is just a README — it's specifically formatted for AI consumption with conventions, patterns, and constraints that override generic AI behavior"
+    - "Students try to put everything in CLAUDE.md — the 200-line golden rule prevents context overload; link to separate files for domain-specific context"
+    - "Students persist ephemeral state like 'currently debugging login bug' — this clutter makes the file less useful; only persist state that survives across sessions"
+  discussion_prompts:
+    - "How many times this week did you re-explain something to an AI that you could have written in a context file once?"
+    - "If you left your project for six months and came back, what decisions would you struggle to remember — and how would ADRs help?"
+  teaching_tips:
+    - "The 'without persistence vs with persistence' ASCII diagram is the best visual — draw the contrast between knowledge lost vs knowledge accumulated"
+    - "Have students create a real CLAUDE.md for their current project during class — the exercise is immediately practical"
+    - "The session journal pattern (AI writes its own notes) is a powerful advanced technique — demo it live if time allows"
+    - "Emphasize that context files must be updated IN THE SAME COMMIT as code changes — tie it back to Principle 4 (atomic changes)"
+  assessment_quick_check:
+    - "Name the four levels of the state hierarchy and give an example of what belongs at each level"
+    - "What goes in a CLAUDE.md file vs what should NOT go in one?"
+    - "Why are Architecture Decision Records valuable for AI collaboration specifically?"
 ---
 
 # Principle 5: Persisting State in Files

@@ -6,6 +6,7 @@ import {
   boolean,
   integer,
   index,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -176,7 +177,9 @@ export const organization = pgTable("organization", {
   logo: text("logo"),
   createdAt: timestamp("created_at").notNull(),
   metadata: text("metadata"),
-});
+  },
+  (table) => [uniqueIndex("organization_slug_uidx").on(table.slug)],
+);
 
 export const member = pgTable(
   "member",
@@ -251,6 +254,7 @@ export const apikey = pgTable(
     index("apikey_userId_idx").on(table.userId),
   ]
 );
+
 
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),

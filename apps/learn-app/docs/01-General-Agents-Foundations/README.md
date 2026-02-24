@@ -17,7 +17,7 @@ This part establishes the mental models and practical skills you need for AI-nat
 
 ## What You'll Learn in Part 1
 
-Part 1 consists of six chapters that build from concepts to communication to tools to engineering discipline to specifications to principles:
+Part 1 consists of seven chapters that build from concepts to communication to tools to engineering discipline to specifications to principles to proof:
 
 ### Chapter 1: The AI Agent Factory Paradigm (Conceptual Foundation)
 
@@ -79,6 +79,10 @@ Chapter 6 synthesizes learnings from Chapters 1-5 into actionable problem-solvin
 
 **Integration (Lesson 8)**: You'll discover the Meta-Principle underlying all seven (general agents leverage computing fundamentals), see how principles combine in real-world workflows, and learn a decision framework for choosing between Code and Cowork based on task characteristics.
 
+### Chapter 7: Meet Your First AI Employee
+
+Before you build domain skills, experience what you're building toward. Chapter 7 introduces OpenClaw — the fastest-growing AI Employee project with 209,000+ GitHub stars. You'll install it, delegate real tasks via WhatsApp or Telegram, explore its architecture (six universal agent patterns), and understand the security implications. This isn't a demo — it's a working system that validates everything you learned in Chapters 1-6.
+
 ## The Agent Factory Paradigm
 
 The Agent Factory paradigm changes everything about how you think about building software:
@@ -105,6 +109,7 @@ By the end of this part, you'll be able to:
 8. **Execute** Spec-Driven Development workflows
 9. **Sell** your Digital FTE solutions to enterprise customers using consultative approaches
 10. **Articulate** your path forward through the rest of this book
+11. **Experience** a working AI Employee and identify the six universal agent patterns
 
 The transformation of software development is underway. The question isn't whether AI will change how you build—it's whether you'll lead or follow.
 

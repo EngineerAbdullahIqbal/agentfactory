@@ -17,6 +17,86 @@ Track meaningful updates to the book. This page is automatically updated when do
 
 <!-- CHANGELOG_START - Do not remove this marker -->
 
+### 2026-02-23
+
+- feat: flashcards with FSRS v6 spaced repetition ([#761](https://github.com/panaversity/agentfactory/pull/761))
+
+### 2026-02-18
+- docs: add thesis paragraph to Chapter 14 overview ([#753](https://github.com/panaversity/agentfactory/pull/753))
+
+### 2026-02-18
+- docs: add kitchen analogy to Chapter 14 overview ([#752](https://github.com/panaversity/agentfactory/pull/752))
+
+### 2026-02-18
+- docs: smooth lesson-to-lesson transitions for Chapter 14 Axioms II-X ([#751](https://github.com/panaversity/agentfactory/pull/751))
+
+### 2026-02-18
+- docs: smooth transition from Axiom I into Axiom II ([#750](https://github.com/panaversity/agentfactory/pull/750))
+
+### 2026-02-18
+- docs: improve ch14 overview clarity and lesson transitions ([#748](https://github.com/panaversity/agentfactory/pull/748))
+
+### 2026-02-18
+- docs: rename ch14 directory to match updated title ([#747](https://github.com/panaversity/agentfactory/pull/747))
+
+### 2026-02-18
+- refactor(study-mode-api): review cleanup for PR #722 ([#745](https://github.com/panaversity/agentfactory/pull/745))
+
+### 2026-02-18
+
+- feat: Practice Environment v0.2 — production-ready embedded terminal ([#725](https://github.com/panaversity/agentfactory/pull/725))
+
+### 2026-02-17
+- docs: embed slides directly in ch14 Teaching Aid ([#744](https://github.com/panaversity/agentfactory/pull/744))
+
+### 2026-02-17
+- docs: fix chapter 6 link to use absolute path ([#743](https://github.com/panaversity/agentfactory/pull/743))
+
+### 2026-02-17
+- docs: fix chapter 6 cross-reference link in ch14 overview ([#742](https://github.com/panaversity/agentfactory/pull/742))
+
+### 2026-02-17
+- docs: improve chapter 14 readability, slides, and citations ([#741](https://github.com/panaversity/agentfactory/pull/741))
+
+### 2026-02-17
+- Improve/chapter 14 ten axioms ([#740](https://github.com/panaversity/agentfactory/pull/740))
+
+### 2026-02-17
+- Improve/chapter 14 ten axioms ([#739](https://github.com/panaversity/agentfactory/pull/739))
+
+### 2026-02-17
+- Improve/chapter 14 ten axioms ([#738](https://github.com/panaversity/agentfactory/pull/738))
+
+### 2026-02-17
+- Move Ch12 (OpenClaw) to Part 1 as Ch7, renumber Ch7-Ch12 ([#737](https://github.com/panaversity/agentfactory/pull/737))
+
+### 2026-02-17
+
+- Condense Ch12 from 8 to 6 lessons ([#736](https://github.com/panaversity/agentfactory/pull/736))
+
+### 2026-02-16
+- docs: migrate chapter 14 assets to R2 CDN ([#735](https://github.com/panaversity/agentfactory/pull/735))
+
+### 2026-02-16
+- Improve/chapter 14 ten axioms ([#734](https://github.com/panaversity/agentfactory/pull/734))
+
+### 2026-02-16
+- Updates after review ([#733](https://github.com/panaversity/agentfactory/pull/733))
+
+### 2026-02-16
+- Ch7 final polish ([#732](https://github.com/panaversity/agentfactory/pull/732))
+
+### 2026-02-16
+- Ch7 final polish ([#731](https://github.com/panaversity/agentfactory/pull/731))
+
+### 2026-02-16
+
+- docs: rewrite chapter 12 — Meet Your First AI Employee ([#730](https://github.com/panaversity/agentfactory/pull/730))
+
+### 2026-02-15
+
+- docs: elevate chapter 14 to book-quality with images and narrative ([#729](https://github.com/panaversity/agentfactory/pull/729))
+
 ### 2026-02-13
 - update slides in ch7 ([#724](https://github.com/panaversity/agentfactory/pull/724))
 

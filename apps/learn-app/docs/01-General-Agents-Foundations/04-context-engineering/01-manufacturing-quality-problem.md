@@ -62,6 +62,31 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Explore transformer attention mechanisms and their relationship to context degradation"
   remedial_for_struggling: "Focus on the 5 definitions first before analyzing implications"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Understanding Context Engineering"
+  key_points:
+    - "Context engineering is THE competitive moat for Digital FTEs — same model access means differentiation comes from context quality, not model choice"
+    - "The 99.9% vs 0.1% split between context and prompts reframes everything students learned about prompt engineering — this is a paradigm shift"
+    - "Four types of context rot (poisoning, distraction, confusion, clash) are diagnostic categories used throughout the rest of this chapter"
+  misconceptions:
+    - "Students think 'context' means 'the prompt I type' — emphasize context is everything the model sees BEFORE and ALONGSIDE the prompt"
+    - "Students assume context rot means the AI is broken or getting dumber — it is the accumulated noise degrading signal quality"
+    - "Students confuse context engineering with prompt engineering — context is 200K tokens of environment, prompts are 50-200 tokens of instruction"
+  discussion_prompts:
+    - "Have you ever had an AI session that started great but degraded over time? Which of the four rot types was likely at work?"
+    - "If two competitors use the same AI model, what specifically makes one product worth $2,000/month and the other worthless?"
+  teaching_tips:
+    - "Open with the two-engineers scenario — ask students to guess the differentiator before revealing context quality"
+    - "The prompts vs context table (0.1% vs 99.9%) is a strong whiteboard moment — draw the proportions visually"
+    - "Have students run /context in Claude Code live during the lab — seeing their actual token consumption makes the concept concrete"
+    - "Walk through each rot type with a live demo: start a session, change direction mid-conversation, then show how the AI references old information"
+  assessment_quick_check:
+    - "Define context engineering in one sentence without using the word 'prompt'"
+    - "Name the four types of context rot and give one symptom of each"
+    - "Why is optimizing prompts alone like 'polishing the doorknob while the house is on fire'?"
 ---
 
 # What Is Context Engineering?

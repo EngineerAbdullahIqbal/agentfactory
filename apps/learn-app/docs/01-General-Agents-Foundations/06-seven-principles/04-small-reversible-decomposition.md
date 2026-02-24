@@ -53,6 +53,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Analyze how different decomposition strategies affect debugging time, testability, and collaboration. Design a decomposition framework for a specific type of project (web app, data pipeline, etc.)."
   remedial_for_struggling: "Focus on concrete examples: show a large change broken into smaller steps, demonstrating how each step is tested and can be reverted. Emphasize the practical benefits of this approach."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Workflow Principles"
+  key_points:
+    - "The debugging cost table (10 lines = 5 min, 10000 lines = days) is the mathematical proof that small changes win — exponential not linear growth"
+    - "Atomic changes must pass three tests: independently verifiable, makes sense alone, revertable without breaking other work"
+    - "Four decomposition strategies (vertical, horizontal, dependency-first, test-first) give students specific approaches — not just 'make it smaller'"
+    - "AI amplifies the need for small steps because it makes plausible mistakes and generates code fast — easy to accept too much at once"
+  misconceptions:
+    - "Students think small steps are slower than big batches — the iteration timeline (2-3 days, low stress) vs batch timeline (7 days, high stress) disproves this"
+    - "Students confuse 'small' with 'trivial' — micro-commits (fix typo, fix typo again) are an anti-pattern; each commit should be a meaningful logical unit"
+    - "Students think reversibility only means 'undo' — it also enables experimentation, because you can try approaches safely knowing you can roll back"
+  discussion_prompts:
+    - "Think of a time you made a large change and something broke — how long did it take to find the bug? How would atomic commits have changed that?"
+    - "Of the four decomposition strategies, which fits your current project best — and why?"
+  teaching_tips:
+    - "The monolithic vs atomic ASCII diagram is the most powerful visual — draw it on the whiteboard with the checkmarks and X showing exactly where the bug is"
+    - "The Lego vs clay analogy resonates with everyone — use it to explain why atomic changes are swappable while monolithic changes ripple"
+    - "Have students practice the 'Step Zero' prompt pattern on a real feature — decomposing WITH the AI before writing any code"
+    - "The three anti-patterns (micro-commits, mixed concerns, untested middle states) are common student mistakes — cover them preventively"
+  assessment_quick_check:
+    - "What three questions does the atomic change checklist ask, and what do you do if any answer is 'no'?"
+    - "Explain why ten 10-line changes are faster to debug than one 100-line change"
+    - "Name the four decomposition strategies and when to use each"
 ---
 
 # Principle 4: Small, Reversible Decomposition

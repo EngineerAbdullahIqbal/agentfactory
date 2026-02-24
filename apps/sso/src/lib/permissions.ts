@@ -1,11 +1,12 @@
 /**
  * Organization Access Control & Custom Roles
  *
- * Defines 7 roles with a hierarchy for the organization plugin.
+ * Defines 10 roles with a hierarchy for the organization plugin.
  * Client-safe — no server secrets, importable from both auth.ts and auth-client.ts.
  *
  * Hierarchy:
- *   owner (7) > admin (6) > manager (5) > teacher/proctor (4) > editor (3) > member (2)
+ *   owner (10) > admin (9) > manager (8) > supervisor (7) > examiner (6) >
+ *   teacher (5) > coordinator (4) > proctor (3) > editor (2) > member (1)
  */
 
 import { createAccessControl } from "better-auth/plugins/access";
@@ -48,9 +49,26 @@ export const manager = ac.newRole({
   assessment: ["read"],
 });
 
+export const supervisor = ac.newRole({
+  ...adminAc.statements,
+  content: ["read", "create", "update"],
+  assessment: ["read", "create", "update", "grade"],
+});
+
+export const examiner = ac.newRole({
+  content: ["read"],
+  assessment: ["read", "create", "update", "grade"],
+});
+
 export const teacher = ac.newRole({
   content: ["read"],
   assessment: ["read"],
+});
+
+export const coordinator = ac.newRole({
+  ...memberAc.statements,
+  content: ["read"],
+  assessment: ["read", "create", "update"],
 });
 
 export const proctor = ac.newRole({

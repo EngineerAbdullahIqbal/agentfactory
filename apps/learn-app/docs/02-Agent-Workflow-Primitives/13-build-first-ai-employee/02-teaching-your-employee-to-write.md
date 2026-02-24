@@ -13,7 +13,7 @@ keywords:
   - professional communication
   - skill creation
   - AI collaboration
-chapter: 10
+chapter: 13
 lesson: 2
 duration_minutes: 30
 
@@ -81,6 +81,34 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Add multiple tone presets (formal, friendly, urgent) with conditional loading based on email context"
   remedial_for_struggling: "Focus on copying the provided SKILL.md exactly before attempting modifications; use the smartphone apps analogy for understanding skill architecture"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 1
+  session_title: "First Skill Creation"
+  key_points:
+    - "Skills are folders not files — the directory structure (.claude/skills/email-drafter/SKILL.md + references/) enables three-level loading that protects Claude's working memory"
+    - "The smartphone analogy is the key mental model: 100 apps installed but only one runs at a time — skills work identically with L1/L2/L3 loading"
+    - "Tone guidelines in references/ demonstrate the separation of 'what to do' (SKILL.md) from 'domain knowledge' (references/) — this pattern recurs in every future skill"
+    - "The iterative refinement loop (draft → feedback → redraft) is the first hands-on experience of L2 AI collaboration"
+  misconceptions:
+    - "Students put everything in SKILL.md instead of using references/ — emphasize that SKILL.md is instructions, references/ is supporting knowledge"
+    - "Students write vague descriptions like 'Helps with emails' — the lesson explicitly contrasts this with the correct activation-trigger format"
+    - "Students think invoking /email-drafter sends the email — it only drafts; sending requires MCP integration built in L06"
+    - "Students expect perfect output on first invocation — the refinement section shows that iteration is the design, not a failure"
+  discussion_prompts:
+    - "What recurring writing tasks in YOUR work could be encoded as a skill with tone guidelines? What would the references/ folder contain?"
+    - "The lesson says 'skills are teaching, not prompting.' What is the practical difference between writing a prompt and writing a SKILL.md?"
+    - "Why does the SKILL.md description start with 'This skill should be used when...' instead of just describing what it does?"
+  teaching_tips:
+    - "Have students create the directory structure by hand (mkdir -p) before creating files — this builds muscle memory for the skills architecture"
+    - "Walk through the 'Common Mistakes to Avoid' section as a live code review — show the wrong vs right description side by side"
+    - "The refinement loop (adding Snowflake detail, proposing specific times) is the best live demo moment — show how Claude adapts while maintaining tone"
+    - "Spend extra time on the three-level loading table — students who internalize L1/L2/L3 will understand every future skill without re-explanation"
+  assessment_quick_check:
+    - "What are the three levels of skill loading, and what triggers each level?"
+    - "Show your email-drafter directory structure — does it match .claude/skills/email-drafter/SKILL.md + references/tone-guidelines.md?"
+    - "Invoke /email-drafter and evaluate: does the output follow your tone guidelines?"
 
 # Generation metadata
 generated_by: "content-implementer v1.0.0"

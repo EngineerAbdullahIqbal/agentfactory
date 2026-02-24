@@ -119,35 +119,35 @@ explanation: "Spec-First is appropriate for personal projects without team coord
 source: "Lesson 2: The Three Levels of SDD"
 },
 {
-question: "What is the correct sequence of the four SDD phases?",
+question: "A team skips the Refinement phase and goes straight from Specification to Implementation. Which failure is most likely to occur?",
 options: [
 "Specification, Research, Implementation, Refinement",
 "Research, Specification, Refinement, Implementation",
-"Implementation, Specification, Research, Refinement",
+"Ambiguities surface mid-implementation causing costly pivots",
 "Refinement, Research, Specification, Implementation"
 ],
 correctOption: 1,
-explanation: "The four phases are: Research (parallel subagents investigate), Specification (written artifact), Refinement (interview surfaces ambiguities), Implementation (task delegation). This order matters: research informs spec, spec prevents pivots, refinement resolves ambiguities, tasks enable rollback.",
+explanation: "Skipping Refinement means ambiguities in the spec are never surfaced before coding begins. These unresolved questions emerge during implementation—when changes are expensive rather than cheap. The correct sequence (Research, Specification, Refinement, Implementation) front-loads ambiguity resolution precisely to avoid mid-implementation pivots.",
 source: "Lesson 3: The Four-Phase Workflow"
 },
 {
-question: "What is the primary deliverable of the Research phase?",
+question: "A developer finishes writing the specification but immediately starts coding without running any investigation agents first. Which phase deliverable is missing?",
 options: [
-"Implementation tasks with dependencies",
-"Refined specification with decisions",
-"Written summaries from multiple agents",
-"Committed code with atomic changes"
+"Implementation tasks with clear dependencies listed",
+"Refined specification with resolved design questions",
+"Written summaries from multiple investigation agents",
+"Committed code with atomic reversible changes"
 ],
 correctOption: 2,
-explanation: "The Research phase produces written summaries from multiple parallel investigation agents. Each subagent investigates a specific aspect (patterns, architecture, best practices) and returns findings. These summaries feed into specification writing. Tasks come from Implementation; refined specs from Refinement; committed code from Implementation.",
+explanation: "The Research phase produces written summaries from multiple parallel investigation agents. Each subagent investigates a specific aspect (patterns, architecture, best practices) and returns findings. These summaries feed into specification writing. Skipping Research means the spec is based on assumptions, not evidence. Tasks come from Implementation; refined specs from Refinement; committed code from Implementation.",
 source: "Lesson 3: The Four-Phase Workflow"
 },
 {
 question: "Why does the specification become the 'source of truth' that survives session restarts?",
 options: [
-"Claude automatically saves specifications",
-"Specifications are stored in version control",
-"The spec is encrypted for persistence",
+"Claude automatically saves specifications to disk",
+"Specifications are stored in version control systems",
+"The spec is encrypted for long-term persistence",
 "Written specs persist as files while conversations disappear"
 ],
 correctOption: 3,
@@ -169,9 +169,9 @@ source: "Lesson 3: The Four-Phase Workflow"
 {
 question: "What happens if you skip the Research phase and go directly to specification?",
 options: [
-"Implementation proceeds faster overall",
-"Claude refuses to generate code",
-"Task extraction becomes impossible",
+"Implementation still proceeds but pivots more often",
+"Claude refuses to generate code without prior research",
+"Task extraction from the spec becomes much harder",
 "The specification is based on assumptions not evidence"
 ],
 correctOption: 3,
@@ -181,10 +181,10 @@ source: "Lesson 3: The Four-Phase Workflow"
 {
 question: "What is the prompt pattern that triggers parallel research in Claude Code?",
 options: [
-"Research this topic thoroughly",
+"Research this topic thoroughly for me",
 "Spin up multiple subagents for your research task",
-"Investigate using parallel processing",
-"Start concurrent research threads"
+"Investigate this using parallel processing threads",
+"Start concurrent research threads for each aspect"
 ],
 correctOption: 1,
 explanation: "'Spin up multiple subagents for your research task' is the specific trigger phrase. When Claude sees this instruction with a research goal, it spawns 3-5 independent agents, each investigating a specific aspect. Other phrasings may work but this is the canonical pattern from practice.",
@@ -215,15 +215,15 @@ explanation: "Conflicting findings indicate a genuine design decision. Agent 1 r
 source: "Lesson 4: Phase 1 - Parallel Research"
 },
 {
-question: "What makes an effective research decomposition for parallel subagents?",
+question: "A team decomposes authentication research into: 'How does authentication work?' and 'What are authentication best practices?' What is wrong with this decomposition?",
 options: [
-"Many overlapping questions for thorough coverage",
-"Independent focused questions without overlap",
-"Sequential tasks that build on each other",
-"Broad general questions for flexibility"
+"Both questions are too specific and narrowly scoped",
+"Questions overlap and lack focused independent boundaries",
+"Sequential tasks that must build on each other first",
+"Broad general questions that produce flexible open results"
 ],
 correctOption: 1,
-explanation: "Effective decomposition creates independent threads where each agent can complete without information from others, each has a focused answerable question, each knows scope boundaries, and together they cover the full problem space. Overlapping wastes effort; sequential defeats parallel benefits; broad questions produce unfocused results.",
+explanation: "Effective decomposition creates independent threads where each agent can complete without information from others, each has a focused answerable question, and each knows scope boundaries. These two questions heavily overlap and are too vague—both could produce the same findings. Effective threads like 'token management', 'session handling', 'provider integration' are independent and bounded.",
 source: "Lesson 4: Phase 1 - Parallel Research"
 },
 {
@@ -239,23 +239,23 @@ explanation: "These threads work because each investigates an independent aspect
 source: "Lesson 4: Phase 1 - Parallel Research"
 },
 {
-question: "What are the four parts of the standard specification template?",
+question: "A spec is missing the Non-Goals section entirely. What risk does this create during implementation?",
 options: [
-"Reference Architecture, Current Architecture, Implementation Plan, Checklist",
-"Goals, Risks, Timeline, Resources",
-"Introduction, Methods, Results, Conclusion",
-"Overview, Details, Examples, Summary"
+"Reference Architecture Analysis becomes harder to structure",
+"Goals and Risks sections become redundant without Non-Goals",
+"Introduction and Methods sections lose their framing context",
+"Claude may implement reasonable features that were explicitly out of scope"
 ],
 correctOption: 0,
-explanation: "The four-part template is: Reference Architecture Analysis (what good looks like), Current Architecture Analysis (where you are), Implementation Plan (the path), Implementation Checklist (task extraction). Plus Constraints and Success Criteria sections. This structure ensures Claude has complete context.",
+explanation: "The four-part template is: Reference Architecture Analysis (what good looks like), Current Architecture Analysis (where you are), Implementation Plan (the path), Implementation Checklist (task extraction). Plus Constraints and Success Criteria sections. Without Non-Goals (part of Constraints), Claude may add caching, logging, or other reasonable features that the team explicitly decided not to build now.",
 source: "Lesson 5: Phase 2 - Writing Effective Specs"
 },
 {
 question: "Why are explicit constraints often more important than requirements in specifications?",
 options: [
-"Constraints are easier to verify than requirements",
-"Constraints reduce the overall specification length",
-"Constraints enable faster implementation",
+"Constraints are much easier to verify than requirements are",
+"Constraints reduce the overall specification length significantly",
+"Constraints enable faster and more predictable implementation",
 "Constraints prevent Claude from making reasonable but wrong choices"
 ],
 correctOption: 3,
@@ -301,9 +301,9 @@ source: "Lesson 5: Phase 2 - Writing Effective Specs"
 {
 question: "What is the prompt pattern that triggers the interview phase for specification refinement?",
 options: [
-"Review my spec for potential issues",
-"Identify gaps in this specification",
-"Prepare interview questions for this spec",
+"Review my specification and flag any potential issues",
+"Identify and list the gaps in this specification",
+"Prepare a set of interview questions for this spec",
 "Use the ask_user_question tool to surface any ambiguities before we implement"
 ],
 correctOption: 3,
@@ -337,34 +337,34 @@ source: "Lesson 6: Phase 3 - Refinement via Interview"
 {
 question: "The spec says 'handle conflicts optimistically.' Developer meant 'last write wins' but Claude interpreted 'prompt user to resolve.' Which interview category would have caught this?",
 options: [
-"Data Decisions about migration",
-"Failure Recovery about error handling",
-"Conflict Resolution about disagreements",
-"Boundary Conditions about limits"
+"Data Decisions about migration strategies",
+"Failure Recovery about error handling paths",
+"Conflict Resolution about disagreements between systems",
+"Boundary Conditions about scale and limits"
 ],
 correctOption: 2,
 explanation: "Conflict Resolution questions address what happens when systems disagree. 'What's the conflict resolution strategy? Last write wins? User resolves? Merge automatically?' would have surfaced this ambiguity. The term 'optimistic' meant different things to developer and Claude.",
 source: "Lesson 6: Phase 3 - Refinement via Interview"
 },
 {
-question: "What signal indicates the interview phase should end?",
+question: "A developer reviews the interview transcript and notices Claude is asking variations of already-answered questions and flagging minor formatting preferences. What does this signal?",
 options: [
-"All five ambiguity categories are addressed",
-"Questions become repetitive or about trivial details",
-"Exactly ten questions have been asked",
-"The specification reaches 1000 words"
+"All five ambiguity categories have been fully addressed now",
+"Questions are becoming repetitive—the interview phase should end",
+"Exactly ten questions have been asked and the limit is reached",
+"The specification has reached an adequate word count threshold"
 ],
 correctOption: 1,
-explanation: "Interview ends when questions become repetitive (variations of answered questions), questions are trivial (implementation details not design decisions), or the specification feels complete (you can imagine implementation without guessing). It's not about category coverage or question count.",
+explanation: "Interview ends when questions become repetitive (variations of answered questions), questions are trivial (implementation details not design decisions), or the specification feels complete (you can imagine implementation without guessing). It's not about category coverage or question count. Repetition and triviality are the signals that the spec is ready.",
 source: "Lesson 6: Phase 3 - Refinement via Interview"
 },
 {
 question: "What is the core prompt pattern for task-based implementation?",
 options: [
 "Use the task tool, each task by subagent, commit after each",
-"Break this spec into tasks and implement each",
-"Implement this spec using parallel processing",
-"Create implementation tasks from specification"
+"Break this spec into tasks and implement each one sequentially",
+"Implement this entire spec using available parallel processing threads",
+"Create then execute all implementation tasks directly from specification"
 ],
 correctOption: 0,
 explanation: "The canonical prompt is: 'Use the task tool and each task should only be done by a subagent so that context is clear. After each task do a commit before you continue. You are the main agent and your subagents are your devs.' This triggers task extraction, delegation, isolation, and atomic commits.",
@@ -397,9 +397,9 @@ source: "Lesson 7: Phase 4 - Task-Based Implementation"
 {
 question: "What is the purpose of pre-commit hooks in task-based implementation?",
 options: [
-"To format commit messages automatically",
-"To track which tasks have been completed",
-"To synchronize parallel task execution",
+"To automatically format commit messages before saving",
+"To track and record which tasks have been completed",
+"To synchronize and coordinate parallel task execution",
 "To provide backpressure that catches errors at the source"
 ],
 correctOption: 3,
@@ -421,25 +421,25 @@ source: "Lesson 7: Phase 4 - Task-Based Implementation"
 {
 question: "Task 2 needs output from Task 1, and Task 3 needs output from Task 2. What execution pattern is required?",
 options: [
-"All three tasks run in parallel",
+"All three tasks run simultaneously in parallel mode",
 "Tasks 1, 2, 3 run sequentially with dependencies",
-"Task 1 runs first, then 2 and 3 in parallel",
-"Random order with automatic dependency resolution"
+"Task 1 runs first, then tasks 2 and 3 in parallel",
+"Tasks run in random order with automatic dependency resolution"
 ],
 correctOption: 1,
 explanation: "When tasks have linear dependencies (2 needs 1's output, 3 needs 2's output), they must run sequentially. You cannot start Task 2 until Task 1 completes. This is why dependency analysis matters—it determines parallel versus sequential execution.",
 source: "Lesson 7: Phase 4 - Task-Based Implementation"
 },
 {
-question: "According to the decision heuristic, when should you definitely use SDD?",
+question: "A developer evaluates a task: 'Fix the null pointer exception on line 47 of auth.ts.' Should they use SDD for this task?",
 options: [
-"When files affected > 5 OR requirements unclear OR learning new tech",
-"For any task involving code changes",
-"Only for production-critical systems",
-"When the team has more than 5 members"
+"Yes—files affected exceeds five so SDD is required here",
+"No—this task is a single-file bug fix and skips SDD",
+"Only for production-critical systems regardless of scope",
+"Yes, when the team has more than five active members"
 ],
 correctOption: 0,
-explanation: "The heuristic states: 'IF files_affected > 5 OR requirements_unclear OR learning_new_tech: Use SDD.' Multiple files compound complexity; unclear requirements benefit from research; unfamiliar tech benefits from parallel investigation. These signals indicate overhead will pay off.",
+explanation: "The heuristic states: 'IF files_affected > 5 OR requirements_unclear OR learning_new_tech: Use SDD.' This task is a single-file bug fix with a clear problem—SDD overhead (research, spec, interview, tasks) would take longer than the fix itself. The correct answer maps to the 'ELSE IF single_file AND bug_fix: Skip SDD' branch of the heuristic.",
 source: "Lesson 8: The Decision Framework"
 },
 {
@@ -457,10 +457,10 @@ source: "Lesson 8: The Decision Framework"
 {
 question: "What should you do when a task falls into the 'judgment call' category of the decision heuristic?",
 options: [
-"Always default to full SDD workflow",
-"Always skip SDD and implement directly",
+"Always default to the full SDD workflow regardless",
+"Always skip SDD entirely and just implement it directly",
 "Start with a lightweight spec and expand if complexity reveals itself",
-"Consult with team members before deciding"
+"Consult with your team members before deciding anything"
 ],
 correctOption: 2,
 explanation: "For judgment calls, start with a lightweight spec (just constraints and success criteria). If writing it reveals complexity—'Wait, how DO we handle existing data?'—expand to full specification. If it feels sufficient, proceed directly. This 80/20 approach balances effort and value.",
@@ -481,10 +481,10 @@ source: "Lesson 8: The Decision Framework"
 {
 question: "The critique 'SDD is just waterfall' compares spec phases to waterfall methodology. What's the key difference that counters this critique?",
 options: [
-"SDD phases are shorter than waterfall phases",
-"SDD uses AI while waterfall used humans",
+"SDD phases are much shorter than waterfall phases",
+"SDD uses AI assistance while waterfall relied on humans",
 "SDD tasks are atomic and reversible via git revert",
-"SDD doesn't require any documentation"
+"SDD does not require any written documentation"
 ],
 correctOption: 2,
 explanation: "SDD differs from waterfall because tasks are atomic and reversible (git revert), not months-long commitments without feedback. The spec also updates during implementation when reality diverges. Waterfall phases were isolated handoffs; SDD phases have tight feedback loops.",
@@ -551,15 +551,15 @@ explanation: "Tasks where SDD is overkill share a characteristic: the solution i
 source: "Lesson 8: The Decision Framework"
 },
 {
-question: "In the vibe coding example, what happens by Turn 14 of the report conversation?",
+question: "A developer is at Turn 14 in a vibe coding session and notices that Claude's latest output is formatted as a blog post instead of the research report with citations they need. Which vibe coding failure is this?",
 options: [
-"The report is complete and ready to publish",
-"The developer discovers the format doesn't match their standards",
-"Claude suggests using specifications instead",
-"The context window is exhausted"
+"Context loss where previous format decisions faded from attention",
+"Assumption drift where Claude filled gaps with reasonable defaults",
+"Pattern violations where code ignores existing project architecture",
+"Specification gap where missing constraints led to wrong output"
 ],
 correctOption: 1,
-explanation: "By Turn 14, the developer discovers Claude wrote blog-style content when they needed a research report with citations. This pattern violation emerged late because Claude didn't know the project's format standards. Early turns seemed like progress but accumulated wrong assumptions about audience and structure.",
+explanation: "By Turn 14, the developer discovers Claude wrote blog-style content when they needed a research report with citations. This is assumption drift—Claude filled the gap in 'report format' with a reasonable but wrong default. Early turns seemed like progress but accumulated wrong assumptions about audience and structure. Without explicit format constraints, Claude defaulted to what 'report' typically means.",
 source: "Lesson 1: Why Specs Beat Vibe Coding"
 },
 {

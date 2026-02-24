@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "@docusaurus/Link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProgress } from "@/contexts/ProgressContext";
 import { BadgeGrid } from "@/components/progress/BadgeCard";
@@ -41,12 +42,15 @@ export default function ProgressDashboard() {
           </span>
           <span className={styles.statLabel}>Total XP</span>
         </div>
-        <div className={`${styles.statCard} gf-stat-rank`}>
+        <Link
+          to="/leaderboard"
+          className={`${styles.statCard} ${styles.statCardClickable} gf-stat-rank no-underline`}
+        >
           <span className={`${styles.statValue} ${styles.rankValue}`}>
-            {stats?.rank ?? "--"}
+            {stats?.rank ? `#${stats.rank}` : "--"}
           </span>
           <span className={styles.statLabel}>Rank</span>
-        </div>
+        </Link>
         <div className={`${styles.statCard} gf-stat-streak`}>
           <span className={`${styles.statValue} ${styles.streakValue}`}>
             {stats?.current_streak ?? 0}
@@ -112,7 +116,6 @@ export default function ProgressDashboard() {
           </div>
         )}
       </div>
-
     </div>
   );
 }

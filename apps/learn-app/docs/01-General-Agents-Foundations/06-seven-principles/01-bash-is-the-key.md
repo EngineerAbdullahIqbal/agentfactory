@@ -53,6 +53,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Research the Vercel d0 agent case study in depth. Analyze other examples where simpler agent architectures outperformed complex ones."
   remedial_for_struggling: "Focus on the core insight: BASH lets AI read files and run commands. Start with simple examples like listing and searching files before moving to the Unix philosophy."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Foundation Principles"
+  key_points:
+    - "Vercel's d0 case study is the proof point: BASH-only agent was 3.5x faster with 100% success rate vs 80% for the complex design — simplicity beats sophistication"
+    - "BASH is the key that unlocks all six other principles — without terminal access, verification, persistence, and observability are impossible"
+    - "The Unix philosophy (each tool does one thing, tools connect through pipes, everything is text) explains WHY BASH and LLMs are a natural fit — both operate on text"
+    - "The command safety spectrum (read-only → creates → moves → deletes → system-level) is the practical framework students need for working with agents"
+  misconceptions:
+    - "Students think 'Bash is the key' means they need to memorize terminal commands — the principle is about giving AI simple tools and room to reason, not human terminal expertise"
+    - "Students assume complex agent architectures must be better — the Vercel data directly contradicts this intuition"
+    - "Students fear terminal access means the AI can do anything unchecked — the permission model (read-only runs freely, destructive requires approval) addresses this"
+  discussion_prompts:
+    - "Why did adding MORE tools to Vercel's d0 agent actually make it WORSE? What does this tell you about AI reasoning?"
+    - "Think of a task you currently do manually on your computer — what would change if an AI could run terminal commands to help?"
+  teaching_tips:
+    - "Start with the Vercel performance table — the numbers are striking enough to hook skeptics immediately"
+    - "Demo the 'without terminal access vs with terminal access' Q4 budget scenario live — the contrast between advising and acting is visceral"
+    - "The seven-principle preview list at the end shows how BASH enables everything else — worth highlighting as a chapter roadmap"
+    - "For non-technical students, the pipe example (grep | wc) is the minimal demo of composability — keep it to just this one example"
+  assessment_quick_check:
+    - "What were the performance differences between Vercel's complex agent design and the BASH-only design?"
+    - "Name the three tenets of the Unix philosophy and explain why they make BASH and LLMs a natural fit"
+    - "Classify these commands by safety level: ls, rm -rf, grep, mv, cat"
 ---
 
 # Principle 1: Bash Is the Key

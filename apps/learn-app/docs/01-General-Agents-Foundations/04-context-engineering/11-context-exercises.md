@@ -1,5 +1,6 @@
 ---
 title: "Context Engineering Exercises"
+practice_exercise: ch4-context
 sidebar_label: "Context Exercises"
 sidebar_position: 11
 chapter: 4
@@ -60,6 +61,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Capstone C: Forensics challenge diagnosing 3 failing agents with different context problems"
   remedial_for_struggling: "Focus on Modules 1-3 (diagnosis and optimization) before attempting persistence and multi-agent modules"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 4
+  session_title: "Capstone: Production-Quality Agents"
+  key_points:
+    - "This is a measurement-driven exercise lab — students apply every technique from Lessons 1-10 and score the results using a consistent rubric at each stage"
+    - "The Contract Review Agent starts broken (missing red flags, contradicting itself, forgetting requirements) and improves measurably as each context engineering technique is applied"
+    - "The progression from Module 1 (diagnosis) through Module 7 (multi-agent coordination) mirrors the chapter's lesson sequence, reinforcing each concept through practice"
+    - "No new concepts are introduced — this is pure application of the full context engineering toolkit learned throughout the chapter"
+  misconceptions:
+    - "Students think exercises are optional supplementary practice — this is the chapter closer where concepts become measurable skills, and the quality scores prove the techniques work"
+    - "Students skip measurement steps because they seem tedious — the before/after scores ARE the learning, showing quantified impact of each technique"
+    - "Students try to jump to advanced modules without completing diagnosis modules first — Module 1-3 (rot diagnosis, signal audit, architecture) are prerequisites for everything after"
+  discussion_prompts:
+    - "After running the same three test tasks at each stage, which technique produced the largest measurable improvement? Was it the one you expected?"
+    - "How would you adapt the Contract Review Agent exercises to your own professional domain?"
+  teaching_tips:
+    - "Emphasize that every module follows the same pattern: apply technique, then measure — this measurement discipline is the meta-skill being taught"
+    - "Have students download the exercise files at the start of class to avoid setup delays — the ZIP contains all starter files and instructions per module"
+    - "The three capstones at the end are the real assessment — Capstone A (build your own domain agent) is the minimum, Capstone C (forensics) is the stretch goal"
+    - "Budget at least 4 hours across multiple sessions — this is a 240-minute exercise set that demonstrates multi-session work in practice"
+  assessment_quick_check:
+    - "After Module 3, what was your agent's quality score compared to the broken starting state?"
+    - "Which context engineering technique produced the largest single improvement in your measurements?"
+    - "Describe one thing you would do differently if you started the exercise lab over from scratch"
 ---
 
 # Context Engineering Exercises: The Context Lab
@@ -129,6 +156,8 @@ The starter agent typically scores 25-35 out of 60. By Module 7, students routin
 >
 > **What you will learn:** How to identify accumulation, contradiction, staleness, and poisoning in a real CLAUDE.md — and why each type degrades agent performance differently.
 
+<ExerciseCard id="1.1" title="Rot Audit" />
+
 ### Exercise 1.1 — Rot Audit
 
 **The Setup:**
@@ -155,6 +184,8 @@ Most students find the starter CLAUDE.md contains 15-25% signal. The rest is rot
 
 ---
 
+<ExerciseCard id="1.2" title="Baseline Measurement" />
+
 ### Exercise 1.2 — Baseline Measurement
 
 **The Setup:**
@@ -180,6 +211,8 @@ Typical baseline scores range from 25-35 out of 60. The agent usually catches th
 >
 > **What you will learn:** How to separate actionable instructions from noise, and how dramatically a lean CLAUDE.md outperforms a bloated one.
 
+<ExerciseCard id="2.1" title="Four-Question Audit" />
+
 ### Exercise 2.1 — Four-Question Audit
 
 **The Setup:**
@@ -200,6 +233,8 @@ Students typically reduce the CLAUDE.md from 650 lines to 40-60 lines. The proce
 3. Where did you move the content you removed? Delete, external file, or skill?
 
 ---
+
+<ExerciseCard id="2.2" title="Quality Comparison" />
 
 ### Exercise 2.2 — Quality Comparison
 
@@ -225,6 +260,8 @@ Students typically see a 8-15 point improvement (out of 60) from signal optimiza
 > **Technique:** Mapping content to the right context tool (Lesson 3)
 >
 > **What you will learn:** How to distribute information across CLAUDE.md, Skills, Hooks, and Subagents so that each piece lives where it gets the most attention at the lowest token cost.
+
+<ExerciseCard id="3.1" title="Tool Mapping" />
 
 ### Exercise 3.1 — Tool Mapping
 
@@ -254,6 +291,8 @@ Most students distribute content roughly: 30% stays in CLAUDE.md (across all thr
 3. How many tokens does your CLAUDE.md consume now vs. Module 1? What is the percentage reduction?
 
 ---
+
+<ExerciseCard id="3.2" title="Token Budget" />
 
 ### Exercise 3.2 — Token Budget
 
@@ -285,6 +324,8 @@ The distributed architecture typically uses 40-60% fewer tokens at session start
 >
 > **What you will learn:** How to make your agent's work survive session boundaries — so that /clear does not destroy accumulated understanding.
 
+<ExerciseCard id="4.1" title="Tasks and Knowledge" />
+
 ### Exercise 4.1 — Tasks and Knowledge
 
 **The Setup:**
@@ -307,6 +348,8 @@ The task DAG typically has 8-12 tasks with 3-5 dependency chains. Students often
 3. Could a new team member use your task DAG and knowledge file to continue the review without reading the session transcripts?
 
 ---
+
+<ExerciseCard id="4.2" title="Survival Test" />
 
 ### Exercise 4.2 — Survival Test
 
@@ -341,6 +384,8 @@ With well-designed persistence files, post-clear quality typically scores within
 >
 > **What you will learn:** How to keep your agent performing well across long sessions by actively managing context utilization and knowing when to compact.
 
+<ExerciseCard id="5.1" title="Zone Monitoring" />
+
 ### Exercise 5.1 — Zone Monitoring
 
 **The Setup:**
@@ -368,6 +413,8 @@ Most agents cross 60% utilization between turns 15-20, depending on how many fil
 3. How would you redesign the workflow to delay the 60% threshold?
 
 ---
+
+<ExerciseCard id="5.2" title="Compaction Strategy" />
 
 ### Exercise 5.2 — Compaction Strategy
 
@@ -400,6 +447,8 @@ Naive compaction typically loses 30-50% of critical context. Structured compacti
 >
 > **What you will learn:** How to build a persistent memory layer that makes your agent smarter over time — so turn 20 reviews are better than turn 1 reviews.
 
+<ExerciseCard id="6.1" title="Memory Corpus" />
+
 ### Exercise 6.1 — Memory Corpus
 
 **The Setup:**
@@ -424,6 +473,8 @@ Students typically extract 25-40 memories from the 10 contracts. The hardest par
 3. How would you handle memory conflicts — when a new contract contradicts a previously learned pattern?
 
 ---
+
+<ExerciseCard id="6.2" title="Drift Measurement" />
 
 ### Exercise 6.2 — Drift Measurement
 
@@ -455,6 +506,8 @@ With well-designed memory injection, turn 20 quality should be equal to or bette
 > **Technique:** Multi-agent pipeline with clean context boundaries (Lesson 9)
 >
 > **What you will learn:** How to split a complex review into parallel specialist agents that produce better results than a single generalist — by keeping each agent's context clean and focused.
+
+<ExerciseCard id="7.1" title="Pipeline Design" />
 
 ### Exercise 7.1 — Pipeline Design
 
@@ -492,6 +545,8 @@ The biggest design challenge is the orchestrator's synthesis prompt. Students wh
 
 ---
 
+<ExerciseCard id="7.2" title="Clean vs. Dirty" />
+
 ### Exercise 7.2 — Clean vs. Dirty
 
 **The Setup:**
@@ -522,6 +577,8 @@ The clean-slate pipeline typically scores 5-10 points higher than the dirty-slat
 
 Capstones are different from the module exercises. There are no guided walkthroughs — you design the entire approach yourself. Each project requires applying multiple context engineering techniques together to solve a realistic problem.
 
+<ExerciseCard id="A" title="Your Domain Agent" />
+
 ### Capstone A — Your Domain Agent
 
 Open the `capstone-A-your-domain-agent/` folder. You will find a project template and self-assessment rubric.
@@ -542,6 +599,8 @@ Apply every technique from the Context Lab:
 
 ---
 
+<ExerciseCard id="B" title="Context Relay" />
+
 ### Capstone B — Context Relay
 
 Open the `capstone-B-context-relay/` folder. You will find a 3-session project specification.
@@ -556,6 +615,8 @@ Execute a complex project across three separate Claude Code sessions. The projec
 **Scoring:** Compare the quality of Session 3's output to what a single uninterrupted session would produce. Effective context engineering should make the multi-session version nearly as good as the single-session version.
 
 ---
+
+<ExerciseCard id="C" title="Forensics Challenge" />
 
 ### Capstone C — Forensics Challenge
 

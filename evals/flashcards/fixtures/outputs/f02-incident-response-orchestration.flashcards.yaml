@@ -1,0 +1,72 @@
+deck:
+  id: "eval-f02-incident-response-orchestration"
+  title: "Eval F02 Incident Response Orchestration"
+  description: "Balanced flashcards covering incident phases, triage dimensions, containment strategy, and recovery reasoning."
+  tags: ["evaluation", "incident-response", "orchestration"]
+  version: 1
+
+cards:
+  - id: "eval-f02-incident-response-orchestration-001"
+    front: "What are the four incident response phases in order?"
+    back: "Detection, triage, containment, and recovery."
+    tags: ["phases"]
+    difficulty: "basic"
+
+  - id: "eval-f02-incident-response-orchestration-002"
+    front: "Why is skipping triage before containment risky?"
+    back: "It can hide root cause, misclassify severity, and trigger repeated incidents because actions are chosen without enough diagnostic context."
+    tags: ["triage", "risk"]
+    difficulty: "intermediate"
+    why: "How would triage quality affect containment side effects?"
+
+  - id: "eval-f02-incident-response-orchestration-003"
+    front: "Which three dimensions define good incident triage?"
+    back: "User impact, data risk, and time sensitivity."
+    tags: ["triage", "severity"]
+    difficulty: "basic"
+
+  - id: "eval-f02-incident-response-orchestration-004"
+    front: "How does multi-dimensional triage improve severity decisions?"
+    back: "It prevents single-metric blind spots by combining business impact, risk exposure, and urgency into a more defensible severity classification."
+    tags: ["triage", "decision-quality"]
+    difficulty: "intermediate"
+    why: "Why can a low user-count incident still be high severity?"
+
+  - id: "eval-f02-incident-response-orchestration-005"
+    front: "What is the containment rule for irreversible actions?"
+    back: "Irreversible actions require explicit human approval."
+    tags: ["containment", "governance"]
+    difficulty: "basic"
+
+  - id: "eval-f02-incident-response-orchestration-006"
+    front: "Why should containment prefer reversible actions first?"
+    back: "Reversible moves reduce blast radius quickly while preserving options to adapt as evidence improves, lowering the chance of irreversible damage."
+    tags: ["containment", "strategy"]
+    difficulty: "intermediate"
+    why: "How do reversible actions support safer recovery planning?"
+
+  - id: "eval-f02-incident-response-orchestration-007"
+    front: "Name two examples of reversible containment actions."
+    back: "Feature flag rollback and traffic shift to a stable path."
+    tags: ["containment", "examples"]
+    difficulty: "basic"
+
+  - id: "eval-f02-incident-response-orchestration-008"
+    front: "How do guardrail tests change the definition of recovery complete?"
+    back: "They shift completion from visual dashboard recovery to verified system safety, proving behavior meets expected constraints after stabilization."
+    tags: ["recovery", "validation"]
+    difficulty: "advanced"
+    why: "Why can green dashboards still hide unresolved incident risk?"
+
+  - id: "eval-f02-incident-response-orchestration-009"
+    front: "What must a post-incident timeline explain?"
+    back: "Cause, trigger, and prevention changes."
+    tags: ["post-incident", "timeline"]
+    difficulty: "basic"
+
+  - id: "eval-f02-incident-response-orchestration-010"
+    front: "How does phase separation improve incident reliability?"
+    back: "It enforces clear decision boundaries, reducing premature actions and helping teams choose evidence-aligned responses at each stage."
+    tags: ["orchestration", "reliability"]
+    difficulty: "intermediate"
+    why: "Why does role clarity matter during high-pressure incidents?"

@@ -4,9 +4,9 @@ import logging
 import os
 from contextlib import asynccontextmanager
 
+import api_infra
+from api_infra.core.redis_cache import get_redis, start_redis, stop_redis
 from fastapi import FastAPI
-
-from .redis_cache import get_redis, start_redis, stop_redis
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +36,11 @@ async def lifespan(app: FastAPI):
         logger.info("=" * 60)
         logger.info("STUDY MODE API - STARTUP")
         logger.info("=" * 60)
+
+        # Configure shared api-infra library with our settings
+        from ..config import settings
+
+        api_infra.configure(settings)
 
         # Log environment status
         openai_key = os.getenv("OPENAI_API_KEY", "")

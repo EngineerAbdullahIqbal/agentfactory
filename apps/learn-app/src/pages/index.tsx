@@ -111,11 +111,19 @@ function HomepageHeader() {
                 </span>
                 {/* Stat */}
                 <span className="text-lg font-bold text-foreground tracking-tight">
-                  16,659
+                  16,884
                 </span>
                 <span className="text-sm text-muted-foreground">
                   professionals learning
                 </span>
+                <span className="w-[1px] h-4 bg-border mx-1"></span>
+                <Link
+                  to="/reviews"
+                  className="text-sm font-bold text-primary hover:text-primary/80 transition-colors flex items-center gap-1.5"
+                >
+                  Live AI Reviews
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
               {/* Authors */}
               {/* Co-Authors - Premium Chip Design */}

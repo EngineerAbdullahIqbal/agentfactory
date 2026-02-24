@@ -14,7 +14,7 @@ import logging
 import re
 from typing import Literal
 
-from ..core.redis_cache import get_redis
+from api_infra.core.redis_cache import get_redis
 
 logger = logging.getLogger(__name__)
 
@@ -196,6 +196,9 @@ def normalize_answer(text: str) -> str | None:
     """
     Normalize answer text to "A" or "B".
 
+    Enhanced parsing with word boundary matching for partial answers.
+    E.g., "I think A because..." -> "A"
+
     Args:
         text: The message text
 
@@ -215,11 +218,59 @@ def normalize_answer(text: str) -> str | None:
         return match.group(1)
 
     # Match "1st option" or "first option" -> A
-    if re.match(r"^(1ST|FIRST)\s*OPTION$", clean):
+    if re.match(r"^(1ST|FIRST)\s*(OPTION|ONE)?$", clean):
         return "A"
 
     # Match "2nd option" or "second option" -> B
-    if re.match(r"^(2ND|SECOND)\s*OPTION$", clean):
+    if re.match(r"^(2ND|SECOND)\s*(OPTION|ONE)?$", clean):
         return "B"
+
+    # Word boundary match for partial answers
+    # "I think A because..." → "A"
+    # "My answer is B" → "B"
+    word_match = re.search(r'\b([AB])\b', clean)
+    if word_match:
+        return word_match.group(1)
+
+    return None
+
+
+# Special request patterns for off-topic handling
+HINT_PATTERNS = ["hint", "help", "confused", "don't understand", "explain", "dont understand"]
+SKIP_PATTERNS = ["skip", "next", "move on", "pass"]
+OPTION_CONFUSION_PATTERNS = [
+    "both wrong", "both are wrong", "both options are wrong",
+    "neither", "neither is correct", "neither option",
+    "none of these", "none correct",
+    "don't agree", "dont agree", "disagree with both"
+]
+
+
+def detect_special_request(text: str) -> str | None:
+    """
+    Detect if the message is a special request (hint, skip, option confusion).
+
+    Args:
+        text: The message text
+
+    Returns:
+        "hint", "skip", "option_confusion", or None
+    """
+    lower = text.lower().strip()
+
+    # Check for hint/help requests
+    for pattern in HINT_PATTERNS:
+        if pattern in lower:
+            return "hint"
+
+    # Check for skip requests
+    for pattern in SKIP_PATTERNS:
+        if pattern in lower:
+            return "skip"
+
+    # Check for option confusion ("both wrong", "neither", etc.)
+    for pattern in OPTION_CONFUSION_PATTERNS:
+        if pattern in lower:
+            return "option_confusion"
 
     return None

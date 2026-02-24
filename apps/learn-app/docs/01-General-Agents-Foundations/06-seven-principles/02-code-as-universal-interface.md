@@ -53,6 +53,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Explore how different types of code (scripts, queries, configurations) enable agents to work across different domains."
   remedial_for_struggling: "Focus on the photo organization story first. Once the concept clicks through that example, introduce additional powers one at a time."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Foundation Principles"
+  key_points:
+    - "Bash is the hands (navigate, explore), Code is the brain (compute, build) — students must understand this distinction to avoid confusing Principles 1 and 2"
+    - "Five Powers framework (Precise Thinking, Workflow Orchestration, Organized Memory, Universal Compatibility, Instant Tool Creation) gives students vocabulary for what code enables"
+    - "General agents beat specialists because code has no pre-built feature limits — Sarah's 3000-photo example shows this concretely"
+    - "The 'code must actually work' caveat sets up Principle 3 (Verification) — code is powerful but probabilistic generation means verification is essential"
+  misconceptions:
+    - "Students think 'code as interface' means they need to learn programming — the principle is about describing problems clearly so agents write code, not about writing it yourself"
+    - "Students confuse Bash (Principle 1) with Code (Principle 2) — draw the hands-vs-brain analogy clearly"
+    - "Students assume general agents are always better than specialized tools — for common tasks, specialized apps may be more convenient; general agents shine for unique combinations"
+  discussion_prompts:
+    - "Think of a task where you've tried three different apps and none did exactly what you needed — how would a general agent's ability to write custom code change that?"
+    - "Which of the Five Powers would be most valuable in your daily work, and why?"
+  teaching_tips:
+    - "Sarah's photo story is the perfect opener — every student has experienced the frustration of apps that almost-but-don't-quite fit their needs"
+    - "The specialist trap diagram (4 separate agents vs 1 general agent) is worth drawing on the whiteboard"
+    - "Walk through Marcus's budget analysis code example even for non-coders — the point isn't the syntax, it's that the agent translated plain English into precise computation"
+    - "End with the safety caveat: code is powerful but must work — this creates natural urgency for the next lesson on verification"
+  assessment_quick_check:
+    - "Name the Five Powers of code and give a real-world example for each"
+    - "What's the difference between Bash (Principle 1) and Code (Principle 2)?"
+    - "Why do general agents that write code beat specialized agents with pre-built tools?"
 ---
 
 # Principle 2: Code as the Universal Interface

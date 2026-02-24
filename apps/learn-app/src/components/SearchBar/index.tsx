@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Search, Loader2, FileText, Hash } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "@docusaurus/Link";
+import { Trophy } from "lucide-react";
 
 // Detect OS for keyboard shortcut display
 const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
@@ -86,6 +88,17 @@ export function SearchBar({ enableShortcut = true }: { enableShortcut?: boolean 
 
   return (
     <>
+      {/* Mobile-only Leaderboard Link injected above Search */}
+      <Link
+        to="/leaderboard"
+        className="flex lg:hidden mb-2 items-center justify-center h-10 w-full gap-2 rounded-md border border-border bg-card hover:bg-accent transition-colors text-sm font-medium text-foreground no-underline"
+        title="Leaderboard"
+        aria-label="Leaderboard"
+      >
+        <Trophy className="h-4 w-4 text-[oklch(0.77_0.16_70)]" />
+        Leaderboard
+      </Link>
+
       <Button
         variant="outline"
         className={cn(

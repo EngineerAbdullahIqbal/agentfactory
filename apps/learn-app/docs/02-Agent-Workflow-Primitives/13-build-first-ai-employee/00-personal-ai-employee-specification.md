@@ -12,7 +12,7 @@ keywords:
   - Watchers
   - Human-in-the-Loop
   - autonomous agent
-chapter: 10
+chapter: 13
 lesson: 0
 duration_minutes: 30
 
@@ -70,6 +70,34 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Read full security section; plan Gold Tier from start"
   remedial_for_struggling: "Focus only on Bronze Tier sections; skip security/error handling until needed"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Chapter Blueprint and Architecture"
+  key_points:
+    - "Perception-Reasoning-Action architecture is the organizing framework for the entire chapter — every subsequent lesson implements one layer"
+    - "Three achievement tiers (Bronze/Silver/Gold) define student commitment levels — students must choose before starting"
+    - "Digital FTE cost comparison ($0.50 vs $5.00 per task) is the business case that justifies the entire chapter"
+    - "Human-in-the-Loop is a safety pattern, not a limitation — approval files in /Pending_Approval/ prevent dangerous autonomous actions"
+  misconceptions:
+    - "Students think they need to read the entire spec before starting — this is a REFERENCE document they return to throughout the chapter"
+    - "Students confuse 'Digital FTE' with chatbot — emphasize the 24/7 autonomous operation and proactive behavior (Watchers wake it up)"
+    - "Students assume Gold Tier is always better — Bronze is a complete, useful product; tiers are about scope not quality"
+    - "Students think the AI acts on its own for everything — the permission boundaries table shows most sensitive actions require human approval"
+  discussion_prompts:
+    - "Looking at the Human FTE vs Digital FTE table, which tasks in YOUR work would benefit most from 24/7 availability?"
+    - "The spec says payments over $100 always require approval. Where would YOU draw the line for auto-approve vs require-approval in your domain?"
+    - "Why does the architecture use file-based communication (Markdown files in folders) rather than a database or API?"
+  teaching_tips:
+    - "Start with the CEO Briefing example — it is the most concrete 'aha moment' showing AI as proactive business partner, not reactive chatbot"
+    - "Walk through the architecture diagram layer by layer — students should be able to name all three layers and their tools before leaving this lesson"
+    - "Have students choose their tier commitment NOW and write it down — this prevents scope confusion in later lessons"
+    - "The end-to-end invoice flow walkthrough is the best section for demonstrating how all layers connect"
+  assessment_quick_check:
+    - "Name the three architecture layers and one tool each layer uses"
+    - "Explain in one sentence why Watchers exist (what problem they solve)"
+    - "Which tier are you targeting and what are its specific deliverables?"
 
 # Generation metadata
 generated_by: "manual creation from hackathon specification"
@@ -135,6 +163,12 @@ Choose your target based on your experience and ambition:
 - Full architecture documentation
 
 **What You'll Have**: A Digital FTE that operates 24/7, handles multiple domains, recovers from errors, and maintains audit trails.
+
+### Hackathon Tier: Full Project Build
+
+**Time Investment**: 8-60+ hours (self-paced, see L14)
+
+After completing the chapter, the Hackathon 0 assignment (L14) challenges you to build a complete Personal AI Employee project from scratch. Choose Bronze through Platinum scope based on your ambition. Submit as a GitHub repository.
 
 ---
 
@@ -340,10 +374,12 @@ Move this file to /Rejected folder.
 
 | Action Category | Auto-Approve Threshold | Always Require Approval    |
 | --------------- | ---------------------- | -------------------------- |
-| Email replies   | To known contacts      | New contacts, bulk sends   |
+| Email replies   | To known contacts\*    | New contacts, bulk sends   |
 | Payments        | < $50 recurring        | All new payees, > $100     |
 | Social media    | Scheduled posts        | Replies, DMs               |
 | File operations | Create, read           | Delete, move outside vault |
+
+_\*Known contacts: people you've exchanged 3+ emails with in the past 90 days AND whose address is in your contacts or CRM. Define this threshold in your `Company_Handbook.md`._
 
 ### 5. Continuous vs Scheduled Operations
 
@@ -369,7 +405,7 @@ Claude Code reads:
 
 1. `Business_Goals.md` - Your objectives and metrics
 2. `/Done/` folder - Completed tasks this week
-3. `Accounting/` - Bank transactions and revenue
+3. `/Logs/` - Financial data and transaction history
 
 ### Deliverable
 
@@ -508,6 +544,13 @@ Store logs in `/Vault/Logs/YYYY-MM-DD.json` and retain for minimum 90 days.
 | L11    | Silver Capstone                 | CEO Briefing                | Silver    |
 | L12    | Gold Capstone                   | Full autonomous employee    | Gold      |
 | L13    | Chapter Assessment              | Quiz & submission           | —         |
+| L14    | Hackathon 0 Assignment          | Full project build          | Hackathon |
+
+### Hackathon Tier: Full Project Build
+
+**Time Investment**: 8-60+ hours (self-paced after completing chapter)
+
+After completing the chapter, the Hackathon 0 assignment (L14) challenges you to build a complete Personal AI Employee from scratch. Choose Bronze through Platinum scope based on your ambition. See [L14: Hackathon 0](./14-when-your-employee-codes.md) for the complete assignment specification, tier breakdown, and judging criteria.
 
 ---
 

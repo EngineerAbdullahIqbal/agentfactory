@@ -1,8 +1,13 @@
 #!/bin/bash
+set -euo pipefail
+
 # Build script that conditionally adds --localstorage-file flag for Node.js 25+
 
 # Change to learn-app directory (parent of scripts/)
 cd "$(dirname "$0")/.."
+
+# Flashcard validation + Anki generation run via nx dependsOn (project.json)
+# before this script is invoked — no need to duplicate here.
 
 NODE_VERSION=$(node -v | cut -d'.' -f1 | sed 's/v//')
 

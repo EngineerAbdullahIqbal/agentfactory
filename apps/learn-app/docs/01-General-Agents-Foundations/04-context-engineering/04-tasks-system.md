@@ -65,6 +65,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a Writer/Reviewer pattern with two sessions using shared task coordination"
   remedial_for_struggling: "Focus on the core insight first (plan on disk = context freedom), then the mechanics"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Persistent State and Knowledge Transfer"
+  key_points:
+    - "The core insight is plan-on-disk enables context freedom — /clear destroys conversation but Tasks survive because they live in ~/.claude/tasks/, not in context"
+    - "Task dependencies form DAGs (Directed Acyclic Graphs) — completing a blocking task automatically unblocks dependents, enabling wave-based execution"
+    - "Cross-session coordination via CLAUDE_CODE_TASK_LIST_ID enables parallel workflows like Writer/Reviewer patterns across multiple terminals"
+    - "Tasks track WHAT needs doing (action items), while progress files (lesson 07) track WHY (decisions and discoveries) — students need both"
+  misconceptions:
+    - "Students think /clear destroys their work — emphasize that Tasks survive because they are files on disk, not conversation state"
+    - "Students confuse Tasks with simple todo lists — Tasks have dependency graphs, cross-session sharing, and automatic unblocking that make them a coordination system"
+    - "Students try to call TaskCreate/TaskUpdate directly — they should describe what they need in natural language and let Claude handle the internal tool calls"
+  discussion_prompts:
+    - "Think of a multi-step project in your domain — what would the dependency graph look like? Which tasks could run in parallel?"
+    - "Why is the plan-clear-execute pattern better than trying to keep everything in context and hoping quality doesn't degrade?"
+  teaching_tips:
+    - "Start with the opening scenario — every student has experienced losing their plan after /clear, so the problem resonates immediately"
+    - "The DAG diagram (Tasks 1-4 with arrows) is worth drawing on a whiteboard — have students trace the execution order"
+    - "Have students do the lab step-by-step: create tasks, run /clear, then verify tasks survived — the 'aha' moment happens when they see persistence firsthand"
+    - "The domain-specific examples (legal due diligence, marketing campaign, research synthesis) help non-technical students see relevance"
+  assessment_quick_check:
+    - "Where do Tasks physically live, and why does this matter for /clear?"
+    - "Draw a simple 4-task dependency graph and explain which tasks can run in parallel"
+    - "What is CLAUDE_CODE_TASK_LIST_ID and what does it enable?"
 ---
 
 # The Tasks System: Persistent State for Context Management

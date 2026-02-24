@@ -31,7 +31,7 @@ export function GatedQuiz({
     (siteConfig.customFields?.progressApiUrl as string) ||
     "http://localhost:8002";
 
-  const { refreshProgress } = useProgress();
+  const { progress, refreshProgress } = useProgress();
   const [quizResult, setQuizResult] = useState<{
     xpData: QuizSubmitResponse;
     scorePct: number;
@@ -80,6 +80,7 @@ export function GatedQuiz({
           totalXp={quizResult.xpData.total_xp}
           newBadges={quizResult.xpData.new_badges}
           attemptNumber={quizResult.xpData.attempt_number}
+          rank={progress?.stats?.rank}
         />
       )}
     </>

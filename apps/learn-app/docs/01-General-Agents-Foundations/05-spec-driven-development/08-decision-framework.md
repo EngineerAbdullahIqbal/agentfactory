@@ -62,6 +62,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Analyze the SDD critiques from research literature and formulate counterarguments"
   remedial_for_struggling: "Focus on the two tables (when SDD excels, when SDD is overkill) before applying the heuristic"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 3
+  session_title: "Implementation and Judgment"
+  key_points:
+    - "SDD is a power tool, not a universal solution — the decision heuristic (files_affected > 5, requirements_unclear, learning_new_tech) gives students a quick classification method"
+    - "The lightweight spec pattern (constraints + success criteria only) is the 80/20 solution for borderline cases — 80% of spec value with 20% of overhead"
+    - "Four legitimate SDD critiques (waterfall, double review, diminishing returns, overhead) each have specific counterpoints students should be able to articulate"
+    - "Judgment develops through feedback loops: tracking when specs helped vs when they were overhead"
+  misconceptions:
+    - "Students think they must use full SDD for everything after this chapter — this lesson explicitly teaches when to skip it"
+    - "Students confuse exploratory prototyping with production development — exploration discovers requirements, SDD turns them into reliable implementation"
+    - "Students think the 'just waterfall' critique is valid — SDD tasks are atomic and reversible (git revert), unlike months-long waterfall commitments"
+  discussion_prompts:
+    - "Think of your last three projects — for each, would SDD have helped or been overkill? Apply the decision heuristic."
+    - "Is there a scenario where you'd START with vibe coding and SWITCH to SDD mid-project? What would trigger that switch?"
+  teaching_tips:
+    - "The two comparison tables (when SDD excels vs when overkill) work well as a classroom sorting exercise — give students scenarios to classify"
+    - "Have students apply the pseudocode heuristic to 5 real tasks — this builds the instant classification skill"
+    - "The lightweight spec pattern is the most practically useful takeaway for students who feel SDD is 'too much' — show them the minimal version"
+    - "Address the critiques proactively — students who are skeptical will appreciate that the chapter acknowledges legitimate concerns"
+  assessment_quick_check:
+    - "Apply the decision heuristic to this scenario: 'Fix a CSS alignment bug on one page' — SDD, skip, or lightweight spec?"
+    - "What's included in a lightweight spec and when should you upgrade it to a full specification?"
+    - "Give the counterpoint to the critique that SDD is just waterfall"
 ---
 
 # The Decision Framework

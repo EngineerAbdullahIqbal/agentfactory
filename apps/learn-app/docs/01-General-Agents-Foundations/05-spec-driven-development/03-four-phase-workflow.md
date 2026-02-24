@@ -63,6 +63,31 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Map SDD phases to traditional software development lifecycle phases (requirements, design, implementation, testing)"
   remedial_for_struggling: "Focus on the visual diagram first, then understand each phase individually"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Why Specifications Matter"
+  key_points:
+    - "Four phases (Research → Specification → Refinement → Implementation) form the backbone of every subsequent lesson in this chapter — students must internalize this sequence"
+    - "The spec as 'source of truth that survives session restarts' is the central insight — conversations vanish, spec.md persists"
+    - "Phase gates replace approval fatigue — you review at transitions, not during every file edit"
+    - "Skip any phase and you get a specific failure: skip research = assumption-based spec, skip refinement = mid-implementation pivots"
+  misconceptions:
+    - "Students think SDD is slower than vibe coding — the one-hour comparison table shows SDD produces more durable artifacts even in the same timeframe"
+    - "Students confuse 'specification' with 'to-do list' — the spec includes constraints, success criteria, and architecture, not just tasks"
+    - "Students expect to run all four phases in one session — SDD is designed so the spec persists across sessions"
+  discussion_prompts:
+    - "If you had to stop working mid-project and hand it to someone else tomorrow, what would they need? How does that compare to what a spec provides?"
+    - "When have you experienced 'approval fatigue' — reviewing every small AI output instead of reviewing a plan once?"
+  teaching_tips:
+    - "Draw the four-phase diagram on the whiteboard and keep it visible throughout Lessons 4-7 as each phase gets its own deep-dive"
+    - "The Vibe Coding vs SDD comparison table is the key persuasion moment — linger on 'what persists' row"
+    - "Use the 'one hour' comparison to counter the 'SDD is slow' objection before students raise it"
+    - "Point out that Lessons 4-7 each cover one phase in detail — this lesson is the map, not the territory"
+  assessment_quick_check:
+    - "Name the four SDD phases in order and state the deliverable of each"
+    - "What happens if you skip the Refinement phase and go straight from Specification to Implementation?"
 ---
 
 # The Four-Phase Workflow

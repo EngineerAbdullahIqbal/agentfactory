@@ -60,11 +60,11 @@ Group lessons into **5-8 modules** based on thematic coherence:
 
 Check the chapter's pedagogical layer and target reader:
 
-| Signal | Audience | Exercise Language |
-| --- | --- | --- |
-| Part 1-2, "no prior coding" in README | **Beginner / Business** | Business scenarios, professional domains, zero code |
-| Part 3-4, tools/methodology chapters | **Practitioner** | Tool workflows, configuration, methodology application |
-| Part 5-6, advanced engineering | **Developer** | Code projects, debugging, architecture |
+| Signal                                | Audience                | Exercise Language                                      |
+| ------------------------------------- | ----------------------- | ------------------------------------------------------ |
+| Part 1-2, "no prior coding" in README | **Beginner / Business** | Business scenarios, professional domains, zero code    |
+| Part 3-4, tools/methodology chapters  | **Practitioner**        | Tool workflows, configuration, methodology application |
+| Part 5-6, advanced engineering        | **Developer**           | Code projects, debugging, architecture                 |
 
 **The audience determines everything**: scenario language, starter file types, rubric criteria, and which exercise pattern to use. Getting this wrong produces exercises students cannot relate to.
 
@@ -72,12 +72,12 @@ Check the chapter's pedagogical layer and target reader:
 
 Determine exercise type based on chapter content AND audience:
 
-| Chapter Type | X.1 Pattern | X.2 Pattern | Examples |
-| --- | --- | --- | --- |
-| **Conceptual** (principles, theory) | Guided (apply principle) | Discovery (diagnose violation) | Ch6 Principles |
-| **Technical** (tools, plugins) | Build (create/configure) | Debug (fix broken setup) | Ch3 Plugins |
-| **Engineering** (methodology, workflow) | Apply (use methodology) | Measure (evaluate quality) | Ch4 Context, Ch5 SDD |
-| **Applied/Business** (beginner, non-coding) | Hands-on (solve with tool) | Design (architect workflow on paper, $0) | Ch3 Agent Teams |
+| Chapter Type                                | X.1 Pattern                | X.2 Pattern                              | Examples             |
+| ------------------------------------------- | -------------------------- | ---------------------------------------- | -------------------- |
+| **Conceptual** (principles, theory)         | Guided (apply principle)   | Discovery (diagnose violation)           | Ch6 Principles       |
+| **Technical** (tools, plugins)              | Build (create/configure)   | Debug (fix broken setup)                 | Ch3 Plugins          |
+| **Engineering** (methodology, workflow)     | Apply (use methodology)    | Measure (evaluate quality)               | Ch4 Context, Ch5 SDD |
+| **Applied/Business** (beginner, non-coding) | Hands-on (solve with tool) | Design (architect workflow on paper, $0) | Ch3 Agent Teams      |
 
 #### Applied/Business Pattern Details
 
@@ -88,26 +88,27 @@ When the audience is beginners or the chapter teaches tool usage for general pro
 **X.2 = Design**: Student architects the workflow on paper — team structures, dependency graphs, communication protocols. **Zero API cost.** This builds strategic thinking before spending tokens.
 
 **Budget-friendly path**: Design exercises (X.2) always come free. Document this path explicitly:
+
 > Complete all design exercises first (1.2, 2.2, 3.2, 4.2), then selectively run hands-on exercises.
 
 **Domain rotation**: Rotate exercises across professional domains so students see breadth:
 
-| Domain | Scenario Examples | Starter File Types |
-| --- | --- | --- |
-| **Knowledge Work** | Market research, competitive analysis, literature review | CSVs (50-100 rows), competitor profiles (.md), analysis briefs |
-| **Corporate** | Event planning, QBR prep, hiring pipelines, compliance | Budget CSVs, venue/vendor lists, guest lists, requirements docs |
-| **Entrepreneurship** | Feature prioritization, pitch decks, go-to-market | Survey CSVs (100+ responses), revenue projections, effort estimates |
-| **Freelancer/Consultant** | Proposal writing, deliverable review, client management | RFPs, capability docs, reference proposals, approval checklists |
+| Domain                    | Scenario Examples                                        | Starter File Types                                                  |
+| ------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------- |
+| **Knowledge Work**        | Market research, competitive analysis, literature review | CSVs (50-100 rows), competitor profiles (.md), analysis briefs      |
+| **Corporate**             | Event planning, QBR prep, hiring pipelines, compliance   | Budget CSVs, venue/vendor lists, guest lists, requirements docs     |
+| **Entrepreneurship**      | Feature prioritization, pitch decks, go-to-market        | Survey CSVs (100+ responses), revenue projections, effort estimates |
+| **Freelancer/Consultant** | Proposal writing, deliverable review, client management  | RFPs, capability docs, reference proposals, approval checklists     |
 
 Each module should use a **different domain**. The capstones can mix domains or let students choose their own.
 
 **Rubric criteria for Applied/Business** (replaces technical accuracy criteria):
 
-| Criteria | What It Measures |
-| --- | --- |
-| Comprehensiveness | Did the analysis cover all required angles? |
-| Actionability | Could someone act on these recommendations? |
-| Evidence Quality | Are conclusions backed by data from starter files? |
+| Criteria          | What It Measures                                             |
+| ----------------- | ------------------------------------------------------------ |
+| Comprehensiveness | Did the analysis cover all required angles?                  |
+| Actionability     | Could someone act on these recommendations?                  |
+| Evidence Quality  | Are conclusions backed by data from starter files?           |
 | Team Coordination | Did agents effectively share and build on each other's work? |
 
 ### 1F. Determine lesson placement
@@ -419,7 +420,7 @@ Dispatch a **lesson-writer** agent with Task tool. Run in parallel with Phase 3.
 
 ### Agent prompt structure
 
-```
+````
 Create the exercise lesson file and summary for [chapter] exercises.
 
 ## Lesson File: [NN]-[topic]-exercises.md
@@ -462,7 +463,25 @@ If the download link doesn't work, visit the [repository releases page](https://
 [5 criteria x 4 levels — same rubric as EXERCISE-GUIDE.md]
 
 ### Module Walkthroughs (ALL modules, 2 exercises each)
+
+**ExerciseCard Integration:** Each exercise walkthrough MUST include an `<ExerciseCard>` marker
+that connects the lesson to the practice environment. Add at the top of the lesson file:
+
+```mdx
+import ExerciseCard from '@site/src/components/ExerciseCard';
+````
+
+Then for EACH exercise, place the marker immediately before the exercise heading:
+
+```mdx
+<ExerciseCard id="X.Y" title="Exercise X.Y -- [Title]" />
+```
+
+The `id` must match the exercise numbering (e.g., "1.1", "2.2", "capstone-A").
+
 For EACH exercise include:
+
+- `<ExerciseCard id="X.Y" title="Exercise X.Y -- [Title]" />` (practice marker)
 - Title: ### Exercise X.Y -- [Title]
 - **The Problem:** [2-4 sentences referencing exercise files]
 - **Your Task:** [what to do]
@@ -474,16 +493,19 @@ For EACH exercise include:
 - Separator: ---
 
 ### Capstones Section
+
 - Module N heading with "Choose one (or more)" blockquote
 - 3 capstones (A, B, C) — no starter prompts, broader scope
 - Each has: description, What You'll Learn (3 bullets)
 
 ### What's Next
+
 [1 paragraph: summarize skills practiced, preview next lesson(s)]
 
 ## Summary File: [NN]-[topic]-exercises.summary.md
 
 3 paragraphs, no headings, no frontmatter:
+
 - P1: What the lesson provides (exercise count, module count, core skills in bold, framework name)
 - P2: Module progression (list all modules by name)
 - P3: Self-assessment method + what's next
@@ -492,15 +514,18 @@ For EACH exercise include:
 
 Read the existing quiz file: [current-quiz-filename].md
 Copy it EXACTLY. Only change:
+
 - sidebar_position: [old + 1]
-Write to: [new-quiz-filename].md
+  Write to: [new-quiz-filename].md
 
 Execute autonomously without confirmation.
 Output paths:
+
 - Lesson: /absolute/path/to/[NN]-[topic]-exercises.md
 - Summary: /absolute/path/to/[NN]-[topic]-exercises.summary.md
 - New quiz: /absolute/path/to/[NN+1]-chapter-quiz.md (copy of old quiz with incremented sidebar_position)
-```
+
+````
 
 ### Lesson sizing targets
 
@@ -527,7 +552,7 @@ ls -d claude-code-[topic]-exercises/module-*/exercise-* claude-code-[topic]-exer
 
 # From lesson: extract referenced folder names
 grep -oP 'exercise-\d+\.\d+-[\w-]+|capstone-[A-C]-[\w-]+' [NN]-[topic]-exercises.md
-```
+````
 
 ### 5B. Compare and fix mismatches
 
@@ -603,13 +628,13 @@ git commit -m "feat: add [topic] exercises for Chapter [N] with ZIP downloads"
 
 Reference data from 5 successful runs:
 
-| Pack       | Chapter | Type             | Modules | Exercises | Repo Files | Lesson Lines | Guide Lines |
-| ---------- | ------- | ---------------- | ------- | --------- | ---------- | ------------ | ----------- |
-| SDD        | Ch5     | Engineering      | 5+cap   | 17        | ~50        | 863          | ~500        |
-| Principles | Ch6     | Conceptual       | 7+cap   | 17        | 354        | 566          | 518         |
-| Plugins    | Ch3     | Technical        | 7+cap   | 17        | 67         | 580          | 522         |
-| Context    | Ch4     | Engineering      | 7+cap   | 17        | ~60        | ~580         | ~500        |
-| **Teams**  | **Ch3** | **Applied/Biz**  | **4+cap** | **11**  | **~40**    | **402**      | **~400**    |
+| Pack       | Chapter | Type            | Modules   | Exercises | Repo Files | Lesson Lines | Guide Lines |
+| ---------- | ------- | --------------- | --------- | --------- | ---------- | ------------ | ----------- |
+| SDD        | Ch5     | Engineering     | 5+cap     | 17        | ~50        | 863          | ~500        |
+| Principles | Ch6     | Conceptual      | 7+cap     | 17        | 354        | 566          | 518         |
+| Plugins    | Ch3     | Technical       | 7+cap     | 17        | 67         | 580          | 522         |
+| Context    | Ch4     | Engineering     | 7+cap     | 17        | ~60        | ~580         | ~500        |
+| **Teams**  | **Ch3** | **Applied/Biz** | **4+cap** | **11**    | **~40**    | **402**      | **~400**    |
 
 Typical output: 4-8 modules, 11-17 exercises + 2-3 capstones, ~400-860 line lesson.
 
@@ -628,6 +653,7 @@ Typical output: 4-8 modules, 11-17 exercises + 2-3 capstones, ~400-860 line less
 4. **Module naming consistency**: Choose bare numbers OR slugged names at the start and be consistent. Do not mix styles within a single repo.
 
 5. **Token safety in starter files**: If exercises involve API configurations, use obviously fake values:
+
    ```
    FAKE-api-key-for-exercise
    FAKE-token-for-exercise

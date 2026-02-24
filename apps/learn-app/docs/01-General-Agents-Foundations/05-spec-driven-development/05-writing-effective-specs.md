@@ -62,6 +62,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design specifications for multi-agent orchestration scenarios"
   remedial_for_struggling: "Focus on constraints and success criteria sections only, then expand to full template"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Deep-Dive into SDD Phases"
+  key_points:
+    - "The four-part template (Reference Architecture, Current Architecture, Implementation Plan, Checklist) is the spec structure students will use throughout the book"
+    - "Constraints are more important than requirements — they prevent Claude from making reasonable but wrong choices specific to your project"
+    - "Success criteria must be testable: ask 'How would I know if this failed?' to convert vague goals into measurable outcomes"
+    - "Checklist items must be atomic enough to delegate to a subagent — the 'junior developer test' (one sentence explanation) is the litmus test"
+  misconceptions:
+    - "Students confuse specs with to-do lists — the Reference Architecture and Current Architecture sections capture WHY decisions were made, not just WHAT to build"
+    - "Students write HOW specs instead of WHAT specs — emphasize the 'describe behavior, not implementation' distinction with the HashMap vs user-lookup example"
+    - "Students think constraints are optional — without constraints, Claude optimizes for the general case which is almost never your specific case"
+  discussion_prompts:
+    - "Look at the 'vague spec vs explicit constraints' table — for your current project, what wrong choice would Claude reasonably make without constraints?"
+    - "Why might prescribing implementation details in a spec actually produce worse code than describing behavior?"
+    - "What's a success criterion you've used before that was actually unmeasurable — and how would you rewrite it?"
+  teaching_tips:
+    - "The Offline-First Sync example is the centerpiece — walk through each section showing how it answers Claude's potential questions"
+    - "Use the vague vs explicit comparison tables as pair exercises: students rewrite vague versions into explicit ones"
+    - "The Addy Osmani quote (PRD thinking + SRS precision) is a useful anchor for students with software engineering background"
+    - "Spend extra time on the anti-patterns section — students learn more from what NOT to do than from templates"
+  assessment_quick_check:
+    - "Name the four parts of the specification template and explain what each prevents"
+    - "Convert this vague success criterion into a measurable one: 'The system should be fast and reliable'"
+    - "Write two explicit constraints for a hypothetical 'add search to our app' spec"
 ---
 
 # Phase 2: Writing Effective Specifications

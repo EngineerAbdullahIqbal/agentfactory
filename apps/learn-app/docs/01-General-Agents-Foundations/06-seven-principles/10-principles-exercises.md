@@ -1,5 +1,6 @@
 ---
 title: "Principles Exercises: Practice the Seven Principles"
+practice_exercise: ch6-principles
 sidebar_label: "Principles Exercises"
 sidebar_position: 10
 chapter: 6
@@ -56,6 +57,32 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Complete all 3 capstone projects; attempt discovery exercises before reading the corresponding lesson"
   remedial_for_struggling: "Start with Module 1 guided exercise only; re-read the principle lesson before each module"
+
+teaching_guide:
+  lesson_type: "hands-on"
+  session_group: 4
+  session_title: "Synthesis and Practice"
+  key_points:
+    - "Each module has two exercise types: guided (student knows which principle to apply) and discovery (student diagnoses which principle was violated)"
+    - "Three skills run through every exercise: principle recognition, principle application, and workflow diagnosis"
+    - "The Principle Application Framework (Identify, Diagnose, Plan, Execute, Verify, Compare, Generalize) is the repeatable method students should internalize"
+    - "Capstone projects require combining 3+ principles simultaneously, which is where real mastery emerges"
+  misconceptions:
+    - "Students may rush through guided exercises and skip discovery exercises, but the discovery exercises build the diagnostic skill that matters most in real work"
+    - "Some students treat the exercises as homework to complete rather than muscle memory to build, missing the point that repeated application creates automaticity"
+    - "Students may think the assessment rubric is only for self-grading, when it is also a tool for peer feedback during collaborative sessions"
+  discussion_prompts:
+    - "After completing a guided exercise and its matching discovery exercise, which felt harder? What does that tell you about the gap between applying a principle and diagnosing its absence?"
+    - "Which of the three capstone projects is closest to your real work? What principles would you prioritize for that project?"
+  teaching_tips:
+    - "Assign guided exercises first and discovery exercises as a follow-up to let students build confidence before diagnosis challenges"
+    - "Use the assessment rubric for peer review: have students evaluate each other's exercise solutions to develop critical evaluation skills"
+    - "For time-constrained sessions, focus on one module (2 exercises) rather than rushing through multiple modules superficially"
+    - "Capstone C (Your Own Project) is the most impactful exercise because it connects abstract principles to the student's actual work context"
+  assessment_quick_check:
+    - "What is the difference between a guided exercise and a discovery exercise in terms of the skill being practiced?"
+    - "Name the seven steps of the Principle Application Framework."
+    - "Which capstone project would you choose and which 3+ principles would you apply?"
 ---
 
 # Principles Exercises: Practice the Seven Principles
@@ -132,6 +159,8 @@ For each exercise, evaluate yourself on:
 
 > **Core Skill:** Using terminal commands to verify state before making changes
 
+<ExerciseCard id="1.1" title="Verify Before You Modify" />
+
 ### Exercise 1.1 — Verify Before You Modify (Guided)
 
 **The Problem:**
@@ -161,6 +190,8 @@ After running `ls -la`, `cat package.json`, and `grep -r "styles" .`, try: "The 
 
 ---
 
+<ExerciseCard id="1.2" title="The Blind Refactor" />
+
 ### Exercise 1.2 — The Blind Refactor (Discovery)
 
 **The Problem:**
@@ -186,6 +217,8 @@ Read the session log. Identify every point where a single bash command would hav
 ## Module 2: Code as Universal Interface
 
 > **Core Skill:** Expressing requirements as structured specifications rather than natural language
+
+<ExerciseCard id="2.1" title="Spec vs. Prose" />
 
 ### Exercise 2.1 — Spec vs. Prose (Guided)
 
@@ -216,6 +249,8 @@ After writing your test file: "Implement a validation function that passes all t
 
 ---
 
+<ExerciseCard id="2.2" title="The Interpretation Gap" />
+
 ### Exercise 2.2 — The Interpretation Gap (Discovery)
 
 **The Problem:**
@@ -241,6 +276,8 @@ Analyze why the same prompt produced two different outputs. Identify every ambig
 ## Module 3: Verification as Core Step
 
 > **Core Skill:** Systematically verifying output rather than trusting "looks right"
+
+<ExerciseCard id="3.1" title="Trust But Verify" />
 
 ### Exercise 3.1 — Trust But Verify (Guided)
 
@@ -271,6 +308,8 @@ After the transformation: "Now verify the output: confirm the row count matches 
 
 ---
 
+<ExerciseCard id="3.2" title='The "Looks Done" Trap' />
+
 ### Exercise 3.2 — The "Looks Done" Trap (Discovery)
 
 **The Problem:**
@@ -296,6 +335,8 @@ Find all 3 bugs. For each one, explain what verification step would have caught 
 ## Module 4: Small, Reversible Decomposition
 
 > **Core Skill:** Breaking complex changes into atomic, verifiable, reversible steps
+
+<ExerciseCard id="4.1" title="Atomic Commits" />
 
 ### Exercise 4.1 — Atomic Commits (Guided)
 
@@ -326,6 +367,8 @@ Decompose this into 5 separate commits, each atomic and independently verifiable
 
 ---
 
+<ExerciseCard id="4.2" title="The Big-Bang Commit" />
+
 ### Exercise 4.2 — The Big-Bang Commit (Discovery)
 
 **The Problem:**
@@ -351,6 +394,8 @@ Analyze the diff and untangle it. Identify which changes belong to the feature, 
 ## Module 5: Persisting State in Files
 
 > **Core Skill:** Creating persistent artifacts that survive session boundaries
+
+<ExerciseCard id="5.1" title="Build a CLAUDE.md" />
 
 ### Exercise 5.1 — Build a CLAUDE.md (Guided)
 
@@ -378,6 +423,8 @@ Read both transcripts. Extract every convention, decision, and project pattern f
 
 ---
 
+<ExerciseCard id="5.2" title="The Groundhog Day Sessions" />
+
 ### Exercise 5.2 — The Groundhog Day Sessions (Discovery)
 
 **The Problem:**
@@ -403,6 +450,8 @@ Map the repeated work: which discoveries in Session 2 were already made in Sessi
 ## Module 6: Constraints and Safety
 
 > **Core Skill:** Setting boundaries that enable safe autonomy
+
+<ExerciseCard id="6.1" title="Write Permission Guardrails" />
 
 ### Exercise 6.1 — Write Permission Guardrails (Guided)
 
@@ -433,6 +482,8 @@ Write a complete set of permission constraints: which files/directories Claude c
 
 ---
 
+<ExerciseCard id="6.2" title="The Unconstrained Agent" />
+
 ### Exercise 6.2 — The Unconstrained Agent (Discovery)
 
 **The Problem:**
@@ -458,6 +509,8 @@ Read the incident report. For each damaging action, write the specific constrain
 ## Module 7: Observability
 
 > **Core Skill:** Making Claude's work visible and debuggable
+
+<ExerciseCard id="7.1" title="Add Progress Reporting" />
 
 ### Exercise 7.1 — Add Progress Reporting (Guided)
 
@@ -488,6 +541,8 @@ Rewrite the task prompt to require explicit progress reporting: Claude must anno
 
 ---
 
+<ExerciseCard id="7.2" title="The Opaque Session" />
+
 ### Exercise 7.2 — The Opaque Session (Discovery)
 
 **The Problem:**
@@ -516,6 +571,8 @@ Reconstruct what happened from the activity log alone. Identify the exact point 
 
 Capstones are different from the exercises above. There are no guided prompts — you design the entire approach yourself. Each project requires applying 3 or more principles together to solve a realistic problem.
 
+<ExerciseCard id="A" title="Project Rescue" />
+
 ### Capstone A — Project Rescue
 
 Open the `module-8-integration/capstone-A-project-rescue/` folder. You'll find a broken project: tests are failing, the build is broken, the CLAUDE.md is out of date, there's no verification step in the workflow, and the last 3 commits are tangled messes. Your job is to rescue it.
@@ -530,6 +587,8 @@ Diagnose which principles were violated (there are at least 4). Fix the project 
 
 ---
 
+<ExerciseCard id="B" title="Workflow Design" />
+
 ### Capstone B — Workflow Design
 
 You've been hired to set up a new project for a small team. Open the `module-8-integration/capstone-B-workflow-design/` folder for the project brief. Your job is to design a complete AI-assisted development workflow from scratch.
@@ -543,6 +602,8 @@ Create a CLAUDE.md that encodes all 7 principles as project rules. Design a perm
 - The difference between principles you understand and principles you can operationalize
 
 ---
+
+<ExerciseCard id="C" title="Your Own Project" />
 
 ### Capstone C — Your Own Project
 

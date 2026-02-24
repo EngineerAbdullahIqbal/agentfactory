@@ -32,6 +32,18 @@
   text-align: center;
 }
 
+.statCardClickable {
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.statCardClickable:hover {
+  border-color: var(--ifm-color-primary);
+}
+
 .statValue {
   display: block;
   font-size: 2rem;

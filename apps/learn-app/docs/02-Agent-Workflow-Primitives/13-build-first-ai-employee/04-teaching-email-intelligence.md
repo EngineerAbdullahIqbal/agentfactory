@@ -14,7 +14,7 @@ keywords:
   - decision extraction
   - skill chaining
   - professional communication
-chapter: 10
+chapter: 13
 lesson: 4
 duration_minutes: 25
 
@@ -89,6 +89,34 @@ differentiation:
   extension_for_advanced: "Add sentiment analysis to detect thread urgency and stakeholder tensions"
   remedial_for_struggling: "Focus on extracting action items only before expanding to full extraction targets"
 
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Email Intelligence and Skill Chaining"
+  key_points:
+    - "Only 25% of thread content is actionable — the extraction targets (Decisions, Action Items, Open Questions) are the DAQ pattern students will reuse in every analysis skill"
+    - "Three output formats (Executive Summary, Detailed Breakdown, Response Context) teach that same data serves different purposes — format follows function"
+    - "Skill chaining (/email-summarizer → /email-drafter) is the first workflow automation pattern — it previews the orchestration layer built in L05-L07"
+    - "Extraction patterns in references/ demonstrate that pattern libraries improve over time — students add patterns as they encounter new email styles"
+  misconceptions:
+    - "Students think the summarizer replaces reading the thread — it extracts actionable items but may miss nuance, especially sarcasm or political subtext"
+    - "Students confuse suggestions with action items — the 'Common Extraction Mistakes' section explicitly distinguishes 'We could consider X' from 'Marcus, please do X by Friday'"
+    - "Students expect perfect extraction on first try — the skill improves as the extraction-patterns.md reference file grows with new patterns"
+    - "Students think skill chaining requires special configuration — it is just invoking one skill after another, using the first skill's output as context"
+  discussion_prompts:
+    - "The lesson says only 25% of a 15-message thread is actionable. Think of a recent long email thread — what percentage was actually useful for your response?"
+    - "The four 'Common Extraction Mistakes' show increasingly subtle errors. Which mistake would be hardest for a human to catch, and why?"
+    - "When would you choose the Executive Summary format over the Response Context format? What drives that decision?"
+  teaching_tips:
+    - "Use a REAL email thread (anonymized) for the live demo — sample threads do not trigger the same recognition as authentic workplace communication"
+    - "Walk through the four extraction mistakes sequentially — each builds on the previous one's subtlety, from 'missing implied decisions' to 'ignoring chronology'"
+    - "Demo skill chaining live: invoke /email-summarizer, then immediately invoke /email-drafter using the summary as context — students see the workflow in action"
+    - "The extraction-patterns.md reference file is a good teaching moment for how L3 intelligence accumulates — start small, add patterns as you encounter them"
+  assessment_quick_check:
+    - "Name the three extraction targets (DAQ) and give one signal pattern for each"
+    - "Given a thread excerpt, identify whether 'We could consider Vendor B' is a decision or a suggestion"
+    - "Explain in one sentence how skill chaining works between the summarizer and drafter"
+
 # Generation metadata
 generated_by: "content-implementer v1.0.0"
 created: "2026-01-01"
@@ -109,13 +137,13 @@ This lesson builds an **email-summarizer skill** that transforms long email thre
 
 Long email threads bury critical information in conversational noise. Consider a typical 15-message thread:
 
-| Message Type | Percentage | Value |
-|--------------|------------|-------|
-| Greetings and sign-offs | 25% | Zero |
-| Context repetition | 20% | Low (already known) |
-| Discussion and exploration | 30% | Medium (background) |
-| Decisions and action items | 15% | High (actionable) |
-| Open questions | 10% | Critical (blocks progress) |
+| Message Type               | Percentage | Value                      |
+| -------------------------- | ---------- | -------------------------- |
+| Greetings and sign-offs    | 25%        | Zero                       |
+| Context repetition         | 20%        | Low (already known)        |
+| Discussion and exploration | 30%        | Medium (background)        |
+| Decisions and action items | 15%        | High (actionable)          |
+| Open questions             | 10%        | Critical (blocks progress) |
 
 Only 25% of thread content matters for your response. The email-summarizer skill extracts that 25% while discarding the rest.
 
@@ -153,13 +181,13 @@ Date: Wed, Jan 17, 2024 at 11:00 AM
 
 **What to Extract from Structure:**
 
-| Element | What It Tells You |
-|---------|-------------------|
-| Sender name | Who said what |
-| Timestamp | When (chronological reconstruction) |
-| Subject changes | Topic pivots or forwards |
-| Reply depth | Conversation branches |
-| CC additions | Stakeholder expansion |
+| Element         | What It Tells You                   |
+| --------------- | ----------------------------------- |
+| Sender name     | Who said what                       |
+| Timestamp       | When (chronological reconstruction) |
+| Subject changes | Topic pivots or forwards            |
+| Reply depth     | Conversation branches               |
+| CC additions    | Stakeholder expansion               |
 
 **Message Boundary Detection:**
 
@@ -181,6 +209,7 @@ Your skill needs to extract three categories of information, each requiring diff
 Explicit agreements or conclusions that close discussion:
 
 **Signal Patterns:**
+
 - "We've decided to..."
 - "Let's go with..."
 - "Agreed—we'll..."
@@ -190,6 +219,7 @@ Explicit agreements or conclusions that close discussion:
 - "Sign-off received"
 
 **What to Capture:**
+
 - The decision itself
 - Who made or approved it
 - When it was made
@@ -214,6 +244,7 @@ CONDITIONS: None stated
 Tasks assigned to specific people with ownership:
 
 **Signal Patterns:**
+
 - "Can you please..."
 - "[Name] will..."
 - "I'll take care of..."
@@ -224,6 +255,7 @@ Tasks assigned to specific people with ownership:
 - "Your action:"
 
 **What to Capture:**
+
 - The task description
 - Who is responsible (owner)
 - Due date (if stated)
@@ -248,6 +280,7 @@ DEPENDENCY: Needed for Friday discussion
 Unresolved items waiting for response:
 
 **Signal Patterns:**
+
 - Lines ending with `?`
 - "What do you think about..."
 - "Need input on..."
@@ -258,6 +291,7 @@ Unresolved items waiting for response:
 - "Can someone clarify..."
 
 **What to Capture:**
+
 - The question itself
 - Who asked it
 - Who should answer (if specified)
@@ -409,6 +443,7 @@ The extraction patterns file gives Claude a recognition library. Create this at 
 ## Decision Signals
 
 Look for these patterns indicating a decision:
+
 - "We've decided to..."
 - "Let's go with..."
 - "Agreed - we'll..."
@@ -423,6 +458,7 @@ Look for these patterns indicating a decision:
 ## Action Item Signals
 
 Patterns indicating tasks:
+
 - "Can you please..."
 - "I'll take care of..."
 - "[Name] will..."
@@ -438,6 +474,7 @@ Patterns indicating tasks:
 ## Question Patterns
 
 Unresolved items:
+
 - Lines ending with "?"
 - "What do you think about..."
 - "Need input on..."
@@ -452,6 +489,7 @@ Unresolved items:
 ## Thread Structure Markers
 
 Identify message boundaries:
+
 - "On [date], [name] wrote:"
 - "From: / To: / Subject:"
 - "---------- Forwarded message"
@@ -463,6 +501,7 @@ Identify message boundaries:
 ## Participant Roles
 
 Identify key players:
+
 - **Original sender** (initiator) - started the thread
 - **Decision makers** (approvers) - can authorize
 - **Subject matter experts** (info providers) - provide data
@@ -472,6 +511,7 @@ Identify key players:
 ## Urgency Indicators
 
 Signals requiring immediate attention:
+
 - "URGENT:" or "ASAP"
 - "EOD" or "End of day"
 - "Before [meeting/deadline]"
@@ -483,6 +523,7 @@ Signals requiring immediate attention:
 ## De-Prioritization Signals
 
 Safe to defer:
+
 - "When you get a chance..."
 - "No rush, but..."
 - "Low priority"
@@ -665,6 +706,7 @@ mkdir -p .claude/skills/email-summarizer/references
 ```
 
 **Output:**
+
 ```
 (no output - directories created silently)
 ```
@@ -676,6 +718,7 @@ find .claude/skills -type d | sort
 ```
 
 **Output:**
+
 ```
 .claude/skills
 .claude/skills/email-drafter
@@ -759,12 +802,12 @@ RIGHT: Decision - use Vendor B (supersedes earlier)
 
 Once the basic skill works, consider these enhancements:
 
-| Extension | Value | Complexity |
-|-----------|-------|------------|
-| Sentiment detection | Identify tension or urgency | Medium |
-| Stakeholder mapping | Auto-identify roles | Low |
-| Timeline extraction | Build project timeline from thread | Medium |
-| Commitment tracking | Match promises to follow-through | High |
+| Extension           | Value                              | Complexity |
+| ------------------- | ---------------------------------- | ---------- |
+| Sentiment detection | Identify tension or urgency        | Medium     |
+| Stakeholder mapping | Auto-identify roles                | Low        |
+| Timeline extraction | Build project timeline from thread | Medium     |
+| Commitment tracking | Match promises to follow-through   | High       |
 
 **Sentiment example addition to SKILL.md:**
 
@@ -772,11 +815,13 @@ Once the basic skill works, consider these enhancements:
 ## Sentiment Indicators
 
 ### Urgency Signals
+
 - Multiple exclamation marks
 - "URGENT", "ASAP", "Critical"
 - Short response times (< 1 hour between messages)
 
 ### Tension Signals
+
 - Defensive language ("As I mentioned...")
 - Escalation (new executives added to CC)
 - Formal tone shift (first names → full names)

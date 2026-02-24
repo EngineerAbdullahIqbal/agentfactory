@@ -19,25 +19,25 @@ questions={[
 {
 question: "A developer is choosing between ChatGPT (web interface, no terminal access) and Claude Code (terminal-based, file access). They need to debug a failing test. Why is terminal access the deciding factor for this task?",
 options: [
-"Terminal access provides faster response times compared to web interfaces",
 "Terminal access allows the AI to read test files, run tests, and observe actual output",
+"Terminal access provides faster response times compared to web interfaces",
 "Terminal access enables access to more powerful language models than web interfaces",
 "Terminal access provides code suggestions that web interfaces cannot generate"
 ],
-correctOption: 1,
-explanation: "Terminal access is the key differentiator because it enables agentic capability—the ability to observe, orient, decide, and act in a loop. For debugging a failing test, the AI needs to read the actual test file, execute the test command, observe the real error output, analyze the results, and propose fixes. ChatGPT can only suggest based on what you paste—it cannot run the test itself or see the actual error. Claude Code can execute `npm test`, read the output, identify the root cause, and iterate. Options A, C, and D describe characteristics that don't distinguish the tools or are incorrect (model access is similar, response speed isn't the primary advantage). The real difference is agency: the ability to act in your environment rather than just generate text.",
+correctOption: 0,
+explanation: "Terminal access is the key differentiator because it enables agentic capability—the ability to observe, orient, decide, and act in a loop. For debugging a failing test, the AI needs to read the actual test file, execute the test command, observe the real error output, analyze the results, and propose fixes. ChatGPT can only suggest based on what you paste—it cannot run the test itself or see the actual error. Claude Code can execute `npm test`, read the output, identify the root cause, and iterate. Options B, C, and D describe characteristics that don't distinguish the tools or are incorrect (model access is similar, response speed isn't the primary advantage). The real difference is agency: the ability to act in your environment rather than just generate text.",
 source: "Lesson 01: Bash is the Key"
 },
 {
 question: "You're explaining to a colleague why terminal access matters for AI. They say: 'I can just copy-paste commands and output to ChatGPT.' What limitation of the copy-paste workflow does your colleague miss?",
 options: [
 "Copy-paste is slower than terminal-based AI for all tasks",
-"Copy-paste breaks the OODA loop that enables autonomous iteration",
 "Copy-paste doesn't work with complex multi-file projects",
-"Copy-paste requires paid subscriptions while terminal access is free"
+"Copy-paste requires paid subscriptions while terminal access is free",
+"Copy-paste breaks the OODA loop that enables autonomous iteration"
 ],
-correctOption: 1,
-explanation: "The copy-paste workflow fundamentally breaks the OODA loop (Observe-Orient-Decide-Act) that makes agentic AI powerful. With copy-paste, YOU become the bridge between AI and your system—you observe the error, paste it to AI, get a suggestion, paste it back, observe if it works, and repeat. This manual loop is slow and error-prone. With terminal access, the AI closes its own OODA loop: it observes by running commands, orients by analyzing output, decides on next steps, and acts by executing commands—iterating autonomously until the problem is solved. Option A is an overgeneralization—some simple tasks are similar speed. Option C is incorrect because copy-paste can work with multi-file projects, just poorly. Option D is incorrect—pricing varies by tool. The real issue is the broken feedback loop.",
+correctOption: 3,
+explanation: "The copy-paste workflow fundamentally breaks the OODA loop (Observe-Orient-Decide-Act) that makes agentic AI powerful. With copy-paste, YOU become the bridge between AI and your system—you observe the error, paste it to AI, get a suggestion, paste it back, observe if it works, and repeat. This manual loop is slow and error-prone. With terminal access, the AI closes its own OODA loop: it observes by running commands, orients by analyzing output, decides on next steps, and acts by executing commands—iterating autonomously until the problem is solved. Option A is an overgeneralization—some simple tasks are similar speed. Option B is incorrect because copy-paste can work with multi-file projects, just poorly. Option C is incorrect—pricing varies by tool. The real issue is the broken feedback loop.",
 source: "Lesson 01: Bash is the Key"
 },
 {
@@ -45,11 +45,11 @@ question: "Which command category would you always want to require human approva
 options: [
 "Read operations like cat, grep, find",
 "Build commands like npm run build, make",
-"Test commands like npm test, pytest",
-"Destructive operations like rm -rf, git reset --hard"
+"Destructive operations like rm -rf, git reset --hard",
+"Test commands like npm test, pytest"
 ],
-correctOption: 3,
-explanation: "Destructive operations (Option D) should always require human approval because they can cause irreversible damage—deleting files, discarding work, breaking systems. Read operations (cat, grep) are inherently safe—they only gather information. Build and test commands are generally low-risk and should be auto-approved for efficiency; they're verification steps that catch problems. The permission model should scale with risk: read operations are automatic, writes require review, destructive operations need explicit approval. This分层approach balances safety with autonomy—you don't want to approve every `cat` command, but you absolutely want to review `rm -rf` commands before execution.",
+correctOption: 2,
+explanation: "Destructive operations (Option C) should always require human approval because they can cause irreversible damage—deleting files, discarding work, breaking systems. Read operations (cat, grep) are inherently safe—they only gather information. Build and test commands are generally low-risk and should be auto-approved for efficiency; they're verification steps that catch problems. The permission model should scale with risk: read operations are automatic, writes require review, destructive operations need explicit approval. This layered approach balances safety with autonomy—you don't want to approve every `cat` command, but you absolutely want to review `rm -rf` commands before execution.",
 source: "Lesson 01: Bash is the Key"
 },
 {
@@ -67,13 +67,13 @@ source: "Lesson 02: Code as Universal Interface"
 {
 question: "A team uses a specification document written in prose to describe features. AI implementations based on this document consistently miss edge cases. What would most improve alignment between specifications and implementations?",
 options: [
-"Use a larger AI model with better reasoning capabilities",
 "Include executable test cases as part of the specification",
+"Use a larger AI model with better reasoning capabilities",
 "Hold meetings to verbally explain edge cases to the team",
 "Rewrite the specification using more precise language"
 ],
-correctOption: 1,
-explanation: "Executable test cases provide unambiguous specifications because they define expected behavior precisely—input X should produce output Y. Unlike prose descriptions, which are open to interpretation, tests are machine-verifiable and leave no room for ambiguity about what 'correct' means. When AI implements against tests, it can verify its own work and catch edge cases before you review. Option A (larger model) doesn't solve the fundamental ambiguity problem. Option C (meetings) doesn't help AI systems, which only see the written specification. Option D (precise language) still suffers from natural language ambiguity—prose can never be as precise as executable code. The principle here is: code is the most precise specification language we have.",
+correctOption: 0,
+explanation: "Executable test cases provide unambiguous specifications because they define expected behavior precisely—input X should produce output Y. Unlike prose descriptions, which are open to interpretation, tests are machine-verifiable and leave no room for ambiguity about what 'correct' means. When AI implements against tests, it can verify its own work and catch edge cases before you review. Option B (larger model) doesn't solve the fundamental ambiguity problem. Option C (meetings) doesn't help AI systems, which only see the written specification. Option D (precise language) still suffers from natural language ambiguity—prose can never be as precise as executable code. The principle here is: code is the most precise specification language we have.",
 source: "Lesson 02: Code as Universal Interface"
 },
 {
@@ -81,35 +81,35 @@ question: "You're reviewing AI-generated code and notice it doesn't match your i
 options: [
 "Explain in natural language what's wrong and what should change",
 "Paste the problematic code into ChatGPT for alternative implementation",
-"Provide specific code examples showing desired behavior",
-"Ask the AI to rewrite the entire feature from scratch"
+"Ask the AI to rewrite the entire feature from scratch",
+"Provide specific code examples showing desired behavior"
 ],
-correctOption: 2,
-explanation: "Specific code examples bridge the intent-implementation gap more effectively than natural language descriptions. Instead of saying 'handle edge cases better' (vague), show `if (user === null) return error` (precise). Code examples are unambiguous—they demonstrate exactly what you want, leaving no room for interpretation. Option A (natural language) repeats the ambiguity problem that caused the initial mismatch. Option B starts over with a tool that lacks your project context. Option D is wasteful—rewriting everything when you could provide targeted correction. The most effective feedback anchors discussion in code: 'Here's what I want' (example) is clearer than 'Change X to be more Y' (description).",
+correctOption: 3,
+explanation: "Specific code examples bridge the intent-implementation gap more effectively than natural language descriptions. Instead of saying 'handle edge cases better' (vague), show `if (user === null) return error` (precise). Code examples are unambiguous—they demonstrate exactly what you want, leaving no room for interpretation. Option A (natural language) repeats the ambiguity problem that caused the initial mismatch. Option B starts over with a tool that lacks your project context. Option C is wasteful—rewriting everything when you could provide targeted correction. The most effective feedback anchors discussion in code: 'Here's what I want' (example) is clearer than 'Change X to be more Y' (description).",
 source: "Lesson 02: Code as Universal Interface"
 },
 {
 question: "An AI generates a function that looks correct but has a race condition: it checks a value, then acts on it, but the value might change between check and act. Why didn't verification catch this?",
 options: [
-"Verification is unnecessary for simple functions",
+"Verification is unnecessary for simple functions with clear logic",
+"Verification only catches syntax errors and not logical errors",
 "The race condition only occurs under concurrent load not captured by basic tests",
-"AI systems cannot generate code that handles concurrency correctly",
-"Verification only catches syntax errors not logic errors"
+"AI systems cannot generate code that handles concurrency correctly"
 ],
-correctOption: 1,
-explanation: "This scenario illustrates that verification depth must match risk level. Basic verification (syntax check, unit tests) passes because the race condition only manifests under concurrent load—multiple operations accessing shared state simultaneously. The function works correctly in single-threaded tests but fails in production with concurrent users. This doesn't mean verification is useless (Option A)—it means you need appropriate verification for the risk level. High-risk code (concurrency, security, payments) requires deeper verification: load testing, concurrent test execution, security review. Option C is incorrect—AI can write correct concurrent code when explicitly asked. Option D is wrong—verification does catch logic errors, but only if tests cover the actual failure mode. The lesson: match verification depth to consequence of failure.",
+correctOption: 2,
+explanation: "This scenario illustrates that verification depth must match risk level. Basic verification (syntax check, unit tests) passes because the race condition only manifests under concurrent load—multiple operations accessing shared state simultaneously. The function works correctly in single-threaded tests but fails in production with concurrent users. This doesn't mean verification is useless (Option A)—it means you need appropriate verification for the risk level. High-risk code (concurrency, security, payments) requires deeper verification: load testing, concurrent test execution, security review. Option D is incorrect—AI can write correct concurrent code when explicitly asked. Option B is wrong—verification does catch logic errors, but only if tests cover the actual failure mode. The lesson: match verification depth to consequence of failure.",
 source: "Lesson 03: Verification as Core Step"
 },
 {
 question: "You're implementing a feature and the AI suggests a large change touching 50 files across multiple domains. What verification strategy is most appropriate?",
 options: [
-"Accept the change and monitor for bugs in production",
 "Break the change into smaller pieces and verify each independently",
+"Accept the change and monitor for bugs in production",
 "Run the full test suite and if it passes, approve the change",
 "Ask the AI to review its own changes for potential issues"
 ],
-correctOption: 1,
-explanation: "Breaking large changes into smaller, independently verifiable pieces (Principle 4: Decomposition) makes verification manageable. When you verify 50 files at once, you can't effectively review the diff, understand the changes, or identify problems. When you verify 5 files at a time across 10 iterations, each review is thorough and problems are caught early. Option A is irresponsible—production is not a testing environment. Option C is insufficient because tests pass doesn't mean changes are correct (tests might not cover new behavior, or changes might introduce subtle bugs). Option D is useful but doesn't replace human review—AI can miss context and consequences that you would catch. The principle: verify at granularity you can actually understand and review.",
+correctOption: 0,
+explanation: "Breaking large changes into smaller, independently verifiable pieces (Principle 4: Decomposition) makes verification manageable. When you verify 50 files at once, you can't effectively review the diff, understand the changes, or identify problems. When you verify 5 files at a time across 10 iterations, each review is thorough and problems are caught early. Option B is irresponsible—production is not a testing environment. Option C is insufficient because tests pass doesn't mean changes are correct (tests might not cover new behavior, or changes might introduce subtle bugs). Option D is useful but doesn't replace human review—AI can miss context and consequences that you would catch. The principle: verify at granularity you can actually understand and review.",
 source: "Lesson 03: Verification as Core Step"
 },
 {
@@ -128,36 +128,36 @@ source: "Lesson 03: Verification as Core Step"
 question: "A developer makes one large commit with a complete feature implementation. Later, they discover a bug but can't identify which change caused it because the commit touches 20 files. What principle would have prevented this problem?",
 options: [
 "Persisting state in files for better context",
-"Small, reversible decomposition with atomic commits",
-"Constraints and safety to prevent bugs",
-"Observability to trace the issue"
+"Constraints and safety to prevent bugs early",
+"Observability to trace the issue across files",
+"Small, reversible decomposition with atomic commits"
 ],
-correctOption: 1,
-explanation: "Small, reversible decomposition (Principle 4) means breaking work into atomic commits where each commit can be independently understood, tested, and reverted. If the developer had made 20 small commits (one per logical change) instead of one large commit, they could use binary search on commit history (`git bisect`) to quickly identify which commit introduced the bug. With one monolithic commit, they can't isolate the problematic change. Options A, C, and D are valuable principles but don't directly address this isolation problem. State persistence (A) helps with context but not bug isolation. Safety constraints (C) prevent some bugs but not all. Observability (D) helps trace execution but not commit history. The specific issue here is commit granularity—atomic commits enable precise rollback and debugging.",
+correctOption: 3,
+explanation: "Small, reversible decomposition (Principle 4) means breaking work into atomic commits where each commit can be independently understood, tested, and reverted. If the developer had made 20 small commits (one per logical change) instead of one large commit, they could use binary search on commit history (`git bisect`) to quickly identify which commit introduced the bug. With one monolithic commit, they can't isolate the problematic change. Options A, B, and C are valuable principles but don't directly address this isolation problem. State persistence (A) helps with context but not bug isolation. Safety constraints (B) prevent some bugs but not all. Observability (C) helps trace execution but not commit history. The specific issue here is commit granularity—atomic commits enable precise rollback and debugging.",
 source: "Lesson 04: Small, Reversible Decomposition"
 },
 {
 question: "Why is it recommended to create a feature branch for AI-assisted work rather than working directly on main?",
 options: [
 "Feature branches prevent AI from accessing production code",
+"Feature branches are required by git for all development work",
 "Feature branches enable easy rollback if AI makes mistakes",
-"Feature branches make it harder for AI to read sensitive files",
-"Feature branches are required by git for all development work"
+"Feature branches make it harder for AI to read sensitive files"
 ],
-correctOption: 1,
-explanation: "Feature branches create a sandbox where AI can work without affecting the main branch. If the AI makes mistakes or you're unsatisfied with the changes, you can simply abandon the branch—main remains untouched. This is reversibility in action: branches are cheap to create and delete, making them ideal for experimentation. Option A is incorrect—AI can read any branch, including main. Option C is wrong—branch access doesn't affect file reading permissions. Option D is incorrect—direct main commits are allowed, just inadvisable. The principle: use branching to create reversible work streams where mistakes are easily discarded.",
+correctOption: 2,
+explanation: "Feature branches create a sandbox where AI can work without affecting the main branch. If the AI makes mistakes or you're unsatisfied with the changes, you can simply abandon the branch—main remains untouched. This is reversibility in action: branches are cheap to create and delete, making them ideal for experimentation. Option A is incorrect—AI can read any branch, including main. Option B is incorrect—direct main commits are allowed, just inadvisable. Option D is wrong—branch access doesn't affect file reading permissions. The principle: use branching to create reversible work streams where mistakes are easily discarded.",
 source: "Lesson 04: Small, Reversible Decomposition"
 },
 {
 question: "You ask AI to 'refactor the auth system' and it immediately starts making changes. What's missing from this workflow?",
 options: [
-"The AI needs a better model to understand refactoring",
 "The workflow lacks decomposition into small, verifiable steps",
+"The AI needs a better model to understand refactoring",
 "The auth system is too complex for AI to refactor",
 "The workflow needs more safety constraints enabled"
 ],
-correctOption: 1,
-explanation: "Refactoring an entire auth system is a large, complex task that should be decomposed into small steps: extract validation logic, extract token handling, update tests, etc. Without decomposition, the AI makes all changes before you see any—making review impossible and rollback difficult. A better approach: 'Plan the refactoring. Show me the steps. Execute one step at a time, waiting for my approval before continuing.' This makes each change reviewable and reversible. Option A is incorrect—model size isn't the issue. Option C is defeatist—auth systems can be refactored, just not as one monolithic change. Option D helps but doesn't solve the core problem. The principle: large tasks must be broken down for effective human-AI collaboration.",
+correctOption: 0,
+explanation: "Refactoring an entire auth system is a large, complex task that should be decomposed into small steps: extract validation logic, extract token handling, update tests, etc. Without decomposition, the AI makes all changes before you see any—making review impossible and rollback difficult. A better approach: 'Plan the refactoring. Show me the steps. Execute one step at a time, waiting for my approval before continuing.' This makes each change reviewable and reversible. Option B is incorrect—model size isn't the issue. Option C is defeatist—auth systems can be refactored, just not as one monolithic change. Option D helps but doesn't solve the core problem. The principle: large tasks must be broken down for effective human-AI collaboration.",
 source: "Lesson 04: Small, Reversible Decomposition"
 },
 {
@@ -175,37 +175,37 @@ source: "Lesson 05: Persisting State in Files"
 {
 question: "Six months after choosing PostgreSQL over MongoDB, the team forgets why they made that decision. What document would have prevented this memory loss?",
 options: [
-"README.md with project overview",
-"CLAUDE.md with coding conventions",
-"Architecture Decision Record (ADR) explaining the choice",
-"Package.json with database dependencies"
+"README.md with project overview and setup instructions",
+"CLAUDE.md with coding conventions and style guides",
+"Package.json with database dependencies and versions",
+"Architecture Decision Record (ADR) explaining the choice"
 ],
-correctOption: 2,
-explanation: "Architecture Decision Records (ADRs) exist to capture the 'why' behind technical choices: what problem you faced, what options you considered, what you chose, and the consequences. Unlike README.md (what the project does) or CLAUDE.md (how to work on it), ADRs document the reasoning that future you (or new team members) can reference when questions resurface. Option D shows what you chose but not why. Six months later, when someone asks 'why not MongoDB?', the ADR provides the answer without requiring original decision-makers to remember. The principle: decisions have consequences, and those consequences should be documented.",
+correctOption: 3,
+explanation: "Architecture Decision Records (ADRs) exist to capture the 'why' behind technical choices: what problem you faced, what options you considered, what you chose, and the consequences. Unlike README.md (what the project does) or CLAUDE.md (how to work on it), ADRs document the reasoning that future you (or new team members) can reference when questions resurface. Option C shows what you chose but not why. Six months later, when someone asks 'why not MongoDB?', the ADR provides the answer without requiring original decision-makers to remember. The principle: decisions have consequences, and those consequences should be documented.",
 source: "Lesson 05: Persisting State in Files"
 },
 {
 question: "A team's CLAUDE.md file says 'Use functional components' but the codebase has mostly class components. What does this mismatch indicate?",
 options: [
-"The AI is ignoring CLAUDE.md instructions intentionally",
 "CLAUDE.md should document actual patterns, not aspirational ones",
+"The AI is ignoring CLAUDE.md instructions intentionally",
 "Class components should be immediately converted to functional",
 "CLAUDE.md files don't work for React projects"
 ],
-correctOption: 1,
-explanation: "CLAUDE.md should document reality, not aspirations. If it says 'use functional components' but the codebase uses class components, AI faces conflicting signals—should it follow documented rules or existing patterns? This confusion leads to inconsistent code. Either update CLAUDE.md to match reality ('we use class components, migrating to functional over time') or update the codebase to match documentation. Options A mischaracterizes AI behavior—AI doesn't 'ignore' instructions, it reconciles conflicts imperfectly. Option C is premature—migrate first, then update documentation. Option D is incorrect—CLAUDE.md works for any project. The principle: context files should reflect actual project state, not desired state, to avoid confusion.",
+correctOption: 0,
+explanation: "CLAUDE.md should document reality, not aspirations. If it says 'use functional components' but the codebase uses class components, AI faces conflicting signals—should it follow documented rules or existing patterns? This confusion leads to inconsistent code. Either update CLAUDE.md to match reality ('we use class components, migrating to functional over time') or update the codebase to match documentation. Option B mischaracterizes AI behavior—AI doesn't 'ignore' instructions, it reconciles conflicts imperfectly. Option C is premature—migrate first, then update documentation. Option D is incorrect—CLAUDE.md works for any project. The principle: context files should reflect actual project state, not desired state, to avoid confusion.",
 source: "Lesson 05: Persisting State in Files"
 },
 {
 question: "You grant AI terminal access on a production server. It accidentally runs `rm -rf /app/data` while trying to clean up temporary files. What safety principle was violated?",
 options: [
 "Observability—you didn't see the command before it executed",
+"Decomposition—the operation was too large to execute safely",
 "Constraints and safety—AI shouldn't have production access",
-"Verification—you didn't test the command beforehand",
-"Decomposition—the operation was too large to execute safely"
+"Verification—you didn't test the command beforehand"
 ],
-correctOption: 1,
-explanation: "Granting AI direct production access violates the safety principle of environment isolation. AI should work in sandbox/staging environments, with human-controlled deployment to production. This containment limits the blast radius of mistakes—destructive commands in staging are annoying; in production, they're catastrophic. Options A, C, and D are valuable principles but the root issue here is inappropriate access. Observability (A) helps diagnose problems after they occur but doesn't prevent them. Verification (C) might catch the issue if you reviewed the command, but the real problem is AI executing destructive commands in production at all. Decomposition (D) is irrelevant to this specific failure. The principle: isolate AI work from production systems.",
+correctOption: 2,
+explanation: "Granting AI direct production access violates the safety principle of environment isolation. AI should work in sandbox/staging environments, with human-controlled deployment to production. This containment limits the blast radius of mistakes—destructive commands in staging are annoying; in production, they're catastrophic. Options A, B, and D are valuable principles but the root issue here is inappropriate access. Observability (A) helps diagnose problems after they occur but doesn't prevent them. Decomposition (B) is irrelevant to this specific failure. Verification (D) might catch the issue if you reviewed the command, but the real problem is AI executing destructive commands in production at all. The principle: isolate AI work from production systems.",
 source: "Lesson 06: Constraints and Safety"
 },
 {
@@ -225,84 +225,84 @@ question: "An AI tool offers to 'auto-approve all commands' for faster workflow.
 options: [
 "Always—speed is more important than caution",
 "Never—you should always review every command",
-"When working in sandbox environment on trusted codebase",
-"Only when using the most expensive AI model tier"
+"Only when using the most expensive AI model tier",
+"When working in sandbox environment on trusted codebase"
 ],
-correctOption: 2,
-explanation: "Auto-approve (permissive mode) is appropriate when the consequence of mistakes is low—sandbox environments where you can easily reset, familiar codebases where you understand patterns, routine operations where risks are known. In these cases, the efficiency benefit outweighs the small risk. It's inappropriate for production systems (consequence high), unfamiliar code (risk unknown), or destructive operations (irreversible). Options A and B are absolute rules that don't match the nuanced reality of risk-based decision making. Option D is unrelated to safety. The principle: calibrate permissions to context—more permissive when risks are low and contained, more cautious when consequences are severe.",
+correctOption: 3,
+explanation: "Auto-approve (permissive mode) is appropriate when the consequence of mistakes is low—sandbox environments where you can easily reset, familiar codebases where you understand patterns, routine operations where risks are known. In these cases, the efficiency benefit outweighs the small risk. It's inappropriate for production systems (consequence high), unfamiliar code (risk unknown), or destructive operations (irreversible). Options A and B are absolute rules that don't match the nuanced reality of risk-based decision making. Option C is unrelated to safety. The principle: calibrate permissions to context—more permissive when risks are low and contained, more cautious when consequences are severe.",
 source: "Lesson 06: Constraints and Safety"
 },
 {
 question: "You ask AI to fix a bug and it reports 'Done!' but doesn't show what it changed. You later discover it modified files you didn't want touched. What principle would have prevented this?",
 options: [
+"Observability—AI should show what it's doing as it works",
 "Bash is the key—AI should use terminal more carefully",
 "Code as universal interface—you should have specified changes as code",
-"Observability—AI should show what it's doing as it works",
 "Decomposition—you should have broken the task into smaller steps"
 ],
-correctOption: 2,
-explanation: "Observability (Principle 7) means seeing what the AI is doing—what files it reads, what changes it makes, what commands it executes. Without visibility, you can't verify the AI is doing only what you asked. A good AI workflow shows progress: 'Reading auth.js... Found bug... Modifying auth.js (+3 lines)... Tests pass.' This transparency lets you redirect if the AI goes off-track. Options A and B are valuable but don't directly address this visibility problem. Option D helps but doesn't prevent unintended modifications if you can't see what's changing. The principle: you can't trust (or effectively direct) what you can't see.",
+correctOption: 0,
+explanation: "Observability (Principle 7) means seeing what the AI is doing—what files it reads, what changes it makes, what commands it executes. Without visibility, you can't verify the AI is doing only what you asked. A good AI workflow shows progress: 'Reading auth.js... Found bug... Modifying auth.js (+3 lines)... Tests pass.' This transparency lets you redirect if the AI goes off-track. Options B and C are valuable but don't directly address this visibility problem. Option D helps but doesn't prevent unintended modifications if you can't see what's changing. The principle: you can't trust (or effectively direct) what you can't see.",
 source: "Lesson 07: Observability"
 },
 {
 question: "When debugging an AI session, what information is most valuable for understanding what went wrong?",
 options: [
 "The AI model version used during the session",
-"The activity log showing the sequence of actions taken",
 "The time of day when the session occurred",
+"The activity log showing the sequence of actions taken",
 "The length of the conversation in tokens"
 ],
-correctOption: 1,
-explanation: "Activity logs showing the sequence of actions (read file X, modify file Y, run command Z, observed result W) let you reconstruct what happened and identify where things went wrong. Unlike the other options (model version, time, token count), the action sequence is diagnostic—you can see 'AI read the wrong config file' or 'AI ran tests before implementing the fix.' This observability enables debugging: you can trace the failure to a specific decision point. Option A might be relevant for some issues but most problems are workflow-related, not model-specific. Options C and D are rarely relevant to understanding failures. The principle: logs are your post-mortem tool—what the AI did, in order, is the most valuable diagnostic information.",
+correctOption: 2,
+explanation: "Activity logs showing the sequence of actions (read file X, modify file Y, run command Z, observed result W) let you reconstruct what happened and identify where things went wrong. Unlike the other options (model version, time, token count), the action sequence is diagnostic—you can see 'AI read the wrong config file' or 'AI ran tests before implementing the fix.' This observability enables debugging: you can trace the failure to a specific decision point. Option A might be relevant for some issues but most problems are workflow-related, not model-specific. Options B and D are rarely relevant to understanding failures. The principle: logs are your post-mortem tool—what the AI did, in order, is the most valuable diagnostic information.",
 source: "Lesson 07: Observability"
 },
 {
 question: "You're implementing a new feature. Which principles are MOST critical for this task type?",
 options: [
 "Only bash access is needed since features require code execution",
-"Only verification is needed since features must work correctly",
 "All principles are relevant for feature implementation work",
+"Only verification is needed since features must work correctly",
 "Only observability is needed since you need to see progress"
 ],
-correctOption: 2,
-explanation: "Feature implementation involves all principles: bash access to execute commands, code as interface to specify behavior, verification to test correctness, decomposition to break into manageable steps, state persistence to maintain context, safety to prevent mistakes, and observability to see progress. While you might prioritize certain principles based on context (safety for production systems, observability for debugging), all seven are relevant for complete feature work. Options A, B, and D incorrectly suggest single principles are sufficient—no single principle covers all aspects of feature development. The principle: real workflows integrate multiple principles, with emphasis shifting based on task context.",
+correctOption: 1,
+explanation: "Feature implementation involves all principles: bash access to execute commands, code as interface to specify behavior, verification to test correctness, decomposition to break into manageable steps, state persistence to maintain context, safety to prevent mistakes, and observability to see progress. While you might prioritize certain principles based on context (safety for production systems, observability for debugging), all seven are relevant for complete feature work. Options A, C, and D incorrectly suggest single principles are sufficient—no single principle covers all aspects of feature development. The principle: real workflows integrate multiple principles, with emphasis shifting based on task context.",
 source: "Lesson 09: Putting It All Together"
 },
 {
 question: "You're debugging a production issue. Which THREE principles are most critical?",
 options: [
 "Bash access, state persistence, and safety constraints",
-"Bash access, verification, and observability",
 "Code as interface, decomposition, and state persistence",
-"Decomposition, safety, and observability"
+"Decomposition, safety, and observability",
+"Bash access, verification, and observability"
 ],
-correctOption: 1,
-explanation: "Debugging production issues requires: bash access to investigate (read logs, run commands, check system state), verification to test fixes (ensure the fix actually resolves the issue), and observability to understand what happened (trace logs, see error sequence). While other principles are valuable, these three are essential for the debugging cycle. Option A includes state persistence (useful for context but not critical for acute debugging) and safety (important but secondary to fixing the active issue). Option C misses observability which is crucial for understanding the problem. Option D misses bash access which is required for investigation. The principle: prioritize principles based on task needs—debugging emphasizes investigation, verification, and visibility.",
+correctOption: 3,
+explanation: "Debugging production issues requires: bash access to investigate (read logs, run commands, check system state), verification to test fixes (ensure the fix actually resolves the issue), and observability to understand what happened (trace logs, see error sequence). While other principles are valuable, these three are essential for the debugging cycle. Option A includes state persistence (useful for context but not critical for acute debugging) and safety (important but secondary to fixing the active issue). Option B misses observability which is crucial for understanding the problem. Option C misses bash access which is required for investigation. The principle: prioritize principles based on task needs—debugging emphasizes investigation, verification, and visibility.",
 source: "Lesson 09: Putting It All Together"
 },
 {
 question: "A team wants to improve their AI workflow but doesn't know where to start. What's the first step?",
 options: [
-"Implement all seven principles simultaneously for maximum benefit",
 "Identify which principle would provide the most value for their specific pain points",
+"Implement all seven principles simultaneously for maximum benefit",
 "Purchase a more expensive AI tool with better built-in safety features",
 "Hire an AI workflow consultant to design a comprehensive solution"
 ],
-correctOption: 1,
-explanation: "The most effective starting point is identifying your biggest pain point and applying the principle that addresses it. If you're constantly repeating context, start with CLAUDE.md (state persistence). If you're surprised by AI changes, improve observability. If you're debugging integration issues, focus on decomposition and verification. Option A (all principles at once) is overwhelming and wasteful—you'll implement features you don't need. Option C (expensive tool) throws money at process problems. Option D (consultant) might help eventually, but start with self-assessment. The principle: targeted improvement based on actual problems beats wholesale change.",
+correctOption: 0,
+explanation: "The most effective starting point is identifying your biggest pain point and applying the principle that addresses it. If you're constantly repeating context, start with CLAUDE.md (state persistence). If you're surprised by AI changes, improve observability. If you're debugging integration issues, focus on decomposition and verification. Option B (all principles at once) is overwhelming and wasteful—you'll implement features you don't need. Option C (expensive tool) throws money at process problems. Option D (consultant) might help eventually, but start with self-assessment. The principle: targeted improvement based on actual problems beats wholesale change.",
 source: "Lesson 09: Putting It All Together"
 },
 {
 question: "An AI agent successfully implements a feature in a development environment. When moved to staging, it fails because environment variables differ. The agent had no way to know about the staging configuration. Which principle combination would have caught this earlier?",
 options: [
-"Bash access + Observability: run commands and see results",
-"Verification + Persisting State: test in multiple environments and document differences",
 "Code as Interface + Decomposition: specify behavior precisely and break into steps",
-"Safety + Observability: restrict access and monitor activity"
+"Safety + Observability: restrict access and monitor activity",
+"Verification + Persisting State: test in multiple environments and document differences",
+"Bash access + Observability: run commands and see results"
 ],
-correctOption: 1,
+correctOption: 2,
 explanation: "This is an environment parity problem. Verification (Principle 3) across environments would catch configuration mismatches before staging. Persisting State (Principle 5) would document environment-specific configurations in files the agent can read—'staging uses DATABASE_URL_STAGING, not DATABASE_URL.' Together, these principles ensure the agent knows about environmental differences and tests against them. Bash access alone doesn't help if you don't know what to test. Code precision doesn't address environment configuration. Safety constraints wouldn't prevent this class of error. The lesson: verification must span environments, and environmental differences must be documented.",
-source: "Principles 3 & 5: Verification + State Persistence"
+source: "Lesson 03: Verification as Core Step"
 },
 {
 question: "A developer uses AI to refactor authentication. The AI makes changes across 12 files in one operation. Tests pass, but a week later, a subtle security flaw is discovered in the token validation logic. Git history shows one massive commit. What principle failure made this bug hard to isolate?",
@@ -314,43 +314,43 @@ options: [
 ],
 correctOption: 1,
 explanation: "While verification (C) also failed (tests missed the flaw), the question asks about isolation difficulty. Small, reversible decomposition (Principle 4) would have created atomic commits—one for 'extract token validation,' another for 'add expiration check,' etc. With atomic commits, git bisect could pinpoint exactly which commit introduced the flaw. With one massive commit, you can't isolate which of the 12 file changes caused the problem. Observability helps during the session but not for post-hoc debugging of committed code. The lesson: decomposition enables forensic debugging.",
-source: "Principle 4: Small, Reversible Decomposition"
+source: "Lesson 04: Small, Reversible Decomposition"
 },
 {
 question: "Two developers use AI on the same codebase. Developer A's AI follows team conventions perfectly. Developer B's AI constantly violates them, using different naming patterns and import styles. Both use identical AI tools and models. What's the most likely cause of the difference?",
 options: [
 "Developer A has a higher-tier AI subscription with better instruction following",
-"Developer A has conventions documented in CLAUDE.md; Developer B relies on verbal explanations each session",
-"Developer B's AI has degraded context from too many sessions",
-"Developer A reviews code more carefully before accepting AI suggestions"
+"Developer A reviews code carefully and rejects bad suggestions immediately",
+"Developer B's AI has degraded context from too many prior sessions",
+"Developer A has conventions documented in CLAUDE.md; Developer B relies on verbal explanations each session"
 ],
-correctOption: 1,
+correctOption: 3,
 explanation: "This illustrates Principle 5 (Persisting State in Files). Developer A encoded conventions in CLAUDE.md—the AI reads them automatically every session. Developer B re-explains conventions each time, introducing variance, forgetting details, or omitting context. The AI doesn't 'remember' previous sessions, so verbal explanations are lost. Same tool, same model, different results because of context persistence. Subscription tiers don't affect instruction following. Context doesn't degrade between sessions (each starts fresh). Code review catches issues but doesn't prevent them. The lesson: persistent context files eliminate session-to-session variance.",
-source: "Principle 5: Persisting State in Files"
+source: "Lesson 05: Persisting State in Files"
 },
 {
 question: "An AI agent is given broad file system access and told to 'clean up the project.' It deletes node_modules (correct), .git directory (catastrophic), and build artifacts (correct). The developer had no warning before the .git deletion. Which TWO principles failed?",
 options: [
+"Constraints/Safety and Observability",
 "Bash access and Code as Interface",
 "Verification and Decomposition",
-"Constraints/Safety and Observability",
 "State Persistence and Verification"
 ],
-correctOption: 2,
+correctOption: 0,
 explanation: "Two principles failed catastrophically: Constraints/Safety (Principle 6) should have prevented AI from touching .git—it should be on an explicit deny list or require confirmation for any git-related operations. Observability (Principle 7) should have shown the developer what files would be deleted BEFORE deletion, allowing intervention. With proper safety constraints, .git would be protected. With proper observability, the developer would see 'About to delete: node_modules/, .git/, dist/' and could say 'Stop—not .git!' The lesson: destructive operations need both protection (constraints) and preview (observability).",
-source: "Principles 6 & 7: Constraints/Safety + Observability"
+source: "Lesson 06: Constraints and Safety"
 },
 {
 question: "You ask an AI to 'make the API faster.' It refactors database queries, adds caching, and changes the response format. Users report broken integrations because the response format changed. What specification approach would have prevented the breaking change?",
 options: [
-"Natural language: 'Make it faster but don't break anything'",
+"Natural language: 'Make it faster but don't change the response structure'",
+"Decomposition: Break 'make faster' into smaller optimization tasks",
 "Code as Interface: Provide existing API contract tests that must continue passing",
-"Decomposition: Break 'make faster' into smaller tasks",
-"Observability: Watch the AI work in real-time"
+"Observability: Watch the AI work in real-time and intervene if needed"
 ],
-correctOption: 1,
-explanation: "Code as Universal Interface (Principle 2) solves this precisely. 'Don't break anything' is vague—what counts as breaking? API contract tests are unambiguous: these requests must return these exact response shapes. The AI can optimize freely as long as tests pass. If it changes response format, tests fail, and the AI knows to revert. Natural language (A) is too vague. Decomposition (C) helps but doesn't define 'breaking.' Observability (D) might let you catch it but requires constant attention. The lesson: executable specifications (tests) define constraints more precisely than prose.",
-source: "Principle 2: Code as Universal Interface"
+correctOption: 2,
+explanation: "Code as Universal Interface (Principle 2) solves this precisely. 'Don't break anything' is vague—what counts as breaking? API contract tests are unambiguous: these requests must return these exact response shapes. The AI can optimize freely as long as tests pass. If it changes response format, tests fail, and the AI knows to revert. Natural language (A) is too vague. Decomposition (B) helps but doesn't define 'breaking.' Observability (D) might let you catch it but requires constant attention. The lesson: executable specifications (tests) define constraints more precisely than prose.",
+source: "Lesson 02: Code as Universal Interface"
 },
 {
 question: "A junior developer sets AI to 'permissive mode' (auto-approve all operations) to work faster. A senior developer insists on 'confirming mode' (approve writes). The junior argues: 'I can always git reset if something goes wrong.' What does the junior's argument miss?",
@@ -362,42 +362,42 @@ options: [
 ],
 correctOption: 1,
 explanation: "The junior assumes all AI actions are reversible via git. But Principle 6 (Constraints and Safety) recognizes that some operations have consequences beyond the repository: leaked API keys can't be un-leaked, external API calls (sending emails, making payments) can't be un-sent, database changes may not be tracked in git. Git reset fixes file state but not external state. The junior's mental model works for pure code changes but fails for operations with real-world effects. The lesson: reversibility has limits—some operations require approval because their effects extend beyond what git controls.",
-source: "Principle 6: Constraints and Safety"
+source: "Lesson 06: Constraints and Safety"
 },
 {
 question: "A developer notices their AI sessions are inconsistent: sometimes the AI follows project patterns perfectly, other times it seems to forget them mid-session. Context utilization varies from 20% to 85% across tasks. What's the likely root cause?",
 options: [
-"The AI model has inconsistent capabilities across sessions",
-"Project patterns aren't in CLAUDE.md Zone 1, so they lose attention as context fills",
-"The developer is using different AI models without realizing it",
-"Network latency is causing dropped instructions"
+"The AI model has inconsistent capabilities across different session types",
+"The developer is using different AI models in different sessions unknowingly",
+"Network latency is causing instructions to be silently dropped",
+"Project patterns aren't in CLAUDE.md Zone 1, so they lose attention as context fills"
 ],
-correctOption: 1,
-explanation: "This combines Principle 5 (State Persistence) with context engineering from Chapter 4. When patterns are in Zone 2 (middle) of CLAUDE.md, they receive ~30% less attention. At 20% context utilization, there's enough attention for everything. At 85%, attention is strained, and middle-positioned content gets deprioritized. The solution: move critical patterns to Zone 1 (beginning) where primacy ensures consistent attention regardless of utilization. The AI model doesn't vary (A), and dropped instructions (D) would cause different symptoms. The lesson: position affects reliability, especially under context pressure.",
-source: "Principle 5 + Context Engineering"
+correctOption: 3,
+explanation: "This combines Principle 5 (State Persistence) with context engineering from Chapter 4. When patterns are in Zone 2 (middle) of CLAUDE.md, they receive ~30% less attention. At 20% context utilization, there's enough attention for everything. At 85%, attention is strained, and middle-positioned content gets deprioritized. The solution: move critical patterns to Zone 1 (beginning) where primacy ensures consistent attention regardless of utilization. The AI model doesn't vary (A), and dropped instructions (C) would cause different symptoms. The lesson: position affects reliability, especially under context pressure.",
+source: "Lesson 05: Persisting State in Files"
 },
 {
 question: "A developer starts Claude Code and immediately types: 'Add a payment system with Stripe integration.' Claude begins editing files right away. After 20 minutes, the developer realizes Claude chose the wrong architecture. What operational practice would have prevented this?",
 options: [
-"Using a larger context window to give Claude more room to work",
 "Using the four-phase workflow: Explore and Plan in Plan Mode before implementing",
+"Using a larger context window to give Claude more room to work",
 "Asking Claude to work faster so mistakes are caught sooner",
-"Running all tests before letting Claude start"
+"Running all tests before letting Claude start any implementation"
 ],
-correctOption: 1,
-explanation: "The four-phase workflow (Explore → Plan → Implement → Commit) prevents this exact scenario. In Plan Mode (Shift+Tab), Claude reads and plans without modifying files. The developer would see the proposed architecture before any code is written—catching the wrong approach in minutes rather than discovering it after 20 minutes of wasted implementation. Option A doesn't help because more context doesn't prevent wrong architectural choices. Option C makes things worse—faster mistakes are still mistakes. Option D is premature—there's nothing to test yet. The key insight: course correction is cheap during planning, expensive during implementation.",
+correctOption: 0,
+explanation: "The four-phase workflow (Explore → Plan → Implement → Commit) prevents this exact scenario. In Plan Mode (Shift+Tab), Claude reads and plans without modifying files. The developer would see the proposed architecture before any code is written—catching the wrong approach in minutes rather than discovering it after 20 minutes of wasted implementation. Option B doesn't help because more context doesn't prevent wrong architectural choices. Option C makes things worse—faster mistakes are still mistakes. Option D is premature—there's nothing to test yet. The key insight: course correction is cheap during planning, expensive during implementation.",
 source: "Lesson 08: Operational Best Practices"
 },
 {
 question: "A developer asks Claude to fix a bug. Claude's first attempt is wrong. The developer corrects it. Claude's second attempt is also wrong, in a different way. What should the developer do next?",
 options: [
-"Provide a third, more detailed correction and hope Claude gets it right",
+"Provide a third, more detailed correction and continue in the same session",
+"Switch to a different AI model that may understand better",
 "Apply the Rule of Two: /clear and start a fresh session with a better prompt",
-"Switch to a different AI model that might understand better",
 "Continue correcting until Claude eventually converges on the right answer"
 ],
-correctOption: 1,
-explanation: "The Rule of Two says: if Claude misses the mark twice on the same fix, STOP. Don't try a third time. Each correction adds noise to the context—Claude is now juggling the original request plus two failed attempts plus your frustrations. The signal-to-noise ratio collapses. Instead, /clear and start fresh with a prompt that includes what you learned from the failures. The failed attempts taught you what Claude needed to know; a fresh prompt with that information upfront beats a third round of corrections every time. Option A continues the correction loop. Option C changes the tool but not the approach. Option D is the definition of the correction loop anti-pattern.",
+correctOption: 2,
+explanation: "The Rule of Two says: if Claude misses the mark twice on the same fix, STOP. Don't try a third time. Each correction adds noise to the context—Claude is now juggling the original request plus two failed attempts plus your frustrations. The signal-to-noise ratio collapses. Instead, /clear and start fresh with a prompt that includes what you learned from the failures. The failed attempts taught you what Claude needed to know; a fresh prompt with that information upfront beats a third round of corrections every time. Option A continues the correction loop. Option B changes the tool but not the approach. Option D is the definition of the correction loop anti-pattern.",
 source: "Lesson 08: Operational Best Practices"
 },
 {
@@ -417,41 +417,41 @@ source: "Lesson 08: Operational Best Practices"
 
 ## Answer Key
 
-| Question | Correct Answer | Principle Tested                                     |
-| -------- | -------------- | ---------------------------------------------------- |
-| 1        | B              | Principle 1: Bash is the Key                         |
-| 2        | B              | Principle 1: Bash is the Key                         |
-| 3        | D              | Principle 1: Bash is the Key                         |
-| 4        | B              | Principle 2: Code as Universal Interface             |
-| 5        | B              | Principle 2: Code as Universal Interface             |
-| 6        | C              | Principle 2: Code as Universal Interface             |
-| 7        | B              | Principle 3: Verification as Core Step               |
-| 8        | B              | Principle 3: Verification as Core Step               |
-| 9        | B              | Principle 3: Verification as Core Step               |
-| 10       | B              | Principle 4: Small, Reversible Decomposition         |
-| 11       | B              | Principle 4: Small, Reversible Decomposition         |
-| 12       | B              | Principle 4: Small, Reversible Decomposition         |
-| 13       | B              | Principle 5: Persisting State in Files               |
-| 14       | C              | Principle 5: Persisting State in Files               |
-| 15       | B              | Principle 5: Persisting State in Files               |
-| 16       | B              | Principle 6: Constraints and Safety                  |
-| 17       | B              | Principle 6: Constraints and Safety                  |
-| 18       | C              | Principle 6: Constraints and Safety                  |
-| 19       | C              | Principle 7: Observability                           |
-| 20       | B              | Principle 7: Observability                           |
-| 21       | C              | Principle 8: Putting It All Together                 |
-| 22       | B              | Principle 8: Putting It All Together                 |
-| 23       | B              | Principle 8: Putting It All Together                 |
-| 24       | B              | Principles 3 & 5: Verification + State Persistence   |
-| 25       | B              | Principle 4: Small, Reversible Decomposition         |
-| 26       | B              | Principle 5: Persisting State in Files               |
-| 27       | C              | Principles 6 & 7: Constraints/Safety + Observability |
-| 28       | B              | Principle 2: Code as Universal Interface             |
-| 29       | B              | Principle 6: Constraints and Safety                  |
-| 30       | B              | Principle 5 + Context Engineering                    |
-| 31       | B              | Lesson 8: Operational Best Practices                 |
-| 32       | B              | Lesson 8: Operational Best Practices                 |
-| 33       | B              | Lesson 8: Operational Best Practices                 |
+| Question | Correct Answer | Principle Tested                             |
+| -------- | -------------- | -------------------------------------------- |
+| 1        | A              | Principle 1: Bash is the Key                 |
+| 2        | D              | Principle 1: Bash is the Key                 |
+| 3        | C              | Principle 1: Bash is the Key                 |
+| 4        | B              | Principle 2: Code as Universal Interface     |
+| 5        | A              | Principle 2: Code as Universal Interface     |
+| 6        | D              | Principle 2: Code as Universal Interface     |
+| 7        | C              | Principle 3: Verification as Core Step       |
+| 8        | A              | Principle 3: Verification as Core Step       |
+| 9        | B              | Principle 3: Verification as Core Step       |
+| 10       | D              | Principle 4: Small, Reversible Decomposition |
+| 11       | C              | Principle 4: Small, Reversible Decomposition |
+| 12       | A              | Principle 4: Small, Reversible Decomposition |
+| 13       | B              | Principle 5: Persisting State in Files       |
+| 14       | D              | Principle 5: Persisting State in Files       |
+| 15       | A              | Principle 5: Persisting State in Files       |
+| 16       | C              | Principle 6: Constraints and Safety          |
+| 17       | B              | Principle 6: Constraints and Safety          |
+| 18       | D              | Principle 6: Constraints and Safety          |
+| 19       | A              | Principle 7: Observability                   |
+| 20       | C              | Principle 7: Observability                   |
+| 21       | B              | Principle 8: Putting It All Together         |
+| 22       | D              | Principle 8: Putting It All Together         |
+| 23       | A              | Principle 8: Putting It All Together         |
+| 24       | C              | Lesson 03: Verification as Core Step         |
+| 25       | B              | Lesson 04: Small, Reversible Decomposition   |
+| 26       | D              | Lesson 05: Persisting State in Files         |
+| 27       | A              | Lesson 06: Constraints and Safety            |
+| 28       | C              | Lesson 02: Code as Universal Interface       |
+| 29       | B              | Lesson 06: Constraints and Safety            |
+| 30       | D              | Lesson 05: Persisting State in Files         |
+| 31       | A              | Lesson 08: Operational Best Practices        |
+| 32       | C              | Lesson 08: Operational Best Practices        |
+| 33       | B              | Lesson 08: Operational Best Practices        |
 
 ## Scoring Guide
 

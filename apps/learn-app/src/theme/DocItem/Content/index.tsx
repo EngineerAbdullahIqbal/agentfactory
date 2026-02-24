@@ -15,6 +15,7 @@ import type { WrapperProps } from "@docusaurus/types";
 import { useDoc } from "@docusaurus/plugin-content-docs/client";
 import { usePluginData } from "@docusaurus/useGlobalData";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 import LessonContent from "../../../components/LessonContent";
 import ReactMarkdown from "react-markdown";
 import ReadingProgress from "@/components/ReadingProgress";
@@ -28,6 +29,17 @@ import { getOAuthAuthorizationUrl } from "@/lib/auth-client";
 import { useVoiceReading } from "@/contexts/VoiceReadingContext";
 import { VoiceControlDock } from "@/components/VoiceControlDock";
 import LessonCompleteButton from "@/components/progress/LessonCompleteButton";
+import { usePracticeServer } from "@/components/TerminalPanel/usePracticeServer";
+import { PracticeContext } from "@/contexts/PracticeContext";
+import { PracticeSetupCard } from "@/components/PracticeSetupCard";
+import { PracticeErrorCard } from "@/components/PracticeErrorCard";
+
+// Lazy-load terminal (requires DOM)
+const TerminalPanel = React.lazy(() =>
+  import("@/components/TerminalPanel").then((mod) => ({
+    default: mod.TerminalPanel,
+  })),
+);
 
 type Props = WrapperProps<typeof ContentType>;
 
@@ -272,6 +284,247 @@ function SpeakerFloatingButton() {
   );
 }
 
+/**
+ * PracticeOverlay — Fixed overlay on right side of viewport.
+ * Contains resize handle + terminal. The lesson content stays in the
+ * normal document flow on the left (CSS constrains its width).
+ */
+function PracticeOverlay({
+  exerciseId,
+  subExercise,
+  onClose,
+}: {
+  exerciseId: string;
+  subExercise?: string;
+  onClose: () => void;
+}) {
+  const {
+    serverAvailable,
+    startSession,
+    resetSession,
+    isStarting,
+    sessionError,
+    clearError,
+    onWsConnected,
+    onWsDisconnected,
+    onWsError,
+  } = usePracticeServer(true);
+  const [wsUrl, setWsUrl] = useState<string | null>(null);
+  const [leftWidth, setLeftWidth] = useState(50);
+  const [isResetting, setIsResetting] = useState(false);
+  const dragCleanupRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    if (
+      exerciseId &&
+      serverAvailable &&
+      !wsUrl &&
+      !isStarting &&
+      !sessionError
+    ) {
+      startSession(exerciseId, subExercise).then((session) => {
+        if (session) setWsUrl(session.wsUrl);
+      });
+    }
+  }, [
+    exerciseId,
+    subExercise,
+    serverAvailable,
+    wsUrl,
+    isStarting,
+    sessionError,
+    startSession,
+  ]);
+
+  // Apply CSS custom properties for resizable split
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--practice-left-width",
+      `${leftWidth}%`,
+    );
+    document.documentElement.style.setProperty(
+      "--practice-right-width",
+      `${100 - leftWidth}%`,
+    );
+    return () => {
+      document.documentElement.style.removeProperty("--practice-left-width");
+      document.documentElement.style.removeProperty("--practice-right-width");
+    };
+  }, [leftWidth]);
+
+  // Esc to close overlay
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+
+  // Clean up drag listeners if component unmounts mid-drag
+  useEffect(() => {
+    return () => {
+      dragCleanupRef.current?.();
+    };
+  }, []);
+
+  const handleRetry = () => {
+    clearError();
+    setWsUrl(null);
+  };
+
+  const handleReset = async () => {
+    setIsResetting(true);
+    const ok = await resetSession(exerciseId);
+    setIsResetting(false);
+    if (ok) {
+      setWsUrl(null);
+      clearError();
+    }
+  };
+
+  const handleResizeStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+
+    const handleMouseMove = (ev: MouseEvent) => {
+      const percent = (ev.clientX / window.innerWidth) * 100;
+      setLeftWidth(Math.max(20, Math.min(80, percent)));
+    };
+
+    const handleMouseUp = () => {
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      dragCleanupRef.current = null;
+    };
+
+    dragCleanupRef.current = () => {
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  return (
+    <div className="practice-overlay">
+      <div
+        className="practice-resize-handle"
+        onMouseDown={handleResizeStart}
+        title="Drag to resize"
+      />
+      <div className="practice-terminal-pane">
+        <div className="practice-terminal-header">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="4 17 10 11 4 5" />
+            <line x1="12" y1="19" x2="20" y2="19" />
+          </svg>
+          <span className="practice-terminal-title">{exerciseId}</span>
+          <span className="practice-terminal-beta">Beta</span>
+          <span className="practice-terminal-hint">
+            {subExercise ? `Exercise ${subExercise}` : exerciseId}
+          </span>
+          <button
+            onClick={handleReset}
+            className="practice-terminal-reset"
+            title="Reset exercise (re-download fresh copy)"
+            aria-label="Reset exercise"
+            disabled={isResetting}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="1 4 1 10 7 10" />
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+            </svg>
+          </button>
+          <button
+            onClick={onClose}
+            className="practice-terminal-close"
+            title="Close terminal"
+            aria-label="Close practice terminal"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div className="practice-terminal-body">
+          <BrowserOnly
+            fallback={
+              <div className="practice-terminal-loading">Loading...</div>
+            }
+          >
+            {() =>
+              !serverAvailable ? (
+                <PracticeSetupCard />
+              ) : sessionError ? (
+                <PracticeErrorCard
+                  error={sessionError}
+                  onRetry={handleRetry}
+                  onRestart={handleRetry}
+                />
+              ) : wsUrl ? (
+                <React.Suspense
+                  fallback={
+                    <div className="practice-terminal-loading">
+                      Loading terminal...
+                    </div>
+                  }
+                >
+                  <TerminalPanel
+                    wsUrl={wsUrl}
+                    onWsConnected={onWsConnected}
+                    onWsDisconnected={onWsDisconnected}
+                    onWsError={onWsError}
+                    onRestart={handleRetry}
+                  />
+                </React.Suspense>
+              ) : (
+                <div className="practice-terminal-loading">
+                  {isStarting ? "Starting exercise..." : "Connecting..."}
+                </div>
+              )
+            }
+          </BrowserOnly>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ContentWrapper(props: Props): React.ReactElement {
   const doc = useDoc();
 
@@ -402,18 +655,26 @@ export default function ContentWrapper(props: Props): React.ReactElement {
   // - Parts have 1 segment (category landing - no panel)
   // - Chapters have 2 segments (category landing - no panel)
   const pathSegments = docId.split("/").filter(Boolean);
-  const specialRootPages = ["thesis", "preface"];
+  const specialRootPages = ["thesis", "preface", "preface-agent-native"];
   const isSpecialRootPage =
     pathSegments.length === 1 && specialRootPages.includes(pathSegments[0]);
-  const isLeafPage = pathSegments.length >= 3 || isSpecialRootPage;
+  const isQuizPage = docId.toLowerCase().includes("quiz");
+  const isLeafPage =
+    (pathSegments.length >= 3 || isSpecialRootPage) && !isQuizPage;
 
-  // Derive chapter + lesson slugs from docId for the LessonCompleteButton
-  // docId example: "01-Part/02-Chapter/03-lesson"
-  // Root pages (thesis, preface) have no chapter — skip lesson tracking for those
-  const docIdSegments = docId.split("/");
-  const lessonSlug = docIdSegments[docIdSegments.length - 1] || "";
-  const chapterSlug = docIdSegments.slice(0, -1).join("/");
+  // Derive chapter + lesson slugs for the LessonCompleteButton
+  // Use slug (from frontmatter) when available to preserve progress tracking
+  // across directory restructuring. Falls back to docId for files without slug.
+  const slugPath = (slug || docId).replace(/^\//, "");
+  const slugSegments = slugPath.split("/");
+  const lessonSlug = slugSegments[slugSegments.length - 1] || "";
+  const chapterSlug = slugSegments.slice(0, -1).join("/");
   const hasValidSlug = chapterSlug.length > 0 && lessonSlug.length > 0;
+  const isCategoryIndex =
+    rawSource.endsWith("README.md") ||
+    rawSource.endsWith("README.mdx") ||
+    rawSource.endsWith("index.md") ||
+    rawSource.endsWith("index.mdx");
 
   // Teaching Guide Sheet state
   const [teachingGuideOpen, setTeachingGuideOpen] = React.useState(false);
@@ -424,10 +685,45 @@ export default function ContentWrapper(props: Props): React.ReactElement {
     frontMatter?.learning_objectives != null &&
     (frontMatter.learning_objectives as unknown[]).length > 0;
 
+  // Practice terminal state (gated by feature flag)
+  const practiceEnabled = siteConfig.customFields?.practiceEnabled as
+    | boolean
+    | undefined;
+  const practiceExerciseId = practiceEnabled
+    ? (doc as { frontMatter?: { practice_exercise?: string } }).frontMatter
+        ?.practice_exercise
+    : undefined;
+  const [practiceOpen, setPracticeOpen] = useState(false);
+  const [practiceSubExercise, setPracticeSubExercise] = useState<
+    string | undefined
+  >();
+
+  // Add/remove body class for split layout (affects Docusaurus container widths)
+  useEffect(() => {
+    if (practiceOpen) {
+      document.body.classList.add("practice-split-active");
+    } else {
+      document.body.classList.remove("practice-split-active");
+    }
+    return () => document.body.classList.remove("practice-split-active");
+  }, [practiceOpen]);
+
+  // Shared PracticeContext value for ExerciseCard components
+  const practiceContextValue = React.useMemo(
+    () => ({
+      practiceOpen,
+      openPractice: (subId?: string) => {
+        setPracticeSubExercise(subId);
+        setPracticeOpen(true);
+      },
+    }),
+    [practiceOpen],
+  );
+
   // If no summary, just render original content
   if (!summary) {
     return (
-      <>
+      <PracticeContext.Provider value={practiceContextValue}>
         <ReadingProgress />
         <div className="doc-content-header">
           <ReadingTime />
@@ -511,14 +807,26 @@ export default function ContentWrapper(props: Props): React.ReactElement {
           </div>
         )}
         <Content {...props} />
-        {isLeafPage && isLoggedIn && hasValidSlug && (
-          <LessonCompleteButton
-            chapterSlug={chapterSlug}
-            lessonSlug={lessonSlug}
+        {isLeafPage &&
+          isLoggedIn &&
+          hasValidSlug &&
+          !isQuizPage &&
+          !isCategoryIndex && (
+            <LessonCompleteButton
+              chapterSlug={chapterSlug}
+              lessonSlug={lessonSlug}
+            />
+          )}
+        {practiceOpen && practiceExerciseId && (
+          <PracticeOverlay
+            exerciseId={practiceExerciseId}
+            subExercise={practiceSubExercise}
+            onClose={() => setPracticeOpen(false)}
           />
         )}
         <VoiceControlDock />
         {<TeachMePanel lessonPath={lessonPath} />}
+
         {hasTeachingData && frontMatter && (
           <TeachingGuideSheet
             open={teachingGuideOpen}
@@ -526,14 +834,14 @@ export default function ContentWrapper(props: Props): React.ReactElement {
             frontmatter={frontMatter}
           />
         )}
-      </>
+      </PracticeContext.Provider>
     );
   }
 
   const summaryElement = <ReactMarkdown>{summary}</ReactMarkdown>;
 
   return (
-    <>
+    <PracticeContext.Provider value={practiceContextValue}>
       <ReadingProgress />
       <div className="doc-content-header">
         <ReadingTime />
@@ -618,12 +926,22 @@ export default function ContentWrapper(props: Props): React.ReactElement {
       )}
       <LessonContent summaryElement={summaryElement}>
         <Content {...props} />
-        {/* TODO: ASK ME ENALBE AFTER BACKEND DEP */}
       </LessonContent>
-      {isLeafPage && isLoggedIn && hasValidSlug && (
-        <LessonCompleteButton
-          chapterSlug={chapterSlug}
-          lessonSlug={lessonSlug}
+      {isLeafPage &&
+        isLoggedIn &&
+        hasValidSlug &&
+        !isQuizPage &&
+        !isCategoryIndex && (
+          <LessonCompleteButton
+            chapterSlug={chapterSlug}
+            lessonSlug={lessonSlug}
+          />
+        )}
+      {practiceOpen && practiceExerciseId && (
+        <PracticeOverlay
+          exerciseId={practiceExerciseId}
+          subExercise={practiceSubExercise}
+          onClose={() => setPracticeOpen(false)}
         />
       )}
       <VoiceControlDock />
@@ -635,6 +953,6 @@ export default function ContentWrapper(props: Props): React.ReactElement {
           frontmatter={frontMatter}
         />
       )}
-    </>
+    </PracticeContext.Provider>
   );
 }

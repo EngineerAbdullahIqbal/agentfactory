@@ -1,0 +1,150 @@
+deck:
+  id: "why-ai-is-non-negotiable"
+  title: "Why AI Is Non-Negotiable"
+  description: "Cards covering the eight objections to AI, their rebuttals, and the core argument that every fear is a reason to build better—not to build less."
+  tags: ["ai-debate", "objections", "capacity-to-serve", "geopolitics", "ai-policy"]
+  version: 1
+
+cards:
+  - id: "why-ai-is-non-negotiable-001"
+    front: "According to the lesson, what makes AI different from every previous technological revolution?"
+    back: "AI augments cognition itself—the ability to reason, synthesize, create, and decide—whereas every previous tool augmented bodies or automated routine computation."
+    tags: ["ai-uniqueness", "cognition"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-002"
+    front: "Why does the text argue that halting AI to protect existing jobs is counterproductive?"
+    back: "Halting AI only delays the reckoning for workers in stagnant roles while denying billions of underserved people the healthcare, education, and legal services they need today. It protects no one and harms the most vulnerable."
+    tags: ["employment", "capacity-to-serve"]
+    difficulty: "intermediate"
+    why: "Who bears the greater cost—workers whose roles change, or billions who never had access to the service at all?"
+
+  - id: "why-ai-is-non-negotiable-003"
+    front: "What are the eight core objections to AI listed in the lesson?"
+    back: "1. Mass unemployment\n2. No clear benefit to ordinary people\n3. Surveillance and authoritarian control\n4. Geopolitical arms race\n5. Erosion of reality\n6. Existential risk\n7. Environmental cost\n8. Bias and discrimination at scale"
+    tags: ["objections", "ai-debate"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-004"
+    front: "How does the concept of 'capacity to serve' differ from 'cost to serve' in the context of AI's economic impact?"
+    back: "Cost to serve means doing the same work at a lower price. Capacity to serve means doing work at a scale previously impossible—like providing healthcare screening to villages that never had a specialist. AI introduces both dimensions, but capacity to serve is the more transformative one."
+    tags: ["capacity-to-serve", "economics"]
+    difficulty: "intermediate"
+    why: "Why can't cost-to-serve improvements alone close the global service gap?"
+
+  - id: "why-ai-is-non-negotiable-005"
+    front: "In the lesson, what does 'AI unbundles jobs into tasks' mean?"
+    back: "AI doesn't eliminate whole jobs. It breaks them into individual tasks—some get automated, many get recombined into new roles that didn't exist before."
+    tags: ["employment", "job-transformation"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-006"
+    front: "Why does the text call the missing consumer benefit a 'marketing failure, not a technology failure'?"
+    back: "The consumer dividend is real and already happening (cheaper legal help, AI tutoring, drug discovery acceleration). But the industry sold AGI hype to investors to raise capital instead of explaining practical value to citizens, which eroded public trust."
+    tags: ["consumer-dividend", "marketing"]
+    difficulty: "intermediate"
+    why: "How should AI companies measure and communicate success differently?"
+
+  - id: "why-ai-is-non-negotiable-007"
+    front: "What three examples does the lesson give of ordinary people benefiting from AI right now?"
+    back: "1. A single mother in Ohio drafting a lease dispute letter (saving ~$400 in legal fees)\n2. A shopkeeper in Karachi using AI translation to negotiate directly with a Chinese supplier\n3. A first-generation college student in rural Mexico preparing for university exams with no nearby test-prep center"
+    tags: ["consumer-dividend", "examples"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-008"
+    front: "Why does the lesson argue that open-source AI models are critical for preventing surveillance abuse?"
+    back: "Open-source models shatter the assumption that AI must be a black box controlled by a few corporations. When anyone can inspect, modify, and deploy a model, no single institution holds a monopoly on intelligence—shifting the balance of power away from potential abusers."
+    tags: ["surveillance", "open-source"]
+    difficulty: "intermediate"
+    why: "What happens if only proprietary, closed models dominate the AI landscape?"
+
+  - id: "why-ai-is-non-negotiable-009"
+    front: "According to the geopolitical argument, what three categories will nations fall into within ten years?"
+    back: "1. Exporters of AI intelligence\n2. Strategic partners with sovereign capability\n3. Digital vassal states dependent on foreign infrastructure"
+    tags: ["geopolitics", "sovereignty"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-010"
+    front: "How does the lesson reframe the 'erosion of reality' concern?"
+    back: "It reframes it as a content-verification problem, not an AI problem. The printing press also flooded the world with misinformation. The answer was not to ban printing but to build verification institutions—journalism, peer review, the scientific method, libel law."
+    tags: ["misinformation", "verification"]
+    difficulty: "intermediate"
+    why: "Why does the text say we won't get decades to build verification institutions this time?"
+
+  - id: "why-ai-is-non-negotiable-011"
+    front: "What does the lesson mean by 'AI is the enemy of mediocrity, not of excellence'?"
+    back: "Professionals who combine deep expertise with AI tools become indispensable (e.g., a radiologist using AI-assisted pattern detection). Those who coast on routine work feel pressure. The dividing line is growth mindset, not job category."
+    tags: ["employment", "excellence"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-012"
+    front: "Why does the lesson argue that a moratorium on AI development would make existential risk worse, not better?"
+    back: "AI development is global and distributed across thousands of labs. A pause adopted by safety-conscious democracies doesn't stop development—it relocates the frontier to actors with fewer safety commitments, less transparency, and no democratic accountability. The most safety-conscious builders are precisely the ones you want leading."
+    tags: ["existential-risk", "moratorium"]
+    difficulty: "advanced"
+    why: "How does this parallel the nuclear arms control dilemma?"
+
+  - id: "why-ai-is-non-negotiable-013"
+    front: "What historical pattern does the lesson cite for how humanity has managed catastrophic technology risks?"
+    back: "Nuclear weapons, engineered pathogens, climate change—each was managed not by abandoning the underlying science but by building institutions of oversight, norms of restraint, and technical safeguards around it."
+    tags: ["existential-risk", "governance"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-014"
+    front: "Why does the lesson argue that AI-detected bias is actually an improvement over human bias?"
+    back: "When a human makes a biased decision, it is invisible, unrepeatable, and nearly impossible to audit. When an AI makes a biased decision, it is logged, measurable, and fixable. AI doesn't introduce bias into fair systems—it makes existing bias visible in systems that were never fair, and visibility is the prerequisite for correction."
+    tags: ["bias", "accountability"]
+    difficulty: "advanced"
+    why: "What institutional mechanisms must exist for this visibility advantage to actually produce fairer outcomes?"
+
+  - id: "why-ai-is-non-negotiable-015"
+    front: "What does the lesson identify as 'the real risk' regarding AI and employment?"
+    back: "The real risk is not AI taking your job—it is refusing to learn the tools that redefine your job."
+    tags: ["employment", "adaptation"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-016"
+    front: "How does the lesson use the printing press and encryption as analogies for governing powerful technology?"
+    back: "The printing press enabled both democracy and propaganda. Encryption enables both privacy and criminal communication. In every case, the answer was not prohibition but the deliberate construction of countervailing power—guardrails, oversight, and institutions."
+    tags: ["governance", "dual-use"]
+    difficulty: "intermediate"
+    why: "What specific countervailing powers does the lesson propose for AI?"
+
+  - id: "why-ai-is-non-negotiable-017"
+    front: "What new AI-era roles does the lesson cite as emerging?"
+    back: "Agent designers, outcome architects, verification specialists, and domain experts who teach machines what 'correct' looks like."
+    tags: ["employment", "new-roles"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-018"
+    front: "Why does the lesson argue that Global South nations face an existential choice regarding AI, and how does open-source change the equation?"
+    back: "They must build domestic AI capability or become permanent consumers of foreign intelligence—with critical systems subject to foreign licensing and policy leverage. Open-source foundations change the equation because a university in Lahore or Lagos can now fine-tune a frontier-class model for local needs, something unimaginable five years ago."
+    tags: ["geopolitics", "global-south", "open-source"]
+    difficulty: "advanced"
+    why: "What determines whether a nation becomes a digital vassal state versus a strategic partner?"
+
+  - id: "why-ai-is-non-negotiable-019"
+    front: "What three architectural elements does the lesson say make AI outputs trustworthy?"
+    back: "1. Clear specifications that define intent\n2. Verification loops that catch errors before they propagate\n3. Human-in-the-loop supervision keeping final judgment with people"
+    tags: ["trust", "architecture"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-020"
+    front: "How does the lesson respond to the environmental cost objection against AI?"
+    back: "It acknowledges the real energy footprint but argues: (1) data centers are 1-2% of global electricity vs. fashion at 2-8% of emissions, (2) efficiency gains in model architecture are compounding rapidly, (3) AI itself reduces environmental damage—DeepMind cut Google's cooling energy by 40%, and AI enables precision agriculture, better grid management, and climate modeling. The answer is clean energy acceleration, not an AI moratorium."
+    tags: ["environment", "energy"]
+    difficulty: "intermediate"
+    why: "Why does pausing AI fail to solve the energy crisis while building AI on clean infrastructure could solve both?"
+
+  - id: "why-ai-is-non-negotiable-021"
+    front: "What is the lesson's single-sentence bottom line?"
+    back: "AI is non-negotiable. How we build it is the only decision that remains."
+    tags: ["thesis", "bottom-line"]
+    difficulty: "basic"
+
+  - id: "why-ai-is-non-negotiable-022"
+    front: "Why does the lesson call the surveillance objection 'the strongest objection'?"
+    back: "Because the concern is not hypothetical—China's social credit experiments, law enforcement misuse of facial recognition in the US and UK, and the Pegasus spyware scandal all demonstrate that powerful technology in unchecked hands becomes a tool of control."
+    tags: ["surveillance", "evidence"]
+    difficulty: "intermediate"
+    why: "If the evidence of surveillance abuse is already concrete, what makes the 'build differently' response credible rather than naive?"

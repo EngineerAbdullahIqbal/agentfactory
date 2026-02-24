@@ -101,7 +101,7 @@ export function NavbarAuth() {
     const initials = getInitials(session.user.name, session.user.email);
     const software = session.user.softwareBackground
       ? session.user.softwareBackground.charAt(0).toUpperCase() +
-        session.user.softwareBackground.slice(1)
+      session.user.softwareBackground.slice(1)
       : null;
     const hardware = session.user.hardwareTier;
     const hardwareLabel =
@@ -119,11 +119,14 @@ export function NavbarAuth() {
       <div className="flex items-center gap-2">
         <Link
           to="/leaderboard"
-          className="flex items-center justify-center h-9 w-9 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded"
+          className="hidden sm:flex items-center justify-center h-9 w-auto gap-1.5 px-2.5 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded no-underline"
           title="Leaderboard"
           aria-label="Leaderboard"
         >
           <Trophy className="h-4 w-4 text-[oklch(0.77_0.16_70)]" />
+          <span className="hidden sm:inline text-xs font-medium text-foreground">
+            Leaderboard
+          </span>
         </Link>
         <div className="hidden sm:block">
           <XPCounter />
@@ -256,11 +259,14 @@ export function NavbarAuth() {
     <div className="flex items-center gap-2">
       <Link
         to="/leaderboard"
-        className="flex items-center justify-center h-9 w-9 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded"
+        className="hidden sm:flex items-center justify-center h-9 w-auto gap-1.5 px-2.5 rounded-md border border-border bg-card hover:bg-accent transition-colors allow-rounded no-underline"
         title="Leaderboard"
         aria-label="Leaderboard"
       >
         <Trophy className="h-4 w-4 text-[oklch(0.77_0.16_70)]" />
+        <span className="hidden sm:inline text-xs font-medium text-foreground">
+          Leaderboard
+        </span>
       </Link>
       <Button
         variant="ghost"

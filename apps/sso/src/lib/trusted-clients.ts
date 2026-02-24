@@ -75,9 +75,7 @@ export const TRUSTED_CLIENTS = [
     name: "RoboLearn Backend Service (Test)",
     type: "web" as const, // "web" type for server-side confidential clients with secrets
     clientSecret: "robolearn-confidential-secret-for-testing-only",
-    redirectUrls: getRedirectUrls([
-      "http://localhost:8000/auth/callback",
-    ]),
+    redirectUrls: getRedirectUrls(["http://localhost:8000/auth/callback"]),
     disabled: false,
     skipConsent: true,
     metadata: {},
@@ -131,6 +129,20 @@ export const TRUSTED_CLIENTS = [
     skipConsent: true,
     metadata: {},
   },
+  {
+    clientId: "learn-skill-cli-client",
+    name: "Learn Skill CLI",
+    type: "public" as const,
+    // Localhost callbacks are intentional — CLI tool always runs locally.
+    // Do NOT use getRedirectUrls() which strips localhost in production.
+    redirectUrls: [
+      "http://localhost:9876/callback",
+      "http://127.0.0.1:9876/callback",
+    ],
+    disabled: false,
+    skipConsent: true,
+    metadata: { authCodePKCE: true },
+  },
 ];
 
 /**
@@ -154,7 +166,8 @@ export const CLIENT_DESCRIPTIONS = {
     security: "Public client with PKCE, no client secret",
   },
   "ai-native-public-client": {
-    purpose: "AI Native development platform (Legacy - use agent-factory-public-client)",
+    purpose:
+      "AI Native development platform (Legacy - use agent-factory-public-client)",
     audience: "Developers building AI applications",
     security: "Public client with PKCE, no client secret",
   },
@@ -167,5 +180,11 @@ export const CLIENT_DESCRIPTIONS = {
     purpose: "Panaversity Assessment Platform",
     audience: "Students taking assessments and quizzes",
     security: "Public client with PKCE, no client secret",
+  },
+  "learn-skill-cli-client": {
+    purpose: "CLI-based learning skill for Claude Code",
+    audience: "Developers using the learn-agentfactory skill",
+    security:
+      "Public client using authorization code + PKCE, localhost callback, no client secret",
   },
 } as const;

@@ -14,6 +14,7 @@ jobs:
   main:
     name: Nx Affected
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -48,12 +49,21 @@ jobs:
       - name: Derive appropriate SHAs for base and head
         uses: nrwl/nx-set-shas@v4
 
-      # Run affected lint, test, build
-      # This only runs tasks for projects affected by the PR changes
-      - name: Run affected tasks
-        run: npx nx affected -t lint test build --base=$NX_BASE --head=$NX_HEAD
+      # Fast checks only: lint + typecheck
+      # Heavy operations (test, build) belong in dedicated per-project CI workflows:
+      #   - practice-server: practice-server-ci.yml (needs node-pty native compilation)
+      #   - learn-app: pr-check.yml (Docusaurus build is 10-30 min)
+      #   - Python APIs: need database + Docker (not available here)
+      - name: Run affected lint
+        run: npx nx affected -t lint --base=$NX_BASE --head=$NX_HEAD --exclude=practice-server
+        timeout-minutes: 10
+
+      - name: Run affected typecheck
+        run: npx nx affected -t typecheck --base=$NX_BASE --head=$NX_HEAD --exclude=practice-server
+        timeout-minutes: 10
 
       - name: Build summary
+        if: always()
         run: |
           echo "## Nx Affected CI Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY

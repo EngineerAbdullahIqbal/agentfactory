@@ -5,7 +5,15 @@ chapter: 6
 lesson: 9
 duration_minutes: 35
 description: "Synthesis lesson showing how all seven principles combine in real-world agentic workflows"
-keywords: ["workflow", "synthesis", "practical", "real-world", "integration", "end-to-end"]
+keywords:
+  [
+    "workflow",
+    "synthesis",
+    "practical",
+    "real-world",
+    "integration",
+    "end-to-end",
+  ]
 
 # HIDDEN SKILLS METADATA
 skills:
@@ -53,6 +61,33 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Design a comprehensive workflow framework for a specific domain (e.g., web development, data science) that codifies principle application patterns."
   remedial_for_struggling: "Focus on one complete example walkthrough, then practice with similar tasks. Emphasize the practical application over theoretical understanding."
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 4
+  session_title: "Synthesis and Practice"
+  key_points:
+    - "The Director's Loop mindset shift: students move from typing code to directing an agent that investigates, proposes, implements, and verifies"
+    - "Different task types prioritize different principles: debugging emphasizes P1/P3/P7, refactoring emphasizes P2/P4/P5, new features need all seven"
+    - "Three reusable workflow templates (Quick Fix, Feature Development, Refactoring) provide ready-to-use patterns students can adapt"
+    - "The meta-principle: general agents are most effective when they leverage computing fundamentals (files, shells, code, version control) rather than fighting them"
+  misconceptions:
+    - "Students may think every task needs all seven principles equally, when principle prioritization based on task type is the key skill"
+    - "Some students treat the workflow templates as rigid scripts rather than adaptable frameworks to customize for their context"
+    - "The self-assessment checklist can feel like busywork unless students connect low scores to actual frustrating sessions they have experienced"
+  discussion_prompts:
+    - "Which of the seven principles do you think you already apply naturally? Which do you consistently neglect? Why?"
+    - "The lesson says 'You are no longer the typist, you are the director.' What changes about your daily work if you fully adopt this mindset?"
+    - "When Template 1b shows what to do when verification fails, how does that connect to the Correction Loop failure pattern from Lesson 8?"
+  teaching_tips:
+    - "Walk through one complete workflow example end-to-end, explicitly naming each principle as it is applied, before discussing the theory"
+    - "Have students score themselves on the 7-point self-assessment, then pair up to discuss their gaps and strategies for improvement"
+    - "Use the Principle Selection Guide table as a classroom activity: give students task scenarios and have them identify the top 2-3 principles"
+    - "The Director's Tip (explicitly invoking principles in prompts) is a power technique worth demonstrating live with a real Claude Code session"
+  assessment_quick_check:
+    - "For a quick bug fix, which 2-3 principles are most critical and why?"
+    - "Describe the Director's Loop: what is the human's role versus the AI agent's role?"
+    - "What is the meta-principle that underlies all seven principles?"
 ---
 
 # Putting It All Together: Workflows in Practice
@@ -74,6 +109,7 @@ Knowing the principles is one thing. Applying them together in real workflows is
 Here's the mindset shift: **You're no longer the one typing code. You're the director managing an agent.**
 
 Think of the AI as a junior developer with infinite energy but no institutional knowledge. It will work tirelessly, but it needs:
+
 - Clear direction (what to do)
 - Context (why and how)
 - Guardrails (what NOT to do)
@@ -104,13 +140,13 @@ Your job is no longer typing—it's directing, reviewing, and approving. The sev
 
 Real workflows rarely involve a single principle in isolation. They require multiple principles working together:
 
-| Task | Key Principles | Why These Principles Matter |
-|------|----------------|---------------------------|
-| **Debug production issue** | 1, 3, 7 | Terminal access to investigate, verification of fixes, observability to understand what happened |
-| **Refactor large module** | 2, 4, 5 | Code as specification, small reversible steps, context persistence for patterns |
-| **Add new feature** | All principles | Complete workflow needs all aspects |
-| **Set up new project** | 1, 5, 6 | Terminal for setup, context files, safety for new environment |
-| **Optimize performance** | 1, 3, 7 | Terminal for profiling, verification of improvements, observability to find bottlenecks |
+| Task                       | Key Principles | Why These Principles Matter                                                                      |
+| -------------------------- | -------------- | ------------------------------------------------------------------------------------------------ |
+| **Debug production issue** | 1, 3, 7        | Terminal access to investigate, verification of fixes, observability to understand what happened |
+| **Refactor large module**  | 2, 4, 5        | Code as specification, small reversible steps, context persistence for patterns                  |
+| **Add new feature**        | All principles | Complete workflow needs all aspects                                                              |
+| **Set up new project**     | 1, 5, 6        | Terminal for setup, context files, safety for new environment                                    |
+| **Optimize performance**   | 1, 3, 7        | Terminal for profiling, verification of improvements, observability to find bottlenecks          |
 
 ## Workflow 1: Debugging a Production Issue
 
@@ -121,6 +157,7 @@ You get a report: "Users are seeing 'Invalid token' errors when logging in."
 ### Applying the Principles
 
 **Principle 1: Bash is the Key**
+
 ```bash
 # AI can investigate directly
 tail -f /var/log/app.log              # Real-time logs
@@ -129,6 +166,7 @@ ps aux | grep node                    # Check running processes
 ```
 
 **Principle 7: Observability**
+
 ```bash
 # Trace through the system
 # AI reads logs to understand the sequence:
@@ -139,6 +177,7 @@ ps aux | grep node                    # Check running processes
 ```
 
 **Principle 3: Verification as Core Step**
+
 ```bash
 # AI proposes fix, then verifies
 # "I see the issue: Token validation uses wrong secret"
@@ -150,6 +189,7 @@ ps aux | grep node                    # Check running processes
 ```
 
 **Principle 4: Small, Reversible Decomposition**
+
 ```bash
 # Fix in one step, verify, then move on
 Step 1: Update .env with correct secret
@@ -159,6 +199,7 @@ Step 4: Monitor logs for recurrence
 ```
 
 **Principle 6: Constraints and Safety**
+
 ```bash
 # AI doesn't automatically modify production .env
 # Requires your confirmation
@@ -214,40 +255,47 @@ You need to add: "Users can reset their password via email."
 ### Applying the Principles
 
 **Principle 5: Persisting State in Files**
+
 ```markdown
 # First, update CLAUDE.md with new context
+
 ## Current Work
+
 ### In Progress
+
 - Password reset feature: email token generation, reset endpoint, UI
 
 ### Requirements
+
 - Token expires in 1 hour
 - Single-use tokens
 - Email sent via SendGrid
 ```
 
 **Principle 2: Code as Universal Interface**
+
 ```typescript
 // Write specification as code (test)
-test('password reset flow', async () => {
+test("password reset flow", async () => {
   // Request reset
-  const response1 = await requestReset('user@example.com');
+  const response1 = await requestReset("user@example.com");
   expect(response1.success).toBe(true);
 
   // Get token from email (mock)
   const token = await getLastEmailToken();
 
   // Use token to reset
-  const response2 = await resetPassword(token, 'newPassword123');
+  const response2 = await resetPassword(token, "newPassword123");
   expect(response2.success).toBe(true);
 
   // Login with new password
-  const response3 = await login('user@example.com', 'newPassword123');
+  const response3 = await login("user@example.com", "newPassword123");
   expect(response3.success).toBe(true);
 });
 ```
 
 **Principle 4: Small, Reversible Decomposition**
+
 ```
 Break into 8 steps:
 1. Add password reset token to database schema
@@ -261,6 +309,7 @@ Break into 8 steps:
 ```
 
 **Principle 3: Verification as Core Step**
+
 ```bash
 # After each step:
 npm test                     # Run tests
@@ -269,6 +318,7 @@ npm run build               # Verify build
 ```
 
 **Principle 1: Bash is the Key**
+
 ```bash
 # AI executes each step
 # Step 1: Modify schema
@@ -284,6 +334,7 @@ npx prisma migrate dev --name add-reset-tokens
 ```
 
 **Principle 6: Constraints and Safety**
+
 ```bash
 # Safety checkpoints:
 - Database migration: Show SQL before applying
@@ -292,6 +343,7 @@ npx prisma migrate dev --name add-reset-tokens
 ```
 
 **Principle 7: Observability**
+
 ```
 AI provides progress updates:
 "Step 3 complete: Created email template
@@ -302,19 +354,19 @@ Continue?"
 
 ### Complete Workflow Timeline
 
-| Time | Step | Principle(s) Applied |
-|------|------|---------------------|
-| 0:00 | Write test specification | 2 (Code as Interface) |
-| 0:05 | Update CLAUDE.md with context | 5 (Persist State) |
-| 0:10 | Break into 8 steps | 4 (Decomposition) |
-| 0:15 | Step 1: Database migration + verify | 1, 3, 6 |
-| 0:20 | Step 2: Token utility + verify | 1, 3, 6 |
-| 0:25 | Step 3: Email template + verify | 1, 3, 6 |
-| 0:30 | Step 4: Reset-request endpoint + verify | 1, 3, 6, 7 |
-| 0:35 | Steps 5-8: Remaining work | 1, 3, 6, 7 |
-| 0:50 | Full test suite + integration tests | 3 (Verification) |
-| 0:55 | Review all changes with git diff | 7 (Observability) |
-| 1:00 | Commit if satisfied | 4 (Reversible) |
+| Time | Step                                    | Principle(s) Applied  |
+| ---- | --------------------------------------- | --------------------- |
+| 0:00 | Write test specification                | 2 (Code as Interface) |
+| 0:05 | Update CLAUDE.md with context           | 5 (Persist State)     |
+| 0:10 | Break into 8 steps                      | 4 (Decomposition)     |
+| 0:15 | Step 1: Database migration + verify     | 1, 3, 6               |
+| 0:20 | Step 2: Token utility + verify          | 1, 3, 6               |
+| 0:25 | Step 3: Email template + verify         | 1, 3, 6               |
+| 0:30 | Step 4: Reset-request endpoint + verify | 1, 3, 6, 7            |
+| 0:35 | Steps 5-8: Remaining work               | 1, 3, 6, 7            |
+| 0:50 | Full test suite + integration tests     | 3 (Verification)      |
+| 0:55 | Review all changes with git diff        | 7 (Observability)     |
+| 1:00 | Commit if satisfied                     | 4 (Reversible)        |
 
 ## Workflow 3: Refactoring a Large Module
 
@@ -325,28 +377,32 @@ Refactor `src/auth/auth.js` (500 lines) into smaller, testable modules.
 ### Applying the Principles
 
 **Principle 5: Persisting State in Files**
+
 ```markdown
 # Document before starting
+
 ## Refactoring Plan: src/auth/auth.js
 
 Current issues:
+
 - 500-line file, hard to understand
 - Mixed concerns: validation, storage, tokens
 - No tests
 
 Target structure:
 src/auth/
-├── validation.js    # Input validation
-├── storage.js       # Database operations
-├── tokens.js        # Token generation/validation
-├── auth.js          # Orchestration (small)
-└── __tests__/
-    ├── validation.test.js
-    ├── storage.test.js
-    └── tokens.test.js
+├── validation.js # Input validation
+├── storage.js # Database operations
+├── tokens.js # Token generation/validation
+├── auth.js # Orchestration (small)
+└── **tests**/
+├── validation.test.js
+├── storage.test.js
+└── tokens.test.js
 ```
 
 **Principle 4: Small, Reversible Decomposition**
+
 ```
 Step 1: Extract validation logic (reversible via git)
 Step 2: Extract storage logic (reversible via git)
@@ -359,6 +415,7 @@ Step 8: Full test suite
 ```
 
 **Principle 2: Code as Universal Interface**
+
 ```javascript
 // Before: Show current code
 // After: Show refactored code
@@ -366,6 +423,7 @@ Step 8: Full test suite
 ```
 
 **Principle 3: Verification as Core Step**
+
 ```bash
 # After each extraction:
 npm test                      # Ensure tests still pass
@@ -374,6 +432,7 @@ npm run build                 # Ensure build succeeds
 ```
 
 **Principle 1: Bash is the Key**
+
 ```bash
 # AI executes refactor steps
 git checkout -b refactor/auth-extraction
@@ -382,6 +441,7 @@ git diff --stat               # Show summary
 ```
 
 **Principle 6: Constraints and Safety**
+
 ```bash
 # Work on feature branch
 # Commit after each successful step
@@ -389,6 +449,7 @@ git diff --stat               # Show summary
 ```
 
 **Principle 7: Observability**
+
 ```
 AI provides progress:
 "Extracted validation (87 lines)
@@ -402,15 +463,15 @@ Commit? [y/n]"
 
 Not all principles are equally important for every task. Use this guide to prioritize:
 
-| Task Type | Most Critical Principles | Why |
-|-----------|-------------------------|-----|
-| **Quick bug fix** | 1, 3, 7 | Fast investigation, verify fix, see what happened |
-| **New feature** | All | Complete workflow needs all aspects |
-| **Refactoring** | 2, 4, 5 | Code precision, small steps, context persistence |
-| **Debugging** | 1, 3, 7 | Terminal access, verification, visibility |
-| **Learning codebase** | 1, 7, 5 | Read files, observe patterns, understand context |
-| **Setup/install** | 1, 5, 6 | Terminal commands, state files, safety in new env |
-| **Performance work** | 1, 3, 7 | Profiling (terminal), verification, observability |
+| Task Type             | Most Critical Principles | Why                                               |
+| --------------------- | ------------------------ | ------------------------------------------------- |
+| **Quick bug fix**     | 1, 3, 7                  | Fast investigation, verify fix, see what happened |
+| **New feature**       | All                      | Complete workflow needs all aspects               |
+| **Refactoring**       | 2, 4, 5                  | Code precision, small steps, context persistence  |
+| **Debugging**         | 1, 3, 7                  | Terminal access, verification, visibility         |
+| **Learning codebase** | 1, 7, 5                  | Read files, observe patterns, understand context  |
+| **Setup/install**     | 1, 5, 6                  | Terminal commands, state files, safety in new env |
+| **Performance work**  | 1, 3, 7                  | Profiling (terminal), verification, observability |
 
 ## Workflow Templates: Ready-to-Use Patterns
 
@@ -484,42 +545,49 @@ What happens when step 6 (verification) fails? Don't panic—follow this recover
 Use this checklist to evaluate how well you're applying the principles:
 
 ### Terminal Access (Principle 1)
+
 - [ ] AI can read project files directly
 - [ ] AI can run commands (tests, builds, etc.)
 - [ ] You're not copying/pasting code manually
 - [ ] AI uses terminal for investigation, not just code generation
 
 ### Code as Interface (Principle 2)
+
 - [ ] You provide specifications as code/tests, not vague descriptions
 - [ ] You review AI-generated code as the primary feedback mechanism
 - [ ] You use concrete examples to clarify requirements
 - [ ] You iterate through code changes, not natural language debate
 
 ### Verification (Principle 3)
+
 - [ ] You verify after every significant change
 - [ ] Tests run automatically or with AI assistance
 - [ ] You never accept code without testing
 - [ ] You have appropriate verification depth for risk level
 
 ### Decomposition (Principle 4)
+
 - [ ] You break tasks into small steps
 - [ ] Each step can be independently tested
 - [ ] Each commit is atomic and reversible
 - [ ] You iterate rather than batch
 
 ### State Persistence (Principle 5)
+
 - [ ] You maintain CLAUDE.md or similar context file
 - [ ] Project conventions are documented
 - [ ] Current work is tracked
 - [ ] Decisions are documented (ADRs)
 
 ### Safety (Principle 6)
+
 - [ ] Destructive operations require approval
 - [ ] You work in sandbox/feature branches
 - [ ] You have appropriate permission model
 - [ ] You can easily rollback changes
 
 ### Observability (Principle 7)
+
 - [ ] You can see what AI is doing
 - [ ] You understand AI's rationale for changes
 - [ ] You review activity logs when debugging
@@ -529,12 +597,12 @@ Use this checklist to evaluate how well you're applying the principles:
 
 Count how many principles you're actively applying (1 point per principle with at least 2 checkboxes marked):
 
-| Score | Level | What It Means |
-|-------|-------|---------------|
-| **0-2** | Cowboy Coder | High risk. You're flying blind. Start with Principles 3 (Verification) and 7 (Observability). |
-| **3-4** | Collaborator | Good progress. You're working WITH the AI, not just using it. Focus on the gaps. |
-| **5-6** | Agent Architect | Professional grade. You're managing AI effectively. Fine-tune for efficiency. |
-| **7** | Master Director | Full integration. You've internalized the principles. Now optimize and teach others. |
+| Score   | Level           | What It Means                                                                                 |
+| ------- | --------------- | --------------------------------------------------------------------------------------------- |
+| **0-2** | Cowboy Coder    | High risk. You're flying blind. Start with Principles 3 (Verification) and 7 (Observability). |
+| **3-4** | Collaborator    | Good progress. You're working WITH the AI, not just using it. Focus on the gaps.              |
+| **5-6** | Agent Architect | Professional grade. You're managing AI effectively. Fine-tune for efficiency.                 |
+| **7**   | Master Director | Full integration. You've internalized the principles. Now optimize and teach others.          |
 
 **Where to start if you're at 0-2**: Begin with just two principles—Verification (always test) and Observability (always see what AI did). These two alone prevent most disasters.
 
@@ -547,6 +615,7 @@ The principles are powerful individually. Together, they're transformative:
 - **State Persistence**: Context accumulates across sessions
 
 When you apply all principles together, you move from "using AI" to "collaborating with an intelligent agent." The workflow becomes:
+
 1. You provide intent and direction
 2. AI investigates and proposes solutions
 3. You review and redirect
@@ -569,16 +638,16 @@ Claude Code makes this explicit through the terminal interface. Cowork makes it 
 
 Both interfaces support all seven principles. Choose based on your task characteristics:
 
-| If you need... | Claude Code | Claude Cowork |
-|----------------|-------------|---------------|
-| Maximum observability | Best choice (raw terminal) | Good (three-panel layout) |
-| Minimal friction | Good | Best choice (GUI) |
-| Custom constraints | Best choice (hooks, settings) | Limited (built-in only) |
-| Built-in safety prompts | Manual configuration | Best choice (native dialogs) |
-| Git-based reversibility | Native | Requires setup |
-| Document workflows | Requires Skills/tools | Best choice (built-in Skills) |
-| Programmatic precision | Best choice (code/scripts) | Good (structured prompts) |
-| Non-technical users | Requires terminal comfort | Best choice (familiar desktop) |
+| If you need...          | Claude Code                   | Claude Cowork                  |
+| ----------------------- | ----------------------------- | ------------------------------ |
+| Maximum observability   | Best choice (raw terminal)    | Good (three-panel layout)      |
+| Minimal friction        | Good                          | Best choice (GUI)              |
+| Custom constraints      | Best choice (hooks, settings) | Limited (built-in only)        |
+| Built-in safety prompts | Manual configuration          | Best choice (native dialogs)   |
+| Git-based reversibility | Native                        | Requires setup                 |
+| Document workflows      | Requires Skills/tools         | Best choice (built-in Skills)  |
+| Programmatic precision  | Best choice (code/scripts)    | Good (structured prompts)      |
+| Non-technical users     | Requires terminal comfort     | Best choice (familiar desktop) |
 
 The choice isn't "which is better"—it's "which fits this task." Many workflows benefit from using both: Claude Code for implementation, Cowork for documentation and review.
 

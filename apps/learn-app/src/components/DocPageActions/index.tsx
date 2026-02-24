@@ -24,6 +24,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { siClaude } from "simple-icons/icons";
 import TurndownService from "turndown";
 import { useAuth } from "@/contexts/AuthContext";
@@ -977,7 +978,9 @@ export function DocPageActions({
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onClick={isLoggedIn ? onOpenTeachingGuide : handleLoginRedirect}
+                  onClick={
+                    isLoggedIn ? onOpenTeachingGuide : handleLoginRedirect
+                  }
                   className={!isLoggedIn ? "doc-actions-item--locked" : ""}
                 >
                   {isLoggedIn ? <TeachingAidIcon /> : <LockIcon />}

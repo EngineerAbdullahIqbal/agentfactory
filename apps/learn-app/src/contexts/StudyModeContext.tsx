@@ -7,16 +7,22 @@
  * State is client-side only (sessionStorage for persistence)
  */
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 
 // =============================================================================
 // Types
 // =============================================================================
 
-export type ChatMode = 'teach' | 'ask';
+export type ChatMode = "teach" | "ask";
 
 export interface Message {
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: string;
 }
@@ -63,17 +69,17 @@ const StudyModeContext = createContext<StudyModeContextValue | null>(null);
 // Storage helpers
 // =============================================================================
 
-const STORAGE_KEY = 'study-mode-state';
+const STORAGE_KEY = "study-mode-state";
 
 function loadFromStorage(): Partial<StudyModeState> {
-  if (typeof window === 'undefined') return {};
+  if (typeof window === "undefined") return {};
 
   try {
     const stored = sessionStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
       return {
-        mode: parsed.mode || 'teach',
+        mode: parsed.mode || "teach",
         conversations: parsed.conversations || {},
       };
     }
@@ -84,13 +90,16 @@ function loadFromStorage(): Partial<StudyModeState> {
 }
 
 function saveToStorage(state: Partial<StudyModeState>): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   try {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
-      mode: state.mode,
-      conversations: state.conversations,
-    }));
+    sessionStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        mode: state.mode,
+        conversations: state.conversations,
+      }),
+    );
   } catch {
     // Ignore storage errors
   }
@@ -105,7 +114,7 @@ export function StudyModeProvider({ children }: { children: React.ReactNode }) {
     const stored = loadFromStorage();
     return {
       isOpen: false,
-      mode: stored.mode || 'teach',
+      mode: stored.mode || "teach",
       conversations: stored.conversations || {},
       isLoading: false,
       error: null,
@@ -122,30 +131,36 @@ export function StudyModeProvider({ children }: { children: React.ReactNode }) {
 
   // Panel controls
   const openPanel = useCallback(() => {
-    setState(s => ({ ...s, isOpen: true, error: null }));
+    setState((s) => ({ ...s, isOpen: true, error: null }));
   }, []);
 
   const closePanel = useCallback(() => {
-    setState(s => ({ ...s, isOpen: false }));
+    setState((s) => ({ ...s, isOpen: false }));
   }, []);
 
   const togglePanel = useCallback(() => {
-    setState(s => ({ ...s, isOpen: !s.isOpen, error: null }));
+    setState((s) => ({ ...s, isOpen: !s.isOpen, error: null }));
   }, []);
 
   // Mode controls
   const setMode = useCallback((mode: ChatMode) => {
-    setState(s => ({ ...s, mode }));
+    setState((s) => ({ ...s, mode }));
   }, []);
 
   // Conversation controls
-  const getCurrentConversation = useCallback((lessonPath: string): ConversationState => {
-    return state.conversations[lessonPath] || { messages: [], lessonPath };
-  }, [state.conversations]);
+  const getCurrentConversation = useCallback(
+    (lessonPath: string): ConversationState => {
+      return state.conversations[lessonPath] || { messages: [], lessonPath };
+    },
+    [state.conversations],
+  );
 
   const addMessage = useCallback((lessonPath: string, message: Message) => {
-    setState(s => {
-      const existing = s.conversations[lessonPath] || { messages: [], lessonPath };
+    setState((s) => {
+      const existing = s.conversations[lessonPath] || {
+        messages: [],
+        lessonPath,
+      };
       return {
         ...s,
         conversations: {
@@ -160,7 +175,7 @@ export function StudyModeProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const clearConversation = useCallback((lessonPath: string) => {
-    setState(s => {
+    setState((s) => {
       const { [lessonPath]: _, ...rest } = s.conversations;
       return {
         ...s,
@@ -172,11 +187,11 @@ export function StudyModeProvider({ children }: { children: React.ReactNode }) {
 
   // Loading/error state
   const setLoading = useCallback((isLoading: boolean) => {
-    setState(s => ({ ...s, isLoading }));
+    setState((s) => ({ ...s, isLoading }));
   }, []);
 
   const setError = useCallback((error: string | null) => {
-    setState(s => ({ ...s, error, isLoading: false }));
+    setState((s) => ({ ...s, error, isLoading: false }));
   }, []);
 
   const value: StudyModeContextValue = {
@@ -206,7 +221,7 @@ export function StudyModeProvider({ children }: { children: React.ReactNode }) {
 export function useStudyMode(): StudyModeContextValue {
   const context = useContext(StudyModeContext);
   if (!context) {
-    throw new Error('useStudyMode must be used within a StudyModeProvider');
+    throw new Error("useStudyMode must be used within a StudyModeProvider");
   }
   return context;
 }

@@ -1,0 +1,42 @@
+{
+  "name": "api-infra",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/api-infra/src",
+  "targets": {
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/api-infra",
+        "command": "uv run pytest tests/ -v --tb=short"
+      },
+      "cache": true,
+      "inputs": ["pythonInputs"]
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/api-infra",
+        "command": "uv run ruff check src/ tests/"
+      },
+      "cache": true,
+      "inputs": ["pythonInputs"]
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/api-infra",
+        "command": "uv run ruff format src/ tests/"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/api-infra",
+        "command": "uv run mypy src/"
+      },
+      "cache": true,
+      "inputs": ["pythonInputs"]
+    }
+  }
+}

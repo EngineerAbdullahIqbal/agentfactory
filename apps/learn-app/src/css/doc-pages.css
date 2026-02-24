@@ -872,7 +872,7 @@ article {
    FLOATING ACTION BUTTONS — Bottom-right corner positioning
    ============================================================================ */
 
-/* Floating actions container - fixed to bottom-right */
+/* Floating actions container - fixed to bottom-right (Desktop) */
 .floating-actions {
   position: fixed !important;
   bottom: 2rem !important;
@@ -881,6 +881,22 @@ article {
   flex-direction: column !important;
   gap: 1rem !important;
   z-index: 100 !important;
+}
+
+/* Floating actions container - Bottom-inline (Mobile) */
+@media screen and (max-width: 768px) {
+  .floating-actions {
+    position: static !important;
+    /* Disables floating entirely */
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 0.75rem !important;
+    justify-content: center !important;
+    align-items: center !important;
+    margin-top: 2rem !important;
+    margin-bottom: 0.5rem !important;
+    width: 100% !important;
+  }
 }
 
 /* Shared button styles */
@@ -896,6 +912,19 @@ article {
   cursor: pointer !important;
   transition: all 150ms ease-out !important;
   box-shadow: 0 2px 8px oklch(0 0 0 / 0.1) !important;
+}
+
+@media screen and (max-width: 768px) {
+  .floating-actions button {
+    /* Since we are an inline row, not a pill, we keep shadows and size */
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  .floating-actions button svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
 }
 
 .floating-actions button:hover {
@@ -966,6 +995,17 @@ article {
 .study-mode-float:hover::after {
   opacity: 1;
   visibility: visible;
+}
+
+@media screen and (max-width: 768px) {
+
+  /* Hide tooltips on mobile since they would overflow or get clipped */
+  .study-mode-float::after,
+  .ask-mode-float::after,
+  .teaching-guide-float::after,
+  .speaker-float::after {
+    display: none !important;
+  }
 }
 
 .study-mode-float:hover {
@@ -1669,12 +1709,14 @@ article.voice-reading-active::before {
    ============================================================================ */
 
 @media screen and (max-width: 768px) {
+
   /* Bug 4 fix: Mobile-specific keyframes to prevent horizontal jump */
   @keyframes slideUpMobile {
     from {
       opacity: 0;
       transform: translateY(12px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -2671,5 +2713,553 @@ article {
 
   .admonition {
     padding: 1.25rem;
+  }
+}
+
+/* ============================================================================
+   EXERCISE CARD — Per-exercise marker in exercise lessons
+   ============================================================================ */
+
+.exercise-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 1rem;
+  margin: 1.5rem 0 0.25rem;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-left: 3px solid var(--ifm-color-primary);
+  border-radius: 6px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.exercise-card:hover {
+  border-left-color: var(--ifm-color-primary-dark);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+.exercise-card-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.exercise-card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.exercise-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.exercise-card-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--ifm-color-primary);
+  background: var(--ifm-color-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.exercise-card-start:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.exercise-card-start:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================================
+   PRACTICE MODE — Full-page overlay: lesson left, terminal right
+   ============================================================================ */
+
+/* Body state: hide Docusaurus chrome, lock scroll, constrain content to left */
+body.practice-split-active {
+  overflow: hidden;
+  /* Override Docusaurus container width so content fills the left pane */
+  --ifm-container-width: 100% !important;
+  --ifm-container-width-xl: 100% !important;
+}
+
+body.practice-split-active .theme-doc-sidebar-container,
+body.practice-split-active [class*='tableOfContents'],
+body.practice-split-active .theme-doc-footer,
+body.practice-split-active .pagination-nav,
+body.practice-split-active .theme-doc-breadcrumbs,
+body.practice-split-active .floating-actions,
+body.practice-split-active .doc-update-meta {
+  display: none !important;
+}
+
+/* Shrink content area to the left portion */
+body.practice-split-active main[class*='docMainContainer'],
+body.practice-split-active [class*='docMainContainer'] {
+  max-width: var(--practice-left-width, 50%) !important;
+  width: var(--practice-left-width, 50%) !important;
+  height: calc(100vh - var(--ifm-navbar-height, 60px));
+  overflow-y: auto;
+  margin: 0 !important;
+}
+
+body.practice-split-active [class*='docItemContainer'],
+body.practice-split-active [class*='docItemCol'] {
+  max-width: 100% !important;
+  padding: 0 !important;
+  flex: 1 !important;
+}
+
+/* Remove all inner width constraints so content fills the left pane */
+body.practice-split-active .container,
+body.practice-split-active .row,
+body.practice-split-active .col {
+  max-width: 100% !important;
+  width: 100% !important;
+  flex-basis: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.practice-split-active article {
+  max-width: 100% !important;
+  padding: 0 1rem !important;
+}
+
+/* Terminal overlay: fixed on right side of viewport */
+.practice-overlay {
+  position: fixed;
+  top: var(--ifm-navbar-height, 60px);
+  right: 0;
+  bottom: 0;
+  width: var(--practice-right-width, 50%);
+  z-index: 100;
+  display: flex;
+}
+
+/* Resizable drag handle */
+.practice-resize-handle {
+  width: 6px;
+  cursor: col-resize;
+  background: #292e42;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  position: relative;
+}
+
+.practice-resize-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 1px;
+  width: 4px;
+  height: 32px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+  background: #565f89;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.practice-resize-handle:hover::after,
+.practice-resize-handle:active::after {
+  opacity: 1;
+}
+
+.practice-resize-handle:hover,
+.practice-resize-handle:active {
+  background: #7aa2f7;
+}
+
+/* Terminal pane (inside overlay) */
+.practice-terminal-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #1a1b26;
+}
+
+/* Terminal header */
+.practice-terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  background: #16161e;
+  border-bottom: 1px solid #292e42;
+  flex-shrink: 0;
+  color: #a9b1d6;
+}
+
+.practice-terminal-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.practice-terminal-beta {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 165, 0, 0.15);
+  color: #f0a050;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+}
+
+.practice-terminal-hint {
+  flex: 1;
+  text-align: right;
+  font-size: 0.7rem;
+  opacity: 0.4;
+  font-family: 'SF Mono', monospace;
+}
+
+.practice-terminal-close {
+  background: none;
+  border: none;
+  color: #565f89;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.practice-terminal-close:hover {
+  color: #c0caf5;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Terminal body fills remaining space */
+.practice-terminal-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* States: loading, setup, error */
+.practice-terminal-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  height: 100%;
+  color: #565f89;
+  font-size: 0.85rem;
+}
+
+.practice-terminal-loading::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 2px solid #292e42;
+  border-top-color: #7aa2f7;
+  border-radius: 50%;
+  animation: doc-actions-spin 0.8s linear infinite;
+}
+
+@keyframes practice-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ── Reset button (mirrors .practice-terminal-close) ── */
+.practice-terminal-reset {
+  background: none;
+  border: none;
+  color: #565f89;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.practice-terminal-reset:hover {
+  color: #c0caf5;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.practice-terminal-reset:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.practice-terminal-reset:disabled svg {
+  animation: doc-actions-spin 1s linear infinite;
+}
+
+/* ── PracticeSetupCard ── */
+.practice-setup-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: #a9b1d6;
+  gap: 0.25rem;
+}
+
+.practice-setup-card h3 {
+  color: #c0caf5;
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.practice-setup-card p {
+  color: #565f89;
+  font-size: 0.8rem;
+  margin: 0 0 0.75rem;
+}
+
+.practice-setup-cmd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.8rem;
+  color: #7aa2f7;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 100%;
+  max-width: 320px;
+}
+
+.practice-setup-cmd:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.practice-setup-copy {
+  font-size: 0.65rem;
+  color: #565f89;
+  white-space: nowrap;
+}
+
+.practice-setup-waiting {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #565f89;
+  margin-top: 0.75rem;
+}
+
+.practice-setup-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e0af68;
+  animation: practice-pulse 1.5s infinite;
+}
+
+.practice-setup-expand {
+  background: none;
+  border: none;
+  color: #565f89;
+  cursor: pointer;
+  font-size: 0.7rem;
+  margin-top: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.15s;
+}
+
+.practice-setup-expand:hover {
+  color: #a9b1d6;
+}
+
+.practice-setup-info {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border: 1px solid #292e42;
+  max-width: 320px;
+}
+
+.practice-setup-info p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #565f89;
+}
+
+.practice-setup-info a {
+  color: #7aa2f7;
+  text-decoration: none;
+}
+
+.practice-setup-info a:hover {
+  text-decoration: underline;
+}
+
+.practice-setup-retry {
+  margin-top: 0.75rem;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #292e42;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a9b1d6;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s;
+}
+
+.practice-setup-retry:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── PracticeErrorCard ── */
+.practice-error-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.practice-error-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(247, 118, 142, 0.15);
+  color: #f7768e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.practice-error-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: 320px;
+}
+
+.practice-error-message {
+  color: #c0caf5;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.practice-error-action {
+  color: #565f89;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.practice-error-guidance {
+  color: #565f89;
+  font-size: 0.7rem;
+  margin: 0;
+  font-style: italic;
+}
+
+.practice-error-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.practice-error-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #292e42;
+  background: rgba(255, 255, 255, 0.05);
+  color: #a9b1d6;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.practice-error-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.practice-error-btn-retry {
+  border-color: rgba(247, 118, 142, 0.3);
+}
+
+.practice-error-btn-retry:hover {
+  border-color: #f7768e;
+}
+
+.practice-error-btn-restart {
+  border-color: rgba(122, 162, 247, 0.3);
+  color: #7aa2f7;
+}
+
+.practice-error-btn-restart:hover {
+  border-color: #7aa2f7;
+  background: rgba(122, 162, 247, 0.1);
+}
+
+/* Mobile: practice overlay stacks below */
+@media screen and (max-width: 996px) {
+
+  body.practice-split-active main[class*='docMainContainer'],
+  body.practice-split-active [class*='docMainContainer'] {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: 50vh;
+  }
+
+  .practice-overlay {
+    top: calc(var(--ifm-navbar-height, 60px) + 50vh);
+    width: 100%;
+  }
+
+  .practice-resize-handle {
+    display: none;
   }
 }

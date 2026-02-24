@@ -422,7 +422,7 @@ Text Only → Structured Output → Interactive Components
 | **Who Gets Access** | Business, Enterprise, Edu tiers |
 | **What Platform Handles** | Billing, discovery, user acquisition |
 
-**Marketplace Monetization:** Remember the four revenue models from Chapter 1? Apps SDK unlocks the **Marketplace** path: 800M+ ChatGPT users, low customer acquisition cost, platform billing, volume play (many small customers vs few large contracts).
+**Marketplace Monetization:** Remember the four revenue models? Apps SDK unlocks the **Marketplace** path: 800M+ ChatGPT users, low customer acquisition cost, platform billing, volume play (many small customers vs few large contracts).
 
 **Build Now vs Build Later:**
 

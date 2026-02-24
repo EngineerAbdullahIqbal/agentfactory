@@ -1,8 +1,10 @@
-"""Core infrastructure modules for Study Mode API."""
+"""Core infrastructure modules for Study Mode API.
 
-from .lifespan import lifespan
-from .rate_limit import RateLimitConfig, RateLimiter, rate_limit
-from .redis_cache import (
+Re-exports from shared api_infra library for backwards compatibility.
+"""
+
+from api_infra.core.rate_limit import RateLimitConfig, RateLimiter, rate_limit
+from api_infra.core.redis_cache import (
     cache_response,
     get_redis,
     safe_redis_get,
@@ -10,6 +12,8 @@ from .redis_cache import (
     start_redis,
     stop_redis,
 )
+
+from .lifespan import lifespan
 
 __all__ = [
     "start_redis",

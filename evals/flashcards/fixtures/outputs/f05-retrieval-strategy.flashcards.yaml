@@ -1,0 +1,59 @@
+deck:
+  id: "eval-f05-retrieval-strategy"
+  title: "Eval F05 Retrieval Strategy"
+  description: "Chapter-mode deck for keyword, vector, and hybrid retrieval with two-stage retrieval reasoning."
+  tags: ["evaluation", "retrieval", "hybrid-search"]
+  version: 1
+
+cards:
+  - id: "eval-f05-retrieval-strategy-001"
+    front: "When should keyword retrieval be preferred?"
+    back: "When exact terms matter, such as IDs, error codes, and legal clauses."
+    tags: ["keyword-retrieval"]
+    difficulty: "basic"
+
+  - id: "eval-f05-retrieval-strategy-002"
+    front: "Why does vector retrieval help conceptual queries?"
+    back: "It captures semantic similarity, surfacing relevant ideas even when query and document wording differ significantly."
+    tags: ["vector-retrieval", "semantics"]
+    difficulty: "intermediate"
+    why: "How would you verify semantic relevance quality in production?"
+
+  - id: "eval-f05-retrieval-strategy-003"
+    front: "What is the purpose of hybrid retrieval?"
+    back: "To combine exact keyword matches with semantically similar candidates in one retrieval flow."
+    tags: ["hybrid-retrieval"]
+    difficulty: "basic"
+
+  - id: "eval-f05-retrieval-strategy-004"
+    front: "How does two-stage retrieval balance recall and precision?"
+    back: "Broad candidate generation maximizes recall, then reranking increases precision by prioritizing truly relevant evidence."
+    tags: ["two-stage", "ranking"]
+    difficulty: "intermediate"
+    why: "Why is reranking valuable when context window is limited?"
+
+  - id: "eval-f05-retrieval-strategy-005"
+    front: "Name the two stages in the recommended retrieval pipeline."
+    back: "Candidate generation followed by reranking."
+    tags: ["pipeline", "stages"]
+    difficulty: "basic"
+
+  - id: "eval-f05-retrieval-strategy-006"
+    front: "Why can skipping reranking degrade answer quality?"
+    back: "Loose candidates can flood prompt context, pushing out high-signal evidence and increasing irrelevant or inconsistent responses."
+    tags: ["reranking", "quality"]
+    difficulty: "intermediate"
+    why: "How would you identify this failure pattern from logs?"
+
+  - id: "eval-f05-retrieval-strategy-007"
+    front: "Which metrics are used to monitor retrieval quality?"
+    back: "recall@k and precision@k."
+    tags: ["metrics"]
+    difficulty: "basic"
+
+  - id: "eval-f05-retrieval-strategy-008"
+    front: "How does over-aggressive reranking introduce retrieval risk?"
+    back: "It can discard edge-case evidence that appears weak initially but is required to answer specialized or rare user queries correctly."
+    tags: ["reranking", "edge-cases"]
+    difficulty: "advanced"
+    why: "Why should thresholds differ across task classes?"

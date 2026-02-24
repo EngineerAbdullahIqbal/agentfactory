@@ -141,11 +141,17 @@ class TestNormalizeAnswer:
         assert normalize_answer("second option") == "B"
         assert normalize_answer("2nd option") == "B"
 
+    def test_partial_answer_extraction(self):
+        """Should extract A/B from partial answers (enhanced parsing)."""
+        assert normalize_answer("I think A") == "A"
+        assert normalize_answer("I think B because...") == "B"
+        assert normalize_answer("My answer is A") == "A"
+
     def test_invalid_returns_none(self):
         """Should return None for unrecognized formats."""
         assert normalize_answer("C") is None
         assert normalize_answer("hello") is None
-        assert normalize_answer("I think A") is None
+        assert normalize_answer("I don't know") is None
 
     def test_empty_returns_none(self):
         """Should return None for empty string."""

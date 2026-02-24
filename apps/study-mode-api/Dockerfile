@@ -1,10 +1,11 @@
 # =============================================================================
 # Study Mode API - Production Dockerfile (Hardened)
 # Multi-stage build | Non-root | Minimal attack surface | OCI compliant
+#
+# Build context: apps/study-mode-api/
 # =============================================================================
 
-# Pin versions for reproducibility
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.13
 
 # -----------------------------------------------------------------------------
 # Stage 1: Builder - Compile dependencies with build tools
@@ -26,17 +27,16 @@ COPY --from=ghcr.io/astral-sh/uv:0.5 /uv /usr/local/bin/uv
 
 WORKDIR /build
 
-# Copy dependency files first (layer caching)
-COPY pyproject.toml uv.lock README.md ./
+# Copy dependency + source files
+COPY pyproject.toml README.md ./
+COPY src/ ./src/
 
-# Install dependencies into isolated venv
-# uv pip install . reads pyproject.toml and installs all dependencies
+# Install app + deps into isolated venv
 RUN uv venv /app/.venv && \
     . /app/.venv/bin/activate && \
     uv pip install . --compile-bytecode
 
 # Aggressive cleanup to minimize venv size
-# Remove: pip, setuptools (not needed at runtime), tests, docs, type stubs, C headers
 RUN rm -rf /app/.venv/lib/python*/site-packages/pip* \
            /app/.venv/lib/python*/site-packages/setuptools* \
            /app/.venv/lib/python*/site-packages/_distutils_hack \
@@ -45,22 +45,16 @@ RUN rm -rf /app/.venv/lib/python*/site-packages/pip* \
     find /app/.venv -type d -name "tests" -exec rm -rf {} + 2>/dev/null || true && \
     find /app/.venv -type d -name "test" -exec rm -rf {} + 2>/dev/null || true && \
     find /app/.venv -type d -name "docs" -exec rm -rf {} + 2>/dev/null || true && \
-    find /app/.venv -type d -name "__pycache__" -name "*.cpython-*.pyc" -exec rm -rf {} + 2>/dev/null || true && \
     find /app/.venv -type f -name "*.pyi" -delete 2>/dev/null || true && \
-    find /app/.venv -type f -name "*.md" -delete 2>/dev/null || true && \
-    find /app/.venv -type f -name "*.rst" -delete 2>/dev/null || true && \
-    find /app/.venv -type f -name "*.txt" ! -name "entry_points.txt" -delete 2>/dev/null || true && \
     find /app/.venv -type f -name "*.c" -delete 2>/dev/null || true && \
     find /app/.venv -type f -name "*.h" -delete 2>/dev/null || true && \
     find /app/.venv -type f -name "*.pxd" -delete 2>/dev/null || true
 
 # -----------------------------------------------------------------------------
 # Stage 2: Production Runtime (NO uv, NO build tools)
-# This is the final stage - no --target flag needed
 # -----------------------------------------------------------------------------
 FROM python:${PYTHON_VERSION}-slim
 
-# OCI standard labels
 LABEL org.opencontainers.image.title="Study Mode API" \
       org.opencontainers.image.description="AI-powered tutoring with ChatKit integration" \
       org.opencontainers.image.version="5.1.0" \
@@ -70,7 +64,6 @@ LABEL org.opencontainers.image.title="Study Mode API" \
 
 # Install ONLY runtime dependencies (minimal)
 # - libpq5: PostgreSQL client library (required by psycopg at runtime)
-# NO curl - we use Python's built-in urllib for healthcheck
 RUN apt-get update && \
     apt-get install -y --no-install-recommends libpq5 && \
     rm -rf /var/lib/apt/lists/* && \
@@ -85,7 +78,7 @@ WORKDIR /app
 # Copy ONLY the venv from builder (uv stays in builder, not copied here)
 COPY --from=builder --chown=app:app /app/.venv /app/.venv
 
-# Copy application source
+# Copy application source (includes api_infra alongside study_mode_api)
 COPY --chown=app:app src/ ./src/
 
 # Environment configuration

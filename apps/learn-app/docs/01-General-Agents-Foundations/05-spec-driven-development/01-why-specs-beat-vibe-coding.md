@@ -70,6 +70,30 @@ cognitive_load:
 differentiation:
   extension_for_advanced: "Analyze how context window limits compound the three failure modes over long conversations"
   remedial_for_struggling: "Focus on recognizing the three failure modes before exploring solutions"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 1
+  session_title: "Why Specifications Matter"
+  key_points:
+    - "Three failure modes (context loss, assumption drift, pattern violations) are the chapter's diagnostic framework — students reference them in every subsequent lesson"
+    - "Vibe coding fails structurally, not from bad prompts — the compounding table (turns vs severity) is the key visual"
+    - "Specs solve all three failure modes by front-loading context — this connects directly to Chapter 4's context engineering principles"
+  misconceptions:
+    - "Students think vibe coding fails because they wrote bad prompts — emphasize the structural inevitability shown in the compounding table"
+    - "Students assume specs are only for coding — the report-writing example deliberately shows specs apply to any AI-assisted work"
+    - "Students confuse 'context loss' with 'AI forgetting' — Claude still has the tokens, but newer instructions receive more weight"
+  discussion_prompts:
+    - "Think of a time you iterated with AI and ended up worse than where you started — which failure mode was dominant?"
+    - "If Claude technically has all prior context in its window, why does context loss still happen?"
+  teaching_tips:
+    - "Start with the report-writing scenario in paragraph 1 — every student has experienced this exact frustration"
+    - "The compounding table (Turn 1-5 through 16+) is worth drawing on a whiteboard to show how failure modes reinforce each other"
+    - "Have students try Prompt 1 live and experience the drift firsthand before explaining the three failure modes"
+    - "Connect the Context Engineering table back to Chapter 4 — students should recognize these principles"
+  assessment_quick_check:
+    - "Name the three failure modes of vibe coding and give a one-sentence example of each"
+    - "Explain why giving Claude more instructions mid-conversation can make output worse, not better"
 ---
 
 # Why Specs Beat Vibe Coding
