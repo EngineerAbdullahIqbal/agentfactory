@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: "Chapter 14.1: The Development Environment Quiz"
 ---
 
@@ -510,7 +510,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 1,
       explanation: "assert uses exact equality comparison. 'Hello from smartnotes!' is not equal to 'Hello from SmartNotes!' because the lowercase 's' differs from uppercase 'S'. pytest will show F (failed), display the expected value with a - prefix and the actual value with a + prefix. Option A is wrong because Python string comparison is case-sensitive. Option C is wrong because pytest does not crash on assertion failures -- it reports them. Option D is wrong because pytest does not track file modification times for skip decisions.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 6: Testing With pytest"
     },
     {
       question: "A developer creates a test file called 'main_test_helpers.py' with a function 'def validate_greet(): assert greet(\"Emma\") == \"Hello, Emma\"'. They run pytest and the test is not discovered. What two naming mistakes did they make?",
@@ -522,7 +522,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 3,
       explanation: "pytest requires specific naming conventions for automatic discovery. Files must match test_*.py or *_test.py -- main_test_helpers.py matches neither pattern because the filename does not end with _test. Functions must start with test_ -- validate_greet does not. Both conventions must be satisfied. Option A fabricates naming conventions. Option B is wrong because pytest uses pattern matching, not module-name matching. Option C is wrong because location and docstrings are not discovery requirements. The lesson lists these conventions in a reference table.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 6: Testing With pytest"
     },
     {
       question: "A developer writes a function 'def add(a: int, b: int) -> int: return a - b' (bug: subtracts instead of adds). They run 'uv run pyright' and see zero errors. They conclude the code is correct. Why is this conclusion wrong?",
@@ -534,7 +534,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 0,
       explanation: "pyright checks that types match: int - int returns int, which matches the declared return type -> int. The types are correct. But the behavior is wrong -- the function subtracts instead of adding. Only pytest can catch behavioral bugs by asserting 'assert add(3, 2) == 5'. Option B is wrong because a - b with int operands is valid. Option C is wrong because the issue is fundamental to what pyright checks, not the mode. Option D is wrong because pyright handles arithmetic. This illustrates why the pipeline needs all three tools.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 6: Testing With pytest"
     },
     {
       question: "A developer runs pytest and sees 'tests/test_main.py ..F.E [100%]'. They need to explain the output to their team. What do the five characters mean in sequence?",
@@ -546,7 +546,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 1,
       explanation: "Each character represents one test result: '.' means passed, 'F' means failed (assertion was false), and 'E' means error (exception during setup or execution). So ..F.E means: pass, pass, fail, pass, error -- five tests total. Option A fabricates meanings for these characters. Option C invents 'slow' and 'empty' meanings that do not exist in pytest. Option D treats the characters as progress indicators rather than individual test results. The lesson provides a reference table: . = passed, F = failed, E = error, s = skipped.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 6: Testing With pytest"
     },
     {
       question: "The verification pipeline runs 'uv run ruff check . && uv run pyright && uv run pytest'. A developer has a type error in main.py but no lint issues. They run the full pipeline. Which tools execute and which are skipped?",
@@ -558,7 +558,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 2,
       explanation: "The && operator runs each command only if the previous one exited successfully (exit code 0). ruff finds no lint issues and passes. pyright detects the type error and exits non-zero. The && operator stops the pipeline, so pytest never runs. This fail-fast behavior is the point: fix the simplest problem first. Option A is wrong because && stops at first failure. Option B is wrong because ruff does not check types. Option D is wrong because && chains all commands sequentially. The lesson demonstrates this exact scenario.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {
       question: "James edits his working format_title function, realizes the original was better, and tries to undo. The undo history is gone because he closed the file between versions. He has no Git commits. What should he have done differently to prevent this loss?",
@@ -570,7 +570,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 2,
       explanation: "A git commit before rewriting would have recorded the working function as a permanent snapshot. If the rewrite went wrong, James could recover with git log and git checkout. This is Axiom VIII (Version Control is Memory) in practice. Option A works in theory but is fragile and does not scale. Option B is wrong because pyright checks types, not snapshots. Option D is wrong because pytest output shows pass/fail results, not source code. The lesson opens with this exact scenario as the motivation for Git.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {
       question: "A developer runs only pytest before committing. All tests pass with green dots. Their code has three unused imports and two type errors. They push to the shared repository. What was their mistake?",
@@ -582,7 +582,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 1,
       explanation: "Each pipeline tool catches a different category: ruff catches unused imports and style violations, pyright catches type mismatches, and pytest catches behavioral bugs. Running only pytest means lint violations and type errors go undetected. The full pipeline ensures all categories are verified. Option A is wrong because pytest has no --strict flag for import/type checking. Option C adds manual review but misses what automated tools find. Option D catches flaky tests, not missing ruff and pyright checks.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {
       question: "A developer has been working for three hours without committing. Their laptop battery dies during a forced restart, and unsaved changes are lost. According to the discipline stack, what should they have done differently?",
@@ -594,7 +594,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 2,
       explanation: "The 'not committing early' anti-pattern means working for extended periods without Git checkpoints. Committing after every meaningful change creates recovery points. If the battery dies after the latest commit, at most one small change is lost. Option A is fabricated. Option B introduces external dependencies instead of using Git. Option D is a primitive backup method without version history. The lesson lists 'not committing early' as a specific anti-pattern.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {
       question: "A developer runs 'git init' in SmartNotes, then 'git add .' and 'git commit -m \"initial project\"'. The next day they accidentally delete main.py and panic. What Git command can recover the deleted file from the commit?",
@@ -606,7 +606,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 2,
       explanation: "git checkout HEAD -- main.py restores main.py from the most recent commit without affecting other files. This is Axiom VIII (Version Control is Memory) in practice -- the commit recorded the file permanently. Option A is wrong because no remote server was set up. Option B is wrong because git stash is for temporarily shelving changes, not recovering from commits. Option D is destructive and would discard all uncommitted changes without selectively restoring one file. The lesson explains that commits are permanent checkpoints.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {
       question: "A developer verifies their code by running it manually and checking the terminal output by eye. Their teammate writes pytest assertions checking the same scenarios. Both approaches confirm the code works today. Which approach provides value when the code changes next week?",
@@ -618,7 +618,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 3,
       explanation: "Manual testing verifies one scenario, one time, and leaves no record. When code changes, the developer must manually re-check everything -- if they remember it all. pytest assertions are permanent specifications that re-run automatically. If an edit breaks a scenario, the assertion catches it instantly. Option A is wrong because manual testing does not scale. Option B is wrong because manual testing creates no reusable artifact. Option C is wrong because pytest assertions re-execute without being re-created. The lesson contrasts manual testing with automated assertions.",
-      source: "Lesson 6: Tests, Git, and the Complete Workbench"
+      source: "Lesson 6: Testing With pytest"
     }
   ]}
   questionsPerBatch={20}

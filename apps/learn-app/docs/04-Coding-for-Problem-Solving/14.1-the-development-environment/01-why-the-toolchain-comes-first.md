@@ -137,7 +137,8 @@ Here is the roadmap for this chapter:
 | **Lesson 3** | Configure `pyproject.toml`, install dev tools | All five tools configured in one file |
 | **Lesson 4** | Run ruff, read lint and format output | Code quality checks passing |
 | **Lesson 5** | Run pyright, read type checking output | Type safety checks passing |
-| **Lesson 6** | Add first test, initialize Git, run full pipeline | Complete workbench: lint, type check, test, commit |
+| **Lesson 6** | Write first test, run pytest, read pass/fail output | Tests verifying code behavior |
+| **Lesson 7** | Initialize Git, make first commit, run full pipeline | Complete workbench: lint, type check, test, commit |
 
 For now, SmartNotes is a promise: by the end of this chapter, your terminal will show three green tool outputs and a clean Git commit. That is what a professional Python workbench looks like.
 

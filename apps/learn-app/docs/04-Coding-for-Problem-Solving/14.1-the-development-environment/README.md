@@ -46,7 +46,7 @@ By the end of this chapter, you will be able to:
 
 Every lesson in this chapter builds on the same project: **SmartNotes**, a personal note-taking assistant that you will develop across the remaining chapters of this course. In this chapter, you do not write application logic. You set up SmartNotes as a properly configured, professionally tooled Python project -- the kind of foundation that makes everything built on top of it reliable.
 
-By Lesson 6, your SmartNotes project will have a passing linter, a passing type checker, a passing test suite, and a clean Git history. That is the starting line for real Python development.
+By Lesson 7, your SmartNotes project will have a passing linter, a passing type checker, a passing test suite, and a clean Git history. That is the starting line for real Python development.
 
 ## The Axiom Connections
 
@@ -69,7 +69,8 @@ Each tool in the discipline stack maps directly to an axiom you learned in Chapt
 | 3 | The pyproject.toml and the Discipline Stack | Configure the central project file, install dev tools |
 | 4 | Ruff -- Your Code Quality Guardian | Run the linter and formatter, read error output |
 | 5 | Pyright -- Your Type Safety Net | Run the type checker, compare typed vs untyped code |
-| 6 | Tests, Git, and the Complete Workbench | Run pytest, initialize Git, execute the full pipeline |
+| 6 | Testing With pytest | Write your first test, run pytest, read pass/fail output |
+| 7 | Git -- Your Version Control Memory | Initialize Git, make your first commit, run the full pipeline |
 
 ## Prerequisites
 

@@ -30,4 +30,4 @@ Pyright is a static type checker that analyzes Python code without running it, r
 
 ### Connections
 - **Builds on**: Lesson 4: Ruff -- Your Code Quality Guardian (ruff catches style and potential bugs; pyright catches an entirely different category -- type mismatches that ruff cannot see)
-- **Leads to**: Lesson 6: Tests, Git, and the Complete Workbench (adds pytest as the third verification tool and combines ruff, pyright, and pytest into a single verification pipeline)
+- **Leads to**: Lesson 6: Testing With pytest (adds pytest as the third verification tool, checking that code does what it is supposed to do)

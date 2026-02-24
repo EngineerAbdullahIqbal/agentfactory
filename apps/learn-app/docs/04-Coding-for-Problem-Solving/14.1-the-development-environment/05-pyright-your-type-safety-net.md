@@ -464,4 +464,4 @@ Explain:
 
 Your SmartNotes project now has two verification tools running clean: ruff checks code quality and pyright checks type safety. But there is a third question neither tool can answer: does the code do what it is supposed to do? Code can be perfectly formatted, fully typed, and still produce the wrong result.
 
-In Lesson 6, James writes his first test, initializes Git, and runs the complete verification pipeline -- ruff, pyright, pytest -- in one command chain. The workbench will be complete.
+In Lesson 6, James writes his first test with pytest -- a tool that checks whether your code does what you specified it should do.
