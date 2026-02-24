@@ -145,6 +145,7 @@ Write **recall cards** for things worth memorizing. Write **thinking cards** for
 **Recall cards**:
 
 - Direct explicit question (**under 40 words**), atomic answer
+- Front must end with `?`
 - Focus on key terms, formulas, and relationships
 - No `why` field
 - Difficulty: `basic` or `intermediate`
@@ -153,7 +154,7 @@ Write **recall cards** for things worth memorizing. Write **thinking cards** for
 **Thinking cards**:
 
 - Focus on **understanding, not just rote memorization**
-- Scenario-based or **Why/How** question
+- Front must be an explicit **Why** or **How** question
 - Always has `why` field (single question, under 20 words)
 - Difficulty: `intermediate` or `advanced`
 - Back includes reasoning, not just the answer word.
@@ -170,10 +171,30 @@ Read through your cards as if you're a student who read the lesson last month:
 - [ ] Did I skip any concept that a student would be embarrassed not to know?
 - [ ] Is any card testing two things? Split it.
 - [ ] Does any back start with "Yes" or "No"? Rephrase. (The validator script rejects these.)
+- [ ] Does every front end with `?`
+- [ ] Do all thinking cards include a non-empty `why` field?
+- [ ] Do recall cards avoid `why` entirely?
+- [ ] Do thinking fronts explicitly contain `Why` or `How`?
+- [ ] Are recall/thinking counts roughly 50/50 (target band: 45%-55% each)?
 
 ### 6. Write the YAML
 
 Write `<lesson-basename>.flashcards.yaml` adjacent to the `.md` file. Follow the schema in `references/YAML-SCHEMA.md`.
+
+### 6.5 Mandatory Quality Gate (Do Not Skip)
+
+Before you finalize, enforce these constraints:
+
+1. Card IDs must match `^{deck.id}-\d{3}$` exactly. Never shorten the prefix (for example `preface-001` is invalid if `deck.id` is `preface-agent-native`).
+2. Every card `front` ends with `?`.
+3. Every thinking card has a non-empty `why` field.
+4. No recall card includes a `why` field.
+5. Thinking card fronts explicitly include `Why` or `How`.
+6. Recall/thinking balance is within 45%-55% each.
+7. Recall fronts remain under 40 words.
+8. No card back starts with `Yes` or `No`.
+
+If any gate fails, revise cards and re-check before returning the final output.
 
 ### 7. Heading Convention
 
@@ -231,6 +252,7 @@ When generating for an entire chapter:
 | Thinking cards are just recall with "Why" | The answer must require reasoning. If it's a single term, it's recall.     |
 | `why` repeats the front                   | Push to a different dimension: implications, prevention, adjacent concepts |
 | Too many cards about minor details        | Would a student be embarrassed not to know this? If not, cut it.           |
+| ID uses shortened prefix (e.g. `preface-001`) | Card IDs must be `deck.id-NNN` (full prefix, no abbreviations).        |
 | YAML special chars break parsing          | Quote strings with `: # " '`                                               |
 | Card back starts with "Yes"/"No"          | Validator rejects these. Rephrase directly.                                |
 
@@ -242,6 +264,9 @@ After generation, output:
 Generated: <path>
 Cards: <count> total (recall: N, thinking: N)
 Why fields: N
+Ratios: recall=<0.00>, thinking=<0.00>, thinking-fronts-with-why/how=<0.00>
+ID format: PASS/FAIL (`deck.id-NNN`)
+Fronts end with '?': PASS/FAIL
 Difficulty: basic: N, intermediate: N, advanced: N
 ```
 

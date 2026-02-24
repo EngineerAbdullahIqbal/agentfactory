@@ -1,0 +1,82 @@
+{
+  "version": "1.0.0",
+  "harness": "flashcards-skill-eval",
+  "description": "Live evaluation dataset for current docs flashcard outputs on 2026-02-24.",
+  "cases": [
+    {
+      "id": "L01_preface_agent_native_live",
+      "name": "Live Preface Deck",
+      "scenario": "live_single_lesson",
+      "input": {
+        "source_lessons": [
+          "apps/learn-app/docs/preface-agent-native.md"
+        ],
+        "user_prompt": "Act as an expert study aid creator. Use minimum information principle, under 40 words for recall questions, self-contained atomic cards, key terms/formulas/relationships, and half understanding cards using Why/How."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 1,
+        "min_cards": 8,
+        "max_cards": 30,
+        "recall_ratio_min": 0.45,
+        "recall_ratio_max": 0.55,
+        "thinking_ratio_min": 0.45,
+        "thinking_ratio_max": 0.55,
+        "thinking_front_why_how_ratio_min": 0.75,
+        "require_formula_focus": false,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": []
+    },
+    {
+      "id": "L02_why_ai_non_negotiable_live",
+      "name": "Live Why-AI Deck",
+      "scenario": "live_single_lesson",
+      "input": {
+        "source_lessons": [
+          "apps/learn-app/docs/why-ai-is-non-negotiable.md"
+        ],
+        "user_prompt": "Create a set of Q&A flashcards focused on understanding, not just rote memorization, and include Why/How questions. Keep recall cards concise, explicit, and atomic."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 1,
+        "min_cards": 8,
+        "max_cards": 30,
+        "recall_ratio_min": 0.45,
+        "recall_ratio_max": 0.55,
+        "thinking_ratio_min": 0.45,
+        "thinking_ratio_max": 0.55,
+        "thinking_front_why_how_ratio_min": 0.75,
+        "require_formula_focus": false,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": []
+    },
+    {
+      "id": "L03_thesis_live",
+      "name": "Live Thesis Deck",
+      "scenario": "live_single_lesson",
+      "input": {
+        "source_lessons": [
+          "apps/learn-app/docs/thesis.md"
+        ],
+        "user_prompt": "Generate flashcards from both styles: half minimum-information recall cards and half understanding cards with Why/How for deep thinking."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 1,
+        "min_cards": 8,
+        "max_cards": 30,
+        "recall_ratio_min": 0.45,
+        "recall_ratio_max": 0.55,
+        "thinking_ratio_min": 0.45,
+        "thinking_ratio_max": 0.55,
+        "thinking_front_why_how_ratio_min": 0.75,
+        "require_formula_focus": false,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": []
+    }
+  ]
+}

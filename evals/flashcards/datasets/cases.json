@@ -1,0 +1,143 @@
+{
+  "version": "1.0.0",
+  "harness": "flashcards-skill-eval",
+  "description": "Dataset for evaluating flashcard skill quality, consistency, and Sir Zia prompt alignment before deck regeneration.",
+  "cases": [
+    {
+      "id": "F01_explicit_dual_prompt_single_lesson",
+      "name": "Explicit Dual Prompt Single Lesson",
+      "scenario": "explicit_trigger",
+      "input": {
+        "source_lessons": [
+          "evals/flashcards/fixtures/lessons/f01-agent-memory-basics.md"
+        ],
+        "user_prompt": "Act as an expert study aid creator...minimum information principle...under 40 words...self-contained and atomic...focus on key terms, formulas, and relationships. Also create understanding-focused Why/How cards. Generate half from each prompt style."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 1,
+        "min_cards": 8,
+        "max_cards": 16,
+        "recall_ratio_min": 0.45,
+        "recall_ratio_max": 0.55,
+        "thinking_ratio_min": 0.45,
+        "thinking_ratio_max": 0.55,
+        "thinking_front_why_how_ratio_min": 0.75,
+        "require_formula_focus": false,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": [
+        "evals/flashcards/fixtures/outputs/f01-agent-memory-basics.flashcards.yaml"
+      ]
+    },
+    {
+      "id": "F02_implicit_request_single_lesson",
+      "name": "Implicit Flashcard Request",
+      "scenario": "implicit_trigger",
+      "input": {
+        "source_lessons": [
+          "evals/flashcards/fixtures/lessons/f02-incident-response-orchestration.md"
+        ],
+        "user_prompt": "Create flashcards for this lesson. Make them useful for understanding, not rote memorization."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 1,
+        "min_cards": 8,
+        "max_cards": 20,
+        "recall_ratio_min": 0.4,
+        "recall_ratio_max": 0.6,
+        "thinking_ratio_min": 0.4,
+        "thinking_ratio_max": 0.6,
+        "thinking_front_why_how_ratio_min": 0.6,
+        "require_formula_focus": false,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": [
+        "evals/flashcards/fixtures/outputs/f02-incident-response-orchestration.flashcards.yaml"
+      ]
+    },
+    {
+      "id": "F03_negative_control_no_flashcards",
+      "name": "Negative Control Non-Flashcard Request",
+      "scenario": "negative_control",
+      "input": {
+        "source_lessons": [
+          "evals/flashcards/fixtures/lessons/f03-non-flashcard-request.md"
+        ],
+        "user_prompt": "Summarize this lesson in 5 bullet points. Do not generate flashcards."
+      },
+      "expected": {
+        "should_generate": false,
+        "target_decks": 0,
+        "min_cards": 0,
+        "max_cards": 0,
+        "recall_ratio_min": 0.0,
+        "recall_ratio_max": 0.0,
+        "thinking_ratio_min": 0.0,
+        "thinking_ratio_max": 0.0,
+        "thinking_front_why_how_ratio_min": 0.0,
+        "require_formula_focus": false,
+        "require_relationship_focus": false
+      },
+      "golden_outputs": []
+    },
+    {
+      "id": "F04_formula_heavy_single_lesson",
+      "name": "Formula Heavy Lesson",
+      "scenario": "formula_focus",
+      "input": {
+        "source_lessons": [
+          "evals/flashcards/fixtures/lessons/f04-formula-confidence-calibration.md"
+        ],
+        "user_prompt": "Generate flashcards from this lesson. Keep cards atomic and concise, include formulas and relationships, and include Why/How understanding cards half and half."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 1,
+        "min_cards": 8,
+        "max_cards": 18,
+        "recall_ratio_min": 0.45,
+        "recall_ratio_max": 0.55,
+        "thinking_ratio_min": 0.45,
+        "thinking_ratio_max": 0.55,
+        "thinking_front_why_how_ratio_min": 0.75,
+        "require_formula_focus": true,
+        "min_formula_cards": 3,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": [
+        "evals/flashcards/fixtures/outputs/f04-formula-confidence-calibration.flashcards.yaml"
+      ]
+    },
+    {
+      "id": "F05_chapter_mode_two_lessons",
+      "name": "Chapter Mode Multi-Lesson",
+      "scenario": "chapter_mode",
+      "input": {
+        "source_lessons": [
+          "evals/flashcards/fixtures/lessons/f05-chapter/01-context-window-budgeting.md",
+          "evals/flashcards/fixtures/lessons/f05-chapter/02-retrieval-strategy.md"
+        ],
+        "user_prompt": "Generate flashcards for this chapter directory. Use half recall and half understanding cards for each lesson."
+      },
+      "expected": {
+        "should_generate": true,
+        "target_decks": 2,
+        "min_cards": 8,
+        "max_cards": 16,
+        "recall_ratio_min": 0.4,
+        "recall_ratio_max": 0.6,
+        "thinking_ratio_min": 0.4,
+        "thinking_ratio_max": 0.6,
+        "thinking_front_why_how_ratio_min": 0.6,
+        "require_formula_focus": false,
+        "require_relationship_focus": true
+      },
+      "golden_outputs": [
+        "evals/flashcards/fixtures/outputs/f05-context-window-budgeting.flashcards.yaml",
+        "evals/flashcards/fixtures/outputs/f05-retrieval-strategy.flashcards.yaml"
+      ]
+    }
+  ]
+}

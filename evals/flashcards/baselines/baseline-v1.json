@@ -1,0 +1,87 @@
+{
+  "run_id": "fixture-smoke-v1",
+  "timestamp": "2026-02-24T06:04:18.482Z",
+  "dataset": "evals/flashcards/datasets/cases.json",
+  "manifest": "evals/flashcards/fixtures/manifests/fixture-baseline-v1.json",
+  "global": {
+    "total_cases": 5,
+    "total_trials": 15,
+    "hard_pass_rate": 100,
+    "pass_at_1_rate": 100,
+    "pass_at_k_rate": 100,
+    "pass_pow_k_rate": 100,
+    "deterministic_mean": 98.2,
+    "llm_judge_mean": 0,
+    "consistency_score": 100,
+    "deterministic_stddev_avg": 0,
+    "recall_ratio_stddev_avg": 0
+  },
+  "cases": [
+    {
+      "case_id": "F01_explicit_dual_prompt_single_lesson",
+      "trials": 3,
+      "pass_at_1": true,
+      "pass_at_k": true,
+      "pass_pow_k": true,
+      "deterministic_mean": 100,
+      "deterministic_stddev": 0,
+      "llm_judge_mean": 0,
+      "llm_judge_trials_scored": 0,
+      "recall_ratio_stddev": 0,
+      "failing_hard_checks": []
+    },
+    {
+      "case_id": "F02_implicit_request_single_lesson",
+      "trials": 3,
+      "pass_at_1": true,
+      "pass_at_k": true,
+      "pass_pow_k": true,
+      "deterministic_mean": 97,
+      "deterministic_stddev": 0,
+      "llm_judge_mean": 0,
+      "llm_judge_trials_scored": 0,
+      "recall_ratio_stddev": 0,
+      "failing_hard_checks": []
+    },
+    {
+      "case_id": "F03_negative_control_no_flashcards",
+      "trials": 3,
+      "pass_at_1": true,
+      "pass_at_k": true,
+      "pass_pow_k": true,
+      "deterministic_mean": 100,
+      "deterministic_stddev": 0,
+      "llm_judge_mean": 0,
+      "llm_judge_trials_scored": 0,
+      "recall_ratio_stddev": 0,
+      "failing_hard_checks": []
+    },
+    {
+      "case_id": "F04_formula_heavy_single_lesson",
+      "trials": 3,
+      "pass_at_1": true,
+      "pass_at_k": true,
+      "pass_pow_k": true,
+      "deterministic_mean": 97,
+      "deterministic_stddev": 0,
+      "llm_judge_mean": 0,
+      "llm_judge_trials_scored": 0,
+      "recall_ratio_stddev": 0,
+      "failing_hard_checks": []
+    },
+    {
+      "case_id": "F05_chapter_mode_two_lessons",
+      "trials": 3,
+      "pass_at_1": true,
+      "pass_at_k": true,
+      "pass_pow_k": true,
+      "deterministic_mean": 97,
+      "deterministic_stddev": 0,
+      "llm_judge_mean": 0,
+      "llm_judge_trials_scored": 0,
+      "recall_ratio_stddev": 0,
+      "failing_hard_checks": []
+    }
+  ],
+  "baseline_diff": null
+}

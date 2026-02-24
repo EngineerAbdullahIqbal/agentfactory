@@ -1,0 +1,42 @@
+{
+  "run_id": "live-2026-02-24",
+  "description": "Live manifest for docs flashcards on 2026-02-24",
+  "cases": {
+    "L01_preface_agent_native_live": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "apps/learn-app/docs/preface-agent-native.flashcards.yaml"
+          ],
+          "source": "live",
+          "updated_at": "2026-02-24T07:00:08.321Z"
+        }
+      ]
+    },
+    "L02_why_ai_non_negotiable_live": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "apps/learn-app/docs/why-ai-is-non-negotiable.flashcards.yaml"
+          ],
+          "source": "live",
+          "updated_at": "2026-02-24T07:00:08.611Z"
+        }
+      ]
+    },
+    "L03_thesis_live": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "apps/learn-app/docs/thesis.flashcards.yaml"
+          ],
+          "source": "live",
+          "updated_at": "2026-02-24T07:00:08.810Z"
+        }
+      ]
+    }
+  }
+}

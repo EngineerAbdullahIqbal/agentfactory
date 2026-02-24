@@ -1,0 +1,59 @@
+deck:
+  id: "eval-f04-formula-confidence-calibration"
+  title: "Eval F04 Formula Confidence Calibration"
+  description: "Formula-focused flashcards for confidence calibration, ECE, thresholds, and behavior policies."
+  tags: ["evaluation", "calibration", "formula"]
+  version: 1
+
+cards:
+  - id: "eval-f04-formula-confidence-calibration-001"
+    front: "What is the calibrated confidence formula C in the lesson?"
+    back: "C = 0.7 * p_model + 0.3 * e_retrieval"
+    tags: ["formula", "confidence"]
+    difficulty: "basic"
+
+  - id: "eval-f04-formula-confidence-calibration-002"
+    front: "Why should confidence drop when retrieval evidence is weak?"
+    back: "Low retrieval evidence indicates weak grounding, so model certainty alone is not enough to justify strong confidence in correctness."
+    tags: ["grounding", "confidence"]
+    difficulty: "intermediate"
+    why: "How would weak evidence change answer style at runtime?"
+
+  - id: "eval-f04-formula-confidence-calibration-003"
+    front: "What is the ECE equation used for calibration quality?"
+    back: "ECE = sum_k (|acc(k) - conf(k)| * n(k) / N)"
+    tags: ["ece", "formula"]
+    difficulty: "basic"
+
+  - id: "eval-f04-formula-confidence-calibration-004"
+    front: "How does lower ECE relate to real-world answer reliability?"
+    back: "Lower ECE means confidence better matches actual correctness, so user trust and escalation decisions are based on more truthful uncertainty signals."
+    tags: ["ece", "reliability"]
+    difficulty: "intermediate"
+    why: "Why is calibration quality critical for high-stakes workflows?"
+
+  - id: "eval-f04-formula-confidence-calibration-005"
+    front: "What release threshold for ECE is given in the lesson?"
+    back: "ECE <= 0.05 is used as a release threshold."
+    tags: ["thresholds", "ece"]
+    difficulty: "basic"
+
+  - id: "eval-f04-formula-confidence-calibration-006"
+    front: "Why should an agent abstain when C < 0.4?"
+    back: "At low confidence, direct answers risk confident mistakes, so abstaining or asking clarification reduces harm and improves downstream accuracy."
+    tags: ["policy", "abstention"]
+    difficulty: "advanced"
+    why: "How would you log abstentions to improve future calibration?"
+
+  - id: "eval-f04-formula-confidence-calibration-007"
+    front: "What response behavior is recommended for 0.4 <= C < 0.7?"
+    back: "Answer with caveats and uncertainty context instead of presenting a fully definitive claim."
+    tags: ["policy", "confidence-bands"]
+    difficulty: "basic"
+
+  - id: "eval-f04-formula-confidence-calibration-008"
+    front: "How do confidence bands improve user-facing safety decisions?"
+    back: "They map uncertainty to explicit behaviors, creating predictable escalation paths rather than ad-hoc responses under uncertain conditions."
+    tags: ["safety", "decision-policy"]
+    difficulty: "intermediate"
+    why: "Why do explicit thresholds outperform informal intuition in production?"
