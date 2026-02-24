@@ -83,12 +83,14 @@ cards:
     front: "Why should someone scoring 0-2 on the self-assessment start with Verification and Observability specifically?"
     back: "BECAUSE P3 catches broken changes before they compound and P7 reveals what the AI actually did, THEREFORE these two alone transform a blind high-risk workflow into a trackable one even without the other five."
     why: "Why are these two sufficient to prevent most disasters while other principles are not?"
+    tags: ["self-assessment", "verification", "observability"]
 
   - id: "ch06-09-putting-it-all-together-013"
     type: recall
     difficulty: intermediate
     front: "What four levels make up the Project Health Score on the 7-principle self-assessment?"
     back: "0-2: Cowboy Coder.\n3-4: Collaborator.\n5-6: Agent Architect.\n7: Master Director."
+    tags: ["self-assessment", "health-score"]
 
   - id: "ch06-09-putting-it-all-together-014"
     type: thinking
@@ -96,12 +98,14 @@ cards:
     front: "How does explicitly naming principles in your prompts improve agent output?"
     back: "BECAUSE stating which principle to apply gives the AI a framework for HOW to work, THEREFORE it follows structured methods like small-step decomposition instead of interpreting vague instructions freely."
     why: "What is the difference between directing methodology versus directing only the task outcome?"
+    tags: ["prompting", "directors-loop"]
 
   - id: "ch06-09-putting-it-all-together-015"
     type: recall
     difficulty: basic
     front: "What is the meta-principle underlying all seven principles of agent work?"
     back: "General agents are most effective leveraging computing fundamentals rather than fighting them."
+    tags: ["meta-principle", "synthesis"]
 
   - id: "ch06-09-putting-it-all-together-016"
     type: thinking
@@ -109,3 +113,4 @@ cards:
     front: "Why are file systems, shells, and version control foundations for agent workflows rather than limitations?"
     back: "BECAUSE these computing primitives provide deterministic state, executable commands, and reversible history, THEREFORE agents built on them produce reliable, debuggable workflows instead of fragile conversational ones."
     why: "What breaks when an agent workflow avoids computing fundamentals and relies on conversation alone?"
+    tags: ["meta-principle", "computing-fundamentals"]

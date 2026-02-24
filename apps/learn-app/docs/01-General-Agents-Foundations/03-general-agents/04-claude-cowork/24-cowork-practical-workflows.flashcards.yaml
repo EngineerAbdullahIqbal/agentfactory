@@ -44,7 +44,7 @@ cards:
   - id: "ch03-cowork-practical-workflows-006"
     type: recall
     front: "What system tool does Claude Cowork delegate to for video format conversion in Workflow 2?"
-    back: "FFmpeg."
+    back: "FFmpeg for video processing."
     tags: [batch-processing, tools]
     difficulty: "intermediate"
 

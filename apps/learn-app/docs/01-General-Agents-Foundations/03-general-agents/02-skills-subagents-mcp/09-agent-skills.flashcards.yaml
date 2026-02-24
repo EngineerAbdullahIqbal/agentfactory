@@ -23,7 +23,7 @@ cards:
   - id: "ch03-09-building-skills-003"
     type: recall
     front: "What is the only required file in a skill folder?"
-    back: "SKILL.md"
+    back: "The SKILL.md file inside the skill folder."
     tags: ["skill-structure"]
     difficulty: "basic"
 

@@ -9,7 +9,7 @@ cards:
   - id: "ch03-04-hello-world-001"
     type: recall
     front: "What command starts a Claude Code session in the terminal?"
-    back: "`claude`"
+    back: "The `claude` command in terminal."
     tags: ["getting-started", "terminal"]
     difficulty: "basic"
 

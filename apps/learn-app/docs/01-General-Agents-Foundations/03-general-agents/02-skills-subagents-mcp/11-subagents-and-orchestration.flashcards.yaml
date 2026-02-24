@@ -16,7 +16,7 @@ cards:
   - id: "ch03-11-subagents-orchestration-002"
     type: recall
     front: "What command reveals the built-in agents available in Claude Code?"
-    back: "/agents"
+    back: "The /agents slash command."
     tags: ["subagents", "commands"]
     difficulty: "basic"
 

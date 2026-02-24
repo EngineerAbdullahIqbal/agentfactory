@@ -24,7 +24,7 @@ cards:
   - id: "ch07-02-setup-ai-employee-003"
     type: recall
     front: "What is the default gateway port for OpenClaw?"
-    back: "18789."
+    back: "Port 18789 by default."
     tags: ["gateway", "configuration"]
     difficulty: "basic"
 
