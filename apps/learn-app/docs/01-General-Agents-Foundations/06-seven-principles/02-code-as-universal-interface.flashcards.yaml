@@ -1,124 +1,189 @@
 deck:
-  id: "ch06-02-code-as-universal-interface"
-  title: "Principle 2: Code as the Universal Interface"
-  description: "Flashcards covering why general agents write code to solve any computational task, the Five Powers of code, the specialist trap, and how to describe problems effectively for agent collaboration."
-  tags: [code-as-interface, general-agents, five-powers, specialist-trap, workflow-orchestration, universal-compatibility]
+  id: ch06-02-code-as-universal-interface
+  title: 'Principle 2: Code as the Universal Interface'
+  description: Flashcards covering why general agents write code to solve any computational task, the Five Powers of code, the specialist trap, and how to describe problems effectively for agent collaboration.
+  tags:
+  - code-as-interface
+  - general-agents
+  - five-powers
+  - specialist-trap
+  - workflow-orchestration
+  - universal-compatibility
   version: 2
-
 cards:
-  - id: "ch06-02-code-as-universal-interface-001"
-    type: recall
-    difficulty: basic
-    front: "In the Seven Principles framework, what role does code serve for general agents?"
-    back: "The universal interface through which agents interact with computers."
+- id: ch06-02-code-as-universal-interface-001
+  type: recall
+  difficulty: basic
+  front: In the Seven Principles framework, what role does code serve for general agents?
+  back: The universal interface through which agents interact with computers.
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-002
+  type: thinking
+  difficulty: intermediate
+  front: Why did Sarah's general agent succeed where three photo apps failed?
+  back: BECAUSE specialized apps only offer pre-built features, THEREFORE they cannot handle unique combinations of requirements. A general agent writes custom code that fits the exact problem.
+  why: What does this imply about the long-term value of specialized single-purpose apps?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-003
+  type: recall
+  difficulty: basic
+  front: In the Bash-vs-Code distinction, what analogy describes each principle's role?
+  back: Bash is the Hands (navigate, explore). Code is the Brain (compute, build).
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-004
+  type: thinking
+  difficulty: intermediate
+  front: How does an agent with only Bash differ from one that can also write code?
+  back: BECAUSE Bash only navigates and manipulates files, THEREFORE an agent limited to Bash can explore but not compute. Adding code lets the agent think, build logic, and create solutions.
+  why: When would Bash alone be sufficient for a task?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-005
+  type: recall
+  difficulty: basic
+  front: What are the Five Powers that code gives to general agents?
+  back: '1. Precise Thinking
 
-  - id: "ch06-02-code-as-universal-interface-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why did Sarah's general agent succeed where three photo apps failed?"
-    back: "BECAUSE specialized apps only offer pre-built features, THEREFORE they cannot handle unique combinations of requirements. A general agent writes custom code that fits the exact problem."
-    why: "What does this imply about the long-term value of specialized single-purpose apps?"
+    2. Workflow Orchestration
 
-  - id: "ch06-02-code-as-universal-interface-003"
-    type: recall
-    difficulty: basic
-    front: "In the Bash-vs-Code distinction, what analogy describes each principle's role?"
-    back: "Bash is the Hands (navigate, explore). Code is the Brain (compute, build)."
+    3. Organized Memory
 
-  - id: "ch06-02-code-as-universal-interface-004"
-    type: thinking
-    difficulty: intermediate
-    front: "How does an agent with only Bash differ from one that can also write code?"
-    back: "BECAUSE Bash only navigates and manipulates files, THEREFORE an agent limited to Bash can explore but not compute. Adding code lets the agent think, build logic, and create solutions."
-    why: "When would Bash alone be sufficient for a task?"
+    4. Universal Compatibility
 
-  - id: "ch06-02-code-as-universal-interface-005"
-    type: recall
-    difficulty: basic
-    front: "What are the Five Powers that code gives to general agents?"
-    back: "1. Precise Thinking\n2. Workflow Orchestration\n3. Organized Memory\n4. Universal Compatibility\n5. Instant Tool Creation"
+    5. Instant Tool Creation'
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-006
+  type: thinking
+  difficulty: intermediate
+  front: Why does code produce more reliable calculations than language-based reasoning?
+  back: BECAUSE language is fuzzy ('about 30%' could mean 28% or 32%), THEREFORE code executes with perfect precision where 127 times 89 always equals 11,303, eliminating approximation and drift.
+  why: When might fuzzy language reasoning still be preferable to code execution?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-007
+  type: recall
+  difficulty: intermediate
+  front: In the Workflow Orchestration power, what analogy contrasts coded workflows with manual step-by-step interaction?
+  back: Train track (pre-built switches) versus pushing a cart (asking at every junction).
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-008
+  type: thinking
+  difficulty: advanced
+  front: Why does workflow orchestration reduce the need for human involvement during multi-step tasks?
+  back: BECAUSE code captures all steps, conditions, and branching logic in advance, THEREFORE the entire workflow runs autonomously without interrupting the human at each decision point.
+  why: What risks emerge when agents run complex workflows without human checkpoints?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-009
+  type: recall
+  difficulty: intermediate
+  front: In the Five Powers framework, what provides agents with Organized Memory?
+  back: File systems — agents create, read, search, and organize files to persist information.
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-010
+  type: thinking
+  difficulty: intermediate
+  front: How did code solve Aisha's event planning problem across four incompatible data sources?
+  back: BECAUSE code can read any format and transform any data, THEREFORE the agent parsed spreadsheets, emails, web forms, and PDFs separately, then merged them into a unified guest list no single tool
+    could produce.
+  why: What makes code a better integrator than a single all-in-one application?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-011
+  type: recall
+  difficulty: basic
+  front: What does the Instant Tool Creation power allow agents to do?
+  back: Build custom tools on demand — anything the user describes, the agent can create.
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-012
+  type: thinking
+  difficulty: intermediate
+  front: Why does describing outcomes produce better agent solutions than specifying methods?
+  back: BECAUSE outcome-focused descriptions give the agent freedom to choose the best implementation, THEREFORE the resulting code fits the actual problem rather than being constrained by the user's technical
+    assumptions.
+  why: When might specifying the method actually be more appropriate than describing the outcome?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-013
+  type: recall
+  difficulty: intermediate
+  front: What three problems does the Specialist Trap identify with using separate specialized agents?
+  back: '1. Must know which specialist to call
 
-  - id: "ch06-02-code-as-universal-interface-006"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does code produce more reliable calculations than language-based reasoning?"
-    back: "BECAUSE language is fuzzy ('about 30%' could mean 28% or 32%), THEREFORE code executes with perfect precision where 127 times 89 always equals 11,303, eliminating approximation and drift."
-    why: "When might fuzzy language reasoning still be preferable to code execution?"
+    2. Cross-domain problems require coordination
 
-  - id: "ch06-02-code-as-universal-interface-007"
-    type: recall
-    difficulty: intermediate
-    front: "In the Workflow Orchestration power, what analogy contrasts coded workflows with manual step-by-step interaction?"
-    back: "Train track (pre-built switches) versus pushing a cart (asking at every junction)."
+    3. Truly novel problems may stump all specialists'
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-014
+  type: thinking
+  difficulty: advanced
+  front: Why is LLM-generated code powerful yet inherently risky?
+  back: BECAUSE LLMs predict what correct code looks like rather than executing it mentally, THEREFORE generated code may look right but fail on edge cases, misunderstand intent, or use non-existent functions
+    — making verification essential.
+  why: How does this connect to Principle 3 (Verification as a Core Step)?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-015
+  type: recall
+  difficulty: basic
+  front: Who observed that 'all agents will become coding agents,' and what was his role?
+  back: Davis Treybig, Partner at Innovation Endeavors.
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-016
+  type: thinking
+  difficulty: advanced
+  front: How does problem specificity affect the quality of agent-generated code?
+  back: BECAUSE agents translate descriptions directly into code logic, THEREFORE vague requests like 'organize my files' produce generic solutions, while precise descriptions of folder structure, file
+    types, and rules yield code tailored to the exact situation.
+  why: What skill does this make most valuable for non-technical users working with agents?
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-017
+  type: recall
+  difficulty: intermediate
+  front: What four steps make up the human-agent collaboration loop when code is the interface?
+  back: '1. You describe what you want
 
-  - id: "ch06-02-code-as-universal-interface-008"
-    type: thinking
-    difficulty: advanced
-    front: "Why does workflow orchestration reduce the need for human involvement during multi-step tasks?"
-    back: "BECAUSE code captures all steps, conditions, and branching logic in advance, THEREFORE the entire workflow runs autonomously without interrupting the human at each decision point."
-    why: "What risks emerge when agents run complex workflows without human checkpoints?"
+    2. Agent writes code
 
-  - id: "ch06-02-code-as-universal-interface-009"
-    type: recall
-    difficulty: intermediate
-    front: "In the Five Powers framework, what provides agents with Organized Memory?"
-    back: "File systems — agents create, read, search, and organize files to persist information."
+    3. You verify results
 
-  - id: "ch06-02-code-as-universal-interface-010"
-    type: thinking
-    difficulty: intermediate
-    front: "How did code solve Aisha's event planning problem across four incompatible data sources?"
-    back: "BECAUSE code can read any format and transform any data, THEREFORE the agent parsed spreadsheets, emails, web forms, and PDFs separately, then merged them into a unified guest list no single tool could produce."
-    why: "What makes code a better integrator than a single all-in-one application?"
-
-  - id: "ch06-02-code-as-universal-interface-011"
-    type: recall
-    difficulty: basic
-    front: "What does the Instant Tool Creation power allow agents to do?"
-    back: "Build custom tools on demand — anything the user describes, the agent can create."
-
-  - id: "ch06-02-code-as-universal-interface-012"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does describing outcomes produce better agent solutions than specifying methods?"
-    back: "BECAUSE outcome-focused descriptions give the agent freedom to choose the best implementation, THEREFORE the resulting code fits the actual problem rather than being constrained by the user's technical assumptions."
-    why: "When might specifying the method actually be more appropriate than describing the outcome?"
-
-  - id: "ch06-02-code-as-universal-interface-013"
-    type: recall
-    difficulty: intermediate
-    front: "What three problems does the Specialist Trap identify with using separate specialized agents?"
-    back: "1. Must know which specialist to call\n2. Cross-domain problems require coordination\n3. Truly novel problems may stump all specialists"
-
-  - id: "ch06-02-code-as-universal-interface-014"
-    type: thinking
-    difficulty: advanced
-    front: "Why is LLM-generated code powerful yet inherently risky?"
-    back: "BECAUSE LLMs predict what correct code looks like rather than executing it mentally, THEREFORE generated code may look right but fail on edge cases, misunderstand intent, or use non-existent functions — making verification essential."
-    why: "How does this connect to Principle 3 (Verification as a Core Step)?"
-
-  - id: "ch06-02-code-as-universal-interface-015"
-    type: recall
-    difficulty: basic
-    front: "Who observed that 'all agents will become coding agents,' and what was his role?"
-    back: "Davis Treybig, Partner at Innovation Endeavors."
-
-  - id: "ch06-02-code-as-universal-interface-016"
-    type: thinking
-    difficulty: advanced
-    front: "How does problem specificity affect the quality of agent-generated code?"
-    back: "BECAUSE agents translate descriptions directly into code logic, THEREFORE vague requests like 'organize my files' produce generic solutions, while precise descriptions of folder structure, file types, and rules yield code tailored to the exact situation."
-    why: "What skill does this make most valuable for non-technical users working with agents?"
-
-  - id: "ch06-02-code-as-universal-interface-017"
-    type: recall
-    difficulty: intermediate
-    front: "What four steps make up the human-agent collaboration loop when code is the interface?"
-    back: "1. You describe what you want\n2. Agent writes code\n3. You verify results\n4. You refine if needed"
-
-  - id: "ch06-02-code-as-universal-interface-018"
-    type: thinking
-    difficulty: intermediate
-    front: "Why did Anthropic's discovery about Claude Code usage patterns support the 'code as universal interface' principle?"
-    back: "BECAUSE users applied Claude Code to non-programming tasks like organizing files, analyzing spreadsheets, and automating workflows, THEREFORE code proved to be a general-purpose problem-solving interface, not just a programmer's tool."
-    why: "What does this reveal about the future relationship between coding ability and general productivity?"
+    4. You refine if needed'
+  tags:
+  - code-as-interface
+  - general-agents
+- id: ch06-02-code-as-universal-interface-018
+  type: thinking
+  difficulty: intermediate
+  front: Why did Anthropic's discovery about Claude Code usage patterns support the 'code as universal interface' principle?
+  back: BECAUSE users applied Claude Code to non-programming tasks like organizing files, analyzing spreadsheets, and automating workflows, THEREFORE code proved to be a general-purpose problem-solving
+    interface, not just a programmer's tool.
+  why: What does this reveal about the future relationship between coding ability and general productivity?
+  tags:
+  - code-as-interface
+  - general-agents

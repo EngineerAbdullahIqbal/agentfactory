@@ -1,202 +1,271 @@
 deck:
-  id: "ch01-five-powers-ai-stack"
-  title: "Five Powers and the Modern AI Stack"
-  description: "Covers the UX-to-Intent paradigm shift, the Five Powers of AI agents, the three-layer modern AI stack, MCP as universal connector, and the evolution from prompt engineering to skill authoring."
-  tags: [five-powers, ai-stack, mcp, agentic-ai, ux-intent, agent-skills]
+  id: ch01-five-powers-ai-stack
+  title: Five Powers and the Modern AI Stack
+  description: Covers the UX-to-Intent paradigm shift, the Five Powers of AI agents, the three-layer modern AI stack, MCP as universal connector, and the evolution from prompt engineering to skill authoring.
+  tags:
+  - five-powers
+  - ai-stack
+  - mcp
+  - agentic-ai
+  - ux-intent
+  - agent-skills
   version: 1
-
 cards:
-  - id: "ch01-five-powers-ai-stack-001"
-    type: recall
-    difficulty: basic
-    front: "What paradigm shift does agentic AI introduce in how humans interact with software?"
-    back: "From navigation-based User Interface to conversation-based User Intent."
-
-  - id: "ch01-five-powers-ai-stack-002"
-    type: recall
-    difficulty: basic
-    front: "What is the interaction model for traditional software UX?"
-    back: "User → Interface → Action."
-
-  - id: "ch01-five-powers-ai-stack-003"
-    type: recall
-    difficulty: basic
-    front: "What is the interaction model for agentic UX?"
-    back: "User Intent → Agent → Orchestrated Actions."
-
-  - id: "ch01-five-powers-ai-stack-004"
-    type: recall
-    difficulty: basic
-    front: "In the hotel booking comparison, how many manual steps does traditional UX require versus agentic UX exchanges?"
-    back: "14 manual steps versus 3 conversational exchanges."
-
-  - id: "ch01-five-powers-ai-stack-005"
-    type: recall
-    difficulty: basic
-    front: "What are the three phases of AI evolution in chronological order?"
-    back: "Predictive AI, Generative AI, Agentic AI."
-
-  - id: "ch01-five-powers-ai-stack-006"
-    type: recall
-    difficulty: basic
-    front: "What does Predictive AI do, and what is a well-known example?"
-    back: "Forecasts outcomes from historical data. Example: Netflix recommendations."
-
-  - id: "ch01-five-powers-ai-stack-007"
-    type: recall
-    difficulty: basic
-    front: "What does Generative AI do, and what is a well-known example?"
-    back: "Creates new content from patterns when prompted. Example: ChatGPT."
-
-  - id: "ch01-five-powers-ai-stack-008"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does Agentic AI represent a bigger shift than Generative AI?"
-    back: "BECAUSE Generative AI only creates content when prompted, while Agentic AI autonomously initiates, coordinates, and completes multi-step workflows without waiting for each command."
-    why: "Generative AI still requires human initiation for every output."
-
-  - id: "ch01-five-powers-ai-stack-009"
-    type: recall
-    difficulty: basic
-    front: "What are the Five Powers of AI agents?"
-    back: "See, Hear, Reason, Act, Remember."
-
-  - id: "ch01-five-powers-ai-stack-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is the 'See' power essential for agents that interact with existing software?"
-    back: "BECAUSE most enterprise interfaces were designed for human eyes, not APIs, THEREFORE agents need visual processing to read screenshots, navigate GUIs, and interpret documents that lack structured data formats."
-    why: "Visual capability bridges the gap between human-designed interfaces and agent automation."
-
-  - id: "ch01-five-powers-ai-stack-011"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the 'Hear' power go beyond simple speech-to-text transcription?"
-    back: "BECAUSE understanding spoken requests requires interpreting intent and detecting sentiment, not just converting audio to words, THEREFORE Hear enables agents to respond appropriately to tone and meaning, not just literal content."
-    why: "Sentiment detection adds a reasoning layer that transforms raw audio into actionable understanding."
-
-  - id: "ch01-five-powers-ai-stack-012"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the 'Reason' power differ from simple rule-based automation?"
-    back: "BECAUSE Reason enables analyzing tradeoffs, making context-aware decisions, and chaining multi-step logic (if X then Y then Z), rather than following fixed predetermined rules."
-    why: "Rule-based systems cannot adapt to novel situations or weigh competing constraints."
-
-  - id: "ch01-five-powers-ai-stack-013"
-    type: recall
-    difficulty: intermediate
-    front: "What does the 'Act' power enable an AI agent to do?"
-    back: "Call APIs, perform actions across multiple systems, coordinate workflows, and retry on failure."
-
-  - id: "ch01-five-powers-ai-stack-014"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the 'Remember' power differ from an LLM's built-in memory?"
-    back: "BECAUSE Remember is an application-level capability that stores user preferences, history, and domain knowledge persistently, while LLM memory is stateless and resets each session."
-    why: "LLMs have no persistent memory between conversations without external storage."
-
-  - id: "ch01-five-powers-ai-stack-015"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the hotel booking agent infer transportation needs without being asked?"
-    back: "BECAUSE the Remember power stores user context and past patterns, while the Reason power analyzes the meeting context to anticipate related logistics like airport transfers."
-    why: "Combining memory of preferences with contextual reasoning enables proactive orchestration."
-
-  - id: "ch01-five-powers-ai-stack-016"
-    type: thinking
-    difficulty: advanced
-    front: "Why do the Five Powers create autonomous orchestration only when combined?"
-    back: "BECAUSE each power alone is limited — See without Act cannot execute, Reason without Remember lacks context. THEREFORE only their combination enables end-to-end autonomous workflows that adapt to user needs."
-    why: "Individual capabilities like vision or reasoning are useful but cannot complete multi-step tasks alone."
-
-  - id: "ch01-five-powers-ai-stack-017"
-    type: recall
-    difficulty: intermediate
-    front: "What are the three layers of the modern AI stack?"
-    back: "Frontier Models, AI-First IDEs, Agent Skills."
-
-  - id: "ch01-five-powers-ai-stack-018"
-    type: recall
-    difficulty: intermediate
-    front: "What role do Frontier Models serve in the AI stack (Layer 1)?"
-    back: "They are the reasoning engines with native agentic reasoning capabilities."
-
-  - id: "ch01-five-powers-ai-stack-019"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are AI-First IDEs called 'Context Orchestrators' rather than just code editors?"
-    back: "BECAUSE they serve as the Skill Host where models, tools, and local file systems converge, orchestrating context across all three rather than merely displaying code."
-    why: "Traditional editors only show files; AI-First IDEs actively mediate between models and tools."
-
-  - id: "ch01-five-powers-ai-stack-020"
-    type: thinking
-    difficulty: intermediate
-    front: "Why did the industry shift from building 'Custom Agents' to building 'Modular Skills' at Layer 3?"
-    back: "BECAUSE modular skills are portable across platforms, use progressive disclosure to manage context, and give agents permanent reusable capabilities instead of one-off custom configurations."
-    why: "Custom agents were locked to specific platforms and required rebuilding for each new environment."
-
-  - id: "ch01-five-powers-ai-stack-021"
-    type: thinking
-    difficulty: advanced
-    front: "How does progressive disclosure work in the Agent Skills standard?"
-    back: "BECAUSE an agent reads only skill metadata (name and description) first, then loads full instructions and scripts only when the task specifically requires them, avoiding information overload."
-    why: "Loading all documentation upfront would waste context window capacity on irrelevant information."
-
-  - id: "ch01-five-powers-ai-stack-022"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does skill portability matter for the agent ecosystem?"
-    back: "BECAUSE a skill written for one platform (like Claude Code) works instantly in others (Gemini CLI, OpenAI Codex), THEREFORE preventing vendor lock-in and protecting the skill author's investment."
-    why: "Without portability, switching AI providers means rewriting all agent capabilities."
-
-  - id: "ch01-five-powers-ai-stack-023"
-    type: recall
-    difficulty: basic
-    front: "In the modern AI stack analogy, what does MCP correspond to?"
-    back: "The 'USB cable' that connects agents to databases, Slack, Jira, and other services."
-
-  - id: "ch01-five-powers-ai-stack-024"
-    type: recall
-    difficulty: intermediate
-    front: "In the modern AI stack analogy, what do Agent Skills correspond to?"
-    back: "The 'App' that teaches agents how to use connections to achieve goals."
-
-  - id: "ch01-five-powers-ai-stack-025"
-    type: thinking
-    difficulty: advanced
-    front: "Why is MCP's bidirectional sampling a significant breakthrough?"
-    back: "BECAUSE it allows MCP servers (like databases) to ask the LLM questions before returning results, enabling collaborative optimization rather than one-way command execution."
-    why: "Previously communication was one-way from model to tool, limiting intelligent coordination."
-
-  - id: "ch01-five-powers-ai-stack-026"
-    type: thinking
-    difficulty: advanced
-    front: "Why is MCP classified as a protocol rather than a product?"
-    back: "BECAUSE MCP is a universal standard (like HTTP) that defines how agents connect to any data source or service, not a downloadable tool — any vendor can implement it."
-    why: "Protocols enable interoperability across implementations; products lock users to one vendor."
-
-  - id: "ch01-five-powers-ai-stack-027"
-    type: recall
-    difficulty: intermediate
-    front: "What were two key problems with the 2024 pre-MCP 'Tool Silos' approach?"
-    back: "Custom API for every tool and high vendor lock-in."
-
-  - id: "ch01-five-powers-ai-stack-028"
-    type: thinking
-    difficulty: advanced
-    front: "Why did skill authoring replace prompt engineering as the core design challenge by 2026?"
-    back: "BECAUSE structured SKILL.md files with YAML metadata encode permanent, portable, reusable capabilities, while system prompts were long, fragile, and had to be rewritten for each interaction."
-    why: "Prompts are ephemeral instructions; skills are durable institutional knowledge."
-
-  - id: "ch01-five-powers-ai-stack-029"
-    type: thinking
-    difficulty: advanced
-    front: "How do skills give agents permanent capabilities compared to one-time prompts?"
-    back: "BECAUSE a skill bundles metadata, logic scripts, and step-by-step procedures into a reusable folder, THEREFORE the agent gains a lasting capability it can invoke repeatedly without re-instruction."
-    why: "Prompts must be re-supplied each session, while skills persist as files in the repository."
-
-  - id: "ch01-five-powers-ai-stack-030"
-    type: recall
-    difficulty: intermediate
-    front: "What standard does agentskills.io provide for AI agents?"
-    back: "A standard for portable, modular agent skills with SKILL.md files."
+- id: ch01-five-powers-ai-stack-001
+  type: recall
+  difficulty: basic
+  front: What paradigm shift does agentic AI introduce in how humans interact with software?
+  back: From navigation-based User Interface to conversation-based User Intent.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-002
+  type: recall
+  difficulty: basic
+  front: What is the interaction model for traditional software UX?
+  back: User → Interface → Action.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-003
+  type: recall
+  difficulty: basic
+  front: What is the interaction model for agentic UX?
+  back: User Intent → Agent → Orchestrated Actions.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-004
+  type: recall
+  difficulty: basic
+  front: In the hotel booking comparison, how many manual steps does traditional UX require versus agentic UX exchanges?
+  back: 14 manual steps versus 3 conversational exchanges.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-005
+  type: recall
+  difficulty: basic
+  front: What are the three phases of AI evolution in chronological order?
+  back: Predictive AI, Generative AI, Agentic AI.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-006
+  type: recall
+  difficulty: basic
+  front: What does Predictive AI do, and what is a well-known example?
+  back: 'Forecasts outcomes from historical data. Example: Netflix recommendations.'
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-007
+  type: recall
+  difficulty: basic
+  front: What does Generative AI do, and what is a well-known example?
+  back: 'Creates new content from patterns when prompted. Example: ChatGPT.'
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-008
+  type: thinking
+  difficulty: intermediate
+  front: Why does Agentic AI represent a bigger shift than Generative AI?
+  back: BECAUSE Generative AI only creates content when prompted, while Agentic AI autonomously initiates, coordinates, and completes multi-step workflows without waiting for each command.
+  why: Generative AI still requires human initiation for every output.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-009
+  type: recall
+  difficulty: basic
+  front: What are the Five Powers of AI agents?
+  back: See, Hear, Reason, Act, Remember.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-010
+  type: thinking
+  difficulty: intermediate
+  front: Why is the 'See' power essential for agents that interact with existing software?
+  back: BECAUSE most enterprise interfaces were designed for human eyes, not APIs, THEREFORE agents need visual processing to read screenshots, navigate GUIs, and interpret documents that lack structured
+    data formats.
+  why: Visual capability bridges the gap between human-designed interfaces and agent automation.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-011
+  type: thinking
+  difficulty: intermediate
+  front: Why does the 'Hear' power go beyond simple speech-to-text transcription?
+  back: BECAUSE understanding spoken requests requires interpreting intent and detecting sentiment, not just converting audio to words, THEREFORE Hear enables agents to respond appropriately to tone and
+    meaning, not just literal content.
+  why: Sentiment detection adds a reasoning layer that transforms raw audio into actionable understanding.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-012
+  type: thinking
+  difficulty: intermediate
+  front: How does the 'Reason' power differ from simple rule-based automation?
+  back: BECAUSE Reason enables analyzing tradeoffs, making context-aware decisions, and chaining multi-step logic (if X then Y then Z), rather than following fixed predetermined rules.
+  why: Rule-based systems cannot adapt to novel situations or weigh competing constraints.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-013
+  type: recall
+  difficulty: intermediate
+  front: What does the 'Act' power enable an AI agent to do?
+  back: Call APIs, perform actions across multiple systems, coordinate workflows, and retry on failure.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-014
+  type: thinking
+  difficulty: intermediate
+  front: How does the 'Remember' power differ from an LLM's built-in memory?
+  back: BECAUSE Remember is an application-level capability that stores user preferences, history, and domain knowledge persistently, while LLM memory is stateless and resets each session.
+  why: LLMs have no persistent memory between conversations without external storage.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-015
+  type: thinking
+  difficulty: intermediate
+  front: Why does the hotel booking agent infer transportation needs without being asked?
+  back: BECAUSE the Remember power stores user context and past patterns, while the Reason power analyzes the meeting context to anticipate related logistics like airport transfers.
+  why: Combining memory of preferences with contextual reasoning enables proactive orchestration.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-016
+  type: thinking
+  difficulty: advanced
+  front: Why do the Five Powers create autonomous orchestration only when combined?
+  back: BECAUSE each power alone is limited — See without Act cannot execute, Reason without Remember lacks context. THEREFORE only their combination enables end-to-end autonomous workflows that adapt to
+    user needs.
+  why: Individual capabilities like vision or reasoning are useful but cannot complete multi-step tasks alone.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-017
+  type: recall
+  difficulty: intermediate
+  front: What are the three layers of the modern AI stack?
+  back: Frontier Models, AI-First IDEs, Agent Skills.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-018
+  type: recall
+  difficulty: intermediate
+  front: What role do Frontier Models serve in the AI stack (Layer 1)?
+  back: They are the reasoning engines with native agentic reasoning capabilities.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-019
+  type: thinking
+  difficulty: intermediate
+  front: Why are AI-First IDEs called 'Context Orchestrators' rather than just code editors?
+  back: BECAUSE they serve as the Skill Host where models, tools, and local file systems converge, orchestrating context across all three rather than merely displaying code.
+  why: Traditional editors only show files; AI-First IDEs actively mediate between models and tools.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-020
+  type: thinking
+  difficulty: intermediate
+  front: Why did the industry shift from building 'Custom Agents' to building 'Modular Skills' at Layer 3?
+  back: BECAUSE modular skills are portable across platforms, use progressive disclosure to manage context, and give agents permanent reusable capabilities instead of one-off custom configurations.
+  why: Custom agents were locked to specific platforms and required rebuilding for each new environment.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-021
+  type: thinking
+  difficulty: advanced
+  front: How does progressive disclosure work in the Agent Skills standard?
+  back: BECAUSE an agent reads only skill metadata (name and description) first, then loads full instructions and scripts only when the task specifically requires them, avoiding information overload.
+  why: Loading all documentation upfront would waste context window capacity on irrelevant information.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-022
+  type: thinking
+  difficulty: intermediate
+  front: Why does skill portability matter for the agent ecosystem?
+  back: BECAUSE a skill written for one platform (like Claude Code) works instantly in others (Gemini CLI, OpenAI Codex), THEREFORE preventing vendor lock-in and protecting the skill author's investment.
+  why: Without portability, switching AI providers means rewriting all agent capabilities.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-023
+  type: recall
+  difficulty: basic
+  front: In the modern AI stack analogy, what does MCP correspond to?
+  back: The 'USB cable' that connects agents to databases, Slack, Jira, and other services.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-024
+  type: recall
+  difficulty: intermediate
+  front: In the modern AI stack analogy, what do Agent Skills correspond to?
+  back: The 'App' that teaches agents how to use connections to achieve goals.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-025
+  type: thinking
+  difficulty: advanced
+  front: Why is MCP's bidirectional sampling a significant breakthrough?
+  back: BECAUSE it allows MCP servers (like databases) to ask the LLM questions before returning results, enabling collaborative optimization rather than one-way command execution.
+  why: Previously communication was one-way from model to tool, limiting intelligent coordination.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-026
+  type: thinking
+  difficulty: advanced
+  front: Why is MCP classified as a protocol rather than a product?
+  back: BECAUSE MCP is a universal standard (like HTTP) that defines how agents connect to any data source or service, not a downloadable tool — any vendor can implement it.
+  why: Protocols enable interoperability across implementations; products lock users to one vendor.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-027
+  type: recall
+  difficulty: intermediate
+  front: What were two key problems with the 2024 pre-MCP 'Tool Silos' approach?
+  back: Custom API for every tool and high vendor lock-in.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-028
+  type: thinking
+  difficulty: advanced
+  front: Why did skill authoring replace prompt engineering as the core design challenge by 2026?
+  back: BECAUSE structured SKILL.md files with YAML metadata encode permanent, portable, reusable capabilities, while system prompts were long, fragile, and had to be rewritten for each interaction.
+  why: Prompts are ephemeral instructions; skills are durable institutional knowledge.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-029
+  type: thinking
+  difficulty: advanced
+  front: How do skills give agents permanent capabilities compared to one-time prompts?
+  back: BECAUSE a skill bundles metadata, logic scripts, and step-by-step procedures into a reusable folder, THEREFORE the agent gains a lasting capability it can invoke repeatedly without re-instruction.
+  why: Prompts must be re-supplied each session, while skills persist as files in the repository.
+  tags:
+  - five-powers
+  - ai-stack
+- id: ch01-five-powers-ai-stack-030
+  type: recall
+  difficulty: intermediate
+  front: What standard does agentskills.io provide for AI agents?
+  back: A standard for portable, modular agent skills with SKILL.md files.
+  tags:
+  - five-powers
+  - ai-stack

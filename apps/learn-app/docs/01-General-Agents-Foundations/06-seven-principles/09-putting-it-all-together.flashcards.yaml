@@ -1,116 +1,162 @@
 deck:
-  id: "ch06-09-putting-it-all-together"
-  title: "Putting It All Together: Workflows in Practice"
-  description: "How the seven principles combine in real-world workflows, the Director's Loop mindset, principle selection by task type, and reusable workflow templates."
-  tags: ["workflows", "seven-principles", "directors-loop", "synthesis", "workflow-templates", "meta-principle"]
+  id: ch06-09-putting-it-all-together
+  title: 'Putting It All Together: Workflows in Practice'
+  description: How the seven principles combine in real-world workflows, the Director's Loop mindset, principle selection by task type, and reusable workflow templates.
+  tags:
+  - workflows
+  - seven-principles
+  - directors-loop
+  - synthesis
+  - workflow-templates
+  - meta-principle
   version: 2
-
 cards:
-  - id: "ch06-09-putting-it-all-together-001"
-    type: recall
-    difficulty: basic
-    front: "In the Director's Loop, what is your new role when working with an AI agent?"
-    back: "Director who manages, reviews, and approves — not the typist writing code."
+- id: ch06-09-putting-it-all-together-001
+  type: recall
+  difficulty: basic
+  front: In the Director's Loop, what is your new role when working with an AI agent?
+  back: Director who manages, reviews, and approves — not the typist writing code.
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-002
+  type: thinking
+  difficulty: intermediate
+  front: Why does treating the AI as a junior developer with infinite energy require all seven principles?
+  back: BECAUSE a tireless agent with no institutional knowledge will work endlessly in wrong directions, THEREFORE the principles provide direction, context, guardrails, and verification that substitute
+    for experience.
+  why: What specific disasters happen when even one principle is missing from the management framework?
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-003
+  type: recall
+  difficulty: basic
+  front: What four things does an AI agent need from its human director?
+  back: Clear direction, context, guardrails, and verification.
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-004
+  type: thinking
+  difficulty: intermediate
+  front: Why does debugging prioritize Principles 1, 3, and 7 over the others?
+  back: BECAUSE debugging requires investigating live systems, confirming fixes work, and understanding what happened, THEREFORE terminal access, verification, and observability address the core debugging
+    needs directly.
+  why: What would go wrong if you debugged with only P2 and P4 instead?
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-005
+  type: recall
+  difficulty: basic
+  front: Which three principles are most critical for refactoring a large module?
+  back: P2 (Code as Interface), P4 (Small Reversible Decomposition), P5 (Persisting State).
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-006
+  type: thinking
+  difficulty: advanced
+  front: How does principle prioritization differ between a quick bug fix and a new feature?
+  back: BECAUSE a bug fix is a narrow investigate-fix-verify cycle needing only P1, P3, P7, THEREFORE a new feature spans the full lifecycle and requires all seven principles for specification, decomposition,
+    safety, and persistence.
+  why: What makes a new feature's scope inherently demand principles that a bug fix can skip?
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-007
+  type: recall
+  difficulty: intermediate
+  front: In the Quick Fix template, what does the AI do immediately after you describe the problem?
+  back: Reads files to understand the codebase using Principles 1 and 7.
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-008
+  type: thinking
+  difficulty: intermediate
+  front: Why is a failed verification attempt valuable information rather than wasted effort?
+  back: BECAUSE a failed fix reveals what does not work and narrows the solution space, THEREFORE reverting cleanly via P4 and learning from the failure produces a better-targeted second approach.
+  why: How does clean reversal enable learning from failure instead of compounding it?
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-009
+  type: recall
+  difficulty: intermediate
+  front: In Template 1b, what four-step recovery sequence follows a failed verification?
+  back: Identify why it failed (P7), revert cleanly (P4), propose new approach, return to review step.
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-010
+  type: thinking
+  difficulty: intermediate
+  front: Why does the Feature Development template start with writing a test before any implementation?
+  back: BECAUSE a test expresses requirements as executable code (P2), THEREFORE it creates an unambiguous specification the AI can implement against and verify automatically at each step.
+  why: What happens when you skip the test-first step and describe requirements in natural language instead?
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-011
+  type: recall
+  difficulty: basic
+  front: What is the first step in the Refactoring Pattern template?
+  back: Document the current state using Principle 5 (Persisting State in Files).
+  tags:
+  - workflows
+  - seven-principles
+- id: ch06-09-putting-it-all-together-012
+  type: thinking
+  difficulty: advanced
+  front: Why should someone scoring 0-2 on the self-assessment start with Verification and Observability specifically?
+  back: BECAUSE P3 catches broken changes before they compound and P7 reveals what the AI actually did, THEREFORE these two alone transform a blind high-risk workflow into a trackable one even without the
+    other five.
+  why: Why are these two sufficient to prevent most disasters while other principles are not?
+  tags:
+  - self-assessment
+  - verification
+  - observability
+- id: ch06-09-putting-it-all-together-013
+  type: recall
+  difficulty: intermediate
+  front: What four levels make up the Project Health Score on the 7-principle self-assessment?
+  back: '0-2: Cowboy Coder.
 
-  - id: "ch06-09-putting-it-all-together-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does treating the AI as a junior developer with infinite energy require all seven principles?"
-    back: "BECAUSE a tireless agent with no institutional knowledge will work endlessly in wrong directions, THEREFORE the principles provide direction, context, guardrails, and verification that substitute for experience."
-    why: "What specific disasters happen when even one principle is missing from the management framework?"
+    3-4: Collaborator.
 
-  - id: "ch06-09-putting-it-all-together-003"
-    type: recall
-    difficulty: basic
-    front: "What four things does an AI agent need from its human director?"
-    back: "Clear direction, context, guardrails, and verification."
+    5-6: Agent Architect.
 
-  - id: "ch06-09-putting-it-all-together-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does debugging prioritize Principles 1, 3, and 7 over the others?"
-    back: "BECAUSE debugging requires investigating live systems, confirming fixes work, and understanding what happened, THEREFORE terminal access, verification, and observability address the core debugging needs directly."
-    why: "What would go wrong if you debugged with only P2 and P4 instead?"
-
-  - id: "ch06-09-putting-it-all-together-005"
-    type: recall
-    difficulty: basic
-    front: "Which three principles are most critical for refactoring a large module?"
-    back: "P2 (Code as Interface), P4 (Small Reversible Decomposition), P5 (Persisting State)."
-
-  - id: "ch06-09-putting-it-all-together-006"
-    type: thinking
-    difficulty: advanced
-    front: "How does principle prioritization differ between a quick bug fix and a new feature?"
-    back: "BECAUSE a bug fix is a narrow investigate-fix-verify cycle needing only P1, P3, P7, THEREFORE a new feature spans the full lifecycle and requires all seven principles for specification, decomposition, safety, and persistence."
-    why: "What makes a new feature's scope inherently demand principles that a bug fix can skip?"
-
-  - id: "ch06-09-putting-it-all-together-007"
-    type: recall
-    difficulty: intermediate
-    front: "In the Quick Fix template, what does the AI do immediately after you describe the problem?"
-    back: "Reads files to understand the codebase using Principles 1 and 7."
-
-  - id: "ch06-09-putting-it-all-together-008"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is a failed verification attempt valuable information rather than wasted effort?"
-    back: "BECAUSE a failed fix reveals what does not work and narrows the solution space, THEREFORE reverting cleanly via P4 and learning from the failure produces a better-targeted second approach."
-    why: "How does clean reversal enable learning from failure instead of compounding it?"
-
-  - id: "ch06-09-putting-it-all-together-009"
-    type: recall
-    difficulty: intermediate
-    front: "In Template 1b, what four-step recovery sequence follows a failed verification?"
-    back: "Identify why it failed (P7), revert cleanly (P4), propose new approach, return to review step."
-
-  - id: "ch06-09-putting-it-all-together-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the Feature Development template start with writing a test before any implementation?"
-    back: "BECAUSE a test expresses requirements as executable code (P2), THEREFORE it creates an unambiguous specification the AI can implement against and verify automatically at each step."
-    why: "What happens when you skip the test-first step and describe requirements in natural language instead?"
-
-  - id: "ch06-09-putting-it-all-together-011"
-    type: recall
-    difficulty: basic
-    front: "What is the first step in the Refactoring Pattern template?"
-    back: "Document the current state using Principle 5 (Persisting State in Files)."
-
-  - id: "ch06-09-putting-it-all-together-012"
-    type: thinking
-    difficulty: advanced
-    front: "Why should someone scoring 0-2 on the self-assessment start with Verification and Observability specifically?"
-    back: "BECAUSE P3 catches broken changes before they compound and P7 reveals what the AI actually did, THEREFORE these two alone transform a blind high-risk workflow into a trackable one even without the other five."
-    why: "Why are these two sufficient to prevent most disasters while other principles are not?"
-    tags: ["self-assessment", "verification", "observability"]
-
-  - id: "ch06-09-putting-it-all-together-013"
-    type: recall
-    difficulty: intermediate
-    front: "What four levels make up the Project Health Score on the 7-principle self-assessment?"
-    back: "0-2: Cowboy Coder.\n3-4: Collaborator.\n5-6: Agent Architect.\n7: Master Director."
-    tags: ["self-assessment", "health-score"]
-
-  - id: "ch06-09-putting-it-all-together-014"
-    type: thinking
-    difficulty: intermediate
-    front: "How does explicitly naming principles in your prompts improve agent output?"
-    back: "BECAUSE stating which principle to apply gives the AI a framework for HOW to work, THEREFORE it follows structured methods like small-step decomposition instead of interpreting vague instructions freely."
-    why: "What is the difference between directing methodology versus directing only the task outcome?"
-    tags: ["prompting", "directors-loop"]
-
-  - id: "ch06-09-putting-it-all-together-015"
-    type: recall
-    difficulty: basic
-    front: "What is the meta-principle underlying all seven principles of agent work?"
-    back: "General agents are most effective leveraging computing fundamentals rather than fighting them."
-    tags: ["meta-principle", "synthesis"]
-
-  - id: "ch06-09-putting-it-all-together-016"
-    type: thinking
-    difficulty: advanced
-    front: "Why are file systems, shells, and version control foundations for agent workflows rather than limitations?"
-    back: "BECAUSE these computing primitives provide deterministic state, executable commands, and reversible history, THEREFORE agents built on them produce reliable, debuggable workflows instead of fragile conversational ones."
-    why: "What breaks when an agent workflow avoids computing fundamentals and relies on conversation alone?"
-    tags: ["meta-principle", "computing-fundamentals"]
+    7: Master Director.'
+  tags:
+  - self-assessment
+  - health-score
+- id: ch06-09-putting-it-all-together-014
+  type: thinking
+  difficulty: intermediate
+  front: How does explicitly naming principles in your prompts improve agent output?
+  back: BECAUSE stating which principle to apply gives the AI a framework for HOW to work, THEREFORE it follows structured methods like small-step decomposition instead of interpreting vague instructions
+    freely.
+  why: What is the difference between directing methodology versus directing only the task outcome?
+  tags:
+  - prompting
+  - directors-loop
+- id: ch06-09-putting-it-all-together-015
+  type: recall
+  difficulty: basic
+  front: What is the meta-principle underlying all seven principles of agent work?
+  back: General agents are most effective leveraging computing fundamentals rather than fighting them.
+  tags:
+  - meta-principle
+  - synthesis
+- id: ch06-09-putting-it-all-together-016
+  type: thinking
+  difficulty: advanced
+  front: Why are file systems, shells, and version control foundations for agent workflows rather than limitations?
+  back: BECAUSE these computing primitives provide deterministic state, executable commands, and reversible history, THEREFORE agents built on them produce reliable, debuggable workflows instead of fragile
+    conversational ones.
+  why: What breaks when an agent workflow avoids computing fundamentals and relies on conversation alone?
+  tags:
+  - meta-principle
+  - computing-fundamentals

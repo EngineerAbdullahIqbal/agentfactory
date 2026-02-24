@@ -1,105 +1,157 @@
 deck:
-  id: "ch06-05-persisting-state-in-files"
-  title: "Principle 5: Persisting State in Files"
-  description: "Why file-based state management is the key to effective AI collaboration and reproducible workflows."
-  tags: ["state-persistence", "claude-md", "context-engineering", "adrs", "reproducibility"]
+  id: ch06-05-persisting-state-in-files
+  title: 'Principle 5: Persisting State in Files'
+  description: Why file-based state management is the key to effective AI collaboration and reproducible workflows.
+  tags:
+  - state-persistence
+  - claude-md
+  - context-engineering
+  - adrs
+  - reproducibility
   version: 2
-
 cards:
-  - id: "ch06-05-persisting-state-in-files-001"
-    type: recall
-    difficulty: basic
-    front: "What fundamental limitation forces you to re-explain project conventions to AI every session?"
-    back: "AI systems are stateless — each session starts as a blank slate with no memory."
+- id: ch06-05-persisting-state-in-files-001
+  type: recall
+  difficulty: basic
+  front: What fundamental limitation forces you to re-explain project conventions to AI every session?
+  back: AI systems are stateless — each session starts as a blank slate with no memory.
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-002
+  type: thinking
+  difficulty: intermediate
+  front: Why does writing CLAUDE.md once save more time than it costs?
+  back: BECAUSE re-explaining context takes ~10 minutes per session, THEREFORE over 20 sessions you waste 3+ hours, while writing CLAUDE.md once takes ~20 minutes and costs zero seconds per session after.
+  why: After how many sessions does the investment break even?
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-003
+  type: recall
+  difficulty: basic
+  front: What are the four levels of the state hierarchy from most to least volatile?
+  back: 'Ephemeral (every session)
 
-  - id: "ch06-05-persisting-state-in-files-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does writing CLAUDE.md once save more time than it costs?"
-    back: "BECAUSE re-explaining context takes ~10 minutes per session, THEREFORE over 20 sessions you waste 3+ hours, while writing CLAUDE.md once takes ~20 minutes and costs zero seconds per session after."
-    why: "After how many sessions does the investment break even?"
+    Session (within session)
 
-  - id: "ch06-05-persisting-state-in-files-003"
-    type: recall
-    difficulty: basic
-    front: "What are the four levels of the state hierarchy from most to least volatile?"
-    back: "Ephemeral (every session)\nSession (within session)\nProject (weekly/monthly)\nPermanent (rarely changes)"
+    Project (weekly/monthly)
 
-  - id: "ch06-05-persisting-state-in-files-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why should ephemeral state like 'currently debugging login bug' not go in CLAUDE.md?"
-    back: "BECAUSE ephemeral state changes every session, THEREFORE persisting it clutters the context file with stale information that misleads future sessions instead of helping them."
-    why: "What distinguishes state worth persisting from state that should expire?"
+    Permanent (rarely changes)'
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-004
+  type: thinking
+  difficulty: intermediate
+  front: Why should ephemeral state like 'currently debugging login bug' not go in CLAUDE.md?
+  back: BECAUSE ephemeral state changes every session, THEREFORE persisting it clutters the context file with stale information that misleads future sessions instead of helping them.
+  why: What distinguishes state worth persisting from state that should expire?
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-005
+  type: recall
+  difficulty: basic
+  front: What does Claude Code automatically do when it finds a CLAUDE.md file in your project root?
+  back: Reads it and treats project-specific conventions as context overriding generic patterns.
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-006
+  type: thinking
+  difficulty: intermediate
+  front: How does CLAUDE.md differ from a standard README.md in what it communicates to AI?
+  back: BECAUSE CLAUDE.md contains project-specific conventions, patterns, and constraints formatted for AI consumption, THEREFORE it acts as a handshake that overrides generic AI behavior, while README.md
+    targets human developers with setup instructions.
+  why: What kind of information belongs in CLAUDE.md but not in README.md?
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-007
+  type: recall
+  difficulty: intermediate
+  front: What is the purpose of an Architecture Decision Record (ADR)?
+  back: Documents why a technical decision was made, including context, alternatives considered, and tradeoffs.
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-008
+  type: thinking
+  difficulty: advanced
+  front: Why are ADRs especially valuable for AI collaboration, not just human teams?
+  back: BECAUSE AI has no memory of past discussions, THEREFORE without ADRs it treats every technical choice as open and may re-suggest previously rejected alternatives, wasting time re-opening settled
+    debates.
+  why: How does an ADR prevent the AI from undoing a deliberate architectural choice?
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-009
+  type: recall
+  difficulty: intermediate
+  front: What five elements make a project fully reproducible from its files alone?
+  back: 'CLAUDE.md (conventions)
 
-  - id: "ch06-05-persisting-state-in-files-005"
-    type: recall
-    difficulty: basic
-    front: "What does Claude Code automatically do when it finds a CLAUDE.md file in your project root?"
-    back: "Reads it and treats project-specific conventions as context overriding generic patterns."
+    README.md (how to run)
 
-  - id: "ch06-05-persisting-state-in-files-006"
-    type: thinking
-    difficulty: intermediate
-    front: "How does CLAUDE.md differ from a standard README.md in what it communicates to AI?"
-    back: "BECAUSE CLAUDE.md contains project-specific conventions, patterns, and constraints formatted for AI consumption, THEREFORE it acts as a handshake that overrides generic AI behavior, while README.md targets human developers with setup instructions."
-    why: "What kind of information belongs in CLAUDE.md but not in README.md?"
+    ADRs (why decisions were made)
 
-  - id: "ch06-05-persisting-state-in-files-007"
-    type: recall
-    difficulty: intermediate
-    front: "What is the purpose of an Architecture Decision Record (ADR)?"
-    back: "Documents why a technical decision was made, including context, alternatives considered, and tradeoffs."
+    Code comments (tricky logic)
 
-  - id: "ch06-05-persisting-state-in-files-008"
-    type: thinking
-    difficulty: advanced
-    front: "Why are ADRs especially valuable for AI collaboration, not just human teams?"
-    back: "BECAUSE AI has no memory of past discussions, THEREFORE without ADRs it treats every technical choice as open and may re-suggest previously rejected alternatives, wasting time re-opening settled debates."
-    why: "How does an ADR prevent the AI from undoing a deliberate architectural choice?"
-
-  - id: "ch06-05-persisting-state-in-files-009"
-    type: recall
-    difficulty: intermediate
-    front: "What five elements make a project fully reproducible from its files alone?"
-    back: "CLAUDE.md (conventions)\nREADME.md (how to run)\nADRs (why decisions were made)\nCode comments (tricky logic)\nTests (expected behavior)"
-
-  - id: "ch06-05-persisting-state-in-files-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why must context file updates be committed in the same commit as code changes?"
-    back: "BECAUSE separating them breaks atomic changes (Principle 4), THEREFORE the repo can enter a state where code says one thing and CLAUDE.md says another, feeding the AI contradictory context."
-    why: "What specific anti-pattern does this practice prevent?"
-
-  - id: "ch06-05-persisting-state-in-files-011"
-    type: recall
-    difficulty: basic
-    front: "What is the session journal pattern in AI collaboration?"
-    back: "Asking AI to maintain a scratchpad file recording its reasoning, progress, and open questions."
-
-  - id: "ch06-05-persisting-state-in-files-012"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is documenting semicolons and indentation in CLAUDE.md an anti-pattern?"
-    back: "BECAUSE formatting conventions are enforced by linters automatically, THEREFORE putting them in CLAUDE.md wastes limited context space on trivia instead of meaningful decisions like architecture patterns."
-    why: "What distinguishes a convention worth documenting from one a tool should enforce?"
-
-  - id: "ch06-05-persisting-state-in-files-013"
-    type: recall
-    difficulty: intermediate
-    front: "What is the golden rule for CLAUDE.md length?"
-    back: "Keep it under 200 lines."
-
-  - id: "ch06-05-persisting-state-in-files-013b"
-    type: recall
-    difficulty: intermediate
-    front: "What should you do when CLAUDE.md exceeds 200 lines?"
-    back: "Move detailed content to separate files AI reads only when relevant."
-    tags: ["claude-md", "context-engineering"]
-
-  - id: "ch06-05-persisting-state-in-files-014"
-    type: thinking
-    difficulty: advanced
-    front: "How does file-based state persistence produce compounding rather than linear knowledge gains?"
-    back: "BECAUSE each session reads accumulated context from all previous documentation, THEREFORE new sessions start further along each time while onboarding cost stays constant, unlike stateless sessions that reset to zero every time."
-    why: "What property of files makes them better knowledge accumulators than conversation history?"
+    Tests (expected behavior)'
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-010
+  type: thinking
+  difficulty: intermediate
+  front: Why must context file updates be committed in the same commit as code changes?
+  back: BECAUSE separating them breaks atomic changes (Principle 4), THEREFORE the repo can enter a state where code says one thing and CLAUDE.md says another, feeding the AI contradictory context.
+  why: What specific anti-pattern does this practice prevent?
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-011
+  type: recall
+  difficulty: basic
+  front: What is the session journal pattern in AI collaboration?
+  back: Asking AI to maintain a scratchpad file recording its reasoning, progress, and open questions.
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-012
+  type: thinking
+  difficulty: intermediate
+  front: Why is documenting semicolons and indentation in CLAUDE.md an anti-pattern?
+  back: BECAUSE formatting conventions are enforced by linters automatically, THEREFORE putting them in CLAUDE.md wastes limited context space on trivia instead of meaningful decisions like architecture
+    patterns.
+  why: What distinguishes a convention worth documenting from one a tool should enforce?
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-013
+  type: recall
+  difficulty: intermediate
+  front: What is the golden rule for CLAUDE.md length?
+  back: Keep it under 200 lines.
+  tags:
+  - state-persistence
+  - claude-md
+- id: ch06-05-persisting-state-in-files-013b
+  type: recall
+  difficulty: intermediate
+  front: What should you do when CLAUDE.md exceeds 200 lines?
+  back: Move detailed content to separate files AI reads only when relevant.
+  tags:
+  - claude-md
+  - context-engineering
+- id: ch06-05-persisting-state-in-files-014
+  type: thinking
+  difficulty: advanced
+  front: How does file-based state persistence produce compounding rather than linear knowledge gains?
+  back: BECAUSE each session reads accumulated context from all previous documentation, THEREFORE new sessions start further along each time while onboarding cost stays constant, unlike stateless sessions
+    that reset to zero every time.
+  why: What property of files makes them better knowledge accumulators than conversation history?
+  tags:
+  - state-persistence
+  - claude-md

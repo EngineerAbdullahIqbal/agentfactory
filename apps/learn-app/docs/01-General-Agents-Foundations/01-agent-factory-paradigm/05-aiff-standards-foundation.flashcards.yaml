@@ -1,216 +1,311 @@
 deck:
-  id: "ch01-aiff-standards"
-  title: "AIFF Standards - The Foundation"
-  description: "Flashcards covering the five AAIF open standards (MCP, AGENTS.md, goose, Skills, MCP Apps) that enable portable, sellable Digital FTEs across AI platforms."
-  tags: [AAIF, MCP, AGENTS.md, goose, Agent Skills, MCP Apps, open standards, Linux Foundation, portability]
+  id: ch01-aiff-standards
+  title: AIFF Standards - The Foundation
+  description: Flashcards covering the five AAIF open standards (MCP, AGENTS.md, goose, Skills, MCP Apps) that enable portable, sellable Digital FTEs across AI platforms.
+  tags:
+  - AAIF
+  - MCP
+  - AGENTS.md
+  - goose
+  - Agent Skills
+  - MCP Apps
+  - open standards
+  - Linux Foundation
+  - portability
   version: 1
-
 cards:
-  - id: ch01-aiff-standards-001
-    type: recall
-    difficulty: basic
-    front: "What does AAIF stand for and what organization hosts it?"
-    back: "Agentic AI Foundation, hosted by the Linux Foundation."
+- id: ch01-aiff-standards-001
+  type: recall
+  difficulty: basic
+  front: What does AAIF stand for and what organization hosts it?
+  back: Agentic AI Foundation, hosted by the Linux Foundation.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-002
+  type: thinking
+  difficulty: intermediate
+  front: Why did competitors like OpenAI, Anthropic, and Block donate technologies to neutral governance?
+  back: BECAUSE infrastructure everyone needs should belong to everyone. THEREFORE companies compete on products built atop shared foundations, not on the foundations themselves.
+  why: Shared standards create larger markets that benefit all participants more than fragmented proprietary ecosystems.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-003
+  type: recall
+  difficulty: basic
+  front: When was the Agentic AI Foundation officially announced?
+  back: December 9, 2025.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-004
+  type: recall
+  difficulty: basic
+  front: What analogy does the lesson use to explain AAIF's role in AI agent standards?
+  back: The USB Implementers Forum standardizing device connectors.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-005
+  type: thinking
+  difficulty: intermediate
+  front: Why does the USB analogy apply to AAIF and AI agent portability?
+  back: BECAUSE before USB, every device needed proprietary connectors, creating waste and lock-in. THEREFORE AAIF standardizes agent connections so Digital FTEs work across any platform without rebuilding.
+  why: Standards eliminate redundant integration work and let vendors compete on quality instead of lock-in.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-006
+  type: recall
+  difficulty: intermediate
+  front: What are the five standards governed by AAIF?
+  back: '- MCP (connectivity)
 
-  - id: ch01-aiff-standards-002
-    type: thinking
-    difficulty: intermediate
-    front: "Why did competitors like OpenAI, Anthropic, and Block donate technologies to neutral governance?"
-    back: "BECAUSE infrastructure everyone needs should belong to everyone. THEREFORE companies compete on products built atop shared foundations, not on the foundations themselves."
-    why: "Shared standards create larger markets that benefit all participants more than fragmented proprietary ecosystems."
+    - AGENTS.md (adaptability)
 
-  - id: ch01-aiff-standards-003
-    type: recall
-    difficulty: basic
-    front: "When was the Agentic AI Foundation officially announced?"
-    back: "December 9, 2025."
+    - goose (architecture)
 
-  - id: ch01-aiff-standards-004
-    type: recall
-    difficulty: basic
-    front: "What analogy does the lesson use to explain AAIF's role in AI agent standards?"
-    back: "The USB Implementers Forum standardizing device connectors."
+    - Agent Skills (expertise)
 
-  - id: ch01-aiff-standards-005
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the USB analogy apply to AAIF and AI agent portability?"
-    back: "BECAUSE before USB, every device needed proprietary connectors, creating waste and lock-in. THEREFORE AAIF standardizes agent connections so Digital FTEs work across any platform without rebuilding."
-    why: "Standards eliminate redundant integration work and let vendors compete on quality instead of lock-in."
+    - MCP Apps Extension (interfaces)
 
-  - id: ch01-aiff-standards-006
-    type: recall
-    difficulty: intermediate
-    front: "What are the five standards governed by AAIF?"
-    back: |
-      - MCP (connectivity)
-      - AGENTS.md (adaptability)
-      - goose (architecture)
-      - Agent Skills (expertise)
-      - MCP Apps Extension (interfaces)
+    '
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-007
+  type: thinking
+  difficulty: intermediate
+  front: How does MCP solve the M-times-N integration problem?
+  back: BECAUSE without MCP, M AI platforms connecting to N tools requires M times N custom integrations. THEREFORE MCP provides one standard protocol so each tool writes one server and every agent connects
+    through it.
+  why: A single protocol reduces integration work from multiplicative to additive scaling.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-008
+  type: recall
+  difficulty: basic
+  front: What are the three universal primitives defined by MCP?
+  back: Resources, Tools, and Prompts.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-009
+  type: recall
+  difficulty: intermediate
+  front: 'What physical metaphor maps to each MCP primitive: Resources, Tools, and Prompts?'
+  back: '- Resources: eyes (read-only)
 
-  - id: ch01-aiff-standards-007
-    type: thinking
-    difficulty: intermediate
-    front: "How does MCP solve the M-times-N integration problem?"
-    back: "BECAUSE without MCP, M AI platforms connecting to N tools requires M times N custom integrations. THEREFORE MCP provides one standard protocol so each tool writes one server and every agent connects through it."
-    why: "A single protocol reduces integration work from multiplicative to additive scaling."
+    - Tools: hands (change state)
 
-  - id: ch01-aiff-standards-008
-    type: recall
-    difficulty: basic
-    front: "What are the three universal primitives defined by MCP?"
-    back: "Resources, Tools, and Prompts."
+    - Prompts: playbooks (templates)
 
-  - id: ch01-aiff-standards-009
-    type: recall
-    difficulty: intermediate
-    front: "What physical metaphor maps to each MCP primitive: Resources, Tools, and Prompts?"
-    back: |
-      - Resources: eyes (read-only)
-      - Tools: hands (change state)
-      - Prompts: playbooks (templates)
+    '
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-010
+  type: thinking
+  difficulty: intermediate
+  front: Why would exposing 'send email' as an MCP Resource instead of a Tool break a Digital FTE?
+  back: BECAUSE Resources are read-only data access, not state-changing actions. THEREFORE the agent could see the send-email option but never actually execute it, making the capability useless.
+  why: Misclassifying primitives silently disables agent capabilities without obvious errors.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-011
+  type: recall
+  difficulty: basic
+  front: What are the three layers in MCP's architecture?
+  back: Host, Client, and Server.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-012
+  type: recall
+  difficulty: basic
+  front: Which company originally created MCP and when was it open-sourced?
+  back: Anthropic, open-sourced November 2024.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-013
+  type: thinking
+  difficulty: advanced
+  front: Why does AGENTS.md exist as a separate file from README.md?
+  back: BECAUSE humans and AI agents need fundamentally different information. README answers 'What is this project?' for humans, while AGENTS.md answers 'How should I behave?' with build commands, code
+    style rules, and security constraints that agents can follow precisely.
+  why: Agents need actionable instructions like exact commands and constraints, not motivation or getting-started tutorials.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-014
+  type: recall
+  difficulty: intermediate
+  front: What four categories of information belong in an AGENTS.md file?
+  back: '- Build and test commands
 
-  - id: ch01-aiff-standards-010
-    type: thinking
-    difficulty: intermediate
-    front: "Why would exposing 'send email' as an MCP Resource instead of a Tool break a Digital FTE?"
-    back: "BECAUSE Resources are read-only data access, not state-changing actions. THEREFORE the agent could see the send-email option but never actually execute it, making the capability useless."
-    why: "Misclassifying primitives silently disables agent capabilities without obvious errors."
+    - Code style guidelines
 
-  - id: ch01-aiff-standards-011
-    type: recall
-    difficulty: basic
-    front: "What are the three layers in MCP's architecture?"
-    back: "Host, Client, and Server."
+    - Security constraints
 
-  - id: ch01-aiff-standards-012
-    type: recall
-    difficulty: basic
-    front: "Which company originally created MCP and when was it open-sourced?"
-    back: "Anthropic, open-sourced November 2024."
+    - Architecture patterns
 
-  - id: ch01-aiff-standards-013
-    type: thinking
-    difficulty: advanced
-    front: "Why does AGENTS.md exist as a separate file from README.md?"
-    back: "BECAUSE humans and AI agents need fundamentally different information. README answers 'What is this project?' for humans, while AGENTS.md answers 'How should I behave?' with build commands, code style rules, and security constraints that agents can follow precisely."
-    why: "Agents need actionable instructions like exact commands and constraints, not motivation or getting-started tutorials."
+    '
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-015
+  type: thinking
+  difficulty: intermediate
+  front: How does the AGENTS.md hierarchy rule enable monorepo support?
+  back: BECAUSE the nearest AGENTS.md file takes precedence, different subprojects within a monorepo can define their own conventions. THEREFORE a frontend folder uses React rules while the backend folder
+    uses Express rules, all under shared company-wide rules.
+  why: Precedence-based inheritance lets local rules override global rules without conflict.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-016
+  type: recall
+  difficulty: basic
+  front: Which company created AGENTS.md and which company created goose?
+  back: OpenAI created AGENTS.md. Block created goose.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-017
+  type: thinking
+  difficulty: advanced
+  front: Why should you study goose's source code when Claude Code already exists as a General Agent?
+  back: BECAUSE goose is open source under Apache 2.0, you can examine its production-tested patterns for MCP client connections, streaming, and context management. THEREFORE when building Custom Agents,
+    you adapt battle-tested enterprise patterns rather than solving from first principles.
+  why: Closed-source agents show what agents can do, but open-source agents show how they do it.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-018
+  type: recall
+  difficulty: intermediate
+  front: What percentage of Block engineers use goose, and how much time do they save weekly?
+  back: 75% of Block engineers, saving 8-10+ hours per week.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-019
+  type: thinking
+  difficulty: intermediate
+  front: Why is goose's local-first execution pattern important for enterprise clients?
+  back: BECAUSE enterprise clients have sensitive intellectual property and compliance requirements. THEREFORE local-first execution keeps code and data on-premises, meeting security and privacy constraints
+    that cloud-only solutions cannot satisfy.
+  why: Data sovereignty is often a non-negotiable requirement in enterprise sales.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-020
+  type: thinking
+  difficulty: intermediate
+  front: Why do Agent Skills and MCP serve complementary rather than competing purposes?
+  back: BECAUSE MCP provides connectivity to external tools (the hands) while Skills encode domain expertise on how to use those tools effectively (the training). THEREFORE an agent needs both to act competently,
+    not just access systems.
+  why: Access without expertise produces technically functional but professionally incompetent behavior.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-021
+  type: recall
+  difficulty: basic
+  front: What file format packages domain expertise into a portable agent skill?
+  back: SKILL.md with YAML frontmatter.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-022
+  type: thinking
+  difficulty: advanced
+  front: Why does progressive disclosure in Skills use three loading levels instead of loading everything at once?
+  back: BECAUSE loading all skills upfront would exhaust the context window. THEREFORE L1 loads only metadata (~100 tokens), L2 loads full instructions when activated, and L3 loads resources when needed,
+    cutting token usage 80-98%.
+  why: Context window is a finite resource; progressive disclosure maximizes available capacity for actual work.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-023
+  type: recall
+  difficulty: intermediate
+  front: What token cost does each progressive disclosure level use for Agent Skills?
+  back: '- L1 startup: ~100 tokens per skill
 
-  - id: ch01-aiff-standards-014
-    type: recall
-    difficulty: intermediate
-    front: "What four categories of information belong in an AGENTS.md file?"
-    back: |
-      - Build and test commands
-      - Code style guidelines
-      - Security constraints
-      - Architecture patterns
+    - L2 activated: under 5K tokens
 
-  - id: ch01-aiff-standards-015
-    type: thinking
-    difficulty: intermediate
-    front: "How does the AGENTS.md hierarchy rule enable monorepo support?"
-    back: "BECAUSE the nearest AGENTS.md file takes precedence, different subprojects within a monorepo can define their own conventions. THEREFORE a frontend folder uses React rules while the backend folder uses Express rules, all under shared company-wide rules."
-    why: "Precedence-based inheritance lets local rules override global rules without conflict."
+    - L3 needed: supporting resources loaded
 
-  - id: ch01-aiff-standards-016
-    type: recall
-    difficulty: basic
-    front: "Which company created AGENTS.md and which company created goose?"
-    back: "OpenAI created AGENTS.md. Block created goose."
-
-  - id: ch01-aiff-standards-017
-    type: thinking
-    difficulty: advanced
-    front: "Why should you study goose's source code when Claude Code already exists as a General Agent?"
-    back: "BECAUSE goose is open source under Apache 2.0, you can examine its production-tested patterns for MCP client connections, streaming, and context management. THEREFORE when building Custom Agents, you adapt battle-tested enterprise patterns rather than solving from first principles."
-    why: "Closed-source agents show what agents can do, but open-source agents show how they do it."
-
-  - id: ch01-aiff-standards-018
-    type: recall
-    difficulty: intermediate
-    front: "What percentage of Block engineers use goose, and how much time do they save weekly?"
-    back: "75% of Block engineers, saving 8-10+ hours per week."
-
-  - id: ch01-aiff-standards-019
-    type: thinking
-    difficulty: intermediate
-    front: "Why is goose's local-first execution pattern important for enterprise clients?"
-    back: "BECAUSE enterprise clients have sensitive intellectual property and compliance requirements. THEREFORE local-first execution keeps code and data on-premises, meeting security and privacy constraints that cloud-only solutions cannot satisfy."
-    why: "Data sovereignty is often a non-negotiable requirement in enterprise sales."
-
-  - id: ch01-aiff-standards-020
-    type: thinking
-    difficulty: intermediate
-    front: "Why do Agent Skills and MCP serve complementary rather than competing purposes?"
-    back: "BECAUSE MCP provides connectivity to external tools (the hands) while Skills encode domain expertise on how to use those tools effectively (the training). THEREFORE an agent needs both to act competently, not just access systems."
-    why: "Access without expertise produces technically functional but professionally incompetent behavior."
-
-  - id: ch01-aiff-standards-021
-    type: recall
-    difficulty: basic
-    front: "What file format packages domain expertise into a portable agent skill?"
-    back: "SKILL.md with YAML frontmatter."
-
-  - id: ch01-aiff-standards-022
-    type: thinking
-    difficulty: advanced
-    front: "Why does progressive disclosure in Skills use three loading levels instead of loading everything at once?"
-    back: "BECAUSE loading all skills upfront would exhaust the context window. THEREFORE L1 loads only metadata (~100 tokens), L2 loads full instructions when activated, and L3 loads resources when needed, cutting token usage 80-98%."
-    why: "Context window is a finite resource; progressive disclosure maximizes available capacity for actual work."
-
-  - id: ch01-aiff-standards-023
-    type: recall
-    difficulty: intermediate
-    front: "What token cost does each progressive disclosure level use for Agent Skills?"
-    back: |
-      - L1 startup: ~100 tokens per skill
-      - L2 activated: under 5K tokens
-      - L3 needed: supporting resources loaded
-
-  - id: ch01-aiff-standards-024
-    type: recall
-    difficulty: intermediate
-    front: "What is the MCP Apps Extension specification number and what does it enable?"
-    back: "SEP-1865. Enables MCP servers to deliver interactive UI like buttons, forms, and charts."
-
-  - id: ch01-aiff-standards-025
-    type: thinking
-    difficulty: advanced
-    front: "Why does chat alone limit a Digital FTE's competitive viability?"
-    back: "BECAUSE data visualizations become text descriptions, forms become sequential questions, and tables become formatting puzzles in chat. THEREFORE competitors offering buttons, charts, and dashboards via MCP Apps or Apps SDK deliver superior user experiences that win deals."
-    why: "Users expect visual interfaces for complex data; text-only interaction creates friction that reduces adoption."
-
-  - id: ch01-aiff-standards-026
-    type: recall
-    difficulty: basic
-    front: "What URI scheme does MCP Apps Extension use for UI templates?"
-    back: "The ui:// URI scheme with sandboxed iframe security."
-
-  - id: ch01-aiff-standards-027
-    type: thinking
-    difficulty: advanced
-    front: "Why should you build on Apps SDK today while watching MCP Apps Extension for tomorrow?"
-    back: "BECAUSE Apps SDK provides immediate distribution to 800M+ ChatGPT users with production-ready tooling. THEREFORE you capture revenue now while MCP Apps Extension matures as the cross-platform standard for portability across all AI hosts."
-    why: "Distribution today generates revenue; waiting for perfect portability delays income indefinitely."
-
-  - id: ch01-aiff-standards-028
-    type: recall
-    difficulty: intermediate
-    front: "Name four AAIF platinum member companies besides Anthropic, OpenAI, and Block?"
-    back: "Amazon Web Services, Bloomberg, Cloudflare, Google, and Microsoft (any four)."
-
-  - id: ch01-aiff-standards-029
-    type: thinking
-    difficulty: advanced
-    front: "How do AAIF standards transform a Digital FTE from a demo into a sellable product?"
-    back: "BECAUSE MCP enables any-CRM connectivity, AGENTS.md enables any-client adaptability, and Skills enable any-platform portability. THEREFORE the agent serves diverse clients without per-client rebuilding, turning a single-vendor demo into scalable recurring revenue."
-    why: "Portability across platforms and clients is what converts technical capability into business viability."
-
-  - id: ch01-aiff-standards-030
-    type: thinking
-    difficulty: intermediate
-    front: "How does the Stripe payment processing example illustrate the MCP-Skills relationship?"
-    back: "BECAUSE the MCP server provides raw API access to Stripe operations like creating charges and refunds. THEREFORE the Skill adds domain expertise on retry logic, error recovery, and customer communication, combining connectivity with professional judgment."
-    why: "API access alone produces naive automation; domain expertise transforms it into professional-grade behavior."
+    '
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-024
+  type: recall
+  difficulty: intermediate
+  front: What is the MCP Apps Extension specification number and what does it enable?
+  back: SEP-1865. Enables MCP servers to deliver interactive UI like buttons, forms, and charts.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-025
+  type: thinking
+  difficulty: advanced
+  front: Why does chat alone limit a Digital FTE's competitive viability?
+  back: BECAUSE data visualizations become text descriptions, forms become sequential questions, and tables become formatting puzzles in chat. THEREFORE competitors offering buttons, charts, and dashboards
+    via MCP Apps or Apps SDK deliver superior user experiences that win deals.
+  why: Users expect visual interfaces for complex data; text-only interaction creates friction that reduces adoption.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-026
+  type: recall
+  difficulty: basic
+  front: What URI scheme does MCP Apps Extension use for UI templates?
+  back: The ui:// URI scheme with sandboxed iframe security.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-027
+  type: thinking
+  difficulty: advanced
+  front: Why should you build on Apps SDK today while watching MCP Apps Extension for tomorrow?
+  back: BECAUSE Apps SDK provides immediate distribution to 800M+ ChatGPT users with production-ready tooling. THEREFORE you capture revenue now while MCP Apps Extension matures as the cross-platform standard
+    for portability across all AI hosts.
+  why: Distribution today generates revenue; waiting for perfect portability delays income indefinitely.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-028
+  type: recall
+  difficulty: intermediate
+  front: Name four AAIF platinum member companies besides Anthropic, OpenAI, and Block?
+  back: Amazon Web Services, Bloomberg, Cloudflare, Google, and Microsoft (any four).
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-029
+  type: thinking
+  difficulty: advanced
+  front: How do AAIF standards transform a Digital FTE from a demo into a sellable product?
+  back: BECAUSE MCP enables any-CRM connectivity, AGENTS.md enables any-client adaptability, and Skills enable any-platform portability. THEREFORE the agent serves diverse clients without per-client rebuilding,
+    turning a single-vendor demo into scalable recurring revenue.
+  why: Portability across platforms and clients is what converts technical capability into business viability.
+  tags:
+  - AAIF
+  - MCP
+- id: ch01-aiff-standards-030
+  type: thinking
+  difficulty: intermediate
+  front: How does the Stripe payment processing example illustrate the MCP-Skills relationship?
+  back: BECAUSE the MCP server provides raw API access to Stripe operations like creating charges and refunds. THEREFORE the Skill adds domain expertise on retry logic, error recovery, and customer communication,
+    combining connectivity with professional judgment.
+  why: API access alone produces naive automation; domain expertise transforms it into professional-grade behavior.
+  tags:
+  - AAIF
+  - MCP

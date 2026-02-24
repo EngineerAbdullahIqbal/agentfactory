@@ -1,189 +1,294 @@
 deck:
-  id: "ch04-05-tacit-knowledge"
-  title: "The Two-Way Problem: Getting Tacit Knowledge In and Out"
-  description: "Flashcards covering the bidirectional knowledge transfer challenge between professionals and AI—tacit knowledge encoding strategies, memory systems, and understanding extraction techniques."
-  tags: [tacit-knowledge, context-engineering, memory-systems, knowledge-transfer, two-way-problem]
+  id: ch04-05-tacit-knowledge
+  title: 'The Two-Way Problem: Getting Tacit Knowledge In and Out'
+  description: Flashcards covering the bidirectional knowledge transfer challenge between professionals and AI—tacit knowledge encoding strategies, memory systems, and understanding extraction techniques.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+  - memory-systems
+  - knowledge-transfer
+  - two-way-problem
   version: 1
-
 cards:
-  - id: "ch04-05-tacit-knowledge-001"
-    type: recall
-    difficulty: basic
-    front: "What is the Two-Way Problem in AI collaboration?"
-    back: "Transferring tacit knowledge to AI AND extracting understanding from AI output."
+- id: ch04-05-tacit-knowledge-001
+  type: recall
+  difficulty: basic
+  front: What is the Two-Way Problem in AI collaboration?
+  back: Transferring tacit knowledge to AI AND extracting understanding from AI output.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-002
+  type: recall
+  difficulty: basic
+  front: What are the two directions of the Two-Way Problem?
+  back: 'Professional -> AI (transfer tacit knowledge)
 
-  - id: "ch04-05-tacit-knowledge-002"
-    type: recall
-    difficulty: basic
-    front: "What are the two directions of the Two-Way Problem?"
-    back: "Professional -> AI (transfer tacit knowledge)\nAI -> Professional (extract understanding)"
+    AI -> Professional (extract understanding)'
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-003
+  type: thinking
+  difficulty: intermediate
+  front: Why do most professionals neglect the AI-to-Professional direction?
+  back: BECAUSE they focus on crafting instructions and prompts, THEREFORE they accept AI deliverables without verifying they understand the reasoning behind them, creating work products they cannot defend.
+  why: What risk does this neglect create for accountability?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-004
+  type: recall
+  difficulty: basic
+  front: What is tacit knowledge?
+  back: Unwritten rules experienced professionals carry that never makes it into documentation.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-005
+  type: recall
+  difficulty: intermediate
+  front: Name three categories of tacit knowledge a professional might carry?
+  back: 'Historical context behind decisions
 
-  - id: "ch04-05-tacit-knowledge-003"
-    type: thinking
-    difficulty: intermediate
-    front: "Why do most professionals neglect the AI-to-Professional direction?"
-    back: "BECAUSE they focus on crafting instructions and prompts, THEREFORE they accept AI deliverables without verifying they understand the reasoning behind them, creating work products they cannot defend."
-    why: "What risk does this neglect create for accountability?"
+    Unwritten rules and conventions
 
-  - id: "ch04-05-tacit-knowledge-004"
-    type: recall
-    difficulty: basic
-    front: "What is tacit knowledge?"
-    back: "Unwritten rules experienced professionals carry that never makes it into documentation."
+    Relationship dynamics and preferences'
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-006
+  type: thinking
+  difficulty: intermediate
+  front: Why can AI read documentation but still miss what makes expertise valuable?
+  back: BECAUSE documentation records what someone thought to write down, THEREFORE it misses the dozens of micro-decisions, historical context, and relationship dynamics that shaped current practice.
+  why: What gap exists between documented procedures and actual professional judgment?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-007
+  type: recall
+  difficulty: basic
+  front: What are four things that tacit knowledge is NOT?
+  back: 'Documented procedures and policies
 
-  - id: "ch04-05-tacit-knowledge-005"
-    type: recall
-    difficulty: intermediate
-    front: "Name three categories of tacit knowledge a professional might carry?"
-    back: "Historical context behind decisions\nUnwritten rules and conventions\nRelationship dynamics and preferences"
+    Written style guides
 
-  - id: "ch04-05-tacit-knowledge-006"
-    type: thinking
-    difficulty: intermediate
-    front: "Why can AI read documentation but still miss what makes expertise valuable?"
-    back: "BECAUSE documentation records what someone thought to write down, THEREFORE it misses the dozens of micro-decisions, historical context, and relationship dynamics that shaped current practice."
-    why: "What gap exists between documented procedures and actual professional judgment?"
+    Formal decision records
 
-  - id: "ch04-05-tacit-knowledge-007"
-    type: recall
-    difficulty: basic
-    front: "What are four things that tacit knowledge is NOT?"
-    back: "Documented procedures and policies\nWritten style guides\nFormal decision records\nOnboarding materials and handbooks"
+    Onboarding materials and handbooks'
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-008
+  type: thinking
+  difficulty: advanced
+  front: How does the indemnification clause example illustrate tacit knowledge failure?
+  back: BECAUSE the instruction says 'use standard language,' the AI applies it everywhere. THEREFORE without knowing about a past $2M claim requiring gross negligence carve-outs for service agreements,
+    it produces legally risky output.
+  why: What makes domain-specific exceptions invisible to AI without explicit encoding?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-009
+  type: thinking
+  difficulty: intermediate
+  front: Why must context documents for AI be structurally different from human documents?
+  back: BECAUSE human documents assume shared experience and implicit understanding, THEREFORE AI documents must explicitly state constraints, include historical rationale, and provide concrete examples
+    rather than vague references.
+  why: What shared context do human readers bring that AI fundamentally lacks?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-010
+  type: thinking
+  difficulty: intermediate
+  front: How do documents written for AI differ from documents written for humans?
+  back: BECAUSE AI lacks shared experience and implicit understanding, THEREFORE AI documents must be explicit about constraints, include the 'why' behind decisions, and provide concrete examples instead
+    of references.
+  why: What assumptions do human-readable documents make that AI cannot fulfill?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-011
+  type: recall
+  difficulty: intermediate
+  front: What three characteristics do effective AI-consumable context documents share?
+  back: 'Explicit constraints
 
-  - id: "ch04-05-tacit-knowledge-008"
-    type: thinking
-    difficulty: advanced
-    front: "How does the indemnification clause example illustrate tacit knowledge failure?"
-    back: "BECAUSE the instruction says 'use standard language,' the AI applies it everywhere. THEREFORE without knowing about a past $2M claim requiring gross negligence carve-outs for service agreements, it produces legally risky output."
-    why: "What makes domain-specific exceptions invisible to AI without explicit encoding?"
+    The ''why'' behind decisions
 
-  - id: "ch04-05-tacit-knowledge-009"
-    type: thinking
-    difficulty: intermediate
-    front: "Why must context documents for AI be structurally different from human documents?"
-    back: "BECAUSE human documents assume shared experience and implicit understanding, THEREFORE AI documents must explicitly state constraints, include historical rationale, and provide concrete examples rather than vague references."
-    why: "What shared context do human readers bring that AI fundamentally lacks?"
+    Concrete examples of what NOT to do'
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-012
+  type: recall
+  difficulty: basic
+  front: What is Strategy 2 for encoding tacit knowledge into AI?
+  back: Encoded preferences using examples over rules.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-013
+  type: thinking
+  difficulty: intermediate
+  front: Why are example-based preferences more effective than rule-based ones?
+  back: BECAUSE AI pattern-matches better against concrete examples than vague principles, THEREFORE a GOOD/BAD example pair transfers style and judgment more reliably than abstract rules like 'write clearly.'
+  why: What makes generic rules like 'be professional' unhelpful for AI?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-014
+  type: recall
+  difficulty: basic
+  front: What are the four steps of the OpenAI Memory Lifecycle?
+  back: 'Inject
 
-  - id: "ch04-05-tacit-knowledge-010"
-    type: thinking
-    difficulty: intermediate
-    front: "How do documents written for AI differ from documents written for humans?"
-    back: "BECAUSE AI lacks shared experience and implicit understanding, THEREFORE AI documents must be explicit about constraints, include the 'why' behind decisions, and provide concrete examples instead of references."
-    why: "What assumptions do human-readable documents make that AI cannot fulfill?"
+    Reason
 
-  - id: "ch04-05-tacit-knowledge-011"
-    type: recall
-    difficulty: intermediate
-    front: "What three characteristics do effective AI-consumable context documents share?"
-    back: "Explicit constraints\nThe 'why' behind decisions\nConcrete examples of what NOT to do"
+    Distill
 
-  - id: "ch04-05-tacit-knowledge-012"
-    type: recall
-    difficulty: basic
-    front: "What is Strategy 2 for encoding tacit knowledge into AI?"
-    back: "Encoded preferences using examples over rules."
+    Consolidate'
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-015
+  type: recall
+  difficulty: intermediate
+  front: What happens during the 'inject' phase of the memory lifecycle?
+  back: Saved memories are rendered as context at session start.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-016
+  type: thinking
+  difficulty: intermediate
+  front: Why does the memory lifecycle include both distill and consolidate phases?
+  back: BECAUSE preferences emerge unpredictably during conversation, THEREFORE distill captures them in-session while consolidate merges them into persistent storage afterward, separating real-time capture
+    from organized archival.
+  why: What would happen if new preferences were only captured at the end of a session?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-017
+  type: thinking
+  difficulty: intermediate
+  front: Why should 'we are reviewing the Johnson contract' be session memory, not global?
+  back: BECAUSE it describes current context that becomes irrelevant tomorrow, THEREFORE persisting it as global memory adds noise that clutters future sessions without providing value.
+  why: What harm does over-globalizing session-specific information cause?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-018
+  type: recall
+  difficulty: basic
+  front: What is the difference between global memory and session memory?
+  back: Global persists across all sessions; session is relevant only to the current task.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-019
+  type: thinking
+  difficulty: advanced
+  front: Why is incorrect memory scoping dangerous in both directions?
+  back: BECAUSE over-globalizing creates noise that clutters every future session, and under-globalizing forces re-explaining the same preferences repeatedly, THEREFORE correct scoping requires judging
+    whether knowledge affects future sessions.
+  why: How does memory scoping connect to the signal-vs-noise concept from Lesson 4?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-020
+  type: recall
+  difficulty: intermediate
+  front: What is the 'require explanations' strategy for extracting understanding from AI?
+  back: Ask AI to explain its reasoning before producing the deliverable.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-021
+  type: thinking
+  difficulty: intermediate
+  front: How does requiring explanations before the deliverable change your review process?
+  back: BECAUSE you understand the intent before seeing the output, THEREFORE the deliverable becomes verification of the explanation rather than a puzzle you must reverse-engineer for reasoning.
+  why: What cognitive shift occurs when you review output with known intent versus unknown?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-022
+  type: recall
+  difficulty: intermediate
+  front: What four elements should structured output from AI include?
+  back: 'Summary with key decisions
 
-  - id: "ch04-05-tacit-knowledge-013"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are example-based preferences more effective than rule-based ones?"
-    back: "BECAUSE AI pattern-matches better against concrete examples than vague principles, THEREFORE a GOOD/BAD example pair transfers style and judgment more reliably than abstract rules like 'write clearly.'"
-    why: "What makes generic rules like 'be professional' unhelpful for AI?"
+    Component descriptions with rationale
 
-  - id: "ch04-05-tacit-knowledge-014"
-    type: recall
-    difficulty: basic
-    front: "What are the four steps of the OpenAI Memory Lifecycle?"
-    back: "Inject\nReason\nDistill\nConsolidate"
+    Review notes with verification steps
 
-  - id: "ch04-05-tacit-knowledge-015"
-    type: recall
-    difficulty: intermediate
-    front: "What happens during the 'inject' phase of the memory lifecycle?"
-    back: "Saved memories are rendered as context at session start."
+    Future considerations and limitations'
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-023
+  type: thinking
+  difficulty: intermediate
+  front: How does progressive review improve understanding of AI-generated work?
+  back: BECAUSE each step builds on the previous one, THEREFORE by the time you reach the final deliverable you have accumulated understanding piece by piece instead of trying to absorb a complete complex
+    output at once.
+  why: Why is incremental understanding more reliable than reviewing a complete deliverable?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-024
+  type: thinking
+  difficulty: advanced
+  front: Why is reviewing a 20-page AI deliverable at once worse than progressive review?
+  back: BECAUSE absorbing a complete complex deliverable requires holding all reasoning in your head simultaneously, THEREFORE progressive review builds understanding piece by piece, catching misalignment
+    early before it compounds.
+  why: How does progressive review reduce the risk of using work you do not understand?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-025
+  type: recall
+  difficulty: basic
+  front: What is the Rubber Duck Test for AI-generated work?
+  back: Explain the AI's output back to it and ask it to correct your misunderstandings.
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-026
+  type: thinking
+  difficulty: intermediate
+  front: Why does the Rubber Duck Test reveal gaps in understanding?
+  back: BECAUSE if you cannot explain the deliverable back accurately, you do not truly understand it, THEREFORE the test exposes gaps before you use, defend, or maintain work you cannot fully articulate.
+  why: What practical risk exists in using AI deliverables you cannot explain to colleagues?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-027
+  type: thinking
+  difficulty: advanced
+  front: How does tacit knowledge connect to the signal-vs-noise ratio from Lesson 4?
+  back: BECAUSE tacit knowledge captures the judgment and context that drives real decisions, THEREFORE it is inherently high-signal content that maximizes context quality when properly encoded into the
+    attention budget.
+  why: Why is tacit knowledge considered high-signal by definition?
+  tags:
+  - tacit-knowledge
+  - context-engineering
+- id: ch04-05-tacit-knowledge-028
+  type: recall
+  difficulty: intermediate
+  front: In the lab's tacit knowledge extraction protocol, what are the five sections of the extraction document?
+  back: 'Historical Context
 
-  - id: "ch04-05-tacit-knowledge-016"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the memory lifecycle include both distill and consolidate phases?"
-    back: "BECAUSE preferences emerge unpredictably during conversation, THEREFORE distill captures them in-session while consolidate merges them into persistent storage afterward, separating real-time capture from organized archival."
-    why: "What would happen if new preferences were only captured at the end of a session?"
+    Unwritten Rules
 
-  - id: "ch04-05-tacit-knowledge-017"
-    type: thinking
-    difficulty: intermediate
-    front: "Why should 'we are reviewing the Johnson contract' be session memory, not global?"
-    back: "BECAUSE it describes current context that becomes irrelevant tomorrow, THEREFORE persisting it as global memory adds noise that clutters future sessions without providing value."
-    why: "What harm does over-globalizing session-specific information cause?"
+    Danger Zones
 
-  - id: "ch04-05-tacit-knowledge-018"
-    type: recall
-    difficulty: basic
-    front: "What is the difference between global memory and session memory?"
-    back: "Global persists across all sessions; session is relevant only to the current task."
+    Key Relationships
 
-  - id: "ch04-05-tacit-knowledge-019"
-    type: thinking
-    difficulty: advanced
-    front: "Why is incorrect memory scoping dangerous in both directions?"
-    back: "BECAUSE over-globalizing creates noise that clutters every future session, and under-globalizing forces re-explaining the same preferences repeatedly, THEREFORE correct scoping requires judging whether knowledge affects future sessions."
-    why: "How does memory scoping connect to the signal-vs-noise concept from Lesson 4?"
-
-  - id: "ch04-05-tacit-knowledge-020"
-    type: recall
-    difficulty: intermediate
-    front: "What is the 'require explanations' strategy for extracting understanding from AI?"
-    back: "Ask AI to explain its reasoning before producing the deliverable."
-
-  - id: "ch04-05-tacit-knowledge-021"
-    type: thinking
-    difficulty: intermediate
-    front: "How does requiring explanations before the deliverable change your review process?"
-    back: "BECAUSE you understand the intent before seeing the output, THEREFORE the deliverable becomes verification of the explanation rather than a puzzle you must reverse-engineer for reasoning."
-    why: "What cognitive shift occurs when you review output with known intent versus unknown?"
-
-  - id: "ch04-05-tacit-knowledge-022"
-    type: recall
-    difficulty: intermediate
-    front: "What four elements should structured output from AI include?"
-    back: "Summary with key decisions\nComponent descriptions with rationale\nReview notes with verification steps\nFuture considerations and limitations"
-
-  - id: "ch04-05-tacit-knowledge-023"
-    type: thinking
-    difficulty: intermediate
-    front: "How does progressive review improve understanding of AI-generated work?"
-    back: "BECAUSE each step builds on the previous one, THEREFORE by the time you reach the final deliverable you have accumulated understanding piece by piece instead of trying to absorb a complete complex output at once."
-    why: "Why is incremental understanding more reliable than reviewing a complete deliverable?"
-
-  - id: "ch04-05-tacit-knowledge-024"
-    type: thinking
-    difficulty: advanced
-    front: "Why is reviewing a 20-page AI deliverable at once worse than progressive review?"
-    back: "BECAUSE absorbing a complete complex deliverable requires holding all reasoning in your head simultaneously, THEREFORE progressive review builds understanding piece by piece, catching misalignment early before it compounds."
-    why: "How does progressive review reduce the risk of using work you do not understand?"
-
-  - id: "ch04-05-tacit-knowledge-025"
-    type: recall
-    difficulty: basic
-    front: "What is the Rubber Duck Test for AI-generated work?"
-    back: "Explain the AI's output back to it and ask it to correct your misunderstandings."
-
-  - id: "ch04-05-tacit-knowledge-026"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the Rubber Duck Test reveal gaps in understanding?"
-    back: "BECAUSE if you cannot explain the deliverable back accurately, you do not truly understand it, THEREFORE the test exposes gaps before you use, defend, or maintain work you cannot fully articulate."
-    why: "What practical risk exists in using AI deliverables you cannot explain to colleagues?"
-
-  - id: "ch04-05-tacit-knowledge-027"
-    type: thinking
-    difficulty: advanced
-    front: "How does tacit knowledge connect to the signal-vs-noise ratio from Lesson 4?"
-    back: "BECAUSE tacit knowledge captures the judgment and context that drives real decisions, THEREFORE it is inherently high-signal content that maximizes context quality when properly encoded into the attention budget."
-    why: "Why is tacit knowledge considered high-signal by definition?"
-
-  - id: "ch04-05-tacit-knowledge-028"
-    type: recall
-    difficulty: intermediate
-    front: "In the lab's tacit knowledge extraction protocol, what are the five sections of the extraction document?"
-    back: "Historical Context\nUnwritten Rules\nDanger Zones\nKey Relationships\nPolitical Landscape"
+    Political Landscape'
+  tags:
+  - tacit-knowledge
+  - context-engineering

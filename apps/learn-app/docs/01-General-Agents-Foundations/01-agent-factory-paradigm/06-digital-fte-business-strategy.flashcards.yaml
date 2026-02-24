@@ -1,313 +1,315 @@
 deck:
-  id: "ch01-digital-fte-business"
-  title: "Digital FTE Business Strategy"
-  description: "Competitive positioning, economics, monetization models, market entry strategy, and guardrails for building defensible AI products from domain expertise."
-  tags: ["digital-fte", "business-strategy", "monetization", "competitive-positioning", "guardrails"]
+  id: ch01-digital-fte-business
+  title: Digital FTE Business Strategy
+  description: Competitive positioning, economics, monetization models, market entry strategy, and guardrails for building defensible AI products from domain expertise.
+  tags:
+  - digital-fte
+  - business-strategy
+  - monetization
+  - competitive-positioning
+  - guardrails
   version: 1
-
 cards:
-  - id: "ch01-digital-fte-business-001a"
-    type: recall
-    front: "What does FTE stand for?"
-    back: "Full-Time Equivalent."
-    tags: ["fte-definition", "fundamentals"]
-    difficulty: "basic"
+- id: ch01-digital-fte-business-001
+  type: recall
+  front: What does FTE stand for and what does 1.0 FTE represent?
+  back: Full-Time Equivalent; one full-time worker (typically 40 hours/week).
+  tags:
+  - fte-definition
+  - fundamentals
+  difficulty: basic
+- id: ch01-digital-fte-business-002
+  type: thinking
+  front: Why does a Digital FTE replace a human operator while an AI productivity tool does not?
+  back: BECAUSE a Digital FTE targets complete outcomes end-to-end, THEREFORE no human operator is needed to drive the workflow. A tool still requires someone to operate it for each task.
+  tags:
+  - digital-fte
+  - fundamentals
+  difficulty: intermediate
+  why: Outcome-completeness is the dividing line between tool and autonomous agent.
+- id: ch01-digital-fte-business-003
+  type: thinking
+  front: Why did Sarah get displaced despite increasing her productivity 40% with AI tools?
+  back: BECAUSE she positioned AI as a productivity tool for her own tasks rather than encoding her expertise as a product. A startup launched a Digital FTE doing the same work for $500/month versus her
+    $10,000/month salary.
+  tags:
+  - sarah-marcus
+  - positioning
+  difficulty: intermediate
+  why: What would Sarah need to change to avoid displacement in a different domain?
+- id: ch01-digital-fte-business-004
+  type: recall
+  front: What did Marcus do differently from Sarah when building his Digital FTE?
+  back: He encoded domain expertise into an AI product he owned, rather than accelerating his own labor.
+  tags:
+  - sarah-marcus
+  - positioning
+  difficulty: basic
+- id: ch01-digital-fte-business-005
+  type: recall
+  front: In the 90/10 moat concept, what does the 90% represent?
+  back: Commodity work — structure, grammar, basic facts, and formatting that generic AI handles easily.
+  tags:
+  - 90-10-moat
+  - competitive-positioning
+  difficulty: basic
+- id: ch01-digital-fte-business-006
+  type: thinking
+  front: Why is the 10% domain expertise more valuable than the 90% AI can produce?
+  back: BECAUSE generic AI is trained on averages and misses nuance, edge cases, and context-specific judgment. Only deep domain experience can detect where AI output is wrong or shallow, making that verification
+    ability the defensible moat.
+  tags:
+  - 90-10-moat
+  - competitive-positioning
+  difficulty: intermediate
+  why: How does this moat erode if AI models improve to 95% domain accuracy?
+- id: ch01-digital-fte-business-007
+  type: thinking
+  front: Why is prompt engineering not a defensible moat?
+  back: BECAUSE learning to prompt is easy and AI models continuously improve at understanding natural language. The real moat is knowing what the correct answer should look like, which requires deep domain
+    experience.
+  tags:
+  - moat
+  - prompt-engineering
+  difficulty: intermediate
+  why: What skill should a domain expert invest in instead of prompt engineering?
+- id: ch01-digital-fte-business-008
+  type: thinking
+  front: Why could the contract lawyer's 10% domain moat catch a deal-killing error that AI missed?
+  back: BECAUSE AI drafted a technically correct NDA but lacked industry-specific social context, THEREFORE only the lawyer's 15 years of deal experience recognized that Clause 4 would kill the deal due
+    to unwritten social dynamics.
+  tags:
+  - 90-10-moat
+  - concrete-example
+  difficulty: intermediate
+  why: Illustrates that domain expertise detects contextual risks invisible to pattern-matching AI.
+- id: ch01-digital-fte-business-009
+  type: recall
+  front: What are the four reasons specialists win over generic AI tools?
+  back: '1. Network effects (vertical credibility)
 
-  - id: "ch01-digital-fte-business-001b"
-    type: recall
-    front: "What does 1.0 FTE represent in traditional HR?"
-    back: "One full-time employee's workload, typically 40 hours per week."
-    tags: ["fte-definition", "fundamentals"]
-    difficulty: "basic"
+    2. Regulatory moats (compliance knowledge)
 
-  - id: "ch01-digital-fte-business-002"
-    type: thinking
-    front: "Why does a Digital FTE replace a human operator while an AI productivity tool does not?"
-    back: "BECAUSE a Digital FTE targets complete outcomes end-to-end, THEREFORE no human operator is needed to drive the workflow. A tool still requires someone to operate it for each task."
-    tags: ["digital-fte", "fundamentals"]
-    difficulty: "intermediate"
-    why: "Outcome-completeness is the dividing line between tool and autonomous agent."
+    3. Switching costs (integration lock-in)
 
-  - id: "ch01-digital-fte-business-003"
-    type: thinking
-    front: "Why did Sarah get displaced despite increasing her productivity 40% with AI tools?"
-    back: "BECAUSE she positioned AI as a productivity tool for her own tasks rather than encoding her expertise as a product. A startup launched a Digital FTE doing the same work for $500/month versus her $10,000/month salary."
-    tags: ["sarah-marcus", "positioning"]
-    difficulty: "intermediate"
-    why: "What would Sarah need to change to avoid displacement in a different domain?"
+    4. Compounding improvement (customer data feedback)'
+  tags:
+  - specialist-advantage
+  - competitive-positioning
+  difficulty: basic
+- id: ch01-digital-fte-business-010
+  type: recall
+  front: What are the four layers in the Snakes and Ladders competitive framework?
+  back: '1. Consumer AI Backbone (snakes)
 
-  - id: "ch01-digital-fte-business-004"
-    type: recall
-    front: "What did Marcus do differently from Sarah when building his Digital FTE?"
-    back: "He encoded domain expertise into an AI product he owned, rather than accelerating his own labor."
-    tags: ["sarah-marcus", "positioning"]
-    difficulty: "basic"
+    2. General Agents as Developer Tools
 
-  - id: "ch01-digital-fte-business-005"
-    type: recall
-    front: "In the 90/10 moat concept, what does the 90% represent?"
-    back: "Commodity work — structure, grammar, basic facts, and formatting that generic AI handles easily."
-    tags: ["90-10-moat", "competitive-positioning"]
-    difficulty: "basic"
+    3. Custom Agents for Vertical Markets
 
-  - id: "ch01-digital-fte-business-006"
-    type: thinking
-    front: "Why is the 10% domain expertise more valuable than the 90% AI can produce?"
-    back: "BECAUSE generic AI is trained on averages and misses nuance, edge cases, and context-specific judgment. Only deep domain experience can detect where AI output is wrong or shallow, making that verification ability the defensible moat."
-    tags: ["90-10-moat", "competitive-positioning"]
-    difficulty: "intermediate"
-    why: "How does this moat erode if AI models improve to 95% domain accuracy?"
+    4. Orchestrator Layer (top)'
+  tags:
+  - snakes-ladders
+  - competitive-layers
+  difficulty: basic
+- id: ch01-digital-fte-business-011
+  type: thinking
+  front: Why should solo entrepreneurs avoid competing at Layer 1 of the Snakes and Ladders framework?
+  back: BECAUSE Layer 1 is a brutal, billion-dollar consumer AI war between OpenAI and Google. Only two players can survive, and competing there requires massive capital for data, compute, and marketing.
+  tags:
+  - snakes-ladders
+  - layer-1
+  difficulty: intermediate
+  why: How does this constraint change if a third company raises $10 billion?
+- id: ch01-digital-fte-business-012
+  type: thinking
+  front: How did Microsoft's Windows Mobile failure illustrate the Snakes and Ladders principle?
+  back: BECAUSE Microsoft tried to compete directly on consumer appeal against entrenched iOS and Android, collapsing to 5% market share by 2010. THEREFORE, the lesson is to dominate a developer or vertical
+    layer first, then integrate upward.
+  tags:
+  - snakes-ladders
+  - historical-example
+  difficulty: intermediate
+  why: What layer should Microsoft have targeted instead of consumer mobile?
+- id: ch01-digital-fte-business-014
+  type: thinking
+  front: Why does Scenario 2 (capacity expansion) measure ROI differently than Scenario 1 (cost replacement)?
+  back: BECAUSE Scenario 2 targets revenue captured from previously rejected customers, not cost savings. The company cannot hire fast enough, so ROI is measured in new revenue enabled rather than salary
+    reduction.
+  tags:
+  - economics
+  - capacity-expansion
+  difficulty: intermediate
+  why: When would a capacity expansion pitch be more persuasive than a cost-cutting pitch?
+- id: ch01-digital-fte-business-015
+  type: thinking
+  front: Why is insurance claims adjudication a poor candidate for a fully autonomous Digital FTE?
+  back: BECAUSE a single agent error can trigger a $100K+ lawsuit, THEREFORE the $3,500/month savings is dwarfed by potential $200K-$300K monthly liability from just 2-3 errors.
+  tags:
+  - economics
+  - risk-assessment
+  difficulty: intermediate
+  why: High error cost relative to savings makes the risk-reward ratio unacceptable.
+- id: ch01-digital-fte-business-016
+  type: recall
+  front: What is the first red flag when pitching a Digital FTE to a client?
+  back: The client cannot quantify their current pain in measurable cost or lost revenue.
+  tags:
+  - financial-pitch
+  - red-flags
+  difficulty: basic
+- id: ch01-digital-fte-business-017
+  type: recall
+  front: What is shadow mode deployment, and what is its purpose?
+  back: Agent runs alongside humans, logging recommendations without executing them while its accuracy is measured.
+  tags:
+  - shadow-mode
+  - deployment
+  difficulty: basic
+- id: ch01-digital-fte-business-018
+  type: thinking
+  front: How does the 90-10 efficiency multiplier reduce costs while maintaining quality?
+  back: BECAUSE the Digital FTE handles the 90% mechanical work at 50x lower cost and 24/7 availability, while humans focus only on the 10% requiring judgment. THEREFORE the same expertise output costs
+    20% with 5x capacity.
+  tags:
+  - efficiency-multiplier
+  - 90-10
+  difficulty: intermediate
+  why: What happens to quality if the boundary between mechanical and judgment work is drawn incorrectly?
+- id: ch01-digital-fte-business-019
+  type: recall
+  front: What are the four Digital FTE monetization models?
+  back: '1. Subscription (recurring revenue)
 
-  - id: "ch01-digital-fte-business-007"
-    type: thinking
-    front: "Why is prompt engineering not a defensible moat?"
-    back: "BECAUSE learning to prompt is easy and AI models continuously improve at understanding natural language. The real moat is knowing what the correct answer should look like, which requires deep domain experience."
-    tags: ["moat", "prompt-engineering"]
-    difficulty: "intermediate"
-    why: "What skill should a domain expert invest in instead of prompt engineering?"
+    2. Success Fee (aligned incentives)
 
-  - id: "ch01-digital-fte-business-008"
-    type: thinking
-    front: "Why could the contract lawyer's 10% domain moat catch a deal-killing error that AI missed?"
-    back: "BECAUSE AI drafted a technically correct NDA but lacked industry-specific social context, THEREFORE only the lawyer's 15 years of deal experience recognized that Clause 4 would kill the deal due to unwritten social dynamics."
-    tags: ["90-10-moat", "concrete-example"]
-    difficulty: "intermediate"
-    why: "Illustrates that domain expertise detects contextual risks invisible to pattern-matching AI."
+    3. License (enterprise self-hosted)
 
-  - id: "ch01-digital-fte-business-009"
-    type: recall
-    front: "What are the four reasons specialists win over generic AI tools?"
-    back: "1. Network effects (vertical credibility)\n2. Regulatory moats (compliance knowledge)\n3. Switching costs (integration lock-in)\n4. Compounding improvement (customer data feedback)"
-    tags: ["specialist-advantage", "competitive-positioning"]
-    difficulty: "basic"
+    4. Marketplace (volume/platform)'
+  tags:
+  - monetization
+  - revenue-models
+  difficulty: basic
+- id: ch01-digital-fte-business-020
+  type: thinking
+  front: Why do Digital FTEs charge for outcomes rather than per-seat like traditional SaaS?
+  back: BECAUSE Digital FTEs complete work autonomously without human operators, THEREFORE charging per seat is meaningless — value is measured in outcomes delivered, not humans using the tool.
+  tags:
+  - monetization
+  - saas-comparison
+  difficulty: intermediate
+  why: The pricing model follows from removing the human operator from the loop.
+- id: ch01-digital-fte-business-021
+  type: thinking
+  front: Why might a Success Fee model transition to a Subscription model over time?
+  back: BECAUSE once the client sees massive ROI (e.g., $1M revenue from $500/month cost), a flat subscription becomes more predictable for both parties. The client proposes upgrading to lock in value at
+    a fixed rate.
+  tags:
+  - monetization
+  - success-fee
+  - hybrid
+  difficulty: intermediate
+  why: What metric would trigger the client to propose this transition?
+- id: ch01-digital-fte-business-022
+  type: thinking
+  front: Why do enterprise customers prefer the License model for healthcare Digital FTEs?
+  back: BECAUSE data stays on their infrastructure, satisfying HIPAA, SOC 2, and GDPR compliance requirements without exposing patient data to external cloud services.
+  tags:
+  - monetization
+  - license
+  - compliance
+  difficulty: intermediate
+  why: What risk does the License model create for the builder that Subscription avoids?
+- id: ch01-digital-fte-business-024
+  type: recall
+  front: What are the three phases of the Piggyback Protocol Pivot (PPP) strategy?
+  back: '1. Infrastructure Layering (low-risk entry)
 
-  - id: "ch01-digital-fte-business-010"
-    type: recall
-    front: "What are the four layers in the Snakes and Ladders competitive framework?"
-    back: "1. Consumer AI Backbone (snakes)\n2. General Agents as Developer Tools\n3. Custom Agents for Vertical Markets\n4. Orchestrator Layer (top)"
-    tags: ["snakes-ladders", "competitive-layers"]
-    difficulty: "basic"
+    2. Market Validation (leverage ecosystems)
 
-  - id: "ch01-digital-fte-business-011"
-    type: thinking
-    front: "Why should solo entrepreneurs avoid competing at Layer 1 of the Snakes and Ladders framework?"
-    back: "BECAUSE Layer 1 is a brutal, billion-dollar consumer AI war between OpenAI and Google. Only two players can survive, and competing there requires massive capital for data, compute, and marketing."
-    tags: ["snakes-ladders", "layer-1"]
-    difficulty: "intermediate"
-    why: "How does this constraint change if a third company raises $10 billion?"
+    3. Independent AI-Native Solution (pivot)'
+  tags:
+  - ppp
+  - market-entry
+  difficulty: basic
+- id: ch01-digital-fte-business-026
+  type: thinking
+  front: Why does standardizing Agent Skills during Phase 1 create a competitive moat in Phase 3?
+  back: BECAUSE skills built on standardized interfaces can be re-pointed from incumbent APIs to your own native platform. Users experience zero friction during the switch, making migration invisible and
+    your platform defensible.
+  tags:
+  - ppp
+  - agent-skills
+  - moat
+  difficulty: advanced
+  why: What would happen if you hard-coded integrations instead of using standardized skills?
+- id: ch01-digital-fte-business-027
+  type: recall
+  front: How does PPP reduce customer acquisition cost compared to direct competition?
+  back: By 60-80%, via piggybacking on incumbent marketplaces like Salesforce AppExchange or Shopify Store.
+  tags:
+  - ppp
+  - cac-reduction
+  difficulty: intermediate
+- id: ch01-digital-fte-business-028
+  type: recall
+  front: What are the three requirements for vertical market success with Custom Agents?
+  back: '1. Domain expertise
 
-  - id: "ch01-digital-fte-business-012"
-    type: thinking
-    front: "How did Microsoft's Windows Mobile failure illustrate the Snakes and Ladders principle?"
-    back: "BECAUSE Microsoft tried to compete directly on consumer appeal against entrenched iOS and Android, collapsing to 5% market share by 2010. THEREFORE, the lesson is to dominate a developer or vertical layer first, then integrate upward."
-    tags: ["snakes-ladders", "historical-example"]
-    difficulty: "intermediate"
-    why: "What layer should Microsoft have targeted instead of consumer mobile?"
+    2. Deep integrations with existing systems
 
-  - id: "ch01-digital-fte-business-013"
-    type: recall
-    front: "In the customer support economic scenario, what is the cost per ticket for a human agent versus a Digital FTE?"
-    back: "Human agent: approximately $12 per ticket. Digital FTE: approximately $0.50 per ticket."
-    tags: ["economics", "cost-comparison"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-014"
-    type: thinking
-    front: "Why does Scenario 2 (capacity expansion) measure ROI differently than Scenario 1 (cost replacement)?"
-    back: "BECAUSE Scenario 2 targets revenue captured from previously rejected customers, not cost savings. The company cannot hire fast enough, so ROI is measured in new revenue enabled rather than salary reduction."
-    tags: ["economics", "capacity-expansion"]
-    difficulty: "intermediate"
-    why: "When would a capacity expansion pitch be more persuasive than a cost-cutting pitch?"
-
-  - id: "ch01-digital-fte-business-015"
-    type: thinking
-    front: "Why is insurance claims adjudication a poor candidate for a fully autonomous Digital FTE?"
-    back: "BECAUSE a single agent error can trigger a $100K+ lawsuit, THEREFORE the $3,500/month savings is dwarfed by potential $200K-$300K monthly liability from just 2-3 errors."
-    tags: ["economics", "risk-assessment"]
-    difficulty: "intermediate"
-    why: "High error cost relative to savings makes the risk-reward ratio unacceptable."
-
-  - id: "ch01-digital-fte-business-016"
-    type: recall
-    front: "What is the first red flag when pitching a Digital FTE to a client?"
-    back: "The client cannot quantify their current pain in measurable cost or lost revenue."
-    tags: ["financial-pitch", "red-flags"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-017"
-    type: recall
-    front: "What is shadow mode deployment, and what is its purpose?"
-    back: "Agent runs alongside humans, logging recommendations without executing them while its accuracy is measured."
-    tags: ["shadow-mode", "deployment"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-018"
-    type: thinking
-    front: "How does the 90-10 efficiency multiplier reduce costs while maintaining quality?"
-    back: "BECAUSE the Digital FTE handles the 90% mechanical work at 50x lower cost and 24/7 availability, while humans focus only on the 10% requiring judgment. THEREFORE the same expertise output costs 20% with 5x capacity."
-    tags: ["efficiency-multiplier", "90-10"]
-    difficulty: "intermediate"
-    why: "What happens to quality if the boundary between mechanical and judgment work is drawn incorrectly?"
-
-  - id: "ch01-digital-fte-business-019"
-    type: recall
-    front: "What are the four Digital FTE monetization models?"
-    back: "1. Subscription (recurring revenue)\n2. Success Fee (aligned incentives)\n3. License (enterprise self-hosted)\n4. Marketplace (volume/platform)"
-    tags: ["monetization", "revenue-models"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-020"
-    type: thinking
-    front: "Why do Digital FTEs charge for outcomes rather than per-seat like traditional SaaS?"
-    back: "BECAUSE Digital FTEs complete work autonomously without human operators, THEREFORE charging per seat is meaningless — value is measured in outcomes delivered, not humans using the tool."
-    tags: ["monetization", "saas-comparison"]
-    difficulty: "intermediate"
-    why: "The pricing model follows from removing the human operator from the loop."
-
-  - id: "ch01-digital-fte-business-021"
-    type: thinking
-    front: "Why might a Success Fee model transition to a Subscription model over time?"
-    back: "BECAUSE once the client sees massive ROI (e.g., $1M revenue from $500/month cost), a flat subscription becomes more predictable for both parties. The client proposes upgrading to lock in value at a fixed rate."
-    tags: ["monetization", "success-fee", "hybrid"]
-    difficulty: "intermediate"
-    why: "What metric would trigger the client to propose this transition?"
-
-  - id: "ch01-digital-fte-business-022"
-    type: thinking
-    front: "Why do enterprise customers prefer the License model for healthcare Digital FTEs?"
-    back: "BECAUSE data stays on their infrastructure, satisfying HIPAA, SOC 2, and GDPR compliance requirements without exposing patient data to external cloud services."
-    tags: ["monetization", "license", "compliance"]
-    difficulty: "intermediate"
-    why: "What risk does the License model create for the builder that Subscription avoids?"
-
-  - id: "ch01-digital-fte-business-023"
-    type: recall
-    front: "What revenue split does a typical AI Marketplace take from agent creators?"
-    back: "The platform keeps 70%, and the creator keeps 30% of subscription revenue."
-    tags: ["monetization", "marketplace"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-024"
-    type: recall
-    front: "What are the three phases of the Piggyback Protocol Pivot (PPP) strategy?"
-    back: "1. Infrastructure Layering (low-risk entry)\n2. Market Validation (leverage ecosystems)\n3. Independent AI-Native Solution (pivot)"
-    tags: ["ppp", "market-entry"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-025"
-    type: recall
-    front: "How does MCP function in Phase 1 of the PPP strategy?"
-    back: "MCP provides a standardized JSON-RPC interface abstracting data access across fragmented incumbent systems."
-    tags: ["ppp", "mcp", "infrastructure"]
-    difficulty: "intermediate"
-
-  - id: "ch01-digital-fte-business-026"
-    type: thinking
-    front: "Why does standardizing Agent Skills during Phase 1 create a competitive moat in Phase 3?"
-    back: "BECAUSE skills built on standardized interfaces can be re-pointed from incumbent APIs to your own native platform. Users experience zero friction during the switch, making migration invisible and your platform defensible."
-    tags: ["ppp", "agent-skills", "moat"]
-    difficulty: "advanced"
-    why: "What would happen if you hard-coded integrations instead of using standardized skills?"
-
-  - id: "ch01-digital-fte-business-027"
-    type: recall
-    front: "How does PPP reduce customer acquisition cost compared to direct competition?"
-    back: "By 60-80%, via piggybacking on incumbent marketplaces like Salesforce AppExchange or Shopify Store."
-    tags: ["ppp", "cac-reduction"]
-    difficulty: "intermediate"
-
-  - id: "ch01-digital-fte-business-028"
-    type: recall
-    front: "What are the three requirements for vertical market success with Custom Agents?"
-    back: "1. Domain expertise\n2. Deep integrations with existing systems\n3. Complete agentic solutions (end-to-end)"
-    tags: ["vertical-success", "requirements"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-029"
-    type: thinking
-    front: "Why does having domain expertise plus integrations but no agentic solution make you just a data pipeline?"
-    back: "BECAUSE without autonomous end-to-end problem solving, you merely move data between systems. The customer still needs humans to interpret and act on that data, so the solution is useful but not transformative."
-    tags: ["vertical-success", "missing-elements"]
-    difficulty: "advanced"
-    why: "How would you upgrade a data pipeline into a complete agentic solution?"
-
-  - id: "ch01-digital-fte-business-030"
-    type: recall
-    front: "What are the two paths to achieving 99% domain expertise in Custom Agents?"
-    back: "1. Fine-tuned models\n2. Vertical reusable intelligence via sub-agents and Agent Skills"
-    tags: ["domain-expertise", "fine-tuning", "vertical-intelligence"]
-    difficulty: "intermediate"
-
-  - id: "ch01-digital-fte-business-031"
-    type: recall
-    front: "What are the three phases of shadow mode deployment?"
-    back: "1. Shadow Mode (weeks 1-4)\n2. Augmented Decision-Making (weeks 5-8)\n3. Selective Automation (weeks 9+)"
-    tags: ["shadow-mode", "deployment-phases"]
-    difficulty: "intermediate"
-
-  - id: "ch01-digital-fte-business-032"
-    type: recall
-    front: "What accuracy threshold triggers selective automation in shadow mode Phase 3?"
-    back: "Above 95%: agent decides\nBelow 90%: human reviews\n90-95%: escalated for review"
-    tags: ["shadow-mode", "automation-thresholds"]
-    difficulty: "intermediate"
-
-  - id: "ch01-digital-fte-business-033"
-    type: recall
-    front: "How many of the six red flag signals must be present before you should stop and redesign or abandon a Digital FTE project?"
-    back: "3+ signals: stop\n2 signals: red flag, reconsider\n1 signal: yellow flag, review"
-    tags: ["red-flags", "decision-framework"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-034"
-    type: thinking
-    front: "Why is 'Adversarial Pressure' (stakeholders demanding immediate deployment) a red flag signal?"
-    back: "BECAUSE time pressure is the enemy of security and validation. Skipping safety checks to meet deadlines creates undetected risks that compound into serious failures at scale."
-    tags: ["red-flags", "adversarial-pressure"]
-    difficulty: "intermediate"
-    why: "How should a builder respond when a client demands skipping shadow mode?"
-
-  - id: "ch01-digital-fte-business-035"
-    type: thinking
-    front: "Why must every Digital FTE maintain a comprehensive audit trail for its decisions?"
-    back: "BECAUSE regulations like the AI Act and Fair Lending require documented decision rationale. Without logs of inputs, rules triggered, and outputs, you cannot defend decisions in litigation or satisfy regulators."
-    tags: ["guardrails", "audit-trail"]
-    difficulty: "advanced"
-    why: "What specific information should each audit log entry contain?"
-
-  - id: "ch01-digital-fte-business-036"
-    type: recall
-    front: "What is the correct fix for a Digital FTE that makes fully autonomous legal decisions?"
-    back: "A human attorney reviews all agent-generated opinions before client contact; agent becomes research assistant."
-    tags: ["guardrails", "legal-pitfall"]
-    difficulty: "intermediate"
-
-  - id: "ch01-digital-fte-business-037"
-    type: thinking
-    front: "How does a biased hiring agent create systemic harm at scale?"
-    back: "BECAUSE biased training data perpetuates discrimination across every candidate screening decision. THEREFORE entire demographic groups can be systematically excluded, violating EEO laws and amplifying bias far beyond what individual human reviewers would produce."
-    tags: ["guardrails", "bias", "hiring"]
-    difficulty: "advanced"
-    why: "What ongoing process prevents bias from re-emerging after initial correction?"
-
-  - id: "ch01-digital-fte-business-038"
-    type: recall
-    front: "In the Subscription model, what is the approximate gross margin per client for a Digital SDR agent?"
-    back: "60% gross margin ($900/month profit on $1,500/month pricing with $600/month costs)."
-    tags: ["monetization", "subscription", "economics"]
-    difficulty: "basic"
-
-  - id: "ch01-digital-fte-business-039"
-    type: thinking
-    front: "Why does the Marketplace model have the highest churn risk among the four monetization models?"
-    back: "BECAUSE users can cancel with one click, discovery is brutal among 10,000+ competing agents, and users often try for one month without seeing clear ROI. The low commitment that enables easy adoption also enables easy abandonment."
-    tags: ["monetization", "marketplace", "churn"]
-    difficulty: "advanced"
-    why: "What retention strategy could reduce Marketplace churn?"
-
-  - id: "ch01-digital-fte-business-040"
-    type: recall
-    front: "What hybrid strategy starts with Success Fee and transitions to Subscription?"
-    back: "Start with Success Fee to prove value, then upgrade top clients to Subscription (70/30)."
-    tags: ["monetization", "hybrid-strategy"]
-    difficulty: "intermediate"
+    3. Complete agentic solutions (end-to-end)'
+  tags:
+  - vertical-success
+  - requirements
+  difficulty: basic
+- id: ch01-digital-fte-business-029
+  type: thinking
+  front: Why does having domain expertise plus integrations but no agentic solution make you just a data pipeline?
+  back: BECAUSE without autonomous end-to-end problem solving, you merely move data between systems. The customer still needs humans to interpret and act on that data, so the solution is useful but not
+    transformative.
+  tags:
+  - vertical-success
+  - missing-elements
+  difficulty: advanced
+  why: How would you upgrade a data pipeline into a complete agentic solution?
+- id: ch01-digital-fte-business-034
+  type: thinking
+  front: Why is 'Adversarial Pressure' (stakeholders demanding immediate deployment) a red flag signal?
+  back: BECAUSE time pressure is the enemy of security and validation. Skipping safety checks to meet deadlines creates undetected risks that compound into serious failures at scale.
+  tags:
+  - red-flags
+  - adversarial-pressure
+  difficulty: intermediate
+  why: How should a builder respond when a client demands skipping shadow mode?
+- id: ch01-digital-fte-business-035
+  type: thinking
+  front: Why must every Digital FTE maintain a comprehensive audit trail for its decisions?
+  back: BECAUSE regulations like the AI Act and Fair Lending require documented decision rationale. Without logs of inputs, rules triggered, and outputs, you cannot defend decisions in litigation or satisfy
+    regulators.
+  tags:
+  - guardrails
+  - audit-trail
+  difficulty: advanced
+  why: What specific information should each audit log entry contain?
+- id: ch01-digital-fte-business-037
+  type: thinking
+  front: How does a biased hiring agent create systemic harm at scale?
+  back: BECAUSE biased training data perpetuates discrimination across every candidate screening decision. THEREFORE entire demographic groups can be systematically excluded, violating EEO laws and amplifying
+    bias far beyond what individual human reviewers would produce.
+  tags:
+  - guardrails
+  - bias
+  - hiring
+  difficulty: advanced
+  why: What ongoing process prevents bias from re-emerging after initial correction?
+- id: ch01-digital-fte-business-039
+  type: thinking
+  front: Why does the Marketplace model have the highest churn risk among the four monetization models?
+  back: BECAUSE users can cancel with one click, discovery is brutal among 10,000+ competing agents, and users often try for one month without seeing clear ROI. The low commitment that enables easy adoption
+    also enables easy abandonment.
+  tags:
+  - monetization
+  - marketplace
+  - churn
+  difficulty: advanced
+  why: What retention strategy could reduce Marketplace churn?

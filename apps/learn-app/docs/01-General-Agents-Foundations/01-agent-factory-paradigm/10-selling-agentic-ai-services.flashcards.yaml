@@ -1,201 +1,290 @@
 deck:
-  id: "ch01-selling-agentic-ai"
-  title: "Selling Agentic AI Services to Enterprises"
-  description: "Flashcards covering enterprise sales positioning, pricing models, market landscape, and consultative selling strategies for Digital FTE solutions in the agentic AI market."
-  tags: [enterprise-sales, digital-fte, pricing-models, value-proposition, agentic-ai, market-strategy]
+  id: ch01-selling-agentic-ai
+  title: Selling Agentic AI Services to Enterprises
+  description: Flashcards covering enterprise sales positioning, pricing models, market landscape, and consultative selling strategies for Digital FTE solutions in the agentic AI market.
+  tags:
+  - enterprise-sales
+  - digital-fte
+  - pricing-models
+  - value-proposition
+  - agentic-ai
+  - market-strategy
   version: 1
-
 cards:
-  - id: "ch01-selling-agentic-ai-001"
-    type: recall
-    difficulty: basic
-    front: "According to Robert Herjavec, what is the most important skill that makes a founder successful?"
-    back: "The ability to sell."
+- id: ch01-selling-agentic-ai-001
+  type: recall
+  difficulty: basic
+  front: According to Robert Herjavec, what is the most important skill that makes a founder successful?
+  back: The ability to sell.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-002
+  type: recall
+  difficulty: basic
+  front: What is the Gen AI Paradox?
+  back: Broad enterprise AI adoption with no material impact on earnings.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-003
+  type: thinking
+  difficulty: intermediate
+  front: Why does the Gen AI Paradox create a sales opportunity for agentic AI providers?
+  back: BECAUSE enterprises are frustrated with AI tools that promise everything but deliver little measurable value, THEREFORE they are actively seeking solutions that produce quantifiable business outcomes.
+  why: Frustrated buyers with budget are the ideal market for outcome-focused sellers.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-004
+  type: recall
+  difficulty: basic
+  front: What is the estimated incremental spending on agentic AI services by the end of the decade?
+  back: $100 billion to $400 billion.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-005
+  type: thinking
+  difficulty: intermediate
+  front: Why does agentic AI cause 20-30% contraction in core tech services while creating new value pools?
+  back: BECAUSE agents automate routine services like staff augmentation and managed infrastructure, THEREFORE traditional service revenue shrinks, but new $100-400B value pools emerge around agent design,
+    integration, and orchestration.
+  why: Market compression and new value pools are simultaneous, not sequential.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-006
+  type: recall
+  difficulty: basic
+  front: What percentage of C-suite executives are already running agentic AI pilots according to McKinsey's 2025 survey?
+  back: More than 80 percent.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-007
+  type: thinking
+  difficulty: intermediate
+  front: Why must service providers navigate both market compression and new value pools simultaneously?
+  back: BECAUSE 20-30% contraction in traditional services happens while $100-400B in new agentic opportunities emerge, THEREFORE providers who only defend existing revenue will shrink, while those who
+    pivot to agent-native services will capture growth.
+  why: The dual dynamic rewards proactive repositioning and punishes defensive strategies.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-008
+  type: recall
+  difficulty: basic
+  front: What is the estimated size of the agentic AI workflow services opportunity?
+  back: Approximately $200 billion.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-009
+  type: recall
+  difficulty: intermediate
+  front: What are the four key enterprise investment areas for agentic AI?
+  back: Technology and engineering agents, customer-facing agents, back-end function agents, and vertical-specific process agents.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-010
+  type: thinking
+  difficulty: intermediate
+  front: Why is 70%+ of the agentic AI opportunity concentrated in just five industries?
+  back: BECAUSE financial services, healthcare, technology, telecommunications, and manufacturing have highly structured, repeatable processes with large knowledge workforces, THEREFORE they are particularly
+    well suited to agent-based automation.
+  why: Industry concentration guides where to focus sales efforts first.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-011
+  type: recall
+  difficulty: intermediate
+  front: Name any 3 of the 6 core factors enterprises cite when choosing an agentic AI service provider.
+  back: 'Customization ability
 
-  - id: "ch01-selling-agentic-ai-002"
-    type: recall
-    difficulty: basic
-    front: "What is the Gen AI Paradox?"
-    back: "Broad enterprise AI adoption with no material impact on earnings."
+    Partnership ecosystem and IP
 
-  - id: "ch01-selling-agentic-ai-003"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the Gen AI Paradox create a sales opportunity for agentic AI providers?"
-    back: "BECAUSE enterprises are frustrated with AI tools that promise everything but deliver little measurable value, THEREFORE they are actively seeking solutions that produce quantifiable business outcomes."
-    why: "Frustrated buyers with budget are the ideal market for outcome-focused sellers."
+    Consultative sales engine
 
-  - id: "ch01-selling-agentic-ai-004"
-    type: recall
-    difficulty: basic
-    front: "What is the estimated incremental spending on agentic AI services by the end of the decade?"
-    back: "$100 billion to $400 billion."
+    Domain expertise
 
-  - id: "ch01-selling-agentic-ai-005"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does agentic AI cause 20-30% contraction in core tech services while creating new value pools?"
-    back: "BECAUSE agents automate routine services like staff augmentation and managed infrastructure, THEREFORE traditional service revenue shrinks, but new $100-400B value pools emerge around agent design, integration, and orchestration."
-    why: "Market compression and new value pools are simultaneous, not sequential."
+    Line-of-business-focused delivery
 
-  - id: "ch01-selling-agentic-ai-006"
-    type: recall
-    difficulty: basic
-    front: "What percentage of C-suite executives are already running agentic AI pilots according to McKinsey's 2025 survey?"
-    back: "More than 80 percent."
-
-  - id: "ch01-selling-agentic-ai-007"
-    type: thinking
-    difficulty: intermediate
-    front: "Why must service providers navigate both market compression and new value pools simultaneously?"
-    back: "BECAUSE 20-30% contraction in traditional services happens while $100-400B in new agentic opportunities emerge, THEREFORE providers who only defend existing revenue will shrink, while those who pivot to agent-native services will capture growth."
-    why: "The dual dynamic rewards proactive repositioning and punishes defensive strategies."
-
-  - id: "ch01-selling-agentic-ai-008"
-    type: recall
-    difficulty: basic
-    front: "What is the estimated size of the agentic AI workflow services opportunity?"
-    back: "Approximately $200 billion."
-
-  - id: "ch01-selling-agentic-ai-009"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four key enterprise investment areas for agentic AI?"
-    back: "Technology and engineering agents, customer-facing agents, back-end function agents, and vertical-specific process agents."
-
-  - id: "ch01-selling-agentic-ai-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is 70%+ of the agentic AI opportunity concentrated in just five industries?"
-    back: "BECAUSE financial services, healthcare, technology, telecommunications, and manufacturing have highly structured, repeatable processes with large knowledge workforces, THEREFORE they are particularly well suited to agent-based automation."
-    why: "Industry concentration guides where to focus sales efforts first."
-
-  - id: "ch01-selling-agentic-ai-011"
-    type: recall
-    difficulty: intermediate
-    front: "Name any 3 of the 6 core factors enterprises cite when choosing an agentic AI service provider."
-    back: "Customization ability\nPartnership ecosystem and IP\nConsultative sales engine\nDomain expertise\nLine-of-business-focused delivery\nOutcome-based pricing"
-
-  - id: "ch01-selling-agentic-ai-012"
-    type: thinking
-    difficulty: advanced
-    front: "Why has buying power for AI services shifted from IT departments to business units?"
-    back: "BECAUSE agentic AI transforms business operations rather than just infrastructure, THEREFORE COOs, CFOs, and business unit leaders now drive purchasing decisions since they own the processes being automated."
-    why: "This shift requires providers to speak business language, not just technical language."
-
-  - id: "ch01-selling-agentic-ai-013"
-    type: recall
-    difficulty: basic
-    front: "What are the four value propositions for agentic AI service providers identified by McKinsey?"
-    back: "Agentic AI Enabler, Packaged Agent Implementer, Custom Agent Developer, and End-to-End Workflow Disruptor."
-
-  - id: "ch01-selling-agentic-ai-014"
-    type: thinking
-    difficulty: intermediate
-    front: "How do the four McKinsey value propositions connect to Lesson 6's Snakes and Ladders framework?"
-    back: "BECAUSE both frameworks describe competitive layers from infrastructure to orchestration, THEREFORE Enabler maps to Developer Tools (Layer 2), Implementer and Custom Developer map to Vertical Markets (Layer 3), and Disruptor maps to Orchestrator (Layer 4)."
-    why: "Lesson 6 defines what to build; Lesson 10 defines how to sell at each layer."
-
-  - id: "ch01-selling-agentic-ai-015"
-    type: recall
-    difficulty: basic
-    front: "What are the three core challenges that prevent enterprises from scaling agentic AI?"
-    back: "Integration complexity, limited technical expertise, and security vulnerabilities."
-
-  - id: "ch01-selling-agentic-ai-016"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is integration complexity the top challenge enterprises face when scaling agentic AI?"
-    back: "BECAUSE enterprises have legacy databases, siloed data across platforms, complex cross-department workflows, and strict compliance requirements, THEREFORE connecting agentic AI to existing systems demands specialized integration expertise."
-    why: "Solving integration earns trusted-partner status faster than any other capability."
-
-  - id: "ch01-selling-agentic-ai-017"
-    type: recall
-    difficulty: intermediate
-    front: "What five foundational capabilities does McKinsey say distinguish leading agentic AI service providers?"
-    back: "Reimagined positioning, proprietary solutions, consultative domain-driven go-to-market, redesigned operating model and talent, and reinvented commercial models."
-
-  - id: "ch01-selling-agentic-ai-018"
-    type: thinking
-    difficulty: advanced
-    front: "Why does consultative selling outperform product selling in the agentic AI market?"
-    back: "BECAUSE enterprises need providers who understand their unique business problems before proposing solutions, THEREFORE consultative sellers who co-create with customers and identify adjacent opportunities build deeper, more defensible relationships than product vendors."
-    why: "The buyer-seller line is blurring toward co-creation partnerships."
-
-  - id: "ch01-selling-agentic-ai-019"
-    type: recall
-    difficulty: basic
-    front: "What percentage of enterprises prefer outcome-based pricing over traditional time-and-materials models?"
-    back: "More than 70 percent."
-
-  - id: "ch01-selling-agentic-ai-020"
-    type: recall
-    difficulty: intermediate
-    front: "What are the three new pricing models for agentic AI services?"
-    back: "Subscription-based, fixed-price, and gain-share models."
-
-  - id: "ch01-selling-agentic-ai-021"
-    type: thinking
-    difficulty: intermediate
-    front: "How does gain-share pricing align provider and client incentives?"
-    back: "BECAUSE fees are tied directly to measurable impact like cost savings or productivity gains, THEREFORE both parties benefit when the solution delivers results, and the provider bears risk if it underperforms."
-    why: "Gain-share removes the budget objection by linking payment to proven value."
-
-  - id: "ch01-selling-agentic-ai-022"
-    type: thinking
-    difficulty: intermediate
-    front: "Why can small specialized companies compete effectively in the enterprise agentic AI market?"
-    back: "BECAUSE McKinsey notes small companies already play key roles in the agentic ecosystem through deep domain expertise and partnerships with hyperscalers and LLM providers, THEREFORE size matters less than specialization and ecosystem positioning."
-    why: "Partnerships compensate for scale; domain depth compensates for breadth."
-
-  - id: "ch01-selling-agentic-ai-023"
-    type: recall
-    difficulty: intermediate
-    front: "What four types of partners does an agentic AI service provider need from day one?"
-    back: "Hyperscalers (AWS, Azure, GCP), LLM providers (OpenAI, Anthropic), vertical specialists, and SaaS vendors."
-
-  - id: "ch01-selling-agentic-ai-024"
-    type: thinking
-    difficulty: advanced
-    front: "How should a sales pitch to a CFO differ from a pitch to a CEO?"
-    back: "BECAUSE CFOs prioritize ROI and cost reduction with specific dollar figures, THEREFORE their pitch emphasizes productivity gains and 12-month payback. CEOs prioritize competitive advantage and transformation, THEREFORE their pitch emphasizes market positioning and new capabilities."
-    why: "Same solution, different framing based on what each executive is measured on."
-
-  - id: "ch01-selling-agentic-ai-025"
-    type: recall
-    difficulty: intermediate
-    front: "What is a human-agent delivery pod?"
-    back: "A cross-functional team combining human workers with AI agents for service delivery."
-
-  - id: "ch01-selling-agentic-ai-026"
-    type: recall
-    difficulty: intermediate
-    front: "What is the purpose of an Agent Operation Center?"
-    back: "Centralized management of agent performance, retraining cycles, and exception handling."
-
-  - id: "ch01-selling-agentic-ai-027"
-    type: thinking
-    difficulty: advanced
-    front: "Why should FTE productivity be delinked from commercial models as agentic AI scales?"
-    back: "BECAUSE agents complete entire workflows autonomously rather than augmenting individual workers, THEREFORE measuring value by FTE equivalence underestimates the business impact and risks margin erosion under traditional hourly pricing."
-    why: "Outcome-based metrics capture value that headcount-based metrics miss entirely."
-
-  - id: "ch01-selling-agentic-ai-028"
-    type: recall
-    difficulty: basic
-    front: "What percentage of current roles' work could be handled by agents within three years according to enterprise estimates?"
-    back: "15 to 30 percent."
-
-  - id: "ch01-selling-agentic-ai-029"
-    type: thinking
-    difficulty: advanced
-    front: "How does a consultative domain-driven go-to-market model differ from traditional product sales?"
-    back: "BECAUSE it combines deep industry knowledge with rapid co-creation alongside customers, THEREFORE providers proactively identify business opportunities together with clients rather than selling pre-packaged solutions to passive buyers."
-    why: "Cross-functional squads of consultants, prompt engineers, and data specialists replace sales reps."
-
-  - id: "ch01-selling-agentic-ai-030"
-    type: thinking
-    difficulty: advanced
-    front: "Why is domain specificity a critical success factor rather than positioning AI as a horizontal capability?"
-    back: "BECAUSE enterprises need providers who understand their industry's regulatory requirements, business processes, and unique pain points, THEREFORE generic AI offerings fail to deliver the measurable outcomes that justify enterprise investment."
-    why: "Horizontal positioning commoditizes your offering; vertical expertise creates defensible value."
+    Outcome-based pricing'
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-012
+  type: thinking
+  difficulty: advanced
+  front: Why has buying power for AI services shifted from IT departments to business units?
+  back: BECAUSE agentic AI transforms business operations rather than just infrastructure, THEREFORE COOs, CFOs, and business unit leaders now drive purchasing decisions since they own the processes being
+    automated.
+  why: This shift requires providers to speak business language, not just technical language.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-013
+  type: recall
+  difficulty: basic
+  front: What are the four value propositions for agentic AI service providers identified by McKinsey?
+  back: Agentic AI Enabler, Packaged Agent Implementer, Custom Agent Developer, and End-to-End Workflow Disruptor.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-014
+  type: thinking
+  difficulty: intermediate
+  front: How do the four McKinsey value propositions connect to Lesson 6's Snakes and Ladders framework?
+  back: BECAUSE both frameworks describe competitive layers from infrastructure to orchestration, THEREFORE Enabler maps to Developer Tools (Layer 2), Implementer and Custom Developer map to Vertical Markets
+    (Layer 3), and Disruptor maps to Orchestrator (Layer 4).
+  why: Lesson 6 defines what to build; Lesson 10 defines how to sell at each layer.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-015
+  type: recall
+  difficulty: basic
+  front: What are the three core challenges that prevent enterprises from scaling agentic AI?
+  back: Integration complexity, limited technical expertise, and security vulnerabilities.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-016
+  type: thinking
+  difficulty: intermediate
+  front: Why is integration complexity the top challenge enterprises face when scaling agentic AI?
+  back: BECAUSE enterprises have legacy databases, siloed data across platforms, complex cross-department workflows, and strict compliance requirements, THEREFORE connecting agentic AI to existing systems
+    demands specialized integration expertise.
+  why: Solving integration earns trusted-partner status faster than any other capability.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-017
+  type: recall
+  difficulty: intermediate
+  front: What five foundational capabilities does McKinsey say distinguish leading agentic AI service providers?
+  back: Reimagined positioning, proprietary solutions, consultative domain-driven go-to-market, redesigned operating model and talent, and reinvented commercial models.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-018
+  type: thinking
+  difficulty: advanced
+  front: Why does consultative selling outperform product selling in the agentic AI market?
+  back: BECAUSE enterprises need providers who understand their unique business problems before proposing solutions, THEREFORE consultative sellers who co-create with customers and identify adjacent opportunities
+    build deeper, more defensible relationships than product vendors.
+  why: The buyer-seller line is blurring toward co-creation partnerships.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-019
+  type: recall
+  difficulty: basic
+  front: What percentage of enterprises prefer outcome-based pricing over traditional time-and-materials models?
+  back: More than 70 percent.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-020
+  type: recall
+  difficulty: intermediate
+  front: What are the three new pricing models for agentic AI services?
+  back: Subscription-based, fixed-price, and gain-share models.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-021
+  type: thinking
+  difficulty: intermediate
+  front: How does gain-share pricing align provider and client incentives?
+  back: BECAUSE fees are tied directly to measurable impact like cost savings or productivity gains, THEREFORE both parties benefit when the solution delivers results, and the provider bears risk if it
+    underperforms.
+  why: Gain-share removes the budget objection by linking payment to proven value.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-022
+  type: thinking
+  difficulty: intermediate
+  front: Why can small specialized companies compete effectively in the enterprise agentic AI market?
+  back: BECAUSE McKinsey notes small companies already play key roles in the agentic ecosystem through deep domain expertise and partnerships with hyperscalers and LLM providers, THEREFORE size matters
+    less than specialization and ecosystem positioning.
+  why: Partnerships compensate for scale; domain depth compensates for breadth.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-023
+  type: recall
+  difficulty: intermediate
+  front: What four types of partners does an agentic AI service provider need from day one?
+  back: Hyperscalers (AWS, Azure, GCP), LLM providers (OpenAI, Anthropic), vertical specialists, and SaaS vendors.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-024
+  type: thinking
+  difficulty: advanced
+  front: How should a sales pitch to a CFO differ from a pitch to a CEO?
+  back: BECAUSE CFOs prioritize ROI and cost reduction with specific dollar figures, THEREFORE their pitch emphasizes productivity gains and 12-month payback. CEOs prioritize competitive advantage and transformation,
+    THEREFORE their pitch emphasizes market positioning and new capabilities.
+  why: Same solution, different framing based on what each executive is measured on.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-025
+  type: recall
+  difficulty: intermediate
+  front: What is a human-agent delivery pod?
+  back: A cross-functional team combining human workers with AI agents for service delivery.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-026
+  type: recall
+  difficulty: intermediate
+  front: What is the purpose of an Agent Operation Center?
+  back: Centralized management of agent performance, retraining cycles, and exception handling.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-027
+  type: thinking
+  difficulty: advanced
+  front: Why should FTE productivity be delinked from commercial models as agentic AI scales?
+  back: BECAUSE agents complete entire workflows autonomously rather than augmenting individual workers, THEREFORE measuring value by FTE equivalence underestimates the business impact and risks margin
+    erosion under traditional hourly pricing.
+  why: Outcome-based metrics capture value that headcount-based metrics miss entirely.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-028
+  type: recall
+  difficulty: basic
+  front: What percentage of current roles' work could be handled by agents within three years according to enterprise estimates?
+  back: 15 to 30 percent.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-029
+  type: thinking
+  difficulty: advanced
+  front: How does a consultative domain-driven go-to-market model differ from traditional product sales?
+  back: BECAUSE it combines deep industry knowledge with rapid co-creation alongside customers, THEREFORE providers proactively identify business opportunities together with clients rather than selling
+    pre-packaged solutions to passive buyers.
+  why: Cross-functional squads of consultants, prompt engineers, and data specialists replace sales reps.
+  tags:
+  - enterprise-sales
+  - digital-fte
+- id: ch01-selling-agentic-ai-030
+  type: thinking
+  difficulty: advanced
+  front: Why is domain specificity a critical success factor rather than positioning AI as a horizontal capability?
+  back: BECAUSE enterprises need providers who understand their industry's regulatory requirements, business processes, and unique pain points, THEREFORE generic AI offerings fail to deliver the measurable
+    outcomes that justify enterprise investment.
+  why: Horizontal positioning commoditizes your offering; vertical expertise creates defensible value.
+  tags:
+  - enterprise-sales
+  - digital-fte

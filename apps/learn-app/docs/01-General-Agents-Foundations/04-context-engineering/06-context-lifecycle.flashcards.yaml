@@ -1,162 +1,255 @@
 deck:
-  id: "ch04-06-context-lifecycle"
-  title: "Context Lifecycle: Knowing When to Reset vs Compress"
-  description: "Flashcards covering the Context Zones framework, /clear vs /compact decision criteria, custom compaction instructions, session persistence commands, and the save checkpoint pattern."
-  tags: [context-lifecycle, context-zones, clear, compact, session-persistence, compaction]
+  id: ch04-06-context-lifecycle
+  title: 'Context Lifecycle: Knowing When to Reset vs Compress'
+  description: Flashcards covering the Context Zones framework, /clear vs /compact decision criteria, custom compaction instructions, session persistence commands, and the save checkpoint pattern.
+  tags:
+  - context-lifecycle
+  - context-zones
+  - clear
+  - compact
+  - session-persistence
+  - compaction
   version: 1
-
 cards:
-  - id: "ch04-06-context-lifecycle-001"
-    type: recall
-    difficulty: basic
-    front: "What are the five Context Zones and their utilization ranges?"
-    back: "Green: 0-50%\nYellow: 50-70%\nOrange: 70-85%\nRed: 85-95%\nBlack: 95%+"
+- id: ch04-06-context-lifecycle-001
+  type: recall
+  difficulty: basic
+  front: What are the five Context Zones and their utilization ranges?
+  back: 'Green: 0-50%
 
-  - id: "ch04-06-context-lifecycle-002"
-    type: recall
-    difficulty: basic
-    front: "What action is required in the Green context zone (0-50%)?"
-    back: "Work freely."
+    Yellow: 50-70%
 
-  - id: "ch04-06-context-lifecycle-003"
-    type: recall
-    difficulty: intermediate
-    front: "What action is required in the Orange context zone (70-85%)?"
-    back: "Run /compact NOW to reduce context before quality degrades further."
+    Orange: 70-85%
 
-  - id: "ch04-06-context-lifecycle-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is 70% utilization considered the critical cliff for context quality?"
-    back: "BECAUSE research shows quality holds steady until roughly 70% then drops, THEREFORE compacting at this threshold preserves most work while the context is still high-quality enough for accurate summarization."
-    why: "What happens to compaction quality if you wait until 85% or higher?"
+    Red: 85-95%
 
-  - id: "ch04-06-context-lifecycle-005"
-    type: recall
-    difficulty: basic
-    front: "What command checks your current context utilization zone?"
-    back: "/context"
+    Black: 95%+'
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-002
+  type: recall
+  difficulty: basic
+  front: What action is required in the Green context zone (0-50%)?
+  back: Work freely.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-003
+  type: recall
+  difficulty: intermediate
+  front: What action is required in the Orange context zone (70-85%)?
+  back: Run /compact NOW to reduce context before quality degrades further.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-004
+  type: thinking
+  difficulty: intermediate
+  front: Why is 70% utilization considered the critical cliff for context quality?
+  back: BECAUSE research shows quality holds steady until roughly 70% then drops, THEREFORE compacting at this threshold preserves most work while the context is still high-quality enough for accurate summarization.
+  why: What happens to compaction quality if you wait until 85% or higher?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-005
+  type: recall
+  difficulty: basic
+  front: What command checks your current context utilization zone?
+  back: The /context slash command.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-006
+  type: recall
+  difficulty: intermediate
+  front: Name any 3 of 5 conditions when /clear is the right choice?
+  back: 'Task is complete
 
-  - id: "ch04-06-context-lifecycle-006"
-    type: recall
-    difficulty: intermediate
-    front: "Name any 3 of 5 conditions when /clear is the right choice?"
-    back: "Task is complete\nContext is poisoned\nSwitching to unrelated work\nIn Black zone (95%+)\nSession is 3+ days old"
+    Context is poisoned
 
-  - id: "ch04-06-context-lifecycle-007"
-    type: recall
-    difficulty: intermediate
-    front: "Name any 3 of 4 conditions when /compact is the right choice?"
-    back: "Same task continues\nNeed to preserve decisions\nContext is large but relevant\nCompaction faster than re-explaining"
+    Switching to unrelated work
 
-  - id: "ch04-06-context-lifecycle-008"
-    type: thinking
-    difficulty: advanced
-    front: "Why is compacting poisoned context worse than clearing it?"
-    back: "BECAUSE compaction summarizes and preserves existing context including outdated decisions and wrong directions, THEREFORE the poison gets compressed into the summary and continues to mislead future work."
-    why: "What makes poisoned context different from merely large context?"
+    In Black zone (95%+)
 
-  - id: "ch04-06-context-lifecycle-009"
-    type: recall
-    difficulty: basic
-    front: "What is context poisoning?"
-    back: "When context contains outdated decisions, wrong directions, or accumulated confusion."
+    Session is 3+ days old'
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-007
+  type: recall
+  difficulty: intermediate
+  front: Name any 3 of 4 conditions when /compact is the right choice?
+  back: 'Same task continues
 
-  - id: "ch04-06-context-lifecycle-010"
-    type: thinking
-    difficulty: intermediate
-    front: "How should you decide between /clear and /compact at 70%+ utilization?"
-    back: "BECAUSE the decision hinges on context quality not just size, THEREFORE check if the task is complete (clear), if context is poisoned (clear), or if decisions need preserving (compact with custom instructions)."
-    why: "Why is context quality more important than context size in this decision?"
+    Need to preserve decisions
 
-  - id: "ch04-06-context-lifecycle-011"
-    type: thinking
-    difficulty: intermediate
-    front: "How does /compact maintain session continuity while reducing size?"
-    back: "BECAUSE it summarizes conversation into condensed form preserving decisions and task state, THEREFORE you get a new session that 'remembers' the important parts but has freed space for more work."
-    why: "What gets lost during compaction that you might want to save externally first?"
+    Context is large but relevant
 
-  - id: "ch04-06-context-lifecycle-012"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are custom compaction instructions called the 'power move'?"
-    back: "BECAUSE without custom instructions Claude uses its own judgment which may miss domain-specific priorities, THEREFORE specifying exactly what to preserve and discard ensures critical decisions survive compaction."
-    why: "What domain-specific knowledge might default compaction miss?"
+    Compaction faster than re-explaining'
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-008
+  type: thinking
+  difficulty: advanced
+  front: Why is compacting poisoned context worse than clearing it?
+  back: BECAUSE compaction summarizes and preserves existing context including outdated decisions and wrong directions, THEREFORE the poison gets compressed into the summary and continues to mislead future
+    work.
+  why: What makes poisoned context different from merely large context?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-009
+  type: recall
+  difficulty: basic
+  front: What is context poisoning?
+  back: When context contains outdated decisions, wrong directions, or accumulated confusion.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-010
+  type: thinking
+  difficulty: intermediate
+  front: How should you decide between /clear and /compact at 70%+ utilization?
+  back: BECAUSE the decision hinges on context quality not just size, THEREFORE check if the task is complete (clear), if context is poisoned (clear), or if decisions need preserving (compact with custom
+    instructions).
+  why: Why is context quality more important than context size in this decision?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-011
+  type: thinking
+  difficulty: intermediate
+  front: How does /compact maintain session continuity while reducing size?
+  back: BECAUSE it summarizes conversation into condensed form preserving decisions and task state, THEREFORE you get a new session that 'remembers' the important parts but has freed space for more work.
+  why: What gets lost during compaction that you might want to save externally first?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-012
+  type: thinking
+  difficulty: intermediate
+  front: Why are custom compaction instructions called the 'power move'?
+  back: BECAUSE without custom instructions Claude uses its own judgment which may miss domain-specific priorities, THEREFORE specifying exactly what to preserve and discard ensures critical decisions survive
+    compaction.
+  why: What domain-specific knowledge might default compaction miss?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-013
+  type: recall
+  difficulty: basic
+  front: What is the structure for custom compaction instructions?
+  back: '/compact [Preserve: X, Y, Z] [Discard: A, B, C] [Focus: current task]'
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-014
+  type: recall
+  difficulty: intermediate
+  front: Where can you encode default compaction priorities so they apply automatically?
+  back: In the CLAUDE.md file under a Context Management section.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-015
+  type: recall
+  difficulty: basic
+  front: What does 'claude --continue' do?
+  back: Resumes the most recent session after closing the terminal.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-016
+  type: thinking
+  difficulty: intermediate
+  front: Why are three separate session persistence commands needed instead of one?
+  back: BECAUSE each addresses a different workflow scenario, THEREFORE --continue handles quick resumption, --resume allows choosing among multiple projects, and /resume enables mid-session switching without
+    restarting.
+  why: What workflow problem does each command solve that the others cannot?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-017
+  type: recall
+  difficulty: basic
+  front: What is the 3-day rule for session viability?
+  back: Sessions older than 3 days should be started fresh rather than resumed.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-018
+  type: thinking
+  difficulty: intermediate
+  front: Why do sessions become un-resumable after roughly 3 days?
+  back: BECAUSE old sessions accumulate tangents, implicit assumptions, and stale references that no longer hold, THEREFORE resuming causes more confusion than starting fresh with the old session as reference.
+  why: What kinds of drift make old sessions unreliable?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-019
+  type: thinking
+  difficulty: advanced
+  front: How does the save checkpoint pattern protect against compaction losses?
+  back: BECAUSE checkpoints externalize progress to saved documents or commits, THEREFORE if compaction loses something important, the work still exists outside the conversation and recovery is always possible.
+  why: How does this apply Principle 5 (Persisting State in Files) to context lifecycle?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-020
+  type: recall
+  difficulty: intermediate
+  front: What are the six steps of the save checkpoint pattern?
+  back: 'Work in Green/Yellow zone
 
-  - id: "ch04-06-context-lifecycle-013"
-    type: recall
-    difficulty: basic
-    front: "What is the structure for custom compaction instructions?"
-    back: "/compact [Preserve: X, Y, Z] [Discard: A, B, C] [Focus: current task]"
+    Make meaningful progress
 
-  - id: "ch04-06-context-lifecycle-014"
-    type: recall
-    difficulty: intermediate
-    front: "Where can you encode default compaction priorities so they apply automatically?"
-    back: "In the CLAUDE.md file under a Context Management section."
+    Save checkpoint externally
 
-  - id: "ch04-06-context-lifecycle-015"
-    type: recall
-    difficulty: basic
-    front: "What does 'claude --continue' do?"
-    back: "Resumes the most recent session after closing the terminal."
+    Check /context
 
-  - id: "ch04-06-context-lifecycle-016"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are three separate session persistence commands needed instead of one?"
-    back: "BECAUSE each addresses a different workflow scenario, THEREFORE --continue handles quick resumption, --resume allows choosing among multiple projects, and /resume enables mid-session switching without restarting."
-    why: "What workflow problem does each command solve that the others cannot?"
+    If Orange+: /compact
 
-  - id: "ch04-06-context-lifecycle-017"
-    type: recall
-    difficulty: basic
-    front: "What is the 3-day rule for session viability?"
-    back: "Sessions older than 3 days should be started fresh rather than resumed."
-
-  - id: "ch04-06-context-lifecycle-018"
-    type: thinking
-    difficulty: intermediate
-    front: "Why do sessions become un-resumable after roughly 3 days?"
-    back: "BECAUSE old sessions accumulate tangents, implicit assumptions, and stale references that no longer hold, THEREFORE resuming causes more confusion than starting fresh with the old session as reference."
-    why: "What kinds of drift make old sessions unreliable?"
-
-  - id: "ch04-06-context-lifecycle-019"
-    type: thinking
-    difficulty: advanced
-    front: "How does the save checkpoint pattern protect against compaction losses?"
-    back: "BECAUSE checkpoints externalize progress to saved documents or commits, THEREFORE if compaction loses something important, the work still exists outside the conversation and recovery is always possible."
-    why: "How does this apply Principle 5 (Persisting State in Files) to context lifecycle?"
-
-  - id: "ch04-06-context-lifecycle-020"
-    type: recall
-    difficulty: intermediate
-    front: "What are the six steps of the save checkpoint pattern?"
-    back: "Work in Green/Yellow zone\nMake meaningful progress\nSave checkpoint externally\nCheck /context\nIf Orange+: /compact\nContinue from checkpoint"
-
-  - id: "ch04-06-context-lifecycle-021"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is monitoring at 50% utilization important even though quality is still fine?"
-    back: "BECAUSE context accumulates faster than most professionals realize, THEREFORE the Yellow zone warning at 50% gives you time to prepare compaction instructions and save checkpoints before the 70% cliff arrives."
-    why: "What happens if you only start monitoring at 70%?"
-
-  - id: "ch04-06-context-lifecycle-022"
-    type: thinking
-    difficulty: advanced
-    front: "Why is /clear safer than /compact in the Black zone (95%+)?"
-    back: "BECAUSE compaction itself requires context space for the summarization process, THEREFORE at 95%+ the overhead of compaction might push you over the limit, making a full reset the only reliable option."
-    why: "What overhead does the compaction process itself consume?"
-
-  - id: "ch04-06-context-lifecycle-023"
-    type: recall
-    difficulty: basic
-    front: "What exception allows sessions older than 3 days to remain viable?"
-    back: "Sessions with excellent external progress files that externalize state."
-
-  - id: "ch04-06-context-lifecycle-024"
-    type: thinking
-    difficulty: intermediate
-    front: "How does a marketing professional's rejected campaign tangent illustrate the compaction tradeoff?"
-    back: "BECAUSE compacting preserves both useful context ('we tried lifestyle messaging and it failed') and noise (detailed exploration of rejected angles), THEREFORE clearing might be cleaner when most context is from rejected directions."
-    why: "When does the noise from exploration outweigh the value of preserving what was learned?"
+    Continue from checkpoint'
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-021
+  type: thinking
+  difficulty: intermediate
+  front: Why is monitoring at 50% utilization important even though quality is still fine?
+  back: BECAUSE context accumulates faster than most professionals realize, THEREFORE the Yellow zone warning at 50% gives you time to prepare compaction instructions and save checkpoints before the 70%
+    cliff arrives.
+  why: What happens if you only start monitoring at 70%?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-022
+  type: thinking
+  difficulty: advanced
+  front: Why is /clear safer than /compact in the Black zone (95%+)?
+  back: BECAUSE compaction itself requires context space for the summarization process, THEREFORE at 95%+ the overhead of compaction might push you over the limit, making a full reset the only reliable
+    option.
+  why: What overhead does the compaction process itself consume?
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-023
+  type: recall
+  difficulty: basic
+  front: What exception allows sessions older than 3 days to remain viable?
+  back: Sessions with excellent external progress files that externalize state.
+  tags:
+  - context-lifecycle
+  - context-zones
+- id: ch04-06-context-lifecycle-024
+  type: thinking
+  difficulty: intermediate
+  front: How does a marketing professional's rejected campaign tangent illustrate the compaction tradeoff?
+  back: BECAUSE compacting preserves both useful context ('we tried lifestyle messaging and it failed') and noise (detailed exploration of rejected angles), THEREFORE clearing might be cleaner when most
+    context is from rejected directions.
+  why: When does the noise from exploration outweigh the value of preserving what was learned?
+  tags:
+  - context-lifecycle
+  - context-zones

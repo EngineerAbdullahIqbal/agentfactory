@@ -130,7 +130,7 @@ cards:
   - id: "ch04-04-tasks-system-017"
     type: recall
     front: "What keyboard shortcut toggles the task list view in Claude Code?"
-    back: "Ctrl+T"
+    back: "The Ctrl+T keyboard shortcut."
     tags: ["CLI", "shortcuts"]
     difficulty: "basic"
 

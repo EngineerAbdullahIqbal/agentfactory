@@ -1,111 +1,152 @@
 deck:
-  id: "ch06-08-operational-best-practices"
-  title: "Operational Best Practices"
-  description: "Flashcards covering the four-phase workflow, course correction tools, permission configuration, the interview pattern, and five failure patterns for productive Claude Code sessions."
-  tags: [plan-mode, checkpoints, rewind, permissions, failure-patterns, workflow, interview-pattern, golden-reset]
+  id: ch06-08-operational-best-practices
+  title: Operational Best Practices
+  description: Flashcards covering the four-phase workflow, course correction tools, permission configuration, the interview pattern, and five failure patterns for productive Claude Code sessions.
+  tags:
+  - plan-mode
+  - checkpoints
+  - rewind
+  - permissions
+  - failure-patterns
+  - workflow
+  - interview-pattern
+  - golden-reset
   version: 2
-
 cards:
-  - id: "ch06-08-operational-best-practices-001"
-    type: recall
-    difficulty: basic
-    front: "What are the four phases of the structured Claude Code workflow, in order?"
-    back: "Explore, Plan, Implement, Commit."
-
-  - id: "ch06-08-operational-best-practices-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is course correction cheap during planning but expensive during implementation?"
-    back: "BECAUSE planning produces only a reviewed design with no code changes, THEREFORE catching misunderstandings costs minutes of revision rather than hours of cleanup and revert."
-    why: "How does Plan Mode structurally enforce read-only exploration?"
-
-  - id: "ch06-08-operational-best-practices-003"
-    type: recall
-    difficulty: basic
-    front: "In Claude Code, what does pressing Esc do while Claude is mid-response?"
-    back: "Stops Claude immediately, preserving context."
-
-  - id: "ch06-08-operational-best-practices-004"
-    type: thinking
-    difficulty: intermediate
-    front: "How do automatic checkpoints transform the risk of trying experimental approaches?"
-    back: "BECAUSE Claude creates snapshots before every modifying tool use, THEREFORE you can try risky approaches and rewind to a clean state if they fail, making experimentation fully reversible."
-    why: "Which of the seven principles does reversible experimentation implement?"
-
-  - id: "ch06-08-operational-best-practices-005"
-    type: recall
-    difficulty: basic
-    front: "What is the difference between single Esc and double Esc (or /rewind) in Claude Code?"
-    back: "Single Esc stops mid-response; double Esc opens the checkpoint menu."
-
-  - id: "ch06-08-operational-best-practices-006"
-    type: thinking
-    difficulty: intermediate
-    front: "A developer is unsure whether a task needs the planning phase. How should they decide?"
-    back: "BECAUSE unnecessary planning costs only a few minutes while improvising a complex change often costs an hour of cleanup, THEREFORE when uncertain, always plan — the downside of skipping is far worse."
-    why: "What kinds of tasks can safely skip the planning phase?"
-
-  - id: "ch06-08-operational-best-practices-007"
-    type: recall
-    difficulty: intermediate
-    front: "What three choices does a user have when Claude Code shows a permission prompt?"
-    back: "Allow once, allow for session, or deny."
-
-  - id: "ch06-08-operational-best-practices-008"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are loose permissions inside a sandbox considered safe rather than reckless?"
-    back: "BECAUSE the sandbox creates OS-level isolation from the real system, THEREFORE Claude can operate with full autonomy without risk of affecting real files, data, or production systems."
-    why: "When would the same loose permissions outside a sandbox become dangerous?"
-
-  - id: "ch06-08-operational-best-practices-009"
-    type: recall
-    difficulty: basic
-    front: "What three categories of commands make up the standard safe permission allowlist?"
-    back: "Read operations, verification operations, and observability operations."
-
-  - id: "ch06-08-operational-best-practices-010"
-    type: thinking
-    difficulty: advanced
-    front: "Why does the Golden Reset often produce better code than continuing the same session?"
-    back: "BECAUSE the interview generates a signal-dense specification while the conversation also accumulates exploratory noise, THEREFORE starting fresh with just the spec gives Claude a clean context focused entirely on implementation."
-    why: "How does this relate to the context window as a zero-sum resource?"
-
-  - id: "ch06-08-operational-best-practices-011"
-    type: recall
-    difficulty: intermediate
-    front: "What is the interview pattern's one-liner prompt?"
-    back: "\"Don't code yet. Interview me until you have a 100% clear spec.\""
-
-  - id: "ch06-08-operational-best-practices-012"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the Kitchen Sink Session cause quality to degrade?"
-    back: "BECAUSE Claude's responses are influenced by everything in context, THEREFORE mixing unrelated tasks fragments attention across all of them, diluting focus on each individual task."
-    why: "What is the single operational fix for this pattern?"
-
-  - id: "ch06-08-operational-best-practices-013"
-    type: recall
-    difficulty: intermediate
-    front: "What is the Rule of Two for correction loops?"
-    back: "If Claude misses the mark twice, stop and start fresh with a better prompt."
-
-  - id: "ch06-08-operational-best-practices-014"
-    type: thinking
-    difficulty: advanced
-    front: "Why does a third correction attempt usually fail worse than starting over?"
-    back: "BECAUSE each correction adds noise from failed attempts and frustrations, THEREFORE the signal-to-noise ratio collapses and a fresh prompt with lessons learned outperforms continued patching."
-    why: "What information from the failed attempts should carry into the fresh prompt?"
-
-  - id: "ch06-08-operational-best-practices-015"
-    type: recall
-    difficulty: intermediate
-    front: "What is the recommended maximum length for CLAUDE.md, and where should excess knowledge go?"
-    back: "Under 60 lines; move domain knowledge into .claude/skills/."
-
-  - id: "ch06-08-operational-best-practices-016"
-    type: thinking
-    difficulty: advanced
-    front: "Why is \"it looks right\" insufficient as verification for AI-generated output?"
-    back: "BECAUSE LLMs are optimized to produce confident, plausible-sounding responses, THEREFORE plausibility is not correctness — only running the code and observing actual results counts as verification."
-    why: "How does this connect to the principle that verification is a core step?"
+- id: ch06-08-operational-best-practices-001
+  type: recall
+  difficulty: basic
+  front: What are the four phases of the structured Claude Code workflow, in order?
+  back: Explore, Plan, Implement, Commit.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-002
+  type: thinking
+  difficulty: intermediate
+  front: Why is course correction cheap during planning but expensive during implementation?
+  back: BECAUSE planning produces only a reviewed design with no code changes, THEREFORE catching misunderstandings costs minutes of revision rather than hours of cleanup and revert.
+  why: How does Plan Mode structurally enforce read-only exploration?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-003
+  type: recall
+  difficulty: basic
+  front: In Claude Code, what does pressing Esc do while Claude is mid-response?
+  back: Stops Claude immediately, preserving context.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-004
+  type: thinking
+  difficulty: intermediate
+  front: How do automatic checkpoints transform the risk of trying experimental approaches?
+  back: BECAUSE Claude creates snapshots before every modifying tool use, THEREFORE you can try risky approaches and rewind to a clean state if they fail, making experimentation fully reversible.
+  why: Which of the seven principles does reversible experimentation implement?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-005
+  type: recall
+  difficulty: basic
+  front: What is the difference between single Esc and double Esc (or /rewind) in Claude Code?
+  back: Single Esc stops mid-response; double Esc opens the checkpoint menu.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-006
+  type: thinking
+  difficulty: intermediate
+  front: A developer is unsure whether a task needs the planning phase. How should they decide?
+  back: BECAUSE unnecessary planning costs only a few minutes while improvising a complex change often costs an hour of cleanup, THEREFORE when uncertain, always plan — the downside of skipping is far worse.
+  why: What kinds of tasks can safely skip the planning phase?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-007
+  type: recall
+  difficulty: intermediate
+  front: What three choices does a user have when Claude Code shows a permission prompt?
+  back: Allow once, allow for session, or deny.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-008
+  type: thinking
+  difficulty: intermediate
+  front: Why are loose permissions inside a sandbox considered safe rather than reckless?
+  back: BECAUSE the sandbox creates OS-level isolation from the real system, THEREFORE Claude can operate with full autonomy without risk of affecting real files, data, or production systems.
+  why: When would the same loose permissions outside a sandbox become dangerous?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-009
+  type: recall
+  difficulty: basic
+  front: What three categories of commands make up the standard safe permission allowlist?
+  back: Read operations, verification operations, and observability operations.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-010
+  type: thinking
+  difficulty: advanced
+  front: Why does the Golden Reset often produce better code than continuing the same session?
+  back: BECAUSE the interview generates a signal-dense specification while the conversation also accumulates exploratory noise, THEREFORE starting fresh with just the spec gives Claude a clean context focused
+    entirely on implementation.
+  why: How does this relate to the context window as a zero-sum resource?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-011
+  type: recall
+  difficulty: intermediate
+  front: What is the interview pattern's one-liner prompt?
+  back: '"Don''t code yet. Interview me until you have a 100% clear spec."'
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-012
+  type: thinking
+  difficulty: intermediate
+  front: Why does the Kitchen Sink Session cause quality to degrade?
+  back: BECAUSE Claude's responses are influenced by everything in context, THEREFORE mixing unrelated tasks fragments attention across all of them, diluting focus on each individual task.
+  why: What is the single operational fix for this pattern?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-013
+  type: recall
+  difficulty: intermediate
+  front: What is the Rule of Two for correction loops?
+  back: If Claude misses the mark twice, stop and start fresh with a better prompt.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-014
+  type: thinking
+  difficulty: advanced
+  front: Why does a third correction attempt usually fail worse than starting over?
+  back: BECAUSE each correction adds noise from failed attempts and frustrations, THEREFORE the signal-to-noise ratio collapses and a fresh prompt with lessons learned outperforms continued patching.
+  why: What information from the failed attempts should carry into the fresh prompt?
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-015
+  type: recall
+  difficulty: intermediate
+  front: What is the recommended maximum length for CLAUDE.md, and where should excess knowledge go?
+  back: Under 60 lines; move domain knowledge into .claude/skills/.
+  tags:
+  - plan-mode
+  - checkpoints
+- id: ch06-08-operational-best-practices-016
+  type: thinking
+  difficulty: advanced
+  front: Why is "it looks right" insufficient as verification for AI-generated output?
+  back: BECAUSE LLMs are optimized to produce confident, plausible-sounding responses, THEREFORE plausibility is not correctness — only running the code and observing actual results counts as verification.
+  why: How does this connect to the principle that verification is a core step?
+  tags:
+  - plan-mode
+  - checkpoints

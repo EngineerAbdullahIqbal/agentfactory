@@ -47,14 +47,14 @@ cards:
   - id: "ch04-10-context-playbook-006"
     type: recall
     front: "What percentage of context does message history consume in late sessions with 50+ messages?"
-    back: "50%."
+    back: "Approximately 50% of total context."
     tags: ["token-budget", "message-history"]
     difficulty: "basic"
 
   - id: "ch04-10-context-playbook-007"
     type: recall
     front: "What recommended percentage should the reserve buffer occupy in context budget?"
-    back: "10-15%."
+    back: "Between 10-15% of context budget."
     tags: ["token-budget", "reserve-buffer"]
     difficulty: "basic"
 

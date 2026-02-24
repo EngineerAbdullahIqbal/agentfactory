@@ -1,98 +1,147 @@
 deck:
-  id: "ch06-01-bash-is-the-key"
-  title: "Principle 1: Bash Is the Key"
-  description: "Flashcards covering why BASH access transforms AI from passive chatbot to active agent, the Unix philosophy, Vercel's d0 discovery, command safety levels, and how this principle enables all others."
-  tags: [bash, unix-philosophy, simplicity, vercel-d0, command-safety, agentic-capability, general-agents]
+  id: ch06-01-bash-is-the-key
+  title: 'Principle 1: Bash Is the Key'
+  description: Flashcards covering why BASH access transforms AI from passive chatbot to active agent, the Unix philosophy, Vercel's d0 discovery, command safety levels, and how this principle enables all
+    others.
+  tags:
+  - bash
+  - unix-philosophy
+  - simplicity
+  - vercel-d0
+  - command-safety
+  - agentic-capability
+  - general-agents
   version: 2
-
 cards:
-  - id: "ch06-01-bash-is-the-key-001"
-    type: recall
-    difficulty: basic
-    front: "What does BASH stand for?"
-    back: "Bourne Again Shell."
+- id: ch06-01-bash-is-the-key-001
+  type: recall
+  difficulty: basic
+  front: What does BASH stand for?
+  back: Bourne Again Shell.
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-002
+  type: thinking
+  difficulty: intermediate
+  front: Why did removing 80% of d0's tools improve its performance?
+  back: BECAUSE complex tooling constrained the model's reasoning, THEREFORE stripping down to simple BASH gave the LLM room to adapt and find better solutions on its own.
+  why: What does this imply about the relationship between tool count and agent reliability?
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-003
+  type: recall
+  difficulty: basic
+  front: In Vercel's d0 benchmark, what was the success rate of the BASH-only design versus the complex design?
+  back: 100% for BASH-only versus 80% for the complex design.
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-004
+  type: thinking
+  difficulty: intermediate
+  front: How does the text-to-text nature of BASH explain its fit with LLMs?
+  back: BECAUSE BASH commands, inputs, and outputs are all plain text, THEREFORE there is no translation layer or format conversion needed — the LLM reads text and produces text that the terminal executes
+    directly.
+  why: What would break if an agent's primary interface used binary or proprietary formats?
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-005
+  type: recall
+  difficulty: basic
+  front: What are the three tenets of the Unix philosophy?
+  back: '1. Each tool does one thing well.
 
-  - id: "ch06-01-bash-is-the-key-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why did removing 80% of d0's tools improve its performance?"
-    back: "BECAUSE complex tooling constrained the model's reasoning, THEREFORE stripping down to simple BASH gave the LLM room to adapt and find better solutions on its own."
-    why: "What does this imply about the relationship between tool count and agent reliability?"
+    2. Tools connect through pipes.
 
-  - id: "ch06-01-bash-is-the-key-003"
-    type: recall
-    difficulty: basic
-    front: "In Vercel's d0 benchmark, what was the success rate of the BASH-only design versus the complex design?"
-    back: "100% for BASH-only versus 80% for the complex design."
+    3. Everything is text.'
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-006
+  type: thinking
+  difficulty: advanced
+  front: Why do battle-tested Unix tools outperform custom-built agent tools?
+  back: BECAUSE commands like grep have been refined for 50+ years by millions of users, THEREFORE their edge cases are resolved and performance is optimized in ways no newly built custom tool can match.
+  why: When might a custom tool be justified despite this maturity advantage?
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-007
+  type: recall
+  difficulty: intermediate
+  front: In BASH, what does the pipe operator (|) do?
+  back: Takes the output of one command and feeds it as input to the next.
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-008
+  type: thinking
+  difficulty: intermediate
+  front: A chatbot tells you how to search files; a General Agent searches them directly. Why is the difference more than speed?
+  back: BECAUSE terminal access lets the agent observe, reason, and iterate through the OODA loop, THEREFORE it can discover things the user wouldn't have thought to look for, not just execute faster.
+  why: How does iteration change the quality of outcomes, not just the time to reach them?
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-009
+  type: recall
+  difficulty: intermediate
+  front: How much faster was Vercel's BASH-only d0 agent compared to the complex design?
+  back: 3.5x faster (77.4 seconds versus 274.8 seconds).
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-010
+  type: thinking
+  difficulty: intermediate
+  front: Why does the command safety model use a graduated spectrum rather than binary allow/deny?
+  back: BECAUSE commands range from harmless reads to destructive system operations, THEREFORE a spectrum lets agents run safe commands freely for speed while requiring approval only for risky actions.
+  why: What would happen to agent usefulness if every command required explicit approval?
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-011
+  type: recall
+  difficulty: intermediate
+  front: What are the five levels of the command safety spectrum, from safest to most dangerous?
+  back: '1. Read/search (ls, grep)
 
-  - id: "ch06-01-bash-is-the-key-004"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the text-to-text nature of BASH explain its fit with LLMs?"
-    back: "BECAUSE BASH commands, inputs, and outputs are all plain text, THEREFORE there is no translation layer or format conversion needed — the LLM reads text and produces text that the terminal executes directly."
-    why: "What would break if an agent's primary interface used binary or proprietary formats?"
+    2. Create (mkdir, touch)
 
-  - id: "ch06-01-bash-is-the-key-005"
-    type: recall
-    difficulty: basic
-    front: "What are the three tenets of the Unix philosophy?"
-    back: "1. Each tool does one thing well.\n2. Tools connect through pipes.\n3. Everything is text."
+    3. Move/rename (mv)
 
-  - id: "ch06-01-bash-is-the-key-006"
-    type: thinking
-    difficulty: advanced
-    front: "Why do battle-tested Unix tools outperform custom-built agent tools?"
-    back: "BECAUSE commands like grep have been refined for 50+ years by millions of users, THEREFORE their edge cases are resolved and performance is optimized in ways no newly built custom tool can match."
-    why: "When might a custom tool be justified despite this maturity advantage?"
+    4. Delete (rm)
 
-  - id: "ch06-01-bash-is-the-key-007"
-    type: recall
-    difficulty: intermediate
-    front: "In BASH, what does the pipe operator (|) do?"
-    back: "Takes the output of one command and feeds it as input to the next."
-
-  - id: "ch06-01-bash-is-the-key-008"
-    type: thinking
-    difficulty: intermediate
-    front: "A chatbot tells you how to search files; a General Agent searches them directly. Why is the difference more than speed?"
-    back: "BECAUSE terminal access lets the agent observe, reason, and iterate through the OODA loop, THEREFORE it can discover things the user wouldn't have thought to look for, not just execute faster."
-    why: "How does iteration change the quality of outcomes, not just the time to reach them?"
-
-  - id: "ch06-01-bash-is-the-key-009"
-    type: recall
-    difficulty: intermediate
-    front: "How much faster was Vercel's BASH-only d0 agent compared to the complex design?"
-    back: "3.5x faster (77.4 seconds versus 274.8 seconds)."
-
-  - id: "ch06-01-bash-is-the-key-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the command safety model use a graduated spectrum rather than binary allow/deny?"
-    back: "BECAUSE commands range from harmless reads to destructive system operations, THEREFORE a spectrum lets agents run safe commands freely for speed while requiring approval only for risky actions."
-    why: "What would happen to agent usefulness if every command required explicit approval?"
-
-  - id: "ch06-01-bash-is-the-key-011"
-    type: recall
-    difficulty: intermediate
-    front: "What are the five levels of the command safety spectrum, from safest to most dangerous?"
-    back: "1. Read/search (ls, grep)\n2. Create (mkdir, touch)\n3. Move/rename (mv)\n4. Delete (rm)\n5. System-level (rm -rf, sudo)"
-
-  - id: "ch06-01-bash-is-the-key-012"
-    type: thinking
-    difficulty: advanced
-    front: "How does Principle 1 (BASH) enable Principle 3 (Verification as Core Step)?"
-    back: "BECAUSE verification requires running commands and checking their output against expectations, THEREFORE without terminal access an agent cannot confirm whether its actions succeeded or failed."
-    why: "What would verification look like for an agent that can only generate text but never execute it?"
-
-  - id: "ch06-01-bash-is-the-key-013"
-    type: recall
-    difficulty: basic
-    front: "Who first asked 'What if BASH is all you need?' and at which company?"
-    back: "Andrew Qu, a Vercel engineer."
-
-  - id: "ch06-01-bash-is-the-key-014"
-    type: thinking
-    difficulty: advanced
-    front: "An agent with 20 specialized tools scores lower than one with only BASH. Why might adding tools reduce performance?"
-    back: "BECAUSE each additional tool adds decision complexity the model must navigate, THEREFORE the model spends tokens choosing between tools rather than reasoning about the actual problem."
-    why: "How would you decide the minimum viable toolset for a new agent?"
+    5. System-level (rm -rf, sudo)'
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-012
+  type: thinking
+  difficulty: advanced
+  front: How does Principle 1 (BASH) enable Principle 3 (Verification as Core Step)?
+  back: BECAUSE verification requires running commands and checking their output against expectations, THEREFORE without terminal access an agent cannot confirm whether its actions succeeded or failed.
+  why: What would verification look like for an agent that can only generate text but never execute it?
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-013
+  type: recall
+  difficulty: basic
+  front: Who first asked 'What if BASH is all you need?' and at which company?
+  back: Andrew Qu, a Vercel engineer.
+  tags:
+  - bash
+  - unix-philosophy
+- id: ch06-01-bash-is-the-key-014
+  type: thinking
+  difficulty: advanced
+  front: An agent with 20 specialized tools scores lower than one with only BASH. Why might adding tools reduce performance?
+  back: BECAUSE each additional tool adds decision complexity the model must navigate, THEREFORE the model spends tokens choosing between tools rather than reasoning about the actual problem.
+  why: How would you decide the minimum viable toolset for a new agent?
+  tags:
+  - bash
+  - unix-philosophy

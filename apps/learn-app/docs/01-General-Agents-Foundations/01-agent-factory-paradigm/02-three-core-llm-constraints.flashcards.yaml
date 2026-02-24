@@ -1,202 +1,274 @@
 deck:
-  id: "ch01-three-core-llm-constraints"
-  title: "The Three Core Operational Constraints of LLMs"
-  description: "Flashcards covering the three fundamental LLM constraints—statelessness, probabilistic outputs, and limited context—and how they shape AI-native development methodology."
-  tags: [llm-constraints, stateless, probabilistic, context-window, context-engineering, agents-md, sdd, mcp]
+  id: ch01-three-core-llm-constraints
+  title: The Three Core Operational Constraints of LLMs
+  description: Flashcards covering the three fundamental LLM constraints—statelessness, probabilistic outputs, and limited context—and how they shape AI-native development methodology.
+  tags:
+  - llm-constraints
+  - stateless
+  - probabilistic
+  - context-window
+  - context-engineering
+  - agents-md
+  - sdd
+  - mcp
   version: 1
-
 cards:
-  - id: "ch01-three-core-llm-constraints-001"
-    type: recall
-    difficulty: basic
-    front: "What does it mean that LLMs are stateless?"
-    back: "They have no memory of previous interactions; every message is processed from scratch."
-
-  - id: "ch01-three-core-llm-constraints-002"
-    type: recall
-    difficulty: basic
-    front: "When you send a new message in a chat, what does the application do with conversation history?"
-    back: "Re-sends the entire conversation history to the model with each new message."
-
-  - id: "ch01-three-core-llm-constraints-003"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does AGENTS.md exist as a persistent file?"
-    back: "BECAUSE LLMs are stateless and forget everything between sessions, THEREFORE a persistent file must be injected into context each time to provide consistent baseline knowledge."
-    why: "Connects the statelessness constraint to the practical need for persistent configuration."
-
-  - id: "ch01-three-core-llm-constraints-004"
-    type: recall
-    difficulty: basic
-    front: "What analogy describes the correct mental model for working with an LLM?"
-    back: "A brilliant expert with amnesia who must be briefed from scratch each time."
-
-  - id: "ch01-three-core-llm-constraints-005"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are detailed specifications essential rather than optional when working with LLMs?"
-    back: "BECAUSE LLMs are stateless and have no prior knowledge of your project, THEREFORE the specification is the only information the model will ever have about your requirements."
-    why: "Highlights that specs are the sole source of requirements, not just documentation."
-
-  - id: "ch01-three-core-llm-constraints-006"
-    type: recall
-    difficulty: basic
-    front: "What does \"probabilistic\" mean in the context of LLM outputs?"
-    back: "The model generates text by sampling from probability distributions, producing variable outputs."
-
-  - id: "ch01-three-core-llm-constraints-007"
-    type: recall
-    difficulty: intermediate
-    front: "How does an LLM generate each token in its response?"
-    back: "It calculates probabilities for many possible next tokens and samples one from that distribution."
-
-  - id: "ch01-three-core-llm-constraints-008"
-    type: recall
-    difficulty: basic
-    front: "What does the temperature parameter control in an LLM?"
-    back: "How much randomness influences the model's output during token selection."
-
-  - id: "ch01-three-core-llm-constraints-009"
-    type: recall
-    difficulty: intermediate
-    front: "What happens when temperature is set to 0 versus 0.7 versus 1.0+?"
-    back: "0: most deterministic, less creative. 0.7: balanced creativity and coherence. 1.0+: high creativity, risk of incoherence."
-
-  - id: "ch01-three-core-llm-constraints-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is validation mandatory rather than optional when working with AI-generated code?"
-    back: "BECAUSE LLM outputs are probabilistic and vary between runs, THEREFORE every output must be validated against specifications since no run is guaranteed correct."
-    why: "Frames validation as a structural requirement of the technology, not just good practice."
-
-  - id: "ch01-three-core-llm-constraints-011"
-    type: thinking
-    difficulty: intermediate
-    front: "How do clear specifications constrain probabilistic output variation?"
-    back: "BECAUSE precise specs narrow the space of valid outputs, THEREFORE the model's probabilistic sampling produces variations within acceptable bounds rather than wildly different results."
-    why: "Explains the mechanism by which specs reduce harmful variability."
-
-  - id: "ch01-three-core-llm-constraints-012"
-    type: thinking
-    difficulty: advanced
-    front: "Why does Test-Driven Development take on special importance with AI-generated code?"
-    back: "BECAUSE AI outputs are probabilistic and vary between runs, THEREFORE tests define deterministic invariants that any valid implementation must satisfy regardless of how it was generated."
-    why: "Connects the nondeterminism of AI to the determinism tests enforce."
-
-  - id: "ch01-three-core-llm-constraints-013"
-    type: thinking
-    difficulty: intermediate
-    front: "How can probabilistic outputs be a strength rather than just a limitation?"
-    back: "BECAUSE the model samples different valid responses each run, THEREFORE you can generate multiple implementations, discover unconsidered approaches, and explore the solution space creatively."
-    why: "Reframes variability as a tool for creative exploration."
-
-  - id: "ch01-three-core-llm-constraints-014"
-    type: recall
-    difficulty: basic
-    front: "What is an LLM's context window?"
-    back: "A fixed maximum amount of text the model can process at once, including all inputs and outputs."
-
-  - id: "ch01-three-core-llm-constraints-015"
-    type: recall
-    difficulty: intermediate
-    front: "What are the approximate context window sizes for GPT-5.2, Claude Opus 4.5, and Gemini 3 Pro?"
-    back: "GPT-5.2: 256K tokens. Claude Opus 4.5: 200K tokens. Gemini 3 Pro: 2M tokens."
-
-  - id: "ch01-three-core-llm-constraints-016"
-    type: recall
-    difficulty: intermediate
-    front: "What five categories of content compete for space inside a context window?"
-    back: "System prompt, specifications, conversation history, relevant code files, and model response."
-
-  - id: "ch01-three-core-llm-constraints-017"
-    type: recall
-    difficulty: intermediate
-    front: "What is the \"lost in the middle\" effect in large context windows?"
-    back: "Information in the center of a very long context gets less attention than content at the beginning or end."
-
-  - id: "ch01-three-core-llm-constraints-018"
-    type: thinking
-    difficulty: advanced
-    front: "Why is context engineering considered a core development skill?"
-    back: "BECAUSE context windows are finite and zero-sum, THEREFORE deciding what information to include or exclude directly determines output quality, making curation as important as prompting."
-    why: "Elevates context selection from a technicality to a strategic skill."
-
-  - id: "ch01-three-core-llm-constraints-019"
-    type: thinking
-    difficulty: intermediate
-    front: "How do AI-first IDEs like Cursor address the limited context problem?"
-    back: "BECAUSE the full codebase cannot fit in context, THEREFORE these IDEs intelligently select only relevant code—files being edited, imports, related functions—to maximize value of limited space."
-    why: "Explains why smart tooling matters beyond simple code pasting."
-
-  - id: "ch01-three-core-llm-constraints-020"
-    type: thinking
-    difficulty: intermediate
-    front: "Why do specifications compress intent more efficiently than conversations?"
-    back: "BECAUSE a spec conveys requirements in fewer tokens than a long back-and-forth discovery process, THEREFORE specs maximize the value of limited context window space."
-    why: "Connects specification writing to the economics of token budgets."
-
-  - id: "ch01-three-core-llm-constraints-021"
-    type: thinking
-    difficulty: advanced
-    front: "How do statelessness and limited context compound each other?"
-    back: "BECAUSE the model forgets everything between sessions, context must be re-injected each time. THEREFORE that re-injected context must be concise since window space is finite, which is why AGENTS.md is brief."
-    why: "Shows how two constraints interact to create a design pressure for conciseness."
-
-  - id: "ch01-three-core-llm-constraints-022"
-    type: thinking
-    difficulty: advanced
-    front: "How do probabilistic outputs and statelessness compound each other?"
-    back: "BECAUSE each session starts fresh and produces variable output, THEREFORE you cannot guarantee the model approaches a problem the same way twice, making version control and decision documentation essential."
-    why: "Explains why reproducibility requires external systems, not model behavior."
-
-  - id: "ch01-three-core-llm-constraints-023"
-    type: thinking
-    difficulty: advanced
-    front: "How do probabilistic outputs and limited context compound each other?"
-    back: "BECAUSE constrained context gives the model less anchoring information, THEREFORE probabilistic generation with vague specs and limited context yields wildly varying outputs, while clear specs constrain variation."
-    why: "Demonstrates that context quality directly controls output variability."
-
-  - id: "ch01-three-core-llm-constraints-024"
-    type: recall
-    difficulty: intermediate
-    front: "What three methodological responses does Spec-Driven Development provide to the three constraints?"
-    back: "Specs persist across sessions (statelessness), constrain probabilistic outputs (variation), and maximize context window use (limited context)."
-
-  - id: "ch01-three-core-llm-constraints-025"
-    type: recall
-    difficulty: basic
-    front: "What is the incorrect mental model many developers have about AI?"
-    back: "That the AI is a knowledgeable colleague who remembers your work together."
-
-  - id: "ch01-three-core-llm-constraints-026"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is hallucination not the same as the AI lying?"
-    back: "BECAUSE hallucination is the probabilistic nature producing confident-sounding outputs from statistical patterns, THEREFORE it is an inherent property of token sampling, not intentional deception."
-    why: "Distinguishes a mechanical process from a human concept of dishonesty."
-
-  - id: "ch01-three-core-llm-constraints-027"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does poor context management directly increase costs at scale?"
-    back: "BECAUSE every token in the context window costs money via API pricing, THEREFORE stuffing irrelevant files or long conversation histories wastes budget that efficient specs and context engineering would save."
-    why: "Links context engineering to financial impact, not just quality."
-
-  - id: "ch01-three-core-llm-constraints-028"
-    type: recall
-    difficulty: basic
-    front: "What does MCP (Model Context Protocol) allow agents to do instead of requiring all context upfront?"
-    back: "Dynamically retrieve information as needed rather than loading everything into context at once."
-
-  - id: "ch01-three-core-llm-constraints-029"
-    type: thinking
-    difficulty: intermediate
-    front: "Why should you start a fresh conversation instead of continuing a long debugging session?"
-    back: "BECAUSE long conversations accumulate thousands of irrelevant history tokens, THEREFORE resetting with only relevant context frees window space and improves output quality."
-    why: "Applies the context-is-zero-sum principle to practical workflow decisions."
-
-  - id: "ch01-three-core-llm-constraints-030"
-    type: recall
-    difficulty: intermediate
-    front: "What three things should the correct developer mental model include when working with LLMs?"
-    back: "Provide all context each session concisely, specify needs clearly, validate outputs, and expect iteration."
+- id: ch01-three-core-llm-constraints-001
+  type: recall
+  difficulty: basic
+  front: What does it mean that LLMs are stateless?
+  back: They have no memory of previous interactions; every message is processed from scratch.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-002
+  type: recall
+  difficulty: basic
+  front: When you send a new message in a chat, what does the application do with conversation history?
+  back: Re-sends the entire conversation history to the model with each new message.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-003
+  type: thinking
+  difficulty: intermediate
+  front: Why does AGENTS.md exist as a persistent file?
+  back: BECAUSE LLMs are stateless and forget everything between sessions, THEREFORE a persistent file must be injected into context each time to provide consistent baseline knowledge.
+  why: Connects the statelessness constraint to the practical need for persistent configuration.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-004
+  type: recall
+  difficulty: basic
+  front: What analogy describes the correct mental model for working with an LLM?
+  back: A brilliant expert with amnesia who must be briefed from scratch each time.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-005
+  type: thinking
+  difficulty: intermediate
+  front: Why are detailed specifications essential rather than optional when working with LLMs?
+  back: BECAUSE LLMs are stateless and have no prior knowledge of your project, THEREFORE the specification is the only information the model will ever have about your requirements.
+  why: Highlights that specs are the sole source of requirements, not just documentation.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-006
+  type: recall
+  difficulty: basic
+  front: What does "probabilistic" mean in the context of LLM outputs?
+  back: The model generates text by sampling from probability distributions, producing variable outputs.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-007
+  type: recall
+  difficulty: intermediate
+  front: How does an LLM generate each token in its response?
+  back: It calculates probabilities for many possible next tokens and samples one from that distribution.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-008
+  type: recall
+  difficulty: basic
+  front: What does the temperature parameter control in an LLM?
+  back: How much randomness influences the model's output during token selection.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-009
+  type: recall
+  difficulty: intermediate
+  front: What happens when temperature is set to 0 versus 0.7 versus 1.0+?
+  back: '0: most deterministic, less creative. 0.7: balanced creativity and coherence. 1.0+: high creativity, risk of incoherence.'
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-010
+  type: thinking
+  difficulty: intermediate
+  front: Why is validation mandatory rather than optional when working with AI-generated code?
+  back: BECAUSE LLM outputs are probabilistic and vary between runs, THEREFORE every output must be validated against specifications since no run is guaranteed correct.
+  why: Frames validation as a structural requirement of the technology, not just good practice.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-011
+  type: thinking
+  difficulty: intermediate
+  front: How do clear specifications constrain probabilistic output variation?
+  back: BECAUSE precise specs narrow the space of valid outputs, THEREFORE the model's probabilistic sampling produces variations within acceptable bounds rather than wildly different results.
+  why: Explains the mechanism by which specs reduce harmful variability.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-012
+  type: thinking
+  difficulty: advanced
+  front: Why does Test-Driven Development take on special importance with AI-generated code?
+  back: BECAUSE AI outputs are probabilistic and vary between runs, THEREFORE tests define deterministic invariants that any valid implementation must satisfy regardless of how it was generated.
+  why: Connects the nondeterminism of AI to the determinism tests enforce.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-013
+  type: thinking
+  difficulty: intermediate
+  front: How can probabilistic outputs be a strength rather than just a limitation?
+  back: BECAUSE the model samples different valid responses each run, THEREFORE you can generate multiple implementations, discover unconsidered approaches, and explore the solution space creatively.
+  why: Reframes variability as a tool for creative exploration.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-014
+  type: recall
+  difficulty: basic
+  front: What is an LLM's context window?
+  back: A fixed maximum amount of text the model can process at once, including all inputs and outputs.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-015
+  type: recall
+  difficulty: intermediate
+  front: What are the approximate context window sizes for GPT-5.2, Claude Opus 4.5, and Gemini 3 Pro?
+  back: 'GPT-5.2: 256K tokens. Claude Opus 4.5: 200K tokens. Gemini 3 Pro: 2M tokens.'
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-016
+  type: recall
+  difficulty: intermediate
+  front: What five categories of content compete for space inside a context window?
+  back: System prompt, specifications, conversation history, relevant code files, and model response.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-017
+  type: recall
+  difficulty: intermediate
+  front: What is the "lost in the middle" effect in large context windows?
+  back: Information in the center of a very long context gets less attention than content at the beginning or end.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-018
+  type: thinking
+  difficulty: advanced
+  front: Why is context engineering considered a core development skill?
+  back: BECAUSE context windows are finite and zero-sum, THEREFORE deciding what information to include or exclude directly determines output quality, making curation as important as prompting.
+  why: Elevates context selection from a technicality to a strategic skill.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-019
+  type: thinking
+  difficulty: intermediate
+  front: How do AI-first IDEs like Cursor address the limited context problem?
+  back: BECAUSE the full codebase cannot fit in context, THEREFORE these IDEs intelligently select only relevant code—files being edited, imports, related functions—to maximize value of limited space.
+  why: Explains why smart tooling matters beyond simple code pasting.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-020
+  type: thinking
+  difficulty: intermediate
+  front: Why do specifications compress intent more efficiently than conversations?
+  back: BECAUSE a spec conveys requirements in fewer tokens than a long back-and-forth discovery process, THEREFORE specs maximize the value of limited context window space.
+  why: Connects specification writing to the economics of token budgets.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-021
+  type: thinking
+  difficulty: advanced
+  front: How do statelessness and limited context compound each other?
+  back: BECAUSE the model forgets everything between sessions, context must be re-injected each time. THEREFORE that re-injected context must be concise since window space is finite, which is why AGENTS.md
+    is brief.
+  why: Shows how two constraints interact to create a design pressure for conciseness.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-022
+  type: thinking
+  difficulty: advanced
+  front: How do probabilistic outputs and statelessness compound each other?
+  back: BECAUSE each session starts fresh and produces variable output, THEREFORE you cannot guarantee the model approaches a problem the same way twice, making version control and decision documentation
+    essential.
+  why: Explains why reproducibility requires external systems, not model behavior.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-023
+  type: thinking
+  difficulty: advanced
+  front: How do probabilistic outputs and limited context compound each other?
+  back: BECAUSE constrained context gives the model less anchoring information, THEREFORE probabilistic generation with vague specs and limited context yields wildly varying outputs, while clear specs constrain
+    variation.
+  why: Demonstrates that context quality directly controls output variability.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-024
+  type: recall
+  difficulty: intermediate
+  front: What three methodological responses does Spec-Driven Development provide to the three constraints?
+  back: Specs persist across sessions (statelessness), constrain probabilistic outputs (variation), and maximize context window use (limited context).
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-025
+  type: recall
+  difficulty: basic
+  front: What is the incorrect mental model many developers have about AI?
+  back: That the AI is a knowledgeable colleague who remembers your work together.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-026
+  type: thinking
+  difficulty: intermediate
+  front: Why is hallucination not the same as the AI lying?
+  back: BECAUSE hallucination is the probabilistic nature producing confident-sounding outputs from statistical patterns, THEREFORE it is an inherent property of token sampling, not intentional deception.
+  why: Distinguishes a mechanical process from a human concept of dishonesty.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-027
+  type: thinking
+  difficulty: intermediate
+  front: Why does poor context management directly increase costs at scale?
+  back: BECAUSE every token in the context window costs money via API pricing, THEREFORE stuffing irrelevant files or long conversation histories wastes budget that efficient specs and context engineering
+    would save.
+  why: Links context engineering to financial impact, not just quality.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-028
+  type: recall
+  difficulty: basic
+  front: What does MCP (Model Context Protocol) allow agents to do instead of requiring all context upfront?
+  back: Dynamically retrieve information as needed rather than loading everything into context at once.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-029
+  type: thinking
+  difficulty: intermediate
+  front: Why should you start a fresh conversation instead of continuing a long debugging session?
+  back: BECAUSE long conversations accumulate thousands of irrelevant history tokens, THEREFORE resetting with only relevant context frees window space and improves output quality.
+  why: Applies the context-is-zero-sum principle to practical workflow decisions.
+  tags:
+  - llm-constraints
+  - stateless
+- id: ch01-three-core-llm-constraints-030
+  type: recall
+  difficulty: intermediate
+  front: What three things should the correct developer mental model include when working with LLMs?
+  back: Provide all context each session concisely, specify needs clearly, validate outputs, and expect iteration.
+  tags:
+  - llm-constraints
+  - stateless

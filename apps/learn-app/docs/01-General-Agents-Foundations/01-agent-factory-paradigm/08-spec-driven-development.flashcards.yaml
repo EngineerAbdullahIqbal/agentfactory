@@ -1,215 +1,274 @@
 deck:
-  id: "ch01-spec-driven-dev"
-  title: "Spec-Driven Development"
-  description: "Flashcards covering the SDD methodology, its six-phase workflow, specification quality, and when to use SDD vs Vibe Coding."
-  tags: [sdd, specifications, workflow, ai-collaboration, development-methodology]
+  id: ch01-spec-driven-dev
+  title: Spec-Driven Development
+  description: Flashcards covering the SDD methodology, its six-phase workflow, specification quality, and when to use SDD vs Vibe Coding.
+  tags:
+  - sdd
+  - specifications
+  - workflow
+  - ai-collaboration
+  - development-methodology
   version: 1
-
 cards:
-  - id: "ch01-spec-driven-dev-001"
-    type: recall
-    difficulty: basic
-    front: "What is Spec-Driven Development (SDD)?"
-    back: "A methodology where you write complete specifications before writing code, then AI implements against them."
-
-  - id: "ch01-spec-driven-dev-002"
-    type: recall
-    difficulty: basic
-    front: "What is the Core Equation of SDD for a vague idea given to AI?"
-    back: "Vague Idea + AI = 5+ iterations of misalignment."
-
-  - id: "ch01-spec-driven-dev-003"
-    type: recall
-    difficulty: basic
-    front: "What is the Core Equation of SDD for a clear specification given to AI?"
-    back: "Clear Specification + AI = 1-2 iterations of refinement."
-
-  - id: "ch01-spec-driven-dev-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why did SDD become practical only with the rise of AI coding assistants?"
-    back: "BECAUSE AI generates code faster than humans, the bottleneck shifted from implementation to specification. THEREFORE investing time in clear specs now yields disproportionate returns."
-    why: "Specification was previously as costly as coding, making upfront specs uneconomical."
-
-  - id: "ch01-spec-driven-dev-005"
-    type: recall
-    difficulty: basic
-    front: "What are the four elements of a specification in SDD Phase 1 (Specify)?"
-    back: "Intent, Success Criteria, Constraints, Non-Goals."
-
-  - id: "ch01-spec-driven-dev-006"
-    type: recall
-    difficulty: basic
-    front: "What does the Intent element of an SDD specification answer?"
-    back: "Why the feature exists and what user problem it solves."
-
-  - id: "ch01-spec-driven-dev-007"
-    type: thinking
-    difficulty: intermediate
-    front: "Why must the Clarify phase be done by the human, not delegated to AI?"
-    back: "BECAUSE Clarify is about identifying what you do not know, which requires domain judgment AI lacks. THEREFORE the human must surface ambiguities before AI starts implementing to prevent assumption-driven code."
-    why: "AI cannot detect requirements gaps in domains it has no business context for."
-
-  - id: "ch01-spec-driven-dev-008"
-    type: recall
-    difficulty: intermediate
-    front: "What four outputs does the Plan phase (Phase 3) of SDD produce?"
-    back: "Architecture, dependencies, testing strategy, and tradeoffs."
-
-  - id: "ch01-spec-driven-dev-009"
-    type: recall
-    difficulty: basic
-    front: "What must every task include in SDD Phase 4 (Tasks)?"
-    back: "Acceptance criteria and explicit dependencies."
-
-  - id: "ch01-spec-driven-dev-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is human-in-the-loop review essential during SDD Phase 5 (Implement)?"
-    back: "BECAUSE AI may interpret specs differently than intended, human review catches misalignment before code is committed. THEREFORE the review step ensures implementation fidelity to the specification."
-    why: "Without human review, small interpretation errors compound across multiple tasks."
-
-  - id: "ch01-spec-driven-dev-011"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is the Validate phase necessary even when all tests pass during implementation?"
-    back: "BECAUSE passing tests only confirms code works as coded, not that it matches the original specification intent. THEREFORE validation cross-checks implementation against success criteria, constraints, and edge cases holistically."
-    why: "Tests verify code correctness; validation verifies specification compliance."
-
-  - id: "ch01-spec-driven-dev-012"
-    type: recall
-    difficulty: basic
-    front: "What are the six phases of SDD in order?"
-    back: "Specify, Clarify, Plan, Tasks, Implement, Validate."
-
-  - id: "ch01-spec-driven-dev-013"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four qualities of a good specification?"
-    back: "Clarity, completeness, constraints, and testability."
-
-  - id: "ch01-spec-driven-dev-014"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does clarity in a specification require measurable criteria instead of adjectives?"
-    back: "BECAUSE adjectives like 'fast' or 'user-friendly' are subjective, they cannot be verified. THEREFORE measurable criteria like 'response time < 200ms' create an objective pass/fail test."
-    why: "Ambiguous requirements force AI to guess, multiplying misalignment iterations."
-
-  - id: "ch01-spec-driven-dev-015"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are Non-Goals as important as goals in an SDD specification?"
-    back: "BECAUSE without explicit Non-Goals, every feature request seems reasonable and scope creeps unchecked. THEREFORE Non-Goals create a boundary that keeps both humans and AI focused on the defined scope."
-    why: "Non-Goals give a concrete answer when someone asks to add unplanned features."
-
-  - id: "ch01-spec-driven-dev-016"
-    type: thinking
-    difficulty: advanced
-    front: "Why do vague success criteria like 'good performance' cause SDD to fail?"
-    back: "BECAUSE unmeasurable criteria cannot be tested, so you can never confirm the implementation succeeded. THEREFORE the validate phase becomes subjective opinion rather than objective verification."
-    why: "Without testable criteria, the spec provides no advantage over Vibe Coding."
-
-  - id: "ch01-spec-driven-dev-017"
-    type: thinking
-    difficulty: intermediate
-    front: "How does SDD change the nature of iteration compared to Vibe Coding?"
-    back: "BECAUSE requirements are defined upfront, SDD iterations are refinement within known bounds. THEREFORE you spend 1-2 cycles polishing rather than 5-10 cycles discovering forgotten requirements."
-    why: "Vibe Coding iterations discover requirements reactively; SDD iterations refine known requirements."
-
-  - id: "ch01-spec-driven-dev-018"
-    type: recall
-    difficulty: basic
-    front: "When is Vibe Coding an appropriate approach?"
-    back: "Learning new frameworks, prototyping throwaway code, or writing simple scripts under 50 lines."
-
-  - id: "ch01-spec-driven-dev-019"
-    type: recall
-    difficulty: intermediate
-    front: "When is full SDD essential?"
-    back: "Production features, complex systems, security-critical work, team projects, and AI-assisted development."
-
-  - id: "ch01-spec-driven-dev-020"
-    type: recall
-    difficulty: basic
-    front: "When should you skip SDD entirely?"
-    back: "Learning experiments, throwaway prototypes, and trivial changes like fixing typos."
-
-  - id: "ch01-spec-driven-dev-021"
-    type: thinking
-    difficulty: advanced
-    front: "How does SDD transform AI from a chatbot into an implementation partner?"
-    back: "BECAUSE the spec removes guesswork, AI can ask targeted clarifying questions during planning rather than making assumptions during implementation. THEREFORE collaboration becomes precise and convergent instead of iterative and divergent."
-    why: "Without specs, AI must guess intent on every decision, compounding misalignment."
-
-  - id: "ch01-spec-driven-dev-022"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does writing a specification after the code defeats the purpose of SDD?"
-    back: "BECAUSE the spec becomes a retrospective document rather than a decision-making guide. THEREFORE it cannot prevent the upfront design mistakes that SDD exists to eliminate."
-    why: "Post-hoc specs document decisions already made rather than guiding decisions yet to come."
-
-  - id: "ch01-spec-driven-dev-023"
-    type: thinking
-    difficulty: advanced
-    front: "Why does skipping Non-Goals lead to scope creep in AI-assisted projects?"
-    back: "BECAUSE AI has no judgment about what is out of scope, it will implement any requested feature that seems reasonable. THEREFORE explicit Non-Goals are the only mechanism to constrain what AI builds."
-    why: "Humans can infer boundaries from context; AI agents cannot without explicit constraints."
-
-  - id: "ch01-spec-driven-dev-024"
-    type: thinking
-    difficulty: advanced
-    front: "Why should specifications be treated as living documents rather than static artifacts?"
-    back: "BECAUSE requirements change during implementation as new information emerges. THEREFORE keeping specs updated ensures the implementation and specification stay aligned, preventing drift."
-    why: "Outdated specs become misleading, causing AI to implement against stale requirements."
-
-  - id: "ch01-spec-driven-dev-025"
-    type: recall
-    difficulty: intermediate
-    front: "What is the time distribution difference between Vibe Coding and SDD?"
-    back: "Vibe Coding: 80% coding, 20% fixing. SDD: 20% specifying, 80% building."
-
-  - id: "ch01-spec-driven-dev-026"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does each SDD phase require quality gates before proceeding to the next?"
-    back: "BECAUSE errors in early phases propagate and amplify through later phases. THEREFORE quality gates catch defects at the cheapest point to fix them, before they become embedded in plans, tasks, or code."
-    why: "A missing edge case in Clarify becomes a missing test in Validate, costing far more to fix."
-
-  - id: "ch01-spec-driven-dev-027"
-    type: recall
-    difficulty: intermediate
-    front: "What three categories does the completeness checklist cover for specifications?"
-    back: "Functional requirements, non-functional requirements, and integration requirements."
-
-  - id: "ch01-spec-driven-dev-028"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does testability require every success criterion to be measurable?"
-    back: "BECAUSE the validate phase needs objective pass/fail checks against each criterion. THEREFORE unmeasurable criteria make validation impossible and success ambiguous."
-    why: "Testability connects specifications directly to the validation phase, closing the SDD loop."
-
-  - id: "ch01-spec-driven-dev-029"
-    type: thinking
-    difficulty: advanced
-    front: "How does the Developer A vs Developer B comparison demonstrate that process matters more than skill?"
-    back: "BECAUSE both developers have equal coding ability, the only variable is methodology. THEREFORE Developer B's SDD approach delivers faster results, proving that systematic specification outperforms reactive coding."
-    why: "The comparison isolates process as the single differentiating factor between outcomes."
-
-  - id: "ch01-spec-driven-dev-030"
-    type: recall
-    difficulty: basic
-    front: "What is lightweight SDD appropriate for?"
-    back: "Simple utilities, prototype code, and well-understood patterns like CRUD APIs."
-
-  - id: "ch01-spec-driven-dev-031"
-    type: thinking
-    difficulty: advanced
-    front: "Why does the Clarify phase happen before the Plan phase in SDD?"
-    back: "BECAUSE unresolved ambiguities would propagate into architecture and task decisions. THEREFORE clarifying unknowns first ensures the plan is built on solid, agreed-upon requirements."
-    why: "Planning on ambiguous requirements produces plans that must be reworked when ambiguities surface later."
-
-  - id: "ch01-spec-driven-dev-032"
-    type: recall
-    difficulty: intermediate
-    front: "What is the maximum time a single task should take in SDD Phase 4?"
-    back: "Each task should take no more than 2 hours."
+- id: ch01-spec-driven-dev-001
+  type: recall
+  difficulty: basic
+  front: What is Spec-Driven Development (SDD)?
+  back: A methodology where you write complete specifications before writing code, then AI implements against them.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-002
+  type: recall
+  difficulty: basic
+  front: What is the Core Equation of SDD for a vague idea given to AI?
+  back: Vague Idea + AI = 5+ iterations of misalignment.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-003
+  type: recall
+  difficulty: basic
+  front: What is the Core Equation of SDD for a clear specification given to AI?
+  back: Clear Specification + AI = 1-2 iterations of refinement.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-004
+  type: thinking
+  difficulty: intermediate
+  front: Why did SDD become practical only with the rise of AI coding assistants?
+  back: BECAUSE AI generates code faster than humans, the bottleneck shifted from implementation to specification. THEREFORE investing time in clear specs now yields disproportionate returns.
+  why: Specification was previously as costly as coding, making upfront specs uneconomical.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-005
+  type: recall
+  difficulty: basic
+  front: What are the four elements of a specification in SDD Phase 1 (Specify)?
+  back: Intent, Success Criteria, Constraints, Non-Goals.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-006
+  type: recall
+  difficulty: basic
+  front: What does the Intent element of an SDD specification answer?
+  back: Why the feature exists and what user problem it solves.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-007
+  type: thinking
+  difficulty: intermediate
+  front: Why must the Clarify phase be done by the human, not delegated to AI?
+  back: BECAUSE Clarify is about identifying what you do not know, which requires domain judgment AI lacks. THEREFORE the human must surface ambiguities before AI starts implementing to prevent assumption-driven
+    code.
+  why: AI cannot detect requirements gaps in domains it has no business context for.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-008
+  type: recall
+  difficulty: intermediate
+  front: What four outputs does the Plan phase (Phase 3) of SDD produce?
+  back: Architecture, dependencies, testing strategy, and tradeoffs.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-009
+  type: recall
+  difficulty: basic
+  front: What must every task include in SDD Phase 4 (Tasks)?
+  back: Acceptance criteria and explicit dependencies.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-010
+  type: thinking
+  difficulty: intermediate
+  front: Why is human-in-the-loop review essential during SDD Phase 5 (Implement)?
+  back: BECAUSE AI may interpret specs differently than intended, human review catches misalignment before code is committed. THEREFORE the review step ensures implementation fidelity to the specification.
+  why: Without human review, small interpretation errors compound across multiple tasks.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-011
+  type: thinking
+  difficulty: intermediate
+  front: Why is the Validate phase necessary even when all tests pass during implementation?
+  back: BECAUSE passing tests only confirms code works as coded, not that it matches the original specification intent. THEREFORE validation cross-checks implementation against success criteria, constraints,
+    and edge cases holistically.
+  why: Tests verify code correctness; validation verifies specification compliance.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-012
+  type: recall
+  difficulty: basic
+  front: What are the six phases of SDD in order?
+  back: Specify, Clarify, Plan, Tasks, Implement, Validate.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-013
+  type: recall
+  difficulty: intermediate
+  front: What are the four qualities of a good specification?
+  back: Clarity, completeness, constraints, and testability.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-014
+  type: thinking
+  difficulty: intermediate
+  front: Why does clarity in a specification require measurable criteria instead of adjectives?
+  back: BECAUSE adjectives like 'fast' or 'user-friendly' are subjective, they cannot be verified. THEREFORE measurable criteria like 'response time < 200ms' create an objective pass/fail test.
+  why: Ambiguous requirements force AI to guess, multiplying misalignment iterations.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-015
+  type: thinking
+  difficulty: intermediate
+  front: Why are Non-Goals as important as goals in an SDD specification?
+  back: BECAUSE without explicit Non-Goals, every feature request seems reasonable and scope creeps unchecked. THEREFORE Non-Goals create a boundary that keeps both humans and AI focused on the defined
+    scope.
+  why: Non-Goals give a concrete answer when someone asks to add unplanned features.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-016
+  type: thinking
+  difficulty: advanced
+  front: Why do vague success criteria like 'good performance' cause SDD to fail?
+  back: BECAUSE unmeasurable criteria cannot be tested, so you can never confirm the implementation succeeded. THEREFORE the validate phase becomes subjective opinion rather than objective verification.
+  why: Without testable criteria, the spec provides no advantage over Vibe Coding.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-017
+  type: thinking
+  difficulty: intermediate
+  front: How does SDD change the nature of iteration compared to Vibe Coding?
+  back: BECAUSE requirements are defined upfront, SDD iterations are refinement within known bounds. THEREFORE you spend 1-2 cycles polishing rather than 5-10 cycles discovering forgotten requirements.
+  why: Vibe Coding iterations discover requirements reactively; SDD iterations refine known requirements.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-018
+  type: recall
+  difficulty: basic
+  front: When is Vibe Coding an appropriate approach?
+  back: Learning new frameworks, prototyping throwaway code, or writing simple scripts under 50 lines.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-019
+  type: recall
+  difficulty: intermediate
+  front: When is full SDD essential?
+  back: Production features, complex systems, security-critical work, team projects, and AI-assisted development.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-020
+  type: recall
+  difficulty: basic
+  front: When should you skip SDD entirely?
+  back: Learning experiments, throwaway prototypes, and trivial changes like fixing typos.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-021
+  type: thinking
+  difficulty: advanced
+  front: How does SDD transform AI from a chatbot into an implementation partner?
+  back: BECAUSE the spec removes guesswork, AI can ask targeted clarifying questions during planning rather than making assumptions during implementation. THEREFORE collaboration becomes precise and convergent
+    instead of iterative and divergent.
+  why: Without specs, AI must guess intent on every decision, compounding misalignment.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-022
+  type: thinking
+  difficulty: intermediate
+  front: Why does writing a specification after the code defeats the purpose of SDD?
+  back: BECAUSE the spec becomes a retrospective document rather than a decision-making guide. THEREFORE it cannot prevent the upfront design mistakes that SDD exists to eliminate.
+  why: Post-hoc specs document decisions already made rather than guiding decisions yet to come.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-023
+  type: thinking
+  difficulty: advanced
+  front: Why does skipping Non-Goals lead to scope creep in AI-assisted projects?
+  back: BECAUSE AI has no judgment about what is out of scope, it will implement any requested feature that seems reasonable. THEREFORE explicit Non-Goals are the only mechanism to constrain what AI builds.
+  why: Humans can infer boundaries from context; AI agents cannot without explicit constraints.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-024
+  type: thinking
+  difficulty: advanced
+  front: Why should specifications be treated as living documents rather than static artifacts?
+  back: BECAUSE requirements change during implementation as new information emerges. THEREFORE keeping specs updated ensures the implementation and specification stay aligned, preventing drift.
+  why: Outdated specs become misleading, causing AI to implement against stale requirements.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-025
+  type: recall
+  difficulty: intermediate
+  front: What is the time distribution difference between Vibe Coding and SDD?
+  back: 'Vibe Coding: 80% coding, 20% fixing. SDD: 20% specifying, 80% building.'
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-026
+  type: thinking
+  difficulty: intermediate
+  front: Why does each SDD phase require quality gates before proceeding to the next?
+  back: BECAUSE errors in early phases propagate and amplify through later phases. THEREFORE quality gates catch defects at the cheapest point to fix them, before they become embedded in plans, tasks, or
+    code.
+  why: A missing edge case in Clarify becomes a missing test in Validate, costing far more to fix.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-027
+  type: recall
+  difficulty: intermediate
+  front: What three categories does the completeness checklist cover for specifications?
+  back: Functional requirements, non-functional requirements, and integration requirements.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-028
+  type: thinking
+  difficulty: intermediate
+  front: Why does testability require every success criterion to be measurable?
+  back: BECAUSE the validate phase needs objective pass/fail checks against each criterion. THEREFORE unmeasurable criteria make validation impossible and success ambiguous.
+  why: Testability connects specifications directly to the validation phase, closing the SDD loop.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-029
+  type: thinking
+  difficulty: advanced
+  front: How does the Developer A vs Developer B comparison demonstrate that process matters more than skill?
+  back: BECAUSE both developers have equal coding ability, the only variable is methodology. THEREFORE Developer B's SDD approach delivers faster results, proving that systematic specification outperforms
+    reactive coding.
+  why: The comparison isolates process as the single differentiating factor between outcomes.
+  tags:
+  - sdd
+  - specifications
+- id: ch01-spec-driven-dev-031
+  type: thinking
+  difficulty: advanced
+  front: Why does the Clarify phase happen before the Plan phase in SDD?
+  back: BECAUSE unresolved ambiguities would propagate into architecture and task decisions. THEREFORE clarifying unknowns first ensures the plan is built on solid, agreed-upon requirements.
+  why: Planning on ambiguous requirements produces plans that must be reworked when ambiguities surface later.
+  tags:
+  - sdd
+  - specifications

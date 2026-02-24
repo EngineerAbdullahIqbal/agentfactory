@@ -1,111 +1,175 @@
 deck:
-  id: "ch06-04-small-reversible-decomposition"
-  title: "Small, Reversible Decomposition"
-  description: "Breaking problems into small, reversible steps to manage complexity, enable fast debugging, and support safe experimentation in agentic workflows."
-  tags: [decomposition, reversibility, atomic-changes, git, debugging, iteration, agentic-workflow]
+  id: ch06-04-small-reversible-decomposition
+  title: Small, Reversible Decomposition
+  description: Breaking problems into small, reversible steps to manage complexity, enable fast debugging, and support safe experimentation in agentic workflows.
+  tags:
+  - decomposition
+  - reversibility
+  - atomic-changes
+  - git
+  - debugging
+  - iteration
+  - agentic-workflow
   version: 2
-
 cards:
-  - id: "ch06-04-small-reversible-decomposition-001"
-    type: recall
-    difficulty: basic
-    front: "What is small, reversible decomposition?"
-    back: "Breaking problems into small, independently verifiable steps that can be easily rolled back."
+- id: ch06-04-small-reversible-decomposition-001
+  type: recall
+  difficulty: basic
+  front: What is small, reversible decomposition?
+  back: Breaking problems into small, independently verifiable steps that can be easily rolled back.
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-002
+  type: thinking
+  difficulty: intermediate
+  front: Why do large code changes reliably produce bugs, regardless of developer skill?
+  back: BECAUSE humans hold only 7±2 items in working memory, THEREFORE large changes exceed cognitive limits, causing missed interactions and untested components that guarantee mistakes.
+  why: How does this cognitive limit change your planning before starting any feature?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-003
+  type: recall
+  difficulty: basic
+  front: According to the debugging cost table, what is the expected debugging time for 10 lines vs 10,000 lines changed?
+  back: '10 lines: 5 minutes. 10,000 lines: days.'
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-004
+  type: thinking
+  difficulty: intermediate
+  front: Why are ten 10-line changes faster to debug than one 100-line change?
+  back: BECAUSE each small change is tested immediately when context is fresh, THEREFORE most require zero debugging, while a 100-line change delays bug discovery when variables to consider have multiplied
+    tenfold.
+  why: What role does fresh context play beyond just reducing line count?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-005
+  type: recall
+  difficulty: basic
+  front: What four properties of AI amplify the need for small decomposition steps?
+  back: '1. Makes plausible mistakes
 
-  - id: "ch06-04-small-reversible-decomposition-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why do large code changes reliably produce bugs, regardless of developer skill?"
-    back: "BECAUSE humans hold only 7±2 items in working memory, THEREFORE large changes exceed cognitive limits, causing missed interactions and untested components that guarantee mistakes."
-    why: "How does this cognitive limit change your planning before starting any feature?"
+    2. Doesn''t learn your context
 
-  - id: "ch06-04-small-reversible-decomposition-003"
-    type: recall
-    difficulty: basic
-    front: "According to the debugging cost table, what is the expected debugging time for 10 lines vs 10,000 lines changed?"
-    back: "10 lines: 5 minutes. 10,000 lines: days."
+    3. Generates code fast (easy to accept too much)
 
-  - id: "ch06-04-small-reversible-decomposition-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are ten 10-line changes faster to debug than one 100-line change?"
-    back: "BECAUSE each small change is tested immediately when context is fresh, THEREFORE most require zero debugging, while a 100-line change delays bug discovery when variables to consider have multiplied tenfold."
-    why: "What role does fresh context play beyond just reducing line count?"
+    4. Loses track of its own logic in long outputs'
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-006
+  type: thinking
+  difficulty: advanced
+  front: Why does AI-generated code require smaller steps than human-written code?
+  back: BECAUSE AI makes plausible-looking mistakes and loses coherence in long outputs, THEREFORE accepting large AI changes without incremental verification lets subtle bugs compound before detection.
+  why: How would you structure AI prompts to enforce this incremental pattern?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-007
+  type: recall
+  difficulty: basic
+  front: What three criteria define an atomic change?
+  back: '1. Can be independently verified
 
-  - id: "ch06-04-small-reversible-decomposition-005"
-    type: recall
-    difficulty: basic
-    front: "What four properties of AI amplify the need for small decomposition steps?"
-    back: "1. Makes plausible mistakes\n2. Doesn't learn your context\n3. Generates code fast (easy to accept too much)\n4. Loses track of its own logic in long outputs"
+    2. Makes sense on its own
 
-  - id: "ch06-04-small-reversible-decomposition-006"
-    type: thinking
-    difficulty: advanced
-    front: "Why does AI-generated code require smaller steps than human-written code?"
-    back: "BECAUSE AI makes plausible-looking mistakes and loses coherence in long outputs, THEREFORE accepting large AI changes without incremental verification lets subtle bugs compound before detection."
-    why: "How would you structure AI prompts to enforce this incremental pattern?"
+    3. Can be reverted without breaking other work'
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-008
+  type: thinking
+  difficulty: intermediate
+  front: How does the Lego vs clay analogy explain why atomic changes are safer than monolithic ones?
+  back: BECAUSE Lego bricks are independent and swappable, removing one bad brick leaves the rest intact. THEREFORE atomic changes isolate failure, while monolithic clay-like changes cause fixes to ripple
+    outward.
+  why: What property must each unit of work have for the Lego model to hold?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-009
+  type: recall
+  difficulty: intermediate
+  front: What does the 'revert, don't fix' mindset recommend when code breaks?
+  back: Revert to the last working state and try a different approach.
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-010
+  type: thinking
+  difficulty: intermediate
+  front: Why is reverting broken code a strategic advantage rather than a sign of failure?
+  back: BECAUSE adding code to broken code compounds the problem with unknown interactions, THEREFORE reverting returns to a known-good state, saving hours of debugging and enabling a fresh approach.
+  why: What precondition must your workflow satisfy for reverting to be practical?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-011
+  type: recall
+  difficulty: intermediate
+  front: What are the four decomposition strategies for breaking down problems?
+  back: '1. Vertical slicing (by feature)
 
-  - id: "ch06-04-small-reversible-decomposition-007"
-    type: recall
-    difficulty: basic
-    front: "What three criteria define an atomic change?"
-    back: "1. Can be independently verified\n2. Makes sense on its own\n3. Can be reverted without breaking other work"
+    2. Horizontal slicing (by layer)
 
-  - id: "ch06-04-small-reversible-decomposition-008"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the Lego vs clay analogy explain why atomic changes are safer than monolithic ones?"
-    back: "BECAUSE Lego bricks are independent and swappable, removing one bad brick leaves the rest intact. THEREFORE atomic changes isolate failure, while monolithic clay-like changes cause fixes to ripple outward."
-    why: "What property must each unit of work have for the Lego model to hold?"
+    3. Dependency-first (by prerequisites)
 
-  - id: "ch06-04-small-reversible-decomposition-009"
-    type: recall
-    difficulty: intermediate
-    front: "What does the 'revert, don't fix' mindset recommend when code breaks?"
-    back: "Revert to the last working state and try a different approach."
+    4. Test-first (by verification)'
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-012
+  type: thinking
+  difficulty: intermediate
+  front: How does vertical slicing optimize for something different than horizontal slicing?
+  back: BECAUSE vertical slicing builds one complete feature across all layers, each step produces visible user-facing functionality. THEREFORE it optimizes for testable features, while horizontal slicing
+    optimizes for clean layer separation.
+  why: When would horizontal slicing be the wrong choice for a user-facing product?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-013
+  type: recall
+  difficulty: intermediate
+  front: What are the three decomposition anti-patterns and their fixes?
+  back: '1. Micro-commits: group related tiny changes
 
-  - id: "ch06-04-small-reversible-decomposition-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is reverting broken code a strategic advantage rather than a sign of failure?"
-    back: "BECAUSE adding code to broken code compounds the problem with unknown interactions, THEREFORE reverting returns to a known-good state, saving hours of debugging and enabling a fresh approach."
-    why: "What precondition must your workflow satisfy for reverting to be practical?"
+    2. Mixed concerns: one concern per commit
 
-  - id: "ch06-04-small-reversible-decomposition-011"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four decomposition strategies for breaking down problems?"
-    back: "1. Vertical slicing (by feature)\n2. Horizontal slicing (by layer)\n3. Dependency-first (by prerequisites)\n4. Test-first (by verification)"
-
-  - id: "ch06-04-small-reversible-decomposition-012"
-    type: thinking
-    difficulty: intermediate
-    front: "How does vertical slicing optimize for something different than horizontal slicing?"
-    back: "BECAUSE vertical slicing builds one complete feature across all layers, each step produces visible user-facing functionality. THEREFORE it optimizes for testable features, while horizontal slicing optimizes for clean layer separation."
-    why: "When would horizontal slicing be the wrong choice for a user-facing product?"
-
-  - id: "ch06-04-small-reversible-decomposition-013"
-    type: recall
-    difficulty: intermediate
-    front: "What are the three decomposition anti-patterns and their fixes?"
-    back: "1. Micro-commits: group related tiny changes\n2. Mixed concerns: one concern per commit\n3. Untested middle states: every commit must leave code working"
-
-  - id: "ch06-04-small-reversible-decomposition-014"
-    type: thinking
-    difficulty: advanced
-    front: "Why do bad commit boundaries break reversibility even when individual commits are small?"
-    back: "BECAUSE mixing unrelated changes in one commit forces reverting both, and broken intermediate states leave no working point to revert to. THEREFORE each commit must be logically independent and leave code functional."
-    why: "What specific property distinguishes a good commit boundary from a bad one?"
-
-  - id: "ch06-04-small-reversible-decomposition-015"
-    type: recall
-    difficulty: basic
-    front: "What is the Step Zero prompt pattern for AI-assisted decomposition?"
-    back: "Ask AI to break a feature into 5-7 small steps before writing any code."
-
-  - id: "ch06-04-small-reversible-decomposition-016"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the small iteration approach finish in 2-3 days while large batches take 7 days?"
-    back: "BECAUSE small iterations provide immediate feedback, easy debugging, and continuous course correction, THEREFORE problems are caught and fixed instantly rather than accumulating into days of delayed integration debugging."
-    why: "Which of the five comparison dimensions (feedback, debugging, motivation, risk, course correction) compounds the others most?"
+    3. Untested middle states: every commit must leave code working'
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-014
+  type: thinking
+  difficulty: advanced
+  front: Why do bad commit boundaries break reversibility even when individual commits are small?
+  back: BECAUSE mixing unrelated changes in one commit forces reverting both, and broken intermediate states leave no working point to revert to. THEREFORE each commit must be logically independent and
+    leave code functional.
+  why: What specific property distinguishes a good commit boundary from a bad one?
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-015
+  type: recall
+  difficulty: basic
+  front: What is the Step Zero prompt pattern for AI-assisted decomposition?
+  back: Ask AI to break a feature into 5-7 small steps before writing any code.
+  tags:
+  - decomposition
+  - reversibility
+- id: ch06-04-small-reversible-decomposition-016
+  type: thinking
+  difficulty: intermediate
+  front: Why does the small iteration approach finish in 2-3 days while large batches take 7 days?
+  back: BECAUSE small iterations provide immediate feedback, easy debugging, and continuous course correction, THEREFORE problems are caught and fixed instantly rather than accumulating into days of delayed
+    integration debugging.
+  why: Which of the five comparison dimensions (feedback, debugging, motivation, risk, course correction) compounds the others most?
+  tags:
+  - decomposition
+  - reversibility

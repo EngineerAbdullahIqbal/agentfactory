@@ -1,98 +1,154 @@
 deck:
-  id: "ch06-06-constraints-and-safety"
-  title: "Constraints and Safety"
-  description: "Risk categories, defense-in-depth layers, permission models, sandboxing strategies, trust gradualism, and the safety paradox that constraints enable autonomy."
-  tags: [safety, constraints, guardrails, permission-models, sandboxing, destructive-operations, defense-in-depth]
+  id: ch06-06-constraints-and-safety
+  title: Constraints and Safety
+  description: Risk categories, defense-in-depth layers, permission models, sandboxing strategies, trust gradualism, and the safety paradox that constraints enable autonomy.
+  tags:
+  - safety
+  - constraints
+  - guardrails
+  - permission-models
+  - sandboxing
+  - destructive-operations
+  - defense-in-depth
   version: 2
-
 cards:
-  - id: "ch06-06-constraints-and-safety-001"
-    type: recall
-    difficulty: basic
-    front: "What is the Safety Mantra for local AI work?"
-    back: "\"As long as I haven't git pushed, I am the master of my machine.\""
+- id: ch06-06-constraints-and-safety-001
+  type: recall
+  difficulty: basic
+  front: What is the Safety Mantra for local AI work?
+  back: '"As long as I haven''t git pushed, I am the master of my machine."'
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-002
+  type: thinking
+  difficulty: intermediate
+  front: Why does defense in depth use five layers instead of one strong safeguard?
+  back: BECAUSE each layer protects against different failure modes, THEREFORE no single layer's failure is catastrophic — breaching one still leaves four others intact.
+  why: Which layer would catch a bug that passes all automated tests?
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-003
+  type: recall
+  difficulty: basic
+  front: Name any three of the five risk categories on the AI risk spectrum?
+  back: Data loss, security vulnerabilities, cost overruns, reputation damage, workflow disruption.
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-004
+  type: thinking
+  difficulty: intermediate
+  front: How does the safety paradox explain that constraints enable autonomy?
+  back: BECAUSE solid guardrails make damage reversible or impossible, THEREFORE you feel comfortable granting AI more freedom to do meaningful work instead of restricting it to trivial tasks.
+  why: What non-AI example shows adding constraints expanding practical freedom?
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-005
+  type: recall
+  difficulty: basic
+  front: What are the five layers of defense in depth, from innermost to outermost?
+  back: '1. Technical Limits
 
-  - id: "ch06-06-constraints-and-safety-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does defense in depth use five layers instead of one strong safeguard?"
-    back: "BECAUSE each layer protects against different failure modes, THEREFORE no single layer's failure is catastrophic — breaching one still leaves four others intact."
-    why: "Which layer would catch a bug that passes all automated tests?"
+    2. Permission Controls
 
-  - id: "ch06-06-constraints-and-safety-003"
-    type: recall
-    difficulty: basic
-    front: "Name any three of the five risk categories on the AI risk spectrum?"
-    back: "Data loss, security vulnerabilities, cost overruns, reputation damage, workflow disruption."
+    3. Environment Isolation
 
-  - id: "ch06-06-constraints-and-safety-004"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the safety paradox explain that constraints enable autonomy?"
-    back: "BECAUSE solid guardrails make damage reversible or impossible, THEREFORE you feel comfortable granting AI more freedom to do meaningful work instead of restricting it to trivial tasks."
-    why: "What non-AI example shows adding constraints expanding practical freedom?"
+    4. Process Controls
 
-  - id: "ch06-06-constraints-and-safety-005"
-    type: recall
-    difficulty: basic
-    front: "What are the five layers of defense in depth, from innermost to outermost?"
-    back: "1. Technical Limits\n2. Permission Controls\n3. Environment Isolation\n4. Process Controls\n5. Human Verification"
+    5. Human Verification'
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-006
+  type: thinking
+  difficulty: advanced
+  front: Why does skipping trust gradualism and jumping straight to full AI autonomy backfire?
+  back: BECAUSE you have no calibrated understanding of the AI's error patterns or conventions adherence, THEREFORE you cannot distinguish safe from risky operations, leading to either over-trust disasters
+    or panic-driven restriction.
+  why: Which trust signals would you track first during Phase 1?
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-007
+  type: recall
+  difficulty: intermediate
+  front: What are the three permission models and when is each best used?
+  back: 'Permissive: experienced users, familiar codebase.
 
-  - id: "ch06-06-constraints-and-safety-006"
-    type: thinking
-    difficulty: advanced
-    front: "Why does skipping trust gradualism and jumping straight to full AI autonomy backfire?"
-    back: "BECAUSE you have no calibrated understanding of the AI's error patterns or conventions adherence, THEREFORE you cannot distinguish safe from risky operations, leading to either over-trust disasters or panic-driven restriction."
-    why: "Which trust signals would you track first during Phase 1?"
+    Confirming: new AI collaboration, unfamiliar code.
 
-  - id: "ch06-06-constraints-and-safety-007"
-    type: recall
-    difficulty: intermediate
-    front: "What are the three permission models and when is each best used?"
-    back: "Permissive: experienced users, familiar codebase.\nConfirming: new AI collaboration, unfamiliar code.\nRestricted: exploration and code review only."
+    Restricted: exploration and code review only.'
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-008
+  type: thinking
+  difficulty: intermediate
+  front: Why is a git branch considered sufficient sandboxing for most AI work?
+  back: BECAUSE all AI changes stay isolated on the branch, THEREFORE you can discard everything with one command and return to main — no Docker or DevOps knowledge required for 90% of safety needs.
+  why: When would you need to graduate beyond a git branch to Docker or staging?
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-009
+  type: recall
+  difficulty: basic
+  front: What four emergency commands should you memorize for when AI makes unwanted changes?
+  back: Ctrl+C (stop AI), git status (see changes), git checkout -- . (revert files), git reset --hard HEAD (discard all).
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-010
+  type: thinking
+  difficulty: intermediate
+  front: Why must the guardrail prompt template include an uncertainty rule alongside forbidden actions?
+  back: BECAUSE no forbidden list can anticipate every risky situation, THEREFORE the uncertainty rule ensures the AI escalates novel risks to you rather than guessing and proceeding unsafely.
+  why: How does this mirror the human verification layer in defense in depth?
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-011
+  type: recall
+  difficulty: intermediate
+  front: What are the four phases of trust gradualism and their timeframes?
+  back: 'Phase 1: Observation Only (Week 1).
 
-  - id: "ch06-06-constraints-and-safety-008"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is a git branch considered sufficient sandboxing for most AI work?"
-    back: "BECAUSE all AI changes stay isolated on the branch, THEREFORE you can discard everything with one command and return to main — no Docker or DevOps knowledge required for 90% of safety needs."
-    why: "When would you need to graduate beyond a git branch to Docker or staging?"
+    Phase 2: Supervised Autonomy (Weeks 2-4).
 
-  - id: "ch06-06-constraints-and-safety-009"
-    type: recall
-    difficulty: basic
-    front: "What four emergency commands should you memorize for when AI makes unwanted changes?"
-    back: "Ctrl+C (stop AI), git status (see changes), git checkout -- . (revert files), git reset --hard HEAD (discard all)."
+    Phase 3: Selective Autonomy (Month 2-3).
 
-  - id: "ch06-06-constraints-and-safety-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why must the guardrail prompt template include an uncertainty rule alongside forbidden actions?"
-    back: "BECAUSE no forbidden list can anticipate every risky situation, THEREFORE the uncertainty rule ensures the AI escalates novel risks to you rather than guessing and proceeding unsafely."
-    why: "How does this mirror the human verification layer in defense in depth?"
-
-  - id: "ch06-06-constraints-and-safety-011"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four phases of trust gradualism and their timeframes?"
-    back: "Phase 1: Observation Only (Week 1).\nPhase 2: Supervised Autonomy (Weeks 2-4).\nPhase 3: Selective Autonomy (Month 2-3).\nPhase 4: Calibrated Autonomy (Month 3+)."
-
-  - id: "ch06-06-constraints-and-safety-012"
-    type: thinking
-    difficulty: advanced
-    front: "How does the wrong-directory deletion incident illustrate all five defense layers?"
-    back: "BECAUSE no single layer caught the rm command, THEREFORE each layer represents a missed opportunity — technical limits could have blocked it, permissions could have required approval, and isolation could have contained the damage."
-    why: "Which specific prevention measure maps to which defense layer?"
-
-  - id: "ch06-06-constraints-and-safety-013"
-    type: recall
-    difficulty: intermediate
-    front: "What four trust signals should you track to decide when to increase AI autonomy?"
-    back: "Error rate, correction ease, pattern adherence, risk awareness."
-
-  - id: "ch06-06-constraints-and-safety-014"
-    type: thinking
-    difficulty: intermediate
-    front: "Why do even Permissive mode users still need approval for destructive operations?"
-    back: "BECAUSE destructive operations like rm and git push --force are irreversible or hard to reverse, THEREFORE auto-approving them would eliminate the safety net that makes permissive mode trustworthy in the first place."
-    why: "How does this connect to the Safety Mantra about git push being the point of no return?"
+    Phase 4: Calibrated Autonomy (Month 3+).'
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-012
+  type: thinking
+  difficulty: advanced
+  front: How does the wrong-directory deletion incident illustrate all five defense layers?
+  back: BECAUSE no single layer caught the rm command, THEREFORE each layer represents a missed opportunity — technical limits could have blocked it, permissions could have required approval, and isolation
+    could have contained the damage.
+  why: Which specific prevention measure maps to which defense layer?
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-013
+  type: recall
+  difficulty: intermediate
+  front: What four trust signals should you track to decide when to increase AI autonomy?
+  back: Error rate, correction ease, pattern adherence, risk awareness.
+  tags:
+  - safety
+  - constraints
+- id: ch06-06-constraints-and-safety-014
+  type: thinking
+  difficulty: intermediate
+  front: Why do even Permissive mode users still need approval for destructive operations?
+  back: BECAUSE destructive operations like rm and git push --force are irreversible or hard to reverse, THEREFORE auto-approving them would eliminate the safety net that makes permissive mode trustworthy
+    in the first place.
+  why: How does this connect to the Safety Mantra about git push being the point of no return?
+  tags:
+  - safety
+  - constraints

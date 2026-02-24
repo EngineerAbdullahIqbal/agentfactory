@@ -1,98 +1,147 @@
 deck:
-  id: "ch06-07-observability"
-  title: "Principle 7: Observability"
-  description: "Seeing what AI agents are doing — the three pillars, log patterns, and habits that build trust and enable debugging."
-  tags: ["observability", "transparency", "logs", "debugging", "agent-behavior", "verification"]
+  id: ch06-07-observability
+  title: 'Principle 7: Observability'
+  description: Seeing what AI agents are doing — the three pillars, log patterns, and habits that build trust and enable debugging.
+  tags:
+  - observability
+  - transparency
+  - logs
+  - debugging
+  - agent-behavior
+  - verification
   version: 2
-
 cards:
-  - id: "ch06-07-observability-001"
-    type: recall
-    difficulty: basic
-    front: "What is observability in the context of AI agent workflows?"
-    back: "Seeing what actions the AI took, in what order, with what results."
+- id: ch06-07-observability-001
+  type: recall
+  difficulty: basic
+  front: What is observability in the context of AI agent workflows?
+  back: Seeing what actions the AI took, in what order, with what results.
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-002
+  type: thinking
+  difficulty: intermediate
+  front: Why is observability a prerequisite for trust, not just a debugging tool?
+  back: BECAUSE trust is earned through transparency, THEREFORE without visibility into actions, rationale, and results you cannot correct mistakes early or confidently grant more autonomy.
+  why: What breaks in a team's workflow when they cannot see agent behavior?
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-003
+  type: recall
+  difficulty: basic
+  front: What are the three pillars of observability for AI agent workflows?
+  back: '1. Action visibility (what it did)
 
-  - id: "ch06-07-observability-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is observability a prerequisite for trust, not just a debugging tool?"
-    back: "BECAUSE trust is earned through transparency, THEREFORE without visibility into actions, rationale, and results you cannot correct mistakes early or confidently grant more autonomy."
-    why: "What breaks in a team's workflow when they cannot see agent behavior?"
+    2. Rationale visibility (why it did it)
 
-  - id: "ch06-07-observability-003"
-    type: recall
-    difficulty: basic
-    front: "What are the three pillars of observability for AI agent workflows?"
-    back: "1. Action visibility (what it did)\n2. Rationale visibility (why it did it)\n3. Result visibility (what the outcome was)"
+    3. Result visibility (what the outcome was)'
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-004
+  type: thinking
+  difficulty: intermediate
+  front: Why is rationale visibility less trustworthy than result visibility?
+  back: BECAUSE AI can produce confident-sounding explanations for broken code (AI rationalization), THEREFORE you must trust test results over the AI's stated reasoning when they conflict.
+  why: How should you weight rationale versus test output when diagnosing a failure?
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-005
+  type: recall
+  difficulty: basic
+  front: What warning does the lesson give about AI rationalization?
+  back: AI can sound confident even when wrong; never trust rationale alone.
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-006
+  type: thinking
+  difficulty: advanced
+  front: An agent log shows READ, EDIT, EDIT, EDIT, COMPLETE with no TEST step. Why is this dangerous?
+  back: BECAUSE multiple edits without verification mean changes were never confirmed to work, THEREFORE bugs compound silently and you discover failures only after shipping broken code.
+  why: What single log verb would convert this warning pattern into a success pattern?
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-007
+  type: recall
+  difficulty: intermediate
+  front: What is the 'scan for verbs' technique for reading activity logs?
+  back: 'Ignore timestamps; look only for verbs: READ, EDIT, TEST, FAIL, COMPLETE.'
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-008
+  type: thinking
+  difficulty: intermediate
+  front: How does the success log pattern differ structurally from the warning pattern?
+  back: BECAUSE the success pattern includes VERIFY after EDIT (READ, ANALYZE, EDIT, VERIFY, COMPLETE), THEREFORE each change is confirmed before proceeding, while the warning pattern skips verification
+    entirely.
+  why: What does the presence of ANALYZE before EDIT tell you about the agent's approach?
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-009
+  type: recall
+  difficulty: basic
+  front: What are the three observable workflow design patterns described in the lesson?
+  back: '1. Explain before executing
 
-  - id: "ch06-07-observability-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is rationale visibility less trustworthy than result visibility?"
-    back: "BECAUSE AI can produce confident-sounding explanations for broken code (AI rationalization), THEREFORE you must trust test results over the AI's stated reasoning when they conflict."
-    why: "How should you weight rationale versus test output when diagnosing a failure?"
+    2. Checkpoint after major steps
 
-  - id: "ch06-07-observability-005"
-    type: recall
-    difficulty: basic
-    front: "What warning does the lesson give about AI rationalization?"
-    back: "AI can sound confident even when wrong; never trust rationale alone."
+    3. Summary after completion'
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-010
+  type: thinking
+  difficulty: intermediate
+  front: Why do you need both real-time observation and post-mortem log review?
+  back: BECAUSE real-time lets you intervene before damage (e.g., Ctrl+C when the agent reads the wrong directory), THEREFORE post-mortem alone misses prevention, while real-time alone misses patterns only
+    visible in retrospect.
+  why: Which type catches a wrong-directory mistake faster, and which reveals recurring failure patterns?
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-011
+  type: recall
+  difficulty: intermediate
+  front: What are the three checks in the 2-minute audit performed after every AI task?
+  back: '1. git diff — changes match AI''s claim?
 
-  - id: "ch06-07-observability-006"
-    type: thinking
-    difficulty: advanced
-    front: "An agent log shows READ, EDIT, EDIT, EDIT, COMPLETE with no TEST step. Why is this dangerous?"
-    back: "BECAUSE multiple edits without verification mean changes were never confirmed to work, THEREFORE bugs compound silently and you discover failures only after shipping broken code."
-    why: "What single log verb would convert this warning pattern into a success pattern?"
+    2. AI summary review — summary matches diff?
 
-  - id: "ch06-07-observability-007"
-    type: recall
-    difficulty: intermediate
-    front: "What is the 'scan for verbs' technique for reading activity logs?"
-    back: "Ignore timestamps; look only for verbs: READ, EDIT, TEST, FAIL, COMPLETE."
-
-  - id: "ch06-07-observability-008"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the success log pattern differ structurally from the warning pattern?"
-    back: "BECAUSE the success pattern includes VERIFY after EDIT (READ, ANALYZE, EDIT, VERIFY, COMPLETE), THEREFORE each change is confirmed before proceeding, while the warning pattern skips verification entirely."
-    why: "What does the presence of ANALYZE before EDIT tell you about the agent's approach?"
-
-  - id: "ch06-07-observability-009"
-    type: recall
-    difficulty: basic
-    front: "What are the three observable workflow design patterns described in the lesson?"
-    back: "1. Explain before executing\n2. Checkpoint after major steps\n3. Summary after completion"
-
-  - id: "ch06-07-observability-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why do you need both real-time observation and post-mortem log review?"
-    back: "BECAUSE real-time lets you intervene before damage (e.g., Ctrl+C when the agent reads the wrong directory), THEREFORE post-mortem alone misses prevention, while real-time alone misses patterns only visible in retrospect."
-    why: "Which type catches a wrong-directory mistake faster, and which reveals recurring failure patterns?"
-
-  - id: "ch06-07-observability-011"
-    type: recall
-    difficulty: intermediate
-    front: "What are the three checks in the 2-minute audit performed after every AI task?"
-    back: "1. git diff — changes match AI's claim?\n2. AI summary review — summary matches diff?\n3. Quick test — tests still pass?"
-
-  - id: "ch06-07-observability-012"
-    type: thinking
-    difficulty: advanced
-    front: "How does the 2-minute audit specifically catch silent failures?"
-    back: "BECAUSE a silent failure means the AI reported success but did something different, THEREFORE comparing the git diff against the AI's summary exposes mismatches where it said X but actually did Y."
-    why: "What makes silent failures more dangerous than visible errors?"
-
-  - id: "ch06-07-observability-013"
-    type: recall
-    difficulty: intermediate
-    front: "What distinguishes observability from verification (Principle 3)?"
-    back: "Observability provides evidence; verification acts on it to check correctness."
-
-  - id: "ch06-07-observability-014"
-    type: thinking
-    difficulty: advanced
-    front: "In the walkthrough, Claude added validation in the wrong location. Why would only result visibility have caught this?"
-    back: "BECAUSE Claude's rationale ('added input validation') sounded correct, THEREFORE only running the form and testing submission would reveal the validation function was never called in the right place."
-    why: "What does this imply about relying on AI summaries without running tests?"
+    3. Quick test — tests still pass?'
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-012
+  type: thinking
+  difficulty: advanced
+  front: How does the 2-minute audit specifically catch silent failures?
+  back: BECAUSE a silent failure means the AI reported success but did something different, THEREFORE comparing the git diff against the AI's summary exposes mismatches where it said X but actually did
+    Y.
+  why: What makes silent failures more dangerous than visible errors?
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-013
+  type: recall
+  difficulty: intermediate
+  front: What distinguishes observability from verification (Principle 3)?
+  back: Observability provides evidence; verification acts on it to check correctness.
+  tags:
+  - observability
+  - transparency
+- id: ch06-07-observability-014
+  type: thinking
+  difficulty: advanced
+  front: In the walkthrough, Claude added validation in the wrong location. Why would only result visibility have caught this?
+  back: BECAUSE Claude's rationale ('added input validation') sounded correct, THEREFORE only running the form and testing submission would reveal the validation function was never called in the right place.
+  why: What does this imply about relying on AI summaries without running tests?
+  tags:
+  - observability
+  - transparency

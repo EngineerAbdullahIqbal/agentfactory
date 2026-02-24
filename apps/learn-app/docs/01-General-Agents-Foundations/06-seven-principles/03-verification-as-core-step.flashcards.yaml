@@ -1,104 +1,165 @@
 deck:
-  id: "ch06-03-verification-as-core-step"
-  title: "Verification as Core Step"
-  description: "Why verification must be continuous in agentic workflows, how to calibrate trust across four zones, and how to apply risk-based verification strategies."
-  tags: [verification, testing, trust-zones, validation, agentic-workflows, risk-assessment]
+  id: ch06-03-verification-as-core-step
+  title: Verification as Core Step
+  description: Why verification must be continuous in agentic workflows, how to calibrate trust across four zones, and how to apply risk-based verification strategies.
+  tags:
+  - verification
+  - testing
+  - trust-zones
+  - validation
+  - agentic-workflows
+  - risk-assessment
   version: 2
-
 cards:
-  - id: "ch06-03-verification-as-core-step-001"
-    type: recall
-    difficulty: basic
-    front: "What is the confidence trap when working with AI-generated code?"
-    back: "AI presents incorrect output with the same certainty as correct output."
+- id: ch06-03-verification-as-core-step-001
+  type: recall
+  difficulty: basic
+  front: What is the confidence trap when working with AI-generated code?
+  back: AI presents incorrect output with the same certainty as correct output.
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-002
+  type: thinking
+  difficulty: intermediate
+  front: Why does immediate verification turn the CSV parser bug into a cheap fix?
+  back: BECAUSE verification happens while context is fresh, THEREFORE the AI corrects the quoted-comma failure in the same session in under 2 minutes instead of surfacing weeks later in production.
+  why: What changes about fix cost when context is lost between generation and discovery?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-003
+  type: recall
+  difficulty: basic
+  front: What three red flags should you always scan for in AI-generated code?
+  back: '1. Hardcoded secrets
 
-  - id: "ch06-03-verification-as-core-step-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does immediate verification turn the CSV parser bug into a cheap fix?"
-    back: "BECAUSE verification happens while context is fresh, THEREFORE the AI corrects the quoted-comma failure in the same session in under 2 minutes instead of surfacing weeks later in production."
-    why: "What changes about fix cost when context is lost between generation and discovery?"
+    2. Silent error swallowing
 
-  - id: "ch06-03-verification-as-core-step-003"
-    type: recall
-    difficulty: basic
-    front: "What three red flags should you always scan for in AI-generated code?"
-    back: "1. Hardcoded secrets\n2. Silent error swallowing\n3. Missing input validation"
+    3. Missing input validation'
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-004
+  type: thinking
+  difficulty: intermediate
+  front: Why are AI systems described as pattern-completers rather than truth-tellers?
+  back: BECAUSE LLMs generate output by completing statistical patterns from training data, THEREFORE they have no internal uncertainty signal and present incorrect API calls with the same confidence as
+    correct ones.
+  why: How does this framing change which errors you should expect to find?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-005
+  type: recall
+  difficulty: basic
+  front: What is the difference between verification and validation?
+  back: 'Verification: "Did we build it right?"
 
-  - id: "ch06-03-verification-as-core-step-004"
-    type: thinking
-    difficulty: intermediate
-    front: "Why are AI systems described as pattern-completers rather than truth-tellers?"
-    back: "BECAUSE LLMs generate output by completing statistical patterns from training data, THEREFORE they have no internal uncertainty signal and present incorrect API calls with the same confidence as correct ones."
-    why: "How does this framing change which errors you should expect to find?"
+    Validation: "Did we build the right thing?"'
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-006
+  type: thinking
+  difficulty: advanced
+  front: A CSV parser passes all tests but sorts by date instead of size. Why did verification succeed while validation failed?
+  back: BECAUSE verification confirms code runs correctly against its own logic, THEREFORE it cannot detect that the implemented behavior solves the wrong problem. Only validation checks alignment with
+    actual intent.
+  why: What habit prevents validation failures from reaching production?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-007
+  type: recall
+  difficulty: basic
+  front: What does continuous verification look like compared to waterfall verification?
+  back: 'Continuous: Generate, Verify, Generate, Verify (loop).
 
-  - id: "ch06-03-verification-as-core-step-005"
-    type: recall
-    difficulty: basic
-    front: "What is the difference between verification and validation?"
-    back: "Verification: \"Did we build it right?\"\nValidation: \"Did we build the right thing?\""
+    Waterfall: Generate, Generate, Generate, then verify at the end.'
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-008
+  type: thinking
+  difficulty: intermediate
+  front: Why does batching all verification to the end cause errors to compound?
+  back: BECAUSE each unverified generation builds on potentially flawed previous output, THEREFORE errors accumulate silently and context is lost by the time problems surface, making fixes expensive.
+  why: How does continuous verification keep fix costs low?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-009
+  type: recall
+  difficulty: intermediate
+  front: What are the four verification strategies in order of increasing depth and time?
+  back: '1. Syntax (seconds)
 
-  - id: "ch06-03-verification-as-core-step-006"
-    type: thinking
-    difficulty: advanced
-    front: "A CSV parser passes all tests but sorts by date instead of size. Why did verification succeed while validation failed?"
-    back: "BECAUSE verification confirms code runs correctly against its own logic, THEREFORE it cannot detect that the implemented behavior solves the wrong problem. Only validation checks alignment with actual intent."
-    why: "What habit prevents validation failures from reaching production?"
+    2. Unit (minutes)
 
-  - id: "ch06-03-verification-as-core-step-007"
-    type: recall
-    difficulty: basic
-    front: "What does continuous verification look like compared to waterfall verification?"
-    back: "Continuous: Generate, Verify, Generate, Verify (loop).\nWaterfall: Generate, Generate, Generate, then verify at the end."
+    3. Integration (tens of minutes)
 
-  - id: "ch06-03-verification-as-core-step-008"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does batching all verification to the end cause errors to compound?"
-    back: "BECAUSE each unverified generation builds on potentially flawed previous output, THEREFORE errors accumulate silently and context is lost by the time problems surface, making fixes expensive."
-    why: "How does continuous verification keep fix costs low?"
+    4. Manual (variable)'
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-010
+  type: thinking
+  difficulty: intermediate
+  front: How does the risk assessment matrix determine verification depth?
+  back: BECAUSE consequence of failure varies from cosmetic to catastrophic, THEREFORE catastrophic risks (data loss, security breach) demand thorough multi-layer verification while low risks (cosmetic,
+    internal tools) need only a syntax check.
+  why: What happens when you apply low-risk verification to a high-risk task?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-011
+  type: recall
+  difficulty: intermediate
+  front: What are the four trust zones and their required verification actions?
+  back: '1. Unverified: verify everything
 
-  - id: "ch06-03-verification-as-core-step-009"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four verification strategies in order of increasing depth and time?"
-    back: "1. Syntax (seconds)\n2. Unit (minutes)\n3. Integration (tens of minutes)\n4. Manual (variable)"
+    2. Pattern-Recognized: spot-check logic
 
-  - id: "ch06-03-verification-as-core-step-010"
-    type: thinking
-    difficulty: intermediate
-    front: "How does the risk assessment matrix determine verification depth?"
-    back: "BECAUSE consequence of failure varies from cosmetic to catastrophic, THEREFORE catastrophic risks (data loss, security breach) demand thorough multi-layer verification while low risks (cosmetic, internal tools) need only a syntax check."
-    why: "What happens when you apply low-risk verification to a high-risk task?"
+    3. Domain-Mastered: spot-check edges
 
-  - id: "ch06-03-verification-as-core-step-011"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four trust zones and their required verification actions?"
-    back: "1. Unverified: verify everything\n2. Pattern-Recognized: spot-check logic\n3. Domain-Mastered: spot-check edges\n4. Never Fully Trusted: always thorough"
-
-  - id: "ch06-03-verification-as-core-step-012"
-    type: thinking
-    difficulty: advanced
-    front: "Why does Zone 4 never earn full trust regardless of track record?"
-    back: "BECAUSE the consequence of a single failure in security, payments, or compliance is catastrophic, THEREFORE no history of correct outputs justifies reducing verification where the cost of one mistake dwarfs the cost of checking."
-    why: "What makes the cost asymmetry between checking and failing so extreme in Zone 4?"
-
-  - id: "ch06-03-verification-as-core-step-013"
-    type: recall
-    difficulty: intermediate
-    front: "What does the automated verification checklist cover and how long does it take?"
-    back: "Lint, type-check, tests, and grep for TODOs. About 3 minutes, catching roughly 90% of issues."
-
-  - id: "ch06-03-verification-as-core-step-014"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is starting strict and accelerating verification safer than starting lenient and tightening later?"
-    back: "BECAUSE starting lenient lets errors compound undetected until they are entangled and expensive to fix, THEREFORE strict-first builds trust on actual evidence while the cost of over-verifying is only time, not production failures."
-    why: "When should you reset a Zone 3 area back to Zone 1?"
-
-  - id: "ch06-03-verification-as-core-step-015"
-    type: recall
-    difficulty: basic
-    front: "For critical systems, what role must a human always play according to the human-in-the-loop principle?"
-    back: "A human must review and approve every change to high-consequence areas."
+    4. Never Fully Trusted: always thorough'
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-012
+  type: thinking
+  difficulty: advanced
+  front: Why does Zone 4 never earn full trust regardless of track record?
+  back: BECAUSE the consequence of a single failure in security, payments, or compliance is catastrophic, THEREFORE no history of correct outputs justifies reducing verification where the cost of one mistake
+    dwarfs the cost of checking.
+  why: What makes the cost asymmetry between checking and failing so extreme in Zone 4?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-013
+  type: recall
+  difficulty: intermediate
+  front: What does the automated verification checklist cover and how long does it take?
+  back: Lint, type-check, tests, and grep for TODOs. About 3 minutes, catching roughly 90% of issues.
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-014
+  type: thinking
+  difficulty: intermediate
+  front: Why is starting strict and accelerating verification safer than starting lenient and tightening later?
+  back: BECAUSE starting lenient lets errors compound undetected until they are entangled and expensive to fix, THEREFORE strict-first builds trust on actual evidence while the cost of over-verifying is
+    only time, not production failures.
+  why: When should you reset a Zone 3 area back to Zone 1?
+  tags:
+  - verification
+  - testing
+- id: ch06-03-verification-as-core-step-015
+  type: recall
+  difficulty: basic
+  front: For critical systems, what role must a human always play according to the human-in-the-loop principle?
+  back: A human must review and approve every change to high-consequence areas.
+  tags:
+  - verification
+  - testing

@@ -1,202 +1,273 @@
 deck:
-  id: "ch01-nine-pillars-aidd"
-  title: "Nine Pillars of AIDD"
-  description: "Covers AIDD definition, nine characteristics, nine enabling pillars, pillar interdependencies, M-shaped developer profiles, and the completeness advantage."
-  tags: [aidd, nine-pillars, m-shaped-developer, specification-driven, system-completeness]
+  id: ch01-nine-pillars-aidd
+  title: Nine Pillars of AIDD
+  description: Covers AIDD definition, nine characteristics, nine enabling pillars, pillar interdependencies, M-shaped developer profiles, and the completeness advantage.
+  tags:
+  - aidd
+  - nine-pillars
+  - m-shaped-developer
+  - specification-driven
+  - system-completeness
   version: 1
-
 cards:
-  - id: "ch01-nine-pillars-aidd-001"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does AIDD transform developers into specification engineers rather than faster coders?"
-    back: "BECAUSE AI handles implementation details, THEREFORE the developer's unique value shifts to defining what to build — specifications, architecture, and validation — not how to code it."
-    why: "Clarifies that AIDD changes the developer's role, not just their speed."
-
-  - id: "ch01-nine-pillars-aidd-002"
-    type: thinking
-    difficulty: intermediate
-    front: "Why did Maya build a full platform in one week without being a 10x engineer?"
-    back: "BECAUSE she worked within a complete system of nine integrated pillars that eliminated barriers requiring specialist silos, THEREFORE system completeness replaced individual heroics."
-    why: "Highlights that AIDD gains come from the system, not from personal talent or overwork."
-
-  - id: "ch01-nine-pillars-aidd-003"
-    type: recall
-    difficulty: basic
-    front: "Name any 4 of the 9 enabling pillars of AIDD?"
-    back: "AI CLI Agents, Markdown as Programming Language, MCP Standard, AI-First IDEs, Linux Universal Dev Env, TDD, SDD with SpecKit Plus, Composable Vertical Skills, Universal Cloud Deployment."
-
-  - id: "ch01-nine-pillars-aidd-004"
-    type: recall
-    difficulty: basic
-    front: "In AIDD, what does the Specification-Driven characteristic mean?"
-    back: "Requirements and design come first; you define what to build, not how to code it."
-
-  - id: "ch01-nine-pillars-aidd-005"
-    type: thinking
-    difficulty: "basic"
-    front: "Why does AIDD describe itself as AI-Augmented rather than AI-Automated?"
-    back: "BECAUSE full automation removes human judgment, while augmentation keeps developers steering architecture and validation, THEREFORE quality depends on human oversight, not replacement."
-    why: "Distinguishes augmentation from automation to prevent misunderstanding the human role."
-
-  - id: "ch01-nine-pillars-aidd-006"
-    type: recall
-    difficulty: basic
-    front: "What does Quality-Gated mean as an AIDD characteristic?"
-    back: "Automated validation at every step ensures generated code meets requirements."
-
-  - id: "ch01-nine-pillars-aidd-007"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does AIDD require human verification despite AI doing the implementation?"
-    back: "BECAUSE AI generates code based on specifications but cannot fully evaluate architectural fitness or business intent, THEREFORE humans remain decision makers who validate and guide AI output."
-    why: "Distinguishes AI augmentation from AI replacement of human judgment."
-
-  - id: "ch01-nine-pillars-aidd-008"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does Pillar 1 (AI CLI Agents) remove the 'working alone' barrier rather than just speeding up coding?"
-    back: "BECAUSE debugging, reading docs, and making architectural decisions in isolation creates bottlenecks no amount of typing speed fixes, THEREFORE an always-available AI partner eliminates the isolation that slows problem-solving."
-    why: "Reframes productivity as a collaboration problem, not a speed problem."
-
-  - id: "ch01-nine-pillars-aidd-009"
-    type: thinking
-    difficulty: intermediate
-    front: "Why can Markdown serve as a programming language in AIDD?"
-    back: "BECAUSE AI agents can interpret structured natural language as executable instructions, THEREFORE Markdown specifications become source code that agents translate directly into working software."
-    why: "Connects AI interpretation capability to the elimination of syntax as a barrier."
-
-  - id: "ch01-nine-pillars-aidd-010"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does treating Markdown as a programming language reduce cognitive load?"
-    back: "BECAUSE developers express intent in natural language instead of translating ideas into rigid syntax, THEREFORE the barrier between idea and implementation shrinks dramatically."
-    why: "Connects specification writing to removing the syntax translation bottleneck."
-
-  - id: "ch01-nine-pillars-aidd-011"
-    type: recall
-    difficulty: basic
-    front: "What analogy describes the MCP Standard (Pillar 3)?"
-    back: "USB for AI — one standard interface that lets any MCP-capable agent connect to any MCP-compliant tool."
-
-  - id: "ch01-nine-pillars-aidd-012"
-    type: recall
-    difficulty: intermediate
-    front: "What barrier does Pillar 3 (MCP Standard) remove?"
-    back: "Tool integration complexity — before MCP, each AI integration required custom code."
-
-  - id: "ch01-nine-pillars-aidd-013"
-    type: recall
-    difficulty: intermediate
-    front: "Name two AI-First IDEs mentioned as examples of Pillar 4?"
-    back: "Zed and Cursor."
-
-  - id: "ch01-nine-pillars-aidd-014"
-    type: recall
-    difficulty: intermediate
-    front: "What barrier does Pillar 5 (Linux Universal Dev Environment) remove?"
-    back: "Platform fragmentation — the same Bash commands work on Windows (WSL2), Mac, Linux, and cloud."
-
-  - id: "ch01-nine-pillars-aidd-015"
-    type: thinking
-    difficulty: intermediate
-    front: "Why is TDD (Pillar 6) especially critical when working with AI-generated code?"
-    back: "BECAUSE you cannot manually verify every line an AI writes, THEREFORE comprehensive tests serve as the automated quality gate that validates correctness at scale."
-    why: "Shows TDD shifts from optional discipline to essential safeguard with AI code generation."
-
-  - id: "ch01-nine-pillars-aidd-016"
-    type: recall
-    difficulty: intermediate
-    front: "What barrier does Pillar 7 (SDD with SpecKit Plus) remove?"
-    back: "Ad-hoc development chaos and requirements drift between specs and implementation."
-
-  - id: "ch01-nine-pillars-aidd-017"
-    type: thinking
-    difficulty: advanced
-    front: "How does Pillar 7 (SDD) relate to the other eight pillars?"
-    back: "BECAUSE Pillar 7 uses Markdown specs (Pillar 2), leverages AI agents (Pillar 1), enforces TDD (Pillar 6), and deploys via cloud (Pillar 9), THEREFORE SDD acts as the integration layer orchestrating all other pillars into a unified workflow."
-    why: "Reveals SDD as the integration layer that ties the system together."
-
-  - id: "ch01-nine-pillars-aidd-018"
-    type: recall
-    difficulty: intermediate
-    front: "What are Composable Vertical Skills (Pillar 8)?"
-    back: "Reusable domain expertise modules that AI coding agents can load and apply to specific problems."
-
-  - id: "ch01-nine-pillars-aidd-019"
-    type: thinking
-    difficulty: advanced
-    front: "Why can't Composable Skills (Pillar 8) work effectively without Pillars 2, 3, and 7?"
-    back: "BECAUSE skills need MCP (Pillar 3) for tool integration, Markdown (Pillar 2) to define what they do, and SDD (Pillar 7) to structure their application, THEREFORE isolated skills lose most of their power."
-    why: "Demonstrates pillar interdependence through a concrete example."
-
-  - id: "ch01-nine-pillars-aidd-020"
-    type: recall
-    difficulty: basic
-    front: "What technologies does Pillar 9 (Universal Cloud Deployment) include?"
-    back: "Kubernetes, Docker, Dapr, Apache Kafka, Ray, and major cloud platforms (AWS/Azure/GCP)."
-
-  - id: "ch01-nine-pillars-aidd-021"
-    type: recall
-    difficulty: basic
-    front: "What is an M-Shaped developer?"
-    back: "A developer with deep expertise in 2-4 complementary domains, all at professional level."
-
-  - id: "ch01-nine-pillars-aidd-022"
-    type: thinking
-    difficulty: intermediate
-    front: "Why was M-Shaped development nearly impossible before AI augmentation?"
-    back: "BECAUSE mastering multiple domains required more hours than any individual had to learn, practice, and maintain expertise, THEREFORE specialization was forced by cognitive and time constraints."
-    why: "Connects the M-shaped shift to a fundamental resource constraint that AI removes."
-
-  - id: "ch01-nine-pillars-aidd-023"
-    type: recall
-    difficulty: intermediate
-    front: "What distinguishes an M-Shaped developer from a Generalist?"
-    back: "M-Shaped means deep expertise in 2-4 domains; Generalist means shallow knowledge across many domains without production depth."
-
-  - id: "ch01-nine-pillars-aidd-024"
-    type: recall
-    difficulty: intermediate
-    front: "What are the four developer profiles from least to most domains?"
-    back: "I-Shaped (one deep), T-Shaped (one deep plus broad shallow), Generalist (many shallow), M-Shaped (2-4 deep)."
-
-  - id: "ch01-nine-pillars-aidd-025"
-    type: thinking
-    difficulty: advanced
-    front: "Why does partial pillar adoption (6 of 9) create bottlenecks rather than proportional gains?"
-    back: "BECAUSE the pillars form an integrated system where each amplifies the others, THEREFORE missing pillars become chokepoints that force developers back to specialist silos for those gaps."
-    why: "Explains the non-linear relationship between pillar adoption and capability."
-
-  - id: "ch01-nine-pillars-aidd-026"
-    type: thinking
-    difficulty: advanced
-    front: "How does the historical pattern of Cloud Computing adoption parallel AIDD adoption?"
-    back: "BECAUSE companies treating cloud as just hosting struggled while those embracing the full paradigm gained 10x advantages, THEREFORE partial AIDD adoption similarly underperforms complete system adoption."
-    why: "Uses historical precedent to argue for complete rather than selective adoption."
-
-  - id: "ch01-nine-pillars-aidd-027"
-    type: recall
-    difficulty: intermediate
-    front: "What are the three phases of the 18-month AIDD learning pathway?"
-    back: "Months 1-6: foundational (Pillars 1-3), Months 7-12: integration (Pillars 4-6), Months 13-18: orchestration (Pillars 7-9)."
-
-  - id: "ch01-nine-pillars-aidd-028"
-    type: thinking
-    difficulty: intermediate
-    front: "Why does the lesson list domain depth, domain compatibility, and organizational context as constraints on M-Shaped development?"
-    back: "BECAUSE AI augmentation is a capability multiplier not a replacement for earned expertise, THEREFORE critical domains like security and regulatory compliance still need deep specialization, and organizational structure shapes how M-shaped skills apply."
-    why: "Prevents overpromising by grounding M-shaped development in realistic limits."
-
-  - id: "ch01-nine-pillars-aidd-029"
-    type: thinking
-    difficulty: intermediate
-    front: "How do the nine AIDD characteristics differ from the nine enabling pillars?"
-    back: "BECAUSE characteristics define WHAT AIDD is (specification-driven, quality-gated, etc.), while pillars are the concrete technologies and practices (AI CLI agents, TDD, MCP) that make those characteristics achievable in practice."
-    why: "Clarifies the relationship between the abstract definition and its practical implementation."
-
-  - id: "ch01-nine-pillars-aidd-030"
-    type: recall
-    difficulty: basic
-    front: "In the Vertical SaaS Builder M-shaped profile, what four domains combine?"
-    back: "Healthcare domain knowledge, full-stack development, MLOps, and product design."
+- id: ch01-nine-pillars-aidd-001
+  type: thinking
+  difficulty: intermediate
+  front: Why does AIDD transform developers into specification engineers rather than faster coders?
+  back: BECAUSE AI handles implementation details, THEREFORE the developer's unique value shifts to defining what to build — specifications, architecture, and validation — not how to code it.
+  why: Clarifies that AIDD changes the developer's role, not just their speed.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-002
+  type: thinking
+  difficulty: intermediate
+  front: Why did Maya build a full platform in one week without being a 10x engineer?
+  back: BECAUSE she worked within a complete system of nine integrated pillars that eliminated barriers requiring specialist silos, THEREFORE system completeness replaced individual heroics.
+  why: Highlights that AIDD gains come from the system, not from personal talent or overwork.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-003
+  type: recall
+  difficulty: basic
+  front: Name any 4 of the 9 enabling pillars of AIDD?
+  back: AI CLI Agents, Markdown as Programming Language, MCP Standard, AI-First IDEs, Linux Universal Dev Env, TDD, SDD with SpecKit Plus, Composable Vertical Skills, Universal Cloud Deployment.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-004
+  type: recall
+  difficulty: basic
+  front: In AIDD, what does the Specification-Driven characteristic mean?
+  back: Requirements and design come first; you define what to build, not how to code it.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-005
+  type: thinking
+  difficulty: basic
+  front: Why does AIDD describe itself as AI-Augmented rather than AI-Automated?
+  back: BECAUSE full automation removes human judgment, while augmentation keeps developers steering architecture and validation, THEREFORE quality depends on human oversight, not replacement.
+  why: Distinguishes augmentation from automation to prevent misunderstanding the human role.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-006
+  type: recall
+  difficulty: basic
+  front: What does Quality-Gated mean as an AIDD characteristic?
+  back: Automated validation at every step ensures generated code meets requirements.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-007
+  type: thinking
+  difficulty: intermediate
+  front: Why does AIDD require human verification despite AI doing the implementation?
+  back: BECAUSE AI generates code based on specifications but cannot fully evaluate architectural fitness or business intent, THEREFORE humans remain decision makers who validate and guide AI output.
+  why: Distinguishes AI augmentation from AI replacement of human judgment.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-008
+  type: thinking
+  difficulty: intermediate
+  front: Why does Pillar 1 (AI CLI Agents) remove the 'working alone' barrier rather than just speeding up coding?
+  back: BECAUSE debugging, reading docs, and making architectural decisions in isolation creates bottlenecks no amount of typing speed fixes, THEREFORE an always-available AI partner eliminates the isolation
+    that slows problem-solving.
+  why: Reframes productivity as a collaboration problem, not a speed problem.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-009
+  type: thinking
+  difficulty: intermediate
+  front: Why can Markdown serve as a programming language in AIDD?
+  back: BECAUSE AI agents can interpret structured natural language as executable instructions, THEREFORE Markdown specifications become source code that agents translate directly into working software.
+  why: Connects AI interpretation capability to the elimination of syntax as a barrier.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-010
+  type: thinking
+  difficulty: intermediate
+  front: Why does treating Markdown as a programming language reduce cognitive load?
+  back: BECAUSE developers express intent in natural language instead of translating ideas into rigid syntax, THEREFORE the barrier between idea and implementation shrinks dramatically.
+  why: Connects specification writing to removing the syntax translation bottleneck.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-011
+  type: recall
+  difficulty: basic
+  front: What analogy describes the MCP Standard (Pillar 3)?
+  back: USB for AI — one standard interface that lets any MCP-capable agent connect to any MCP-compliant tool.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-012
+  type: recall
+  difficulty: intermediate
+  front: What barrier does Pillar 3 (MCP Standard) remove?
+  back: Tool integration complexity — before MCP, each AI integration required custom code.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-013
+  type: recall
+  difficulty: intermediate
+  front: Name two AI-First IDEs mentioned as examples of Pillar 4?
+  back: Zed and Cursor.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-014
+  type: recall
+  difficulty: intermediate
+  front: What barrier does Pillar 5 (Linux Universal Dev Environment) remove?
+  back: Platform fragmentation — the same Bash commands work on Windows (WSL2), Mac, Linux, and cloud.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-015
+  type: thinking
+  difficulty: intermediate
+  front: Why is TDD (Pillar 6) especially critical when working with AI-generated code?
+  back: BECAUSE you cannot manually verify every line an AI writes, THEREFORE comprehensive tests serve as the automated quality gate that validates correctness at scale.
+  why: Shows TDD shifts from optional discipline to essential safeguard with AI code generation.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-016
+  type: recall
+  difficulty: intermediate
+  front: What barrier does Pillar 7 (SDD with SpecKit Plus) remove?
+  back: Ad-hoc development chaos and requirements drift between specs and implementation.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-017
+  type: thinking
+  difficulty: advanced
+  front: How does Pillar 7 (SDD) relate to the other eight pillars?
+  back: BECAUSE Pillar 7 uses Markdown specs (Pillar 2), leverages AI agents (Pillar 1), enforces TDD (Pillar 6), and deploys via cloud (Pillar 9), THEREFORE SDD acts as the integration layer orchestrating
+    all other pillars into a unified workflow.
+  why: Reveals SDD as the integration layer that ties the system together.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-018
+  type: recall
+  difficulty: intermediate
+  front: What are Composable Vertical Skills (Pillar 8)?
+  back: Reusable domain expertise modules that AI coding agents can load and apply to specific problems.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-019
+  type: thinking
+  difficulty: advanced
+  front: Why can't Composable Skills (Pillar 8) work effectively without Pillars 2, 3, and 7?
+  back: BECAUSE skills need MCP (Pillar 3) for tool integration, Markdown (Pillar 2) to define what they do, and SDD (Pillar 7) to structure their application, THEREFORE isolated skills lose most of their
+    power.
+  why: Demonstrates pillar interdependence through a concrete example.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-020
+  type: recall
+  difficulty: basic
+  front: What technologies does Pillar 9 (Universal Cloud Deployment) include?
+  back: Kubernetes, Docker, Dapr, Apache Kafka, Ray, and major cloud platforms (AWS/Azure/GCP).
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-021
+  type: recall
+  difficulty: basic
+  front: What is an M-Shaped developer?
+  back: A developer with deep expertise in 2-4 complementary domains, all at professional level.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-022
+  type: thinking
+  difficulty: intermediate
+  front: Why was M-Shaped development nearly impossible before AI augmentation?
+  back: BECAUSE mastering multiple domains required more hours than any individual had to learn, practice, and maintain expertise, THEREFORE specialization was forced by cognitive and time constraints.
+  why: Connects the M-shaped shift to a fundamental resource constraint that AI removes.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-023
+  type: recall
+  difficulty: intermediate
+  front: What distinguishes an M-Shaped developer from a Generalist?
+  back: M-Shaped means deep expertise in 2-4 domains; Generalist means shallow knowledge across many domains without production depth.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-024
+  type: recall
+  difficulty: intermediate
+  front: What are the four developer profiles from least to most domains?
+  back: I-Shaped (one deep), T-Shaped (one deep plus broad shallow), Generalist (many shallow), M-Shaped (2-4 deep).
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-025
+  type: thinking
+  difficulty: advanced
+  front: Why does partial pillar adoption (6 of 9) create bottlenecks rather than proportional gains?
+  back: BECAUSE the pillars form an integrated system where each amplifies the others, THEREFORE missing pillars become chokepoints that force developers back to specialist silos for those gaps.
+  why: Explains the non-linear relationship between pillar adoption and capability.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-026
+  type: thinking
+  difficulty: advanced
+  front: How does the historical pattern of Cloud Computing adoption parallel AIDD adoption?
+  back: BECAUSE companies treating cloud as just hosting struggled while those embracing the full paradigm gained 10x advantages, THEREFORE partial AIDD adoption similarly underperforms complete system
+    adoption.
+  why: Uses historical precedent to argue for complete rather than selective adoption.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-027
+  type: recall
+  difficulty: intermediate
+  front: What are the three phases of the 18-month AIDD learning pathway?
+  back: 'Months 1-6: foundational (Pillars 1-3), Months 7-12: integration (Pillars 4-6), Months 13-18: orchestration (Pillars 7-9).'
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-028
+  type: thinking
+  difficulty: intermediate
+  front: Why does the lesson list domain depth, domain compatibility, and organizational context as constraints on M-Shaped development?
+  back: BECAUSE AI augmentation is a capability multiplier not a replacement for earned expertise, THEREFORE critical domains like security and regulatory compliance still need deep specialization, and
+    organizational structure shapes how M-shaped skills apply.
+  why: Prevents overpromising by grounding M-shaped development in realistic limits.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-029
+  type: thinking
+  difficulty: intermediate
+  front: How do the nine AIDD characteristics differ from the nine enabling pillars?
+  back: BECAUSE characteristics define WHAT AIDD is (specification-driven, quality-gated, etc.), while pillars are the concrete technologies and practices (AI CLI agents, TDD, MCP) that make those characteristics
+    achievable in practice.
+  why: Clarifies the relationship between the abstract definition and its practical implementation.
+  tags:
+  - aidd
+  - nine-pillars
+- id: ch01-nine-pillars-aidd-030
+  type: recall
+  difficulty: basic
+  front: In the Vertical SaaS Builder M-shaped profile, what four domains combine?
+  back: Healthcare domain knowledge, full-stack development, MLOps, and product design.
+  tags:
+  - aidd
+  - nine-pillars
