@@ -17,6 +17,10 @@ Track meaningful updates to the book. This page is automatically updated when do
 
 <!-- CHANGELOG_START - Do not remove this marker -->
 
+### 2026-02-24
+
+- Add Python course chapters 15 and 16 (Development Environment + Reading Python) ([#767](https://github.com/panaversity/agentfactory/pull/767))
+
 ### 2026-02-23
 
 - feat: flashcards with FSRS v6 spaced repetition ([#761](https://github.com/panaversity/agentfactory/pull/761))
