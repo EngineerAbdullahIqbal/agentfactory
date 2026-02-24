@@ -65,6 +65,14 @@ const config: Config = {
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    experimental_faster: {
+      swcJsLoader: true,        // Use SWC to transpile JS (faster than Babel)
+      swcJsMinimizer: true,     // Use SWC to minify JS (faster than Terser)
+      swcHtmlMinimizer: true,   // Use SWC to minify HTML
+      lightningCssMinimizer: true, // Use Lightning CSS instead of cssnano
+      // rspackBundler: false,  // Skip Rspack - use default webpack (Linux native binding issues)
+      mdxCrossCompilerCache: true, // Compile MDX once instead of twice
+    },
   },
 
   // Set the production url of your site here
