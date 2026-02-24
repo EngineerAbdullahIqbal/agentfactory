@@ -1,0 +1,21 @@
+{
+  "run_id": "live-template",
+  "description": "Template manifest for live outputs",
+  "cases": {
+    "F01_explicit_dual_prompt_single_lesson": {
+      "trials": []
+    },
+    "F02_implicit_request_single_lesson": {
+      "trials": []
+    },
+    "F03_negative_control_no_flashcards": {
+      "trials": []
+    },
+    "F04_formula_heavy_single_lesson": {
+      "trials": []
+    },
+    "F05_chapter_mode_two_lessons": {
+      "trials": []
+    }
+  }
+}

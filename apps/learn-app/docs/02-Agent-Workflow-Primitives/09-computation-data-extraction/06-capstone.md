@@ -69,7 +69,7 @@ teaching_guide:
   session_title: "Data Wrangling and Capstone"
   key_points:
     - "The verification-first orchestration pattern (test data → verify → real data) is the capstone's central contribution — it combines every lesson into one disciplined workflow"
-    - "All Seven Principles appeared naturally in a single workflow — the mapping table makes this explicit and shows students how principles reinforce each other"
+    - "All Seven Principles appeared naturally in a single workflow — presented as a brief callback to Chapter 6 rather than a full exercise, since students already did the mapping in Ch6 L9"
     - "The 'NEEDS REVIEW' section demonstrates that good automation flags ambiguity for human judgment rather than making silent decisions"
     - "The CSV merging technique (head -1 for header + tail -n +2 -q for data rows) is a practical Unix pattern students will reuse whenever combining structured files"
   misconceptions:
@@ -93,378 +93,370 @@ teaching_guide:
 
 # Capstone: Tax Season Prep
 
-Open Claude Code. Set a timer for 40 minutes. Your goal:
+You spent five lessons building tools. Each works. Each is verified. Now put them together.
 
-> **Point Claude Code at a folder of bank statement CSVs and produce a categorized tax report with verified totals.**
+From the very first lesson, the README promised you this:
 
-You have everything you need. You know how to build scripts that handle decimals (Lesson 1), verify them against known answers (Lesson 2), parse real CSV data (Lesson 3), make tools permanent (Lesson 4), and categorize with false-positive guards (Lesson 5). Now orchestrate all of it into one workflow.
+```bash
+cat ~/finances/2025/*.csv | tax-prep
+```
 
-:::tip Use Your Own Data
-If you downloaded your bank statement CSV in Lesson 3, use that here. Create a folder `~/finances/2025/` and put your CSV files in it. Otherwise, ask Claude Code to generate test data. Real data makes this capstone real.
+That command doesn't exist yet. This lesson builds it — then shows you how the same pattern transfers to any domain you work in.
+
+:::tip No bank CSV yet? Start here.
+
+Ask Claude Code to generate realistic test data before doing anything else:
+
+```
+Generate a bank statement CSV with 20 transactions.
+Include: CVS PHARMACY ($45.67), WALGREENS ($23.45), DR MARTINEZ MEDICAL ($150.00),
+DR PEPPER SNAPPLE ($4.99), UNITED WAY DONATION ($100.00), OFFICE DEPOT ($89.50),
+CVSMITH CONSULTING ($200.00), and 13 random transactions.
+Use columns: Date, Description, Amount (negative for debits).
+Save as ~/finances/test-2025.csv.
+```
+
+Calculate expected totals by hand BEFORE running anything:
+- Medical (CVS + WALGREENS + DR MARTINEZ): $219.12
+- Charitable (UNITED WAY): $100.00
+- Business (OFFICE DEPOT): $89.50
+- POTENTIAL DEDUCTIONS: $408.62
+
+Those hand-calculated numbers are your verification baseline.
 :::
 
-## Your Mission
+## Step 1: Take Inventory
 
-Build a workflow that:
+You have three tools in `~/tools`:
 
-1. Creates test data with known answers (you calculate expected totals by hand)
-2. Builds a categorizer that handles Medical, Charitable, and Business expenses
-3. Verifies totals match your hand calculations before touching real data
-4. Processes all monthly CSVs into a single report
-5. Flags ambiguous transactions for human review
+| Tool | What It Does |
+|------|-------------|
+| `sum.py` | Sums decimal numbers from stdin |
+| `sum-expenses.py` | Extracts and sums the Amount column from bank CSVs |
+| `tax-categorize.py` | Categorizes transactions, prints subtotals by category |
 
-**Start now.** Come back when you have a report — or when you're stuck.
+What's missing: a `tax-prep` command that adds a POTENTIAL DEDUCTIONS total and runs from any folder without typing `python3 ~/tools/...`.
 
-Hint: Your opening prompt should tell Claude Code the full scope AND insist on verification first. Something like:
+## Step 2: Build tax-prep
 
-```
-I have bank statement CSVs in ~/finances/2025/.
-Help me categorize transactions (Medical, Charitable, Business),
-calculate subtotals, and flag ambiguous items.
-
-IMPORTANT: Verify with test data before processing real files.
-```
-
----
-
-<details>
-<summary><strong>Reference Implementation</strong> — Done or stuck? Click to compare your approach.</summary>
-
-## Reference Implementation
+Open Claude Code:
 
 ```
-You: I have a folder ~/finances/2025/ with monthly bank statement CSVs
-(january.csv through december.csv). Each has Date, Description, Amount.
+You: I have tax-categorize.py in ~/tools. It categorizes bank transactions and
+prints subtotals by Medical, Charitable, and Business categories.
 
-Help me:
-1. Categorize transactions: Medical, Charitable, Business
-2. Calculate subtotals for each category
-3. Flag anything ambiguous for human review
-4. Generate a report for my accountant
+I want a tax-prep command I can run like this:
+    cat ~/finances/2025/*.csv | tax-prep
 
-IMPORTANT: First verify your approach with test data before touching real files.
-I want to see it work on known data where I can check the math.
-```
-
-Watch what Claude Code does:
-
-```
-Claude Code: Smart approach - verify first with known data. Let me set up
-a complete workflow.
-
-STEP 1: CREATE TEST DATA WITH KNOWN ANSWERS
-==========================================
-
-[Creates: ~/finances/2025/test_january.csv]
-
-Date,Description,Amount
-01/05/2025,CVS PHARMACY #1234,-45.67
-01/06/2025,DR MARTINEZ MEDICAL,-150.00
-01/07/2025,WALGREENS #5678,-32.50
-01/10/2025,AMERICAN RED CROSS,-100.00
-01/15/2025,OFFICE DEPOT #901,-89.99
-01/18/2025,STAPLES #123,-45.00
-01/20/2025,DOCTORS WITHOUT BORDERS,-50.00
-01/22/2025,DR PEPPER BOTTLING,-4.99
-01/25/2025,CVSMITH CONSULTING,-200.00
-
-Expected totals (calculated by hand):
-- Medical: $228.17 (CVS + DR MARTINEZ + WALGREENS)
-- Charitable: $150.00 (RED CROSS + DOCTORS WITHOUT BORDERS)
-- Business: $134.99 (OFFICE DEPOT + STAPLES)
-- NOT categorized: DR PEPPER ($4.99), CVSMITH ($200.00)
-
-STEP 2: BUILD THE CATEGORIZER
-=============================
-
-[Creates: tax-prep.py with categories, false positive guards, and report generation]
-
-STEP 3: VERIFY AGAINST TEST DATA
-================================
-
-[Runs: cat ~/finances/2025/test_january.csv | python tax-prep.py]
-
-==================================================
-2025 TAX CATEGORIZATION REPORT
-==================================================
-
-MEDICAL (Schedule A):
-  CVS PHARMACY #1234 (1 txns)      $45.67
-  DR MARTINEZ MEDICAL (1 txns)     $150.00
-  WALGREENS #5678 (1 txns)         $32.50
-  SUBTOTAL:                        $228.17
-
-CHARITABLE (Schedule A):
-  AMERICAN RED CROSS (1 txns)      $100.00
-  DOCTORS WITHOUT BORDERS (1 txns) $50.00
-  SUBTOTAL:                        $150.00
-
-BUSINESS (if applicable):
-  OFFICE DEPOT #901 (1 txns)       $89.99
-  STAPLES #123 (1 txns)            $45.00
-  SUBTOTAL:                        $134.99
-
-==================================================
-POTENTIAL DEDUCTIONS: $513.16
-==================================================
-
-NEEDS REVIEW:
-  - "DR PEPPER BOTTLING" $4.99 - verify category
-  - "CVSMITH CONSULTING" $200.00 - verify category
-
-VERIFICATION:
-✓ Medical: $228.17 (matches expected)
-✓ Charitable: $150.00 (matches expected)
-✓ Business: $134.99 (matches expected)
-✓ DR PEPPER correctly flagged for review
-✓ CVSMITH correctly flagged for review
-
-All totals match hand-calculated values. Ready to process real files?
-```
-
-You verify the totals match your expectations. Then:
-
-```
-You: Verified. Now process all the real monthly files.
+It should do everything tax-categorize.py does, plus print a
+POTENTIAL DEDUCTIONS total at the end (the sum of all category subtotals).
 ```
 
 ```
-Claude Code: Processing all monthly CSVs...
+Claude Code: I'll update tax-categorize.py to include the final total,
+then install it as a permanent tax-prep command.
 
-STEP 4: COMBINE MONTHLY FILES
-=============================
+[Updates: ~/tools/tax-categorize.py — adds POTENTIAL DEDUCTIONS sum]
 
-[Runs: head -1 ~/finances/2025/january.csv > all-2025.csv]
-[Runs: tail -n +2 -q ~/finances/2025/*.csv >> all-2025.csv]
+#!/usr/bin/env python3
+import sys, csv, re
 
-Combined 12 files, 1,247 transactions total.
+CATEGORIES = {
+    'medical': [r'\bCVS\b', r'\bWALGREENS\b', r'\bPHARMACY\b', r'\bMEDICAL\b'],
+    'charitable': [r'\bDONATION\b', r'\bRED CROSS\b', r'\bUNITED WAY\b'],
+    'business': [r'\bOFFICE DEPOT\b', r'\bSTAPLES\b', r'\bSUBSCRIPTION\b'],
+}
+FALSE_POSITIVES = [r'\bDR\.?\s*PEPPER\b', r'\bCVSMITH\b']
 
-STEP 5: GENERATE FINAL REPORT
-=============================
+def categorize(description):
+    desc_upper = description.upper()
+    for fp_pattern in FALSE_POSITIVES:
+        if re.search(fp_pattern, desc_upper, re.IGNORECASE):
+            return None
+    for category, patterns in CATEGORIES.items():
+        for pattern in patterns:
+            if re.search(pattern, desc_upper, re.IGNORECASE):
+                return category
+    return None
 
-[Runs: cat all-2025.csv | python tax-prep.py > tax-report-2025.txt]
+reader = csv.DictReader(sys.stdin)
+totals = {}
+items = {}
+for row in reader:
+    amount = float(row['Amount'].replace('$', '').replace(',', ''))
+    if amount >= 0:  # Skip credits/refunds — only process debits
+        continue
+    cat = categorize(row['Description'])
+    if cat:
+        expense = abs(amount)
+        totals.setdefault(cat, 0.0)
+        items.setdefault(cat, [])
+        totals[cat] += expense
+        items[cat].append((row['Description'], expense))
 
-==================================================
-2025 TAX CATEGORIZATION REPORT
-==================================================
+for cat, entries in items.items():
+    for desc, amount in entries:
+        print(f"{cat.upper()}: {desc}: ${amount:.2f}")
 
-MEDICAL (Schedule A):
-  CVS PHARMACY (23 txns)           $456.70
-  WALGREENS (15 txns)              $234.50
-  Medical offices (8 txns)         $1,200.00
-  SUBTOTAL:                        $1,891.20
+print("\n--- TOTALS ---")
+potential_deductions = 0.0
+for cat, total in totals.items():
+    print(f"{cat.title()}: ${total:.2f}")
+    potential_deductions += total
 
-CHARITABLE (Schedule A):
-  RED CROSS (4 txns)               $400.00
-  UNITED WAY (6 txns)              $600.00
-  Other donations (8 txns)         $550.00
-  SUBTOTAL:                        $1,550.00
+print(f"\nPOTENTIAL DEDUCTIONS: ${potential_deductions:.2f}")
 
-BUSINESS (if applicable):
-  Office supplies (18 txns)        $539.76
-  Software subscriptions (9 txns)  $234.56
-  SUBTOTAL:                        $774.32
+[Runs: chmod +x ~/tools/tax-categorize.py]
+[Checks: echo $SHELL → /bin/zsh]
+[Appends to ~/.zshrc:]
+alias tax-prep='python3 ~/tools/tax-categorize.py'
+[Runs: source ~/.zshrc]
 
-==================================================
-POTENTIAL DEDUCTIONS: $4,215.52
-==================================================
-
-NEEDS REVIEW (23 items):
-  - "SQ *LOCALSTORE" $200.00 - verify category
-  - "AMZN MKTP US" $89.00 - personal or business?
-  [...]
-
-Report saved to: tax-report-2025.txt
-
-Would you like me to create a reusable script for next year?
+Done. Try it:
+cat ~/finances/test-2025.csv | tax-prep
 ```
 
-In one conversation, a year of bank statements became an accountant-ready report.
+## Step 3: Verify Before Touching Real Data
 
-</details>
+Run it on your test data (or the generated test file from the tip above):
+
+```bash
+cat ~/finances/test-2025.csv | tax-prep
+```
+
+**Expected output:**
+
+```
+MEDICAL: CVS/PHARMACY #1234: $45.67
+MEDICAL: WALGREENS #5678: $23.45
+MEDICAL: DR MARTINEZ MEDICAL: $150.00
+CHARITABLE: UNITED WAY: $100.00
+BUSINESS: OFFICE DEPOT #901: $89.50
+
+--- TOTALS ---
+Medical: $219.12
+Charitable: $100.00
+Business: $89.50
+
+POTENTIAL DEDUCTIONS: $408.62
+```
+
+DR PEPPER SNAPPLE and CVSMITH CONSULTING are absent. The totals match your hand calculations. That's the verification. Now you can trust it on real data.
+
+:::warning Checkpoint: Prove tax-prep Is Permanent
+
+1. Close your terminal completely
+2. Open a brand new terminal
+3. Navigate to any folder: `cd ~/Desktop`
+4. Run: `cat ~/finances/test-2025.csv | tax-prep`
+
+If you see the report — your command is installed. If you see "command not found" — check your `~/.zshrc` alias.
+:::
+
+## Step 4: Process a Full Year
+
+For multiple monthly statements, combine them first:
+
+```bash
+# Combine 12 months into one file (single header, all data rows)
+head -1 ~/finances/2025/january.csv > ~/finances/combined-2025.csv
+tail -n +2 -q ~/finances/2025/*.csv >> ~/finances/combined-2025.csv
+
+# Run tax-prep on the full year
+cat ~/finances/combined-2025.csv | tax-prep
+```
+
+Or skip the intermediate file entirely:
+
+```bash
+# Direct pipeline — no temp file needed
+cat ~/finances/2025/*.csv | grep -v "^Date" | \
+  { echo "Date,Description,Amount"; cat; } | tax-prep
+```
+
+The command from the README works exactly as promised.
 
 ## What Just Happened?
 
-Let's trace how ALL Seven Principles appeared in that workflow.
+Remember the Seven Principles from Chapter 6? You just used all of them in one workflow — without a checklist, without thinking about it. That is the point. Principles are not rules you consult. They are habits you act on.
 
-| Principle                               | How It Appeared                                                  |
-| --------------------------------------- | ---------------------------------------------------------------- |
-| **P1: Bash is the Key**                 | `cat`, `head`, `tail`, pipes orchestrated all data flow          |
-| **P2: Code as Universal Interface**     | Python script executed categorization - no hallucinated math     |
-| **P3: Verification as Core Step**       | Test data with known totals BEFORE processing real files         |
-| **P4: Small, Reversible Decomposition** | 5 clear steps, each testable independently                       |
-| **P5: Persisting State in Files**       | Script saved to tax-prep.py, report saved to tax-report-2025.txt |
-| **P6: Constraints and Safety**          | False positive guards prevented DR PEPPER → medical              |
-| **P7: Observability**                   | "NEEDS REVIEW" section made ambiguous items visible              |
+| Principle | Where It Appeared |
+|-----------|------------------|
+| **Bash is the Key** | `cat`, `head`, `tail`, pipes orchestrated all data flow |
+| **Code as Universal Interface** | Python scripts executed computation — no hallucinated math |
+| **Verification as Core Step** | Test data with hand-calculated totals BEFORE real files |
+| **Small, Reversible Decomposition** | Five standalone tools, each testable independently |
+| **Persisting State in Files** | Scripts in `~/tools`, report saved to a file |
+| **Constraints and Safety** | False positive guards prevented miscategorized deductions |
+| **Observability** | Every transaction printed before the totals section |
 
-All seven principles appeared in a single workflow. This isn't coincidence. The principles are how agents work effectively with computing systems.
+## Worked Example: Server Log Analysis
 
-## The Agent's Toolkit: CSV Merging
+The same pattern — build tools, verify with known data, process everything — transfers to any domain with CSV data. Here's how it looks on server logs.
 
-The agent combined 12 CSVs without duplicating headers. Here's the technique:
+```
+You: I have a folder ~/logs/2025/ with weekly server log CSVs
+(week01.csv through week52.csv). Each has timestamp, endpoint,
+status_code, response_time_ms.
+
+Help me:
+1. Categorize responses: Success (2xx), Client Error (4xx), Server Error (5xx)
+2. Calculate error rates per category
+3. Flag endpoints with unusually high error rates
+
+IMPORTANT: Verify with test data before processing real logs.
+```
+
+```
+Claude Code: Verify first — smart. Let me set up the workflow.
+
+[Creates: test_week01.csv]
+timestamp,endpoint,status_code,response_time_ms
+2025-01-06T08:00:00,/api/users,200,45
+2025-01-06T08:01:00,/api/orders,201,120
+2025-01-06T08:02:00,/api/users,404,12
+2025-01-06T08:03:00,/health,404,3
+2025-01-06T08:04:00,/api/orders,500,5002
+2025-01-06T08:05:00,/api/payments,200,89
+2025-01-06T08:06:00,/api/payments,502,30001
+
+Expected: Success=3, Client Error=2, Server Error=2
+
+[Creates: log-analyzer.py]
+[Runs verification against test data]
+
+NEEDS REVIEW:
+  - /health 404 (3ms) — health check failures are often expected during deployment
+
+That /health 404 is the DR PEPPER of server logs. Adding it to known-benign patterns.
+
+[Updates log-analyzer.py with KNOWN_BENIGN list]
+[Re-runs — totals match]
+
+Verified. Ready for real logs.
+```
+
+```
+You: Verified. Process all 52 weekly files.
+```
+
+```
+Claude Code:
+[Runs: head -1 week01.csv > all-2025.csv]
+[Runs: tail -n +2 -q week*.csv >> all-2025.csv]
+[Runs: python log-analyzer.py all-2025.csv > ops-report-2025.txt]
+
+SUCCESS (2xx): 847,892 requests (94.8%) — Avg 78.3ms
+CLIENT ERROR (4xx): 38,456 requests (4.3%)
+SERVER ERROR (5xx): 7,855 requests (0.9%)
+
+HIGH ERROR ENDPOINTS:
+  /api/payments — 8.2% error rate — INVESTIGATE
+  /api/search — 6.1% error rate — INVESTIGATE
+
+NEEDS REVIEW (31 items): /api/v1/legacy 503 (892x), /api/webhooks 408 (234x)...
+
+Report saved: ops-report-2025.txt
+```
+
+Same five steps. Different domain. The /health 404 is the DR PEPPER of server logs — a false positive with a different name but the same solution. The pattern transferred completely.
+
+## The CSV Merging Technique
+
+The agent combined multiple CSVs without duplicating headers. Worth knowing for any multi-file workflow:
 
 ```bash
-# Get header from first file only
+# Header from first file only
 head -1 january.csv > combined.csv
 
-# Append data (skip headers) from ALL files
+# Data rows from ALL files (skip each file's header)
 tail -n +2 -q *.csv >> combined.csv
 ```
 
-| Command      | What It Does                                |
-| ------------ | ------------------------------------------- |
-| `head -1`    | First line only (the header)                |
-| `tail -n +2` | Everything from line 2 onward (skip header) |
-| `-q`         | Quiet mode - no filename prefixes           |
-| `>>`         | Append (don't overwrite)                    |
+| Command | What It Does |
+|---------|-------------|
+| `head -1` | First line only (the header row) |
+| `tail -n +2` | Everything from line 2 onward (skips header) |
+| `-q` | Quiet mode — no filename prefixes in output |
+| `>>` | Append (don't overwrite) |
 
-Result: One file with a single header row followed by all data rows.
+Result: one file, one header row, all data rows.
 
-## The Pattern: Verification-First Orchestration
-
-Here's the capstone prompt pattern:
-
-```
-"Help me [complex multi-step goal].
-
-IMPORTANT: First verify your approach with test data before touching
-real files. I want to see it work on known data where I can check the math."
-```
-
-This pattern ensures:
-
-1. **Test data is created first** - Known inputs with calculable outputs
-2. **Logic is verified** - You check totals match before processing real data
-3. **Real processing happens only after verification** - Trust is earned
-
-The phrase "verify your approach with test data" triggers the agent to build a verification workflow, not just execute blindly.
-
-### Pattern for Reusable Workflows
-
-```
-"Would you like me to create a reusable script for next year?"
-```
-
-When the agent offers this, say yes. The result is a script you can run annually:
-
-```bash
-./tax-prep.sh ~/finances/2026/
-```
-
-Same workflow, different year. No re-prompting needed.
-
-## Try It Yourself
-
-Direct Claude Code through the full workflow:
-
-```
-I have expense CSVs in ~/expenses/. Help me:
-1. Categorize by type (supplies, travel, meals)
-2. Generate monthly and yearly summaries
-3. Flag transactions over $500 for receipt verification
-
-Verify with test data first.
-```
-
-Watch how the agent:
-
-1. Creates test data with known amounts
-2. Builds categorization logic
-3. Verifies totals match
-4. Then processes real files
-
-This is the verification-first pattern in action.
+---
 
 ## The Victory
 
-Step back and recognize what you accomplished in this chapter.
-
 **Before Chapter 9:**
 
-- Bash couldn't add decimals
-- LLMs hallucinated calculations
-- Manual spreadsheet work for expense categorization
-- No systematic verification
+- Bash could not add decimals
+- Asking AI to calculate felt risky (because it is)
+- Manual spreadsheet work for any numerical analysis
+- No systematic way to catch silent bugs in agent-generated code
 
 **After Chapter 9:**
 
-- Python scripts handle any calculation
-- Verified against known test data
-- Automated categorization with false-positive guards
-- Reusable tools in your personal toolbox
+- You know when to prompt directly vs. when to build verified code
+- You verify before you trust — regardless of the domain
+- You catch the agent's mistakes before they become your mistakes
+- You have tools in `~/tools` that work tomorrow, not just today
 
-You built your first Digital FTE component - a tool that does tedious work accurately, every time, without missing edge cases or hallucinating categories.
+Tax prep was the exercise. The skill is knowing when a wrong number has consequences — and building the verification habit that catches it before anyone else does.
 
-The same pattern applies to:
+## Reflection: What You Are Actually Learning
 
-- Invoice processing
-- Subscription tracking
-- Budget analysis
-- Any scenario where data needs categorization
+The agent wrote all the code. You made all the decisions that mattered.
 
-You have the foundation.
+| What It Looked Like | What You Actually Learned |
+|---------------------|--------------------------|
+| Building sum.py | Directing agents to create tools *you* designed |
+| Testing with known data | Trusting nothing until you have verified it |
+| CSV parsing with Python | Redirecting an agent when its first approach fails |
+| Spotting Dr. Pepper | Finding bugs in output that looks correct |
+| Installing tax-prep | Assembling verified tools into a permanent workflow |
+| Writing the prompts | Specifying outcomes and interfaces — the one contribution the agent cannot make for itself |
 
-## Reflection: What You're Actually Learning
-
-This chapter taught you patterns, not just commands.
-
-| What It Looked Like       | What You Actually Learned                       |
-| ------------------------- | ----------------------------------------------- |
-| Building sum.py           | How to direct agents to create reusable tools   |
-| Testing with known data   | The verification-first pattern                  |
-| CSV parsing with Python   | When to use specialized tools vs. simple ones   |
-| Regex patterns            | How to specify precise matching with guardrails |
-| Processing multiple files | How to orchestrate complex workflows            |
-
-The specific tools (Python, regex, find/xargs) matter less than the patterns:
-
-- Describe the problem, not the solution
-- Verify before trusting
-- Mention edge cases to get robust solutions
-- Make tools permanent and reusable
-
-These patterns transfer to any domain where you work with General Agents.
+The specific tools (Python, regex, find/xargs) will change. The patterns will not. And the role — human as director, agent as implementer — will not change either.
 
 ---
 
 ## Try With AI
 
-### Prompt 1: Extend the Workflow
+### Prompt 1: Add a NEEDS REVIEW Section
 
 ```
-My tax-prep workflow works well. Now I want to add:
-1. Filter by date range (only Q4 transactions: Oct-Dec)
-2. Generate CSV output (for importing to Excel)
-3. Email-ready summary (plain text I can paste)
+My tax-prep command categorizes transactions correctly. But some
+transactions don't match any category — they're just silently ignored.
 
-Keep the verification-first approach.
+Modify it to print a NEEDS REVIEW section at the end listing all
+uncategorized transactions with amounts, so I can review them manually.
 ```
 
-**What you're learning:** Incremental extension. You have a working workflow and add features. The agent preserves the verification pattern while adding functionality.
+**What you're learning:** A director decision disguised as a feature request. You're telling the agent the tool must make its own uncertainty visible rather than silently ignore it. "Print what you couldn't categorize" is not an implementation detail — it's a design principle you imposed. The agent wired the NEEDS REVIEW output; you decided that discarding uncategorized data silently was unacceptable. That call was yours.
 
-### Prompt 2: Apply to Different Domain
-
-```
-I learned the tax-prep workflow pattern. Now apply it to a different
-problem: I have server logs with timestamps and response codes.
-Help me categorize by error type and generate a weekly report.
-
-Same approach: verify with test data first, then process real logs.
-```
-
-**What you're learning:** Pattern transfer. The same workflow structure (test data → verify → process real) applies to completely different domains. You're learning to recognize when to apply patterns, not just execute them.
-
-### Prompt 3: Build the Reusable Script
+### Prompt 2: Add Date Filtering
 
 ```
-Convert my tax-prep workflow into a single bash script I can run
-next year. It should:
-1. Take a folder path as argument
-2. Combine all CSVs in that folder
-3. Run tax-prep.py and save the report
-4. Print a summary to the terminal
+My tax-prep processes all transactions in the CSV. For quarterly
+estimates, I need to filter by date range:
 
-Include comments explaining each step.
+    cat finances.csv | tax-prep --start 2025-01-01 --end 2025-03-31
+
+Add date filtering. Keep the stdin reading pattern so it still works
+with pipes and cat.
 ```
 
-**What you're learning:** Packaging workflows. A conversation becomes a script. A script becomes a tool. A tool becomes part of your permanent toolkit. You're manufacturing Digital FTE components.
+**What you're learning:** Interface-first directing. Notice the prompt specifies exactly what the command should look like from the outside (`tax-prep --start 2025-01-01 --end 2025-03-31`) before mentioning implementation. You designed the interface; the agent wired argparse to match it. This is the same move as "reads from stdin and prints the total" in Lesson 1 — you specify the contract, the agent writes the code that fulfills it.
+
+### Prompt 3: Transfer to Your Domain
+
+```
+I work with [your domain] data in CSV format. The data has
+[describe columns]. I need to categorize it by [your categories]
+and flag items that don't cleanly fit.
+
+Apply the verification-first pattern: create test data with known
+answers first, verify totals match before processing real files,
+then build a permanent command I can reuse.
+```
+
+**What you're learning:** Full pattern transfer. You're applying the verification-first orchestration to a domain you actually work in. Notice which parts of the pattern carry over unchanged (verify first, flag ambiguous items, make it permanent) and which require domain-specific knowledge (your categories, your false positives).

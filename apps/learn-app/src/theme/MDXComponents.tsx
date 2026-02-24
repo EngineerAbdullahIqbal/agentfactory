@@ -16,6 +16,7 @@ import {
   LinuxContent,
 } from "@/components/OSTabs";
 import ExerciseCard from "@/components/ExerciseCard";
+import LazyFlashcards from "@/components/flashcards/LazyFlashcards";
 
 export default {
   ...MDXComponents,
@@ -40,4 +41,6 @@ export default {
   WindowsContent,
   MacOSContent,
   LinuxContent,
+  // Flashcards with FSRS v6 spaced repetition
+  Flashcards: LazyFlashcards,
 };

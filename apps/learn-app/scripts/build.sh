@@ -1,4 +1,6 @@
 #!/bin/bash
+set -euo pipefail
+
 # Build script for Docusaurus with i18n support
 #
 # With multiple locales (en + ur), Docusaurus builds them sequentially in one
@@ -15,10 +17,11 @@
 #   docusaurus build --locale en && docusaurus build --locale ur --out-dir build/ur
 #   (requires baseUrl adjustments per locale)
 
-set -e
-
 # Change to learn-app directory (parent of scripts/)
 cd "$(dirname "$0")/.."
+
+# Flashcard validation + Anki generation run via nx dependsOn (project.json)
+# before this script is invoked — no need to duplicate here.
 
 NODE_VERSION=$(node -v | cut -d'.' -f1 | sed 's/v//')
 

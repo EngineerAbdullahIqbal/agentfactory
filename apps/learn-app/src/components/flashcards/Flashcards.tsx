@@ -1,0 +1,386 @@
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
+import type { FlashcardsProps } from "./types";
+import { Rating } from "ts-fsrs";
+import FlashcardCard from "./FlashcardCard";
+import RatingButtons from "./RatingButtons";
+import { useFSRS } from "./useFSRS";
+import styles from "./Flashcards.module.css";
+
+export default function Flashcards({ cards: deck }: FlashcardsProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [ankiUrl, setAnkiUrl] = useState<string | null>(null);
+  const [showDownloadMenu, setShowDownloadMenu] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [ratedCards, setRatedCards] = useState<Map<string, "missed" | "gotit">>(
+    new Map(),
+  );
+
+  // Close fullscreen on Escape
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [isFullscreen]);
+
+  const { cards, rateCard, wasReset } = useFSRS(deck ?? undefined);
+
+  // Shuffle counter — increment to reshuffle (not a deterministic seed)
+  const [shuffleCounter, setShuffleCounter] = useState(0);
+
+  const shuffledIndices = useMemo(() => {
+    if (!deck) return [];
+    const indices = deck.cards.map((_, i) => i);
+    if (shuffleCounter === 0) return indices;
+    // Fisher-Yates shuffle
+    const shuffled = [...indices];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }, [deck, shuffleCounter]);
+
+  // Show toast when localStorage was reset
+  useEffect(() => {
+    if (wasReset) {
+      setShowToast(true);
+      const timer = setTimeout(() => setShowToast(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [wasReset]);
+
+  // Fetch Anki manifest
+  useEffect(() => {
+    if (!deck) return;
+    fetch("/flashcards/manifest.json")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((manifest) => {
+        if (manifest?.decks?.[deck.deck.id]?.apkgPath) {
+          setAnkiUrl(manifest.decks[deck.deck.id].apkgPath);
+        }
+      })
+      .catch((err) => {
+        console.warn(
+          `[flashcards] Failed to fetch Anki manifest for deck "${deck.deck.id}":`,
+          err,
+        );
+      });
+  }, [deck]);
+
+  // Close download menu on outside click
+  useEffect(() => {
+    if (!showDownloadMenu) return;
+    const close = () => setShowDownloadMenu(false);
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, [showDownloadMenu]);
+
+  const totalCards = deck?.cards.length ?? 0;
+  const isLastCard = currentIndex >= totalCards - 1;
+
+  const goToNext = useCallback(() => {
+    if (isLastCard) return;
+    setCurrentIndex((prev) => prev + 1);
+    setIsFlipped(false);
+  }, [isLastCard]);
+
+  const goToPrev = useCallback(() => {
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    setIsFlipped(false);
+  }, []);
+
+  // Keyboard navigation (skip when user is typing in inputs/textareas)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        // Only allow Space to flip front→back; rating buttons handle back→next
+        setIsFlipped((prev) => (prev ? prev : true));
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        goToNext();
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        goToPrev();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [goToNext, goToPrev]);
+
+  const [isExiting, setIsExiting] = useState(false);
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
+    };
+  }, []);
+
+  const handleRate = useCallback(
+    (rating: Rating) => {
+      if (!deck) return;
+      const realIndex = shuffledIndices[currentIndex] ?? currentIndex;
+      const card = deck.cards[realIndex];
+      if (!card) return;
+
+      rateCard(card.id, rating);
+
+      setRatedCards((prev) => {
+        const next = new Map(prev);
+        next.set(card.id, rating === Rating.Again ? "missed" : "gotit");
+        return next;
+      });
+
+      // Trigger exit animation
+      setIsExiting(true);
+
+      // Wait for CSS animation to finish before advancing
+      exitTimerRef.current = setTimeout(() => {
+        if (!isLastCard) {
+          setCurrentIndex((prev) => prev + 1);
+        }
+        setIsFlipped(false);
+        setIsExiting(false);
+      }, 250);
+    },
+    [deck, shuffledIndices, currentIndex, isLastCard, rateCard],
+  );
+
+  const handleShuffle = useCallback(() => {
+    setShuffleCounter((prev) => prev + 1);
+    setCurrentIndex(0);
+    setIsFlipped(false);
+  }, []);
+
+  const handleDownloadCSV = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      setShowDownloadMenu(false);
+
+      if (!deck || !deck.cards) return;
+
+      // Create a CSV string with a header row
+      const headers = "Front,Back\n";
+      const csvContent = deck.cards
+        .map((card) => {
+          // Escape quotes by doubling them, and wrap fields containing commas/newlines in quotes
+          const escapeField = (text: string) => `"${text.replace(/"/g, '""')}"`;
+          return `${escapeField(card.front)},${escapeField(card.back)}`;
+        })
+        .join("\n");
+
+      const fullCsv = headers + csvContent;
+      const blob = new Blob([fullCsv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `flashcards-${deck.deck.id}.csv`;
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 100);
+    },
+    [deck],
+  );
+
+  if (!deck) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.fallbackMessage}>
+          Flashcards Study Aid is not available for this lesson yet.
+        </p>
+      </div>
+    );
+  }
+
+  // Derive counts from rated cards map (prevents double-counting on re-rating)
+  const missedCount = [...ratedCards.values()].filter(
+    (v) => v === "missed",
+  ).length;
+  const gotItCount = [...ratedCards.values()].filter(
+    (v) => v === "gotit",
+  ).length;
+
+  // Session complete — every card rated and user has moved past the last card
+  // (currentIndex stays on last card after rating, but isFlipped resets to false)
+  const allRated = ratedCards.size >= totalCards;
+  const sessionDone = allRated && isLastCard && !isFlipped;
+  if (sessionDone) {
+    const total = missedCount + gotItCount;
+    const pct = total > 0 ? Math.round((gotItCount / total) * 100) : 0;
+    return (
+      <div
+        className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}
+      >
+        <div className={styles.sessionComplete}>
+          <div className={styles.sessionCompleteTitle}>Session Complete</div>
+          <div className={styles.sessionStats}>
+            <div className={`${styles.stat} ${styles.statMissed}`}>
+              {missedCount} missed
+            </div>
+            <div className={`${styles.stat} ${styles.statGotIt}`}>
+              {gotItCount} got it
+            </div>
+          </div>
+          <div className={styles.sessionPct}>{pct}% correct</div>
+          <button
+            className={styles.exitButton}
+            onClick={() => {
+              setCurrentIndex(0);
+              setIsFlipped(false);
+              setRatedCards(new Map());
+            }}
+          >
+            Review Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const realIndex = shuffledIndices[currentIndex] ?? currentIndex;
+  const currentCard = deck.cards[realIndex];
+  const progress = totalCards > 0 ? ((currentIndex + 1) / totalCards) * 100 : 0;
+
+  return (
+    <div
+      className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}
+    >
+      <div className={styles.browseLayout}>
+        <button
+          className={styles.navArrow}
+          onClick={goToPrev}
+          disabled={currentIndex === 0}
+          aria-label="Previous card"
+        >
+          &#8249;
+        </button>
+
+        <div className={`${styles.cardArea} ${styles.atmosphericGlow}`}>
+          {currentCard && (
+            <div
+              className={`${styles.cardAnimator} ${isExiting ? styles.exiting : ""}`}
+            >
+              <FlashcardCard
+                card={currentCard}
+                isFlipped={isFlipped}
+                onFlip={() => !isExiting && setIsFlipped((prev) => !prev)}
+                cardNumber={currentIndex + 1}
+                totalCards={totalCards}
+              />
+            </div>
+          )}
+        </div>
+
+        <button
+          className={styles.navArrow}
+          onClick={goToNext}
+          disabled={isLastCard}
+          aria-label="Next card"
+        >
+          &#8250;
+        </button>
+      </div>
+
+      {isFlipped && (
+        <RatingButtons
+          onRate={handleRate}
+          missedCount={missedCount}
+          gotItCount={gotItCount}
+        />
+      )}
+
+      <div className={styles.progressRow}>
+        <div className={styles.progressBar}>
+          <div
+            className={styles.progressFill}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <span className={styles.cardCounter}>
+          {currentIndex + 1} / {totalCards} cards
+        </span>
+      </div>
+
+      <div className={styles.utilityRow}>
+        <button
+          className={styles.utilityButton}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsFullscreen((prev) => !prev);
+          }}
+          title={isFullscreen ? "Exit Full Screen" : "Full Screen"}
+          aria-label={isFullscreen ? "Exit Full Screen" : "Full Screen"}
+        >
+          {isFullscreen ? "\u21F2 Exit Fullscreen" : "\u2922 Fullscreen"}
+        </button>
+        <button
+          className={styles.utilityButton}
+          onClick={handleShuffle}
+          aria-label="Shuffle cards"
+        >
+          &#8645; Shuffle
+        </button>
+        <div className={styles.downloadWrapper}>
+          <button
+            className={styles.utilityButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDownloadMenu((prev) => !prev);
+            }}
+            aria-label="Download flashcards"
+            aria-expanded={showDownloadMenu}
+          >
+            &#8615; Download
+          </button>
+          {showDownloadMenu && (
+            <div className={styles.downloadMenu}>
+              <button
+                className={styles.downloadOption}
+                onClick={handleDownloadCSV}
+              >
+                Download CSV
+              </button>
+              {ankiUrl && (
+                <a
+                  className={styles.downloadOption}
+                  href={ankiUrl}
+                  download
+                  onClick={() => setShowDownloadMenu(false)}
+                >
+                  Anki Deck (.apkg)
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {showToast && (
+        <div className={styles.toast} role="alert">
+          Flashcard progress was reset due to a deck update.
+        </div>
+      )}
+    </div>
+  );
+}

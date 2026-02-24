@@ -58,7 +58,7 @@ learning_objectives:
 
 cognitive_load:
   new_concepts: 5
-  assessment: "5 concepts (categorization logic, false positives, regex word boundaries, false positive guards, batch processing) within A2 limit"
+  assessment: "5 concepts (categorization logic, false positives, regex word boundaries, false positive guards, batch processing). Categorization and false positives are A2; regex word boundaries and batch processing with find/xargs stretch into B1 territory. Students are not expected to write regex — only to understand why the agent's patterns work."
 
 differentiation:
   extension_for_advanced: "Handle case sensitivity, regex anchors for precision, more complex patterns"
@@ -146,12 +146,15 @@ def categorize(description):
 reader = csv.DictReader(sys.stdin)
 totals = {}
 for row in reader:
+    amount = float(row['Amount'].replace('$', '').replace(',', ''))
+    if amount >= 0:  # Skip credits/refunds
+        continue
     cat = categorize(row['Description'])
     if cat:
-        amount = abs(float(row['Amount'].replace('$', '')))
-        totals.setdefault(cat, 0)
-        totals[cat] += amount
-        print(f"{cat.upper()}: {row['Description']}: ${amount:.2f}")
+        expense = abs(amount)
+        totals.setdefault(cat, 0.0)
+        totals[cat] += expense
+        print(f"{cat.upper()}: {row['Description']}: ${expense:.2f}")
 
 print("\n--- TOTALS ---")
 for cat, total in totals.items():
@@ -173,9 +176,13 @@ Charitable: $100.00
 Business: $89.50
 ```
 
-At first glance, that looks right. Medical, charitable, business — all categorized. The totals look reasonable. You almost move on.
+At first glance, that looks right. Medical, charitable, business — all categorized. The totals look reasonable.
 
-Then you scan the medical list one more time. Wait.
+:::warning Challenge: Find the Fraud
+Scan the medical entries above. One of them would get you audited by the IRS. Another inflates your deductions by $200. Can you spot them both before reading on?
+
+Take 30 seconds. Read each line. Ask yourself: is this *actually* a medical expense?
+:::
 
 ## The Bug
 
@@ -190,7 +197,7 @@ There it is. The keyword "DR" appears in "DR PEPPER," so the categorizer flags i
 
 This is what simple keyword matching does. `if 'CVS' in desc_upper` matches ANYTHING containing those three letters in sequence — CVS Pharmacy, CVSMITH, MCVS, whatever. And `if 'DR' in desc_upper` matches every doctor AND every Dr. Pepper.
 
-Your medical total is inflated by $204.99. On a tax return, that's a problem.
+Your medical total is inflated by $204.99. On a tax return, that's not an "oops" — it's a fraudulent deduction. The IRS doesn't care that your algorithm made the mistake. If you claim $424.11 in medical expenses when the real number is $219.12, you've filed an incorrect return. Multiply this by twelve months of bank statements and the error compounds. The categorizer doesn't just have a bug — it has a liability.
 
 ## The Fix
 
@@ -238,6 +245,18 @@ Look at what the agent changed -- and WHY each fix solves a specific false posit
 
 **`\b(AMZN|AMAZON)\b` shows the pattern generalizes.** If you later need to match Amazon transactions, the same word boundary technique catches "AMZN" and "AMAZON" without matching "AMAZONIA" or "CAMZN."
 
+:::tip Extending Categories Without Writing Regex
+You don't need to understand regex to add new merchants. To add TARGET PHARMACY to medical, just tell Claude Code:
+
+```
+Add TARGET PHARMACY to the medical category in tax-categorize.py.
+Make sure it matches "TARGET PHARMACY" but not "TARGET" by itself
+(I shop at Target for non-medical things too).
+```
+
+The agent writes the regex. You describe what should and shouldn't match. That's the same pattern you've been using all chapter — describe the problem, let the agent handle the implementation.
+:::
+
 Let's verify the fix:
 
 ```
@@ -273,24 +292,20 @@ Claude Code: I'll use find and xargs to batch process all CSV files.
 
 [Runs: find statements/ -name "*.csv" | xargs cat | python tax-categorize.py]
 
-Processing 12 files...
-Total transactions: 1,247
+MEDICAL: CVS/PHARMACY #1234: $45.67
+MEDICAL: WALGREENS #5678: $23.45
+MEDICAL: DR MARTINEZ MEDICAL: $150.00
+MEDICAL: PHARMACY RX PLUS: $67.80
+CHARITABLE: UNITED WAY DONATION: $100.00
+CHARITABLE: RED CROSS DONATION: $50.00
+BUSINESS: OFFICE DEPOT #901: $89.50
+BUSINESS: STAPLES #2233: $42.30
+... (hundreds more lines across 12 months)
 
-MEDICAL (Schedule A):
-  CVS PHARMACY (23 txns)      $456.70
-  WALGREENS (15 txns)         $234.50
-  Doctor visits (8 txns)      $1,200.00
-  SUBTOTAL:                   $1,891.20
-
-CHARITABLE (Schedule A):
-  Donations (12 txns)         $1,550.00
-
-BUSINESS:
-  Office supplies (18 txns)   $539.76
-  Subscriptions (9 txns)      $234.56
-  SUBTOTAL:                   $774.32
-
-All 12 months processed in one command.
+--- TOTALS ---
+Medical: $1,891.20
+Charitable: $1,550.00
+Business: $774.32
 ```
 
 **How the pipeline works:**
@@ -305,6 +320,12 @@ find statements/ -name "*.csv" | xargs cat | python tax-categorize.py
 
 One command processes an entire year of transactions.
 
+:::caution Regex Is a Stopgap, Not a Solution
+The FALSE_POSITIVES list works for known edge cases. But it's brittle — every new false positive requires a manual update. You'll never anticipate every "DR SOMETHING" that isn't a doctor.
+
+In a real workflow, regex handles the high-confidence matches. Everything else goes into a "NEEDS REVIEW" file for human judgment. The capstone in Lesson 6 does exactly this — the report's NEEDS REVIEW section is the honest answer to "what do you do when pattern matching isn't enough?" Don't pretend regex solves semantic ambiguity. It buys you the easy 80%. The hard 20% requires a human.
+:::
+
 ## The Pattern
 
 Two prompt patterns emerged in this lesson:
@@ -317,7 +338,9 @@ Start simple -- let the agent build a first version. Then test it and look for f
 
 This signals you want file discovery with `find`, batch execution with `xargs`, and aggregated results.
 
-You can categorize transactions and process multiple files. But you've been doing this piece by piece — summing here, categorizing there, batch processing over here. In the capstone, you'll orchestrate everything into a single workflow: point Claude Code at a folder of bank statements and get an accountant-ready tax report. One conversation. One command. A full year of data.
+You've been building tools one at a time: sum.py, a verification workflow, a CSV parser, a permanent alias, a categorizer. Each works. Each is tested. Each handles edge cases. Separately, they're useful. Together, they're a tax preparation system.
+
+The capstone puts it all together. One conversation. One folder of bank statements. One report your accountant can actually use.
 
 ---
 
@@ -336,7 +359,7 @@ Write a regex pattern that matches all these but does NOT match:
 Explain why word boundaries matter here.
 ```
 
-**What you're learning:** Regex design with precision. The agent shows how `\b(AMZN|AMAZON)\b` catches variations while excluding false positives. You understand the WHY, not just the pattern.
+**What you're learning:** The director's move for pattern work — you supply the real-world examples (AMZN MKTP US, AMAZON.COM, AMAZON PRIME) AND the false positives to avoid (AMAZONIA, CAMZN). The agent has the regex knowledge. You have the data knowledge. The quality of the pattern is determined by how precisely you describe what should and shouldn't match — not by your ability to write regex.
 
 ### Prompt 2: Handle a New False Positive
 
@@ -348,7 +371,7 @@ How do I add this to the false positive guards? Show me the pattern
 that excludes travel-related Amazon mentions.
 ```
 
-**What you're learning:** Iterative refinement. As you discover new false positives, you update the guards. The agent shows how to add patterns without breaking existing categorization.
+**What you're learning:** The refinement loop in practice — you discovered "AMAZON RIVER CRUISE" is wrong, which means your verification caught it. You bring the failure; the agent brings the fix. This is the same loop from Lesson 2 applied to categorization: evidence criteria (what's miscategorized) come from you, implementation (the guard pattern) comes from the agent.
 
 ### Prompt 3: Extend Categories
 
@@ -360,4 +383,4 @@ Help me add these categories to tax-categorize.py:
 What false positives might I need to guard against?
 ```
 
-**What you're learning:** Proactive edge case thinking. The agent suggests guards you might not have considered -- like distinguishing IKEA furniture from IKEA food court. You're learning to anticipate problems before they happen.
+**What you're learning:** Shifting from reactive to proactive directing. Instead of waiting to discover a false positive, you ask the agent to surface them before they hit real data. "What false positives might I need to guard against?" is a director's question — you're leveraging the agent's pattern knowledge to stress-test your own domain decisions before they cause a problem.

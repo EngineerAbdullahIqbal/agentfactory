@@ -17,6 +17,10 @@ Track meaningful updates to the book. This page is automatically updated when do
 
 <!-- CHANGELOG_START - Do not remove this marker -->
 
+### 2026-02-23
+
+- feat: flashcards with FSRS v6 spaced repetition ([#761](https://github.com/panaversity/agentfactory/pull/761))
+
 ### 2026-02-18
 - docs: add thesis paragraph to Chapter 14 overview ([#753](https://github.com/panaversity/agentfactory/pull/753))
 

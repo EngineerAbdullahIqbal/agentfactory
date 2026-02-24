@@ -12,66 +12,59 @@
  * - Access in components via: useGlobalData()['docusaurus-summaries-plugin']
  */
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-
-/**
- * Normalize a file path to match Docusaurus doc ID format.
- * Docusaurus strips numeric prefixes like "01-", "02-" from directory and file names.
- *
- * Example:
- * - Input: "01-Introducing-AI-Driven-Development/01-ai-development-revolution/08-traditional-cs-education-gaps"
- * - Output: "Introducing-AI-Driven-Development/ai-development-revolution/traditional-cs-education-gaps"
- */
-function normalizeToDocId(filePath) {
-  return filePath
-    .split('/')
-    .map(segment => segment.replace(/^\d+-/, ''))
-    .join('/');
-}
+const fs = require("fs");
+const path = require("path");
+const glob = require("glob");
+const normalizeToDocId = require("../shared/normalizeToDocId");
 
 module.exports = function summariesPlugin(context, options) {
   const {
-    docsPath = 'docs', // Relative to siteDir
+    docsPath = "docs", // Relative to siteDir
   } = options;
 
   return {
-    name: 'docusaurus-summaries-plugin',
+    name: "docusaurus-summaries-plugin",
 
     async loadContent() {
       const docsDir = path.join(context.siteDir, docsPath);
       const summaries = {};
 
       // Find all .summary.md files
-      const summaryFiles = glob.sync('**/*.summary.md', {
+      const summaryFiles = glob.sync("**/*.summary.md", {
         cwd: docsDir,
         absolute: true,
       });
 
-      console.log(`[Summaries Plugin] Found ${summaryFiles.length} summary files`);
+      console.log(
+        `[Summaries Plugin] Found ${summaryFiles.length} summary files`,
+      );
 
       for (const summaryPath of summaryFiles) {
         try {
           // Read summary content
-          let content = fs.readFileSync(summaryPath, 'utf-8');
+          let content = fs.readFileSync(summaryPath, "utf-8");
 
           // Strip frontmatter from summary if present
-          content = content.replace(/^---[\s\S]*?---\n*/, '').trim();
+          content = content.replace(/^---[\s\S]*?---\n*/, "").trim();
 
           if (content) {
             // Get the doc path relative to docsDir (without .summary.md)
             const relativePath = path.relative(docsDir, summaryPath);
             // Convert lesson.summary.md -> lesson (the doc ID pattern)
-            const rawDocPath = relativePath.replace(/\.summary\.md$/, '');
+            const rawDocPath = relativePath.replace(/\.summary\.md$/, "");
             // Normalize to match Docusaurus doc ID (strips numeric prefixes)
             const docId = normalizeToDocId(rawDocPath);
 
             summaries[docId] = content;
-            console.log(`[Summaries Plugin] Loaded summary for: ${docId} (from ${rawDocPath})`);
+            console.log(
+              `[Summaries Plugin] Loaded summary for: ${docId} (from ${rawDocPath})`,
+            );
           }
         } catch (err) {
-          console.warn(`[Summaries Plugin] Failed to read ${summaryPath}:`, err.message);
+          console.warn(
+            `[Summaries Plugin] Failed to read ${summaryPath}:`,
+            err.message,
+          );
         }
       }
 
@@ -86,7 +79,9 @@ module.exports = function summariesPlugin(context, options) {
         summaries: content || {},
       });
 
-      console.log(`[Summaries Plugin] Set global data with ${Object.keys(content || {}).length} summaries`);
+      console.log(
+        `[Summaries Plugin] Set global data with ${Object.keys(content || {}).length} summaries`,
+      );
     },
   };
 };

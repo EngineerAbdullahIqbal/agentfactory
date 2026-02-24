@@ -1,0 +1,113 @@
+{
+  "run_id": "fixture-baseline-v1",
+  "description": "Golden fixture outputs used to bootstrap baseline scoring.",
+  "cases": {
+    "F01_explicit_dual_prompt_single_lesson": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f01-agent-memory-basics.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 2,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f01-agent-memory-basics.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 3,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f01-agent-memory-basics.flashcards.yaml"
+          ]
+        }
+      ]
+    },
+    "F02_implicit_request_single_lesson": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f02-incident-response-orchestration.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 2,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f02-incident-response-orchestration.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 3,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f02-incident-response-orchestration.flashcards.yaml"
+          ]
+        }
+      ]
+    },
+    "F03_negative_control_no_flashcards": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": []
+        },
+        {
+          "trial_id": 2,
+          "deck_paths": []
+        },
+        {
+          "trial_id": 3,
+          "deck_paths": []
+        }
+      ]
+    },
+    "F04_formula_heavy_single_lesson": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f04-formula-confidence-calibration.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 2,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f04-formula-confidence-calibration.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 3,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f04-formula-confidence-calibration.flashcards.yaml"
+          ]
+        }
+      ]
+    },
+    "F05_chapter_mode_two_lessons": {
+      "trials": [
+        {
+          "trial_id": 1,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f05-context-window-budgeting.flashcards.yaml",
+            "evals/flashcards/fixtures/outputs/f05-retrieval-strategy.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 2,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f05-context-window-budgeting.flashcards.yaml",
+            "evals/flashcards/fixtures/outputs/f05-retrieval-strategy.flashcards.yaml"
+          ]
+        },
+        {
+          "trial_id": 3,
+          "deck_paths": [
+            "evals/flashcards/fixtures/outputs/f05-context-window-budgeting.flashcards.yaml",
+            "evals/flashcards/fixtures/outputs/f05-retrieval-strategy.flashcards.yaml"
+          ]
+        }
+      ]
+    }
+  }
+}

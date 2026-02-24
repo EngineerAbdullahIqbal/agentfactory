@@ -1,0 +1,111 @@
+deck:
+  id: "why-ai-non-negotiable"
+  title: "Why AI Is Non-Negotiable"
+  description: "The honest debate about AI — eight core objections, why none justify stopping, and what it means for professionals deciding whether to build or wait."
+  tags: ["ai-debate", "objections", "capacity-to-serve", "workforce", "policy"]
+  version: 1
+
+cards:
+  - id: "why-ai-non-negotiable-001"
+    front: "According to the AI non-negotiable argument, what makes AI fundamentally different from every previous technological revolution?"
+    back: "AI augments cognition itself — reasoning, synthesis, creation, and decision-making."
+    tags: ["cognition", "paradigm-shift"]
+    difficulty: "basic"
+
+  - id: "why-ai-non-negotiable-002"
+    front: "No society has ever prospered by rejecting a foundational technology. Why does opting out of AI fail even when the risks are real?"
+    back: "Because AI development is global and unstoppable. Societies that opt out don't avoid the risks — they forfeit the ability to shape the technology, leaving that power to others who may not share their values."
+    tags: ["adoption", "historical-pattern"]
+    difficulty: "intermediate"
+    why: "Which historical technology adoption most closely parallels the AI dilemma?"
+
+  - id: "why-ai-non-negotiable-003"
+    front: "How many core objections do AI critics raise in the non-negotiable debate?"
+    back: "Eight core objections"
+    tags: ["objections", "debate-structure"]
+    difficulty: "basic"
+
+  - id: "why-ai-non-negotiable-004"
+    front: "What two dimensions of improvement does the non-negotiable argument distinguish when discussing technology's effect on work?"
+    back: "Cost to serve (same work, lower price) and capacity to serve (work at previously impossible scale)"
+    tags: ["capacity-to-serve", "economics"]
+    difficulty: "intermediate"
+
+  - id: "why-ai-non-negotiable-005"
+    front: "A rural village has never had a specialist doctor. How does AI change what's possible for that village's residents?"
+    back: "AI creates capacity to serve where none existed before — diagnostic tools can screen patients in villages that never had specialists, because AI doesn't require one doctor per location."
+    tags: ["capacity-to-serve", "healthcare"]
+    difficulty: "intermediate"
+    why: "What conditions must be met for AI diagnostics to actually reach underserved populations?"
+
+  - id: "why-ai-non-negotiable-006"
+    front: "In the AI workforce argument, what does 'AI is the enemy of mediocrity, not of excellence' mean for professionals?"
+    back: "Professionals who coast feel pressure; those who combine deep expertise with AI tools become indispensable."
+    tags: ["workforce", "mediocrity-vs-excellence"]
+    difficulty: "intermediate"
+
+  - id: "why-ai-non-negotiable-007"
+    front: "Why is the lack of visible consumer benefit from AI a failure of marketing, not of the technology itself?"
+    back: "Because real benefits already exist — patients diagnosed, students tutored, families saving money — but the industry sold AGI hype to investors instead of explaining practical value to citizens. Trust was sacrificed for fundraising."
+    tags: ["consumer-dividend", "marketing"]
+    difficulty: "intermediate"
+    why: "How should AI companies measure and communicate success differently?"
+
+  - id: "why-ai-non-negotiable-008"
+    front: "Which of the eight AI objections does the non-negotiable argument call 'the strongest'?"
+    back: "Surveillance and authoritarian control"
+    tags: ["surveillance", "objections"]
+    difficulty: "basic"
+
+  - id: "why-ai-non-negotiable-009"
+    front: "How do open-source AI models shift the balance of power away from surveillance-capable institutions?"
+    back: "They shatter the assumption that AI must be a corporate black box. When anyone can inspect, modify, and deploy a model, no single institution holds a monopoly on intelligence — making centralized surveillance harder to sustain."
+    tags: ["open-source", "surveillance", "countervailing-power"]
+    difficulty: "advanced"
+    why: "Under what conditions could open-source models actually enable surveillance rather than prevent it?"
+
+  - id: "why-ai-non-negotiable-010"
+    front: "In the geopolitical argument for AI, what three categories will nations fall into within a decade?"
+    back: "1. Exporters of AI intelligence\n2. Strategic partners with sovereign capability\n3. Digital vassal states"
+    tags: ["geopolitics", "sovereignty"]
+    difficulty: "basic"
+
+  - id: "why-ai-non-negotiable-011"
+    front: "Why does a moratorium on AI development adopted by safety-conscious democracies make the existential risk worse, not better?"
+    back: "Because AI development is globally distributed. A pause by responsible actors doesn't stop development — it relocates the frontier to actors with fewer safety commitments, less transparency, and no democratic accountability."
+    tags: ["existential-risk", "alignment", "moratorium"]
+    difficulty: "advanced"
+    why: "What alternative to a moratorium do serious alignment researchers actually advocate?"
+
+  - id: "why-ai-non-negotiable-012"
+    front: "What historical parallel does the non-negotiable argument draw to AI-generated misinformation flooding information channels?"
+    back: "The printing press — it also flooded the world with misinformation, and society responded by building verification institutions."
+    tags: ["misinformation", "historical-parallel"]
+    difficulty: "intermediate"
+
+  - id: "why-ai-non-negotiable-013"
+    front: "AI trained on biased data produces biased outputs. Why might an auditable biased algorithm actually be preferable to an unauditable biased human?"
+    back: "Because human bias is invisible, unrepeatable, and nearly impossible to audit. Algorithmic bias is logged, measurable, and fixable — you can retrain, stress-test across demographics, and mandate regulatory review in ways impossible with human decision-makers."
+    tags: ["bias", "accountability", "audit"]
+    difficulty: "advanced"
+    why: "What institutional safeguards must exist for algorithmic auditing to actually reduce bias?"
+
+  - id: "why-ai-non-negotiable-014"
+    front: "What single principle does the non-negotiable argument use to answer every one of the eight AI objections?"
+    back: "Build AI better — not build less of it."
+    tags: ["core-thesis", "objections"]
+    difficulty: "intermediate"
+
+  - id: "why-ai-non-negotiable-015"
+    front: "A mid-sized country decides to avoid AI development entirely, relying on foreign AI services for healthcare, education, and defense. What happens to its sovereignty over time?"
+    back: "It becomes a digital vassal state — critical systems run on foreign models, subject to foreign licensing terms and foreign policy leverage. Without sovereign AI capacity, the country cannot control its own economic future."
+    tags: ["geopolitics", "sovereignty", "vassal-state"]
+    difficulty: "advanced"
+    why: "How does open-source AI change the cost of achieving sovereign AI capacity?"
+
+  - id: "why-ai-non-negotiable-016"
+    front: "Why does the AI energy footprint argument support accelerating clean energy deployment rather than pausing AI?"
+    back: "Because AI itself is one of the most powerful tools for reducing environmental damage — optimizing cooling, grid management, precision agriculture, and climate modeling. Pausing AI doesn't solve the energy crisis; building AI on clean infrastructure addresses both problems."
+    tags: ["environment", "energy", "sustainability"]
+    difficulty: "intermediate"
+    why: "What happens if AI efficiency gains don't keep pace with deployment scale?"

@@ -175,46 +175,18 @@ Each command the agent ran serves a specific purpose:
 | `alias name='command'` | Creates a shortcut                 | Like a **nickname** for a command |
 | `source ~/.zshrc`      | Reloads shell config               | Load the **source** of settings   |
 
-## The Shebang Line
+## How It Works
 
-Your script starts with this line:
+Two things make this work:
 
-```python
-#!/usr/bin/env python3
-```
+**The shebang line** (`#!/usr/bin/env python3`) tells your OS to use Python when running the file directly. Without it, `chmod +x` alone isn't enough — the file needs to declare what runs it.
 
-This is called a **shebang** (the `#!` characters). It tells your operating system: "When someone runs this file directly, use `python3` to execute it."
+**Shell config files** (`.zshrc` or `.bashrc`) run every time you open a terminal. The agent added your alias there so it loads on startup. `source ~/.zshrc` reloads it immediately without closing the terminal.
 
-Without the shebang, your OS wouldn't know this is a Python script — it would try to run it as raw shell commands and fail. The `env` part finds `python3` wherever it's installed on your system, making the script portable across different setups.
-
-## Shell Config Files
-
-Every time you open a terminal, your shell reads a config file and runs whatever's inside it. Which file depends on your shell:
-
-```bash
-echo $SHELL
-```
-
-**Output (one of these):**
-
-```
-/bin/zsh     → Edit ~/.zshrc
-/bin/bash    → Edit ~/.bashrc
-```
-
-When the agent added `alias sum-expenses='python3 ~/tools/sum-expenses.py'` to your `.zshrc`, it put the alias where your shell will find it every single time you open a terminal. That's what makes it permanent — not magic, just a config file that runs on startup.
-
-`source ~/.zshrc` reloads that file in your current terminal so you don't have to close and reopen it.
-
-## The Pattern
-
-Whenever you build a script worth keeping:
-
-```
-"I want to use [script] from anywhere. Make it a permanent command."
-```
-
-The agent will follow the same steps: organize, make executable, alias, reload. This pattern works for any script in any language.
+| Your shell (`echo $SHELL`) | Config file |
+|---|---|
+| `/bin/zsh` | `~/.zshrc` |
+| `/bin/bash` | `~/.bashrc` |
 
 :::warning Checkpoint: Prove It's Permanent
 
@@ -231,7 +203,49 @@ The new terminal has no memory of what you did before. It only knows what's in y
 
 :::
 
-Your tools are installed, permanent, and available from any directory on your system. You can sum any CSV with a single pipe command. But summing is all they do — they can't tell the difference between a pharmacy visit and a grocery run. Your accountant doesn't want "Total: $4,215.52." They want medical, charitable, and business broken out separately. And buried in your bank data, Dr. Pepper is waiting to be misclassified as a doctor visit.
+## When It Breaks (And It Will)
+
+Six months from now, something will stop working. Maybe you updated your shell, maybe you reinstalled Python, maybe you moved your scripts to a new machine. The agent won't be there with the exact context of today's session. You need to know what to check.
+
+Here's the diagnostic chain — the three things that can break:
+
+```bash
+# 1. Does the alias exist in your current session?
+alias sum-expenses
+# If "not found" → your shell config didn't load it
+
+# 2. Does the script exist where the alias points?
+ls -la ~/tools/sum-expenses.py
+# If "not found" → the script was moved or deleted
+
+# 3. Can the script actually run?
+python3 ~/tools/sum-expenses.py <<< "10"
+# If error → Python version mismatch or missing shebang
+```
+
+| Symptom | Check | Fix |
+|---------|-------|-----|
+| "command not found" | `alias sum-expenses` | Re-add alias to shell config, then `source` |
+| "No such file" | `ls ~/tools/sum-expenses.py` | Script was moved — update the alias path |
+| "Permission denied" | `ls -la ~/tools/sum-expenses.py` | Re-run `chmod +x ~/tools/sum-expenses.py` |
+| Script errors on run | `python3 --version` | Python version changed — check shebang line |
+
+This is the difference between someone who set up a tool and someone who *owns* a tool. Setup is the agent's job. Diagnosis is yours — because when it breaks at 11pm before a deadline, you need to know the three places to look.
+
+:::tip Moving to a New Machine
+When you set up a new computer or reinstall your OS, you need two things: the `~/tools` directory (copy it over) and the aliases in your shell config (copy the relevant lines from `~/.zshrc` or `~/.bashrc`). That's it. Your entire toolkit travels in two copy operations.
+
+A more robust approach: keep `~/tools` as a git repository. Then setup on any new machine is:
+```bash
+git clone your-tools-repo ~/tools
+# Copy alias lines to ~/.zshrc
+source ~/.zshrc
+```
+:::
+
+The agent handled the tedious parts (checking your shell, finding the right config file, setting permissions). You made one design decision: "I want `cat file.csv | sum-expenses` to work from anywhere." Everything else followed from that. And now you know what to check when it breaks.
+
+The interesting question is what you DO with permanent tools. Right now, `sum-expenses` gives you one number: the total. Your accountant needs categories — medical, charitable, business — broken out separately. And your bank data is full of merchant names that look like they belong in one category but don't. (How confident are you that "DR PEPPER SNAPPLE" won't end up in your medical deductions?)
 
 ---
 
@@ -246,7 +260,7 @@ them and create aliases for each one. Show me the final state of
 my .zshrc aliases section.
 ```
 
-**What you're learning:** Batch tool installation. Instead of repeating the process three times, you describe the full scope and the agent handles the repetitive setup for multiple scripts at once. This is the "300 files vs 3 files" principle from Chapter 8 — when the task is repetitive, hand it to the agent.
+**What you're learning:** Scope, not steps. You describe the outcome (3 scripts, all available everywhere, aliases listed in .zshrc) and the agent handles every repetitive step without being told the sequence. You made one decision — "install all three" — and the agent inferred mkdir, chmod, alias, and source for each. That ratio (one director decision → many agent steps) is what makes agentic work efficient.
 
 ### Prompt 2: PATH vs Aliases
 
@@ -256,4 +270,15 @@ scripts directly by name without an alias? What are the pros and
 cons of PATH vs aliases?
 ```
 
-**What you're learning:** Advanced tool installation. PATH modification is how professional developers make tools available system-wide. The agent explains when aliases are sufficient and when modifying PATH is the better approach — and helps you understand the tradeoff between simplicity and flexibility.
+**What you're learning:** Asking the agent to surface a tradeoff so YOU can make the call. You don't need to know whether PATH or aliases is "right" — you need to know your constraints (how many scripts, portability, maintenance burden). The agent knows the mechanics of both. You know your situation. "What are the pros and cons?" is a director's question: gather the options, then decide.
+
+### Prompt 3: Diagnose a Broken Installation
+
+```
+I set up sum-expenses as an alias yesterday, but today in a new
+terminal it says "command not found." Walk me through how to
+diagnose this step by step. What are the most common causes?
+```
+
+**What you're learning:** The debug version of directing — observation is yours, diagnosis is the agent's. You supply the evidence: which terminal, which command, what error message, what you changed yesterday. The agent maps your observation to a cause in the installation chain (alias missing from config? config not sourced? script path moved?). Without your observation, the agent is guessing. Without the agent's knowledge of the chain, you're checking random things. Together, you find it fast.
+

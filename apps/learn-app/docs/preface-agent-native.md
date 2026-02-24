@@ -1323,3 +1323,9 @@ source: "Section: The Agent Factory Vision"
 }
 ]}
 />
+
+---
+
+## Flashcards Study Aid
+
+<Flashcards />

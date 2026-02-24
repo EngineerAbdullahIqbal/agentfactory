@@ -1,0 +1,59 @@
+deck:
+  id: "eval-f01-agent-memory-basics"
+  title: "Eval F01 Agent Memory Basics"
+  description: "Recall and understanding cards for memory layers, retrieval pipeline, and relevance weighting."
+  tags: ["evaluation", "agent-memory", "retrieval"]
+  version: 1
+
+cards:
+  - id: "eval-f01-agent-memory-basics-001"
+    front: "What are the three memory layers in an agent architecture?"
+    back: "Episodic memory, semantic memory, and procedural memory."
+    tags: ["memory-layers"]
+    difficulty: "basic"
+
+  - id: "eval-f01-agent-memory-basics-002"
+    front: "Why can skipping retrieval ranking hurt answer quality?"
+    back: "Without ranking, low-value memories can consume token budget and displace the most relevant evidence needed for accurate responses."
+    tags: ["retrieval-pipeline", "ranking"]
+    difficulty: "intermediate"
+    why: "How would you detect ranking failure from agent outputs?"
+
+  - id: "eval-f01-agent-memory-basics-003"
+    front: "Which retrieval step enforces token-budget limits?"
+    back: "Selection of top-ranked memories under the token budget."
+    tags: ["retrieval-pipeline"]
+    difficulty: "basic"
+
+  - id: "eval-f01-agent-memory-basics-004"
+    front: "How does procedural memory help troubleshooting workflows?"
+    back: "It preserves step order and operational guardrails, so the agent can execute investigations consistently instead of improvising fragile sequences."
+    tags: ["procedural-memory", "troubleshooting"]
+    difficulty: "intermediate"
+    why: "Why is step order especially important during incident debugging?"
+
+  - id: "eval-f01-agent-memory-basics-005"
+    front: "What weighted relevance formula is used in the lesson?"
+    back: "relevance = 0.6 * semantic_similarity + 0.4 * keyword_overlap"
+    tags: ["formula", "relevance"]
+    difficulty: "basic"
+
+  - id: "eval-f01-agent-memory-basics-006"
+    front: "A query has high semantic similarity but low keyword overlap. Why can it still be useful?"
+    back: "Semantic similarity captures conceptual alignment even when exact terms differ, which can surface relevant context that keyword matching alone misses."
+    tags: ["semantic-search", "relationships"]
+    difficulty: "advanced"
+    why: "How would you tune weights if exact IDs are frequently critical?"
+
+  - id: "eval-f01-agent-memory-basics-007"
+    front: "Which memory type stores stable facts and definitions?"
+    back: "Semantic memory stores stable facts and definitions."
+    tags: ["semantic-memory"]
+    difficulty: "basic"
+
+  - id: "eval-f01-agent-memory-basics-008"
+    front: "How should memory priority shift when the user asks about a specific prior decision?"
+    back: "Episodic memory should be prioritized because the question depends on a concrete past event rather than general knowledge."
+    tags: ["episodic-memory", "decision-context"]
+    difficulty: "intermediate"
+    why: "Why would semantic memory alone risk a wrong answer here?"

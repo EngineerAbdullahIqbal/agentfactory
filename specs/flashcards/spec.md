@@ -1,7 +1,7 @@
 # Flashcards Feature — Requirement Specification
 
-**Status**: v1.1 (Review Round 2 — All open questions resolved)
-**Date**: 2026-02-21
+**Status**: v2.0 (Post-implementation — reflects actual code on `flash-cards` branch)
+**Date**: 2026-02-23
 **Author**: MJS + Claude
 
 ---
@@ -68,13 +68,15 @@ The **Free Spaced Repetition Scheduler** (FSRS) is a machine-learning-based algo
 
 **Implementation**: [`ts-fsrs`](https://github.com/open-spaced-repetition/ts-fsrs) (v4.x) — TypeScript, MIT license, supports ESM/CJS/UMD, FSRS v6, minimal bundle (~15KB). Card states: New → Learning → Review → Relearning.
 
-### 2.2 Confidence-Based Repetition (CBR)
+### 2.2 Binary Confidence Rating (NotebookLM-Inspired)
 
-After revealing the answer, students rate: **Again | Hard | Good | Easy**
+After revealing the answer, students rate with two buttons: **Missed It | Got It**
 
-This isn't just scheduling input — it trains **metacognition**. Each self-assessment forces the student to evaluate "did I actually know this?" Over hundreds of repetitions, this calibration becomes increasingly precise ([Brainscape CBR research](https://www.brainscape.com/academy/confidence-based-repetition-definition/)).
+This is a deliberate simplification from the 4-button FSRS native rating (Again/Hard/Good/Easy). The UX research showed that 4 granularity levels plus interval previews ("1m", "6m", "1d", "2d") caused confusion — students spent cognitive effort on rating mechanics instead of recall. The NotebookLM flashcard UX uses a similar binary approach successfully.
 
-The FSRS algorithm uses these ratings directly — `Rating.Again`, `Rating.Hard`, `Rating.Good`, `Rating.Easy` — to compute optimal next review time.
+**Mapping to FSRS**: "Missed It" → `Rating.Again`, "Got It" → `Rating.Good`. This sacrifices scheduling precision (no Hard/Easy distinction) for a dramatically simpler UX. The FSRS algorithm still computes optimal intervals from these two signals — students who consistently miss a card will see it sooner.
+
+This trains **metacognition** — each self-assessment forces "did I actually know this?" — without the cognitive overhead of distinguishing Hard from Good ([Brainscape CBR research](https://www.brainscape.com/academy/confidence-based-repetition-definition/)).
 
 ### 2.3 Interleaving (Mixed Practice) — Phase 1
 
@@ -123,20 +125,26 @@ flashcards.yaml    →     <Flashcards />                  .apkg export
 
 ## 4. Scope
 
-### Phase 0 (MVP — this spec)
+### Phase 0 (MVP — IMPLEMENTED)
 
 - Flashcard YAML schema (with `deck.id`, `why` field, Zod validation)
 - Remark plugin: `libs/docusaurus/remark-flashcards/`
-- React `<Flashcards />` component with:
+- Shared utilities: `libs/docusaurus/shared/` (flashcardLoader, normalizeToDocId, siteConfig)
+- React `<Flashcards />` component (10 files) with:
+  - Unified single-mode UX (no separate browse/review — flip → rate → auto-advance)
   - Flip-card UI with CSS 3D animation
-  - FSRS v6 scheduling via `ts-fsrs`
-  - Confidence-based rating (Again/Hard/Good/Easy)
-  - Card state persistence (localStorage with wire format)
-  - Due card highlighting (which cards are due for review)
-  - Lesson mode (single lesson deck)
-- Anki `.apkg` export (build-time generation via `anki-apkg-export`, download button)
+  - FSRS v6 scheduling via `ts-fsrs` (silently under the hood)
+  - Binary rating: "Missed It" (`Rating.Again`) / "Got It" (`Rating.Good`)
+  - Card state persistence (localStorage with epoch-ms wire format)
+  - Session complete screen with missed/got-it counts + percentage + "Review Again"
+  - Map-based rated card tracking (prevents double-counting on re-rating)
+  - Shuffle (Fisher-Yates, reshuffles on each click)
+  - Download dropdown: "Print as PDF" + "Anki Deck (.apkg)"
+  - Code-split via `LazyFlashcards.tsx` (React.lazy + BrowserOnly for SSR safety)
+- Anki `.apkg` export (build-time generation via `anki-apkg-export`)
 - Pilot content: `thesis.md`, `why-ai-is-non-negotiable.md`, `preface-agent-native.md`
 - CI: Zod schema validation of all `.flashcards.yaml` files
+- 118 tests (111 component/hook + 7 remark plugin)
 
 ### Phase 1 (Scale + Interleaving)
 
@@ -427,59 +435,79 @@ When a student visits a lesson after deck content has been updated:
 
 Auto-discovers `{file-stem}.flashcards.yaml` in the same directory via remark plugin injection.
 
-### Component States
+### Component UX — Unified Single Mode (NotebookLM-Inspired)
 
-The component has two modes:
+The component has **one unified flow** — no separate browse/review modes. This was a deliberate simplification after UX testing showed a "Start Review" button created unnecessary friction.
 
-**Browse mode** (first visit or casual review):
+**Card view** (front — question visible):
 
 ```
 ┌──────────────────────────────────────────┐
-│  Flashcards: The Agent Factory Thesis    │
-│  12 cards · ~5 min                       │
 │                                          │
-│  ┌──────────────────────────────────┐    │
-│  │                                  │    │
-│  │   What is a Digital FTE?         │    │
-│  │                                  │    │
-│  │       Tap to reveal answer       │    │
-│  │                                  │    │
-│  └──────────────────────────────────┘    │
+│  ‹  ┌──────────────────────────────┐  ›  │
+│     │  [Copy]              Question│     │
+│     │                              │     │
+│     │  What is a Digital FTE?      │     │
+│     │                              │     │
+│     │         See answer           │     │
+│     └──────────────────────────────┘     │
 │                                          │
-│  [Prev]   [1 / 12]   [Next]             │
+│  ████████░░░░░░░░░░░░░  3 / 12 cards    │
 │                                          │
-│  ─── Actions ──────────────────────      │
-│  [Begin Spaced Review]                   │
-│  [Export to Anki (.apkg)]                │
+│  [⇅ Shuffle]              [⇓ Download]  │
 │                                          │
 └──────────────────────────────────────────┘
 ```
 
-**Review mode** (SRS active — after "Begin Spaced Review"):
+**Card view** (back — after flip, rating buttons appear):
 
 ```
 ┌──────────────────────────────────────────┐
-│  Review: The Agent Factory Thesis        │
-│  4 cards due · 8 reviewed · 12 total     │
 │                                          │
-│  ┌──────────────────────────────────┐    │
-│  │                                  │    │
-│  │   [Answer revealed]              │    │
-│  │                                  │    │
-│  │   Why: Why would a business pay  │    │
-│  │   10x more for an AI employee    │    │
-│  │   than an AI tool?               │    │
-│  │                                  │    │
-│  └──────────────────────────────────┘    │
+│  ‹  ┌──────────────────────────────┐  ›  │
+│     │  [Copy]               Answer │     │
+│     │                              │     │
+│     │  A role-based AI system...   │     │
+│     │                              │     │
+│     │  Why?                        │     │
+│     │  Why would removing any one  │     │
+│     │  of these make it less...    │     │
+│     └──────────────────────────────┘     │
 │                                          │
-│  How well did you know this?             │
-│  [Again]  [Hard]  [Good]  [Easy]         │
-│   <1m      6m      10m     4d            │
+│  ┌─────────────┐  ┌─────────────┐       │
+│  │ 2 Missed It │  │ 5 Got It    │       │
+│  └─────────────┘  └─────────────┘       │
 │                                          │
-│  ─── Progress ──────────────────────     │
-│  New: 4 · Learning: 3 · Review: 5       │
+│  ████████░░░░░░░░░░░░░  3 / 12 cards    │
+│                                          │
+│  [⇅ Shuffle]              [⇓ Download]  │
 │                                          │
 └──────────────────────────────────────────┘
+```
+
+**Session complete** (all cards rated):
+
+```
+┌──────────────────────────────────────────┐
+│                                          │
+│           Session Complete               │
+│                                          │
+│       2 missed        10 got it          │
+│                                          │
+│              83% correct                 │
+│                                          │
+│          [Review Again]                  │
+│                                          │
+└──────────────────────────────────────────┘
+```
+
+**Download dropdown** (on click):
+
+```
+┌───────────────┐
+│ Print as PDF  │
+│ Anki (.apkg)  │  ← Only shown if manifest has this deck
+└───────────────┘
 ```
 
 **No flashcards available** (YAML file does not exist for this lesson):
@@ -495,31 +523,37 @@ Component renders a subtle muted message when `cards={null}`. No error, no blank
 
 **Note**: This state ONLY occurs when no `.flashcards.yaml` file exists for the lesson (remark plugin injects `null`). If a `.flashcards.yaml` file exists but contains invalid YAML or fails schema validation, the **build fails** (see Section 9, step 6). Invalid content never reaches the component at runtime.
 
+### Session Tracking
+
+Rated cards are tracked via `Map<string, "missed" | "gotit">` keyed by card ID. This prevents double-counting if a user navigates back and re-rates a card — the Map entry is overwritten, not duplicated. Counts are derived from the Map values at render time.
+
+Session complete triggers when `ratedCards.size >= totalCards && isLastCard && !isFlipped`.
+
 ### Component Props
 
 ```typescript
 interface FlashcardsProps {
   /** Injected by remark plugin at build time. null = YAML not found. undefined = not injected. */
   cards?: FlashcardDeck | null;
-  /** Filter by tags */
-  tags?: string[];
-  /** Filter by max difficulty */
-  maxDifficulty?: "basic" | "intermediate" | "advanced";
-  /** Hide Anki export button */
-  hideExport?: boolean;
 }
 ```
 
+**Note**: The `tags`, `maxDifficulty`, and `hideExport` props from v1.1 spec were not implemented. The single `cards` prop covers Phase 0 needs. Additional filtering can be added in Phase 1 if needed.
+
 ### Interaction
 
-| Action                   | Browse Mode        | Review Mode                     | Non-gesture equivalent |
-| ------------------------ | ------------------ | ------------------------------- | ---------------------- |
-| Click/tap card           | Flip (show answer) | Flip (show answer + why prompt) | Space key              |
-| Arrow keys left/right    | Prev / Next        | N/A (SRS determines order)      | —                      |
-| Space                    | Flip card          | Flip card                       | Click/tap              |
-| 1/2/3/4 keys             | N/A                | Again / Hard / Good / Easy      | Click rating button    |
-| Swipe left/right (touch) | Prev / Next        | N/A                             | Arrow keys / buttons   |
-| Swipe up (touch)         | N/A                | Show answer                     | Space / tap            |
+| Action             | Behavior                                             | Notes                                                   |
+| ------------------ | ---------------------------------------------------- | ------------------------------------------------------- |
+| Click/tap card     | Flip front→back (show answer + why)                  | Also works back→front                                   |
+| Space key          | Flip front→back only                                 | Does NOT toggle back→front (prevents accidental unflip) |
+| Arrow left / right | Previous / Next card                                 | Also Up/Down arrows                                     |
+| 1 key              | "Missed It" (Rating.Again)                           | Only active when card is flipped                        |
+| 2 key              | "Got It" (Rating.Good)                               | Only active when card is flipped                        |
+| ‹ / › nav arrows   | Previous / Next card                                 | Disabled at boundaries                                  |
+| Shuffle button     | Fisher-Yates reshuffle, resets to card 1             | Each click produces new random order                    |
+| Download button    | Opens dropdown: "Print as PDF" / "Anki Deck (.apkg)" | Anki option hidden if no manifest entry                 |
+
+**Keyboard guards**: All keyboard handlers check `(e.target as HTMLElement).tagName` — they do NOT fire when the user is typing in INPUT, TEXTAREA, or SELECT elements (e.g., Docusaurus search bar).
 
 ### Accessibility Requirements
 
@@ -527,10 +561,10 @@ interface FlashcardsProps {
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | **`prefers-reduced-motion`** | Replace flip animation with instant swap (opacity crossfade).                                                                                   |
 | **Screen reader**            | Front and back are both in DOM. Use `aria-live="polite"` on card region. Back is `aria-hidden` until flipped, then front becomes `aria-hidden`. |
-| **Focus management**         | After flip: focus moves to first rating button. After rating: focus moves to next card.                                                         |
-| **Keyboard-only**            | All interactions have keyboard equivalents (see table above). Tab order: card → rating buttons → navigation.                                    |
+| **Keyboard-only**            | All interactions have keyboard equivalents (see table above). Space, 1/2, arrows.                                                               |
 | **ARIA roles**               | Card: `role="region" aria-label="Flashcard {n} of {total}"`. Rating buttons: `role="group" aria-label="Rate your recall"`.                      |
-| **Color independence**       | Rating buttons use color AND text labels. Don't rely on color alone.                                                                            |
+| **Color independence**       | Rating buttons use color AND text labels + running counts. "Missed It" (red) / "Got It" (green).                                                |
+| **Keyboard guards**          | Keyboard handlers skip INPUT/TEXTAREA/SELECT elements to avoid intercepting search/form typing.                                                 |
 
 ### Styling
 
@@ -539,8 +573,9 @@ interface FlashcardsProps {
 - Dark/light mode support
 - Responsive: full-width on mobile, max-width 600px on desktop
 - Flip: CSS `transform: rotateY(180deg)` with `perspective(1000px)` (disabled if `prefers-reduced-motion`)
-- Rating buttons: color-coded + text (Again=red, Hard=orange, Good=green, Easy=blue)
-- Next review interval shown below each rating button
+- Rating buttons: pill-shaped (border-radius: 999px), "Missed It" (red) / "Got It" (green) with running count badges
+- Atmospheric glow effect on card area
+- NotebookLM-inspired minimal aesthetic
 
 ### Performance Budgets
 
@@ -564,29 +599,17 @@ node scripts/generate-anki-decks.js
 
 **Output directory**: `apps/learn-app/static/flashcards/`
 
-**Build wiring**: CI/deploy workflows (`pr-check.yml:38`, `deploy.yml:69`) call `pnpm build` directly inside `apps/learn-app/`, bypassing Nx. So `project.json` `dependsOn` alone is insufficient. The generator must run in BOTH paths:
-
-1. **`build.sh` (CI/deploy path)** — add generation before Docusaurus build:
-
-```bash
-#!/bin/bash
-set -euo pipefail  # Fail fast — any command failure aborts build
-cd "$(dirname "$0")/.."
-
-# Generate Anki .apkg files + manifest before Docusaurus copies static/
-node scripts/generate-anki-decks.js
-
-NODE_VERSION=$(node -v | cut -d'.' -f1 | sed 's/v//')
-HEAP_SIZE="--max-old-space-size=4096"
-# ... rest of existing build.sh
-```
-
-**Note**: The existing `build.sh` lacks `set -e`. Adding `set -euo pipefail` is required — it ensures both the Anki generator AND the Docusaurus build fail the CI job on error.
-
-2. **`project.json` (Nx path)** — add for `pnpm nx build learn-app`:
+**Build wiring**: Both validation and Anki generation run via Nx `dependsOn` in `project.json`:
 
 ```json
-"generate-flashcards": {
+"validate-flashcards": {
+  "executor": "nx:run-commands",
+  "options": {
+    "command": "pnpm exec tsx scripts/validate-flashcards.ts",
+    "cwd": "apps/learn-app"
+  }
+},
+"generate-anki": {
   "executor": "nx:run-commands",
   "options": {
     "command": "node scripts/generate-anki-decks.js",
@@ -594,12 +617,14 @@ HEAP_SIZE="--max-old-space-size=4096"
   }
 },
 "build": {
-  "dependsOn": ["generate-flashcards"],
+  "dependsOn": ["validate-flashcards", "generate-anki"],
   // ... existing build config
 }
 ```
 
-This ensures `.apkg` files and `manifest.json` exist in `static/flashcards/` before Docusaurus copies static assets, regardless of whether the build is triggered via Nx or `pnpm build` directly.
+`build.sh` delegates to Nx — it does NOT duplicate the validate/generate calls (earlier review caught this double-execution bug). The `build.sh` script has `set -euo pipefail` for fail-fast behavior.
+
+This ensures `.apkg` files and `manifest.json` exist in `static/flashcards/` before Docusaurus copies static assets.
 
 ### Manifest
 
@@ -624,7 +649,7 @@ The build script generates a manifest alongside the `.apkg` files:
 }
 ```
 
-The `<Flashcards />` component uses `deck.id` to look up the `.apkg` path from the manifest. If no manifest entry exists for this deck, the export button is hidden (not an error).
+The `<Flashcards />` component fetches `/flashcards/manifest.json` at mount time and uses `deck.id` to look up the `.apkg` path. If the manifest fetch fails or no entry exists for this deck, the Anki option is hidden from the download dropdown (not an error). Fetch failures are logged via `console.warn`.
 
 ### Anki Deck Properties
 
@@ -639,17 +664,7 @@ The `<Flashcards />` component uses `deck.id` to look up the `.apkg` path from t
   1. If MDX frontmatter contains `slug:` → use it (e.g., `slug: /General-Agents-Foundations/general-agents/cross-vendor-landscape`)
   2. Else → `normalizeToDocId(filePath)` (strip `^\d+-` from each segment)
 
-  **Single source of truth for host**: Create `libs/docusaurus/shared/siteConstants.js` that reads `url` and `baseUrl` from `docusaurus.config.ts` at build time (using `tsx` to handle the TS import):
-
-  ```js
-  // libs/docusaurus/shared/siteConstants.js
-  // Extracted once, imported by generate-anki-decks.js and any future consumer.
-  // Uses tsx at build time to read the TS config.
-  const { url, baseUrl } = require("../../apps/learn-app/docusaurus.config.ts");
-  module.exports = { siteUrl: url, baseUrl };
-  ```
-
-  **If TS import proves problematic in CI**, fall back to env vars with defaults extracted from config at implementation time — but the implementation PR must validate they match `docusaurus.config.ts` values in a test.
+  **Single source of truth for host**: `libs/docusaurus/shared/siteConfig.js` exports `url` and `baseUrl` extracted from `docusaurus.config.ts`. Implemented as a simple CJS module with hardcoded values matching the config (avoids TSX build-time import complexity).
 
   The script composes: `${siteUrl}${baseUrl}docs/${route.replace(/^\/+/, "")}` (strip leading slashes from route to prevent `docs//...` double-slash).
 
@@ -745,42 +760,57 @@ export default {
 
 ### New Files
 
-| File                                                             | Purpose                                          |
-| ---------------------------------------------------------------- | ------------------------------------------------ |
-| `libs/docusaurus/remark-flashcards/index.js`                     | Remark plugin: YAML → prop injection             |
-| `libs/docusaurus/remark-flashcards/package.json`                 | Package config                                   |
-| `libs/docusaurus/remark-flashcards/project.json`                 | Nx project config                                |
-| `apps/learn-app/src/components/Flashcards/Flashcards.tsx`        | Main component (browse + review modes)           |
-| `apps/learn-app/src/components/Flashcards/FlashcardCard.tsx`     | Individual card with flip animation              |
-| `apps/learn-app/src/components/Flashcards/ReviewSession.tsx`     | SRS review mode with FSRS scheduling             |
-| `apps/learn-app/src/components/Flashcards/RatingButtons.tsx`     | Again/Hard/Good/Easy with interval display       |
-| `apps/learn-app/src/components/Flashcards/useFSRS.ts`            | Hook: ts-fsrs + localStorage + hydration codec   |
-| `apps/learn-app/src/components/Flashcards/Flashcards.module.css` | Styles + flip animation + rating colors          |
-| `apps/learn-app/src/components/Flashcards/index.ts`              | Barrel export                                    |
-| `apps/learn-app/src/components/Flashcards/types.ts`              | Shared types (PersistedDeckState, etc.)          |
-| `apps/learn-app/scripts/generate-anki-decks.js`                  | Build-time .apkg + manifest generator            |
-| `apps/learn-app/scripts/validate-flashcards.ts`                  | Zod schema validation for CI                     |
-| `apps/learn-app/docs/thesis.flashcards.yaml`                     | Pilot deck 1                                     |
-| `apps/learn-app/docs/preface-agent-native.flashcards.yaml`       | Pilot deck 2                                     |
-| `apps/learn-app/docs/why-ai-is-non-negotiable.flashcards.yaml`   | Pilot deck 3                                     |
-| `apps/learn-app/src/__tests__/flashcards.test.tsx`               | Component unit tests                             |
-| `apps/learn-app/src/__tests__/useFSRS.test.ts`                   | Hook + hydration codec tests                     |
-| `libs/docusaurus/shared/normalizeToDocId.js`                     | Shared utility: strip `^\d+-` from path segments |
+| File                                                                  | Purpose                                                   |
+| --------------------------------------------------------------------- | --------------------------------------------------------- |
+| `libs/docusaurus/remark-flashcards/index.js`                          | Remark plugin: YAML → prop injection                      |
+| `libs/docusaurus/remark-flashcards/package.json`                      | Package config                                            |
+| `libs/docusaurus/remark-flashcards/project.json`                      | Nx project config                                         |
+| `libs/docusaurus/remark-flashcards/vitest.config.js`                  | Plugin test config                                        |
+| `libs/docusaurus/remark-flashcards/__tests__/index.test.js`           | 7 tests for remark plugin                                 |
+| `libs/docusaurus/shared/flashcardLoader.js`                           | Shared YAML loader (loadAllDecks, loadDeckForFile)        |
+| `libs/docusaurus/shared/normalizeToDocId.js`                          | Shared utility: strip `^\d+-` from path segments          |
+| `libs/docusaurus/shared/siteConfig.js`                                | Shared site URL/baseUrl config                            |
+| `libs/docusaurus/shared/package.json`                                 | Package config for docusaurus-shared                      |
+| `libs/docusaurus/shared/project.json`                                 | Nx project config (visible to dependency graph)           |
+| `apps/learn-app/src/components/flashcards/Flashcards.tsx`             | Main component (unified mode, Map-based session tracking) |
+| `apps/learn-app/src/components/flashcards/FlashcardCard.tsx`          | Individual card with flip animation, copy, why section    |
+| `apps/learn-app/src/components/flashcards/ReviewSession.tsx`          | SRS review session (kept for future chapter mode)         |
+| `apps/learn-app/src/components/flashcards/RatingButtons.tsx`          | "Missed It" / "Got It" with running count badges          |
+| `apps/learn-app/src/components/flashcards/LazyFlashcards.tsx`         | Code-split wrapper: React.lazy + BrowserOnly (SSR safe)   |
+| `apps/learn-app/src/components/flashcards/useFSRS.ts`                 | Hook: ts-fsrs + localStorage + hydration codec            |
+| `apps/learn-app/src/components/flashcards/Flashcards.module.css`      | NotebookLM-inspired styles + flip animation               |
+| `apps/learn-app/src/components/flashcards/schema.ts`                  | Zod schema (CardSchema, DeckSchema) for CI validation     |
+| `apps/learn-app/src/components/flashcards/index.ts`                   | Barrel export                                             |
+| `apps/learn-app/src/components/flashcards/types.ts`                   | Shared types (PersistedDeckState, FlashcardDeck, etc.)    |
+| `apps/learn-app/scripts/generate-anki-decks.js`                       | Build-time .apkg + manifest generator                     |
+| `apps/learn-app/scripts/validate-flashcards.ts`                       | Zod schema validation + lint rules for CI                 |
+| `apps/learn-app/docs/thesis.flashcards.yaml`                          | Pilot deck 1                                              |
+| `apps/learn-app/docs/preface-agent-native.flashcards.yaml`            | Pilot deck 2                                              |
+| `apps/learn-app/docs/why-ai-is-non-negotiable.flashcards.yaml`        | Pilot deck 3                                              |
+| `apps/learn-app/src/__tests__/flashcards/Flashcards.test.tsx`         | Main component tests (5 tests)                            |
+| `apps/learn-app/src/__tests__/flashcards/FlashcardCard.test.tsx`      | Card component tests                                      |
+| `apps/learn-app/src/__tests__/flashcards/RatingButtons.test.tsx`      | Rating buttons tests (4 tests)                            |
+| `apps/learn-app/src/__tests__/flashcards/ReviewSession.test.tsx`      | Review session tests (3 tests)                            |
+| `apps/learn-app/src/__tests__/flashcards/useFSRS.test.ts`             | Hook tests (348 lines, comprehensive)                     |
+| `apps/learn-app/src/__tests__/flashcards/validate-flashcards.test.ts` | Validation tests (16 tests)                               |
+| `apps/learn-app/src/__tests__/flashcards/generate-anki-decks.test.ts` | Anki generation tests (12 tests)                          |
 
 ### Modified Files
 
-| File                                               | Change                                                                                                                       |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `apps/learn-app/src/theme/MDXComponents.tsx`       | Register `<Flashcards />`                                                                                                    |
-| `apps/learn-app/docusaurus.config.ts`              | Add `remark-flashcards` to remarkPlugins                                                                                     |
-| `apps/learn-app/package.json`                      | Add `ts-fsrs` runtime dep; `anki-apkg-export`, `zod`, `tsx` dev deps                                                         |
-| `apps/learn-app/project.json`                      | Add `generate-flashcards` and `validate-flashcards` Nx targets; add `generate-flashcards` to `build.dependsOn`               |
-| `apps/learn-app/scripts/build.sh`                  | Add `node scripts/generate-anki-decks.js` before Docusaurus build (CI/deploy path bypasses Nx)                               |
-| `libs/docusaurus/summaries-plugin/index.js`        | Import `normalizeToDocId` from `../shared/normalizeToDocId.js` instead of defining locally                                   |
-| `libs/docusaurus/chapter-manifest-plugin/index.js` | Import `normalizeToDocId` from `../shared/normalizeToDocId.js` instead of defining locally (eliminates duplicate at line 78) |
-| `apps/learn-app/docs/thesis.md`                    | Add `<Flashcards />` section                                                                                                 |
-| `apps/learn-app/docs/preface-agent-native.md`      | Add `<Flashcards />` section                                                                                                 |
-| `apps/learn-app/docs/why-ai-is-non-negotiable.md`  | Add `<Flashcards />` section                                                                                                 |
+| File                                               | Change                                                                                                      |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `apps/learn-app/src/theme/MDXComponents.tsx`       | Register `<Flashcards />` via `LazyFlashcards`                                                              |
+| `apps/learn-app/docusaurus.config.ts`              | Add `remark-flashcards` to remarkPlugins                                                                    |
+| `apps/learn-app/package.json`                      | Add `ts-fsrs`, `react-markdown` runtime; `anki-apkg-export`, `zod`, `tsx` dev deps                          |
+| `apps/learn-app/project.json`                      | Add `validate-flashcards` + `generate-anki` Nx targets; `build.dependsOn`; `docusaurus-shared` implicit dep |
+| `apps/learn-app/scripts/build.sh`                  | Delegates to nx dependsOn (removed duplicate validate/generate calls)                                       |
+| `apps/learn-app/.gitignore`                        | Add `static/flashcards/` (build-time generated)                                                             |
+| `libs/docusaurus/summaries-plugin/index.js`        | Import `normalizeToDocId` from `../shared/normalizeToDocId.js` instead of defining locally                  |
+| `libs/docusaurus/chapter-manifest-plugin/index.js` | Import `normalizeToDocId` from `../shared/normalizeToDocId.js` instead of defining locally                  |
+| `apps/learn-app/docs/thesis.md`                    | Add `<Flashcards />` section                                                                                |
+| `apps/learn-app/docs/preface-agent-native.md`      | Add `<Flashcards />` section                                                                                |
+| `apps/learn-app/docs/why-ai-is-non-negotiable.md`  | Add `<Flashcards />` section                                                                                |
+| `pnpm-lock.yaml`                                   | Updated with new dependencies                                                                               |
 
 ---
 
@@ -788,21 +818,23 @@ export default {
 
 ### Functional Requirements
 
-| ID        | Requirement                                                 | Acceptance Test                                                                                                                                                                                                                                            | Phase |
-| --------- | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| **FR-01** | Card flip animation shows front then back on interaction    | Unit: click triggers flip state. Visual: CSS 3D transform renders.                                                                                                                                                                                         | 0     |
-| **FR-02** | FSRS v6 schedules next review based on rating               | Unit: `useFSRS` returns correct `due` after each rating.                                                                                                                                                                                                   | 0     |
-| **FR-03** | Rating buttons (Again/Hard/Good/Easy) display next interval | Unit: interval text matches ts-fsrs output.                                                                                                                                                                                                                | 0     |
-| **FR-04** | Review mode shows only due cards                            | Unit: filter cards where `dueMs <= Date.now()`.                                                                                                                                                                                                            | 0     |
-| **FR-05** | State persists in localStorage across reloads               | Integration: write state, reload page, verify state restored.                                                                                                                                                                                              | 0     |
-| **FR-06** | Elaborative "Why?" shown on back for cards that have it     | Unit: `why` field renders when present, absent when not.                                                                                                                                                                                                   | 0     |
-| **FR-07** | Browse mode: prev/next navigation                           | Unit: arrow keys and buttons change current card index.                                                                                                                                                                                                    | 0     |
-| **FR-08** | Anki export downloads valid .apkg with correct SourceURL    | Integration: generate .apkg, import into Anki, verify fields. Unit tests for SourceURL: (a) non-slug lesson uses normalizeToDocId, (b) slug-override lesson uses frontmatter.slug, (c) no double-slash in output, (d) non-root baseUrl composes correctly. | 0     |
-| **FR-09** | Remark plugin injects YAML data at build time               | Integration: build succeeds, component receives `cards` prop.                                                                                                                                                                                              | 0     |
-| **FR-10** | Missing .flashcards.yaml shows graceful fallback            | Unit: `cards={null}` renders muted "not available" message.                                                                                                                                                                                                | 0     |
-| **FR-11** | State reconciliation handles added/removed cards            | Unit: new card ID → New state; removed card ID → ignored.                                                                                                                                                                                                  | 0     |
-| **FR-12** | Invalid .flashcards.yaml fails the build                    | Integration: malformed YAML → build exits non-zero with file path + error.                                                                                                                                                                                 | 0     |
-| **FR-13** | Interleaved chapter mode                                    | Integration: aggregate cards across lessons, shuffle.                                                                                                                                                                                                      | 1     |
+| ID        | Requirement                                              | Status | Acceptance Test                                                                                                           | Phase |
+| --------- | -------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------- | ----- |
+| **FR-01** | Card flip animation shows front then back on interaction | ✅     | Unit: click triggers flip state. Visual: CSS 3D transform renders. Reduced-motion fallback tested.                        | 0     |
+| **FR-02** | FSRS v6 schedules next review based on rating            | ✅     | Unit: `useFSRS` returns correct `due` after rating. 348-line test suite covers hydration, persistence, reconciliation.    | 0     |
+| **FR-03** | Binary rating: "Missed It" / "Got It"                    | ✅     | Unit: buttons fire Rating.Again / Rating.Good. Keyboard 1/2 tested. Counts displayed via Map-derived values.              | 0     |
+| **FR-04** | Session complete after rating all cards                  | ✅     | Map-based tracking: `ratedCards.size >= totalCards && isLastCard && !isFlipped`. Shows percentage + "Review Again".       | 0     |
+| **FR-05** | State persists in localStorage across reloads            | ✅     | Integration: write state, reload page, verify state restored. Quota exceeded and corruption recovery tested.              | 0     |
+| **FR-06** | Elaborative "Why?" shown on back for cards that have it  | ✅     | Unit: `why` field renders when present, absent when not.                                                                  | 0     |
+| **FR-07** | Prev/next navigation with keyboard and arrows            | ✅     | Unit: arrow keys and buttons change current card index. Keyboard guards skip INPUT/TEXTAREA/SELECT.                       | 0     |
+| **FR-08** | Anki export via download dropdown with correct SourceURL | ✅     | Unit tests for SourceURL: normalizeToDocId, frontmatter.slug, no double-slash. Download dropdown with PDF + Anki options. | 0     |
+| **FR-09** | Remark plugin injects YAML data at build time            | ✅     | 7 tests: null/error/valid/multiple-nodes/skip-existing paths. AST structure including estree nodes verified.              | 0     |
+| **FR-10** | Missing .flashcards.yaml shows graceful fallback         | ✅     | Unit: `cards={null}` renders muted "not available" message.                                                               | 0     |
+| **FR-11** | State reconciliation handles added/removed cards         | ✅     | Unit: new card ID → New state; removed card ID → tombstoned (kept in state but not shown).                                | 0     |
+| **FR-12** | Invalid .flashcards.yaml fails the build                 | ✅     | Remark plugin throws with file path context. Zod validation runs as nx lint dependency.                                   | 0     |
+| **FR-13** | Shuffle deck on demand                                   | ✅     | Fisher-Yates shuffle via counter increment. Resets to card 1 on each click.                                               | 0     |
+| **FR-14** | Code-split for SSR safety                                | ✅     | LazyFlashcards.tsx: React.lazy + BrowserOnly wrapper prevents SSR hydration errors.                                       | 0     |
+| **FR-15** | Interleaved chapter mode                                 | —      | Future: aggregate cards across lessons in a chapter.                                                                      | 1     |
 
 ### Non-Functional Requirements
 
@@ -815,60 +847,73 @@ export default {
 | **NFR-05** | Screen reader accessible          | `aria-live`, `aria-hidden` toggling, focus management                             | 0     |
 | **NFR-06** | localStorage budget               | < 600KB for full 85-chapter deployment                                            | 0     |
 | **NFR-07** | Build time impact                 | < 5s added to both `pnpm build` (CI path) and `pnpm nx build learn-app` (Nx path) | 0     |
-| **NFR-08** | Keyboard navigable                | All interactions via keyboard (Space, 1-4, arrows, Tab)                           | 0     |
+| **NFR-08** | Keyboard navigable                | All interactions via keyboard (Space, 1-2, arrows). Guards skip form elements.    | 0     |
 | **NFR-09** | Dark/light theme                  | Renders correctly in both Docusaurus themes                                       | 0     |
 
 ---
 
 ## 12. Success Criteria
 
-### Phase 0 — Done When:
+### Phase 0 — Implementation Status
 
-**Component (FR-01 through FR-07, FR-10, FR-11):**
+**Component (FR-01 through FR-07, FR-10, FR-11, FR-13, FR-14):**
 
-- [ ] `<Flashcards />` renders in all 3 pilot pages
-- [ ] Card flip animation works (CSS 3D, smooth, reduced-motion fallback)
-- [ ] Browse mode: prev/next, card counter, keyboard nav
-- [ ] Review mode: FSRS scheduling, due cards first, rating buttons with intervals
-- [ ] "Why?" prompt renders on applicable cards
-- [ ] State persists across reloads (wire format with epoch ms)
-- [ ] State reconciliation: new cards initialize, removed cards ignored
-- [ ] Missing YAML: graceful fallback message
+- [x] `<Flashcards />` renders in all 3 pilot pages
+- [x] Card flip animation works (CSS 3D, smooth, reduced-motion fallback)
+- [x] Unified mode: flip → "Missed It" / "Got It" → auto-advance → session complete
+- [x] Prev/next navigation with arrows and keyboard
+- [x] "Why?" prompt renders on applicable cards
+- [x] State persists across reloads (wire format with epoch ms)
+- [x] State reconciliation: new cards initialize, removed cards tombstoned
+- [x] Missing YAML: graceful fallback message
+- [x] Session complete with missed/got-it counts + percentage + "Review Again"
+- [x] Shuffle reshuffles deck on each click
+- [x] Download dropdown: "Print as PDF" + "Anki Deck (.apkg)"
+- [x] Code-split via LazyFlashcards (React.lazy + BrowserOnly)
 
 **Accessibility (NFR-04, NFR-05, NFR-08):**
 
-- [ ] `prefers-reduced-motion` disables flip animation
-- [ ] Screen reader: aria-live on card, aria-hidden toggling, focus management
-- [ ] Full keyboard navigation: Space, 1-4, arrows, Tab
-- [ ] Color + text labels on rating buttons
+- [x] `prefers-reduced-motion` disables flip animation
+- [x] Screen reader: aria-live on card, aria-hidden toggling
+- [x] Keyboard navigation: Space (flip front→back only), 1/2 (rate), arrows (navigate)
+- [x] Keyboard guards skip INPUT/TEXTAREA/SELECT elements
+- [x] Color + text labels + count badges on rating buttons
 
 **Anki export (FR-08):**
 
-- [ ] Export button downloads valid `.apkg` (manifest lookup)
-- [ ] Imports into Anki desktop + AnkiDroid without errors
-- [ ] Cards show front, back, why, tags, source URL
-- [ ] SourceURL correct for non-slug lesson (normalizeToDocId path)
-- [ ] SourceURL correct for slug-override lesson (frontmatter.slug path)
-- [ ] No double-slash in any generated SourceURL
-- [ ] Button hidden when no manifest entry exists
+- [x] Download dropdown with "Anki Deck (.apkg)" option (manifest lookup)
+- [x] SourceURL correct for non-slug lesson (normalizeToDocId path)
+- [x] SourceURL correct for slug-override lesson (frontmatter.slug path)
+- [x] No double-slash in any generated SourceURL
+- [x] Anki option hidden when no manifest entry exists
+- [ ] Manual verification: imports into Anki desktop + AnkiDroid without errors
+
+**Error handling (post-review fixes):**
+
+- [x] `writePersistedState` returns boolean, typed catch distinguishes quota vs other
+- [x] All 4 empty catch blocks replaced with console.warn/error logging
+- [x] Per-file error isolation in `loadAllDecks` (one bad YAML won't kill batch)
+- [x] `loadDeckForFile` wraps YAML parse errors with file path context
+- [x] `generate-anki-decks.js` validates deck structure before destructuring
+- [x] Clipboard API failure handled in FlashcardCard
 
 **Infrastructure (FR-09, FR-12, NFR-01, NFR-02, NFR-07):**
 
-- [ ] Remark plugin in `libs/docusaurus/remark-flashcards/` works
-- [ ] Invalid `.flashcards.yaml` (malformed YAML or schema violation) fails the build with file path + error in stderr
-- [ ] `pnpm build` (CI path via build.sh) succeeds, < 5s impact from flashcards
-- [ ] `pnpm nx build learn-app` (Nx path) succeeds, < 5s impact from flashcards
-- [ ] `build.sh` has `set -euo pipefail` — generator failure aborts build
-- [ ] No layout shift (CLS = 0)
-- [ ] JS budget < 20KB gzipped
-- [ ] CI validates all `.flashcards.yaml` via Zod
+- [x] Remark plugin in `libs/docusaurus/remark-flashcards/` works
+- [x] Invalid `.flashcards.yaml` fails the build with file path + error
+- [x] `build.sh` has `set -euo pipefail` — delegates to nx dependsOn (no duplicate calls)
+- [x] `docusaurus-shared` has project.json (visible to nx dependency graph)
+- [x] Node 20 LTS compatible (uses `fs.readdirSync` recursive, not `fs.globSync`)
+- [x] CI validates all `.flashcards.yaml` via Zod (lint target dependency)
 
-**Tests:**
+**Tests (118 total):**
 
-- [ ] Unit tests for `useFSRS` hook (hydration, dehydration, scheduling)
-- [ ] Unit tests for state reconciliation
-- [ ] Unit tests for component rendering (browse, review, fallback)
-- [ ] Tests run in existing Vitest setup (`src/__tests__/`)
+- [x] `useFSRS` hook: 348 lines — hydration, dehydration, scheduling, corruption recovery, concurrent decks (in `useFSRS.test.ts`)
+- [x] Component rendering: Flashcards (5), FlashcardCard, RatingButtons (4), ReviewSession (3)
+- [x] Validation: 16 tests (Zod schema + lint rules)
+- [x] Anki generation: 12 tests (helpers + manifest structure)
+- [x] Remark plugin: 7 tests (null/error/valid/multiple/skip paths)
+- [x] All tests in existing Vitest setup (`src/__tests__/flashcards/`)
 
 ---
 
@@ -909,38 +954,46 @@ export default {
 
 ## 14. Decisions Made
 
-| Decision               | Choice                                          | Rationale                                                                                                    |
-| ---------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Primary experience     | Embedded web component                          | Zero friction, full UX control, works on mobile web                                                          |
-| SRS algorithm          | FSRS v6 via `ts-fsrs` v4.x                      | Same as Anki, 99.6% better than SM-2, MIT, TypeScript                                                        |
-| State storage          | localStorage (epoch ms wire format)             | Zero server cost, serializable, acceptable loss on clear                                                     |
-| State key              | `flashcards:${deck.id}`                         | Immutable deck.id prevents key instability                                                                   |
-| Anki role              | Secondary export, hidden if no manifest         | Power users only — not the default experience                                                                |
-| Rating system          | Again/Hard/Good/Easy                            | FSRS native ratings, trains metacognition (CBR)                                                              |
-| Data format            | YAML co-located with lessons                    | Version-controlled, human-reviewable, CI-validatable via Zod                                                 |
-| `why` field            | Optional per card                               | Elaborative interrogation — deepens encoding                                                                 |
-| Remark plugin          | `libs/docusaurus/remark-flashcards/`            | Follows existing convention (remark-os-tabs, etc.)                                                           |
-| Component registration | `MDXComponents.tsx`                             | Matches Quiz, PDFViewer, etc.                                                                                |
-| Anki library           | `anki-apkg-export`                              | Pure JS, MIT, supports custom note types + stable GUIDs                                                      |
-| Deck sharing (Phase 2) | Content link only, NOT progress                 | No server = no cross-device progress sync                                                                    |
-| Invalid YAML at build  | Fail the build (not degrade)                    | Invalid flashcard files are authoring bugs, not runtime                                                      |
-| `deck.version` role    | Informational only (Phase 0)                    | Console log on change; no migration/reset. Future phases may gate on it                                      |
-| `src` prop in MVP      | Not included — strictly co-located              | Phase 0 only supports `{file-stem}.flashcards.yaml` discovery. External `src` deferred to Phase 1+ if needed |
-| SourceURL derivation   | frontmatter.slug first, else `normalizeToDocId` | Config-driven host (`siteConfig.url` + `baseUrl`), matches `chapter-manifest-plugin` precedence              |
+| Decision               | Choice                                                | Rationale                                                                                                                                                                               |
+| ---------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Primary experience     | Embedded web component                                | Zero friction, full UX control, works on mobile web                                                                                                                                     |
+| SRS algorithm          | FSRS v6 via `ts-fsrs` v4.x                            | Same as Anki, 99.6% better than SM-2, MIT, TypeScript                                                                                                                                   |
+| State storage          | localStorage (epoch ms wire format)                   | Zero server cost, serializable, acceptable loss on clear                                                                                                                                |
+| State key              | `flashcards:${deck.id}`                               | Immutable deck.id prevents key instability                                                                                                                                              |
+| Anki role              | Secondary in download dropdown, hidden if no manifest | Power users only — "Print as PDF" is the primary download option                                                                                                                        |
+| Rating system          | Binary: "Missed It" / "Got It"                        | **Changed from 4-button (Again/Hard/Good/Easy)** — 4 buttons + interval previews confused users. NotebookLM-style binary is simpler. Maps to Rating.Again / Rating.Good under the hood. |
+| UX mode                | Unified single mode (no browse/review split)          | **Changed from dual-mode** — separate "Start Review" button was unnecessary friction. Flip → rate → advance.                                                                            |
+| Session tracking       | `Map<string, "missed" \| "gotit">` by card ID         | Prevents double-counting if user navigates back and re-rates. Counts derived at render time.                                                                                            |
+| Data format            | YAML co-located with lessons                          | Version-controlled, human-reviewable, CI-validatable via Zod                                                                                                                            |
+| `why` field            | Optional per card                                     | Elaborative interrogation — deepens encoding                                                                                                                                            |
+| Remark plugin          | `libs/docusaurus/remark-flashcards/`                  | Follows existing convention (remark-os-tabs, etc.)                                                                                                                                      |
+| Component registration | `MDXComponents.tsx` via `LazyFlashcards`              | Code-split with React.lazy + BrowserOnly for SSR safety                                                                                                                                 |
+| Anki library           | `anki-apkg-export`                                    | Pure JS, MIT, supports custom note types + stable GUIDs                                                                                                                                 |
+| Shared utilities       | `libs/docusaurus/shared/`                             | DRY extraction: flashcardLoader, normalizeToDocId (was duplicated), siteConfig                                                                                                          |
+| Node compatibility     | `fs.readdirSync({ recursive: true })`                 | **Changed from `fs.globSync`** — globSync requires Node 22+; readdirSync recursive works on Node 18.17+ (LTS)                                                                           |
+| Build pipeline         | nx `dependsOn` only (not duplicated in build.sh)      | **Changed** — review caught double execution. build.sh delegates to nx.                                                                                                                 |
+| Error handling         | Typed catches, per-file isolation                     | **Post-review fix** — replaced 4 empty catch blocks with logging. writePersistedState returns boolean.                                                                                  |
+| Deck sharing (Phase 2) | Content link only, NOT progress                       | No server = no cross-device progress sync                                                                                                                                               |
+| Invalid YAML at build  | Fail the build (not degrade)                          | Invalid flashcard files are authoring bugs, not runtime                                                                                                                                 |
+| `deck.version` role    | Informational only (Phase 0)                          | Console log on change; no migration/reset. Future phases may gate on it                                                                                                                 |
+| SourceURL derivation   | frontmatter.slug first, else `normalizeToDocId`       | Config-driven host (`siteConfig.url` + `baseUrl`), matches `chapter-manifest-plugin` precedence                                                                                         |
 
 ## 15. How We're Better Than Basic Anki
 
-| Capability                | Basic Anki                    | Our Embedded Experience               |
-| ------------------------- | ----------------------------- | ------------------------------------- |
-| SRS algorithm             | FSRS v6                       | FSRS v6 (identical)                   |
-| Zero friction start       | Install app → import → review | Scroll down → start                   |
-| Elaborative interrogation | Not built-in                  | "Why?" prompts on complex cards       |
-| Context-aware             | Cards isolated from content   | Cards live inside the lesson          |
-| Interleaving (Phase 1)    | Manual deck management        | One-click chapter mode                |
-| Theming                   | Anki's UI                     | Our brand, dark/light, responsive     |
-| Mobile                    | Requires app install          | Works in browser now                  |
-| Content updates           | Must re-import .apkg          | Automatic on page load                |
-| Reduced-motion support    | Limited                       | Full `prefers-reduced-motion` support |
+| Capability                | Basic Anki                    | Our Embedded Experience                     |
+| ------------------------- | ----------------------------- | ------------------------------------------- |
+| SRS algorithm             | FSRS v6                       | FSRS v6 (identical, running silently)       |
+| Zero friction start       | Install app → import → review | Scroll down → flip → rate                   |
+| Rating UX                 | Again/Hard/Good/Easy          | "Missed It" / "Got It" (simpler, faster)    |
+| Session feedback          | Stats after review            | Running counts + session complete %         |
+| Elaborative interrogation | Not built-in                  | "Why?" prompts on complex cards             |
+| Context-aware             | Cards isolated from content   | Cards live inside the lesson                |
+| Interleaving (Phase 1)    | Manual deck management        | One-click chapter mode                      |
+| Theming                   | Anki's UI                     | NotebookLM-inspired, dark/light, responsive |
+| Mobile                    | Requires app install          | Works in browser now                        |
+| Content updates           | Must re-import .apkg          | Automatic on page load                      |
+| Download options          | .apkg only                    | PDF print + .apkg download dropdown         |
+| Reduced-motion support    | Limited                       | Full `prefers-reduced-motion` support       |
 
 ---
 

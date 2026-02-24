@@ -117,13 +117,24 @@ Date,Description,Amount
 2024-01-07,"AMAZON, INC.",-89.50
 ```
 
-You need to sum the Amount column. The third column. Simple, right?
+You need to sum the Amount column. Simple, right? Let's ask Claude Code.
 
-Look at line 4 carefully. The description is `"AMAZON, INC."` -- it contains a comma INSIDE the quoted field. If you split on commas, you'll get the wrong column.
+## The First Attempt (Where Claude Gets It Wrong)
 
-## Try the Obvious Approach First
+```
+You: I have a bank statement CSV with Date, Description, and Amount
+columns. Help me sum the Amount column.
+```
 
-Before asking Claude Code for help, try the obvious solution yourself. The Amount is the third column. awk splits on commas. This should work:
+```
+Claude Code: I'll extract and sum the third column.
+
+[Runs: awk -F',' '{if(NR>1) sum+=$3} END{print sum}' bank-statement.csv]
+
+-133.43
+```
+
+The number looks plausible. But something nags you. That Amazon order was $89.50 — shouldn't the total be higher? You dig into the raw data and spot it:
 
 ```bash
 echo '2024-01-07,"AMAZON, INC.",-89.50' | awk -F',' '{print $3}'
@@ -135,46 +146,39 @@ echo '2024-01-07,"AMAZON, INC.",-89.50' | awk -F',' '{print $3}'
  INC."
 ```
 
-That's garbage. Not `-89.50`. Not even close. awk split on EVERY comma, including the one inside the quoted field. It saw four fields:
+That's garbage. Not `-89.50`. Not even close. awk split on EVERY comma, including the one inside the quoted field `"AMAZON, INC."`. It saw four fields instead of three:
 
 1. `2024-01-07`
 2. `"AMAZON`
 3. ` INC."`
 4. `-89.50`
 
-Field 3 is ` INC."` — not the amount you wanted. And the worst part? No error. No warning. Just a wrong value that looks plausible enough to miss.
+Field 3 is ` INC."` — awk treated that as a number (silently becoming 0) and kept going. No error. No warning. Just a wrong total that looked reasonable enough to miss.
 
-Now try the rows WITHOUT quotes:
+Try the rows WITHOUT quotes and they work fine:
 
 ```bash
 echo '2024-01-02,Coffee Shop,-5.50' | awk -F',' '{print $3}'
 ```
 
-**Output:**
+**Output:** `-5.50` — correct. The trap only triggers on quoted fields. Some rows work, some silently fail. This is the worst kind of bug.
+
+**This is a real Claude Code moment.** The agent gave you a working command — it ran, produced output, exited cleanly. But it was wrong. The agent doesn't know your data has commas inside quoted fields unless you tell it. This is where YOUR verification catches what the agent missed.
+
+## Redirecting the Agent
+
+Now bring your discovery back to Claude Code:
 
 ```
--5.50
+You: The awk approach breaks on rows like "AMAZON, INC." where
+commas hide inside quoted fields. The total is wrong. I need a
+solution that handles CSV quoting correctly.
 ```
 
-That works. The trap only triggers on quoted fields — the rows where merchant names contain commas. Some rows work, some silently fail. This is the worst kind of bug.
-
-## The Conversation
-
-Now bring this problem to Claude Code. Show it what you found:
-
 ```
-You: I have a bank statement CSV. I tried using awk to get the Amount
-column but it breaks on rows like: 2024-01-07,"AMAZON, INC.",-89.50
-The comma inside the quotes throws off the column count. How do I
-sum the Amount column correctly?
-```
-
-Watch what happens:
-
-```
-Claude Code: That's the classic CSV quoting trap. awk treats every
-comma as a delimiter, even inside quotes. I'll use Python's csv
-module which understands quoting rules.
+Claude Code: You're right — awk treats every comma as a delimiter,
+even inside quotes. I'll use Python's csv module which understands
+quoting rules.
 
 [Creates: sum-expenses.py]
 
@@ -183,16 +187,17 @@ module which understands quoting rules.
 import sys
 import csv
 
-total = 0
+total = 0.0
 reader = csv.reader(sys.stdin)
 next(reader)  # Skip header row
 
 for row in reader:
     amount_str = row[2]  # Amount is 3rd column (index 2)
     amount = float(amount_str.replace('$', '').replace(',', ''))
-    total += abs(amount)
+    if amount < 0:  # Only sum debits (negative amounts)
+        total += abs(amount)
 
-print(f"Total: ${total:.2f}")
+print(f"Total expenses: ${total:.2f}")
 
 [Creates: test_bank.csv]
 Date,Description,Amount
@@ -205,7 +210,11 @@ Date,Description,Amount
 Total: $222.43
 ```
 
-Notice the collaboration. YOU discovered the awk failure by running it yourself. You brought that specific failure to the agent, which told it exactly what problem to solve. The agent knew about Python's csv module — something you might not have found on your own. You taught the agent about your data. The agent taught you about the right tool.
+Look at what just happened. The agent's first instinct (awk) was reasonable but wrong for your data. You caught the error through verification — the same pattern from Lesson 2. Then you told the agent *exactly what went wrong*, and it switched to the right tool. The agent knew about Python's csv module. You knew about your data. Neither could have solved this alone.
+
+:::tip Why Filter for Negatives?
+Notice the script checks `if amount < 0` before summing. Bank CSVs use negative numbers for debits (money out) and positive numbers for credits (refunds, deposits). Without this filter, a $500 refund would be counted as a $500 expense — silently inflating your total. This is the kind of bug that passes every test with expense-only data and breaks the moment real data includes a refund. If your bank uses a different convention (separate Debit/Credit columns, all positive amounts), tell Claude Code about your format and it will adapt the filter.
+:::
 
 **Python's csv module understands quoting rules.** It knows that commas inside quotes don't count as separators. The module handles:
 
@@ -245,7 +254,9 @@ Mentioning the edge case helps the agent choose robust solutions. Compare:
 
 The second prompt gives context that guides the agent to the right tool. You're teaching the agent about your data -- and the agent is teaching you which tools handle that data correctly.
 
-You have a script that handles real bank data — commas in quotes, dollar signs, the works. But right now it's stuck in whatever folder you built it in. Next month when you download a fresh bank statement into `~/finances/`, you'll have to remember the exact path to this script. If you have to remember where a tool lives, it's not a tool yet. (And once it IS a tool, you'll still need to teach it the difference between a pharmacy and a Dr. Pepper. That's coming.)
+Three lessons in, you've built two scripts that work and one habit that matters more than both of them: never trust output you haven't verified. That habit just saved you from a silent CSV parsing bug that the agent itself introduced.
+
+Your scripts work. But try this: close your terminal, open a new one, navigate to a different folder, and run `sum-expenses`. You'll get "command not found." The script exists somewhere on your machine, and you can't use it without remembering the exact path. That's not a tool — that's a file you'll lose.
 
 ---
 
@@ -258,7 +269,7 @@ Show me what happens when I try to parse "AMAZON, INC.",-89.50 with awk.
 Why does it give the wrong result? What does Python's csv module do differently?
 ```
 
-**What you're learning:** Deep understanding of the failure mode. The agent demonstrates the problem step by step, so you understand why csv modules exist -- not just that you should use them.
+**What you're learning:** How bringing a specific failure changes what the agent can give you. "Parse this CSV" produces a generic answer. "Parse this CSV — here's the line that breaks it" produces a targeted solution. The failure you discovered through verification is the input that directs the agent to the right tool. Your observation was the work; the agent's knowledge of csv module was the mechanism.
 
 ### Prompt 2: Extend the Parser
 
@@ -282,4 +293,4 @@ column is called 'Debit' instead of 'Amount' and there's a separate
 bank format?
 ```
 
-**What you're learning:** Adapting scripts to YOUR data. Every bank exports differently. The agent helps you customize the tool for your specific situation.
+**What you're learning:** The most common director move in data work — you specify your data's actual schema (column name: 'Debit', not 'Amount'; separate credits column), the agent adapts the implementation. You don't need to know how csv.DictReader works. You need to know what your data looks like. That knowledge is yours; the implementation is the agent's.

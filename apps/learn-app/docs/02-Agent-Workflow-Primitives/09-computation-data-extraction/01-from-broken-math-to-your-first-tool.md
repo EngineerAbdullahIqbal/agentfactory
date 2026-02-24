@@ -4,6 +4,7 @@ title: "From Broken Math to Your First Tool"
 chapter: 9
 lesson: 1
 duration_minutes: 30
+layer: L1
 description: "Discover why Bash arithmetic and LLM head-math both fail with decimals, then build your first reusable Python utility with Claude Code"
 keywords:
   [
@@ -94,59 +95,35 @@ teaching_guide:
 
 # From Broken Math to Your First Tool
 
-Somewhere in your bank statement, Dr. Pepper is hiding among your medical expenses. Not the drink — the merchant name. A simple keyword search for "DR" flags every Dr. Pepper purchase as a doctor visit, silently inflating your tax deductions. File that return and you've committed fraud by algorithm. By the end of this chapter, you'll build a tool that catches that trap and processes a full year of bank statements into an accountant-ready report with one command.
+Somewhere in your bank statement, Dr. Pepper is hiding among your medical expenses. Not the drink — the merchant name. A simple keyword search for "DR" flags every Dr. Pepper purchase as a doctor visit, silently inflating your tax deductions. File that return and you've committed fraud by algorithm. By the end of this chapter, you'll build a tool that catches exactly that trap — processing a full year of bank statements into an accountant-ready report with one command.
+
+That's what makes computation errors dangerous: they don't look like errors. The total is plausible. You copy it into a spreadsheet, nobody questions it — until someone does the math by hand six months later and the numbers don't add up.
 
 But first, you need to solve a more fundamental problem: your terminal can't even add decimals.
 
 ## Watch Bash Fail
 
-You want to split a restaurant bill. Three friends, total $47.50. Open your terminal and try:
+Try this in your terminal:
 
 ```bash
 echo $((47.50 / 3))
 ```
 
-**Output:**
-
 ```
-bash: 47.50 / 3: syntax error: invalid arithmetic operator (error token is ".50 / 3")
+bash: 47.50 / 3: syntax error: invalid arithmetic operator
 ```
 
-Bash chokes on the decimal point. Try something simpler:
-
-```bash
-echo $((1.2 + 2.3))
-```
-
-**Output:**
-
-```
-bash: 1.2 + 2.3: syntax error: invalid arithmetic operator (error token is ".2 + 2.3")
-```
-
-Now try with whole numbers:
-
-```bash
-echo $((12 + 23))
-```
-
-**Output:**
-
-```
-35
-```
-
-That works. The difference? No decimal points. Bash's `$((...))` syntax does **integer-only** arithmetic.
-
-| Works in Bash               | Fails in Bash                  |
-| --------------------------- | ------------------------------ |
-| `$((5 + 3))` = 8           | `$((5.5 + 3.5))` = Error      |
-| `$((100 - 25))` = 75       | `$((100.00 - 25.00))` = Error |
-| `$((10 / 3))` = 3 (wrong!) | `$((10.0 / 3.0))` = Error     |
-
-Notice that last row. Even when Bash doesn't error, it **truncates**. `10 / 3` returns `3`, not `3.333...`. For financial calculations, that silent data loss is worse than a crash.
+Bash's `$((...))` does **integer-only** arithmetic. Any decimal point is a syntax error. And when it doesn't error, it's worse — `$((10 / 3))` silently returns `3`, not `3.333...`. No warning. Just wrong.
 
 Every financial calculation involves decimals. Bash simply cannot do them.
+
+### The Stock Exchange That Lost Half Its Value
+
+This isn't academic. In 1982, the Vancouver Stock Exchange launched a new index at 1000.000. Their software truncated to three decimal places instead of rounding — the same thing Bash does with `$((10 / 3))`. Every time a stock price changed (roughly 2,800 times per day), a tiny sliver of value vanished. No errors. No warnings. After 22 months, the index read approximately 524 — while its mathematically correct value should have been around 1009. They'd silently lost nearly half the index to truncation.
+
+When they found the bug and corrected it over a weekend in November 1983, the index jumped from 524 to over 1098 overnight. The market hadn't crashed. The math had just been wrong — silently, invisibly, for almost two years.
+
+That was truncation at three decimal places. Your Bash terminal does worse: `$((10 / 3))` truncates to *zero* decimal places.
 
 ## The Head Math Trap
 
@@ -169,6 +146,14 @@ The rule for this chapter:
 
 You have a file of expenses, one decimal number per line. You need the total. Bash errors out. LLM head-math hallucinates. You need code that executes.
 
+:::tip Challenge: 60 Seconds on the Clock
+Before asking Claude for help, try to solve this yourself. You need to sum decimal numbers in the terminal. Bash's `$((...))` won't work. Can you find another way?
+
+Hint: Try `echo "1.2 + 2.3" | bc` or `awk 'BEGIN{print 1.2 + 2.3}'`. What do you discover?
+
+Both work for one-off calculations. But can you make either of them read a file of numbers and sum all of them? That's where the problem gets interesting — and where having an agent build you a proper tool starts to make sense.
+:::
+
 Open Claude Code and describe your problem:
 
 ```
@@ -188,13 +173,13 @@ standard input and sums them.
 # sum.py - Sum numbers from stdin
 import sys
 
-total = 0
+total = 0.0
 for line in sys.stdin:
     line = line.strip()
     if line:  # Skip empty lines
         total += float(line)
 
-print(f"Total: {total}")
+print(f"Total: {total:.2f}")
 
 Let me test it:
 
@@ -207,34 +192,27 @@ In seconds, you have a reusable tool. The agent didn't calculate in its head (wh
 
 ### What the Agent Built
 
-Here's a quick walkthrough of sum.py:
+The key lines in sum.py:
 
-- **`#!/usr/bin/env python3`** -- tells the OS to run this with Python 3
 - **`for line in sys.stdin`** -- reads piped input one line at a time
-- **`float(line)`** -- converts text like `"127.89"` to an actual decimal number
-- **`total += float(line)`** -- adds each number to a running total
-- **`print(f"Total: {total}")`** -- outputs the result
+- **`float(line)`** -- converts text like `"127.89"` to a decimal Python can compute with
+- **`print(f"Total: {total:.2f}")`** -- outputs the result, rounded to 2 decimal places
 
-The key insight is `sys.stdin`. When you pipe data into a Python script, `sys.stdin` is where that data arrives. Your script doesn't know or care where the data came from -- a file, another command, or typed input. It just reads lines and sums them.
+`sys.stdin` is where piped data arrives. Your script doesn't know or care where the data came from — a file, another command, or typed input. It just reads lines and sums them.
 
 ### How the Pipe Connects Everything
 
-When you run `cat expenses.txt | python sum.py`, here's the data flow:
+When you run `cat expenses.txt | python sum.py`, the pipe takes whatever `cat` outputs and feeds it directly into your script's `sys.stdin`. Small tools, chained together. Every script in this chapter follows that design — it's the Unix philosophy: programs that do one thing well and compose through pipes.
 
-```
-+-----------------+     +-----------------+
-|      cat        |     |    sum.py       |
-|                 |---->|                 |
-|  reads file     |  |  |  reads stdin    |
-|  outputs text   |  |  |  calculates sum |
-|                 |  |  |  prints total   |
-+-----------------+  |  +-----------------+
-                     |
-        pipe (|) ----+
-   redirects stdout --> stdin
-```
+### And Sometimes a Script Is the Wrong Tool
 
-The pipe takes whatever `cat` outputs and feeds it directly into your script. Small tools, chained together, solving big problems. That's the Unix philosophy you'll use throughout this chapter.
+You have three receipts from lunch and need to submit a reimbursement. Do you build a script? No. You ask the AI in chat, it adds three numbers, and even if it's off by a cent, nobody cares. The script would take longer to build than the task takes to finish.
+
+Same logic applies to one-off calculations on data you'll never see again. A quick sanity check on a number your coworker sent you. A unit conversion you need once. If you'll run the calculation once and delete the data, prompting directly is the right call.
+
+And if the answer is easy to verify by eye — you can glance at the output and know it's right — the overhead of a script isn't earning its keep. Scripts pay for themselves when the data is too large or too complex to sanity-check manually.
+
+The rule: if the calculation is repeated, financial, or where being wrong has consequences, build the script and verify it. If it's one-time and low-stakes, prompt directly.
 
 :::warning Stop. Do This Now.
 Open Claude Code. Ask it to build sum.py. Run it on three numbers. Don't proceed to Lesson 2 until you see output in your terminal.
@@ -252,27 +230,41 @@ echo -e "100.50\n25.75\n14.25" | python3 sum.py
 Expected output: `Total: 140.5`
 :::
 
-## The Prompt Pattern
+## Prompt Quality Determines Tool Quality
 
-Here's the pattern you just used:
+The prompt you gave Claude Code was specific in two ways: it named the data format (decimal numbers, one per line) and it specified *stdin*. That specificity drove the quality of the result. The same underlying problem — sum decimal numbers — produces three different outcomes depending on how you ask:
 
-```
-"I have [data problem]. Build me a script that [reads from stdin]
-and [produces output]."
-```
+| What you said | What the agent returned | Pipeable? | Works next month? |
+|---|---|---|---|
+| "What's 127.89 + 45.50 + 12.99?" | The answer: 186.38 | No | Gone after the chat |
+| "Write Python to sum 127.89, 45.50, 12.99" | A script for those specific numbers | No | Only those three |
+| "Build a script that reads numbers from stdin and prints the total" | `sum.py` — reads any input, composes with pipes | Yes | Works on any data, forever |
 
-This works because you describe the **data problem**, not the implementation. The agent chooses Python. You specify **stdin/stdout**, which signals you want a composable Unix tool. The agent builds something **reusable**, not a one-time answer.
+The difference between row 1 and row 3 isn't effort — all three prompts take the same time to write. The difference is **what you're asking the agent to build**. Row 1 asks for an answer. Row 3 asks for a tool.
 
-| Your Problem     | The Prompt                                                                  |
-| ---------------- | --------------------------------------------------------------------------- |
-| Sum numbers      | "Build me a script that reads numbers from stdin and prints their sum"      |
-| Calculate average| "Build me a script that reads numbers from stdin and prints their average"  |
-| Find maximum     | "Build me a script that reads numbers from stdin and prints the largest one"|
-| Count lines      | "Build me a script that reads from stdin and counts how many lines"         |
+Two phrases made row 3 work:
+- **"reads from stdin"** — signals you want something pipeable, not a hardcoded script
+- **"prints the total"** — signals stdout, so the output can flow into the next command
 
-The structure stays the same. The calculation changes.
+This is the director's move: you describe the interface (data comes in via stdin, result goes out via stdout), the agent handles implementation. You never had to choose Python. You never had to know what `sys.stdin` is. You specified the outcome; the agent handled the how.
 
-You have a working script. It produced a number. But here's the uncomfortable question: how do you know that number is right? The script ran without errors — exit code 0, no red text. Does that mean it's correct? In the next lesson, you'll discover why "it ran" and "it's right" are dangerously different things.
+Throughout this chapter, every time you build a tool, you're making the same two decisions: what does the data look like coming in, and what does the result look like going out. Get those two things right and the agent builds something composable. Miss either one and you get a one-time answer you'll throw away.
+
+## What You Actually Did
+
+Step back and notice the strategy you just used, because you'll use it for the rest of this chapter:
+
+1. **You described the data problem** — "I have numbers, I need a sum" — not the implementation. The agent chose Python. You didn't have to.
+2. **You specified stdin/stdout** — which told the agent you wanted a composable Unix tool, not a one-time answer.
+3. **You got a reusable script** — `sum.py` works on ANY file of numbers, not just the one you tested with.
+
+This same approach works for any calculation: averages, maximums, counts, filters. Describe the data problem. Specify stdin. Get a tool.
+
+Your script ran. It produced a number: 186.38. Exit code 0 — no errors, no red text. Everything looks fine.
+
+But remember the Vancouver Stock Exchange. Their software ran without errors too. For 22 months. And the number it produced was half of what it should have been. Nobody noticed because the output *looked reasonable*.
+
+How do you know 186.38 is right?
 
 ---
 

@@ -8,6 +8,12 @@ description: "Build Unix-styled Python utilities that process bank statements an
 
 > "If it's math, it belongs in a script. Period."
 
+But here's what this chapter is _actually_ about: it's not about tax prep. Tax prep is the training ground. The real skill is knowing **when to trust AI computation and when to demand verified code** — when a quick prompt gives you a reliable answer, and when you need a tested script with known inputs and expected outputs. Every pattern you learn here transfers to invoice processing, payroll calculations, server log analysis, expense reports, and any domain where a wrong number has consequences.
+
+Here's the rule of thumb you'll internalize: if the answer is one-time and low-stakes, prompt directly. If it's repeated, financial, or where being wrong costs you money or credibility, build the script and verify it. By chapter end, that won't be a rule you recite — it'll be an instinct you act on.
+
+The underlying pattern — **describe the data problem, the agent writes executable code, you provide the verification criteria** — is the workflow primitive this chapter installs. You'll recognize it in invoice processing, log analysis, payroll scripts, and every domain where a wrong number has consequences. The tools change. The primitive doesn't.
+
 ## What You'll Build
 
 By the end of this chapter, you'll have a personal toolbox of reusable utilities:
@@ -69,6 +75,50 @@ If you see a version number (3.x), you're ready. If not, install Python from [py
 - **Ubuntu/Debian**: `sudo apt install python3`
 - **Windows**: Download from python.org and check "Add to PATH" during installation
 
+:::note About the Claude Code Conversations
+The conversations shown in this chapter are **illustrative** — they show the flow of interaction and the kind of output you should expect. Your actual Claude Code sessions will look different: the agent may choose different variable names, suggest alternative approaches, or structure its response differently. That's normal. Focus on the **pattern** (what you asked for and why), not the exact words the agent used.
+:::
+
+## Sample Data
+
+Use this bank statement CSV throughout the chapter. Save it as `~/finances/sample-2025.csv`:
+
+```csv
+Date,Description,Amount
+2025-01-02,STARBUCKS #1234,-5.75
+2025-01-03,TRADER JOES #567,-87.32
+2025-01-04,CVS/PHARMACY #1234,-45.67
+2025-01-05,SHELL OIL STATION,-52.10
+2025-01-06,NETFLIX SUBSCRIPTION,-15.99
+2025-01-07,"AMAZON, INC.",-89.50
+2025-01-08,WALGREENS #5678,-23.45
+2025-01-09,DR MARTINEZ MEDICAL,-150.00
+2025-01-10,WHOLE FOODS MKT,-62.18
+2025-01-11,DR PEPPER SNAPPLE,-4.99
+2025-01-12,UNITED WAY DONATION,-100.00
+2025-01-13,SPOTIFY PREMIUM,-10.99
+2025-01-14,OFFICE DEPOT #901,-89.50
+2025-01-15,CVSMITH CONSULTING,-200.00
+2025-01-16,TARGET STORE #442,-34.56
+2025-01-17,RED CROSS DONATION,-50.00
+2025-01-18,UBER TRIP,-18.75
+2025-01-19,STAPLES #2233,-42.30
+2025-01-20,CHEVRON GAS,-48.90
+2025-01-21,PHARMACY RX PLUS,-67.80
+2025-01-22,APPLE.COM/BILL,-9.99
+2025-01-23,COSTCO WHSE #1123,-156.42
+2025-01-24,ZOOM VIDEO COMM,-14.99
+2025-01-25,DEPOSIT - PAYROLL,3200.00
+2025-01-26,ATM WITHDRAWAL,-200.00
+2025-01-27,VENMO PAYMENT,-35.00
+2025-01-28,GOODWILL DONATION,-75.00
+2025-01-29,HULU SUBSCRIPTION,-17.99
+2025-01-30,PET SMART #890,-42.15
+2025-01-31,INTEREST PAYMENT,2.47
+```
+
+This data includes traps you'll learn to catch: commas inside quoted fields (`"AMAZON, INC."`), false positives (`DR PEPPER`, `CVSMITH`), credits mixed with debits (`DEPOSIT`, `INTEREST`), and enough rows that you can't verify totals by eye. Your hand-calculated expense total (all 28 debits, excluding the two credits): **$1,751.29**.
+
 ## Chapter Structure
 
 | Lesson | Title                                | Duration | Key Skill                              |
@@ -95,6 +145,8 @@ This chapter applies the principles you learned in Chapter 6:
 | **P5: Persisting State in Files**       | Aliases and scripts as persistent tools              |
 | **P6: Constraints and Safety**          | Test data prevents production errors                 |
 | **P7: Observability**                   | Exit codes make failures visible                     |
+
+You won't memorize these as rules. You'll internalize them as habits — and then recognize them in every data workflow you run, not just tax prep.
 
 ## The Journey
 
