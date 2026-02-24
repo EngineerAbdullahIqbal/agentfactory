@@ -202,6 +202,19 @@ You will learn the full definition in a later chapter. For now, the important po
 When you ask an AI assistant to write Python code, the result is not guaranteed to be clean. AI-generated code often includes extra imports, unused stored values, and inconsistent formatting -- exactly the problems ruff was built to catch. The AI is not wrong on purpose; it optimizes for working code, not clean code. That is why you never trust generated code by reading it. You run `uv run ruff check .` and let the tool verify what your eyes cannot. The faster code gets generated, the more you need automated verification.
 :::
 
+**Spot the Bug**: James asks an AI assistant to write a utility function. The AI generates this code:
+
+```python static
+import json
+import re
+
+def clean_title(title):
+    cleaned = re.sub(r'[^\w\s]', '', title)
+    return cleaned.strip()
+```
+
+James runs `uv run ruff check .` and sees zero errors. But there is still a problem that ruff found silently fixable. Look at the imports: which one is never used in the function body? What ruff rule code would flag it? (Hint: check the rule prefix table above.)
+
 ### Step 3: Auto-fix With --fix
 
 Ruff can fix many issues automatically. Run:

@@ -291,6 +291,17 @@ Each error points to the exact line, the exact mismatch, and the exact rule that
 
 **Quick Check**: Two of the three errors use the rule `reportArgumentType` and one uses `reportAssignmentType`. Based on the rule names alone, what is the difference — is `reportArgumentType` about data being passed in, or data being returned?
 
+**Spot the Bug**: An AI assistant generates the following typed code for James:
+
+```python static
+def get_discount(price: float, percent: int) -> float:
+    return price * (percent / 100)
+
+final_price: str = get_discount(49.99, 20)
+```
+
+Without running pyright, read the type labels and find the type mismatch. Which line has the bug? What type does `get_discount` return, and what type does `final_price` declare? What pyright rule would catch this?
+
 ### Step 4: Fix the Type Errors
 
 Replace the buggy calls with corrected versions:
