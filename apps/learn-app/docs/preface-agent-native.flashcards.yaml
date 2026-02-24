@@ -91,7 +91,7 @@ cards:
 
   - id: "preface-agent-native-014"
     front: "According to the preface, what percentage of AI agent failures stem from organizational issues rather than technical ones?"
-    back: "80%"
+    back: "80% — organizational, not technical"
     tags: ["pitfalls", "deployment", "change-management"]
     difficulty: "intermediate"
 
