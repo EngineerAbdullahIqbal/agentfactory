@@ -3,9 +3,11 @@ deck:
   title: "The Agent Factory Thesis"
   description: "Core concepts from the Agent Factory thesis — the paradigm shift from SaaS tools to AI employees that deliver outcomes at scale."
   tags: ["agent-factory", "thesis", "paradigm-shift", "ai-employees"]
-  version: 1
+  version: 2
 
 cards:
+  # --- Paradigm Shift (table decomposition + discrimination cards) ---
+
   - id: "thesis-agent-factory-001"
     front: "In the Agent Factory thesis, what are AI employees?"
     back: "Role-based systems that compose tools, spawn specialist agents, and deliver outcomes at scale."
@@ -13,151 +15,198 @@ cards:
     difficulty: "basic"
 
   - id: "thesis-agent-factory-002"
-    front: "A SaaS company charges per seat. Why does the Agent Factory model charge per outcome instead?"
-    back: "Because buyers want results, not access. Per-outcome pricing aligns the seller's incentive with the buyer's goal — you only pay when the work is verifiably done."
+    front: "SaaS era product: software tools. Agent Factory era product?"
+    back: "AI employees."
+    tags: ["paradigm-shift", "discrimination"]
+    difficulty: "basic"
+
+  - id: "thesis-agent-factory-003"
+    front: "SaaS era value metric: per-seat subscriptions. Agent Factory era value metric?"
+    back: "Per-outcome results."
+    tags: ["paradigm-shift", "discrimination"]
+    difficulty: "basic"
+
+  - id: "thesis-agent-factory-004"
+    front: "SaaS era human role: operator. Agent Factory era human role?"
+    back: "Supervisor and verifier."
+    tags: ["paradigm-shift", "discrimination"]
+    difficulty: "basic"
+
+  - id: "thesis-agent-factory-005"
+    front: "SaaS era integration: rigid, point-to-point APIs. Agent Factory era integration?"
+    back: "Standard Tool Protocols (MCP)."
+    tags: ["paradigm-shift", "discrimination"]
+    difficulty: "basic"
+
+  - id: "thesis-agent-factory-006"
+    front: "SaaS era focus: how work is done. Agent Factory era focus?"
+    back: "That the work is done — verifiably correct."
+    tags: ["paradigm-shift", "discrimination"]
+    difficulty: "basic"
+
+  - id: "thesis-agent-factory-007"
+    front: "Why does the Agent Factory model charge per outcome instead of per seat?"
+    back: "Because buyers want results, not access — per-outcome pricing aligns seller incentive with buyer goal."
     tags: ["business-model", "value-metric"]
     difficulty: "intermediate"
     why: "What happens to a per-outcome seller whose agents produce unverified results?"
 
-  - id: "thesis-agent-factory-003"
-    front: "In the paradigm shift table, what replaces per-seat subscriptions as the value metric?"
-    back: "Per-outcome results."
-    tags: ["value-metric", "paradigm-shift"]
-    difficulty: "basic"
-
-  - id: "thesis-agent-factory-004"
-    front: "How does the execution model change from the SaaS era to the Agent Factory era?"
-    back: "From manual and visible to automated and industrialized — because agents handle execution while humans supervise, removing the bottleneck of manual work."
-    tags: ["execution-model", "paradigm-shift"]
-    difficulty: "intermediate"
-    why: "What new risks emerge when execution becomes invisible to the operator?"
-
-  - id: "thesis-agent-factory-005"
-    front: "In the Agent Factory era, what is the human role?"
-    back: "Supervisor and verifier."
-    tags: ["human-role", "paradigm-shift"]
-    difficulty: "basic"
-
-  - id: "thesis-agent-factory-006"
-    front: "What replaces rigid, point-to-point APIs in the Agent Factory era?"
-    back: "Standard Tool Protocols (MCP)."
-    tags: ["mcp", "integration"]
-    difficulty: "basic"
-
-  - id: "thesis-agent-factory-007"
-    front: "Why does the Agent Factory era focus on THAT work is done rather than HOW it is done?"
+  - id: "thesis-agent-factory-008"
+    front: "How does automating execution change the focus from HOW to THAT?"
     back: "Because when agents handle execution, the method is interchangeable — what matters is that outcomes are verifiably correct, not which steps produced them."
     tags: ["focus-shift", "outcomes"]
     difficulty: "intermediate"
     why: "How would you verify an outcome if you can't see the steps that produced it?"
 
-  - id: "thesis-agent-factory-008"
+  - id: "thesis-agent-factory-009"
     front: "What three words summarize what remains in the Agent Factory model?"
     back: "Intent. Verification. Outcome."
     tags: ["thesis-summary", "core-concepts"]
     difficulty: "basic"
 
-  - id: "thesis-agent-factory-009"
+  # --- Industrialized Stack ---
+
+  - id: "thesis-agent-factory-010"
     front: "What are the three layers of the Industrialized Stack?"
     back: "Intent, The Factory, and Outcome."
     tags: ["industrialized-stack", "architecture"]
     difficulty: "basic"
 
-  - id: "thesis-agent-factory-010"
+  - id: "thesis-agent-factory-011"
     front: "In the Industrialized Stack, what does Intent include?"
     back: "Goals, constraints, budgets, and permissions."
     tags: ["intent", "industrialized-stack"]
-    difficulty: "basic"
+    difficulty: "intermediate"
 
-  - id: "thesis-agent-factory-011"
-    front: "A startup builds agents that pass all tests but clients still reject the output. Why might this happen despite verified outcomes?"
-    back: "Because the Intent layer was underspecified — constraints, budgets, or permissions were missing, so agents optimized for the wrong goals. Verification only catches what specs define."
+  - id: "thesis-agent-factory-012"
+    front: "A startup's agents pass all tests but clients reject the output. Why might this happen?"
+    back: "Because the Intent layer was underspecified — missing constraints or permissions meant agents optimized for the wrong goals."
     tags: ["intent", "failure-modes"]
     difficulty: "advanced"
     why: "How would you distinguish a spec failure from an agent failure in production?"
 
-  - id: "thesis-agent-factory-012"
-    front: "Why does the thesis compare The Factory to an industrial plant rather than a software application?"
-    back: "Because a factory implies standardized stations (agents), repeatable processes (specs/skills), and quality control (feedback loops) — it's an architecture for manufacturing outcomes, not a single program."
+  - id: "thesis-agent-factory-013"
+    front: "Why must outcomes in the Industrialized Stack be 'continuously improved through feedback loops' rather than just delivered once?"
+    back: "Because without iteration, initial outputs drift from intent over time — feedback loops catch quality gaps and refine accuracy with each cycle."
+    tags: ["outcome", "industrialized-stack"]
+    difficulty: "intermediate"
+    why: "How would you detect quality drift in an agent that produces plausible-looking but subtly wrong outputs?"
+
+  # --- The Factory ---
+
+  - id: "thesis-agent-factory-014"
+    front: "In the Factory analogy, what maps to raw material, specialized stations, and finished product?"
+    back: "Raw material: intent.\nStations: agents.\nFinished product: verified outcome."
     tags: ["factory-analogy", "architecture"]
     difficulty: "intermediate"
-    why: "What would break if you treated The Factory as a monolithic application instead of an architecture?"
 
-  - id: "thesis-agent-factory-013"
+  - id: "thesis-agent-factory-015"
+    front: "Why does the thesis say The Factory is an architecture, not a single piece of software?"
+    back: "Because it's a set of principles for building systems where agents are manufactured, composed, and deployed — not one program but a production pattern."
+    tags: ["factory-definition", "architecture"]
+    difficulty: "intermediate"
+    why: "What would break if you tried to ship The Factory as a single application?"
+
+  - id: "thesis-agent-factory-016"
     front: "What are the three mechanisms that power The Factory?"
     back: "Specs, skills, and feedback loops."
     tags: ["factory-mechanisms", "architecture"]
     difficulty: "basic"
 
-  - id: "thesis-agent-factory-014"
-    front: "How do specs, skills, and feedback loops relate to each other in The Factory?"
-    back: "Specs define WHAT work to do, skills package HOW to do it, and feedback loops ensure quality improves over time — because each mechanism addresses a different phase of the production cycle."
+  - id: "thesis-agent-factory-017"
+    front: "How do specs, skills, and feedback loops divide labor in The Factory?"
+    back: "Specs define WHAT to do.\nSkills package HOW to do it.\nFeedback loops ensure it IMPROVES."
     tags: ["factory-mechanisms", "relationships"]
-    difficulty: "advanced"
+    difficulty: "intermediate"
     why: "What breaks if you have specs and skills but no feedback loops?"
 
-  - id: "thesis-agent-factory-015"
-    front: "Why is MCP described as a universal protocol rather than just another API standard?"
-    back: "Because it connects every agent to every tool through one shared standard, eliminating the need for custom point-to-point integrations that don't scale."
-    tags: ["mcp", "integration", "protocols"]
+  - id: "thesis-agent-factory-018"
+    front: "Why does MCP sit alongside specs, skills, and feedback loops as a Factory mechanism rather than being just an integration detail?"
+    back: "Because without a universal tool-connection protocol, each agent needs custom integrations — MCP makes the Factory composable by letting any agent connect to any tool."
+    tags: ["mcp", "factory-mechanisms"]
+    difficulty: "intermediate"
+    why: "How does MCP change the economics of building new agents?"
+
+  - id: "thesis-agent-factory-019"
+    front: "Why is MCP described as universal rather than just another API standard?"
+    back: "Because one shared protocol lets every agent connect to every tool — eliminating the N-by-M explosion of custom point-to-point integrations that rigid APIs require."
+    tags: ["mcp", "integration"]
     difficulty: "intermediate"
     why: "What would happen to agent interoperability without a universal protocol?"
 
-  - id: "thesis-agent-factory-016"
-    front: "The thesis says AI paired with a human outperforms either alone. Why does removing the human make the system worse?"
-    back: "Because humans provide intent, domain judgment, and verification that AI lacks — without supervision, agents optimize for measurable proxies rather than actual goals."
-    tags: ["human-in-loop", "collaboration"]
-    difficulty: "advanced"
-    why: "When might a fully autonomous agent actually be preferable to human-AI pairing?"
-
-  - id: "thesis-agent-factory-017"
-    front: "Why does the thesis describe the shift from coder to 'architect of outcomes' as a promotion rather than a job loss?"
-    back: "Because the developer's systems expertise is preserved and amplified — they stop hand-coding and start designing agent-delivered products, which is higher-impact work requiring the same knowledge."
-    tags: ["human-role", "transitions"]
-    difficulty: "intermediate"
-    why: "What existing developer skills transfer directly to outcome architecture?"
-
-  - id: "thesis-agent-factory-018"
-    front: "Why does a developer's expertise become MORE valuable in the Agent Factory era, not less?"
-    back: "Because their systems knowledge is no longer spent hand-coding — it's spent designing, deploying, and supervising agents that deliver entire products, which is higher-leverage work."
-    tags: ["developer-role", "expertise"]
-    difficulty: "intermediate"
-    why: "What new skills must a developer add to their existing technical expertise?"
-
-  - id: "thesis-agent-factory-019"
-    front: "What must the future workforce build instead of relying on fixed career paths?"
-    back: "Dynamic skill portfolios."
-    tags: ["workforce", "skill-portfolios"]
-    difficulty: "basic"
-
   - id: "thesis-agent-factory-020"
-    front: "What four new roles does the thesis predict the Agent Factory era will create?"
-    back: "Agent designers, outcome architects, verification specialists, and domain experts."
-    tags: ["new-roles", "workforce"]
-    difficulty: "intermediate"
-
-  - id: "thesis-agent-factory-021"
-    front: "Why does job unbundling create new opportunity rather than just displacement?"
-    back: "Because breaking jobs into tasks creates new combinations — new roles, businesses, and markets that couldn't exist when work was locked inside rigid job titles."
-    tags: ["workforce", "unbundling"]
-    difficulty: "intermediate"
-    why: "Can you name a role that exists today only because a previous job was unbundled?"
-
-  - id: "thesis-agent-factory-022"
-    front: "What three behaviors does the thesis recommend for professionals who want to thrive?"
-    back: "Think with AI, build using AI tools daily, collaborate with AI as a digital teammate."
-    tags: ["workforce", "adaptation"]
-    difficulty: "intermediate"
-
-  - id: "thesis-agent-factory-023"
     front: "What four elements does the thesis say industrialize execution?"
     back: "Machine-readable specs, reusable skills, Standard Tool Protocols (MCP), and cloud-native infrastructure."
     tags: ["industrialization", "architecture"]
     difficulty: "intermediate"
 
+  # --- Human in the Loop ---
+
+  - id: "thesis-agent-factory-021"
+    front: "Why does removing the human from an AI system make it worse, according to the thesis?"
+    back: "Because for most tasks, AI paired with a human outperforms either alone — humans provide intent and verification that agents lack."
+    tags: ["human-in-loop", "collaboration"]
+    difficulty: "advanced"
+    why: "When might a fully autonomous agent actually be preferable to human-AI pairing?"
+
+  - id: "thesis-agent-factory-022"
+    front: "Why does the thesis frame 'operator to supervisor' as a promotion rather than a demotion?"
+    back: "Because supervisors do higher-leverage work — they define intent and verify outcomes instead of executing steps, which requires more judgment, not less."
+    tags: ["human-role", "transitions"]
+    difficulty: "intermediate"
+    why: "What new failure modes emerge when humans supervise rather than operate?"
+
+  - id: "thesis-agent-factory-023"
+    front: "Why does the thesis redefine a web developer as a 'technology expert' rather than someone who writes React or Swift?"
+    back: "Because in the Agent Factory era, their value comes from understanding systems, data flows, APIs, and user needs — not from hand-coding, which agents now handle."
+    tags: ["tech-professional", "redefinition"]
+    difficulty: "intermediate"
+    why: "What parts of a developer's current skillset become MORE important under this redefinition?"
+
   - id: "thesis-agent-factory-024"
-    front: "A company hires domain experts for its Agent Factory. Why can't engineers alone fill this role?"
-    back: "Because domain experts teach machines what 'correct' looks like in their field — engineers build the system, but only domain specialists define the verification criteria that make outcomes trustworthy."
+    front: "Why does a developer's expertise become MORE valuable in the Agent Factory era?"
+    back: "Because it's no longer spent hand-coding screens — it's spent designing, deploying, and supervising agents that deliver entire products."
+    tags: ["developer-role", "expertise"]
+    difficulty: "intermediate"
+    why: "What new skills must a developer add to their existing technical expertise?"
+
+  # --- Workforce Opportunity ---
+
+  - id: "thesis-agent-factory-025"
+    front: "What must the future workforce build instead of relying on fixed career paths?"
+    back: "Dynamic skill portfolios."
+    tags: ["workforce", "skill-portfolios"]
+    difficulty: "basic"
+
+  - id: "thesis-agent-factory-026"
+    front: "What four new roles does the thesis predict the Agent Factory era will create?"
+    back: "Agent designers, outcome architects, verification specialists, and domain experts."
+    tags: ["new-roles", "workforce"]
+    difficulty: "intermediate"
+
+  - id: "thesis-agent-factory-027"
+    front: "Why can't engineers alone replace domain experts in the Agent Factory?"
+    back: "Because domain experts define what 'correct' looks like in their field — engineers build the system, but only specialists set the verification criteria that make outcomes trustworthy."
     tags: ["domain-experts", "verification"]
     difficulty: "advanced"
     why: "What happens to output quality when domain experts leave and only engineers remain?"
+
+  - id: "thesis-agent-factory-028"
+    front: "Why does job unbundling create new opportunity rather than just displacement?"
+    back: "Because splitting jobs into tasks creates new combinations — roles, businesses, and markets that couldn't exist inside rigid job titles."
+    tags: ["workforce", "unbundling"]
+    difficulty: "advanced"
+    why: "Can you name a role that exists today only because a previous job was unbundled?"
+
+  - id: "thesis-agent-factory-029"
+    front: "What three behaviors does the thesis recommend for professionals who want to thrive?"
+    back: "Think with AI, build using AI tools daily, collaborate with AI as a digital teammate."
+    tags: ["workforce", "adaptation"]
+    difficulty: "intermediate"
+
+  - id: "thesis-agent-factory-030"
+    front: "A company has millions of SaaS subscribers but struggles in the Agent Factory era. Why might seat count no longer matter?"
+    back: "Because value shifted from access to results — winners are measured by outcomes guaranteed, not seats sold. Subscribers without delivered outcomes generate no competitive advantage."
+    tags: ["outcomes", "measurement"]
+    difficulty: "intermediate"
+    why: "How would you price an outcome-based product versus a seat-based one?"
