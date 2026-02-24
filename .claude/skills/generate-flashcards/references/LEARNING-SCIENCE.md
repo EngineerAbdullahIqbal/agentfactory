@@ -1,94 +1,56 @@
 # Learning Science Foundations
 
-The 6 evidence-based strategies that make these flashcards effective.
+Three principles that matter. Everything else is noise.
 
-## 1. Retrieval Practice
-
-**Source**: Roediger & Karpicke (2006). "Test-Enhanced Learning."
-
-Cards must test active recall, not passive recognition. The act of retrieving information from memory strengthens the memory trace more than re-reading.
-
-**Application to flashcards:**
-
-- Front = retrieval cue requiring reconstruction
-- Never put the answer partially visible in the front
-- Prefer scenario-based prompts that require applying knowledge
-
-**Anti-pattern**: "What are the 3 pillars?" (retrieval of a list)
-**Correct**: "A startup has agents and infrastructure but revenue stalls. Which pillar is missing?" (application requiring recall)
-
-## 2. Elaborative Interrogation
-
-**Source**: Pressley et al. (1987). "Elaborative Interrogation facilitates acquisition of confusing facts."
-
-Asking "how" and "why" questions forces deeper processing and stronger encoding. This is implemented through the `why` field.
-
-**Application to flashcards:**
-
-- Add `why` to 40-60% of cards (intermediate and advanced)
-- Connect the concept to prior knowledge or adjacent concepts
-- The `why` should not repeat the front — it should push thinking further
-
-**Example**: Card about SDD → `why: "Why must the spec be human-written rather than AI-generated?"`
-
-## 3. Desirable Difficulty
-
-**Source**: Bjork & Bjork (2011). "Making things hard on yourself, but in a good way."
-
-Learning that feels easy often doesn't stick. Introducing difficulty at the right level strengthens long-term retention.
-
-**Application to flashcards:**
-
-- Three tiers: basic (30%), intermediate (50%), advanced (20%)
-- Basic: Remember/Understand — definitions, identifications
-- Intermediate: Apply/Analyze — comparisons, scenario application, causal reasoning
-- Advanced: Evaluate/Create — critique, predict consequences, synthesis
-
-## 4. Interleaving
-
-**Source**: Rohrer & Taylor (2007). "The shuffling of mathematics problems improves learning."
-
-Mixing different types of problems or concepts forces discriminative contrast, improving the ability to select the right strategy for each problem.
-
-**Application to flashcards:**
-
-- Don't cluster all definition cards together
-- Mix card types within the deck
-- Use tags to enable cross-topic interleaved review
-- No more than 3 consecutive cards of the same type
-
-## 5. Dual Coding
-
-**Source**: Paivio (1986). "Mental Representations: A Dual Coding Approach."
-
-Information encoded both verbally and visually creates multiple retrieval pathways in memory.
-
-**Application to flashcards:**
-
-- Use `\n` for structured comparisons: "SaaS: seats\nAgents: outcomes"
-- Format enumerations as numbered lists
-- Use contrast patterns: "Before: X\nAfter: Y"
-- Where applicable, describe diagrams or processes as structured text
-
-## 6. Minimum Information Principle
+## 1. Minimum Information Principle
 
 **Source**: Wozniak (1999). "Effective Learning: Twenty Rules of Formulating Knowledge."
 
-Complex material should be broken into the simplest possible items. Each card should test exactly one piece of knowledge.
+One card, one concept. Break complex material into the simplest possible items. If a card tests two things, split it.
 
-**Application to flashcards:**
+**For recall cards**: Front is a single question. Back is the atomic answer — no explanation, no filler.
+**For thinking cards**: Front is a single scenario or mechanism question. Back explains the reasoning for that one thing.
 
-- One concept per card front — never "What are X and Y?"
-- If a concept has 4 parts, consider 4 separate cards
-- Front: atomic and unambiguous
-- Back: concise but complete (no padding words)
-- Prefer multiple simple cards over one complex card
+**Anti-pattern**: "What are the three pillars and how do they interact?" → Split into a recall card (name them) and a thinking card (how they interact).
 
-## Integration
+## 2. Retrieval Practice
 
-These strategies reinforce each other:
+**Source**: Roediger & Karpicke (2006). "Test-Enhanced Learning."
 
-- Retrieval practice + desirable difficulty → effortful recall builds stronger memory
-- Elaborative interrogation + dual coding → deeper processing through multiple channels
-- Interleaving + minimum information → each card is distinct and forces discrimination
-- All strategies serve spaced repetition (FSRS) which schedules optimal review intervals
+The act of pulling information from memory strengthens the memory trace more than re-reading. Cards must force genuine recall, not passive recognition.
+
+**Rules**:
+
+- Front must never contain or hint at the answer
+- No Yes/No questions (tests recognition, not recall)
+- Anchor generic terms in context ("In the Agent Factory model, what is Intent?" not "What is Intent?")
+
+**Anti-pattern**: "Is SDD the methodology where specs are the source of truth?" → Yes. (Student recognized it, didn't recall it.)
+
+## 3. Elaborative Interrogation
+
+**Source**: Pressley et al. (1987). "Elaborative Interrogation facilitates acquisition of confusing facts."
+
+Asking "why" and "how" forces deeper processing and stronger encoding.
+
+**For thinking cards**: The front question itself should be a Why/How question. The `why` field pushes one level deeper — asking about implications, adjacent mechanisms, or what would happen if things changed.
+
+**The `why` field is NOT**:
+
+- A repeat of the front question in different words
+- "Can you explain more about X?"
+- Present on recall cards (they don't need it)
+
+**The `why` field IS**:
+
+- A different angle: Front asks "Why did X happen?" → `why` asks "How would you prevent X?"
+- A connection: Front asks about concept A → `why` asks how A relates to concept B
+- An implication: Front asks about a mechanism → `why` asks what breaks if the mechanism fails
+
+## How These Map to Card Types
+
+| Principle                 | Recall Cards                    | Thinking Cards                     |
+| ------------------------- | ------------------------------- | ---------------------------------- |
+| Minimum Information       | One fact per card               | One mechanism per card             |
+| Retrieval Practice        | Direct question → atomic answer | Scenario → reasoned answer         |
+| Elaborative Interrogation | Not used                        | Front = Why/How, `why` = go deeper |

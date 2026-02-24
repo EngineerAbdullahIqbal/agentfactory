@@ -26,12 +26,12 @@ deck:
   version: 1 # Required. Integer. Bump on regeneration (triggers FSRS reset).
 
 cards:
-  - id: "<short-prefix>-001" # Required. Pattern: {short-prefix}-{NNN}. Zero-padded 3 digits.
+  - id: "<deck-id>-001" # Required. Full deck.id + hyphen + zero-padded 3 digits.
     front: "<question text>" # Required. The retrieval cue / question.
     back: "<answer text>" # Required. The answer. Use \n for line breaks.
     tags: ["tag1", "tag2"] # Required. At least 1 tag per card.
     difficulty: "basic" # Required. One of: "basic", "intermediate", "advanced".
-    why: "<elaboration>" # Optional. Elaborative interrogation prompt (40-60% of cards).
+    why: "<elaboration>" # Optional. Only on thinking cards. Deepens understanding.
 ```
 
 ## Field Details
@@ -41,7 +41,7 @@ cards:
 - Kebab-case string, globally unique within the book
 - Used as the key for localStorage FSRS state
 - Convention: `<part-or-chapter>-<lesson-slug>`
-- Examples: `preface-agent-native`, `ch05-lesson03-skills`
+- Examples: `preface-agent-native`, `ch05-reusable-skills`, `ch05-03-skills`
 
 ### deck.version
 
@@ -51,23 +51,24 @@ cards:
 
 ### card.id
 
-- Pattern: `{deck-id-short}-{NNN}` where NNN is zero-padded
-- `{deck-id-short}` is a shortened prefix derived from deck.id (e.g., deck.id `preface-agent-native` → card prefix `preface`, deck.id `ch01-factory-paradigm` → card prefix `ch01`)
-- Must be unique within the deck
-- Sequential numbering: 001, 002, 003...
+- Pattern: `{deck.id}-{NNN}` where NNN is zero-padded 3 digits
+- Uses the **full deck.id** as prefix to guarantee global uniqueness
+- Example: deck.id `ch05-reusable-skills` → cards `ch05-reusable-skills-001`, `ch05-reusable-skills-002`
+- Must be unique within the deck AND across all decks in the book
+- The validator at `apps/learn-app/scripts/validate-flashcards.ts` checks global uniqueness
 
 ### card.front
 
 - Plain text (no markdown)
 - One concept, one question
-- Under 30 words
+- Must be self-contained (makes sense without seeing the lesson)
 - Must not contain the answer
 
 ### card.back
 
 - Plain text with `\n` for line breaks
-- Under 60 words
 - Concise but complete
+- **Must NOT start with "Yes" or "No"** (schema validation rejects these)
 
 ### card.tags
 
@@ -80,13 +81,12 @@ cards:
 - `"basic"` — Remember/Understand (Bloom's L1-2)
 - `"intermediate"` — Apply/Analyze (Bloom's L3-4)
 - `"advanced"` — Evaluate/Create (Bloom's L5-6)
-- Target: 30% basic, 50% intermediate, 20% advanced
 
 ### card.why
 
 - Optional elaborative interrogation prompt
-- Present on 40-60% of cards (prefer intermediate and advanced)
-- Asks HOW or WHY to deepen processing
+- Present on thinking cards (Why/How questions), absent on recall cards
+- Asks HOW or WHY to push understanding one level deeper
 - Must NOT repeat the front question
 
 ## YAML Escaping
@@ -115,8 +115,9 @@ back: "Line one\nLine two\nLine three"
 - [ ] `deck.id` is kebab-case and unique
 - [ ] `deck.version` is a positive integer
 - [ ] Every card has `id`, `front`, `back`, `tags`, `difficulty`
-- [ ] Card IDs follow `{short-prefix}-{NNN}` pattern
-- [ ] No duplicate card IDs
+- [ ] Card IDs use full `deck.id` as prefix: `{deck.id}-{NNN}`
+- [ ] No duplicate card IDs within or across decks
 - [ ] All difficulty values are one of: basic, intermediate, advanced
+- [ ] Card backs do not start with "Yes" or "No"
 - [ ] YAML parses without errors
 - [ ] No unescaped special characters in string values
