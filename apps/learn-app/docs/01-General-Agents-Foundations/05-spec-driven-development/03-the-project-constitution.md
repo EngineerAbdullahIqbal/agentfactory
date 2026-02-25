@@ -80,7 +80,8 @@ teaching_guide:
     - "Connect to Lesson 2's three levels: constitution operates at ALL levels"
     - "The table comparing with/without constitution is the key visual — dwell on it"
     - "Lessons 4-8 will reference the constitution as the coordination system"
-  assessment_quick_check: "Can the student explain why two subagents with the same spec but no constitution might produce inconsistent code?"
+  assessment_quick_check:
+    - "Can the student explain why two subagents with the same spec but no constitution might produce inconsistent code?"
 ---
 
 # The Project Constitution
