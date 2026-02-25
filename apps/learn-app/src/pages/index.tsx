@@ -1082,6 +1082,7 @@ function IDEShowcaseSkeleton() {
 
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
+  const preloadBookCover = useBaseUrl("/img/book-cover-page.webp");
   return (
     <Layout
       title="The AI Agent Factory"
@@ -1092,7 +1093,7 @@ export default function Home(): ReactNode {
         <link
           rel="preload"
           as="image"
-          href={useBaseUrl("/img/book-cover-page.webp")}
+          href={preloadBookCover}
           type="image/webp"
         />
       </Head>

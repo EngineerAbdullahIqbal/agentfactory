@@ -69,9 +69,9 @@ const config: Config = {
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
     experimental_faster: {
-      swcJsLoader: true,        // Use SWC to transpile JS (faster than Babel)
-      swcJsMinimizer: true,     // Use SWC to minify JS (faster than Terser)
-      swcHtmlMinimizer: true,   // Use SWC to minify HTML
+      swcJsLoader: true, // Use SWC to transpile JS (faster than Babel)
+      swcJsMinimizer: true, // Use SWC to minify JS (faster than Terser)
+      swcHtmlMinimizer: true, // Use SWC to minify HTML
       lightningCssMinimizer: true, // Use Lightning CSS instead of cssnano
       mdxCrossCompilerCache: true, // Compile MDX once instead of twice
       // rspackBundler: false,  // Skip Rspack - use webpack (more stable with memory)
@@ -149,17 +149,17 @@ const config: Config = {
     // See docs/ANALYTICS/ga4-setup.md for setup instructions
     ...(process.env.GA4_MEASUREMENT_ID
       ? [
-        {
-          tagName: "script",
-          attributes: {
-            async: "true",
-            src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GA4_MEASUREMENT_ID}`,
+          {
+            tagName: "script",
+            attributes: {
+              async: "true",
+              src: `https://www.googletagmanager.com/gtag/js?id=${process.env.GA4_MEASUREMENT_ID}`,
+            },
           },
-        },
-        {
-          tagName: "script",
-          attributes: {},
-          innerHTML: `
+          {
+            tagName: "script",
+            attributes: {},
+            innerHTML: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -169,8 +169,8 @@ const config: Config = {
             'allow_ad_personalization_signals': false
           });
         `,
-        },
-      ]
+          },
+        ]
       : []),
     // OpenAI ChatKit CDN (for Study Mode)
     {
@@ -241,7 +241,7 @@ const config: Config = {
       },
       ur: {
         label: "اردو",
-        direction: "ltr",
+        direction: "rtl",
         htmlLang: "ur-PK",
         calendar: "gregory",
         path: "ur",
@@ -351,13 +351,13 @@ const config: Config = {
     ...(DEV_MODE
       ? []
       : [
-        [
-          "../../libs/docusaurus/summaries-plugin",
-          {
-            docsPath: docsPath, // Use same docs path as content-docs
-          },
-        ],
-      ]),
+          [
+            "../../libs/docusaurus/summaries-plugin",
+            {
+              docsPath: docsPath, // Use same docs path as content-docs
+            },
+          ],
+        ]),
     // Chapter Manifest Plugin - Enables chapter download for logged-in users
     [
       "../../libs/docusaurus/chapter-manifest-plugin",

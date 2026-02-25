@@ -341,13 +341,12 @@ ul.tabs[role="tablist"] {
 .delay-500 { animation-delay: 500ms; }
 
 /* ============================================
-   Urdu Locale — RTL content only
-   Sidebar, navbar, TOC stay LTR (matching English)
-   Only the doc article text flows right-to-left
+   RTL Locale Overrides
+   Code blocks stay LTR even in RTL locales
    ============================================ */
 
-html[lang="ur-PK"] .markdown,
-html[lang="ur-PK"] .theme-doc-markdown {
-  direction: rtl;
-  text-align: right;
+html[dir="rtl"] pre,
+html[dir="rtl"] code {
+  direction: ltr;
+  text-align: left;
 }
