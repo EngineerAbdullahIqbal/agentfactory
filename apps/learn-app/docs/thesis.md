@@ -102,6 +102,16 @@ The SaaS era created millions of jobs for developers, designers, and product man
 
 **The opportunity is not smaller. It is broader, and it rewards those who adapt.**
 
+Very soon more money will be spent on new construction for digital workers (data centers) than human workers (general office space). In 2019, the United States spent $8.5 billion constructing data centers — roughly 11% of what it spent on office buildings. By mid-2025, data center construction surged to $42 billion annualized — up 400% since 2021 — while office construction plunged 35% from its peak. The lines have now crossed: America spends more building workplaces for digital workers than for human ones.
+
+Data centers are devouring copper and electricity at industrial scale: a single hyperscale AI facility requires up to 50,000 tons of copper, up to ten times what a conventional data center needs. Meta, Google, Amazon, and Microsoft alone project over $600 billion in AI infrastructure spending for 2026 — as a share of GDP, that rivals the railroad expansion of the 1850s and the interstate highway system of the 1950s.
+
+The factories of the Agent era are not hypothetical. They are under construction.
+
+![U.S. private construction spending: general office declining from $60B to $44B while data center surges from near zero to $42B, converging in 2025](../static/img/data-center-vs-office-construction.png)
+
+_Source: U.S. Census Bureau, Value of Construction Put in Place Survey (SAAR)_
+
 <div style={{
   textAlign: 'center',
   maxWidth: '800px',
@@ -120,16 +130,6 @@ Winners in this era will be measured not by seats sold, but by outcomes guarante
 </p>
 
 </div>
-
-### The Physical Evidence
-
-The shift from software tools to AI employees is not just a metaphor — it is being poured in concrete. In 2019, the United States spent $8.5 billion constructing data centers, roughly 11% of what it spent on traditional office buildings. By October 2025, data center construction hit $42 billion annualized — nearly matching the $45 billion spent on offices. The lines have now crossed: America spends more building workplaces for digital workers than for human ones.
-
-This is what an industrial transition looks like. The factories of the Agent era are not hypothetical. They are under construction.
-
-![Monthly spending on data center construction in the United States — from near zero in 2014 to over $2.5 billion per month by 2025](../static/img/monthly-spending-data-center-us.png)
-
-_Source: U.S. Census Bureau (2025), Our World in Data — CC BY_
 
 ---
 
