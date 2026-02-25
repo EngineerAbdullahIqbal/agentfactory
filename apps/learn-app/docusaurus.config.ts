@@ -241,7 +241,7 @@ const config: Config = {
       },
       ur: {
         label: "اردو",
-        direction: "rtl",
+        direction: "ltr",
         htmlLang: "ur-PK",
         calendar: "gregory",
         path: "ur",
