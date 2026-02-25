@@ -2,6 +2,7 @@ import { type ReactNode, lazy, Suspense } from "react";
 import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 import Layout from "@theme/Layout";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -31,6 +32,8 @@ import {
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
+  const bookCoverUrl = useBaseUrl("/img/book-cover-page.webp");
+  const primaryAvatarUrl = useBaseUrl(authors[0].avatar);
   return (
     <header
       className={clsx(
@@ -142,7 +145,7 @@ function HomepageHeader() {
                   >
                     <Avatar className="h-8 w-8 border border-primary/30">
                       <AvatarImage
-                        src={authors[0].avatar}
+                        src={primaryAvatarUrl}
                         alt={authors[0].name}
                         className="object-cover"
                       />
@@ -169,7 +172,10 @@ function HomepageHeader() {
                       >
                         <Avatar className="h-8 w-8 border border-border/50 bg-muted/50">
                           <AvatarImage
-                            src={author.avatar}
+                            src={
+                              siteConfig.baseUrl +
+                              author.avatar.replace(/^\//, "")
+                            }
                             alt={author.name}
                             className="object-cover"
                           />
@@ -213,7 +219,7 @@ function HomepageHeader() {
 
             <div className="relative z-10 transform transition-transform duration-700 hover:scale-[1.28] scale-[1.25]">
               <ThreeDBook
-                src="/img/book-cover-page.webp"
+                src={bookCoverUrl}
                 alt="The AI Agent Factory Book Cover"
               />
             </div>
@@ -1079,6 +1085,7 @@ function IDEShowcaseSkeleton() {
 
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext();
+  const preloadBookCover = useBaseUrl("/img/book-cover-page.webp");
   return (
     <Layout
       title="The AI Agent Factory"
@@ -1089,7 +1096,7 @@ export default function Home(): ReactNode {
         <link
           rel="preload"
           as="image"
-          href="/img/book-cover-page.webp"
+          href={preloadBookCover}
           type="image/webp"
         />
       </Head>

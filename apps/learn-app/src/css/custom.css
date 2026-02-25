@@ -339,3 +339,14 @@ ul.tabs[role="tablist"] {
 .delay-300 { animation-delay: 300ms; }
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
+
+/* ============================================
+   RTL Locale Overrides
+   Code blocks stay LTR even in RTL locales
+   ============================================ */
+
+html[dir="rtl"] pre,
+html[dir="rtl"] code {
+  direction: ltr;
+  text-align: left;
+}

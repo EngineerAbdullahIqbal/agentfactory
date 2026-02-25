@@ -30,6 +30,19 @@ jobs:
           node-version: "20"
           cache: pnpm
 
+      - name: Increase swap for multi-locale build
+        run: |
+          sudo swapoff -a
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-dejavu-core fonts-liberation libvips-dev
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

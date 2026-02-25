@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "Agent Factory",
+    "description": "The title in the navbar"
+  },
+  "item.label.🏭 Factory": {
+    "message": "🏭 Factory",
+    "description": "Navbar item with label 🏭 Factory"
+  },
+  "item.label.Book": {
+    "message": "Book",
+    "description": "Navbar item with label Book"
+  },
+  "item.label.Progress": {
+    "message": "Progress",
+    "description": "Navbar item with label Progress"
+  },
+  "item.label.Leaderboard": {
+    "message": "Leaderboard",
+    "description": "Navbar item with label Leaderboard"
+  }
+}

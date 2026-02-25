@@ -24,6 +24,10 @@ sidebars.js
 src/**/*.js
 !src/**/*.test.js
 
+
+# Translation working files (intermediate segments/manifests)
+/translation-work
+
 # Misc
 .DS_Store
 .env.local

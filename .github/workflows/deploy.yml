@@ -45,6 +45,16 @@ jobs:
           node-version: "20"
           cache: pnpm
 
+      - name: Increase swap for multi-locale build
+        # Docusaurus i18n builds leak memory between locales (issue #10944)
+        # Default 4GB swap isn't enough for en+ur with 1400+ docs
+        run: |
+          sudo swapoff -a
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+
       - name: Install system dependencies
         run: |
           sudo apt-get update
@@ -65,6 +75,7 @@ jobs:
           AUTH_URL: ${{ secrets.AUTH_URL }}
           OAUTH_CLIENT_ID: ${{ secrets.OAUTH_CLIENT_ID }}
           BASE_URL: ${{ secrets.BASE_URL }}
+          SITE_URL: ${{ secrets.SITE_URL }}
           PANAVERSITY_API_KEY: ${{ secrets.PANAVERSITY_API_KEY }}
         run: pnpm build
 

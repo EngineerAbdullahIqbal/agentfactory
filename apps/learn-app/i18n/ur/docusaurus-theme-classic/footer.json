@@ -1,0 +1,74 @@
+{
+  "link.title.Learn": {
+    "message": "Learn",
+    "description": "The title of the footer links column with title=Learn in the footer"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.Resources": {
+    "message": "Resources",
+    "description": "The title of the footer links column with title=Resources in the footer"
+  },
+  "link.title.About": {
+    "message": "About",
+    "description": "The title of the footer links column with title=About in the footer"
+  },
+  "link.item.label.Start Your Journey": {
+    "message": "Start Your Journey",
+    "description": "The label of footer link with label=Start Your Journey linking to /docs/thesis"
+  },
+  "link.item.label.Full Curriculum": {
+    "message": "Full Curriculum",
+    "description": "The label of footer link with label=Full Curriculum linking to /docs/thesis"
+  },
+  "link.item.label.What's New": {
+    "message": "What's New",
+    "description": "The label of footer link with label=What's New linking to /docs/whats-new"
+  },
+  "link.item.label.Learning Path": {
+    "message": "Learning Path",
+    "description": "The label of footer link with label=Learning Path linking to /docs/thesis"
+  },
+  "link.item.label.YouTube": {
+    "message": "YouTube",
+    "description": "The label of footer link with label=YouTube linking to https://youtube.com/@panaversity"
+  },
+  "link.item.label.LinkedIn": {
+    "message": "LinkedIn",
+    "description": "The label of footer link with label=LinkedIn linking to https://linkedin.com/company/panaversity"
+  },
+  "link.item.label.Instagram": {
+    "message": "Instagram",
+    "description": "The label of footer link with label=Instagram linking to https://instagram.com/panaversity"
+  },
+  "link.item.label.Facebook": {
+    "message": "Facebook",
+    "description": "The label of footer link with label=Facebook linking to https://facebook.com/panaversity"
+  },
+  "link.item.label.GitHub Repository": {
+    "message": "GitHub Repository",
+    "description": "The label of footer link with label=GitHub Repository linking to https://github.com/panaversity/ai-native-software-development"
+  },
+  "link.item.label.AI Native Specification": {
+    "message": "AI Native Specification",
+    "description": "The label of footer link with label=AI Native Specification linking to https://github.com/panaversity/ai-native-software-development/tree/main/specs"
+  },
+  "link.item.label.Factory Dashboard": {
+    "message": "Factory Dashboard",
+    "description": "The label of footer link with label=Factory Dashboard linking to /factory"
+  },
+  "link.item.label.Panaversity": {
+    "message": "Panaversity",
+    "description": "The label of footer link with label=Panaversity linking to https://panaversity.org/"
+  },
+  "link.item.label.Our Mission": {
+    "message": "Our Mission",
+    "description": "The label of footer link with label=Our Mission linking to https://panaversity.org/#about"
+  },
+  "copyright": {
+    "message": "Copyright © 2026 <strong>Panaversity</strong> • The AI Agent Factory • Free & Open Source",
+    "description": "The footer copyright"
+  }
+}

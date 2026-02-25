@@ -1,0 +1,406 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.Part 1: General Agents: Foundations": {
+    "message": "Part 1: General Agents: Foundations",
+    "description": "The label for category 'Part 1: General Agents: Foundations' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 1: The AI Agent Factory Paradigm": {
+    "message": "Chapter 1: The AI Agent Factory Paradigm",
+    "description": "The label for category 'Chapter 1: The AI Agent Factory Paradigm' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 2: Markdown": {
+    "message": "Chapter 2: Markdown",
+    "description": "The label for category 'Chapter 2: Markdown' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 3: Working with General Agents: Claude Code and Cowork": {
+    "message": "Chapter 3: Working with General Agents: Claude Code and Cowork",
+    "description": "The label for category 'Chapter 3: Working with General Agents: Claude Code and Cowork' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Section A: Claude Code Essentials": {
+    "message": "Section A: Claude Code Essentials",
+    "description": "The label for category 'Section A: Claude Code Essentials' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Section B: Skills, Subagents & MCP": {
+    "message": "Section B: Skills, Subagents & MCP",
+    "description": "The label for category 'Section B: Skills, Subagents & MCP' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Section C: Extensibility & Teams": {
+    "message": "Section C: Extensibility & Teams",
+    "description": "The label for category 'Section C: Extensibility & Teams' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Section D: Claude Cowork": {
+    "message": "Section D: Claude Cowork",
+    "description": "The label for category 'Section D: Claude Cowork' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Section E: Strategy & Assessment": {
+    "message": "Section E: Strategy & Assessment",
+    "description": "The label for category 'Section E: Strategy & Assessment' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 4: Effective Context Engineering with General Agents": {
+    "message": "Chapter 4: Effective Context Engineering with General Agents",
+    "description": "The label for category 'Chapter 4: Effective Context Engineering with General Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 5: Spec-Driven Development with Claude Code": {
+    "message": "Chapter 5: Spec-Driven Development with Claude Code",
+    "description": "The label for category 'Chapter 5: Spec-Driven Development with Claude Code' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 6: The Seven Principles of General Agent Problem Solving": {
+    "message": "Chapter 6: The Seven Principles of General Agent Problem Solving",
+    "description": "The label for category 'Chapter 6: The Seven Principles of General Agent Problem Solving' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 7: Meet Your First AI Employee - OpenClaw": {
+    "message": "Chapter 7: Meet Your First AI Employee - OpenClaw",
+    "description": "The label for category 'Chapter 7: Meet Your First AI Employee - OpenClaw' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 2: Agent Workflow Primitives": {
+    "message": "Part 2: Agent Workflow Primitives",
+    "description": "The label for category 'Part 2: Agent Workflow Primitives' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 8: File Processing Workflows": {
+    "message": "Chapter 8: File Processing Workflows",
+    "description": "The label for category 'Chapter 8: File Processing Workflows' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 9: Computation & Data Extraction Workflow": {
+    "message": "Chapter 9: Computation & Data Extraction Workflow",
+    "description": "The label for category 'Chapter 9: Computation & Data Extraction Workflow' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 10: Structured Data & Persistent Storage": {
+    "message": "Chapter 10: Structured Data & Persistent Storage",
+    "description": "The label for category 'Chapter 10: Structured Data & Persistent Storage' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 11: Linux Mastery for Digital FTEs": {
+    "message": "Chapter 11: Linux Mastery for Digital FTEs",
+    "description": "The label for category 'Chapter 11: Linux Mastery for Digital FTEs' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 12: Version Control & Safe Experimentation": {
+    "message": "Chapter 12: Version Control & Safe Experimentation",
+    "description": "The label for category 'Chapter 12: Version Control & Safe Experimentation' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 13: Build Your AI Employee": {
+    "message": "Chapter 13: Build Your AI Employee",
+    "description": "The label for category 'Chapter 13: Build Your AI Employee' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 3: Applied Domain Workflows": {
+    "message": "Part 3: Applied Domain Workflows",
+    "description": "The label for category 'Part 3: Applied Domain Workflows' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 13: Master Spec-Kit Plus": {
+    "message": "Chapter 13: Master Spec-Kit Plus",
+    "description": "The label for category 'Chapter 13: Master Spec-Kit Plus' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 4: Coding for Problem Solving": {
+    "message": "Part 4: Coding for Problem Solving",
+    "description": "The label for category 'Part 4: Coding for Problem Solving' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 14: Ten Axioms of Programming in the Era of AI Driven Development": {
+    "message": "Chapter 14: Ten Axioms of Programming in the Era of AI Driven Development",
+    "description": "The label for category 'Chapter 14: Ten Axioms of Programming in the Era of AI Driven Development' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 15: Python UV — The Fastest Python Package Manager": {
+    "message": "Chapter 15: Python UV — The Fastest Python Package Manager",
+    "description": "The label for category 'Chapter 15: Python UV — The Fastest Python Package Manager' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 16: Introduction to Modern Python": {
+    "message": "Chapter 16: Introduction to Modern Python",
+    "description": "The label for category 'Chapter 16: Introduction to Modern Python' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 17: Understanding Python Data Types": {
+    "message": "Chapter 17: Understanding Python Data Types",
+    "description": "The label for category 'Chapter 17: Understanding Python Data Types' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 18: Operators, Keywords, and Variables": {
+    "message": "Chapter 18: Operators, Keywords, and Variables",
+    "description": "The label for category 'Chapter 18: Operators, Keywords, and Variables' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 19: Strings and Type Casting": {
+    "message": "Chapter 19: Strings and Type Casting",
+    "description": "The label for category 'Chapter 19: Strings and Type Casting' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 20: Control Flow and Loops": {
+    "message": "Chapter 20: Control Flow and Loops",
+    "description": "The label for category 'Chapter 20: Control Flow and Loops' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 21: Lists, Tuples, and Dictionary": {
+    "message": "Chapter 21: Lists, Tuples, and Dictionary",
+    "description": "The label for category 'Chapter 21: Lists, Tuples, and Dictionary' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 22: Set, Frozen Set, and GC": {
+    "message": "Chapter 22: Set, Frozen Set, and GC",
+    "description": "The label for category 'Chapter 22: Set, Frozen Set, and GC' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 23: Modules and Functions": {
+    "message": "Chapter 23: Modules and Functions",
+    "description": "The label for category 'Chapter 23: Modules and Functions' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 24: Exception Handling": {
+    "message": "Chapter 24: Exception Handling",
+    "description": "The label for category 'Chapter 24: Exception Handling' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 25: IO and File Handling": {
+    "message": "Chapter 25: IO and File Handling",
+    "description": "The label for category 'Chapter 25: IO and File Handling' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 26: Math, Date Time Calendar": {
+    "message": "Chapter 26: Math, Date Time Calendar",
+    "description": "The label for category 'Chapter 26: Math, Date Time Calendar' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 27: Object-Oriented Programming - Part 1": {
+    "message": "Chapter 27: Object-Oriented Programming - Part 1",
+    "description": "The label for category 'Chapter 27: Object-Oriented Programming - Part 1' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 28: Object-Oriented Programming Part II": {
+    "message": "Chapter 28: Object-Oriented Programming Part II",
+    "description": "The label for category 'Chapter 28: Object-Oriented Programming Part II' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 29: Metaclasses and Dataclasses": {
+    "message": "Chapter 29: Metaclasses and Dataclasses",
+    "description": "The label for category 'Chapter 29: Metaclasses and Dataclasses' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 30: Pydantic and Generics": {
+    "message": "Chapter 30: Pydantic and Generics",
+    "description": "The label for category 'Chapter 30: Pydantic and Generics' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 31: Asyncio — Concurrent I/O and CPU-Parallel Workloads": {
+    "message": "Chapter 31: Asyncio — Concurrent I/O and CPU-Parallel Workloads",
+    "description": "The label for category 'Chapter 31: Asyncio — Concurrent I/O and CPU-Parallel Workloads' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 32: CPython and GIL": {
+    "message": "Chapter 32: CPython and GIL",
+    "description": "The label for category 'Chapter 32: CPython and GIL' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 5: Building Custom Agents": {
+    "message": "Part 5: Building Custom Agents",
+    "description": "The label for category 'Part 5: Building Custom Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 33: Introduction to AI Agents": {
+    "message": "Chapter 33: Introduction to AI Agents",
+    "description": "The label for category 'Chapter 33: Introduction to AI Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 34: OpenAI Agents SDK": {
+    "message": "Chapter 34: OpenAI Agents SDK",
+    "description": "The label for category 'Chapter 34: OpenAI Agents SDK' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 35: Building Custom Agents with Google ADK": {
+    "message": "Chapter 35: Building Custom Agents with Google ADK",
+    "description": "The label for category 'Chapter 35: Building Custom Agents with Google ADK' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 36: Anthropic Claude Agent SDK": {
+    "message": "Chapter 36: Anthropic Claude Agent SDK",
+    "description": "The label for category 'Chapter 36: Anthropic Claude Agent SDK' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 37: Model Context Protocol (MCP) Fundamentals": {
+    "message": "Chapter 37: Model Context Protocol (MCP) Fundamentals",
+    "description": "The label for category 'Chapter 37: Model Context Protocol (MCP) Fundamentals' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 38: Advanced MCP Server Development": {
+    "message": "Chapter 38: Advanced MCP Server Development",
+    "description": "The label for category 'Chapter 38: Advanced MCP Server Development' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 39: Agent Skills & MCP Code Execution": {
+    "message": "Chapter 39: Agent Skills & MCP Code Execution",
+    "description": "The label for category 'Chapter 39: Agent Skills & MCP Code Execution' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 40: FastAPI for Agents": {
+    "message": "Chapter 40: FastAPI for Agents",
+    "description": "The label for category 'Chapter 40: FastAPI for Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 41: ChatKit Server for Agents": {
+    "message": "Chapter 41: ChatKit Server for Agents",
+    "description": "The label for category 'Chapter 41: ChatKit Server for Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 42: Apps SDK - Building Interactive ChatGPT Apps": {
+    "message": "Chapter 42: Apps SDK - Building Interactive ChatGPT Apps",
+    "description": "The label for category 'Chapter 42: Apps SDK - Building Interactive ChatGPT Apps' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 43: Vector Databases & RAG": {
+    "message": "Chapter 43: Vector Databases & RAG",
+    "description": "The label for category 'Chapter 43: Vector Databases & RAG' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 44: Relational Databases for Agents with SQLModel": {
+    "message": "Chapter 44: Relational Databases for Agents with SQLModel",
+    "description": "The label for category 'Chapter 44: Relational Databases for Agents with SQLModel' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 45: Augmented Memory for Agentic Applications": {
+    "message": "Chapter 45: Augmented Memory for Agentic Applications",
+    "description": "The label for category 'Chapter 45: Augmented Memory for Agentic Applications' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 46: TDD for Agents": {
+    "message": "Chapter 46: TDD for Agents",
+    "description": "The label for category 'Chapter 46: TDD for Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 47: Evals - Measuring Agent Performance": {
+    "message": "Chapter 47: Evals - Measuring Agent Performance",
+    "description": "The label for category 'Chapter 47: Evals - Measuring Agent Performance' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 6: AI Cloud Native Development": {
+    "message": "Part 6: AI Cloud Native Development",
+    "description": "The label for category 'Part 6: AI Cloud Native Development' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 49: Docker for AI Services": {
+    "message": "Chapter 49: Docker for AI Services",
+    "description": "The label for category 'Chapter 49: Docker for AI Services' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 50: Kubernetes for AI Services": {
+    "message": "Chapter 50: Kubernetes for AI Services",
+    "description": "The label for category 'Chapter 50: Kubernetes for AI Services' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 51: Helm Charts for AI Services": {
+    "message": "Chapter 51: Helm Charts for AI Services",
+    "description": "The label for category 'Chapter 51: Helm Charts for AI Services' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 52: Event-Driven Architecture with Kafka": {
+    "message": "Chapter 52: Event-Driven Architecture with Kafka",
+    "description": "The label for category 'Chapter 52: Event-Driven Architecture with Kafka' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 53: Dapr Core - Sidecar Building Blocks": {
+    "message": "Chapter 53: Dapr Core - Sidecar Building Blocks",
+    "description": "The label for category 'Chapter 53: Dapr Core - Sidecar Building Blocks' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 54: CI/CD Pipelines & GitOps with ArgoCD": {
+    "message": "Chapter 54: CI/CD Pipelines & GitOps with ArgoCD",
+    "description": "The label for category 'Chapter 54: CI/CD Pipelines & GitOps with ArgoCD' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 55: Observability & Cost Engineering": {
+    "message": "Chapter 55: Observability & Cost Engineering",
+    "description": "The label for category 'Chapter 55: Observability & Cost Engineering' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 56: Traffic Engineering": {
+    "message": "Chapter 56: Traffic Engineering",
+    "description": "The label for category 'Chapter 56: Traffic Engineering' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 57: Dapr Actors & Workflows": {
+    "message": "Chapter 57: Dapr Actors & Workflows",
+    "description": "The label for category 'Chapter 57: Dapr Actors & Workflows' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 58: Production Security & Compliance": {
+    "message": "Chapter 58: Production Security & Compliance",
+    "description": "The label for category 'Chapter 58: Production Security & Compliance' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.assets": {
+    "message": "assets",
+    "description": "The label for category 'assets' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 59: Cost & Disaster Recovery": {
+    "message": "Chapter 59: Cost & Disaster Recovery",
+    "description": "The label for category 'Chapter 59: Cost & Disaster Recovery' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 60: Real Cloud Deployment": {
+    "message": "Chapter 60: Real Cloud Deployment",
+    "description": "The label for category 'Chapter 60: Real Cloud Deployment' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 7: Turing LLMOps — Proprietary Intelligence": {
+    "message": "Part 7: Turing LLMOps — Proprietary Intelligence",
+    "description": "The label for category 'Part 7: Turing LLMOps — Proprietary Intelligence' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 61: Introduction to LLMOps": {
+    "message": "Chapter 61: Introduction to LLMOps",
+    "description": "The label for category 'Chapter 61: Introduction to LLMOps' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 62: LLM Architecture & Compute": {
+    "message": "Chapter 62: LLM Architecture & Compute",
+    "description": "The label for category 'Chapter 62: LLM Architecture & Compute' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 63: Data Engineering for Fine-Tuning": {
+    "message": "Chapter 63: Data Engineering for Fine-Tuning",
+    "description": "The label for category 'Chapter 63: Data Engineering for Fine-Tuning' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 64: Supervised Fine-Tuning (SFT)": {
+    "message": "Chapter 64: Supervised Fine-Tuning (SFT)",
+    "description": "The label for category 'Chapter 64: Supervised Fine-Tuning (SFT)' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 65: Identity & Persona Tuning": {
+    "message": "Chapter 65: Identity & Persona Tuning",
+    "description": "The label for category 'Chapter 65: Identity & Persona Tuning' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 66: Agentic Function Calling": {
+    "message": "Chapter 66: Agentic Function Calling",
+    "description": "The label for category 'Chapter 66: Agentic Function Calling' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 67: Model Merging & Optimization": {
+    "message": "Chapter 67: Model Merging & Optimization",
+    "description": "The label for category 'Chapter 67: Model Merging & Optimization' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 68: Alignment & Safety": {
+    "message": "Chapter 68: Alignment & Safety",
+    "description": "The label for category 'Chapter 68: Alignment & Safety' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 69: Evaluation & Quality Gates": {
+    "message": "Chapter 69: Evaluation & Quality Gates",
+    "description": "The label for category 'Chapter 69: Evaluation & Quality Gates' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 70: Deployment & Serving": {
+    "message": "Chapter 70: Deployment & Serving",
+    "description": "The label for category 'Chapter 70: Deployment & Serving' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 71: Agent Framework Integration": {
+    "message": "Chapter 71: Agent Framework Integration",
+    "description": "The label for category 'Chapter 71: Agent Framework Integration' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 72: Capstone — End-to-End LLMOps": {
+    "message": "Chapter 72: Capstone — End-to-End LLMOps",
+    "description": "The label for category 'Chapter 72: Capstone — End-to-End LLMOps' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 8: TypeScript — The Language of Realtime and Interaction": {
+    "message": "Part 8: TypeScript — The Language of Realtime and Interaction",
+    "description": "The label for category 'Part 8: TypeScript — The Language of Realtime and Interaction' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 73: TypeScript Fundamentals for AI Engineers": {
+    "message": "Chapter 73: TypeScript Fundamentals for AI Engineers",
+    "description": "The label for category 'Chapter 73: TypeScript Fundamentals for AI Engineers' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 74: Async Patterns & Streaming": {
+    "message": "Chapter 74: Async Patterns & Streaming",
+    "description": "The label for category 'Chapter 74: Async Patterns & Streaming' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 75: Runtime Environments & HTTP Communication": {
+    "message": "Chapter 75: Runtime Environments & HTTP Communication",
+    "description": "The label for category 'Chapter 75: Runtime Environments & HTTP Communication' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 76: Building Type-Safe AI SDKs": {
+    "message": "Chapter 76: Building Type-Safe AI SDKs",
+    "description": "The label for category 'Chapter 76: Building Type-Safe AI SDKs' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 77: Testing TypeScript for AI Applications": {
+    "message": "Chapter 77: Testing TypeScript for AI Applications",
+    "description": "The label for category 'Chapter 77: Testing TypeScript for AI Applications' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 78: CLI Tools & Developer Experience": {
+    "message": "Chapter 78: CLI Tools & Developer Experience",
+    "description": "The label for category 'Chapter 78: CLI Tools & Developer Experience' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Part 9: Building Realtime Voice Agents": {
+    "message": "Part 9: Building Realtime Voice Agents",
+    "description": "The label for category 'Part 9: Building Realtime Voice Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 79: Voice AI Fundamentals": {
+    "message": "Chapter 79: Voice AI Fundamentals",
+    "description": "The label for category 'Chapter 79: Voice AI Fundamentals' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 80: LiveKit Agents": {
+    "message": "Chapter 80: LiveKit Agents",
+    "description": "The label for category 'Chapter 80: LiveKit Agents' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 81: Pipecat": {
+    "message": "Chapter 81: Pipecat",
+    "description": "The label for category 'Chapter 81: Pipecat' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 82: OpenAI Realtime API": {
+    "message": "Chapter 82: OpenAI Realtime API",
+    "description": "The label for category 'Chapter 82: OpenAI Realtime API' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 83: Gemini Live API": {
+    "message": "Chapter 83: Gemini Live API",
+    "description": "The label for category 'Chapter 83: Gemini Live API' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 84: Phone & Browser Integration": {
+    "message": "Chapter 84: Phone & Browser Integration",
+    "description": "The label for category 'Chapter 84: Phone & Browser Integration' in sidebar 'tutorialSidebar'"
+  },
+  "sidebar.tutorialSidebar.category.Chapter 85: Production Voice Agent": {
+    "message": "Chapter 85: Production Voice Agent",
+    "description": "The label for category 'Chapter 85: Production Voice Agent' in sidebar 'tutorialSidebar'"
+  }
+}
