@@ -4,6 +4,6 @@
  * Plain .js to avoid CJS-can't-require-TS problems.
  */
 module.exports = {
-  url: "https://agentfactory.panaversity.org",
-  baseUrl: "/",
+  url: process.env.SITE_URL || "https://agentfactory.panaversity.org",
+  baseUrl: process.env.BASE_URL || "/",
 };
