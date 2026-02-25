@@ -103,6 +103,12 @@ February 2026 wasn't a random market fluctuation. It was a **repricing of the en
 
 ![The Anthropic Hit List — February 2026](../static/img/anthropic-hit-list-feb-2026.png)
 
+**Then It Got Worse.** Three weeks later, on February 24, a [7,000-word hypothetical by Citrini Research](https://www.citriniresearch.com/p/2028gic) went viral—and the [Dow dropped 800 points](https://www.wsj.com/finance/stocks/stock-market-citrini-research-ai-downturn-f5c1ca20) in a single session. The report wasn't a prediction. It was a scenario dated June 2028 exploring what happens when AI agents displace white-collar knowledge workers at scale: mass unemployment, software-backed loan defaults, and financial contagion. The market treated the _thought experiment_ as a trading signal. Software firms Datadog, CrowdStrike, and Zscaler each [plunged more than 9%](https://finance.yahoo.com/news/software-payments-shares-tumble-citrini-162303649.html). [IBM fell 13%](https://www.bloomberg.com/news/articles/2026-02-23/software-payments-shares-tumble-after-citrini-post-on-ai-risks)—its worst single-day performance since 2000. American Express, KKR, and Blackstone—all name-checked in the report—tumbled.
+
+The Citrini thesis in one line: _"For the entirety of modern economic history, human intelligence has been the scarce input. We are now experiencing the unwind of that premium."_
+
+The SaaSpocalypse proved that software companies are being disrupted. The Citrini selloff proved something bigger: **the market believes the disruption extends to all knowledge work.** That's the opportunity this book prepares you for—not just surviving the shift, but building the agents that drive it.
+
 ---
 
 ## The Death of the "Software Seat"
@@ -1331,5 +1337,3 @@ source: "Section: The Agent Factory Vision"
 />
 
 ---
-
-
