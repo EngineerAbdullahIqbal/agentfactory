@@ -480,10 +480,6 @@ const config: Config = {
           position: "right",
         },
         {
-          type: "localeDropdown",
-          position: "right",
-        },
-        {
           type: "custom-navbarAuth",
           position: "right",
         },

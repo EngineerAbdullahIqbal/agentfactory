@@ -163,8 +163,13 @@ def process_file(urdu_path: Path, english_path: Path) -> bool:
         
         return True
         
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        print(f"  ❌ File error: {e}")
+        return False
     except Exception as e:
-        print(f"  ❌ Error: {e}")
+        import traceback
+        print(f"  ❌ Unexpected error processing {urdu_path}: {e}")
+        traceback.print_exc()
         return False
 
 

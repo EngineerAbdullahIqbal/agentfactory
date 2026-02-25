@@ -32,8 +32,8 @@ import {
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
-  const baseUrl = useBaseUrl("/");
   const bookCoverUrl = useBaseUrl("/img/book-cover-page.webp");
+  const primaryAvatarUrl = useBaseUrl(authors[0].avatar);
   return (
     <header
       className={clsx(
@@ -145,7 +145,7 @@ function HomepageHeader() {
                   >
                     <Avatar className="h-8 w-8 border border-primary/30">
                       <AvatarImage
-                        src={baseUrl + authors[0].avatar.replace(/^\//, "")}
+                        src={primaryAvatarUrl}
                         alt={authors[0].name}
                         className="object-cover"
                       />
@@ -172,7 +172,10 @@ function HomepageHeader() {
                       >
                         <Avatar className="h-8 w-8 border border-border/50 bg-muted/50">
                           <AvatarImage
-                            src={baseUrl + author.avatar.replace(/^\//, "")}
+                            src={
+                              siteConfig.baseUrl +
+                              author.avatar.replace(/^\//, "")
+                            }
                             alt={author.name}
                             className="object-cover"
                           />

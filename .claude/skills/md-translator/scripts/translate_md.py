@@ -199,8 +199,9 @@ def postprocess_mdx(body: str, protected: dict, admonitions: list,
                 orig_idx = int(idx_str)
                 if orig_idx in protected:
                     lines[i] = protected[orig_idx]
-            except (ValueError, KeyError):
-                pass  # Leave the comment if we can't restore
+            except (ValueError, KeyError) as e:
+                print(f"WARNING: Could not restore protected MDX line at position {i}: {e}")
+                print(f"  Marker: {stripped}")
             continue
 
         # Restore admonition markers
@@ -220,8 +221,9 @@ def postprocess_mdx(body: str, protected: dict, admonitions: list,
                             lines[i] = f"{adm['marker']}{adm['type']}"
                         else:
                             lines[i] = adm['marker']
-            except (ValueError, StopIteration):
-                pass
+            except (ValueError, StopIteration) as e:
+                print(f"WARNING: Could not restore admonition at position {i}: {e}")
+                print(f"  Marker: {stripped}")
             continue
 
     return '\n'.join(lines)
@@ -1082,6 +1084,13 @@ def cmd_reassemble(input_path: str, translated_json_path: str, output_path: str)
         sys.exit(1)
     except json.JSONDecodeError as e:
         print(f"ERROR: Invalid JSON in {translated_json_path}: {e}")
+        sys.exit(1)
+
+    required_keys = {"frontmatter_segments", "body_segments"}
+    if not isinstance(translated, dict) or not required_keys.issubset(translated.keys()):
+        print(f"ERROR: {translated_json_path} is not a valid translation segments file.")
+        print(f"  Expected keys: {required_keys}")
+        print(f"  Found keys: {set(translated.keys()) if isinstance(translated, dict) else type(translated)}")
         sys.exit(1)
 
     md_text, had_crlf = normalize_crlf(md_text)
