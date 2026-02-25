@@ -2,8 +2,8 @@
 sidebar_position: 5
 title: "Chapter 5: Spec-Driven Development with Claude Code"
 slides:
-  source: "https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-1/chapter-05/orchestrating-ai-development.pdf"
-  title: "Orchestrating AI Development"
+  source: "https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-1/chapter-05/spec-driven-development.pdf"
+  title: "Spec-Driven Development"
   height: 700
 ---
 
@@ -34,14 +34,16 @@ SDD is the **methodology** that orchestrates these capabilities into production-
 
 Spec-Driven Development is a methodology, not a single tool. Several frameworks implement it:
 
-| Tool              | Approach                                 | Notable Feature                              |
-| ----------------- | ---------------------------------------- | -------------------------------------------- |
-| **Amazon Kiro**   | Requirements → Design → Tasks            | Lightweight three-document workflow          |
-| **GitHub Spec-Kit** | Constitution → Specify → Plan → Tasks  | Open-source, multi-agent compatible          |
-| **Tessl**         | Spec-as-Source                           | Radical approach: code regenerated from specs |
-| **CC-SDD**        | Cross-tool                               | Works with Claude Code, Cursor, Gemini CLI   |
+| Tool                | Approach                              | Notable Feature                               |
+| ------------------- | ------------------------------------- | --------------------------------------------- |
+| **Amazon Kiro**     | Requirements → Design → Tasks         | Lightweight three-document workflow           |
+| **GitHub Spec-Kit** | Constitution → Specify → Plan → Tasks | Open-source, multi-agent compatible           |
+| **Tessl**           | Spec-as-Source                        | Radical approach: code regenerated from specs |
+| **CC-SDD**          | Cross-tool                            | Works with Claude Code, Cursor, Gemini CLI    |
 
 **This chapter uses native Claude Code capabilities only**—Memory (CLAUDE.md), Subagents, Tasks, and Hooks. No external frameworks required. The principles transfer to any SDD tool.
+
+Claude Code has absorbed much of the SDD tooling natively: CLAUDE.md serves as the project constitution, subagents handle parallel research, the interview pattern (via `ask_user_question`) enables refinement, and the native Tasks system handles implementation delegation with dependency ordering and atomic commits.
 
 ## 📚 Teaching Aid
 
@@ -51,6 +53,7 @@ By the end of this chapter, you'll be able to:
 
 - **Explain** why vibe coding fails for production systems
 - **Distinguish** between the three SDD implementation levels (Spec-First, Spec-Anchored, Spec-as-Source)
+- **Design** a project constitution that governs all specs, sessions, and subagents
 - **Execute** the four-phase SDD workflow using native Claude Code features
 - **Design** effective specifications that AI agents can implement reliably
 - **Apply** parallel research patterns with subagents
@@ -65,6 +68,7 @@ By the end of this chapter, you'll be able to:
 | **Spec-First**        | Force written artifact | "Your goal is to write a report/document"                     |
 | **Interview**         | Surface ambiguities    | "Use ask_user_question tool before we implement"              |
 | **Task Delegation**   | Complex implementation | "Use the task tool, each task by subagent, commit after each" |
+| **Constitution**      | Setting up a project   | "Write a CLAUDE.md constitution for my [project type]"        |
 | **Role Assignment**   | Set expectations       | "You are the main agent and your subagents are your devs"     |
 
 Remember the thesis: **General Agents BUILD Custom Agents.** SDD is HOW you orchestrate complex projects with Claude Code to produce production-quality systems.

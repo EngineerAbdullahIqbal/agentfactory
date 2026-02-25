@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: "The Four-Phase Workflow"
 description: "Understanding how SDD separates planning from execution through Research, Specification, Refinement, and Implementation phases"
 keywords:
@@ -14,7 +14,7 @@ keywords:
     "subagents",
   ]
 chapter: 5
-lesson: 3
+lesson: 4
 duration_minutes: 25
 
 # HIDDEN SKILLS METADATA
@@ -81,10 +81,10 @@ teaching_guide:
     - "If you had to stop working mid-project and hand it to someone else tomorrow, what would they need? How does that compare to what a spec provides?"
     - "When have you experienced 'approval fatigue' — reviewing every small AI output instead of reviewing a plan once?"
   teaching_tips:
-    - "Draw the four-phase diagram on the whiteboard and keep it visible throughout Lessons 4-7 as each phase gets its own deep-dive"
+    - "Draw the four-phase diagram on the whiteboard and keep it visible throughout Lessons 5-8 as each phase gets its own deep-dive"
     - "The Vibe Coding vs SDD comparison table is the key persuasion moment — linger on 'what persists' row"
     - "Use the 'one hour' comparison to counter the 'SDD is slow' objection before students raise it"
-    - "Point out that Lessons 4-7 each cover one phase in detail — this lesson is the map, not the territory"
+    - "Point out that Lessons 5-8 each cover one phase in detail — this lesson is the map, not the territory"
   assessment_quick_check:
     - "Name the four SDD phases in order and state the deliverable of each"
     - "What happens if you skip the Refinement phase and go straight from Specification to Implementation?"
@@ -97,6 +97,8 @@ In Lesson 1, you learned that SDD exists because vibe coding fails at scale. The
 The answer is a structured workflow that treats Claude not as a solo coder who figures everything out through conversation, but as a **development team** you orchestrate. You provide direction. Multiple agents investigate. A comprehensive specification emerges. Implementation follows the spec, not the other way around.
 
 This lesson introduces the four-phase workflow that makes SDD work. By the end, you'll understand why this sequence matters and how it prevents the mid-implementation pivots that derail vibe coding projects.
+
+Before diving into the phases, note that Phase 1 research and all subsequent phases operate within the governance boundaries established by your project constitution (Lesson 3). The constitution defines _how_ you build; the phases define _what_ you do.
 
 ## The Four Phases
 
@@ -276,7 +278,7 @@ Think of a real task you need to accomplish with Claude Code—something you'd n
 - What's the logical sequence?
 - Which tasks could run in parallel?
 
-You don't need to execute this yet—Lessons 4-7 cover each phase in detail. The goal is to start thinking in phases rather than jumping straight to implementation.
+You don't need to execute this yet—Lessons 5-8 cover each phase in detail. The goal is to start thinking in phases rather than jumping straight to implementation.
 
 ## Try With AI
 
@@ -316,7 +318,6 @@ List the actual artifacts, not just the process.
 ```
 
 **What you're learning:** Vibe coding produces a draft that might not fit your audience. SDD produces: research.md (what CTOs need), report-spec.md (structure decisions), and sections written to spec. The artifacts persist; the conversation doesn't.
-
 
 ## Flashcards Study Aid
 

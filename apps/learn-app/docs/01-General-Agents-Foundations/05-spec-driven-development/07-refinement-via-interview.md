@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 title: "Phase 3: Refinement via Interview"
 description: "Surface design decisions and ambiguities before implementation through structured AI interviews using the ask_user_question tool"
 keywords:
@@ -13,7 +13,7 @@ keywords:
     "implementation planning",
   ]
 chapter: 5
-lesson: 6
+lesson: 7
 duration_minutes: 20
 
 # HIDDEN SKILLS METADATA
@@ -80,7 +80,7 @@ teaching_guide:
     - "Think of a project where a 'small detail' you didn't specify upfront caused a major rework — which ambiguity category did it fall into?"
     - "Why is it harder to find your own unstated assumptions than to find someone else's?"
   teaching_tips:
-    - "Have students run the interview prompt live on their Lesson 5 spec — the experience of Claude finding real gaps is more convincing than any lecture"
+    - "Have students run the interview prompt live on their Lesson 6 spec — the experience of Claude finding real gaps is more convincing than any lecture"
     - "The cost multiplier table is worth dwelling on — ask students to estimate their own 'most expensive late-found ambiguity'"
     - "Walk through the report-spec interview example step by step: question → answer → spec update. Show how three questions prevented three rewrites"
     - "The 'when to stop' section prevents analysis paralysis — emphasize that implementation details are not design decisions"
@@ -93,7 +93,7 @@ teaching_guide:
 
 Every ambiguity you find before coding saves 10x the time it would cost to fix mid-implementation.
 
-In Lesson 4, you learned to write effective specifications. But even well-structured specs contain hidden assumptions. You know what "conflict resolution" means in your head. Does Claude? You imagine the error handling approach. Did you write it down?
+In Lesson 6, you learned to write effective specifications. But even well-structured specs contain hidden assumptions. You know what "conflict resolution" means in your head. Does Claude? You imagine the error handling approach. Did you write it down?
 
 This lesson teaches the refinement phase: a structured interview where Claude surfaces every design decision that would otherwise become a mid-implementation pivot. The result is a specification precise enough that implementation becomes execution of a well-understood plan.
 
@@ -356,7 +356,6 @@ For each gap:
 ```
 
 **What you're learning:** Perfect specs don't exist. The goal is specs good enough that writing doesn't require restructuring. Whether to use bullet points vs prose can stay flexible; whether to include a security section cannot.
-
 
 ## Flashcards Study Aid
 

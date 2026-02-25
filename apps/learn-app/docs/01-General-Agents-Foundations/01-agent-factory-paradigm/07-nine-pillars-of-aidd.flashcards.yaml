@@ -32,7 +32,7 @@ cards:
   type: recall
   difficulty: basic
   front: Name any 4 of the 9 enabling pillars of AIDD?
-  back: AI CLI Agents, Markdown as Programming Language, MCP Standard, AI-First IDEs, Linux Universal Dev Env, TDD, SDD with SpecKit Plus, Composable Vertical Skills, Universal Cloud Deployment.
+  back: AI CLI Agents, Markdown as Programming Language, MCP Standard, AI-First IDEs, Linux Universal Dev Env, TDD, SDD with Claude Code, Composable Vertical Skills, Universal Cloud Deployment.
   tags:
   - aidd
   - nine-pillars
@@ -142,7 +142,7 @@ cards:
 - id: ch01-nine-pillars-aidd-016
   type: recall
   difficulty: intermediate
-  front: What barrier does Pillar 7 (SDD with SpecKit Plus) remove?
+  front: What barrier does Pillar 7 (SDD with Claude Code) remove?
   back: Ad-hoc development chaos and requirements drift between specs and implementation.
   tags:
   - aidd

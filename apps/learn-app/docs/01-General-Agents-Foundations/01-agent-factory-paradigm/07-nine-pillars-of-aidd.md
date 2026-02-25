@@ -160,7 +160,7 @@ The nine pillars are concrete technologies and practices that remove specific ba
 
 **Barrier it removes**: The massive cognitive load of translating human ideas into rigid syntax. When Markdown specifications become the source of truth, the barrier between idea and implementation shrinks dramatically.
 
-**Key tools**: This is a methodology enabled by AI agents. SpecKit Plus (Pillar 7) provides the framework for writing and managing Markdown specifications.
+**Key tools**: This is a methodology enabled by AI agents. Claude Code's native SDD capabilities (Pillar 7) provide the framework for writing and managing Markdown specifications.
 
 **How it integrates**: The bridge between human intent and AI execution. Depends on Pillar 1 (AI agents capable of reading natural language) and enables Pillar 7 (SDD workflow). Pillar 4 (AI-First IDEs) enhances the spec-writing experience.
 
@@ -204,13 +204,13 @@ The nine pillars are concrete technologies and practices that remove specific ba
 
 **How it integrates**: Provides the quality gate for Pillar 1 (AI-generated code) and structures the workflow of Pillar 7 (SDD). Connects to Pillar 9 (cloud deployment) through CI/CD pipelines.
 
-### Pillar 7: Specification-Driven Development with SpecKit Plus
+### Pillar 7: Specification-Driven Development
 
-**What it is**: A professional methodology where Markdown specifications are the source of truth for all development work. SpecKit Plus provides templates, workflows, and tools for managing specs, plans, and tasks in a structured way.
+**What it is**: A professional methodology where Markdown specifications are the source of truth for all development work. Claude Code's native capabilities—CLAUDE.md as the project constitution, subagents for research, structured interviews for refinement, and the Tasks system for implementation—provide the complete SDD workflow.
 
 **Barrier it removes**: Ad-hoc development chaos and requirements drift. SDD creates a standardized format for specifications that both humans can read and AI agents can execute.
 
-**Key tools**: SpecKit Plus framework (specification templates, CLI tools, GitHub Actions integration)
+**Key tools**: Claude Code's native SDD capabilities (CLAUDE.md, subagents, tasks)
 
 **How it integrates**: Orchestrates all other pillars. Uses Pillar 2 (Markdown specs), leverages Pillar 1 (AI agents for implementation), enforces Pillar 6 (TDD for quality), and deploys via Pillar 9 (cloud infrastructure).
 
@@ -237,11 +237,13 @@ The nine pillars are concrete technologies and practices that remove specific ba
 ### How Pillars Integrate: The System Effect
 
 Here's what makes this system powerful: the pillars depend on each other. Consider Pillar 8 (Composable Vertical Skills). You can't effectively use domain expertise libraries without:
+
 - Pillar 3 (MCP) to integrate tools
 - Pillar 7 (Spec-Driven Development) to structure their application
 - Pillar 2 (Markdown as Programming) to define what they should do
 
 Or take Pillar 1 (AI Coding Agents). They're far more effective with:
+
 - Pillar 4 (AI-First IDEs) providing the interface
 - Pillar 6 (TDD) ensuring generated code is correct
 - Pillar 3 (MCP) giving them access to tools
@@ -287,18 +289,21 @@ The key insight: These pillars work together. You don't memorize every DevOps pa
 ### Real M-Shaped Profiles in Action
 
 **Profile 1: The Vertical SaaS Builder**
+
 - **Deep Expertise**: Healthcare domain knowledge + Full-stack development + MLOps + Product design
 - **What This Enables**: Building a specialized medical scheduling platform with AI-powered patient routing
 - **Traditional Team**: Domain expert, backend engineer, frontend engineer, ML engineer, product designer (5 people)
 - **With AIDD**: One developer maintains deep expertise across all areas
 
 **Profile 2: The Platform Engineer**
+
 - **Deep Expertise**: Backend architecture + DevOps + Cloud infrastructure + Security
 - **What This Enables**: Designing, implementing, deploying, and securing a multi-tenant SaaS platform
 - **Traditional Team**: Backend architect, DevOps engineer, infrastructure specialist, security engineer (4 people)
 - **With AIDD**: One engineer orchestrates the entire platform
 
 **Profile 3: The AI Product Developer**
+
 - **Deep Expertise**: Frontend (React) + ML model integration + API design + User research
 - **What This Enables**: Building AI-powered user interfaces that integrate ML models with great UX
 - **Traditional Team**: Frontend engineer, ML engineer, backend engineer, UX researcher (4 people)
@@ -328,12 +333,12 @@ Here's the reality: **Partial adoption creates gaps; complete adoption creates a
 
 A developer who masters six of nine pillars is competent. But the three missing pillars become bottlenecks. Maybe they excel at cloud infrastructure and AI orchestration but struggle with quality automation—their deployments are fast but fragile. Or they're brilliant at full-stack development but weak on operations—their applications work beautifully until production traffic hits.
 
-| Aspect | 6/9 Pillars | 9/9 Pillars |
-|--------|-------------|-------------|
-| **Development Speed** | Fast in familiar areas, slow in gaps | Consistently fast across entire workflow |
-| **Quality** | Strong in some layers, brittle in others | Resilient across architecture |
-| **Problem Scope** | Defer to specialists for gaps | Handle end-to-end independently |
-| **Competitive Position** | Competent contributor | Strategic asset |
+| Aspect                   | 6/9 Pillars                              | 9/9 Pillars                              |
+| ------------------------ | ---------------------------------------- | ---------------------------------------- |
+| **Development Speed**    | Fast in familiar areas, slow in gaps     | Consistently fast across entire workflow |
+| **Quality**              | Strong in some layers, brittle in others | Resilient across architecture            |
+| **Problem Scope**        | Defer to specialists for gaps            | Handle end-to-end independently          |
+| **Competitive Position** | Competent contributor                    | Strategic asset                          |
 
 The nine pillars aren't a menu where you pick favorites. They're an integrated system where each pillar amplifies the others.
 
@@ -390,7 +395,7 @@ The Nine Pillars of AIDD are:
 4. AI-First IDEs
 5. Linux Universal Dev Environment
 6. Test-Driven Development
-7. Specification-Driven Development with SpecKit Plus
+7. Specification-Driven Development
 8. Composable Vertical Skills
 9. Universal Cloud Deployment
 
@@ -435,7 +440,6 @@ You now understand the complete system: what AIDD is (nine characteristics), how
 But understanding the system isn't enough—you need to see it in action. In the next lesson, we'll explore how these pillars come together in real development workflows, showing you concrete examples of specification-driven development from idea to deployment.
 
 The paradigm shift isn't about using individual AI tools better—it's about orchestrating a complete system where human creativity and AI capabilities merge into something neither can achieve alone. Maya's one-week platform wasn't magic; it was the system working as designed. Your journey is learning to work within that same system.
-
 
 ## Flashcards Study Aid
 

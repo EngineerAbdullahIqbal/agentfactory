@@ -312,7 +312,6 @@ These provide the **mechanical structure** (file organization, YAML, formatting)
 ## Research Foundation
 
 **Based on**:
-- `papers/compass_artifact_wf-411b5e9e-2fa8-4d2a-9086-5d63431afb98_text_markdown.md`
 - Anthropic Skills blog post + Context Engineering guide
 - Persona + Questions + Principles pattern (activates reasoning 83% better)
 - Constitutional AI (Bai et al. 2022) - process-based training

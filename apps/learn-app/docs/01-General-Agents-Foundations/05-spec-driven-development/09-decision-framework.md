@@ -1,5 +1,5 @@
 ---
-sidebar_position: 8
+sidebar_position: 9
 title: "The Decision Framework"
 description: "Know when SDD adds value versus when simpler approaches work better, and develop the judgment to choose appropriately"
 keywords:
@@ -13,7 +13,7 @@ keywords:
     "direct implementation",
   ]
 chapter: 5
-lesson: 8
+lesson: 9
 duration_minutes: 20
 
 # HIDDEN SKILLS METADATA
@@ -94,7 +94,7 @@ teaching_guide:
 
 SDD is a power tool, not a universal solution. The wisdom is knowing when NOT to use it.
 
-In Lesson 6, you learned the full implementation workflow: task delegation, context isolation, atomic commits. You now have the complete SDD toolkit. But a toolkit isn't valuable if you use a sledgehammer for every nail.
+In Lesson 8, you learned the full implementation workflow: task delegation, context isolation, atomic commits. You now have the complete SDD toolkit. But a toolkit isn't valuable if you use a sledgehammer for every nail.
 
 This lesson develops your judgment. By the end, you'll recognize task characteristics that signal "use SDD" versus "skip the ceremony." You'll learn the lightweight spec pattern for borderline cases. And you'll understand the common critiques of SDD so you can navigate them thoughtfully.
 
@@ -305,7 +305,6 @@ If writing reveals complexity, note what research we'd need.
 ```
 
 **What you're learning:** Lightweight specs are your probe. "Blog post about AI adoption" sounds simple until you write constraints: "Don't reveal vendor pricing" (wait, can we share ROI without that?), "Don't criticize tools we evaluated" (or do we want honest comparisons?). The spec reveals hidden decisions.
-
 
 ## Flashcards Study Aid
 

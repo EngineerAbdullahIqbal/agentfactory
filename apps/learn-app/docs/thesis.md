@@ -55,7 +55,7 @@ What remains: Intent. Verification. Outcome.
 
 ## 📚 Teaching Aid
 
-<PDFViewer src="https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-0/chapter-00/the-agent-factory-thesis.pdf" title="The Agent Factory Thesis" height={700} />
+<PDFViewer src="https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-0/chapter-00/agent-factory-thesis.pdf" title="The Agent Factory Thesis" height={700} />
 
 ---
 

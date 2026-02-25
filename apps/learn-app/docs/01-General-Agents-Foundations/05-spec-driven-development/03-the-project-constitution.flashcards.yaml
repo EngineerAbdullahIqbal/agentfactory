@@ -1,0 +1,98 @@
+deck:
+  id: "ch05-03-project-constitution"
+  title: "The Project Constitution"
+  description: "How CLAUDE.md files establish governance principles that every spec, session, and subagent inherits automatically."
+  tags: ["sdd", "constitution", "claude-md", "governance"]
+  version: 1
+
+cards:
+  - id: "ch05-03-project-constitution-001"
+    front: "What is a project constitution in Claude Code?"
+    back: "A CLAUDE.md file at the project root capturing non-negotiable principles that Claude reads automatically every session."
+    tags: ["constitution", "definition"]
+    difficulty: "basic"
+
+  - id: "ch05-03-project-constitution-002"
+    front: "A team's spec says 'build a REST endpoint.' Claude follows it perfectly but produces 80-line functions with no type hints. Why?"
+    back: "Specs define WHAT to build, not HOW. Without a constitution enforcing function length limits and type hints, Claude fills gaps with its own defaults."
+    tags: ["constitution", "spec-gap"]
+    difficulty: "intermediate"
+    why: "What other coding standards might silently degrade if left out of a constitution?"
+
+  - id: "ch05-03-project-constitution-003"
+    front: "In SDD, what is the difference between a specification and a constitution?"
+    back: "Spec: describes a feature (WHAT to build).\nConstitution: defines immutable principles (HOW everything must be built)."
+    tags: ["constitution", "specification", "distinction"]
+    difficulty: "basic"
+
+  - id: "ch05-03-project-constitution-004"
+    front: "How does a constitution's loading behavior differ from a specification's?"
+    back: "Constitutions load automatically every session without invocation. Specs are referenced only when working on a specific feature — they require explicit context."
+    tags: ["constitution", "automatic-loading"]
+    difficulty: "intermediate"
+    why: "What risks arise if constitutional principles had to be manually loaded each session?"
+
+  - id: "ch05-03-project-constitution-005"
+    front: "What are the two levels of constitution that Claude Code supports?"
+    back: "1. Project-level (./CLAUDE.md)\n2. Global-level (~/.claude/CLAUDE.md)"
+    tags: ["constitution", "hierarchy"]
+    difficulty: "basic"
+
+  - id: "ch05-03-project-constitution-006"
+    front: "When global and project constitutions conflict, which takes precedence?"
+    back: "Project constitution overrides global where they conflict."
+    tags: ["constitution", "composition"]
+    difficulty: "basic"
+
+  - id: "ch05-03-project-constitution-007"
+    front: "What are the five standard categories in a project constitution?"
+    back: "1. Architecture principles\n2. Technology constraints\n3. Code quality standards\n4. Security requirements\n5. Workflow rules"
+    tags: ["constitution", "categories"]
+    difficulty: "intermediate"
+
+  - id: "ch05-03-project-constitution-008"
+    front: "Why must the constitution exist before Phase 1 research begins?"
+    back: "Research without governance boundaries may explore architecturally incompatible patterns. Contradictions only surface during implementation, when they're expensive to fix."
+    tags: ["constitution", "timing", "sdd-workflow"]
+    difficulty: "intermediate"
+    why: "What happens to a spec built on research that violates your architectural standards?"
+
+  - id: "ch05-03-project-constitution-009"
+    front: "Two subagents implement tasks in parallel with the same spec but no constitution. One uses async/await, the other uses callbacks. Why?"
+    back: "Without shared governance, each agent fills spec gaps with its own defaults. A constitution enforces identical patterns across all agents, preventing inconsistency."
+    tags: ["constitution", "cross-agent", "governance"]
+    difficulty: "advanced"
+    why: "How would you detect this inconsistency after the fact without a constitution?"
+
+  - id: "ch05-03-project-constitution-010"
+    front: "Constitution describes structural codes. Spec describes what the building contains. What analogy does this parallel?"
+    back: "Building codes vs architectural blueprints — codes constrain every building, blueprints describe one specific building."
+    tags: ["constitution", "analogy"]
+    difficulty: "basic"
+
+  - id: "ch05-03-project-constitution-011"
+    front: "Why should constitutional rules include a 'why' explanation, not just the rule itself?"
+    back: "A rule with reasoning lets Claude extend the principle correctly to situations the constitution didn't explicitly anticipate. Without 'why,' Claude can only follow the letter, not the intent."
+    tags: ["constitution", "rule-design"]
+    difficulty: "advanced"
+    why: "What kind of constitutional rule would be hardest for Claude to extend without a 'why'?"
+
+  - id: "ch05-03-project-constitution-012"
+    front: "At what three filesystem locations does Claude read CLAUDE.md files?"
+    back: "1. Global (~/.claude/CLAUDE.md)\n2. Project root (./CLAUDE.md)\n3. Subdirectories relevant to current context"
+    tags: ["claude-md", "file-locations"]
+    difficulty: "intermediate"
+
+  - id: "ch05-03-project-constitution-013"
+    front: "A task reveals that a constitutional principle needs revision. When should you update the constitution?"
+    back: "After finishing the current task, never mid-task. Changing rules during execution produces inconsistent output because some work follows the old standard and some the new."
+    tags: ["constitution", "maintenance"]
+    difficulty: "intermediate"
+    why: "What specific inconsistency would result from updating a naming convention mid-implementation?"
+
+  - id: "ch05-03-project-constitution-014"
+    front: "How does standard drift manifest differently with and without a constitution?"
+    back: "Without: drift accumulates silently across sessions and agents. With: drift surfaces as explicit constitution violations that can be detected and fixed."
+    tags: ["constitution", "standard-drift"]
+    difficulty: "advanced"
+    why: "Which of the five constitution categories would show drift earliest in a growing project?"

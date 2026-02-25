@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 title: "Phase 1: Parallel Research with Subagents"
 description: "Transform hours of sequential investigation into minutes of parallel discovery using Claude's subagent architecture"
 keywords:
@@ -13,7 +13,7 @@ keywords:
     "research pattern",
   ]
 chapter: 5
-lesson: 4
+lesson: 5
 duration_minutes: 30
 
 # HIDDEN SKILLS METADATA
@@ -91,7 +91,7 @@ teaching_guide:
 
 # Phase 1: Parallel Research with Subagents
 
-In Lesson 3, you learned the four-phase SDD workflow. Now you'll execute the first phase: research that transforms hours of sequential reading into parallel minutes.
+In Lesson 4, you learned the four-phase SDD workflow. Now you'll execute the first phase: research that transforms hours of sequential reading into parallel minutes.
 
 Here's the economics that makes this lesson worth your time. That reference implementation you've been meaning to understand? The library documentation you've been piecing together? The architecture decisions scattered across multiple files? What would take you four hours of sequential reading, Claude can investigate in twenty minutes using parallel research agents.
 
@@ -418,7 +418,6 @@ would a CTO ask that our research doesn't answer?
 ```
 
 **What you're learning:** Research isn't just collecting data—it's identifying gaps. CTOs might ask: "How do we measure success?" "What's the learning curve?" "How do we handle security review?" If research.md doesn't answer these, the spec needs to address how we'll fill them.
-
 
 ## Flashcards Study Aid
 

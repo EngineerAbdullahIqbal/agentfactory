@@ -1,5 +1,5 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 title: "Phase 4: Task-Based Implementation"
 description: "Transform specifications into parallel work streams using Claude Code's task system where subagents execute with context isolation and atomic commits"
 keywords:
@@ -15,7 +15,7 @@ keywords:
     "task system",
   ]
 chapter: 5
-lesson: 7
+lesson: 8
 duration_minutes: 35
 
 # HIDDEN SKILLS METADATA
@@ -107,7 +107,7 @@ teaching_guide:
 
 "You are the main agent and your subagents are your devs."
 
-This single prompt transforms Claude from a solo coder into a development team. In Lesson 5, you refined your specification through interview until ambiguities disappeared. Now you have a spec precise enough that implementation becomes execution of a well-understood plan.
+This single prompt transforms Claude from a solo coder into a development team. In Lesson 7, you refined your specification through interview until ambiguities disappeared. Now you have a spec precise enough that implementation becomes execution of a well-understood plan.
 
 But here's the problem: even with a perfect spec, a single AI context accumulates errors. Decisions made in minute 5 affect code written in minute 45. A wrong assumption early contaminates everything downstream. And when something breaks after an hour of work, you're left debugging a massive context with no clear rollback point.
 
@@ -326,7 +326,6 @@ subagents. Commit each independently when complete.
 ```
 
 **What you're learning:** Independent sections can be written simultaneously. If "Tool Comparison" and "Implementation Risks" don't cross-reference, parallel execution halves the time. The spec keeps both subagents aligned on audience, tone, and depth.
-
 
 ## Flashcards Study Aid
 

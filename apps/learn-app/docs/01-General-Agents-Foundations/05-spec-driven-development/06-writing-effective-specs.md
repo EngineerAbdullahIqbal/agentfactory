@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 title: "Phase 2: Writing Effective Specifications"
 description: "Create specifications that AI agents can implement reliably"
 keywords:
@@ -13,7 +13,7 @@ keywords:
     "spec-driven development",
   ]
 chapter: 5
-lesson: 5
+lesson: 6
 duration_minutes: 30
 
 # HIDDEN SKILLS METADATA
@@ -390,7 +390,6 @@ Rewrite each criterion so I could verify it:
 ```
 
 **What you're learning:** Vague criteria let anything pass. "Each tool section includes pricing and limitations" is testable. "CTO can justify tool selection to their board" defines actual success.
-
 
 ## Flashcards Study Aid
 

@@ -1,15 +1,15 @@
 ---
 title: "Practical SDD Exercises"
 practice_exercise: ch5-sdd
-sidebar_position: 9
+sidebar_position: 10
 chapter: 5
-lesson: 9
+lesson: 10
 duration_minutes: 120
 
 # PEDAGOGICAL LAYER METADATA
 primary_layer: "Layer 1"
 layer_progression: "L1 (Manual Foundation)"
-layer_1_foundation: "Hands-on practice applying Lessons 01-08 SDD concepts through 27 guided exercises"
+layer_1_foundation: "Hands-on practice applying Lessons 01-09 SDD concepts through 27 guided exercises"
 layer_2_collaboration: "N/A"
 layer_3_intelligence: "N/A"
 layer_4_capstone: "N/A"
@@ -51,7 +51,7 @@ learning_objectives:
 
 cognitive_load:
   new_concepts: 3
-  assessment: "3 concepts (spec writing, research-driven refinement, task delegation) — within B1 limit. Exercises reinforce existing L01-L08 knowledge through hands-on application."
+  assessment: "3 concepts (spec writing, research-driven refinement, task delegation) — within B1 limit. Exercises reinforce existing L01-L09 knowledge through hands-on application."
 
 differentiation:
   extension_for_advanced: "Complete all 3 capstone projects; attempt exercises without starter prompts"
