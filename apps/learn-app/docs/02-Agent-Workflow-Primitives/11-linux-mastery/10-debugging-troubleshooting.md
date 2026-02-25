@@ -1,8 +1,8 @@
 ---
-sidebar_position: 11
+sidebar_position: 10
 chapter: 11
-lesson: 11
-title: "Lesson 11: Debugging & Troubleshooting"
+lesson: 10
+title: "Lesson 10: Debugging & Troubleshooting"
 description: "Diagnose production agent failures systematically using journalctl, network diagnosis, disk monitoring, and process debugging. When your Digital FTE stops working, you'll know exactly where to look."
 keywords: ["debugging", "troubleshooting", "journalctl", "logs", "network diagnostics", "disk monitoring", "strace", "lsof", "triage", "agent debugging"]
 duration_minutes: 60
@@ -93,9 +93,9 @@ teaching_guide:
   session_title: "Production Agent Deployment"
   key_points:
     - "The triage methodology (logs -> network -> disk -> processes) is a systematic approach that prevents random guessing — follow the order every time"
-    - "journalctl filtering (--since, --until, -p, -u) is the systemd equivalent of the grep log analysis from lesson 7 — same concept, systemd-specific tools"
-    - "Disk space exhaustion from unrotated logs (lesson 7) is the #1 silent killer of production agents — df -h and du -sh are the first diagnostic pair"
-    - "The layered network diagnosis (localhost -> port binding -> DNS -> remote) reuses curl and ss from lesson 9 in a structured diagnostic sequence"
+    - "journalctl filtering (--since, --until, -p, -u) is the systemd equivalent of the grep log analysis from lesson 6 — same concept, systemd-specific tools"
+    - "Disk space exhaustion from unrotated logs (lesson 6) is the #1 silent killer of production agents — df -h and du -sh are the first diagnostic pair"
+    - "The layered network diagnosis (localhost -> port binding -> DNS -> remote) reuses curl and ss from lesson 8 in a structured diagnostic sequence"
   misconceptions:
     - "Students jump to restarting the service instead of reading logs first — emphasize that restarting without understanding the failure means the same crash will happen again"
     - "Students think strace is required for every debugging session — strace is a last resort for when logs reveal nothing; most problems are caught at the log or network layer"
@@ -124,15 +124,45 @@ version: "2.0.0"
 
 # Debugging & Troubleshooting
 
-Your agent failed. Now what?
+It is 3:47 AM and Alex's phone buzzes. The alert says their agent service -- the one they deployed to production for the first time just two days ago -- is down. Customers are hitting a dead endpoint. Alex's pulse spikes, and their first instinct is the instinct everyone has: restart the service. They SSH in and run `sudo systemctl restart my-agent`. The service comes back. Forty-five seconds later, it crashes again. Same error, same dead endpoint.
 
-In Lesson 10, you deployed `agent_main.py` as a systemd service with restart policies, resource limits, and a health check script. That infrastructure keeps your agent running through routine crashes. But when something genuinely breaks -- a memory leak, a full disk, a network timeout at 3 AM -- automatic restarts won't help. You need to find the root cause.
+So Alex does the thing that separates debugging from guessing. They stop restarting and start reading:
 
-Production debugging is not about memorizing commands. It is about **systematic diagnosis**: gathering evidence, isolating the problem, and fixing the root cause instead of blindly restarting the service.
+```bash
+journalctl -u my-agent -p err --since "30 minutes ago"
+```
 
-By the end of this lesson, you will have a four-phase triage methodology and the specific tools to execute each phase. When your Digital FTE fails, you will know exactly where to look.
+The output is three lines long. The third line says: `No space left on device`. The agent was not broken. The code had not changed. The disk had filled up overnight because nobody configured log rotation, and the agent's verbose output had quietly consumed every remaining byte on `/dev/sda1`. A `df -h` confirmed it: 100% usage. Alex cleared the old logs, set up rotation, and the service stayed up. Total time from "reading the logs" to "root cause fixed": four minutes. Total time spent restarting and hoping: twelve wasted minutes of escalating panic.
+
+This pattern repeats everywhere. The restart reflex feels productive -- something is happening, the service is coming back -- but it fixes nothing when the underlying cause persists. A full disk stays full after a restart. A memory leak leaks again. An expired certificate stays expired. Reading the logs is not the slow path. It is the only path that leads to the actual problem.
+
+In Lesson 9, you deployed `agent_main.py` as a systemd service with restart policies, resource limits, and a health check script. That infrastructure keeps your agent running through routine crashes. But when something genuinely breaks, automatic restarts will not save you. This lesson teaches systematic diagnosis. Restarting is guessing. Reading logs is engineering.
+
+:::tip[The principle]
+Restart is a reflex. Root cause analysis is a skill. This lesson builds the skill.
+:::
 
 ---
+
+```
+Agent not responding?
+│
+├─► 1. CHECK LOGS first
+│       journalctl -u agent-name -n 50
+│       Exit condition: found error → fix it
+│
+├─► 2. CHECK NETWORK (if logs look clean)
+│       curl localhost:PORT  →  ss -tlnp  →  ping  →  curl remote
+│       Exit condition: found blocked layer → fix it
+│
+├─► 3. CHECK DISK (if network looks fine)
+│       df -h  →  du -sh /var/log/
+│       Exit condition: disk full → rotate logs
+│
+└─► 4. CHECK PROCESSES (if all else clear)
+        ps aux | grep agent  →  strace -p PID
+        Exit condition: found hung call → restart
+```
 
 ## Structured Triage Methodology
 
@@ -155,7 +185,7 @@ Agent fails → Check logs (journalctl)
               Check process (ps, strace, lsof)
 ```
 
-The rest of this lesson teaches the tools for each phase, applied to the `my-agent` service you created in [Lesson 10](10-process-control-systemd.md).
+The rest of this lesson teaches the tools for each phase, applied to the `my-agent` service you created in [Lesson 9](09-process-control-systemd.md).
 
 ---
 
@@ -286,6 +316,10 @@ This gives you only errors from your service in the last hour -- the exact infor
 | `journalctl -u my-agent --since "2026-02-11 14:00" --until "2026-02-11 15:00"` | Specific time window |
 | `journalctl -u my-agent -b` | Since last boot |
 
+:::note[You don't need to memorize this]
+Debugging commands are reference material, not memory tests. What you are learning here is the *triage order* -- logs first, then network, then disk, then processes. The specific flags you will look up. The framework you will internalize.
+:::
+
 ### Real-World Scenario: MemoryError Crash
 
 Your agent has been running fine for three days. This morning, it shows `failed` in `systemctl status`. Here is how you diagnose it:
@@ -325,13 +359,13 @@ systemctl show my-agent --property=MemoryMax
 MemoryMax=536870912
 ```
 
-The service is capped at 512 MB by the `MemoryMax` directive from Lesson 10. The agent tried to allocate beyond that limit. You now have two paths: increase the limit or optimize your agent's memory usage.
+The service is capped at 512 MB by the `MemoryMax` directive from Lesson 9. The agent tried to allocate beyond that limit. You now have two paths: increase the limit or optimize your agent's memory usage.
 
 ---
 
 ## Phase 2: Network Diagnosis
 
-If logs show connection errors, timeouts, or "Connection refused" messages, the problem is in the network layer. Diagnose from local to remote -- this builds on the networking foundations from Lesson 9.
+If logs show connection errors, timeouts, or "Connection refused" messages, the problem is in the network layer. Diagnose from local to remote -- this builds on the networking foundations from Lesson 8.
 
 ### Layer 1: Is the Local Service Responding?
 
@@ -689,6 +723,11 @@ If this number grows steadily over time, the agent is leaking file descriptors.
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `journalctl -u myagent --since '30 minutes ago' -p err`. Filtered to recent errors only, this command gives you the signal without the noise. Most production incidents resolve within the first 10 lines it returns.
+:::
+
 ## Exercises
 
 ### Exercise 1: Find Error-Level Log Messages
@@ -745,7 +784,7 @@ LISTEN   0   128   0.0.0.0:8000    0.0.0.0:*   users:(("uvicorn",pid=12400,fd=7)
 
 Verify that your agent (uvicorn on port 8000) appears in the list. If it does not, the service is not running -- check `systemctl status my-agent` and review the logs.
 
-For a comprehensive health check that combines service status, health endpoint, and resource usage, see [Health Check Script](10-process-control-systemd.md#agent-health-checks).
+For a comprehensive health check that combines service status, health endpoint, and resource usage, see [Health Check Script](09-process-control-systemd.md#agent-health-checks).
 
 ---
 
@@ -766,3 +805,7 @@ For a comprehensive health check that combines service status, health endpoint, 
 :::note Safety Reminder
 When debugging on production servers, prefer read-only diagnostic commands (`journalctl`, `df`, `ps`, `ss`) before running anything that modifies state. Never run `strace` on a production process during peak traffic -- it adds overhead to every system call. Use `strace -c` for a summary instead of full tracing. Always check `systemctl status` and logs before restarting a service, so you capture the evidence before it is lost.
 :::
+
+---
+
+You now have a systematic methodology for diagnosing any agent failure. But diagnosis is reactive -- you wait for something to break. The next lesson asks a different question: what if you could turn every manual operation into a reusable pattern before it breaks? When the same 40-line deployment sequence works the third time because you finally wrote it down once, that's workflow integration. That's what's next.

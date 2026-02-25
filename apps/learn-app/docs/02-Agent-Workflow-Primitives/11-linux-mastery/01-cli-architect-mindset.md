@@ -106,11 +106,19 @@ version: "2.0.0"
 
 # The CLI Architect Mindset
 
-When you build a Digital FTE -- an AI agent that works for your customers around the clock -- where does it actually live? Not on your laptop. Not behind a graphical interface with buttons and menus. Your agents live on Linux servers in the cloud, accessed through command-line interfaces. They run in Docker containers, cloud VMs, and remote systems where graphical desktops do not exist.
+Aisha shipped her first AI customer-service agent on a Tuesday afternoon. It ran perfectly on her laptop -- answered questions, looked up order status, escalated edge cases to a human. She pushed it to a cloud server, watched the health check go green, and closed her laptop feeling like a real engineer.
 
-This reality makes command-line mastery non-negotiable. The terminal is not a relic from the 1970s that developers tolerate out of tradition. It is the native interface for every server your agents will ever run on. Imagine managing a team of employees who only accept written instructions -- you need to be precise, clear, and efficient. That is the CLI.
+Three days later, at 11pm, she got the email. A customer had been waiting forty minutes for a response. The agent was down. Aisha grabbed her phone, opened an SSH connection from her tablet, and stared at a blinking cursor on a black screen. No buttons. No file explorer. No right-click menus. Just a prompt waiting for a command she did not know how to type. She tried the one thing she remembered -- restarted the process. The agent came back. Forty-five seconds later, it crashed again. Same error, whatever the error was. She had no idea where the log files lived, no idea which configuration had drifted, no idea how to even find out what directory she was standing in.
 
-In this lesson, you will discover the Linux filesystem through hands-on exploration. You will open a terminal, find out where you are, look around, move between directories, and build the mental model that makes all future Linux work intuitive. Every command you run will show its output so you can verify what happened. By the end, you will navigate with confidence -- and understand why this skill is foundational to everything else in this chapter.
+That moment -- staring at a terminal with a downed agent and no map of the filesystem -- is where CLI skills stop being "nice to have" and become the difference between an agent that recovers in minutes and one that stays down until morning. Aisha's agent was well-built. Her deployment was sound. But she had never learned to navigate the server it lived on, and that single gap turned a five-minute fix into a three-hour ordeal.
+
+Every AI agent you build will end up on a Linux server. Not on your laptop with its comfortable desktop and drag-and-drop file manager. On a headless machine in the cloud, accessible only through a command-line interface. Docker containers, cloud VMs, remote systems -- none of them have graphical desktops. The terminal is not a relic from the 1970s. It is the native interface for every server your agents will ever run on.
+
+In Chapter 6, Principle 1 established that Bash is the Key -- the single capability that transforms AI from a passive advisor into an active agent. Claude uses Bash to act. You need Bash to deploy, manage, and rescue the agents that use it. This lesson is where that key becomes real in your hands. You will open a terminal, find out where you are, look around, move between directories, and build the mental model that makes all future Linux work intuitive. Every command you run will show its output so you can verify what happened. By the end, you will navigate with confidence -- and Aisha's midnight panic will never be yours.
+
+:::tip[The principle]
+Navigation without a map is wandering. CLI mastery is the map.
+:::
 
 ## Terminal vs Shell: Two Different Things
 
@@ -142,6 +150,17 @@ This tells you the default shell. Throughout this chapter, we use bash -- the mo
 ## The Linux Filesystem: One Tree, One Root
 
 Unlike Windows, which uses drive letters (C:\, D:\), Linux organizes everything into a single unified tree. Every file, every directory, every device starts from one point: `/` (called "root").
+
+```
+/  (root — everything starts here)
+├── home/       ← where you work and develop
+│   └── yourname/
+├── etc/        ← agent config files live here
+├── var/        ← agent logs and runtime data
+│   └── log/
+├── usr/        ← installed tools your agents use
+└── opt/        ← third-party agent deployments
+```
 
 Open your terminal and go to the top of the tree:
 
@@ -351,6 +370,11 @@ This moved up from `/usr` to `/`, then down into `/home` -- all in one command.
 
 **Rule of thumb:** If a human will run the command interactively, relative paths save typing. If a script or agent will run it automatically, absolute paths prevent "where am I?" errors.
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `ls -la` and `cd` — navigate to any directory, list its contents. Every server you will ever manage starts here. This alone will orient you within 30 seconds of connecting to an unfamiliar machine.
+:::
+
 ## Exercises: Verify Your Understanding
 
 Work through these exercises in your terminal. Each includes a verification step so you know you succeeded.
@@ -437,3 +461,9 @@ runs 24/7), where in this building does it live, and why?
 ```
 
 **What you're learning:** Translating filesystem structure into a spatial mental model. Spatial reasoning makes navigation intuitive rather than mechanical -- you stop memorizing paths and start understanding the architecture.
+
+---
+
+You now know how to find your way around a Linux server. Navigation gets you to any file, any directory, any log. But finding your way is only useful if you can also carry things -- create, copy, move, and delete files without accidentally destroying production data. In the next lesson, you'll meet the command that junior developers fear and senior engineers respect: `rm`. Used right, it's essential. Used wrong, it's irreversible. That's exactly where the next mistake lives.
+
+Everything in this chapter builds toward one deployment. In Lesson 12, you'll stand up **SupportBot** -- a real production FastAPI agent -- as a service that restarts on boot, handles its own failures, and serves customers 24/7. You need to know where files live before you can put SupportBot's files there. This lesson is the first step.

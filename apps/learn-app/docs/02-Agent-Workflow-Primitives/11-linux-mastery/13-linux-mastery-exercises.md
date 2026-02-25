@@ -1,9 +1,9 @@
 ---
 title: "Practice: Linux Mastery Exercises"
 practice_exercise: ch11-linux
-sidebar_position: 15
+sidebar_position: 13
 chapter: 11
-lesson: 15
+lesson: 13
 duration_minutes: 180
 
 primary_layer: "Layer 1"
@@ -51,7 +51,7 @@ learning_objectives:
 
 cognitive_load:
   new_concepts: 3
-  assessment: "3 meta-concepts (workflow application, systematic debugging, pipeline design) — within B1-B2 range. Exercises reinforce existing L01-L14 knowledge rather than introducing new tools."
+  assessment: "3 meta-concepts (workflow application, systematic debugging, pipeline design) — within B1-B2 range. Exercises reinforce existing L01-L12 knowledge rather than introducing new tools."
 
 differentiation:
   extension_for_advanced: "Complete all 3 capstone projects; attempt exercises with minimal prompts; write reusable automation scripts"
@@ -85,6 +85,18 @@ teaching_guide:
 ---
 
 # Practice: Linux Mastery Exercises
+
+These exercises cover all 12 lessons of Chapter 11. Rather than one undifferentiated 3-hour block, they are organized into five sessions matching the chapter's session structure. Each session builds directly on the lessons in that group.
+
+**How to use this lesson:**
+- Complete one session per day if you want spaced practice
+- Complete the whole set in one sitting if you prefer intensive review
+- Each exercise includes a difficulty label: **Foundational** (direct application), **Applied** (combines concepts), or **Capstone** (requires judgment)
+- You do not need to complete every exercise — the difficulty labels help you prioritize
+
+:::tip[The right pace]
+Three hours of exercises done across three days with reflection is worth more than three hours done in one anxious sprint. Pick the pace that lets you actually think.
+:::
 
 You've learned to navigate Linux filesystems, edit configs with pipes and streams, script deployments in bash, harden security, manage systemd services, and debug production failures. That's real capability. But knowing the commands and using them under pressure when a production agent is down at 3am are different things. The gap between understanding `grep` and using it to isolate the one log line that explains why your agent crashed across 50,000 lines of output is where most people stall. These exercises close the gap between understanding and fluency.
 
@@ -168,6 +180,10 @@ For each exercise, evaluate yourself on:
 
 ---
 
+:::note[Session 1: CLI Foundations (L1–L3)]
+Lessons covered: CLI Architect Mindset, File Operations, Text Editing & Pipes, Modern Terminal Environment
+:::
+
 ## Module 1: Filesystem Recon
 
 > **Core Skill:** Mapping an unfamiliar server before touching anything (Lessons 1-2)
@@ -175,6 +191,8 @@ For each exercise, evaluate yourself on:
 <ExerciseCard id="1.1" title="Agent Server Recon" />
 
 ### Exercise 1.1 — Agent Server Recon (Build)
+
+**[Foundational]** Map an unfamiliar server's agent deployment using filesystem navigation commands.
 
 **The Problem:**
 Open the `module-1-filesystem-recon/exercise-1.1-agent-server-recon/` folder. You'll find a simulated server directory structure with 3 AI agents deployed across it: a chatbot agent in `/opt/agents/chatbot/`, a data-pipeline agent in `/opt/agents/pipeline/`, and a monitoring agent in `/opt/agents/monitor/`. Each agent has its own configs, logs, data directories, virtual environments, and systemd service files scattered across `/etc/`, `/var/log/`, `/opt/`, and `/home/`. There's no documentation. The previous admin left without a handoff.
@@ -207,6 +225,8 @@ After exploring with `find /opt/agents -type f | head -40`, `du -sh /opt/agents/
 <ExerciseCard id="1.2" title="Misplaced Deployment" />
 
 ### Exercise 1.2 — Misplaced Deployment (Debug)
+
+**[Applied]** Audit a broken deployment against the Linux Filesystem Hierarchy Standard and fix every misplaced file.
 
 **The Problem:**
 Open the `module-1-filesystem-recon/exercise-1.2-misplaced-deployment/` folder. You'll find a server where someone deployed an agent incorrectly. Files are in the wrong Linux directories: application binaries in `/tmp/`, config files in `/home/deploy/` instead of `/etc/`, logs writing to `/opt/` instead of `/var/log/`, the systemd service file pointing to wrong paths, and data directories with wrong permissions. The agent technically starts but is fragile — a reboot would break it, a cleanup cron would delete its binaries, and logs are invisible to standard monitoring.
@@ -243,6 +263,8 @@ After running `find / -name "agent-*" -type f 2>/dev/null` and `systemctl cat ag
 <ExerciseCard id="2.1" title="Config Pipeline" />
 
 ### Exercise 2.1 — Config Pipeline (Build)
+
+**[Applied]** Chain text processing tools into a multi-stage pipeline that assembles production configs from fragments.
 
 **The Problem:**
 Open the `module-2-text-and-pipes/exercise-2.1-config-pipeline/` folder. You'll find `config-fragments/` — a directory with 12 partial configuration files. The previous admin kept agent configurations split across multiple fragment files: `base.conf`, `database.env`, `auth-secrets.template`, `nginx-upstream.conf`, `rate-limits.yaml`, and more. Each fragment has placeholder variables like `{{AGENT_PORT}}`, `{{DB_HOST}}`, and `{{LOG_LEVEL}}`. There's also a `variables.env` file with the actual values.
@@ -304,6 +326,10 @@ After running `cat pipeline.sh` and `head -5 input.log`: "Debug this 4-stage pip
 
 ---
 
+:::note[Session 2: Agent Operations (L4–L6)]
+Lessons covered: Persistent Sessions with tmux, Bash Scripting, Text Processing & Automation
+:::
+
 ## Module 3: Sessions & Scripting
 
 > **Core Skill:** Persistent sessions and bash scripting for automation (Lessons 5-6)
@@ -355,6 +381,10 @@ Read the script line by line. Find all 5 bugs. For each bug, document: the line 
 3. What checks would you add to the beginning of the script to catch problems early? (Hint: `set -euo pipefail`, prerequisite checks, root detection.)
 
 ---
+
+:::note[Session 3: Production Security (L7–L8)]
+Lessons covered: Security Hardening, Networking & SSH
+:::
 
 ## Module 4: Logs & Security
 
@@ -415,6 +445,10 @@ Audit the entire server for security violations. For each finding, document: wha
 3. How long did your audit take? What would you automate for a recurring weekly audit?
 
 ---
+
+:::note[Session 4: Deployment & Debugging (L9–L10)]
+Lessons covered: Process Control & Systemd, Debugging & Troubleshooting
+:::
 
 ## Module 5: Networking & Services
 
@@ -530,11 +564,15 @@ Implement `deploy-agent.sh` — a single script that executes the entire deploym
 
 ---
 
+:::note[Session 5: Mastery & Capstone (L11–L12)]
+Lessons covered: Advanced Patterns & Reusable Skills, Capstone Deployment
+:::
+
 ## Module 7: Capstone Projects
 
 > **Choose one (or more). This is where everything comes together — no starter prompts provided.**
 
-Capstones are different from the exercises above. There are no guided prompts — you design the entire approach yourself. Each project requires applying skills from across all 14 lessons to solve a realistic production scenario. Where module exercises test individual skills, capstones test your ability to orchestrate those skills into a coherent, documented pipeline. The quality of your documentation matters as much as the result — someone should be able to follow your process and reproduce it on a different server.
+Capstones are different from the exercises above. There are no guided prompts — you design the entire approach yourself. Each project requires applying skills from across all 12 lessons to solve a realistic production scenario. Where module exercises test individual skills, capstones test your ability to orchestrate those skills into a coherent, documented pipeline. The quality of your documentation matters as much as the result — someone should be able to follow your process and reproduce it on a different server.
 
 <ExerciseCard id="A" title="Full Production Deployment" />
 

@@ -1,8 +1,8 @@
 ---
-sidebar_position: 14
+sidebar_position: 12
 chapter: 11
-lesson: 14
-title: "Lesson 14: Capstone — Spec-First Production Deployment"
+lesson: 12
+title: "Lesson 12: Capstone — Spec-First Production Deployment"
 description: "Synthesize all chapter skills into a complete production deployment: write a deployment specification, implement it step-by-step, validate with layered checks, and package as a repeatable script."
 keywords: ["capstone", "production deployment", "systemd", "deployment specification", "layered validation", "deploy script", "spec-first", "agent deployment", "linux mastery"]
 duration_minutes: 90
@@ -28,7 +28,7 @@ skills:
     category: "Applied"
     bloom_level: "Create"
     digcomp_area: "Problem Solving"
-    measurable_at_this_level: "Student directs AI to review specifications and optimize deployment using reusable skills from L13, incorporating AI feedback into the deployment process"
+    measurable_at_this_level: "Student directs AI to review specifications and optimize deployment using reusable skills from L11, incorporating AI feedback into the deployment process"
 
   - name: "Layered Validation"
     proficiency_level: "C1"
@@ -70,7 +70,7 @@ cognitive_load:
   concepts_list:
     - "DEPLOYMENT-SPEC.md methodology (write specification before implementation)"
     - "Production architecture (systemd + direct port binding with resource controls)"
-    - "AI-orchestrated deployment (using reusable skills from L13)"
+    - "AI-orchestrated deployment (using reusable skills from L11)"
     - "Layered validation script (service, network, security, monitoring, resources)"
     - "Deployment packaging for repeatability (idempotent deploy.sh)"
   assessment: "5 concepts at C1 level. This capstone integrates all previous chapter skills rather than introducing fundamentally new tools. The cognitive challenge is synthesis and orchestration, not new tool learning."
@@ -93,13 +93,13 @@ teaching_guide:
     - "Students think validation means checking if the service is running — five-layer validation also checks permissions, firewall rules, resource limits, and log rotation"
     - "Students expect AI to write the entire deployment for them — AI reviews and optimizes, but the student must write the specification and understand every component"
   discussion_prompts:
-    - "Compare your capstone deployment to the commands you typed in lesson 10. What is different about spec-first deployment versus 'just make it work'?"
+    - "Compare your capstone deployment to the commands you typed in lesson 9. What is different about spec-first deployment versus 'just make it work'?"
     - "If you hand your deploy.sh to a colleague who has never seen your server, what would they need to know before running it? How does the DEPLOYMENT-SPEC.md help?"
   teaching_tips:
     - "This is the chapter closer — connect back to the chapter opener (lesson 1) where students could barely navigate the filesystem, showing how far they have come"
     - "Allow 90 minutes for this lesson — students need time to write the spec, implement, validate, and package; rushing the capstone undermines its purpose"
     - "The five-layer validation script is the most satisfying moment — seeing all checks pass is the reward for 13 lessons of progressive skill building"
-    - "Have students deploy on a clean workspace (fresh /tmp directory) to prove their deploy.sh is truly reproducible — this connects to fresh-system testing from lesson 13"
+    - "Have students deploy on a clean workspace (fresh /tmp directory) to prove their deploy.sh is truly reproducible — this connects to fresh-system testing from lesson 11"
   assessment_quick_check:
     - "Ask: what are the four sections of DEPLOYMENT-SPEC.md? (Expected: service definition, security requirements, monitoring plan, validation criteria)"
     - "Ask students to list the five validation layers (Expected: service active, network responding, correct user/permissions, logs flowing, resource limits applied)"
@@ -116,11 +116,17 @@ version: "2.0.0"
 
 # Capstone — Spec-First Production Deployment
 
-Everything you've learned — CLI navigation, file operations, scripting, security, networking, systemd, debugging, deployment patterns, reusable skills — comes together here. This capstone is different from every other lesson in this chapter: you will write a specification FIRST, then implement it, then validate it. This is how production deployments work in professional environments.
+There are two ways to deploy software. The first sounds like this: "I got it running on my laptop and it worked. I deployed it to the server and now I'm not sure what's happening. When it broke at 2am I restarted it. It's probably fine." The second sounds like this: "I wrote a spec. I deployed to the spec. I validated all five layers. I set up restart policies and resource limits. I know it works because I can prove it."
 
-The difference between a hobbyist deployment and a production deployment is not the tools. It is the process. Hobbyists type commands until the service starts. Production engineers define success criteria before touching a terminal, implement against those criteria, and validate systematically. You are going to do the second thing.
+The difference is not skill level or years of experience. It is process. The first person typed commands until something worked and then hoped it would keep working. The second person defined success criteria before touching a terminal, implemented against those criteria, and validated systematically. The second approach is not harder — it is actually less stressful, because you are never guessing whether something is working. You know, because the validation script tells you.
 
-You will deploy the same `agent_main.py` from [Lesson 10](./10-process-control-systemd.md) — a FastAPI agent with a health check endpoint. But this time, the deployment will be specification-driven, validated layer by layer, and packaged so anyone can reproduce it.
+This capstone is not a final exam. It is the first deployment you will do with confidence, using everything from all 11 previous lessons together. Navigation, file operations, scripting, permissions, security, networking, systemd, debugging, deployment patterns, reusable skills — every lesson in this chapter was building toward this moment. You will deploy the same `agent_main.py` from [Lesson 9](./09-process-control-systemd.md), but this time you will write the specification first, implement it step by step, validate it layer by layer, and package it so anyone can reproduce the result.
+
+Everything you need, you already know. Now you put it together.
+
+:::tip[The principle]
+A hobbyist deploys and hopes. A professional deploys to a spec and validates.
+:::
 
 ---
 
@@ -142,6 +148,10 @@ The specification becomes your implementation checklist. Every command you run t
 ---
 
 ## Writing Your DEPLOYMENT-SPEC.md
+
+:::note[You already know everything you need]
+This specification draws on every lesson in the chapter. If a section feels uncertain, the lesson number is right there — you can review it before continuing. Nobody writes a perfect spec on the first try. Write it, deploy to it, see what breaks, revise.
+:::
 
 Here is the template. You will fill it out for `agent_main.py` before implementing anything.
 
@@ -243,7 +253,7 @@ sudo cp /opt/agent/agent_main.py /opt/agent-prod/
 (no output — file copied)
 ```
 
-This copies the same `agent_main.py` you deployed in [Lesson 10](./10-process-control-systemd.md). If you haven't set it up yet, create it now with the FastAPI agent code from that lesson.
+This copies the same `agent_main.py` you deployed in [Lesson 9](./09-process-control-systemd.md). If you haven't set it up yet, create it now with the FastAPI agent code from that lesson.
 
 ### Step 3: Install Dependencies (Service Definition)
 
@@ -415,7 +425,7 @@ sudo ufw status | grep 8000
 8000/tcp (v6)              ALLOW       Anywhere (v6)
 ```
 
-Port 8000 is now open for agent traffic. All other ports remain blocked (except SSH on port 22, which you configured in [Lesson 8](./08-security-hardening.md)).
+Port 8000 is now open for agent traffic. All other ports remain blocked (except SSH on port 22, which you configured in [Lesson 7](./07-security-hardening.md)).
 
 :::tip Future Enhancement
 When you learn nginx in a future chapter, you can add a reverse proxy in front for SSL termination and load balancing. For now, direct port binding keeps the architecture simple and gives you one fewer component to debug.
@@ -432,13 +442,28 @@ curl -s localhost:8000/health
 {"status":"healthy","agent":"running","timestamp":"2026-02-11T10:05:15.234567"}
 ```
 
-This is the same health check endpoint from [Lesson 10](./10-process-control-systemd.md). It confirms the agent is alive and responding to requests.
+This is the same health check endpoint from [Lesson 9](./09-process-control-systemd.md). It confirms the agent is alive and responding to requests.
 
 Your implementation is complete. Every step traced back to a requirement in the specification. Now you validate.
 
 ---
 
 ## Layered Validation
+
+```
+        ┌──────────────────────┐
+        │  Layer 5: Resources  │  ← MemoryMax, CPUQuota respected
+        ├──────────────────────┤
+        │   Layer 4: Logs      │  ← journalctl shows activity
+        ├──────────────────────┤
+        │  Layer 3: Security   │  ← non-root user, correct perms
+        ├──────────────────────┤
+        │  Layer 2: Network    │  ← /health endpoint responds
+        ├──────────────────────┤
+        │  Layer 1: Service    │  ← systemctl shows "active"
+        └──────────────────────┘
+  All 5 layers must pass. One failure = deployment incomplete.
+```
 
 Validation is not "it seems to work." Validation is systematic proof that every requirement in your specification is met. Each layer tests a different dimension of the deployment.
 
@@ -863,6 +888,11 @@ Every row links back to a line in DEPLOYMENT-SPEC.md. If any row shows ✗, you 
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: write the specification before writing the code. A deployment spec that answers who runs it, what port, what restart policy, and how to verify health prevents the entire class of errors that come from deploying by intuition.
+:::
+
 ## Exercises
 
 ### Exercise 1: Write Your DEPLOYMENT-SPEC.md
@@ -972,3 +1002,17 @@ After deployment, ask Claude: "My agent is deployed and passing health checks. W
 :::note Safety Reminder
 Production deployment involves system-level changes — creating users, modifying firewall rules, installing systemd services. Always test on a non-production server first (a VM, a cloud instance you can destroy, or a local container). Keep SSH access working at all times: if you lock yourself out by misconfiguring the firewall, you lose access to the server entirely. Run `sudo ufw status` before and after any firewall change to confirm you have not blocked your own SSH connection.
 :::
+
+---
+
+## What You've Built
+
+Look back at where Lesson 1 started: Aisha, staring at a blinking cursor at 11pm, no idea where the log files lived, no idea why her agent crashed.
+
+That is not you anymore.
+
+You can navigate any Linux filesystem, manipulate files deliberately, extract signal from gigabyte logs, persist work across disconnections, script deployments, automate with cron, harden a server, diagnose network issues, control processes, debug systematically, and deploy to a specification that proves everything works.
+
+The agent you just deployed is a production-grade Digital FTE. It starts on boot, restarts on crash, runs under a dedicated user, logs everything, and passes all five validation layers. You did not guess — you proved it.
+
+This is what it means to operate in Linux. Not just knowing commands, but owning the system your agents live on.

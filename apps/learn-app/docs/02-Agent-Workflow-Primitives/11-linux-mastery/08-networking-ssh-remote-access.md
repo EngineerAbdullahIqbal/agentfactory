@@ -1,8 +1,8 @@
 ---
-sidebar_position: 9
+sidebar_position: 8
 chapter: 11
-lesson: 9
-title: "Networking Fundamentals & SSH Remote Access"
+lesson: 8
+title: "Lesson 8: Networking Fundamentals & SSH Remote Access"
 description: "Understand ports, localhost vs 0.0.0.0 binding, test endpoints with curl, establish SSH connections with key-based authentication, configure ~/.ssh/config for multiple servers, and protect agent ports with ufw firewall rules."
 keywords:
   [
@@ -107,7 +107,7 @@ teaching_guide:
   key_points:
     - "localhost (127.0.0.1) vs 0.0.0.0 binding is the #1 reason agents are unreachable — binding to localhost means only the same machine can connect"
     - "curl is the essential diagnostic tool for agent health checks — curl localhost:8000/health is the first command when debugging a deployed agent"
-    - "SSH key-based auth (generated in lesson 8) replaces passwords — ~/.ssh/config aliases simplify managing multiple agent servers"
+    - "SSH key-based auth (generated in lesson 7) replaces passwords — ~/.ssh/config aliases simplify managing multiple agent servers"
     - "ufw default-deny policy means only explicitly allowed ports are open — this is the firewall foundation for protecting agent services"
   misconceptions:
     - "Students think 127.0.0.1 and 0.0.0.0 are the same — 127.0.0.1 is loopback (local only), 0.0.0.0 binds to all network interfaces (reachable from outside)"
@@ -137,11 +137,19 @@ version: "1.0.0"
 
 # Networking Fundamentals & SSH Remote Access
 
-In Lesson 8, you locked down your server with dedicated users, restrictive permissions, and SSH keys. Your agent is secure -- but secure from everyone, including you, if you cannot reach it across a network. Security without connectivity is a locked room with no door.
+In Lesson 7, you locked down your server with dedicated users, restrictive permissions, and SSH keys. Now you need to make sure the right people can actually reach what you secured.
 
-Here is a scenario that every agent deployer encounters: You deploy an AI agent on a cloud server. It starts successfully. You check the logs -- everything looks clean. Then you open your browser to test the health endpoint and get "connection refused." You try from the command line -- same result. The agent is running. The server is on. But nothing can reach it. What went wrong?
+It is 2:47 PM on a Tuesday. A priority-one support ticket arrives: "Our AI document processing agent is completely unresponsive. We are on the Premium tier and this is blocking our entire legal review pipeline." You SSH into the production server and start investigating. The agent process is running. The logs show clean startup, no errors, no crashes. Memory and CPU look normal. By every internal metric, this agent is healthy. But the customer cannot reach it, and neither can you from your laptop.
 
-The answer is almost always one of three things: the agent is bound to the wrong address, a firewall is blocking the port, or you are connecting to the wrong port entirely. This lesson gives you the diagnostic toolkit to identify and fix each of these problems, establish secure remote connections with SSH, and protect your agent ports with a firewall.
+You start working through it layer by layer. First, you test locally on the server itself: `curl localhost:8000/health` returns `{"status":"ok"}`. The agent is alive and responding. Next, you check what address it is listening on: `ss -tlnp | grep 8000` shows the agent bound to `127.0.0.1:8000`. There it is. The agent is listening only on the loopback address -- it can talk to itself, but the rest of the world cannot reach it. External traffic arrives at the server's network interface, finds nothing listening on port 8000, and gets "connection refused."
+
+The fix takes thirty seconds: change the bind address from `127.0.0.1` to `0.0.0.0`, restart the agent. Total diagnosis time from ticket to resolution: seven minutes. The customer's legal review pipeline resumes before anyone escalates to management.
+
+Without network knowledge, that same ticket becomes a two-hour ordeal. You would restart the agent (still broken), rebuild the container (still broken), check DNS records (irrelevant), open a ticket with the cloud provider (embarrassing when they point out the bind address), and eventually stumble onto the answer through exhaustion rather than method. This lesson gives you the same systematic toolkit that turned a potential two-hour crisis into a seven-minute diagnosis -- so when your agent goes silent, you know exactly where to look.
+
+:::tip[The principle]
+Network problems don't announce themselves. You diagnose them by elimination, layer by layer.
+:::
 
 ---
 
@@ -162,7 +170,7 @@ The Internet Assigned Numbers Authority (IANA) maintains a registry of port assi
 | 8000 | Convention | Common for Python/FastAPI agents |
 | 8080 | Convention | Alternative HTTP port            |
 
-Ports 0-1023 are "well-known" and require root privileges to bind. Ports 1024-49151 are "registered" and available to any user. This is why your agent uses port 8000 instead of port 80 -- binding to 8000 does not require root access, which aligns with the least-privilege principle from Lesson 8.
+Ports 0-1023 are "well-known" and require root privileges to bind. Ports 1024-49151 are "registered" and available to any user. This is why your agent uses port 8000 instead of port 80 -- binding to 8000 does not require root access, which aligns with the least-privilege principle from Lesson 7.
 
 ### Checking What is Listening
 
@@ -190,6 +198,15 @@ Each line shows a listening service. The flags mean:
 | `-p` | Show the process using each port                     |
 
 The output above reveals two services: SSH listening on port 22 (accessible from anywhere, `0.0.0.0`) and a Python agent on port 8000 (accessible only from localhost, `127.0.0.1`). That distinction is the next concept.
+
+:::note[Why this matters for agent operations]
+| Without network knowledge | With network knowledge |
+|--------------------------|----------------------|
+| Restart and hope | Diagnose the specific layer |
+| 2+ hours of guessing | 7-minute root cause analysis |
+| "It works on my machine" | Know exactly why it doesn't work on the server |
+| Escalate to someone else | Own the fix yourself |
+:::
 
 ---
 
@@ -382,7 +399,7 @@ Lines starting with `>` are what you sent. Lines starting with `<` are what the 
 
 ## SSH Connections: Reaching Your Server
 
-SSH (Secure Shell) is the standard protocol for connecting to remote Linux servers. In Lesson 8, you generated an SSH key pair. Now you will use those keys to connect to a server.
+SSH (Secure Shell) is the standard protocol for connecting to remote Linux servers. In Lesson 7, you generated an SSH key pair. Now you will use those keys to connect to a server.
 
 ### Basic SSH Connection
 
@@ -773,6 +790,11 @@ This sequence moves from inside-out: first check the agent itself, then check ne
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `ss -tlnp | grep 8000`. This confirms your agent is listening on its port. When an agent seems down, run this before reading logs or restarting services — it tells you immediately whether the process is up at all.
+:::
+
 ## Exercises
 
 ### Exercise 1: Test Port Connectivity with curl
@@ -799,7 +821,7 @@ A status code of `000` means nothing is listening. `200` means a healthy respons
 
 ### Exercise 2: Generate and Display SSH Keys
 
-**Task:** If you already generated SSH keys in Lesson 8, verify they exist. If not, generate a new pair and display the public key.
+**Task:** If you already generated SSH keys in Lesson 7, verify they exist. If not, generate a new pair and display the public key.
 
 ```bash
 ls ~/.ssh/id_ed25519* 2>/dev/null || ssh-keygen -t ed25519 -C "agent-deploy@mycompany.com" -N "" -f ~/.ssh/id_ed25519
@@ -900,3 +922,7 @@ Include a rollback plan for each step in case something goes wrong.
 ```
 
 **What you're learning:** Safety-critical configuration changes benefit from step-by-step collaboration where each change is verified before proceeding to the next. AI provides the sequence and rollback commands, but you execute and verify each step -- this is the pattern for all security-sensitive system changes: change one thing, test, confirm, then proceed.
+
+---
+
+Your agent is now accessible: correctly bound, firewall configured, SSH secured. But accessible is not the same as reliable. What happens when your server reboots for a security patch? What happens when your agent crashes at 3am and nobody notices until 9am? The next lesson shows you how to make your agent unkillable -- not by hoping it never crashes, but by building a service that automatically restarts, logs everything, and survives every reboot.

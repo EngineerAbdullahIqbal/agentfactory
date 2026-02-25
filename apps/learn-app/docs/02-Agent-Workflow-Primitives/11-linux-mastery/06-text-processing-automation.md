@@ -1,10 +1,10 @@
 ---
-sidebar_position: 7
-title: "Lesson 7: Text Processing & Automation"
+sidebar_position: 6
+title: "Lesson 6: Text Processing & Automation"
 description: "Parse agent logs with grep, sed, and awk, compose multi-tool pipelines, and schedule recurring tasks with cron for automated monitoring."
 keywords: ["grep", "sed", "awk", "text processing", "regular expressions", "cron", "crontab", "log parsing", "pipeline", "automation", "log rotation"]
 chapter: 11
-lesson: 7
+lesson: 6
 duration_minutes: 55
 
 # HIDDEN SKILLS METADATA
@@ -93,7 +93,7 @@ teaching_guide:
   session_title: "Text Processing and Automation"
   key_points:
     - "grep, sed, and awk form a processing pipeline: grep finds lines, sed transforms them, awk extracts and computes across fields — each tool has a distinct role"
-    - "The multi-tool pipeline pattern (grep | sed | sort | uniq -c | sort -rn) is the standard approach for log analysis and recurs in debugging (lesson 11) and production monitoring (lesson 14)"
+    - "The multi-tool pipeline pattern (grep | sed | sort | uniq -c | sort -rn) is the standard approach for log analysis and recurs in debugging (lesson 10) and production monitoring (lesson 12)"
     - "cron scheduling with output redirection (>> file 2>&1) turns manual analysis into automated monitoring — but cron runs with a minimal environment, so scripts must use absolute paths"
     - "Log rotation prevents disk exhaustion on long-running agents — without it, a 100-line/min agent fills a disk in days"
   misconceptions:
@@ -124,9 +124,23 @@ version: "1.0.0"
 
 # Text Processing & Automation
 
-In Lesson 6, you wrote bash scripts with variables, functions, and error handling. Those scripts can create directories, deploy agents, and verify workspaces. But your agents generate something scripts alone cannot handle: **logs**. Thousands of lines of timestamped messages, buried errors, intermittent warnings, patterns that only emerge across hundreds of entries.
+Your pager fires at 3am. The billing system has detected a 1,000% spike in API errors over the last hour. You have 15 minutes before the incident auto-escalates to the VP of Engineering. You SSH into the production server and find the log file: 847MB. There is no Kibana. There is no Datadog dashboard. There is no GUI at all. Just you, a terminal, and a ticking clock.
 
-When your Digital FTE runs for 12 hours and produces a 50,000-line log file, you need tools that extract meaning from that volume. Scrolling through manually is not an option. This lesson teaches you three text processing tools -- `grep`, `sed`, and `awk` -- that turn raw log files into actionable intelligence. Then you'll schedule these analyses to run automatically with `cron`, so your monitoring works even when you're not watching.
+You type four commands chained together:
+
+```
+grep "ERROR" api.log | awk '{print $6}' | sort | uniq -c | sort -rn | head -20
+```
+
+Ninety seconds later, the answer is on your screen. One API endpoint -- `/api/v2/process` -- has been returning 503 errors for the last 37 minutes. Every other endpoint is clean. You restart the upstream service that `/api/v2/process` depends on, confirm the error rate drops to zero, and close the incident. The VP never woke up.
+
+That is the difference text processing makes. Without it, you are opening an 847MB file in an editor that crashes, scrolling through thousands of lines, guessing. With it, you are extracting the exact pattern from the noise in under two minutes. The gap between those two outcomes is not talent -- it is tooling.
+
+This lesson gives you those four commands -- and the mental model for chaining them into any pipeline you need. In Lesson 5, you wrote bash scripts with variables, functions, and error handling. Now you will learn the three text processing tools that turn raw log files into actionable intelligence: `grep` to find patterns, `sed` to transform text, and `awk` to extract and compute across fields. Then you will schedule these analyses to run automatically with `cron`, so your monitoring works even when you are not watching.
+
+:::tip[The principle]
+Text processing is not about memorizing commands -- it is about knowing which tool focuses the lens and which tool counts what is left.
+:::
 
 ## Setting Up a Sample Log File
 
@@ -277,6 +291,16 @@ grep ERROR /tmp/agent.log | grep "agent-01"
 ```
 
 Chaining two grep commands narrows results progressively. The first grep finds all errors; the second filters to agent-01.
+
+:::note[What text processing unlocks]
+| Without text processing | With text processing |
+|------------------------|---------------------|
+| Open 847MB log in editor (crashes) | `grep ERROR \| head -50` in 2 seconds |
+| Scroll through thousands of lines | `grep ERROR \| uniq -c \| sort -rn` shows top issues |
+| "Something's wrong" | "Endpoint X failing since 03:17, 847 occurrences" |
+| Manual pattern recognition | Automated pattern extraction |
+| 15 minutes of guessing | 90 seconds to root cause |
+:::
 
 ---
 
@@ -766,6 +790,11 @@ Text processing commands read files by default but can modify them destructively
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `grep 'ERROR' agent.log | sort | uniq -c | sort -rn`. This one-liner counts and ranks error patterns, turning a wall of log output into a prioritized list of what is actually broken.
+:::
+
 ## Exercises
 
 ### Exercise 1: Find ERROR Lines and Count Them
@@ -879,3 +908,7 @@ a race condition? How do production systems handle this?"
 ```
 
 **What you're learning:** Production automation requires thinking beyond the happy path. Asking about concurrent access reveals that simple pipelines can miss lines or double-count when files are actively written to. AI may suggest `cp` + analyze the copy, or log rotation as a solution -- both patterns from this lesson applied to a real constraint.
+
+---
+
+You can now extract, count, and pattern-match anything from any log file. Text processing turns raw data into intelligence. But the most valuable intelligence is useless if your server is not hardened against the people who should not have it. Session 2 is complete. Session 3 starts with the question every production engineer eventually faces: who can access your server, what can they do, and how do you make sure the wrong people cannot do any of it?

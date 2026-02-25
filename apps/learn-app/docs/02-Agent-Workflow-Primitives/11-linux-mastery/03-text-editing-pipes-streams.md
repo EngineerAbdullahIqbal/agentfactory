@@ -119,11 +119,23 @@ version: "1.0.0"
 
 # Text Editing, Pipes & I/O Streams
 
-## The Missing Pieces
+Your phone buzzes at 2:07am. The on-call alert reads: *"agent-support-router: 23 failures in last 10 minutes."* You pull yourself out of bed, open your laptop, and SSH into the production server. The AI agent that triages incoming customer support tickets has been crashing intermittently for the past hour. The log file is 2.3 gigabytes. You need to find out why.
 
-You can create files and navigate directories. But what happens when you need to *change* what's inside a file? Or when one command's output is exactly what another command needs as input?
+Half awake, you type `cat agent.log`. The terminal erupts -- thousands of lines scrolling faster than you can read, a blur of timestamps and JSON payloads flooding the screen. You hit Ctrl+C after twenty seconds. Nothing useful. You're more awake now, but no closer to an answer.
 
-In the previous two lessons, you used `cat` to view files and `touch` to create empty ones. Today, you gain the ability to edit, and you learn the Unix philosophy that makes Linux powerful: **small tools connected by pipes**. Each command does one thing well, and you combine them like building blocks. This is also how your Digital FTEs process data in production: reading input, transforming it, writing output, and logging errors.
+Then you remember one thing from your Linux training: pipes. You type a single line:
+
+```bash
+tail -n 1000 agent.log | grep ERROR | tail -50
+```
+
+Two seconds later, fifty lines appear on screen. Every one of them is an error. You scan from top to bottom and spot the pattern immediately: `RateLimitError: openai API rate limit exceeded`, repeating every 3-4 seconds, starting exactly 47 minutes ago at 1:20am. Root cause found. You email the on-call API team at OpenAI, add exponential backoff to the retry logic, and redeploy. By 2:22am you're back in bed.
+
+The difference between twenty seconds of useless scrolling and two seconds of targeted signal was not a different tool or a smarter approach. It was a pipe -- three commands connected by two `|` characters. `cat` floods. Pipes focus. This lesson gives you the tools to turn 2GB of noise into 50 lines of signal.
+
+:::tip[The principle]
+A pipe doesn't just connect commands -- it focuses your attention on exactly what matters.
+:::
 
 ---
 
@@ -269,6 +281,15 @@ du -sh * | sort -rh | head -5
 ```
 
 Three commands chained: `du -sh *` shows sizes, `sort -rh` sorts largest first, `head -5` takes the top 5. This pipeline would require writing a script in most languages. In Linux, it's one line.
+
+:::note[Pipes in practice]
+| Without pipes | With pipes |
+|---------------|-----------|
+| `cat agent.log` -- 2GB floods terminal | `tail -n 1000 agent.log \| grep ERROR` -- targeted |
+| Open file in editor to find one line | `grep "TimeoutError" app.log \| head -20` |
+| Count lines manually | `wc -l agent.log` |
+| Search through all output mentally | `grep -n "ERROR" \| sort \| uniq -c` |
+:::
 
 ---
 
@@ -433,6 +454,11 @@ Use `--help` for a quick reminder. Use `man` for full details and examples. **Th
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `grep -n 'ERROR' agent.log | tail -50`. This pipe finds the most recent errors in any log file. Every production failure investigation starts with running this command.
+:::
+
 ## Exercises
 
 ### Exercise 1: Create and Edit a Configuration File
@@ -560,3 +586,7 @@ Show the exact keystroke sequences for each operation.
 :::note Safety Reminder
 When using pipes and redirection, be careful with the `>` operator -- it overwrites files without warning. Use `>>` to append instead. When editing configuration files with nano, always make a backup first: `cp config.conf config.conf.bak`. On production servers, test complex pipelines with `echo` or `head` first to verify they produce expected output before piping to destructive commands like `rm` or `tee`.
 :::
+
+---
+
+You can now navigate, manipulate files, and extract exactly what you need from log files. Three lessons in, you have the basics of an operator. But there's a problem every operator hits: SSH sessions die. Laptops close. Network drops. And when that happens, every running process dies with it. That's where Lesson 4 begins -- making everything you run survive your disconnection. The next lesson shows you that the difference between an agent that runs once and an agent that runs forever is not the code. It's whether you know tmux.

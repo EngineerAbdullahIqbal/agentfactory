@@ -1,8 +1,8 @@
 ---
-sidebar_position: 6
+sidebar_position: 5
 chapter: 11
-lesson: 6
-title: "Lesson 6: Bash Scripting Foundations"
+lesson: 5
+title: "Lesson 5: Bash Scripting Foundations"
 description: "Write executable bash scripts with variables, error handling, functions, and control flow to automate repeatable agent deployment tasks."
 keywords: ["bash scripting", "shell scripts", "error handling", "set -euo pipefail", "bash functions", "conditionals", "loops", "chmod", "shebang"]
 duration_minutes: 55
@@ -94,7 +94,7 @@ teaching_guide:
   key_points:
     - "set -euo pipefail is the single most important line in any bash script — it prevents silent failures that cause partial deployments and data loss"
     - "Variables must always be double-quoted (\"${VAR}\") — unquoted variables break on spaces and are the #1 source of bash bugs"
-    - "Functions with local variables keep scripts organized — the deploy_agent pattern (name + port as arguments) is reused in the capstone (lesson 14)"
+    - "Functions with local variables keep scripts organized — the deploy_agent pattern (name + port as arguments) is reused in the capstone (lesson 12)"
     - "Idempotent scripts (safe to run multiple times) are a production requirement — the check-before-create pattern should become default"
   misconceptions:
     - "Students think scripts will stop on errors by default — without set -e, bash happily continues after failures, potentially running destructive commands in wrong directories"
@@ -108,7 +108,7 @@ teaching_guide:
     - "Start with the 3-line script and build incrementally — adding variables, then error handling, then functions mirrors how real scripts evolve"
     - "Demo the broken.sh example (cd to nonexistent path, then rm) live — seeing a script continue after failure is the motivation for set -euo pipefail"
     - "The test operators table ([[ -d ]], [[ -f ]], [[ -z ]]) is a reference card moment — students will look this up repeatedly"
-    - "Connect back to tmux session scripts from lesson 5 — students already wrote their first bash script there without realizing it"
+    - "Connect back to tmux session scripts from lesson 4 — students already wrote their first bash script there without realizing it"
   assessment_quick_check:
     - "Ask students to write a 3-line script: shebang, set -euo pipefail, and echo with a variable — verify they can make it executable and run it"
     - "Ask: what does set -euo pipefail do? (Expected: -e stops on errors, -u stops on undefined vars, -o pipefail catches pipe failures)"
@@ -125,11 +125,21 @@ version: "1.0.0"
 
 # Bash Scripting Foundations
 
-In Lesson 5, you learned to keep terminal sessions alive across disconnections with tmux. Now you'll capture your knowledge as executable scripts -- reusable automation that runs the same way every time.
+In Lesson 4, you learned to keep terminal sessions alive across disconnections with tmux. Now you'll turn that reliability into something more powerful: scripts that encode your entire deployment process as a single, repeatable command.
 
-Every Digital FTE deployment involves a repeatable sequence: create directories, install dependencies, configure services, verify everything works. Typing these commands manually each time is slow and error-prone. One mistyped path or forgotten step can leave an agent partially deployed, silently broken.
+Here is a scenario that happens more often than anyone admits. A team manages 12 AI agents across 3 servers. Their deployment checklist runs 36 steps long. Each deploy takes about an hour, requires two engineers, and plays out slightly differently every time because each engineer improvises their way through the list. On deploy number 7, one engineer skips step 19 -- the file permission check. A customer-facing agent starts with the wrong permissions on its config directory. It fails silently. Six hours pass before anyone notices the agent has been returning empty responses to every request.
 
-Bash scripts solve this by encoding your deployment knowledge as executable files. A script captures the exact sequence, handles errors gracefully, and runs identically whether you execute it at 2 PM or 2 AM. By the end of this lesson, you'll write scripts that create agent workspaces, validate their own execution, and adapt to different environments through variables and functions.
+The post-mortem reveals the real problem: 36 steps that two humans must remember, in order, differently every time. No checklist can survive that. The steps are correct on paper, but paper does not enforce execution order, does not halt when something fails, and does not notice when a step gets skipped.
+
+The scripted version of that same deployment is one command. All 12 agents, all 3 servers. Zero missed steps. If something fails at step 19, the script stops at step 19 with an error message naming the exact file and the exact permission that was wrong. Run it twice and the second run is safe -- it checks what already exists before creating anything new.
+
+In Chapter 6, Principle 4 -- Small, Reversible Decomposition -- applied to code changes: break big changes into small, atomic, reversible steps. Bash scripts apply the same principle to deployment commands. Each step is explicit, in order, and either succeeds or fails visibly. Nothing is "probably fine." The script is the checklist, the executor, and the auditor rolled into one file.
+
+This lesson shows you how to turn a 36-step checklist into a single, reliable command.
+
+:::tip[The principle]
+If you've done it manually three times, you should have scripted it the second time.
+:::
 
 ---
 
@@ -178,7 +188,11 @@ Timestamp: Sun Feb  9 14:30:00 UTC 2026
 
 Three things made this work:
 
-- `#!/bin/bash` -- The **shebang** tells the system which interpreter runs this file. Without it, the system doesn't know this is a bash script.
+- `#!/bin/bash` -- The **shebang** tells the system which interpreter runs this file.
+
+:::note[Glossary: shebang]
+The `#!` at the start of a script (`#!/bin/bash`) tells Linux which interpreter to use. Without it, the system treats the file as plain text, not an executable script.
+::: Without it, the system doesn't know this is a bash script.
 - `chmod +x` -- Adds **executable permission** so the file can be run as a program.
 - `$(date)` -- **Command substitution** captures the output of `date` and inserts it into the string.
 
@@ -430,6 +444,16 @@ port: 8000
 
 One function, three deployments. This is how production scripts scale.
 
+:::note[Manual vs scripted deployment]
+| Manual deployment | Scripted deployment |
+|------------------|---------------------|
+| 36 steps, 2 engineers, ~1 hour | 1 command, 0 engineers, ~5 minutes |
+| Slightly different every time | Identical every time |
+| Silent failures when steps are skipped | Explicit error at the exact failing step |
+| "I think step 19 was done" | Either done or the script stopped |
+| Can't be reviewed | Can be code-reviewed, tested, version-controlled |
+:::
+
 ---
 
 ## Conditionals: Making Decisions
@@ -540,6 +564,10 @@ Already exists: /tmp/agent-ws/data
 ```
 
 The script is **idempotent** -- safe to run multiple times without side effects.
+
+:::note[Glossary: idempotent]
+An operation is idempotent if running it multiple times produces the same result as running it once. Idempotent scripts are safe to re-run when something fails mid-way.
+:::
 
 ---
 
@@ -683,6 +711,11 @@ File found after 3 seconds
 This pattern is essential for deployment scripts that need to wait for services to become ready before proceeding.
 
 ---
+
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: put `set -euo pipefail` at the top of every bash script. This three-option combination stops your script the moment anything fails, preventing cascading errors that leave systems half-deployed.
+:::
 
 ## Exercises
 
@@ -853,3 +886,7 @@ cases you can think of that we haven't addressed yet.
 :::note Safety Reminder
 Always test scripts in a non-production environment first. Use a VM, container, or test server. A script with a typo in a path variable combined with `rm -rf` can cause irreversible damage. Preview destructive operations with `echo` before executing them for real.
 :::
+
+---
+
+You can now script deployments, handle errors, and loop over configurations. One script replaces a 36-step checklist. But scripting is the foundation for something even more powerful: text processing pipelines that turn raw log files into actionable intelligence. In the next lesson, grep, awk, and sed combine into the fastest debugging toolkit you've never used -- and you'll wonder how you ever read logs without them.

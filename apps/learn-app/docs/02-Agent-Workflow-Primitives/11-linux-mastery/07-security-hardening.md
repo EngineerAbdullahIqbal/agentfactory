@@ -1,8 +1,8 @@
 ---
-sidebar_position: 8
+sidebar_position: 7
 chapter: 11
-lesson: 8
-title: "Security Hardening & Least Privilege"
+lesson: 7
+title: "Lesson 7: Security Hardening & Least Privilege"
 description: "Create dedicated service users, configure file permissions with chmod and chown, manage environment variables with proper scoping, and handle secrets using .env files -- all following the principle of least privilege."
 keywords:
   [
@@ -118,7 +118,7 @@ teaching_guide:
     - "Your team says 'just use root, it is faster.' How would you explain the risk in terms they understand — using the blast radius concept from this lesson?"
   teaching_tips:
     - "Open with the security incident scenario — it makes abstract concepts concrete and motivates every defense taught in the lesson"
-    - "The permission guidelines table (file type to chmod value) is a reference card moment — students will use this when deploying agents in lesson 14"
+    - "The permission guidelines table (file type to chmod value) is a reference card moment — students will use this when deploying agents in lesson 12"
     - "Demo the export vs non-export exercise live — students seeing an empty variable in a subshell is the proof they need to understand scoping"
     - "The .env + .gitignore workflow should be practiced as a sequence: create file, chmod 600, add to .gitignore — make it muscle memory"
   assessment_quick_check:
@@ -137,11 +137,21 @@ version: "2.0.0"
 
 # Security Hardening & Least Privilege
 
-In Lesson 7, you learned to process text and automate repetitive tasks with grep, sed, awk, and cron. Those tools are powerful -- and power without restraint is dangerous. Now you'll learn to lock down who can do what on your server.
+In Lesson 6, you learned to process text and automate repetitive tasks with grep, sed, awk, and cron. Those tools are powerful -- and power without restraint is dangerous. Now you'll learn to lock down who can do what on your server.
 
-Here is a scenario that happens more often than anyone admits: A developer deploys an AI agent as root because "it's just a test." The agent has a bug that deletes files it shouldn't. Since it runs as root, nothing stops it -- the agent wipes `/var/log`, taking down monitoring for every service on the server.
+Marcus, a senior DevOps engineer at a fintech startup, got the alert at 2:14am on a Tuesday. The company's security scanner had flagged a process running as root on their production server -- one of the AI agents his team had deployed the previous week. Marcus glanced at his phone, muttered "false positive," and went back to sleep.
 
-The fix is not better code. The fix is **least privilege** -- ensuring that even when code fails, the damage is contained. An agent running as a restricted user with access only to its own directory cannot touch system logs or modify other services. The bug still exists, but the blast radius shrinks from "entire server" to "one agent's workspace."
+At 6:47am, the scanner fired again. This time it wasn't just flagging the process -- it was flagging what the process could *see*. The agent, running with full root privileges, had access to every process on the server. Including the customer database connection pool. Including the credentials sitting in that pool's memory. The agent didn't need those credentials. It didn't use them. But it *could have*, and that was the problem.
+
+Marcus spent the next six hours in an emergency audit. The agent had been running as root because someone on the team had typed `sudo python3 agent.py` during a demo and never changed it for production. No dedicated user. No restricted shell. No permission boundaries. The agent could read every file on the system, write to any directory, and kill any process. It was the digital equivalent of handing an intern the master key to every office, vault, and server room in the building -- and then leaving for the weekend.
+
+The aftermath was brutal: forced credential rotation across 47 customer integrations, each one requiring coordination with an external engineering team. A post-mortem meeting at 8am with the CEO on the call. And the question nobody wanted to answer: *how long had this been running?*
+
+In Chapter 6, Principle 6 -- Constraints and Safety -- was about setting guardrails for AI agents. Least privilege is the same principle applied to the server your agents run on. The agent Marcus deployed had no guardrails. It ran as root because that was the path of least resistance, and nobody stopped to ask whether it *should*. This lesson teaches you how to never be Marcus.
+
+:::tip[The principle]
+The agent that can do anything will eventually do the wrong thing. Least privilege is not paranoia -- it is engineering.
+:::
 
 ---
 
@@ -349,7 +359,7 @@ ls -la /opt/agent-runner/config/settings.yaml
 
 ## Generating SSH Key Pairs
 
-SSH keys use asymmetric cryptography instead of passwords. A private key stays on your machine; its matching public key goes on servers you want to access. You'll configure SSH connections and `sshd_config` in Lesson 9 -- here you generate the key pair.
+SSH keys use asymmetric cryptography instead of passwords. A private key stays on your machine; its matching public key goes on servers you want to access. You'll configure SSH connections and `sshd_config` in Lesson 8 -- here you generate the key pair.
 
 ### Generating an Ed25519 Key Pair
 
@@ -403,7 +413,7 @@ chmod 644 ~/.ssh/id_ed25519.pub
 (no output on success)
 ```
 
-You'll use these keys to connect to remote servers in Lesson 9, where you'll configure `sshd_config`, set up `authorized_keys`, and disable password authentication.
+You'll use these keys to connect to remote servers in Lesson 8, where you'll configure `sshd_config`, set up `authorized_keys`, and disable password authentication.
 
 ---
 
@@ -600,6 +610,11 @@ API keys should be rotated periodically. With `.env` files, rotation is a one-li
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `useradd -r -s /usr/sbin/nologin agentuser`. This creates a system user with no login shell — the foundation of least-privilege that prevents a compromised agent from accessing the rest of your server.
+:::
+
 ## Exercises
 
 ### Exercise 1: Create a Restricted Service User
@@ -723,3 +738,7 @@ What security issues do you see? What chmod commands would fix them?
 ```
 
 **What you're learning:** A security review from another perspective catches oversights in your setup. In this example, `start.sh` and `logs/` have overly permissive settings (`777`) that a fresh pair of eyes -- whether human or AI -- should flag immediately.
+
+---
+
+Your server is now hardened: dedicated user, correct permissions, SSH keys only, password authentication off. But a locked server that nobody can reach is just a locked room. In the next lesson, you'll learn how your agents talk to the outside world -- ports, protocols, firewalls, and the SSH tunnel that makes remote access both secure and reliable. You've locked the door. Now let's make sure the right people can still get in.

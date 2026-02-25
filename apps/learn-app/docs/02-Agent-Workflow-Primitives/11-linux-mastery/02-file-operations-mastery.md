@@ -119,11 +119,19 @@ version: "1.0.0"
 
 # File Operations Mastery
 
-In Lesson 1, you learned to navigate the Linux filesystem -- moving between directories, understanding paths, and building a mental map of where things live. Now it's time to shape that filesystem.
+You're deploying a new version of your AI agent at 11 PM on a Thursday. The routing rules are updated, the environment variables are mapped across three environments -- staging, canary, production. Four hours of careful configuration work. You've done this deployment cleanup a hundred times, so you type the command from muscle memory: `rm -rf` followed by the path to the old deployment directory. You press Enter. No confirmation prompt. No progress bar. Just your terminal, sitting there, cursor blinking, waiting for the next command.
 
-Every AI agent you deploy needs a workspace: directories for source code, configuration files, log output, and data storage. Before any agent can run, someone has to create that structure, populate it with files, and maintain it over time. That someone is you, and your tools are the file operation commands you'll learn in this lesson.
+You run `ls` to verify the cleanup. The directory you meant to delete is still there. The directory you didn't mean to delete -- the one containing four hours of configuration work, the custom routing rules, the environment variable mappings, the entire configuration tree for three environments -- is empty. Not the files inside it. The directory itself, gutted. Gone. No recycle bin on Linux. No undo. No "Are you sure?" that you accidentally dismissed. Just silence, and then the slow realization of what happened.
 
-Think of file operations as the construction tools of the CLI architect. Navigation was reading the blueprint. Now you're picking up the hammer, saw, and measuring tape. By the end of this lesson, you'll be able to build, organize, and manage the directory structures that your Digital FTEs depend on.
+The cost was concrete: four hours rebuilding every configuration file from memory and scattered Slack messages. A release that should have shipped at midnight slipped to 4 AM. Three customers hit the old routing rules during the gap. Your team lead's message at 12:30 AM -- "What's the status?" -- still sits in your inbox.
+
+The fix that would have prevented all of it was three flags and one habit. `rm -i` prompts you before every deletion -- "remove this file?" -- so you see exactly what's about to disappear. `rm -v` prints each file as it's deleted, so silence never means mystery. And the habit: run `ls` on your target before any destructive command, every single time, even when you've done it a hundred times before. Especially when you've done it a hundred times before, because that's when muscle memory types the wrong path.
+
+This lesson makes file operations deliberate -- so you never have a silent `rm -rf` story of your own.
+
+:::tip[The principle]
+Linux has no undo button. The skill is knowing exactly what you're about to delete before you delete it.
+:::
 
 ---
 
@@ -435,6 +443,15 @@ rm -rf target-directory/
 
 :::
 
+:::note[Destructive vs deliberate operations]
+| Without file operation mastery | With file operation mastery |
+|-------------------------------|----------------------------|
+| `rm -rf` without confirming location | `pwd` then `ls` then `rm -i` |
+| Copy overwrites without warning | `cp -n` (no-clobber) or backup first |
+| Lost configs rebuilt from memory | Backup copies before changes |
+| Hours of rework | Minutes of caution |
+:::
+
 ---
 
 ## Reading File Contents
@@ -675,6 +692,11 @@ Man pages are organized into sections: NAME, SYNOPSIS, DESCRIPTION, OPTIONS, and
 
 ---
 
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `cp file file.backup` before editing anything critical. This single habit prevents the most common production data loss — editing a file and discovering ten minutes later that it cannot be restored.
+:::
+
 ## Exercises
 
 ### Exercise 1: Build an Agent Workspace
@@ -808,3 +830,7 @@ Give me specific commands and habits I should build.
 ```
 
 **What you're learning:** Defensive file management practices. Linux doesn't have an undo button, so prevention strategies (aliases, backups, interactive mode defaults) are essential skills for anyone managing production agent deployments.
+
+---
+
+You can now create, copy, move, and delete files -- and more importantly, do it deliberately without losing production data. But managing files is only half the work. The other half is reading them. In the next lesson, you'll discover that `cat` is often the wrong tool for a 2GB log file, and that a single pipe character can turn five separate commands into one powerful operation. The unix philosophy of small tools chained together is about to become your fastest diagnostic weapon.

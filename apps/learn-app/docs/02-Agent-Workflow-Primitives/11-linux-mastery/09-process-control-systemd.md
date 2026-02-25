@@ -1,8 +1,8 @@
 ---
-sidebar_position: 10
+sidebar_position: 9
 chapter: 11
-lesson: 10
-title: "Lesson 10: Process Control & Systemd Services"
+lesson: 9
+title: "Lesson 9: Process Control & Systemd Services"
 description: "Deploy AI agents as production systemd services with restart policies, start-limit protection, resource limits, and centralized logging."
 keywords: ["systemd", "service", "daemon", "restart policy", "journalctl", "resource limits", "agent deployment", "production", "MemoryMax", "CPUQuota"]
 duration_minutes: 60
@@ -103,7 +103,7 @@ teaching_guide:
     - "Students think journalctl shows all logs — journalctl -u service-name filters to that specific service, which is what you almost always want"
   discussion_prompts:
     - "Your agent crashes and restarts 50 times per minute. What is worse: the agent being down, or the restart storm consuming all CPU and memory? How does start-limit protection solve this?"
-    - "When would you choose tmux (lesson 5) over systemd for running an agent? What are the tradeoffs between interactive and service-managed deployment?"
+    - "When would you choose tmux (lesson 4) over systemd for running an agent? What are the tradeoffs between interactive and service-managed deployment?"
   teaching_tips:
     - "Start with the minimal 5-line service file and progressively add restart policy, start-limit, and resource limits — each addition solves a specific production problem"
     - "Demo systemctl status live — the colored output showing active/failed/inactive is much more memorable than describing it"
@@ -120,16 +120,29 @@ modality: "Hands-on discovery with AI collaboration"
 # Generation metadata
 generated_by: "content-implementer"
 created: "2026-02-10"
-version: "2.0.0"
+version: "2.1.0"
 ---
 
 # Process Control & Systemd Services
 
-In Lesson 9, you learned to connect to remote servers with SSH and verify network connectivity with curl. Now you'll make your agent permanent -- a service that starts on boot, restarts after crashes, and runs under resource limits that prevent it from consuming your entire server.
+It is 9:03 on a Monday morning. The lead engineer opens Slack to 47 unread messages in the support channel, all variations of the same question: "Is the agent down?" She pulls up the monitoring dashboard. The customer-facing agent -- the one that had been running flawlessly all week, handling hundreds of requests per day -- shows offline since 2:13am. Six hours and fifty minutes of silence. She checks the server. The ops team applied a critical security patch at 2:00am. The server rebooted. The agent never came back.
 
-Here is the reality of production agent deployment: servers reboot. Processes crash. Memory leaks accumulate. A Digital FTE that requires you to SSH in and manually restart it every time something goes wrong is not a production system -- it's a babysitting obligation. **systemd** transforms your agent from a fragile manual process into an unkillable system service managed by the operating system itself.
+The postmortem conversation writes itself. "Why didn't the agent restart after reboot?" Because it was not a service. It was a process -- started manually in a tmux session during last Tuesday's deploy, running on hope and the assumption that servers never reboot. Tmux is great for interactive sessions, as you learned in Lesson 4. But tmux does not survive a reboot. When the kernel came back up at 2:10am, tmux was gone, and the agent went with it.
 
-By the end of this lesson, you'll deploy the sample `agent_main.py` as a systemd service with automatic restart, crash protection, resource limits, and a canonical health check script that other lessons in this chapter reference.
+:::note[Glossary: daemon]
+A **daemon** is a background service process that runs independently of any user session. Daemons start at boot, run continuously, and are managed by the system — not by a human sitting at a terminal. systemd turns your agent into a proper daemon.
+:::
+
+
+Now picture the alternate timeline. Same security patch. Same 2:00am reboot. But this time the agent is registered as a systemd service. The server finishes booting at 2:10am. At 2:10 and ten seconds, systemd starts the agent automatically -- no human intervention, no Slack messages, no 47 support tickets. The monitoring dashboard never flickers. Nobody wakes up. The customers never notice.
+
+In Chapter 6, Principle 7 -- Observability -- was about seeing what your agent is doing. systemd's journal and restart policies are observability built directly into your infrastructure. You don't just know when your agent is running -- you know when it died, why it died, and what it did before it died. Every start, every crash, every restart attempt is recorded in the system journal with timestamps you can query with a single command.
+
+This lesson makes your agent a service. Services don't die quietly -- they restart automatically, log their own obituaries, and come back from reboots without anyone lifting a finger.
+
+:::tip[The principle]
+A process that nobody manages is a process that will eventually disappear. A systemd service manages itself.
+:::
 
 ---
 
@@ -227,6 +240,10 @@ The agent works. Now let's make it permanent.
 
 ## Your First systemd Service File
 
+:::note[Glossary: systemd]
+**systemd** is the init system that Linux uses to manage processes, services, and startup order. It replaces older init scripts and provides unified logging (`journalctl`), dependency management, and process supervision — all from one interface.
+:::
+
 A systemd service file has three sections. Each section serves a distinct purpose.
 
 Create the service file:
@@ -261,6 +278,16 @@ Each section controls a different aspect of the service:
 | **[Unit]** | Identity and ordering | `Description` names the service. `After=network.target` ensures networking is available before starting. |
 | **[Service]** | How to run the process | `Type=simple` means the process runs directly. `User=nobody` avoids running as root. `ExecStart` is the exact command. |
 | **[Install]** | Boot integration | `WantedBy=multi-user.target` makes the service start during normal boot. |
+
+:::note[The difference a service makes]
+| Running as a process | Running as a service |
+|---------------------|---------------------|
+| Dies when you disconnect | Keeps running after SSH closes |
+| Doesn't restart on crash | Restarts automatically |
+| Doesn't start on reboot | Starts at boot time |
+| No log history | Full journal accessible via journalctl |
+| You notice it's down when customers complain | Alerts available, logs searchable |
+:::
 
 ### Why Restart=on-failure (Not Restart=always)
 
@@ -465,6 +492,10 @@ sudo systemctl start my-agent
 
 ## Reading Service Logs with journalctl
 
+:::note[Glossary: journalctl]
+`journalctl` is systemd's centralized log viewer. It collects output from all services in one place, replacing scattered log files with a searchable, filterable journal accessible from any service.
+:::
+
 systemd captures all output from your service (both stdout and stderr) in the system journal. The `journalctl` command reads it.
 
 ### View Recent Logs
@@ -534,7 +565,11 @@ Feb 10 14:05:31 server uvicorn[4521]: INFO:     Uvicorn running on http://0.0.0.
 
 ## Resource Limits
 
-A production agent that leaks memory or spins the CPU can take down the entire server. systemd provides built-in resource limits through Linux cgroups -- no external monitoring tools needed.
+A production agent that leaks memory or spins the CPU can take down the entire server. systemd provides built-in resource limits through Linux cgroups
+
+:::note[Glossary: cgroups]
+Linux **cgroups** (control groups) are a kernel feature that limits how much CPU, memory, and other resources a process can use. systemd exposes them through `MemoryMax`, `CPUQuota`, and similar directives.
+::: -- no external monitoring tools needed.
 
 Update the service file to add limits:
 
@@ -714,7 +749,7 @@ The script checks three things:
 2. **Health endpoint** -- Does the application respond to HTTP requests?
 3. **Resource usage** -- How much memory is the service consuming?
 
-This script builds directly on skills from earlier lessons: `set -euo pipefail` from Lesson 6, `curl` from Lesson 9, and `systemctl` from this lesson.
+This script builds directly on skills from earlier lessons: `set -euo pipefail` from Lesson 5, `curl` from Lesson 8, and `systemctl` from this lesson.
 
 ---
 
@@ -755,6 +790,11 @@ WantedBy=multi-user.target
 Every directive serves a purpose. There is no boilerplate here -- each line addresses a specific production concern.
 
 ---
+
+
+:::tip[Minimum Viable Skill]
+If you take one thing from this lesson: `systemctl status myagent` followed by `journalctl -u myagent -f`. These two commands reveal everything about a running agent — whether it is active, why it failed, and what it is doing right now.
+:::
 
 ## Exercises
 
@@ -883,3 +923,7 @@ any security improvements?
 :::note Safety Reminder
 Always test service configurations on a non-production server first. A misconfigured `ExecStart` path or wrong `User` will cause the service to fail silently. Use `systemctl status` and `journalctl -u` after every change to verify the service started correctly.
 :::
+
+---
+
+Your agent is now a production service -- it starts on boot, restarts on crash, and logs everything. But "everything is fine" is not a debugging strategy. What happens when it is not fine? When the logs show nothing, the service keeps restarting, and the /health endpoint returns 500? The next lesson teaches you what to do after the restart does not fix it -- the systematic art of finding root causes before your customers find them first.

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 16
+sidebar_position: 14
 title: "Chapter 11: Linux Mastery Quiz"
 ---
 
@@ -47,7 +47,7 @@ explanation: "Relative paths like ../config/agent.yaml resolve based on the curr
 source: "Lesson 1: The CLI Architect Mindset"
 },
 {
-question: "What safety concern makes 'rm -rf /' or 'rm -rf _' extremely dangerous commands in production?",
+question: "What safety concern makes 'rm -rf /' or 'rm -rf *' extremely dangerous commands in production?",
 options: [
 "They consume excessive CPU and disk I/O resources during scanning",
 "They recursively delete files without confirmation and cannot be undone",
@@ -76,14 +76,14 @@ options: [
 "cp configs/ backup/ without flags refuses to copy directory contents",
 "cp -r configs/ backup/ recursively copies directory and all contents",
 "mv configs/ backup/ relocates files instead of creating a backup copy",
-"cat configs/_ > backup/ concatenates file contents into the backup path"
+"cat configs/* > backup/ concatenates file contents into the backup path"
 ],
 correctOption: 1,
 explanation: "cp -r (recursive) copies the directory and everything inside it, preserving the nested structure. Without -r, cp refuses to copy directories and returns an error — plain cp (A) only works on individual files. mv (C) moves rather than copies, so the original is gone afterward — that is not backing up, it is relocating. cat (D) concatenates file contents to stdout and cannot recreate directory structures. For production backups, consider cp -rp to also preserve permissions and timestamps, ensuring the backup is an exact replica of the original agent configuration.",
 source: "Lesson 2: Mastering File Operations"
 },
 {
-question: "What does the wildcard pattern 'agent-_.log' match when used with ls or rm?",
+question: "What does the wildcard pattern 'agent-*.log' match when used with ls or rm?",
 options: [
 "Only files named exactly agent-.log without any additional characters",
 "Files starting with agent- and ending with .log, with any characters between",
@@ -91,7 +91,7 @@ options: [
 "Only files starting with agent- followed by exactly one character then .log"
 ],
 correctOption: 1,
-explanation: "The asterisk (_) glob matches zero or more characters of any kind. So agent-_.log matches agent-deploy.log, agent-001.log, agent-.log, and agent-monitoring-2025.log — anything starting with 'agent-' and ending with '.log'. It does not match only agent-.log (A) — that would be a literal match without a wildcard. It does not match 'agent' appearing anywhere (C) — the pattern requires 'agent-' at the start. A single character match (D) would use the ? wildcard: agent-?.log. Glob patterns are essential for managing agent log files, like rm agent-_.log.old to clean up rotated logs.",
+explanation: "The asterisk (*) glob matches zero or more characters of any kind. So agent-*.log matches agent-deploy.log, agent-001.log, agent-.log, and agent-monitoring-2025.log — anything starting with 'agent-' and ending with '.log'. It does not match only agent-.log (A) — that would be a literal match without a wildcard. It does not match 'agent' appearing anywhere (C) — the pattern requires 'agent-' at the start. A single character match (D) would use the ? wildcard: agent-?.log. Glob patterns are essential for managing agent log files, like rm agent-*.log.old to clean up rotated logs.",
 source: "Lesson 2: Mastering File Operations"
 },
 {
@@ -259,7 +259,7 @@ question: "Why must bash variables be quoted as \"${VAR}\" rather than used bare
         "Quoting enables variable interpolation which is otherwise completely disabled for bare variable references"
       ],
       correctOption: 1,
-      explanation: "Without quotes, bash performs word splitting and glob expansion on variable values. If AGENT_PATH='/var/my agents/config', then cp $AGENT_PATH /backup becomes cp /var/my agents/config /backup — bash splits it into three arguments at the space. Quoted \"${AGENT*PATH}\" preserves the value as a single argument. Quoting does not affect speed (A) — it changes parsing behavior, not performance. Bare variables are not deprecated (C) — they work but are unsafe. Unquoted variables still interpolate (D) — the issue is what happens after interpolation. This bug commonly appears in agent paths containing spaces or special characters, causing deployment scripts to fail unpredictably.",
+      explanation: "Without quotes, bash performs word splitting and glob expansion on variable values. If AGENT_PATH='/var/my agents/config', then cp $AGENT_PATH /backup becomes cp /var/my agents/config /backup — bash splits it into three arguments at the space. Quoted \"${AGENT_PATH}\" preserves the value as a single argument. Quoting does not affect speed (A) — it changes parsing behavior, not performance. Bare variables are not deprecated (C) — they work but are unsafe. Unquoted variables still interpolate (D) — the issue is what happens after interpolation. This bug commonly appears in agent paths containing spaces or special characters, causing deployment scripts to fail unpredictably.",
 source: "Lesson 6: Bash Scripting Fundamentals"
 },
 {
@@ -283,7 +283,7 @@ options: [
 "for file in *.yaml; do process \"$file\"; done iterates over each glob match"
 ],
 correctOption: 3,
-explanation: "Bash for loops use the syntax: for variable in list; do commands; done. The glob _.yaml expands to all matching files, and the loop processes each one. Note the quoted \"$file\" inside the loop to handle filenames with spaces safely. foreach (A) is not a bash keyword — it exists in csh/tcsh shells. C-style loop and curly braces (B) are not valid bash syntax. Java-style for-each with parentheses and colons (C) does not work in bash. Loops are essential for batch operations like deploying multiple agent configurations: for config in /var/agents/configs/_.yaml; do validate \"$config\"; done processes every YAML config file automatically.",
+explanation: "Bash for loops use the syntax: for variable in list; do commands; done. The glob *.yaml expands to all matching files, and the loop processes each one. Note the quoted \"$file\" inside the loop to handle filenames with spaces safely. foreach (A) is not a bash keyword — it exists in csh/tcsh shells. C-style loop and curly braces (B) are not valid bash syntax. Java-style for-each with parentheses and colons (C) does not work in bash. Loops are essential for batch operations like deploying multiple agent configurations: for config in /var/agents/configs/*.yaml; do validate \"$config\"; done processes every YAML config file automatically.",
 source: "Lesson 6: Bash Scripting Fundamentals"
 },
 {
@@ -291,11 +291,11 @@ question: "Which grep command searches for lines containing 'ERROR' or 'FATAL' i
 options: [
 "grep -rE 'ERROR|FATAL' /var/log/ recursively searches with extended regex alternation",
 "grep 'ERROR' 'FATAL' /var/log/ treats the second pattern as a filename argument",
-"grep -w ERROR+FATAL /var/log/_.log searches for the combined word in top-level files",
+"grep -w ERROR+FATAL /var/log/*.log searches for the combined word in top-level files",
 "find /var/log -exec grep ERROR FATAL is malformed and missing proper exec syntax"
 ],
 correctOption: 0,
-explanation: "grep -rE combines -r (recursive search through directories) with -E (extended regex for the alternation operator |). The pattern 'ERROR|FATAL' matches lines containing either word. Multiple bare arguments (B) make grep interpret 'FATAL' as a filename, not a pattern. The + operator (C) is not valid for alternation in grep, and _.log only matches top-level files. The find syntax (D) is malformed — it would need separate -exec grep 'ERROR\\|FATAL' {} \\; syntax. Recursive grep with regex is the fastest way to triage agent failures — grep -rE 'ERROR|FATAL|Exception' /var/log/agents/ immediately reveals what went wrong across all log files.",
+explanation: "grep -rE combines -r (recursive search through directories) with -E (extended regex for the alternation operator |). The pattern 'ERROR|FATAL' matches lines containing either word. Multiple bare arguments (B) make grep interpret 'FATAL' as a filename, not a pattern. The + operator (C) is not valid for alternation in grep, and *.log only matches top-level files. The find syntax (D) is malformed — it would need separate -exec grep 'ERROR\\|FATAL' {} \\; syntax. Recursive grep with regex is the fastest way to triage agent failures — grep -rE 'ERROR|FATAL|Exception' /var/log/agents/ immediately reveals what went wrong across all log files.",
 source: "Lesson 7: Text Processing Power Tools"
 },
 {
@@ -323,7 +323,7 @@ explanation: "awk automatically splits each input line into fields at whitespace
 source: "Lesson 7: Text Processing Power Tools"
 },
 {
-question: "In cron scheduling syntax, what does the expression '0 _/6 \* \* _' mean?",
+question: "In cron scheduling syntax, what does the expression '0 */6 * * *' mean?",
 options: [
 "Run every 6 minutes at the top of each hour throughout the entire day",
 "Run 6 times per day at evenly spaced random intervals selected by cron",
@@ -331,7 +331,7 @@ options: [
 "Run at minute 0 of every 6th hour, meaning 00:00, 06:00, 12:00, 18:00"
 ],
 correctOption: 3,
-explanation: "Cron fields are: minute hour day-of-month month day-of-week. '0 _/6 \* \* _' means minute 0, every 6th hour (_/6 = step value), every day, every month, every weekday. This fires at 00:00, 06:00, 12:00, and 18:00. It is not every 6 minutes (A) — that would be _/6 in the minute field: '_/6 \* \* \* _'. Cron does not pick random intervals (B) — it follows deterministic schedules. The expression does not reference day-of-month (C) — the _/6 is in the hour field. Cron scheduling is essential for agent maintenance tasks like log rotation, health checks, and periodic model updates running on predictable intervals.",
+explanation: "Cron fields are: minute hour day-of-month month day-of-week. '0 */6 * * *' means minute 0, every 6th hour (*/6 = step value), every day, every month, every weekday. This fires at 00:00, 06:00, 12:00, and 18:00. It is not every 6 minutes (A) — that would be */6 in the minute field: '*/6 * * * *'. Cron does not pick random intervals (B) — it follows deterministic schedules. The expression does not reference day-of-month (C) — the */6 is in the hour field. Cron scheduling is essential for agent maintenance tasks like log rotation, health checks, and periodic model updates running on predictable intervals.",
 source: "Lesson 7: Text Processing Power Tools"
 },
 {
