@@ -4,19 +4,23 @@
  *
  * Reads all .flashcards.yaml files, generates .apkg files + manifest.json
  * into apps/learn-app/static/flashcards/
+ *
+ * sql.js 0.5.0 (used by anki-apkg-export) has a fixed 16 MB WASM heap.
+ * To avoid OOM after ~80 decks we process batches in child processes,
+ * each of which gets a fresh heap.
  */
 
 const path = require("path");
 const fs = require("fs");
+const { fork } = require("child_process");
 const {
   loadAllDecks,
 } = require("../../../libs/docusaurus/shared/flashcardLoader");
 const normalizeToDocId = require("../../../libs/docusaurus/shared/normalizeToDocId");
 const siteConfig = require("../../../libs/docusaurus/shared/siteConfig");
 
-// anki-apkg-export uses default export via babel
-const createAnkiExport =
-  require("anki-apkg-export").default || require("anki-apkg-export");
+// How many decks each child process handles before we recycle.
+const BATCH_SIZE = 40;
 
 /* ------------------------------------------------------------------ */
 /*  Card styling for Anki                                             */
@@ -219,8 +223,80 @@ function buildSourceUrl(yamlPath, docsDir) {
 }
 
 /* ------------------------------------------------------------------ */
-/*  Main                                                               */
+/*  Worker mode — entered when this script is forked with IPC          */
 /* ------------------------------------------------------------------ */
+
+if (process.env.__ANKI_WORKER__) {
+  // anki-apkg-export uses default export via babel
+  const createAnkiExport =
+    require("anki-apkg-export").default || require("anki-apkg-export");
+
+  process.on("message", async ({ items, outputDir }) => {
+    const results = {};
+    let skipped = 0;
+
+    for (const { deckId, title, cards, sourceUrl } of items) {
+      const apkg = createAnkiExport(title, {
+        questionFormat: ANKI_QUESTION_FMT,
+        answerFormat: ANKI_ANSWER_FMT,
+        css: ANKI_CSS,
+      });
+
+      for (const card of cards) {
+        const frontHtml = buildFrontHtml(card);
+        const backHtml = buildBackHtml(card, sourceUrl);
+        const tags = [...(card.tags || [])];
+        if (card.difficulty) tags.push(`difficulty:${card.difficulty}`);
+        apkg.addCard(frontHtml, backHtml, { tags });
+      }
+
+      const zip = await apkg.save();
+      const apkgPath = path.join(outputDir, `${deckId}.apkg`);
+      fs.writeFileSync(apkgPath, zip, "binary");
+
+      results[deckId] = {
+        apkgPath: `/flashcards/${deckId}.apkg`,
+        title,
+        cardCount: cards.length,
+        sourceUrl,
+      };
+
+      console.log(`  Generated: ${deckId}.apkg (${cards.length} cards)`);
+    }
+
+    process.send({ results, skipped });
+  });
+
+  // Keep worker alive until parent disconnects
+  return;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main (orchestrator) — discovers decks, dispatches to workers       */
+/* ------------------------------------------------------------------ */
+
+function runBatch(items, outputDir) {
+  return new Promise((resolve, reject) => {
+    const child = fork(__filename, [], {
+      env: { ...process.env, __ANKI_WORKER__: "1" },
+      stdio: ["pipe", "inherit", "inherit", "ipc"],
+    });
+
+    child.on("message", (msg) => {
+      child.disconnect();
+      resolve(msg);
+    });
+
+    child.on("error", reject);
+    child.on("exit", (code) => {
+      if (code !== 0 && code !== null) {
+        reject(new Error(`Worker exited with code ${code}`));
+      }
+    });
+
+    child.send({ items, outputDir });
+  });
+}
 
 async function main() {
   const docsDir = path.resolve(__dirname, "../docs");
@@ -235,11 +311,8 @@ async function main() {
     return;
   }
 
-  const manifest = {
-    generated: new Date().toISOString(),
-    decks: {},
-  };
-
+  // Pre-process: validate decks and resolve source URLs in the main process
+  const validItems = [];
   let skipped = 0;
 
   for (const { filePath, deck } of decks) {
@@ -251,45 +324,39 @@ async function main() {
       continue;
     }
     const { deck: meta, cards } = deck;
-    const deckId = meta.id;
-    const sourceUrl = buildSourceUrl(filePath, docsDir);
-
-    const apkg = createAnkiExport(meta.title, {
-      questionFormat: ANKI_QUESTION_FMT,
-      answerFormat: ANKI_ANSWER_FMT,
-      css: ANKI_CSS,
+    validItems.push({
+      deckId: meta.id,
+      title: meta.title,
+      cards,
+      sourceUrl: buildSourceUrl(filePath, docsDir),
     });
+  }
 
-    for (const card of cards) {
-      const frontHtml = buildFrontHtml(card);
-      const backHtml = buildBackHtml(card, sourceUrl);
+  // Split into batches and process each in a fresh child process
+  const manifest = {
+    generated: new Date().toISOString(),
+    decks: {},
+  };
 
-      const tags = [...(card.tags || [])];
-      if (card.difficulty) {
-        tags.push(`difficulty:${card.difficulty}`);
-      }
+  for (let i = 0; i < validItems.length; i += BATCH_SIZE) {
+    const batch = validItems.slice(i, i + BATCH_SIZE);
+    const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+    const totalBatches = Math.ceil(validItems.length / BATCH_SIZE);
 
-      apkg.addCard(frontHtml, backHtml, { tags });
+    if (totalBatches > 1) {
+      console.log(
+        `\n  Batch ${batchNum}/${totalBatches} (${batch.length} decks)`,
+      );
     }
 
-    const zip = await apkg.save();
-    const apkgPath = path.join(outputDir, `${deckId}.apkg`);
-    fs.writeFileSync(apkgPath, zip, "binary");
-
-    manifest.decks[deckId] = {
-      apkgPath: `/flashcards/${deckId}.apkg`,
-      title: meta.title,
-      cardCount: cards.length,
-      sourceUrl,
-    };
-
-    console.log(`  Generated: ${deckId}.apkg (${cards.length} cards)`);
+    const { results } = await runBatch(batch, outputDir);
+    Object.assign(manifest.decks, results);
   }
 
   const manifestPath = path.join(outputDir, "manifest.json");
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   console.log(`\nManifest written to ${manifestPath}`);
-  console.log(`Generated ${decks.length} deck(s).`);
+  console.log(`Generated ${validItems.length} deck(s).`);
 
   if (skipped > 0) {
     console.error(`\n${skipped} deck(s) skipped due to invalid structure.`);
