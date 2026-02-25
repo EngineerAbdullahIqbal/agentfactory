@@ -316,23 +316,25 @@ Before you finalize, enforce these constraints:
 
 If any gate fails, revise cards and re-check before returning the final output.
 
-### 6.7 Run Validator (if available)
+### 6.7 Run Validator (MANDATORY)
 
 ```bash
-npx ts-node apps/learn-app/scripts/validate-flashcards.ts 2>/dev/null || true
+cd apps/learn-app && pnpm exec tsx scripts/validate-flashcards.ts
 ```
 
-Fix any reported errors (duplicate IDs, schema violations) before returning.
+This validates all decks across the book (duplicate IDs, schema violations, missing fields). **Do NOT swallow errors** — if the validator fails, fix the issues before returning.
 
 ### 7. Heading Convention
 
-When adding flashcards to a lesson `.md` file, use:
+When adding flashcards to a lesson `.md` file, add this heading and component:
 
 ```markdown
 ## Flashcards Study Aid
 
 <Flashcards />
 ```
+
+**IMPORTANT**: Do NOT add an `import` statement for the Flashcards component. The `remark-flashcards` plugin automatically injects the component at build time. Adding `import Flashcards from '@site/src/components/Flashcards';` will cause a build error because the component is virtual (provided by the plugin, not a real file).
 
 ## Card ID Strategy (Prevents Collisions)
 

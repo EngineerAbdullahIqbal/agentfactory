@@ -83,8 +83,6 @@ teaching_guide:
   assessment_quick_check: "Can the student explain why two subagents with the same spec but no constitution might produce inconsistent code?"
 ---
 
-import Flashcards from '@site/src/components/Flashcards';
-
 # The Project Constitution
 
 In Lesson 2, you learned that specifications come in three levels—Spec-First, Spec-Anchored, and Spec-as-Source. Every level shares the same problem: specs describe _what you're building_, but nothing tells Claude _how you always build things_.
