@@ -123,7 +123,7 @@ This isn't academic. In 1982, the Vancouver Stock Exchange launched a new index 
 
 When they found the bug and corrected it over a weekend in November 1983, the index jumped from 524 to over 1098 overnight. The market hadn't crashed. The math had just been wrong — silently, invisibly, for almost two years.
 
-That was truncation at three decimal places. Your Bash terminal does worse: `$((10 / 3))` truncates to *zero* decimal places.
+That was truncation at three decimal places. Your Bash terminal does worse: `$((10 / 3))` truncates to _zero_ decimal places.
 
 ## The Head Math Trap
 
@@ -137,10 +137,10 @@ The rule for this chapter:
 
 > **If it's math, it belongs in a script. Don't ask AI to calculate. Ask AI to write code that calculates.**
 
-| Approach                           | Reliability         | Why                              |
-| ---------------------------------- | ------------------- | -------------------------------- |
-| "What's the sum of these amounts?" | Unreliable at scale | LLM predicts, doesn't compute   |
-| "Write Python to sum these numbers"| Reliable            | Python executes, doesn't predict |
+| Approach                            | Reliability         | Why                              |
+| ----------------------------------- | ------------------- | -------------------------------- |
+| "What's the sum of these amounts?"  | Unreliable at scale | LLM predicts, doesn't compute    |
+| "Write Python to sum these numbers" | Reliable            | Python executes, doesn't predict |
 
 ## Building sum.py with Claude Code
 
@@ -218,11 +218,13 @@ The rule: if the calculation is repeated, financial, or where being wrong has co
 Open Claude Code. Ask it to build sum.py. Run it on three numbers. Don't proceed to Lesson 2 until you see output in your terminal.
 
 Use this prompt:
+
 ```
 I have a file with decimal numbers, one per line. Build me a script that reads numbers from stdin and prints the total.
 ```
 
 Then test it:
+
 ```bash
 echo -e "100.50\n25.75\n14.25" | python3 sum.py
 ```
@@ -232,17 +234,18 @@ Expected output: `Total: 140.5`
 
 ## Prompt Quality Determines Tool Quality
 
-The prompt you gave Claude Code was specific in two ways: it named the data format (decimal numbers, one per line) and it specified *stdin*. That specificity drove the quality of the result. The same underlying problem — sum decimal numbers — produces three different outcomes depending on how you ask:
+The prompt you gave Claude Code was specific in two ways: it named the data format (decimal numbers, one per line) and it specified _stdin_. That specificity drove the quality of the result. The same underlying problem — sum decimal numbers — produces three different outcomes depending on how you ask:
 
-| What you said | What the agent returned | Pipeable? | Works next month? |
-|---|---|---|---|
-| "What's 127.89 + 45.50 + 12.99?" | The answer: 186.38 | No | Gone after the chat |
-| "Write Python to sum 127.89, 45.50, 12.99" | A script for those specific numbers | No | Only those three |
-| "Build a script that reads numbers from stdin and prints the total" | `sum.py` — reads any input, composes with pipes | Yes | Works on any data, forever |
+| What you said                                                       | What the agent returned                         | Pipeable? | Works next month?          |
+| ------------------------------------------------------------------- | ----------------------------------------------- | --------- | -------------------------- |
+| "What's 127.89 + 45.50 + 12.99?"                                    | The answer: 186.38                              | No        | Gone after the chat        |
+| "Write Python to sum 127.89, 45.50, 12.99"                          | A script for those specific numbers             | No        | Only those three           |
+| "Build a script that reads numbers from stdin and prints the total" | `sum.py` — reads any input, composes with pipes | Yes       | Works on any data, forever |
 
 The difference between row 1 and row 3 isn't effort — all three prompts take the same time to write. The difference is **what you're asking the agent to build**. Row 1 asks for an answer. Row 3 asks for a tool.
 
 Two phrases made row 3 work:
+
 - **"reads from stdin"** — signals you want something pipeable, not a hardcoded script
 - **"prints the total"** — signals stdout, so the output can flow into the next command
 
@@ -262,9 +265,13 @@ This same approach works for any calculation: averages, maximums, counts, filter
 
 Your script ran. It produced a number: 186.38. Exit code 0 — no errors, no red text. Everything looks fine.
 
-But remember the Vancouver Stock Exchange. Their software ran without errors too. For 22 months. And the number it produced was half of what it should have been. Nobody noticed because the output *looked reasonable*.
+But remember the Vancouver Stock Exchange. Their software ran without errors too. For 22 months. And the number it produced was half of what it should have been. Nobody noticed because the output _looked reasonable_.
 
 How do you know 186.38 is right?
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 ---
 

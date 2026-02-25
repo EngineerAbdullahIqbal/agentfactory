@@ -389,3 +389,7 @@ Show me the complete model code.
 - [ ] I can explain `cascade="all, delete-orphan"` impact before using it.
 - [ ] I can identify and fix one N+1 pattern.
 - [ ] I can validate relationship queries with expected sample rows.
+
+## Flashcards Study Aid
+
+<Flashcards />

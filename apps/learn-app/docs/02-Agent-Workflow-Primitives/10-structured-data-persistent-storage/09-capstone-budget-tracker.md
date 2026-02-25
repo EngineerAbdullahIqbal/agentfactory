@@ -384,3 +384,7 @@ For each gate, specify: what you test, what "pass" looks like, and what "fail" m
 **What you're learning:** Evidence-driven release decisions transfer to ANY software project. Whether you're shipping a mobile app, deploying an API, or publishing a report -- the pattern is the same: define gates, run tests, collect proof, make decisions based on evidence rather than gut feeling.
 
 Your system is correct. But systems change. Users want new features. Schemas need to evolve. Data needs to migrate. Next chapter: how do you evolve a running system without breaking what works?
+
+## Flashcards Study Aid
+
+<Flashcards />

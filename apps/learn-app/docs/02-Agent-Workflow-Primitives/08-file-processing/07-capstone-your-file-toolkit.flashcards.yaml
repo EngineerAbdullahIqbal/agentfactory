@@ -1,0 +1,65 @@
+deck:
+  id: "ch08-07-capstone-file-toolkit"
+  title: "Capstone: Your File Processing Toolkit"
+  description: "Workflow selection under pressure, the Seven Principles in action, and the bridge from manual prompting to automated AI Employees."
+  tags: ["file-processing", "capstone", "synthesis", "seven-principles"]
+  version: 1
+
+cards:
+  - id: "ch08-07-capstone-file-toolkit-001"
+    front: "What are the six file processing workflows taught in Chapter 8, in order?"
+    back: "1. Survey\n2. Backup\n3. Organize\n4. Batch operations\n5. Recover\n6. Search"
+    tags: ["workflows", "chapter-summary"]
+    difficulty: "basic"
+
+  - id: "ch08-07-capstone-file-toolkit-002"
+    front: "Your accountant is on the phone needing a 1099-DIV and your Desktop has 300 files. Why should you skip the survey and search directly?"
+    back: "Urgency overrides the normal sequence. When someone is waiting, you find the one thing you need now and organize later. The survey-first pattern is for when you have time to be systematic."
+    tags: ["triage", "workflow-selection"]
+    difficulty: "intermediate"
+    why: "How do you decide when to follow the standard workflow sequence versus when to skip steps?"
+
+  - id: "ch08-07-capstone-file-toolkit-003"
+    front: "What is MY-PROMPT-TOOLKIT.md?"
+    back: "A document of reusable prompt templates for all six file processing workflows."
+    tags: ["prompt-toolkit", "deliverables"]
+    difficulty: "basic"
+
+  - id: "ch08-07-capstone-file-toolkit-004"
+    front: "Why are prompt templates more durable than organized folders?"
+    back: "Folders fill up again next month and need re-organizing. Prompt templates capture the patterns for how to direct an agent, which transfer to any folder, any domain, and any future scenario."
+    tags: ["durability", "prompt-toolkit"]
+    difficulty: "intermediate"
+    why: "What makes a deliverable 'durable' versus 'ephemeral' in agent-directed workflows?"
+
+  - id: "ch08-07-capstone-file-toolkit-005"
+    front: "Which of the Seven Principles did these lessons demonstrate: Survey (L1), Safety-First (L2), Organization (L3), Batch Ops (L4)?"
+    back: "Survey: P1 Bash is the Key + P7 Observability.\nSafety: P6 Constraints and Safety + P3 Verification.\nOrganization: P5 Persisting State + P4 Decomposition.\nBatch: P2 Code as Universal Interface."
+    tags: ["seven-principles", "mapping"]
+    difficulty: "intermediate"
+
+  - id: "ch08-07-capstone-file-toolkit-006"
+    front: "A botched rename script garbles 40 filenames and some files seem missing. Why should you compare against backup before trying to fix individual files?"
+    back: "Diagnosis before treatment: comparing current state vs backup reveals the full extent of damage. Files that 'seem missing' might just be renamed. Starting to fix individual files without understanding the full picture risks making things worse."
+    tags: ["recovery", "triage"]
+    difficulty: "intermediate"
+    why: "What is the general principle behind 'diagnose before treating' in any error recovery scenario?"
+
+  - id: "ch08-07-capstone-file-toolkit-007"
+    front: "In the manual-to-automated bridge, what changes when you automate file workflows as an AI Employee?"
+    back: "The workflows stay identical. Automation just removes the human as the trigger — a scheduler replaces manual prompting."
+    tags: ["automation-bridge", "ai-employee"]
+    difficulty: "basic"
+
+  - id: "ch08-07-capstone-file-toolkit-008"
+    front: "Why is 'knowing which workflow to grab under pressure' a harder skill than knowing all six workflows individually?"
+    back: "Individual workflows are procedural knowledge — follow the steps. Selection under pressure requires judgment about context: urgency, risk, available safety nets, and which steps to skip. Judgment cannot be memorized like procedures."
+    tags: ["workflow-selection", "judgment"]
+    difficulty: "advanced"
+    why: "How do you build judgment for workflow selection beyond just practicing each workflow?"
+
+  - id: "ch08-07-capstone-file-toolkit-009"
+    front: "What shift does the chapter describe from Lesson 1 to Lesson 7?"
+    back: "From passive observer (watching the agent work) to active director (demanding backups, questioning rules, requesting previews, verifying results)."
+    tags: ["chapter-arc", "skill-progression"]
+    difficulty: "basic"

@@ -1,0 +1,66 @@
+deck:
+  id: "ch08-02-safety-first-pattern"
+  title: "The Safety-First Pattern"
+  description: "The backup-verify-proceed cycle, verification mindset, and why safety enables fearless experimentation."
+  tags: ["file-processing", "safety", "backup", "verification"]
+  version: 1
+
+cards:
+  - id: "ch08-02-safety-first-pattern-001"
+    front: "What are the three steps of the safety-first cycle before any destructive file operation?"
+    back: "1. Backup\n2. Verify\n3. Proceed"
+    tags: ["safety-cycle", "workflow"]
+    difficulty: "basic"
+
+  - id: "ch08-02-safety-first-pattern-002"
+    front: "What is the safety-first prompt pattern for directing an agent before risky operations?"
+    back: "\"Before [making changes], create a backup of [what matters to me].\""
+    tags: ["prompt-pattern", "safety"]
+    difficulty: "basic"
+
+  - id: "ch08-02-safety-first-pattern-003"
+    front: "A team hesitates at every file operation because they have no backup. Another team experiments freely because they backed up first. Why does the safety constraint speed them up?"
+    back: "Without a safety net, every step triggers anxiety and hesitation. With a verified backup, mistakes are cheap to fix, so the team experiments without fear. The 2 minutes spent on backup saves 20 minutes of paralysis."
+    tags: ["safety-paradox", "workflow"]
+    difficulty: "intermediate"
+    why: "Where else in software development does an upfront safety cost accelerate overall progress?"
+
+  - id: "ch08-02-safety-first-pattern-004"
+    front: "A backup copies 134 of 136 files but 2 fail silently. Why is this potentially worse than having no backup at all?"
+    back: "A mostly-complete backup creates false confidence. You proceed believing everything is safe, but the 2 missing files could be the critical ones. No backup at least makes you cautious."
+    tags: ["verification", "false-confidence"]
+    difficulty: "advanced"
+    why: "How would you design a backup process that makes partial failures impossible to miss?"
+
+  - id: "ch08-02-safety-first-pattern-005"
+    front: "When asked to backup 'important files,' why did the agent ask what 'important' means instead of copying everything?"
+    back: "Different people have different definitions of important. A photographer cares about images, an accountant about spreadsheets. Clarifying before acting prevents wrong assumptions and wasted effort."
+    tags: ["agent-behavior", "clarification"]
+    difficulty: "intermediate"
+    why: "When is an agent that assumes and acts faster actually more dangerous than one that asks first?"
+
+  - id: "ch08-02-safety-first-pattern-006"
+    front: "Why is verifying a backup non-negotiable, even when the agent reports success?"
+    back: "A backup that fails silently gives false confidence, which is worse than knowing you have no backup. Verification (comparing counts, checking errors) catches problems before you rely on the safety net."
+    tags: ["verification", "safety"]
+    difficulty: "intermediate"
+    why: "What other systems give you a 'success' message that you should still verify independently?"
+
+  - id: "ch08-02-safety-first-pattern-007"
+    front: "What is the safety-first equivalent for each domain: files, code, database, system config?"
+    back: "Files: backup before moving.\nCode: commit before refactoring.\nDatabase: export before modifying.\nSystem config: snapshot before changing."
+    tags: ["safety-mindset", "cross-domain"]
+    difficulty: "intermediate"
+
+  - id: "ch08-02-safety-first-pattern-008"
+    front: "Why do good agents check preconditions like available disk space before starting a backup?"
+    back: "Running out of space mid-backup leaves files in limbo — partially copied, nothing complete. Checking preconditions catches problems before they cause worse damage than the original risk."
+    tags: ["preconditions", "agent-behavior"]
+    difficulty: "intermediate"
+    why: "What other preconditions should an agent check before a batch file operation?"
+
+  - id: "ch08-02-safety-first-pattern-009"
+    front: "What prompt should you always use after creating a backup?"
+    back: "\"Verify the backup is complete. Show me any errors.\""
+    tags: ["prompt-pattern", "verification"]
+    difficulty: "basic"

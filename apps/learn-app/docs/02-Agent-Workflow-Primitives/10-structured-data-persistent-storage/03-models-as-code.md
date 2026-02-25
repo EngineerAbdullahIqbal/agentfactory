@@ -298,3 +298,7 @@ Think of a real project you want to build. What are the 2-3 main "things" (entit
 ### Safety Note
 
 Never run model files that drop or recreate tables against a production database. The `create_all` call in this lesson is safe for new databases, but on an existing database with real data, it can silently skip schema changes or, worse, destroy data if combined with `drop_all`. Always use migration tools (like Alembic) for production schema changes.
+
+## Flashcards Study Aid
+
+<Flashcards />

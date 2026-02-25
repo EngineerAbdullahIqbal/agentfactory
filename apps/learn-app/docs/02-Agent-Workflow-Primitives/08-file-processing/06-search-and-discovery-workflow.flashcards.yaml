@@ -1,0 +1,64 @@
+deck:
+  id: "ch08-06-search-discovery"
+  title: "Search and Discovery Workflow"
+  description: "Descriptive search by characteristics instead of location, content search inside files, and search refinement through conversation."
+  tags: ["file-processing", "search", "discovery", "descriptive-search"]
+  version: 1
+
+cards:
+  - id: "ch08-06-search-discovery-001"
+    front: "What is descriptive search in the context of directing an agent?"
+    back: "Describing what you need by characteristics (type, date, content, source) instead of filename or location."
+    tags: ["descriptive-search", "definition"]
+    difficulty: "intermediate"
+
+  - id: "ch08-06-search-discovery-002"
+    front: "What is the prompt pattern for directing an agent to search for files?"
+    back: "\"Find files that match [description] from [time period].\""
+    tags: ["prompt-pattern", "search"]
+    difficulty: "basic"
+
+  - id: "ch08-06-search-discovery-003"
+    front: "You have been clicking through folders for 20 minutes looking for a tax PDF. Why is searching by description more effective than searching by location?"
+    back: "You remember what the file IS (tax document, about dividends, from Chase) but not where you saved it. Description-based search lets the agent check multiple locations and match content simultaneously, while location-based search forces you to guess the folder."
+    tags: ["descriptive-search", "effectiveness"]
+    difficulty: "intermediate"
+    why: "How does this description-vs-location inversion apply to searching databases or research corpora?"
+
+  - id: "ch08-06-search-discovery-004"
+    front: "What are the three search layers, from surface to deep?"
+    back: "1. Filename metadata (name, date, size)\n2. Content inside files (pdftotext + grep)\n3. Pattern-based discovery (find similar files)"
+    tags: ["search-layers", "progression"]
+    difficulty: "intermediate"
+
+  - id: "ch08-06-search-discovery-005"
+    front: "How do you narrow search results through conversation with an agent?"
+    back: "Add progressively specific constraints in follow-ups, like narrowing from 'tax documents' to 'from Chase, not Fidelity.'"
+    tags: ["search-refinement", "conversation"]
+    difficulty: "intermediate"
+
+  - id: "ch08-06-search-discovery-006"
+    front: "You have 40 PDFs named 'document.pdf' and 'download.pdf.' The filename tells you nothing. Why is content search fundamentally different from filename search?"
+    back: "Content search uses pdftotext to read inside files and grep to match text, accessing information that is completely invisible to folder browsing or filename matching. It finds the invoice inside 'download(3).pdf' that no filename filter could locate."
+    tags: ["content-search", "pdftotext"]
+    difficulty: "intermediate"
+    why: "What other file formats trap important information behind unhelpful filenames?"
+
+  - id: "ch08-06-search-discovery-007"
+    front: "When a broad search might return thousands of results, what should you ask the agent to do?"
+    back: "\"Save the full list to search-results.txt and show me the first 10 matches.\""
+    tags: ["session-protection", "search"]
+    difficulty: "basic"
+
+  - id: "ch08-06-search-discovery-008"
+    front: "Why is descriptive search a transferable skill beyond file management?"
+    back: "Every database query, research task, and AI-directed information retrieval uses the same pattern: describing what you need and letting a system figure out how to find it. The skill is articulating criteria, not knowing search syntax."
+    tags: ["transferable-skill", "abstraction"]
+    difficulty: "advanced"
+    why: "What makes 'describe what you need' more powerful as AI systems improve?"
+
+  - id: "ch08-06-search-discovery-009"
+    front: "What prompt triggers pattern-based discovery after finding one example file?"
+    back: "\"Find all similar files to this one.\""
+    tags: ["prompt-pattern", "pattern-discovery"]
+    difficulty: "basic"

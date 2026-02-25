@@ -1,0 +1,95 @@
+deck:
+  id: ch10-08-capstone-budget-tracker
+  title: "Capstone - Budget Tracker Complete App"
+  description: Flashcards covering the evidence bundle, five-gate evidence pipeline, release readiness language, and integration of all Chapter 10 primitives.
+  tags:
+  - capstone
+  - evidence-bundle
+  - release-gate
+  - integration
+  version: 1
+cards:
+- id: ch10-08-capstone-budget-tracker-001
+  type: recall
+  difficulty: basic
+  front: What is an evidence bundle in the context of release readiness?
+  back: "A JSON artifact collecting test results that proves the system works."
+  tags:
+  - evidence-bundle
+  - release-gate
+- id: ch10-08-capstone-budget-tracker-002
+  type: recall
+  difficulty: intermediate
+  front: What are the five gates in the capstone evidence pipeline, in order?
+  back: "1. Schema Gate\n2. CRUD Gate\n3. Rollback Gate\n4. Neon Gate\n5. Verify Gate"
+  tags:
+  - evidence-pipeline
+  - gates
+- id: ch10-08-capstone-budget-tracker-003
+  type: recall
+  difficulty: basic
+  front: "What is the difference between 'ready for demo' and 'ready for release'?"
+  back: "Demo: happy path passes.\nRelease: failure paths and verification gate also pass."
+  tags:
+  - release-readiness
+  - gate-language
+- id: ch10-08-capstone-budget-tracker-004
+  type: thinking
+  difficulty: intermediate
+  front: "A team publishes a financial report despite a 'blocked' verification status. What kind of failure is this?"
+  back: "BECAUSE the verification gate correctly detected a problem, THEREFORE publishing despite the block is a release process failure, not a query problem — the engineering worked, the process did not."
+  why: "What organizational safeguard would prevent someone from overriding a blocked status?"
+  tags:
+  - mismatch-policy
+  - release-gate
+- id: ch10-08-capstone-budget-tracker-005
+  type: recall
+  difficulty: basic
+  front: What is a release gate?
+  back: "A checkpoint that must pass before code goes to production."
+  tags:
+  - release-gate
+  - deployment
+- id: ch10-08-capstone-budget-tracker-006
+  type: thinking
+  difficulty: intermediate
+  front: "Why does the capstone introduce no new concepts despite being the final lesson?"
+  back: "BECAUSE the capstone is an integration test of all chapter primitives (schema, CRUD, rollback, Neon, verification), THEREFORE its value is proving everything holds together under one roof, not adding complexity."
+  why: "What would a failing capstone reveal that individual lesson tests would miss?"
+  tags:
+  - capstone
+  - integration
+- id: ch10-08-capstone-budget-tracker-007
+  type: thinking
+  difficulty: advanced
+  front: "Why should another engineer be able to rerun your evidence bundle without asking you any questions?"
+  back: "BECAUSE verbal claims are not verifiable and depend on one person's availability, THEREFORE a self-contained evidence artifact lets anyone independently verify readiness — reproducibility replaces trust."
+  why: "How does this principle connect to the broader Chapter 10 theme of enforcement over convention?"
+  tags:
+  - evidence-bundle
+  - reproducibility
+- id: ch10-08-capstone-budget-tracker-008
+  type: recall
+  difficulty: intermediate
+  front: "How does the capstone's monthly summary avoid the N+1 problem?"
+  back: "One SQL query with GROUP BY and ORDER BY — no per-category loops."
+  tags:
+  - n-plus-one
+  - query-patterns
+- id: ch10-08-capstone-budget-tracker-009
+  type: thinking
+  difficulty: advanced
+  front: "Why is proving failure paths (forced rollback, mismatch detection) as important as proving happy paths?"
+  back: "BECAUSE production systems encounter failures routinely, THEREFORE a system that only demonstrates success gives false confidence — failure evidence proves the system can fail safely and recover correctly."
+  why: "What is the difference between a system that works and a system you can trust?"
+  tags:
+  - failure-paths
+  - evidence-bundle
+- id: ch10-08-capstone-budget-tracker-010
+  type: recall
+  difficulty: intermediate
+  front: "What are the four capstone self-review questions?"
+  back: "1. Can another engineer rerun without guidance?\n2. Are thresholds explicit?\n3. Did you demonstrate a failure path?\n4. Can a reviewer trace requirement to evidence?"
+  tags:
+  - capstone
+  - self-review

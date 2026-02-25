@@ -184,9 +184,9 @@ Two things make this work:
 **Shell config files** (`.zshrc` or `.bashrc`) run every time you open a terminal. The agent added your alias there so it loads on startup. `source ~/.zshrc` reloads it immediately without closing the terminal.
 
 | Your shell (`echo $SHELL`) | Config file |
-|---|---|
-| `/bin/zsh` | `~/.zshrc` |
-| `/bin/bash` | `~/.bashrc` |
+| -------------------------- | ----------- |
+| `/bin/zsh`                 | `~/.zshrc`  |
+| `/bin/bash`                | `~/.bashrc` |
 
 :::warning Checkpoint: Prove It's Permanent
 
@@ -223,29 +223,35 @@ python3 ~/tools/sum-expenses.py <<< "10"
 # If error → Python version mismatch or missing shebang
 ```
 
-| Symptom | Check | Fix |
-|---------|-------|-----|
-| "command not found" | `alias sum-expenses` | Re-add alias to shell config, then `source` |
-| "No such file" | `ls ~/tools/sum-expenses.py` | Script was moved — update the alias path |
-| "Permission denied" | `ls -la ~/tools/sum-expenses.py` | Re-run `chmod +x ~/tools/sum-expenses.py` |
-| Script errors on run | `python3 --version` | Python version changed — check shebang line |
+| Symptom              | Check                            | Fix                                         |
+| -------------------- | -------------------------------- | ------------------------------------------- |
+| "command not found"  | `alias sum-expenses`             | Re-add alias to shell config, then `source` |
+| "No such file"       | `ls ~/tools/sum-expenses.py`     | Script was moved — update the alias path    |
+| "Permission denied"  | `ls -la ~/tools/sum-expenses.py` | Re-run `chmod +x ~/tools/sum-expenses.py`   |
+| Script errors on run | `python3 --version`              | Python version changed — check shebang line |
 
-This is the difference between someone who set up a tool and someone who *owns* a tool. Setup is the agent's job. Diagnosis is yours — because when it breaks at 11pm before a deadline, you need to know the three places to look.
+This is the difference between someone who set up a tool and someone who _owns_ a tool. Setup is the agent's job. Diagnosis is yours — because when it breaks at 11pm before a deadline, you need to know the three places to look.
 
 :::tip Moving to a New Machine
 When you set up a new computer or reinstall your OS, you need two things: the `~/tools` directory (copy it over) and the aliases in your shell config (copy the relevant lines from `~/.zshrc` or `~/.bashrc`). That's it. Your entire toolkit travels in two copy operations.
 
 A more robust approach: keep `~/tools` as a git repository. Then setup on any new machine is:
+
 ```bash
 git clone your-tools-repo ~/tools
 # Copy alias lines to ~/.zshrc
 source ~/.zshrc
 ```
+
 :::
 
 The agent handled the tedious parts (checking your shell, finding the right config file, setting permissions). You made one design decision: "I want `cat file.csv | sum-expenses` to work from anywhere." Everything else followed from that. And now you know what to check when it breaks.
 
 The interesting question is what you DO with permanent tools. Right now, `sum-expenses` gives you one number: the total. Your accountant needs categories — medical, charitable, business — broken out separately. And your bank data is full of merchant names that look like they belong in one category but don't. (How confident are you that "DR PEPPER SNAPPLE" won't end up in your medical deductions?)
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 ---
 
@@ -281,4 +287,3 @@ diagnose this step by step. What are the most common causes?
 ```
 
 **What you're learning:** The debug version of directing — observation is yours, diagnosis is the agent's. You supply the evidence: which terminal, which command, what error message, what you changed yesterday. The agent maps your observation to a cause in the installation chain (alias missing from config? config not sourced? script path moved?). Without your observation, the agent is guessing. Without the agent's knowledge of the chain, you're checking random things. Together, you find it fast.
-

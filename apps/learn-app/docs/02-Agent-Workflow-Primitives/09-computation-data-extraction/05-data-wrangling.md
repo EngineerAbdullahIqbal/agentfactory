@@ -181,7 +181,7 @@ At first glance, that looks right. Medical, charitable, business — all categor
 :::warning Challenge: Find the Fraud
 Scan the medical entries above. One of them would get you audited by the IRS. Another inflates your deductions by $200. Can you spot them both before reading on?
 
-Take 30 seconds. Read each line. Ask yourself: is this *actually* a medical expense?
+Take 30 seconds. Read each line. Ask yourself: is this _actually_ a medical expense?
 :::
 
 ## The Bug
@@ -341,6 +341,10 @@ This signals you want file discovery with `find`, batch execution with `xargs`, 
 You've been building tools one at a time: sum.py, a verification workflow, a CSV parser, a permanent alias, a categorizer. Each works. Each is tested. Each handles edge cases. Separately, they're useful. Together, they're a tax preparation system.
 
 The capstone puts it all together. One conversation. One folder of bank statements. One report your accountant can actually use.
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 ---
 

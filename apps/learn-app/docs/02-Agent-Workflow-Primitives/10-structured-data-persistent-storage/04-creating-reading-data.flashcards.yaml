@@ -1,0 +1,113 @@
+deck:
+  id: ch10-03-creating-reading-data
+  title: "Creating & Reading Data"
+  description: Flashcards covering the SQLAlchemy session lifecycle, flush vs commit, rollback discipline, query patterns, and CRUD fundamentals.
+  tags:
+  - crud
+  - session
+  - commit
+  - rollback
+  - sqlalchemy
+  version: 1
+cards:
+- id: ch10-03-creating-reading-data-001
+  type: recall
+  difficulty: basic
+  front: What are the five stages of the SQLAlchemy session lifecycle?
+  back: "1. Open (new session)\n2. Pending (add called)\n3. Flushed (SQL sent, IDs assigned)\n4. Committed (durable)\n5. Rollback (undo all)"
+  tags:
+  - session
+  - lifecycle
+- id: ch10-03-creating-reading-data-002
+  type: thinking
+  difficulty: intermediate
+  front: "Why does flush() exist as a separate step from commit()?"
+  back: "BECAUSE sometimes you need database-assigned IDs (like auto-incrementing PKs) before creating child rows, THEREFORE flush sends the SQL and gets IDs without finalizing the transaction."
+  why: "What would happen if you tried to create an Expense with user.id before flushing the User?"
+  tags:
+  - session
+  - flush
+- id: ch10-03-creating-reading-data-003
+  type: recall
+  difficulty: basic
+  front: What does session.commit() do?
+  back: "Finalizes the transaction — data becomes durable and survives restarts."
+  tags:
+  - session
+  - commit
+- id: ch10-03-creating-reading-data-004
+  type: recall
+  difficulty: basic
+  front: What does session.rollback() do?
+  back: "Undoes all pending and flushed changes in the current session."
+  tags:
+  - session
+  - rollback
+- id: ch10-03-creating-reading-data-005
+  type: thinking
+  difficulty: intermediate
+  front: "A developer calls session.add() but never calls commit(). Why does read-back return nothing?"
+  back: "BECAUSE add() only stages the object in memory, THEREFORE without commit() the data never reaches disk and is lost when the session closes."
+  why: "How is this similar to writing a check without signing it?"
+  tags:
+  - session
+  - commit
+- id: ch10-03-creating-reading-data-006
+  type: recall
+  difficulty: intermediate
+  front: "What does .scalars() do when chained after session.execute()?"
+  back: "Unwraps Row objects into model objects (like opening an envelope to get the letter)."
+  tags:
+  - sqlalchemy
+  - query-patterns
+- id: ch10-03-creating-reading-data-007
+  type: thinking
+  difficulty: intermediate
+  front: "Why can using .first() instead of .all() hide bugs in your queries?"
+  back: "BECAUSE .first() silently returns just one result even when multiple rows match, THEREFORE you miss cases where your filter is not specific enough."
+  why: "When is .first() the correct choice over .all()?"
+  tags:
+  - query-patterns
+  - debugging
+- id: ch10-03-creating-reading-data-008
+  type: recall
+  difficulty: intermediate
+  front: "Why must you enable PRAGMA foreign_keys=ON when using SQLite with SQLAlchemy?"
+  back: "SQLite disables FK enforcement by default — without it, invalid FK inserts silently succeed."
+  tags:
+  - sqlite
+  - foreign-keys
+- id: ch10-03-creating-reading-data-009
+  type: thinking
+  difficulty: advanced
+  front: "Why is practicing the rollback failure path as important as the happy path?"
+  back: "BECAUSE duplicate emails, invalid FKs, and constraint violations happen routinely in production, THEREFORE unpracticed failure handling leads to corrupted session state and confusing downstream bugs."
+  why: "In production, which scenario occurs more often — successful writes or failed writes?"
+  tags:
+  - rollback
+  - failure-handling
+- id: ch10-03-creating-reading-data-010
+  type: thinking
+  difficulty: intermediate
+  front: "Why is reading data back in a new session the only reliable proof that commit worked?"
+  back: "BECAUSE data in the same session could be cached in memory without being durable, THEREFORE only a fresh session proves the data actually reached persistent storage."
+  why: "What class of bugs does this catch that same-session verification misses?"
+  tags:
+  - session
+  - persistence
+- id: ch10-03-creating-reading-data-011
+  type: recall
+  difficulty: intermediate
+  front: "What is the try/except/rollback pattern for SQLAlchemy writes that might fail?"
+  back: "try: session.add(row), session.commit()\nexcept: session.rollback(), raise"
+  tags:
+  - rollback
+  - crud
+- id: ch10-03-creating-reading-data-012
+  type: recall
+  difficulty: basic
+  front: What does CRUD stand for?
+  back: "Create, Read, Update, Delete."
+  tags:
+  - crud
+  - database-fundamentals

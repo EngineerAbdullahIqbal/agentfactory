@@ -117,6 +117,7 @@ Save as ~/finances/test-2025.csv.
 ```
 
 Calculate expected totals by hand BEFORE running anything:
+
 - Medical (CVS + WALGREENS + DR MARTINEZ): $219.12
 - Charitable (UNITED WAY): $100.00
 - Business (OFFICE DEPOT): $89.50
@@ -129,10 +130,10 @@ Those hand-calculated numbers are your verification baseline.
 
 You have three tools in `~/tools`:
 
-| Tool | What It Does |
-|------|-------------|
-| `sum.py` | Sums decimal numbers from stdin |
-| `sum-expenses.py` | Extracts and sums the Amount column from bank CSVs |
+| Tool                | What It Does                                           |
+| ------------------- | ------------------------------------------------------ |
+| `sum.py`            | Sums decimal numbers from stdin                        |
+| `sum-expenses.py`   | Extracts and sums the Amount column from bank CSVs     |
 | `tax-categorize.py` | Categorizes transactions, prints subtotals by category |
 
 What's missing: a `tax-prep` command that adds a POTENTIAL DEDUCTIONS total and runs from any folder without typing `python3 ~/tools/...`.
@@ -280,15 +281,15 @@ The command from the README works exactly as promised.
 
 Remember the Seven Principles from Chapter 6? You just used all of them in one workflow — without a checklist, without thinking about it. That is the point. Principles are not rules you consult. They are habits you act on.
 
-| Principle | Where It Appeared |
-|-----------|------------------|
-| **Bash is the Key** | `cat`, `head`, `tail`, pipes orchestrated all data flow |
-| **Code as Universal Interface** | Python scripts executed computation — no hallucinated math |
-| **Verification as Core Step** | Test data with hand-calculated totals BEFORE real files |
-| **Small, Reversible Decomposition** | Five standalone tools, each testable independently |
-| **Persisting State in Files** | Scripts in `~/tools`, report saved to a file |
-| **Constraints and Safety** | False positive guards prevented miscategorized deductions |
-| **Observability** | Every transaction printed before the totals section |
+| Principle                           | Where It Appeared                                          |
+| ----------------------------------- | ---------------------------------------------------------- |
+| **Bash is the Key**                 | `cat`, `head`, `tail`, pipes orchestrated all data flow    |
+| **Code as Universal Interface**     | Python scripts executed computation — no hallucinated math |
+| **Verification as Core Step**       | Test data with hand-calculated totals BEFORE real files    |
+| **Small, Reversible Decomposition** | Five standalone tools, each testable independently         |
+| **Persisting State in Files**       | Scripts in `~/tools`, report saved to a file               |
+| **Constraints and Safety**          | False positive guards prevented miscategorized deductions  |
+| **Observability**                   | Every transaction printed before the totals section        |
 
 ## Worked Example: Server Log Analysis
 
@@ -373,12 +374,12 @@ head -1 january.csv > combined.csv
 tail -n +2 -q *.csv >> combined.csv
 ```
 
-| Command | What It Does |
-|---------|-------------|
-| `head -1` | First line only (the header row) |
+| Command      | What It Does                                 |
+| ------------ | -------------------------------------------- |
+| `head -1`    | First line only (the header row)             |
 | `tail -n +2` | Everything from line 2 onward (skips header) |
-| `-q` | Quiet mode — no filename prefixes in output |
-| `>>` | Append (don't overwrite) |
+| `-q`         | Quiet mode — no filename prefixes in output  |
+| `>>`         | Append (don't overwrite)                     |
 
 Result: one file, one header row, all data rows.
 
@@ -406,16 +407,20 @@ Tax prep was the exercise. The skill is knowing when a wrong number has conseque
 
 The agent wrote all the code. You made all the decisions that mattered.
 
-| What It Looked Like | What You Actually Learned |
-|---------------------|--------------------------|
-| Building sum.py | Directing agents to create tools *you* designed |
-| Testing with known data | Trusting nothing until you have verified it |
-| CSV parsing with Python | Redirecting an agent when its first approach fails |
-| Spotting Dr. Pepper | Finding bugs in output that looks correct |
-| Installing tax-prep | Assembling verified tools into a permanent workflow |
-| Writing the prompts | Specifying outcomes and interfaces — the one contribution the agent cannot make for itself |
+| What It Looked Like     | What You Actually Learned                                                                  |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
+| Building sum.py         | Directing agents to create tools _you_ designed                                            |
+| Testing with known data | Trusting nothing until you have verified it                                                |
+| CSV parsing with Python | Redirecting an agent when its first approach fails                                         |
+| Spotting Dr. Pepper     | Finding bugs in output that looks correct                                                  |
+| Installing tax-prep     | Assembling verified tools into a permanent workflow                                        |
+| Writing the prompts     | Specifying outcomes and interfaces — the one contribution the agent cannot make for itself |
 
 The specific tools (Python, regex, find/xargs) will change. The patterns will not. And the role — human as director, agent as implementer — will not change either.
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 ---
 

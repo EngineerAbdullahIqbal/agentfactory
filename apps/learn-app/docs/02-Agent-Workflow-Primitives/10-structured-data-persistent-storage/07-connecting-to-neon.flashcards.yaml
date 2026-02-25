@@ -1,0 +1,104 @@
+deck:
+  id: ch10-06-connecting-to-neon
+  title: "Connecting to Neon"
+  description: Flashcards covering Neon PostgreSQL deployment, connection pools, pool_pre_ping, secret management with .env, and deterministic error triage.
+  tags:
+  - neon
+  - postgresql
+  - connection-pool
+  - secrets
+  - deployment
+  version: 1
+cards:
+- id: ch10-06-connecting-to-neon-001
+  type: recall
+  difficulty: basic
+  front: What are the six components of a DATABASE_URL connection string?
+  back: "1. Driver\n2. Username\n3. Password\n4. Host\n5. Database name\n6. SSL mode"
+  tags:
+  - database-url
+  - connection
+- id: ch10-06-connecting-to-neon-002
+  type: recall
+  difficulty: basic
+  front: What does pool_pre_ping=True do in SQLAlchemy?
+  back: "Sends an 'are you alive?' health check before using each pooled connection."
+  tags:
+  - connection-pool
+  - pool-pre-ping
+- id: ch10-06-connecting-to-neon-003
+  type: thinking
+  difficulty: intermediate
+  front: "Why is pool_pre_ping essential for cloud databases but optional for local SQLite?"
+  back: "BECAUSE cloud connections die silently from timeouts and network issues, THEREFORE pre-ping catches dead connections before your query fails — local SQLite connections don't have this problem."
+  why: "What error would a user see if pool_pre_ping was disabled and a stale connection was used?"
+  tags:
+  - pool-pre-ping
+  - cloud-deployment
+- id: ch10-06-connecting-to-neon-004
+  type: recall
+  difficulty: intermediate
+  front: What does pool_recycle=3600 do in a SQLAlchemy connection pool?
+  back: "Replaces connections older than 1 hour to prevent using server-closed connections."
+  tags:
+  - connection-pool
+  - pool-recycle
+- id: ch10-06-connecting-to-neon-005
+  type: recall
+  difficulty: intermediate
+  front: What is the four-step secret management baseline for database credentials?
+  back: "1. Put DATABASE_URL in .env\n2. Add .env to .gitignore\n3. Install python-dotenv\n4. Load with os.getenv(), never string literals"
+  tags:
+  - secrets
+  - env-file
+- id: ch10-06-connecting-to-neon-006
+  type: thinking
+  difficulty: intermediate
+  front: "Why do credential scanners exploit exposed DATABASE_URLs within minutes of a git push?"
+  back: "BECAUSE automated bots continuously scan public GitHub repositories for credential patterns, THEREFORE any pushed secret is compromised almost immediately — rotating after the fact is damage control, not prevention."
+  why: "What recovery steps must you take if you accidentally push a .env file?"
+  tags:
+  - secrets
+  - security
+- id: ch10-06-connecting-to-neon-007
+  type: thinking
+  difficulty: intermediate
+  front: "How does an ORM make migrating from SQLite to Neon PostgreSQL trivial?"
+  back: "BECAUSE the ORM abstracts the database engine behind Python classes, THEREFORE only the connection string changes — models, CRUD, and transactions stay identical."
+  why: "What is one thing that might NOT transfer cleanly between SQLite and PostgreSQL?"
+  tags:
+  - orm
+  - migration
+- id: ch10-06-connecting-to-neon-008
+  type: recall
+  difficulty: basic
+  front: What is a connection pool?
+  back: "A set of pre-opened database connections reused instead of opening one per query."
+  tags:
+  - connection-pool
+  - performance
+- id: ch10-06-connecting-to-neon-009
+  type: thinking
+  difficulty: advanced
+  front: "Why does deterministic error triage (checking one cause at a time) outperform random troubleshooting?"
+  back: "BECAUSE changing three settings at once means you never know which one fixed the problem, THEREFORE sequential isolation of variables gives certainty and prevents new issues from masked changes."
+  why: "What is the first thing to check when you see 'server closed the connection unexpectedly'?"
+  tags:
+  - debugging
+  - triage
+- id: ch10-06-connecting-to-neon-010
+  type: recall
+  difficulty: intermediate
+  front: "In the deployment sanity sequence, why is step 5 (restart process and repeat read) the most critical?"
+  back: "It proves data is actually in the cloud, not just in local memory."
+  tags:
+  - deployment
+  - persistence
+- id: ch10-06-connecting-to-neon-011
+  type: recall
+  difficulty: basic
+  front: "What starting pool_size and max_overflow values are recommended for free-tier Neon?"
+  back: "pool_size=3, max_overflow=5."
+  tags:
+  - connection-pool
+  - neon

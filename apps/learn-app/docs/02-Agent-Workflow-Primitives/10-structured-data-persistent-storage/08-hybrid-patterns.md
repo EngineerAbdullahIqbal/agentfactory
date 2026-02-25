@@ -335,3 +335,7 @@ Explain why your two paths have different failure modes.
 ```
 
 **What you're learning:** Hybrid verification is a universal quality pattern. Whether you are building financial software, medical systems, or engineering tools -- any time the COST of being wrong is high, checking with a second independent method is worth the overhead. This skill transfers far beyond databases.
+
+## Flashcards Study Aid
+
+<Flashcards />

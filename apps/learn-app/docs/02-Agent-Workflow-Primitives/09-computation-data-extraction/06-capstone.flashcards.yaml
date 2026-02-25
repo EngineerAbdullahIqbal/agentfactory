@@ -1,0 +1,84 @@
+deck:
+  id: "ch09-06-capstone"
+  title: "Capstone: Tax Season Prep"
+  description: "Orchestrating verified tools into a complete tax preparation workflow, CSV merging, Seven Principles in action, and pattern transfer"
+  tags: ["capstone", "workflow-orchestration", "verification-first", "seven-principles"]
+  version: 1
+
+cards:
+  - id: "ch09-06-capstone-001"
+    front: "What three tools does the capstone combine from ~/tools?"
+    back: "1. sum.py (sums numbers)\n2. sum-expenses.py (CSV amount column)\n3. tax-categorize.py (categorizes transactions)"
+    tags: ["tools", "capstone"]
+    difficulty: "basic"
+
+  - id: "ch09-06-capstone-002"
+    front: "What does the tax-prep command add beyond tax-categorize.py?"
+    back: "A POTENTIAL DEDUCTIONS total — the sum of all category subtotals."
+    tags: ["tax-prep", "capstone"]
+    difficulty: "basic"
+
+  - id: "ch09-06-capstone-003"
+    front: "What is the verification-first pattern used in the capstone?"
+    back: "Test data with hand-calculated totals → verify match → only then process real data."
+    tags: ["verification-first", "workflow"]
+    difficulty: "basic"
+
+  - id: "ch09-06-capstone-004"
+    front: "Why does the capstone insist on verification even for a categorizer already tested in Lesson 5?"
+    back: "Real data differs from test data — new merchant names, unexpected formats, and edge cases not present in earlier tests can trigger new bugs. Tools must be re-verified against each new dataset."
+    tags: ["verification-first", "data-changes"]
+    difficulty: "intermediate"
+    why: "What could be different about full-year data compared to the single-month test set?"
+
+  - id: "ch09-06-capstone-005"
+    front: "How do you combine multiple CSV files into one with a single header row?"
+    back: "`head -1 first.csv > combined.csv` then `tail -n +2 -q *.csv >> combined.csv`"
+    tags: ["csv-merging", "unix-commands"]
+    difficulty: "intermediate"
+
+  - id: "ch09-06-capstone-006"
+    front: "What does `tail -n +2` do, and what does the `-q` flag add?"
+    back: "Outputs everything from line 2 onward (skips header). The -q flag suppresses filename prefixes in output."
+    tags: ["tail", "unix-commands"]
+    difficulty: "basic"
+
+  - id: "ch09-06-capstone-007"
+    front: "Why is a NEEDS REVIEW section in the tax report a feature rather than a failure?"
+    back: "It makes the categorizer's uncertainty visible instead of forcing silent guesses. Flagging ambiguous transactions for human judgment is more professional than miscategorizing them."
+    tags: ["needs-review", "human-judgment"]
+    difficulty: "intermediate"
+    why: "What's the risk of a categorizer that classifies everything with no 'uncertain' category?"
+
+  - id: "ch09-06-capstone-008"
+    front: "Name any 5 of the 7 principles that appeared in the capstone workflow?"
+    back: "1. Bash is the Key\n2. Code as Universal Interface\n3. Verification as Core Step\n4. Small, Reversible Decomposition\n5. Persisting State in Files\n6. Constraints and Safety\n7. Observability"
+    tags: ["seven-principles", "capstone"]
+    difficulty: "intermediate"
+
+  - id: "ch09-06-capstone-009"
+    front: "The agent wrote all the code in Chapter 9. Why does the lesson say 'you made all the decisions that mattered'?"
+    back: "The human decided what to build (interfaces), how to verify (test criteria), and when to trust output. Those design and judgment calls determined the quality — the agent only handled implementation mechanics."
+    tags: ["director-role", "human-agent-division"]
+    difficulty: "advanced"
+    why: "Which of those three human decisions would cause the most damage if skipped?"
+
+  - id: "ch09-06-capstone-010"
+    front: "In the server log worked example, what is the 'Dr. Pepper' equivalent?"
+    back: "A /health endpoint returning 404 — it looks like an error but is expected during deployments."
+    tags: ["pattern-transfer", "false-positives"]
+    difficulty: "intermediate"
+    why: "What makes false positives follow the same pattern across completely different domains?"
+
+  - id: "ch09-06-capstone-011"
+    front: "Why is specifying the desired command format (`cat file.csv | tax-prep`) a design decision, not an implementation detail?"
+    back: "It defines the interface contract — stdin input, pipe-compatible, available by name from anywhere. The agent's implementation choices all follow from that interface specification."
+    tags: ["interface-design", "directing-agents"]
+    difficulty: "advanced"
+    why: "How does specifying the interface first change what the agent builds compared to saying 'process my bank statements'?"
+
+  - id: "ch09-06-capstone-012"
+    front: "What five steps describe the capstone's verification-first workflow?"
+    back: "1. Create test data\n2. Build/update categorizer\n3. Verify against known answers\n4. Process real files\n5. Flag ambiguous items for review"
+    tags: ["workflow", "verification-first"]
+    difficulty: "intermediate"

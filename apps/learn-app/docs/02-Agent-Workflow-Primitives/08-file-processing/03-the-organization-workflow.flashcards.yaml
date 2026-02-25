@@ -1,0 +1,71 @@
+deck:
+  id: "ch08-03-organization-workflow"
+  title: "The Organization Workflow"
+  description: "Collaborative rule design, persistent state in rules.md, single-file testing, and handling the misc problem."
+  tags: ["file-processing", "organization", "rules", "categorization"]
+  version: 1
+
+cards:
+  - id: "ch08-03-organization-workflow-001"
+    front: "What are the 6 steps of the organization workflow pattern?"
+    back: "1. Propose (agent suggests categories)\n2. Refine (human corrects)\n3. Document (save to rules.md)\n4. Test one file\n5. Dry-run (preview all moves)\n6. Batch execute"
+    tags: ["workflow", "organization-pattern"]
+    difficulty: "basic"
+
+  - id: "ch08-03-organization-workflow-002"
+    front: "What is rules.md in the file organization workflow?"
+    back: "A persistent document recording categorization logic — extension mappings, edge cases, and version history — for future reuse."
+    tags: ["state-persistence", "rules"]
+    difficulty: "basic"
+
+  - id: "ch08-03-organization-workflow-003"
+    front: "The agent classified CSV as a text file because it technically is text. The user corrected it to spreadsheet. Why was the user right?"
+    back: "The agent classified by file format (what the file IS), but the user classified by function (how the file is USED). Practical usefulness trumps technical correctness for categorization."
+    tags: ["classification", "collaboration"]
+    difficulty: "intermediate"
+    why: "What other file types have a technical category that differs from how people actually use them?"
+
+  - id: "ch08-03-organization-workflow-004"
+    front: "What is Layer 1 categorization in the file organization system?"
+    back: "Extension-based sorting with case-insensitive matching (.pdf, .xlsx, .jpg, etc.)."
+    tags: ["categorization", "layers"]
+    difficulty: "intermediate"
+
+  - id: "ch08-03-organization-workflow-005"
+    front: "When do you need Layer 2 (content-based) categorization instead of Layer 1 (extension-based)?"
+    back: "When files have no extension, ambiguous types, or misleading names — the file command detects actual content type."
+    tags: ["categorization", "layers"]
+    difficulty: "intermediate"
+
+  - id: "ch08-03-organization-workflow-006"
+    front: "What is the threshold for an acceptable misc/ folder in a categorization system?"
+    back: "Less than 20% of total files."
+    tags: ["quality-gate", "organization"]
+    difficulty: "basic"
+
+  - id: "ch08-03-organization-workflow-007"
+    front: "Why is rules.md more valuable than the organized folders it produces?"
+    back: "Organized folders go stale as new files arrive. But rules.md — the logic for how to organize — is reusable forever. The rules are the product; the folders are just output."
+    tags: ["state-persistence", "reusability"]
+    difficulty: "intermediate"
+    why: "What other workflows produce a reusable artifact that outlasts its immediate output?"
+
+  - id: "ch08-03-organization-workflow-008"
+    front: "How do the single-file test and dry-run differ as verification steps?"
+    back: "Single-file test checks the mechanism works (can files actually move correctly). Dry-run checks the decisions are right (are files going to the correct categories). Both are needed."
+    tags: ["verification", "testing"]
+    difficulty: "intermediate"
+    why: "What kind of bug would a dry-run catch that a single-file test would miss?"
+
+  - id: "ch08-03-organization-workflow-009"
+    front: "30 document files disappeared during organization. What caused them to fall into misc/?"
+    back: "Case-sensitive matching — rules matched .pdf but not .PDF."
+    tags: ["case-sensitivity", "edge-cases"]
+    difficulty: "intermediate"
+
+  - id: "ch08-03-organization-workflow-010"
+    front: "Why are the best categorization systems discovered through errors rather than designed perfectly upfront?"
+    back: "Real files contain ambiguities no one anticipates — case variants, missing extensions, files matching multiple categories. Each error reveals a rule the system needs, making it smarter iteratively."
+    tags: ["iterative-design", "collaboration"]
+    difficulty: "advanced"
+    why: "How does this iterative-discovery principle apply to designing rules for non-file domains like email or project management?"

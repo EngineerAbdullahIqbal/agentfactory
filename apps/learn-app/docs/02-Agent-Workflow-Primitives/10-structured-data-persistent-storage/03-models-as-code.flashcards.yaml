@@ -1,0 +1,113 @@
+deck:
+  id: ch10-02-models-as-code
+  title: "Models as Code"
+  description: Flashcards covering SQLAlchemy model design, Float vs Numeric for money, nullable constraints, foreign keys, type selection, and the model file as an executable contract.
+  tags:
+  - sqlalchemy
+  - models
+  - numeric
+  - foreign-key
+  - constraints
+  version: 1
+cards:
+- id: ch10-02-models-as-code-001
+  type: recall
+  difficulty: basic
+  front: "In Python, what does 0.1 + 0.2 evaluate to?"
+  back: "0.30000000000000004 (not 0.3)."
+  tags:
+  - float
+  - numeric
+- id: ch10-02-models-as-code-002
+  type: thinking
+  difficulty: intermediate
+  front: "Why can't you fix the Float money problem by rounding every calculation?"
+  back: "BECAUSE rounding is YOUR responsibility on every sum, comparison, and calculation, THEREFORE missing one spot lets totals drift — Numeric(10,2) handles precision automatically."
+  why: "At what transaction volume does Float rounding error become financially significant?"
+  tags:
+  - numeric
+  - float
+- id: ch10-02-models-as-code-003
+  type: recall
+  difficulty: basic
+  front: What does Numeric(10, 2) mean in SQLAlchemy?
+  back: "A decimal type storing up to 10 digits with exactly 2 decimal places."
+  tags:
+  - numeric
+  - sqlalchemy
+- id: ch10-02-models-as-code-004
+  type: recall
+  difficulty: basic
+  front: What does nullable=False enforce on a database column?
+  back: "The field is required — the database rejects inserts with empty values."
+  tags:
+  - constraints
+  - nullable
+- id: ch10-02-models-as-code-005
+  type: thinking
+  difficulty: intermediate
+  front: "Why is nullable=False more trustworthy than app-level validation for required fields?"
+  back: "BECAUSE application code has bugs, gets bypassed, and changes over time, THEREFORE a database constraint is permanent — it enforces the rule regardless of which code path inserts data."
+  why: "When might you intentionally choose nullable=True for a field?"
+  tags:
+  - constraints
+  - nullable
+- id: ch10-02-models-as-code-006
+  type: recall
+  difficulty: intermediate
+  front: Why does the Expense model store user_id (a ForeignKey) instead of the user's name directly?
+  back: "Storing IDs means changing a user's email updates one row, not hundreds of expense rows."
+  tags:
+  - foreign-key
+  - update-anomaly
+- id: ch10-02-models-as-code-007
+  type: thinking
+  difficulty: intermediate
+  front: "Alice changes her email. You stored her name in 500 expense rows. What breaks?"
+  back: "BECAUSE the name is duplicated across 500 rows, THEREFORE you must update all 500 — miss one and your reports show inconsistent data (an update anomaly)."
+  why: "How does a ForeignKey reference prevent this problem structurally?"
+  tags:
+  - foreign-key
+  - update-anomaly
+- id: ch10-02-models-as-code-008
+  type: thinking
+  difficulty: advanced
+  front: "How does a model file differ from documentation?"
+  back: "BECAUSE a model file is runnable code that creates real database constraints, THEREFORE the database enforces it on every insert and update — documentation only describes intent without enforcement."
+  why: "What would happen if someone bypassed the ORM and inserted raw SQL that violated the model?"
+  tags:
+  - models
+  - schema-contract
+- id: ch10-02-models-as-code-009
+  type: recall
+  difficulty: basic
+  front: "In the budget tracker ER diagram, what are the three entities and their relationships?"
+  back: "User (1:many) → Expense ← (1:many) Category."
+  tags:
+  - models
+  - foreign-key
+- id: ch10-02-models-as-code-010
+  type: recall
+  difficulty: intermediate
+  front: "What SQLAlchemy type should you use for monetary values and why?"
+  back: "Numeric(10, 2) — provides exact decimal behavior without floating-point errors."
+  tags:
+  - numeric
+  - type-selection
+- id: ch10-02-models-as-code-011
+  type: thinking
+  difficulty: advanced
+  front: "Why should you pick the type that makes invalid data impossible, not the type that is easiest to type?"
+  back: "BECAUSE wrong types allow silent corruption that compounds over time, THEREFORE choosing strict types pushes validation to the database where enforcement is automatic and permanent."
+  why: "What type decision would you make for a boolean status field vs a free-text status?"
+  tags:
+  - type-selection
+  - constraints
+- id: ch10-02-models-as-code-012
+  type: recall
+  difficulty: intermediate
+  front: "Why should you never run create_all against a production database with real data?"
+  back: "It can silently skip schema changes or destroy data if combined with drop_all — use migration tools instead."
+  tags:
+  - models
+  - safety

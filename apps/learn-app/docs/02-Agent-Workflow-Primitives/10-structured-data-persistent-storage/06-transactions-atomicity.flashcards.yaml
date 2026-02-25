@@ -1,0 +1,104 @@
+deck:
+  id: ch10-05-transactions-atomicity
+  title: "Transactions & Atomicity"
+  description: Flashcards covering atomic multi-step writes, rollback discipline, the multi-session anti-pattern, invariant checking, and the relationship between transactions and input validation.
+  tags:
+  - transactions
+  - atomicity
+  - rollback
+  - invariants
+  version: 1
+cards:
+- id: ch10-05-transactions-atomicity-001
+  type: recall
+  difficulty: basic
+  front: What does atomicity mean in the context of database transactions?
+  back: "All-or-nothing — either every operation succeeds or none of them do."
+  tags:
+  - atomicity
+  - transactions
+- id: ch10-05-transactions-atomicity-002
+  type: recall
+  difficulty: basic
+  front: What is a database transaction?
+  back: "A group of operations that must all succeed or all fail together."
+  tags:
+  - transactions
+  - database-fundamentals
+- id: ch10-05-transactions-atomicity-003
+  type: thinking
+  difficulty: intermediate
+  front: "$100 is debited from Food in Session A (committed). The credit to Entertainment fails in Session B. Where did the money go?"
+  back: "BECAUSE Session A's commit is permanent and Session B's rollback only undoes Session B's work, THEREFORE the $100 vanished — irreversible partial state that no rollback can fix."
+  why: "How does keeping both operations in one session prevent this?"
+  tags:
+  - multi-session
+  - atomicity
+- id: ch10-05-transactions-atomicity-004
+  type: recall
+  difficulty: basic
+  front: What is an invariant in the context of database operations?
+  back: "A truth that must always hold, e.g., transfer entries always net to zero."
+  tags:
+  - invariants
+  - transactions
+- id: ch10-05-transactions-atomicity-005
+  type: thinking
+  difficulty: advanced
+  front: "Why is catching an exception without calling rollback worse than letting it crash?"
+  back: "BECAUSE without explicit rollback the session enters a dirty state, THEREFORE later queries in the same session behave unpredictably — the failed transaction state was never resolved."
+  why: "What should you do with the session after a rollback — continue using it or open a new one?"
+  tags:
+  - rollback
+  - session-state
+- id: ch10-05-transactions-atomicity-006
+  type: recall
+  difficulty: intermediate
+  front: "What is the one-session transaction template for multi-step writes?"
+  back: "One session, try block, add_all, commit at end, rollback in except."
+  tags:
+  - transactions
+  - pattern
+- id: ch10-05-transactions-atomicity-007
+  type: thinking
+  difficulty: intermediate
+  front: "A transfer function returns success=false but the database has one new row. What happened?"
+  back: "BECAUSE the return message lied while the database told the truth, THEREFORE the rollback was missing or incomplete — always verify database state directly, not just application return values."
+  why: "How would you write a test that catches this specific bug?"
+  tags:
+  - debugging
+  - invariants
+- id: ch10-05-transactions-atomicity-008
+  type: recall
+  difficulty: intermediate
+  front: "Transactions protect write mechanics. What protects write meaning?"
+  back: "Input validation (amount is positive, source and target differ, ownership is correct)."
+  tags:
+  - input-validation
+  - transactions
+- id: ch10-05-transactions-atomicity-009
+  type: thinking
+  difficulty: intermediate
+  front: "Why don't single inserts need explicit transaction wrappers in SQLAlchemy?"
+  back: "BECAUSE SQLAlchemy sessions already handle single-operation atomicity automatically, THEREFORE wrapping a single insert in an explicit transaction adds ceremony without safety benefit."
+  why: "At what point does an operation become multi-step enough to need an explicit transaction?"
+  tags:
+  - transactions
+  - session
+- id: ch10-05-transactions-atomicity-010
+  type: thinking
+  difficulty: advanced
+  front: "How do invariant assertions in tests catch bugs that return-message checks miss?"
+  back: "BECAUSE a function can return success=false while leaving partial rows behind, THEREFORE asserting 'sum of transfer entries equals zero' verifies actual database state, not just what the code reported."
+  why: "What invariant would you define for a multi-step e-commerce checkout?"
+  tags:
+  - invariants
+  - testing
+- id: ch10-05-transactions-atomicity-011
+  type: recall
+  difficulty: intermediate
+  front: "In the failure drill, what proves rollback worked correctly?"
+  back: "Query the row count before and after — failed transfers change count by exactly 0."
+  tags:
+  - rollback
+  - failure-drill

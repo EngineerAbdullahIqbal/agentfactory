@@ -1,0 +1,113 @@
+deck:
+  id: ch10-04-relationships-joins
+  title: "Relationships & Joins"
+  description: Flashcards covering SQLAlchemy relationships, back_populates, cascade policies, the N+1 problem, selectinload, and when to use relationship navigation vs explicit joins.
+  tags:
+  - relationships
+  - joins
+  - n-plus-one
+  - selectinload
+  - cascade
+  version: 1
+cards:
+- id: ch10-04-relationships-joins-001
+  type: recall
+  difficulty: basic
+  front: "In SQLAlchemy, what does back_populates do?"
+  back: "Makes a relationship work in both directions between two models."
+  tags:
+  - relationships
+  - back-populates
+- id: ch10-04-relationships-joins-002
+  type: thinking
+  difficulty: intermediate
+  front: "User.expenses has back_populates='user', but Expense.user has back_populates='expense'. What happens?"
+  back: "BECAUSE back_populates strings must match the attribute name on the other model exactly, THEREFORE this mismatch is a silent bug — SQLAlchemy may not raise an error but navigation behaves unpredictably."
+  why: "Why is a silent mismatch more dangerous than a crash?"
+  tags:
+  - back-populates
+  - silent-bugs
+- id: ch10-04-relationships-joins-003
+  type: recall
+  difficulty: intermediate
+  front: "What does cascade='all, delete-orphan' mean on a relationship?"
+  back: "Deleting the parent automatically deletes all its children."
+  tags:
+  - cascade
+  - relationships
+- id: ch10-04-relationships-joins-004
+  type: thinking
+  difficulty: intermediate
+  front: "Why is cascade='all, delete-orphan' correct for User.expenses but dangerous for Category.expenses?"
+  back: "BECAUSE an expense without a user is meaningless (orphan), THEREFORE delete-orphan fits. But a category is shared by many expenses — deleting it would wipe out every expense tagged with it."
+  why: "How do you decide cascade policy for a new relationship in your domain?"
+  tags:
+  - cascade
+  - business-logic
+- id: ch10-04-relationships-joins-005
+  type: recall
+  difficulty: basic
+  front: What is the N+1 problem in database queries?
+  back: "Loading N parent records triggers N+1 separate queries instead of 2."
+  tags:
+  - n-plus-one
+  - performance
+- id: ch10-04-relationships-joins-006
+  type: recall
+  difficulty: intermediate
+  front: "How many queries does a loop over 100 users accessing user.expenses fire without selectinload?"
+  back: "101 queries (1 for users + 100 for each user's expenses)."
+  tags:
+  - n-plus-one
+  - performance
+- id: ch10-04-relationships-joins-007
+  type: thinking
+  difficulty: intermediate
+  front: "Your app works fine with 5 users but crawls with 500. What do you check first?"
+  back: "BECAUSE N+1 turns 2 queries into 501 at scale, THEREFORE inspect any loop that accesses relationship attributes — each iteration triggers a separate SELECT that is invisible at small scale."
+  why: "Why does N+1 only surface at scale rather than during development testing?"
+  tags:
+  - n-plus-one
+  - debugging
+- id: ch10-04-relationships-joins-008
+  type: recall
+  difficulty: basic
+  front: "What SQLAlchemy feature fixes the N+1 problem in one line?"
+  back: "selectinload — prefetches related data in a single batch query."
+  tags:
+  - selectinload
+  - n-plus-one
+- id: ch10-04-relationships-joins-009
+  type: recall
+  difficulty: basic
+  front: "When should you use relationship attributes (user.expenses) vs explicit .join() queries?"
+  back: "Relationship attributes: navigation (you have one thing, want related things).\n.join(): filtering or aggregating across tables."
+  tags:
+  - relationships
+  - joins
+- id: ch10-04-relationships-joins-010
+  type: thinking
+  difficulty: advanced
+  front: "How does the ForeignKey column differ from the relationship declaration in SQLAlchemy?"
+  back: "BECAUSE the FK column stores the actual link (an integer ID in the database), THEREFORE the relationship declaration provides Python-level navigation — they serve different layers but work together."
+  why: "Could you have a ForeignKey without a relationship declaration? What would you lose?"
+  tags:
+  - foreign-key
+  - relationships
+- id: ch10-04-relationships-joins-011
+  type: thinking
+  difficulty: intermediate
+  front: "A teammate adds a report loop that prints user.expenses for each user. What two questions should you ask?"
+  back: "BECAUSE hidden N+1 causes performance regression at scale, THEREFORE ask: (1) What query count does this produce at 10, 100, 1000 users? (2) Can we prefetch in one query shape?"
+  why: "What performance signal would confirm N+1 is occurring in production?"
+  tags:
+  - n-plus-one
+  - code-review
+- id: ch10-04-relationships-joins-012
+  type: recall
+  difficulty: basic
+  front: "With selectinload, how many queries are needed to load 100 users and all their expenses?"
+  back: "2 queries (one for users, one for all expenses using IN clause)."
+  tags:
+  - selectinload
+  - performance

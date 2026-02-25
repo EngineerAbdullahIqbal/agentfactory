@@ -224,9 +224,9 @@ The agent used `find`, `grep`, and `xargs` behind the scenes. You didn't need to
 
 ## The Level-Up: Searching Inside Files
 
-Everything above searched by *filename*. But what about files whose names tell you nothing?
+Everything above searched by _filename_. But what about files whose names tell you nothing?
 
-Your Downloads folder has 40 PDFs named `document.pdf`, `download.pdf`, `file(1).pdf`. The filename is useless. The information you need is *inside* the file.
+Your Downloads folder has 40 PDFs named `document.pdf`, `download.pdf`, `file(1).pdf`. The filename is useless. The information you need is _inside_ the file.
 
 ```
 You: I have a bunch of PDFs with generic names. One of them is an
@@ -268,9 +268,10 @@ and scan_20251215.pdf ($599.99).
 Want me to rename these with meaningful names based on their content?
 ```
 
-This is the jump from searching by *metadata* (filename, date, size) to searching by *content* (what's actually in the file). The agent used `pdftotext` to read inside the PDFs, then `grep` to find matches. You couldn't do this by browsing folders — the filenames told you nothing.
+This is the jump from searching by _metadata_ (filename, date, size) to searching by _content_ (what's actually in the file). The agent used `pdftotext` to read inside the PDFs, then `grep` to find matches. You couldn't do this by browsing folders — the filenames told you nothing.
 
 **The progression through this chapter:**
+
 - Lesson 1: See your files (metadata)
 - Lesson 3: Organize by extension (surface attributes)
 - Lesson 6: Search by content (deep attributes)
@@ -405,3 +406,7 @@ might be duplicates based on file SIZE and CONTENT similarity, not just name?
 ```
 
 **What you're practicing:** Semantic deduplication. Finding duplicates that look different on the surface. This asks the agent to go beyond simple name matching and use file characteristics to identify copies that were renamed, versioned, or saved under different names.
+
+## Flashcards Study Aid
+
+<Flashcards />

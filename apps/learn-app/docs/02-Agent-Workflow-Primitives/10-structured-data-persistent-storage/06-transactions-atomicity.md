@@ -303,3 +303,7 @@ Think of a multi-step operation in a project you're building. Maybe it's: creati
 - [ ] I can prove rollback with a deliberate failure drill.
 - [ ] I can identify multi-session anti-patterns in write workflows.
 - [ ] I can distinguish schema validity from transaction correctness.
+
+## Flashcards Study Aid
+
+<Flashcards />

@@ -1,0 +1,95 @@
+deck:
+  id: ch10-01-build-your-database-skill
+  title: "Build Your Database Skill"
+  description: Flashcards covering persistence across process boundaries, the two-script proof pattern, ORM basics, and reusable skill scaffolds.
+  tags:
+  - persistence
+  - orm
+  - sqlalchemy
+  - skill-scaffold
+  version: 1
+cards:
+- id: ch10-01-build-your-database-skill-001
+  type: recall
+  difficulty: basic
+  front: What does persistence mean in the context of databases?
+  back: "Data that survives after your program exits."
+  tags:
+  - persistence
+  - database-fundamentals
+- id: ch10-01-build-your-database-skill-002
+  type: thinking
+  difficulty: intermediate
+  front: "Why does the two-script persistence proof (write_once.py then read_later.py) matter more than testing within one script?"
+  back: "BECAUSE a single script can keep data in memory without proving durability, THEREFORE only a separate process reading the data back proves it survived the process boundary."
+  why: "What would a failed persistence proof tell you about your commit discipline?"
+  tags:
+  - persistence
+  - process-boundary
+- id: ch10-01-build-your-database-skill-003
+  type: recall
+  difficulty: basic
+  front: What is an ORM (Object-Relational Mapper)?
+  back: "A library letting you work with database tables using Python classes instead of raw SQL."
+  tags:
+  - orm
+  - sqlalchemy
+- id: ch10-01-build-your-database-skill-004
+  type: thinking
+  difficulty: intermediate
+  front: "A developer saves data to a JSON file and calls it persistent. Why is this not equivalent to a database?"
+  back: "BECAUSE JSON files break at relationships, concurrent writes, and query flexibility, THEREFORE they fail exactly where databases earn their place — multi-user, multi-query workloads."
+  why: "At what specific moment would a JSON file start producing corrupted data?"
+  tags:
+  - persistence
+  - json-vs-database
+- id: ch10-01-build-your-database-skill-005
+  type: recall
+  difficulty: basic
+  front: In SQLAlchemy, what is declarative_base?
+  back: "The starting point you inherit from to create model classes that map to tables."
+  tags:
+  - sqlalchemy
+  - orm
+- id: ch10-01-build-your-database-skill-006
+  type: recall
+  difficulty: intermediate
+  front: "If read_later.py returns an empty list, what are the four things to check?"
+  back: "1. Same sqlite:/// file path\n2. session.commit() ran in write script\n3. Same table name and model mapping\n4. Delete DB and rerun both scripts"
+  tags:
+  - persistence
+  - debugging
+- id: ch10-01-build-your-database-skill-007
+  type: thinking
+  difficulty: advanced
+  front: Why does the lesson recommend building a skill scaffold now instead of waiting until you are an expert?
+  back: "BECAUSE knowledge kept only in your head gets forgotten between projects, THEREFORE capturing patterns early creates a reusable decision interface that survives memory loss."
+  why: "What must a useful SKILL.md include that a textbook-style note would miss?"
+  tags:
+  - skill-scaffold
+  - pattern-capture
+- id: ch10-01-build-your-database-skill-008
+  type: recall
+  difficulty: intermediate
+  front: What role does session.commit() play in the persistence proof?
+  back: "It writes data to disk — without it, nothing reaches the database file."
+  tags:
+  - sqlalchemy
+  - persistence
+- id: ch10-01-build-your-database-skill-009
+  type: thinking
+  difficulty: intermediate
+  front: Why does the lesson warn against jumping directly to Neon cloud setup before proving local persistence?
+  back: "BECAUSE cloud configuration problems mask local workflow issues, THEREFORE you would spend hours debugging cloud config when the real issue is a broken mental model of persistence."
+  why: "What does proving local persistence first rule out when cloud issues appear later?"
+  tags:
+  - persistence
+  - neon
+- id: ch10-01-build-your-database-skill-010
+  type: recall
+  difficulty: intermediate
+  front: What is the beginner priority order when starting a new database project?
+  back: "1. Prove persistence\n2. Define schema contract\n3. Implement CRUD baseline\n4. Add transaction safety\n5. Deploy with secret discipline\n6. Add verification gate"
+  tags:
+  - skill-scaffold
+  - database-fundamentals

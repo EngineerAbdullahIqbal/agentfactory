@@ -1,0 +1,71 @@
+deck:
+  id: "ch09-04-permanent-toolkit"
+  title: "Your Permanent Toolkit"
+  description: "Making scripts into permanent commands with aliases, chmod, shebang lines, and shell configuration"
+  tags: ["aliases", "shell-config", "chmod", "permanent-tools"]
+  version: 1
+
+cards:
+  - id: "ch09-04-permanent-toolkit-001"
+    front: "What principle does the lesson state about tools you must remember the path to?"
+    back: "If you have to remember where a tool lives, it's not a tool yet."
+    tags: ["core-principle", "tool-installation"]
+    difficulty: "basic"
+
+  - id: "ch09-04-permanent-toolkit-002"
+    front: "What does `mkdir -p ~/tools` do?"
+    back: "Creates the ~/tools directory and any parent directories needed."
+    tags: ["mkdir", "file-system"]
+    difficulty: "basic"
+
+  - id: "ch09-04-permanent-toolkit-003"
+    front: "What does `chmod +x script.py` do?"
+    back: "Makes the file executable (adds execute permission)."
+    tags: ["chmod", "permissions"]
+    difficulty: "basic"
+
+  - id: "ch09-04-permanent-toolkit-004"
+    front: "What does the shebang line `#!/usr/bin/env python3` do at the top of a script?"
+    back: "Tells the OS to use Python3 as the interpreter when the file is run directly."
+    tags: ["shebang", "executable-scripts"]
+    difficulty: "basic"
+
+  - id: "ch09-04-permanent-toolkit-005"
+    front: "Why does the agent check which shell you're using before adding an alias?"
+    back: "Bash uses .bashrc and zsh uses .zshrc — adding the alias to the wrong config file means it never loads. The agent needs the correct file to make the alias permanent."
+    tags: ["shell-config", "aliases"]
+    difficulty: "intermediate"
+    why: "What would happen if the agent guessed wrong about your shell?"
+
+  - id: "ch09-04-permanent-toolkit-006"
+    front: "What does `source ~/.zshrc` do?"
+    back: "Reloads the shell configuration file in the current terminal session."
+    tags: ["source", "shell-config"]
+    difficulty: "basic"
+
+  - id: "ch09-04-permanent-toolkit-007"
+    front: "Why is a shell alias fundamentally different from typing `python3 ~/path/to/script.py`?"
+    back: "An alias makes the script available by name from any directory, like a built-in command. Without it, you must remember the exact path — which breaks if you move the script."
+    tags: ["aliases", "tool-installation"]
+    difficulty: "intermediate"
+    why: "What two things travel with you when you set up a new machine?"
+
+  - id: "ch09-04-permanent-toolkit-008"
+    front: "You open a new terminal and your alias returns 'command not found.' What three things should you check?"
+    back: "1. Alias exists in shell config\n2. Script exists at the path\n3. Script can actually run (permissions, Python version)"
+    tags: ["debugging", "diagnostic-chain"]
+    difficulty: "intermediate"
+
+  - id: "ch09-04-permanent-toolkit-009"
+    front: "Why is closing and reopening the terminal the only way to prove an alias is truly permanent?"
+    back: "The `source` command only affects the current session. A new terminal proves the alias was correctly saved to the config file and loads on startup — not just cached in memory."
+    tags: ["verification", "aliases"]
+    difficulty: "intermediate"
+    why: "What common mistake do students make by only running 'source' without reopening?"
+
+  - id: "ch09-04-permanent-toolkit-010"
+    front: "How can you make your entire ~/tools directory portable across machines?"
+    back: "Keep it as a git repository — clone it on any new machine and copy alias lines to your shell config."
+    tags: ["portability", "git", "tools-directory"]
+    difficulty: "advanced"
+    why: "What else besides the scripts themselves do you need to transfer?"

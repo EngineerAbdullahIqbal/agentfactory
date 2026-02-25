@@ -291,3 +291,7 @@ What would prove your data survived?
 - [ ] I created a lean `/database-deployment` skill scaffold.
 - [ ] My skill contains decision logic, not just definitions.
 - [ ] My guardrails include rollback and secret handling.
+
+## Flashcards Study Aid
+
+<Flashcards />

@@ -259,3 +259,7 @@ Analyze my domain the way we analyzed the budget tracker:
 - [ ] I can name one FK rule that prevents invalid relationships.
 - [ ] I can state when hybrid verification is optional vs required.
 - [ ] I can articulate the Chapter 9 -> 10 escalation trigger in one sentence.
+
+## Flashcards Study Aid
+
+<Flashcards />

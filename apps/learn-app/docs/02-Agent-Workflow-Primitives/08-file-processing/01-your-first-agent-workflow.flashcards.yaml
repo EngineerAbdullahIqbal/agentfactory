@@ -1,0 +1,82 @@
+deck:
+  id: "ch08-01-first-agent-workflow"
+  title: "Your First Agent Workflow"
+  description: "Core concepts for directing a General Agent to analyze files, understanding division of labor, and recognizing prompt patterns."
+  tags: ["file-processing", "agent-workflow", "prompting", "bash-basics"]
+  version: 1
+
+cards:
+  - id: "ch08-01-first-agent-workflow-001"
+    front: "What is the two-part prompt pattern for directing an agent to analyze a problem?"
+    back: "\"Help me understand [my problem]. Show me [what I need to know].\""
+    tags: ["prompt-pattern", "agent-direction"]
+    difficulty: "intermediate"
+
+  - id: "ch08-01-first-agent-workflow-002"
+    front: "What is the rule of thumb for deciding when to use an agent vs doing a task yourself?"
+    back: "Describe faster than do = ask the agent.\nDo faster than describe = do it yourself."
+    tags: ["decision-rule", "agent-direction"]
+    difficulty: "intermediate"
+
+  - id: "ch08-01-first-agent-workflow-003"
+    front: "In the division of labor with a General Agent, what does the human provide and what does the agent provide?"
+    back: "Human: judgment about what matters.\nAgent: technical execution of how to get it."
+    tags: ["division-of-labor", "collaboration"]
+    difficulty: "intermediate"
+
+  - id: "ch08-01-first-agent-workflow-004"
+    front: "The agent counted 23 items with ls, then corrected to 847 files with find. Why is that self-correction a feature, not a bug?"
+    back: "The agent noticed ls only shows top-level items and switched to find -type f for the real count. Self-correction through Observe-Orient-Decide-Act is how good agent work looks."
+    tags: ["self-correction", "ooda", "agent-behavior"]
+    difficulty: "intermediate"
+    why: "What would be worse — an agent that self-corrects or one that confidently reports the wrong number?"
+
+  - id: "ch08-01-first-agent-workflow-005"
+    front: "What does the bash command find do?"
+    back: "Finds files matching a pattern."
+    tags: ["bash", "commands"]
+    difficulty: "basic"
+
+  - id: "ch08-01-first-agent-workflow-006"
+    front: "What does wc -l do in bash?"
+    back: "Counts the number of lines in the input."
+    tags: ["bash", "commands"]
+    difficulty: "basic"
+
+  - id: "ch08-01-first-agent-workflow-007"
+    front: "What does du -sh mean in bash?"
+    back: "Disk usage, summary only, human-readable sizes."
+    tags: ["bash", "commands"]
+    difficulty: "basic"
+
+  - id: "ch08-01-first-agent-workflow-008"
+    front: "What does the pipe symbol (|) do in a bash command?"
+    back: "Chains commands — output from the left feeds as input to the right."
+    tags: ["bash", "pipe"]
+    difficulty: "basic"
+
+  - id: "ch08-01-first-agent-workflow-009"
+    front: "Why does the prompt pattern say to describe the problem rather than specify the solution?"
+    back: "The human knows what matters but not the commands. The agent knows the commands but not what matters. Describing the problem lets the agent choose the right tools while the human steers intent."
+    tags: ["prompt-pattern", "division-of-labor"]
+    difficulty: "intermediate"
+    why: "What goes wrong when a non-technical user tries to specify exact bash commands instead of the problem?"
+
+  - id: "ch08-01-first-agent-workflow-010"
+    front: "Three files to move: agent or manual? Three hundred files to categorize by type, date, and project: agent or manual?"
+    back: "Three files: manual (faster to drag).\nThree hundred files: agent (faster to describe)."
+    tags: ["decision-rule", "agent-direction"]
+    difficulty: "basic"
+
+  - id: "ch08-01-first-agent-workflow-011"
+    front: "Why are agents the wrong tool for browsing photos to decide which to keep?"
+    back: "The agent sees filenames and metadata, but the human needs to see thumbnails to make judgment calls based on visual content and personal meaning."
+    tags: ["agent-limits", "division-of-labor"]
+    difficulty: "advanced"
+    why: "What other tasks require human sensory judgment that an agent cannot replicate?"
+
+  - id: "ch08-01-first-agent-workflow-012"
+    front: "Name any 3 of the 5 common bash flags and their meanings: -l, -h, -r, -s, -a?"
+    back: "-l: lines (or long listing)\n-h: human-readable (KB, MB, GB)\n-r: reverse order\n-s: summary (totals only)\n-a: all (including hidden files)"
+    tags: ["bash", "flags"]
+    difficulty: "basic"

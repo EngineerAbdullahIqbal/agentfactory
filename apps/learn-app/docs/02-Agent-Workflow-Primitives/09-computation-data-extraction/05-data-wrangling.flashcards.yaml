@@ -1,0 +1,84 @@
+deck:
+  id: "ch09-05-data-wrangling"
+  title: "Data Wrangling"
+  description: "Tax categorization with regex patterns, false positive guards, word boundaries, and batch file processing with find/xargs"
+  tags: ["regex", "false-positives", "categorization", "batch-processing"]
+  version: 1
+
+cards:
+  - id: "ch09-05-data-wrangling-001"
+    front: "Why does simple keyword matching flag 'DR PEPPER SNAPPLE' as a medical expense?"
+    back: "The keyword 'DR' appears in the merchant name, and `if 'DR' in description` matches any substring."
+    tags: ["false-positives", "keyword-matching"]
+    difficulty: "basic"
+
+  - id: "ch09-05-data-wrangling-002"
+    front: "Why does `if 'CVS' in description` match 'CVSMITH CONSULTING'?"
+    back: "Substring matching finds 'CVS' inside 'CVSMITH' — it checks for letter sequence, not whole words."
+    tags: ["false-positives", "keyword-matching"]
+    difficulty: "basic"
+
+  - id: "ch09-05-data-wrangling-003"
+    front: "What does the regex word boundary `\\b` match?"
+    back: "The edge where a word starts or ends (transition between word and non-word characters)."
+    tags: ["regex", "word-boundary"]
+    difficulty: "basic"
+
+  - id: "ch09-05-data-wrangling-004"
+    front: "Why does `\\bCVS\\b` match 'CVS PHARMACY' but not 'CVSMITH'?"
+    back: "In 'CVS PHARMACY,' CVS is a complete word with boundaries on both sides. In 'CVSMITH,' there's no boundary after CVS because the letters continue — so the pattern doesn't match."
+    tags: ["regex", "word-boundary"]
+    difficulty: "intermediate"
+    why: "Would \\bCVS\\b match 'CVS/STORE' or 'MY-CVS-RECEIPT'?"
+
+  - id: "ch09-05-data-wrangling-005"
+    front: "In tax-categorize.py, why is the FALSE_POSITIVES list checked before category patterns?"
+    back: "If categories ran first, 'DR PEPPER' would match the medical 'DR' pattern before the guard could block it. Guards must execute before matches to prevent false categorization."
+    tags: ["execution-order", "false-positives"]
+    difficulty: "intermediate"
+    why: "What would the medical total look like if guards ran after category matching?"
+
+  - id: "ch09-05-data-wrangling-006"
+    front: "Dr. Pepper and CVSMITH inflate medical deductions by $204.99. Why is this more than just a software bug?"
+    back: "On a tax return, overclaimed deductions are a fraudulent filing. The IRS doesn't distinguish between human error and algorithmic error — the liability is yours regardless of the cause."
+    tags: ["false-positives", "real-world-consequences"]
+    difficulty: "advanced"
+    why: "How would you design a categorizer that makes this kind of error impossible to miss?"
+
+  - id: "ch09-05-data-wrangling-007"
+    front: "What does the pipeline `find statements/ -name \"*.csv\" | xargs cat | python tax-categorize.py` do?"
+    back: "find locates all CSVs, xargs cat reads them all, and the Python script categorizes the combined output."
+    tags: ["batch-processing", "unix-pipeline"]
+    difficulty: "intermediate"
+
+  - id: "ch09-05-data-wrangling-008"
+    front: "Why is regex categorization a stopgap rather than a complete solution for transaction classification?"
+    back: "Regex handles the high-confidence 80% (exact merchant names). The remaining 20% with semantic ambiguity requires human judgment — no pattern can determine if 'AMAZON RIVER CRUISE' is a purchase or travel."
+    tags: ["regex-limitations", "human-judgment"]
+    difficulty: "advanced"
+    why: "What should a categorizer do with transactions it cannot confidently classify?"
+
+  - id: "ch09-05-data-wrangling-009"
+    front: "What is the iterative categorization loop described in the lesson?"
+    back: "Build → test → find false positives → fix → repeat."
+    tags: ["iterative-development", "categorization"]
+    difficulty: "basic"
+
+  - id: "ch09-05-data-wrangling-010"
+    front: "What does `\\bDR\\.?\\s*PEPPER\\b` match?"
+    back: "\"DR PEPPER\" and \"DR. PEPPER\" — the period is optional (\\.) and whitespace flexible (\\s*)."
+    tags: ["regex", "false-positive-guard"]
+    difficulty: "intermediate"
+
+  - id: "ch09-05-data-wrangling-011"
+    front: "The first categorizer output looks plausible on casual inspection. Why is that dangerous?"
+    back: "False positives like Dr. Pepper ($4.99) and CVSMITH ($200) produce totals that seem reasonable. Without line-by-line inspection, you'd file incorrect numbers — plausible wrong answers are harder to catch than obvious errors."
+    tags: ["verification", "false-positives"]
+    difficulty: "intermediate"
+    why: "What verification habit from Lesson 2 would catch these false positives?"
+
+  - id: "ch09-05-data-wrangling-012"
+    front: "How do you add a new merchant to tax-categorize.py without understanding regex?"
+    back: "Tell the agent what should and shouldn't match — it writes the regex pattern for you."
+    tags: ["directing-agents", "regex"]
+    difficulty: "basic"

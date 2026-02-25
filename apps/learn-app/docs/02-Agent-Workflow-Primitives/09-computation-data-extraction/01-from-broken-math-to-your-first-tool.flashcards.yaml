@@ -1,0 +1,96 @@
+deck:
+  id: "ch09-01-broken-math-first-tool"
+  title: "From Broken Math to Your First Tool"
+  description: "Bash arithmetic limitations, LLM prediction vs computation, building composable stdin/stdout tools with Claude Code"
+  tags: ["bash-arithmetic", "stdin-stdout", "composable-tools", "llm-limitations"]
+  version: 1
+
+cards:
+  - id: "ch09-01-broken-math-first-tool-001"
+    front: "What happens when you run decimal arithmetic in Bash using $((...))?"
+    back: "Syntax error — Bash does integer-only arithmetic."
+    tags: ["bash-arithmetic", "limitations"]
+    difficulty: "basic"
+
+  - id: "ch09-01-broken-math-first-tool-002"
+    front: "What does Bash return for $((10 / 3)), and why is it wrong?"
+    back: "Returns 3 — silently truncates to integer with no warning."
+    tags: ["bash-arithmetic", "truncation"]
+    difficulty: "basic"
+
+  - id: "ch09-01-broken-math-first-tool-003"
+    front: "Why is Bash's silent integer truncation more dangerous than a syntax error?"
+    back: "A syntax error stops you and demands a fix. Silent truncation produces a plausible wrong number you never question — errors compound invisibly."
+    tags: ["bash-arithmetic", "silent-errors"]
+    difficulty: "intermediate"
+    why: "How would you detect silent truncation if the output looks reasonable?"
+
+  - id: "ch09-01-broken-math-first-tool-004"
+    front: "The Vancouver Stock Exchange index dropped from 1000 to ~524 over 22 months without a market crash. Why?"
+    back: "Their software truncated decimal places instead of rounding on every price update (~2,800/day). Tiny losses compounded invisibly because no error was ever raised."
+    tags: ["vancouver-stock-exchange", "truncation", "real-world"]
+    difficulty: "intermediate"
+    why: "What design choice would have caught the bug before 22 months passed?"
+
+  - id: "ch09-01-broken-math-first-tool-005"
+    front: "Why are LLMs unreliable for summing 100 expense amounts, even though they handle 3 numbers correctly?"
+    back: "LLMs predict text patterns, they don't compute. Predictions match reality for small inputs but diverge silently at scale — exactly when accuracy matters most."
+    tags: ["llm-limitations", "prediction-vs-computation"]
+    difficulty: "advanced"
+    why: "How would you verify whether an LLM's arithmetic answer is correct without doing the math yourself?"
+
+  - id: "ch09-01-broken-math-first-tool-006"
+    front: "What is the chapter's central rule about math and AI?"
+    back: "Ask AI to write code that calculates — never ask AI to calculate."
+    tags: ["computation-rule", "core-principle"]
+    difficulty: "basic"
+
+  - id: "ch09-01-broken-math-first-tool-007"
+    front: "In sum.py, what does `for line in sys.stdin` do?"
+    back: "Reads piped input one line at a time from stdin."
+    tags: ["stdin", "python", "pipes"]
+    difficulty: "basic"
+
+  - id: "ch09-01-broken-math-first-tool-008"
+    front: "What does the pipe operator do in `cat expenses.txt | python sum.py`?"
+    back: "Connects cat's stdout to sum.py's stdin."
+    tags: ["pipe-operator", "unix-composability"]
+    difficulty: "basic"
+
+  - id: "ch09-01-broken-math-first-tool-009"
+    front: "Why does asking for 'a script that reads from stdin' produce a fundamentally different tool than asking 'sum these three numbers'?"
+    back: "Stdin makes the tool composable with any data source via pipes. A hardcoded answer works once and is discarded — stdin creates a reusable tool that works on any input forever."
+    tags: ["stdin", "composability", "prompt-quality"]
+    difficulty: "intermediate"
+    why: "What two phrases in a prompt signal you want a composable Unix tool?"
+
+  - id: "ch09-01-broken-math-first-tool-010"
+    front: "Asking AI 'what is the sum?' vs 'write Python to sum specific numbers' vs 'build a stdin script that prints the total' — which produces a reusable, pipeable tool?"
+    back: "Only the stdin script — it works on any data, composes with pipes, and persists beyond the chat."
+    tags: ["prompt-quality", "composability"]
+    difficulty: "intermediate"
+
+  - id: "ch09-01-broken-math-first-tool-011"
+    front: "When should you prompt AI directly instead of building a verified script?"
+    back: "One-time, low-stakes calculations easy to verify by eye."
+    tags: ["decision-rule", "prompt-vs-script"]
+    difficulty: "intermediate"
+
+  - id: "ch09-01-broken-math-first-tool-012"
+    front: "Why does describing the data problem rather than the implementation produce better agent output?"
+    back: "The agent can choose the best tool and language for the job. Specifying implementation constrains it to your assumptions, which may be wrong."
+    tags: ["directing-agents", "prompt-quality"]
+    difficulty: "advanced"
+    why: "What two things should you specify when describing a data problem to an agent?"
+
+  - id: "ch09-01-broken-math-first-tool-013"
+    front: "What does `float(line)` do in sum.py?"
+    back: "Converts a text string like \"127.89\" to a decimal number."
+    tags: ["python", "type-conversion"]
+    difficulty: "basic"
+
+  - id: "ch09-01-broken-math-first-tool-014"
+    front: "What is the Unix philosophy that sum.py follows?"
+    back: "Programs that do one thing well and compose through pipes."
+    tags: ["unix-philosophy", "composability"]
+    difficulty: "basic"

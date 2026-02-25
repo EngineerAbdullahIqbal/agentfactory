@@ -290,6 +290,7 @@ This is the honest part most tutorials skip. Extension-based rules are a startin
 > [Runs: file organized/misc/data-export]
 >
 > Results:
+>
 > - 8 of the 12 no-extension files are actually text/code files
 > - 3 are binary data files
 > - 1 is a renamed PDF (someone saved it without .pdf extension)
@@ -298,6 +299,7 @@ This is the honest part most tutorials skip. Extension-based rules are a startin
 > Moved 1 mislabeled PDF → documents/
 >
 > Updated misc/ breakdown:
+>
 > ```
 > Before: 237 files (49% of total)
 > After:   86 files (18% of total)
@@ -339,7 +341,7 @@ and my rules only matched lowercase. These fell through to misc/.
 Moving them now and updating rules.md to use case-insensitive matching.
 ```
 
-This is a real bug. Case-sensitive matching is one of the most common failures in file categorization, and the agent didn't catch it during the initial rule design. You caught it because you *verified the numbers*. This is Principle 3 in action — verification caught an error that looked like success.
+This is a real bug. Case-sensitive matching is one of the most common failures in file categorization, and the agent didn't catch it during the initial rule design. You caught it because you _verified the numbers_. This is Principle 3 in action — verification caught an error that looked like success.
 
 ### Scenario: The Agent Suggests a Category You Didn't Think Of
 
@@ -452,23 +454,26 @@ cat rules.md
 # File Organization Rules
 
 ## Layer 1: Extension-Based (case-insensitive)
-| Extension                         | Destination    |
-| --------------------------------- | -------------- |
-| .pdf, .doc, .docx, .txt, .rtf     | documents/     |
-| .xlsx, .csv, .ods                 | spreadsheets/  |
-| .jpg, .png, .gif, .svg, .webp     | images/        |
-| .mp4, .mov, .avi, .mkv            | media/         |
-| .py, .js, .sh, .html, .css        | code/          |
-| .dmg, .exe, .msi, .pkg            | installers/    |
-| .zip, .tar, .gz, .rar             | archives/      |
+
+| Extension                     | Destination   |
+| ----------------------------- | ------------- |
+| .pdf, .doc, .docx, .txt, .rtf | documents/    |
+| .xlsx, .csv, .ods             | spreadsheets/ |
+| .jpg, .png, .gif, .svg, .webp | images/       |
+| .mp4, .mov, .avi, .mkv        | media/        |
+| .py, .js, .sh, .html, .css    | code/         |
+| .dmg, .exe, .msi, .pkg        | installers/   |
+| .zip, .tar, .gz, .rar         | archives/     |
 
 ## Layer 2: Content-Based (for no-extension and ambiguous files)
+
 - Use `file` command to detect actual type
 - Text/code files without extension → code/
 - Mislabeled files (PDF saved without .pdf) → correct category
 - Email exports (.eml, .msg) → documents/
 
 ## Edge Cases
+
 - ALL extension matching is case-insensitive (.PDF = .pdf)
 - Hidden files (starting with .) → skip
 - Duplicate filename → append timestamp
@@ -476,6 +481,7 @@ cat rules.md
 - Misc/ target: less than 20% of total files
 
 ## History
+
 - Version: 2.0
 - Created: 2026-02-12
 - Last applied: 2026-02-12
@@ -562,3 +568,7 @@ project-based rules that take priority over extension rules?
 ```
 
 **What you're learning:** Rule precedence. AI explains how to layer rules (check project name first, then fall back to extension), preparing you for more sophisticated automation.
+
+## Flashcards Study Aid
+
+<Flashcards />

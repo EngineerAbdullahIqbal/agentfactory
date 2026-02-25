@@ -349,3 +349,7 @@ Show the expected output for each operation.
 ```
 
 **What you're learning:** CRUD is the bread and butter of every database app. The session, add, commit/rollback pattern you're learning here is the same pattern used in production systems serving millions of users. Master it once, use it everywhere.
+
+## Flashcards Study Aid
+
+<Flashcards />

@@ -1,0 +1,112 @@
+deck:
+  id: ch10-07-hybrid-patterns
+  title: "Hybrid Patterns - When Tools Work Together"
+  description: Flashcards covering true vs false hybrid verification, independence checklists, tolerance thresholds, mismatch policies, and risk-based tool selection.
+  tags:
+  - hybrid-verification
+  - independence
+  - mismatch-policy
+  - risk-based
+  version: 1
+cards:
+- id: ch10-07-hybrid-patterns-001
+  type: recall
+  difficulty: basic
+  front: What is a false hybrid verification?
+  back: "Re-running the same SQL query — confirms determinism, not correctness."
+  tags:
+  - false-hybrid
+  - verification
+- id: ch10-07-hybrid-patterns-002
+  type: recall
+  difficulty: basic
+  front: What is a true hybrid verification?
+  back: "Using two different code paths with different failure modes to check the same answer."
+  tags:
+  - true-hybrid
+  - verification
+- id: ch10-07-hybrid-patterns-003
+  type: thinking
+  difficulty: intermediate
+  front: "Your SQL query has a wrong date boundary. You run it twice and get the same number both times. Why didn't this catch the bug?"
+  back: "BECAUSE the same query with the same bug produces the same wrong answer deterministically, THEREFORE repetition confirms consistency, not correctness — a different code path is needed."
+  why: "What specific property must the second path have to catch a date boundary error?"
+  tags:
+  - false-hybrid
+  - independence
+- id: ch10-07-hybrid-patterns-004
+  type: recall
+  difficulty: intermediate
+  front: What are the five items on the independence checklist for hybrid verification?
+  back: "1. Data source differs\n2. Parsing path differs\n3. Scope matches exactly\n4. Decimal-safe end-to-end\n5. Mismatch policy has mandatory release decision"
+  tags:
+  - independence
+  - checklist
+- id: ch10-07-hybrid-patterns-005
+  type: recall
+  difficulty: basic
+  front: What is tolerance in hybrid verification?
+  back: "The acceptable margin of difference between two paths — for financial data, even $0.01 may matter."
+  tags:
+  - tolerance
+  - verification
+- id: ch10-07-hybrid-patterns-006
+  type: recall
+  difficulty: basic
+  front: What should a mismatch policy do when SQL and raw paths disagree?
+  back: "Block release and investigate — not just log a warning."
+  tags:
+  - mismatch-policy
+  - release-gate
+- id: ch10-07-hybrid-patterns-007
+  type: thinking
+  difficulty: intermediate
+  front: "Your SQL path is user-scoped but your CSV verification path sums all users. Why is this comparison invalid?"
+  back: "BECAUSE independence means different failure modes, not different scopes, THEREFORE comparing user-level SQL to all-user CSV is invalid by construction — they are not answering the same question."
+  why: "What three scope dimensions must match between paths?"
+  tags:
+  - scope-parity
+  - independence
+- id: ch10-07-hybrid-patterns-008
+  type: thinking
+  difficulty: advanced
+  front: "Why are most mismatches caused by scope and normalization issues rather than SQL engine bugs?"
+  back: "BECAUSE SQL engines are battle-tested and deterministic, THEREFORE disagreements almost always come from import-path differences, date boundary definitions, or category normalization — not engine failures."
+  why: "What five triage questions should you answer before editing query logic?"
+  tags:
+  - debugging
+  - mismatch-policy
+- id: ch10-07-hybrid-patterns-009
+  type: recall
+  difficulty: intermediate
+  front: "SQL-only is sufficient for dashboards and ad-hoc queries. When should you add hybrid verification?"
+  back: "For outputs where being wrong has real consequences: financial filings, audit reports, compliance."
+  tags:
+  - risk-based
+  - verification
+- id: ch10-07-hybrid-patterns-010
+  type: thinking
+  difficulty: intermediate
+  front: "A CSV column contains 'Coffee, large' and you parse with split(','). What goes wrong?"
+  back: "BECAUSE split(',') treats the comma inside the field as a delimiter, THEREFORE the field splits into two columns and silently corrupts your sum — csv.DictReader handles quoted fields correctly."
+  why: "What other data formats could cause similar silent parsing corruption?"
+  tags:
+  - csv-parsing
+  - silent-failure
+- id: ch10-07-hybrid-patterns-011
+  type: thinking
+  difficulty: advanced
+  front: "Why is a mismatch policy that blocks release more valuable than one that merely logs a warning?"
+  back: "BECAUSE warnings get ignored under deadline pressure while blocks force investigation, THEREFORE a gate ensures incorrect data never reaches external stakeholders — it converts a potential crisis into a structured triage."
+  why: "Under what circumstances would you override a blocked release?"
+  tags:
+  - mismatch-policy
+  - release-gate
+- id: ch10-07-hybrid-patterns-012
+  type: recall
+  difficulty: intermediate
+  front: "What are the four steps in the release decision template?"
+  back: "1. Verified → publish permitted\n2. Mismatch → publish blocked\n3. Blocked + reason documented → triage begins\n4. Triage complete + evidence updated → re-run gate"
+  tags:
+  - release-gate
+  - verification

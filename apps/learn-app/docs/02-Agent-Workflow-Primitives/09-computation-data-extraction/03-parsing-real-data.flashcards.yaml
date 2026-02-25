@@ -1,0 +1,71 @@
+deck:
+  id: "ch09-03-parsing-real-data"
+  title: "Parsing Real Data"
+  description: "CSV quoting traps, awk limitations, Python csv module, and redirecting agents when their first approach fails"
+  tags: ["csv-parsing", "awk", "python-csv", "data-extraction"]
+  version: 1
+
+cards:
+  - id: "ch09-03-parsing-real-data-001"
+    front: "What happens when awk parses the CSV field \"AMAZON, INC.\" using comma as delimiter?"
+    back: "It splits into 4 fields instead of 3 — the comma inside quotes creates a phantom field."
+    tags: ["csv-quoting", "awk-limitation"]
+    difficulty: "basic"
+
+  - id: "ch09-03-parsing-real-data-002"
+    front: "When awk splits \"AMAZON, INC.\" on commas, what does $3 return instead of the amount?"
+    back: "INC.\" — the second half of the merchant name, not the amount."
+    tags: ["csv-quoting", "awk-limitation"]
+    difficulty: "basic"
+
+  - id: "ch09-03-parsing-real-data-003"
+    front: "Why is awk's CSV failure the worst kind of bug for financial data?"
+    back: "It works correctly on rows without commas in fields and silently fails on rows with them. Some totals are right, some are wrong — making the overall result plausible but incorrect."
+    tags: ["csv-quoting", "silent-errors"]
+    difficulty: "intermediate"
+    why: "How would you detect this bug if 90% of your transactions have clean merchant names?"
+
+  - id: "ch09-03-parsing-real-data-004"
+    front: "What Python module correctly handles CSV fields that contain commas inside quotes?"
+    back: "The csv module (csv.reader)."
+    tags: ["python-csv", "parsing"]
+    difficulty: "basic"
+
+  - id: "ch09-03-parsing-real-data-005"
+    front: "External CSV from a bank export: should you use awk or Python's csv module?"
+    back: "Python's csv module — external data may have quoted fields with embedded commas."
+    tags: ["awk-vs-csv", "decision-rule"]
+    difficulty: "basic"
+
+  - id: "ch09-03-parsing-real-data-006"
+    front: "When is awk appropriate for CSV-like data?"
+    back: "Log files, tab-separated data, or CSVs you control with no embedded delimiters."
+    tags: ["awk-vs-csv", "decision-rule"]
+    difficulty: "intermediate"
+
+  - id: "ch09-03-parsing-real-data-007"
+    front: "Why does mentioning a specific edge case in your prompt steer the agent toward a robust solution?"
+    back: "Without context about your data, the agent defaults to the simplest tool (awk). Mentioning 'commas inside quoted fields' gives the agent the constraint it needs to choose csv module instead."
+    tags: ["prompt-quality", "directing-agents"]
+    difficulty: "intermediate"
+    why: "What other data characteristics should you mention when prompting for CSV processing?"
+
+  - id: "ch09-03-parsing-real-data-008"
+    front: "You discover the agent's awk approach gives wrong totals on your bank CSV. What is the effective next prompt?"
+    back: "Describe the specific failure: which row broke, what awk returned, why it's wrong — then ask for a solution that handles CSV quoting."
+    tags: ["redirecting-agents", "debugging"]
+    difficulty: "intermediate"
+    why: "Why does bringing a specific failure example change the quality of the agent's response?"
+
+  - id: "ch09-03-parsing-real-data-009"
+    front: "In sum-expenses.py, what does `next(reader)` do after creating csv.reader?"
+    back: "Skips the header row so it isn't processed as data."
+    tags: ["python-csv", "parsing"]
+    difficulty: "basic"
+
+  - id: "ch09-03-parsing-real-data-010"
+    front: "Why does sum-expenses.py filter for `amount < 0` before summing?"
+    back: "Bank CSVs mix debits (negative) and credits (positive). Without filtering, refunds and deposits inflate the expense total."
+    tags: ["data-filtering", "csv-processing"]
+    difficulty: "advanced"
+    why: "What would happen to your tax deduction total if a $500 refund was counted as an expense?"

@@ -87,7 +87,7 @@ teaching_guide:
     - "The privacy note about bank CSVs is important — remind students they can remove account numbers before processing, or use the provided test data"
     - "Connect to Lesson 2's zero-trust philosophy: even this csv-module script should be verified with known-answer test data before running on real bank statements"
   assessment_quick_check:
-    - "Give students the line '2024-01-07,\"AMAZON, INC.\",-89.50' and ask: what does 'awk -F, \"{print $3}\"' return and why?"
+    - 'Give students the line ''2024-01-07,"AMAZON, INC.",-89.50'' and ask: what does ''awk -F, "{print $3}"'' return and why?'
     - "Ask: 'When should you use awk and when should you use Python csv module?' — tests understanding of the decision table"
     - "Ask students to write a prompt that would steer the agent toward a robust CSV solution instead of a naive awk approach"
 ---
@@ -210,7 +210,7 @@ Date,Description,Amount
 Total: $222.43
 ```
 
-Look at what just happened. The agent's first instinct (awk) was reasonable but wrong for your data. You caught the error through verification — the same pattern from Lesson 2. Then you told the agent *exactly what went wrong*, and it switched to the right tool. The agent knew about Python's csv module. You knew about your data. Neither could have solved this alone.
+Look at what just happened. The agent's first instinct (awk) was reasonable but wrong for your data. You caught the error through verification — the same pattern from Lesson 2. Then you told the agent _exactly what went wrong_, and it switched to the right tool. The agent knew about Python's csv module. You knew about your data. Neither could have solved this alone.
 
 :::tip Why Filter for Negatives?
 Notice the script checks `if amount < 0` before summing. Bank CSVs use negative numbers for debits (money out) and positive numbers for credits (refunds, deposits). Without this filter, a $500 refund would be counted as a $500 expense — silently inflating your total. This is the kind of bug that passes every test with expense-only data and breaks the moment real data includes a refund. If your bank uses a different convention (separate Debit/Credit columns, all positive amounts), tell Claude Code about your format and it will adapt the filter.
@@ -225,14 +225,14 @@ Notice the script checks `if amount < 0` before summing. Bank CSVs use negative 
 
 ## When to Use Which
 
-| Data Type | Use awk | Use csv module |
-|-----------|---------|----------------|
-| Log files with consistent delimiters | Yes | |
-| Tab-separated data | Yes | |
-| Data you control (no embedded delimiters) | Yes | |
-| Bank exports | | Yes |
-| Downloaded datasets | | Yes |
-| Any external CSV | | Yes |
+| Data Type                                 | Use awk | Use csv module |
+| ----------------------------------------- | ------- | -------------- |
+| Log files with consistent delimiters      | Yes     |                |
+| Tab-separated data                        | Yes     |                |
+| Data you control (no embedded delimiters) | Yes     |                |
+| Bank exports                              |         | Yes            |
+| Downloaded datasets                       |         | Yes            |
+| Any external CSV                          |         | Yes            |
 
 Rule of thumb: If the CSV came from outside your control, use a proper CSV parser.
 
@@ -247,9 +247,9 @@ Be careful - [edge case that could break naive parsing]."
 
 Mentioning the edge case helps the agent choose robust solutions. Compare:
 
-| Prompt | Agent's Likely Response |
-|--------|------------------------|
-| "Sum the third column of this CSV" | Might use awk (faster, simpler) |
+| Prompt                                                   | Agent's Likely Response              |
+| -------------------------------------------------------- | ------------------------------------ |
+| "Sum the third column of this CSV"                       | Might use awk (faster, simpler)      |
 | "Sum the Amount column. Some merchant names have commas" | Uses csv module (handles edge cases) |
 
 The second prompt gives context that guides the agent to the right tool. You're teaching the agent about your data -- and the agent is teaching you which tools handle that data correctly.
@@ -257,6 +257,10 @@ The second prompt gives context that guides the agent to the right tool. You're 
 Three lessons in, you've built two scripts that work and one habit that matters more than both of them: never trust output you haven't verified. That habit just saved you from a silent CSV parsing bug that the agent itself introduced.
 
 Your scripts work. But try this: close your terminal, open a new one, navigate to a different folder, and run `sum-expenses`. You'll get "command not found." The script exists somewhere on your machine, and you can't use it without remembering the exact path. That's not a tool — that's a file you'll lose.
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 ---
 

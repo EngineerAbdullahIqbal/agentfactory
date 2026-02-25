@@ -1,0 +1,65 @@
+deck:
+  id: "ch08-04-batch-operations"
+  title: "Batch Operations Workflow"
+  description: "Preview-before-action, script generation over one-time commands, and the batch operations mindset of fixing rules not files."
+  tags: ["file-processing", "batch-operations", "scripting", "automation"]
+  version: 1
+
+cards:
+  - id: "ch08-04-batch-operations-001"
+    front: "What phrase triggers the preview-before-action pattern when directing an agent?"
+    back: "\"Show me what you'll do before doing it.\""
+    tags: ["prompt-pattern", "preview"]
+    difficulty: "basic"
+
+  - id: "ch08-04-batch-operations-002"
+    front: "What phrase triggers script generation instead of one-time execution?"
+    back: "\"Create a script I can reuse for this.\""
+    tags: ["prompt-pattern", "scripting"]
+    difficulty: "basic"
+
+  - id: "ch08-04-batch-operations-003"
+    front: "A one-time rename command gives you renamed files. A script gives you renamed files plus rename-screenshots.sh. Why is the script approach fundamentally better?"
+    back: "The command solves one problem; the script solves the category of problems. Next month's 50 new screenshots get renamed with one command, and the script doubles as documentation of the naming logic."
+    tags: ["automation", "reusability"]
+    difficulty: "intermediate"
+    why: "When should you ask an agent for a script instead of asking it to just do the task?"
+
+  - id: "ch08-04-batch-operations-004"
+    front: "What should an agent do when two files would receive the same name during a batch rename?"
+    back: "Detect the collision before acting and present options (add time, add suffix, or skip)."
+    tags: ["naming-collision", "safety"]
+    difficulty: "intermediate"
+
+  - id: "ch08-04-batch-operations-005"
+    front: "A batch rename fails on 7 of 87 files due to special characters. Why is updating the script better than renaming those 7 files manually?"
+    back: "Every edge case fixed in the script is one that never recurs. Manual fixes solve 7 files today but leave the same bug for next month. Fixing the rule makes the system permanently smarter."
+    tags: ["fix-the-rule", "automation"]
+    difficulty: "intermediate"
+    why: "How does this 'fix the rule, not the instance' principle apply beyond file operations?"
+
+  - id: "ch08-04-batch-operations-006"
+    front: "The agent's first rename pattern (screenshot-001.png) stripped the dates. The preview step caught this before execution. Why was that a design error, not just a technical one?"
+    back: "Losing dates destroyed useful information — you can no longer tell when screenshots were taken. The preview revealed a flawed naming convention, not a broken command. Without preview, 87 files would have lost their temporal context."
+    tags: ["preview", "information-loss"]
+    difficulty: "advanced"
+    why: "What other kinds of metadata should you preserve when renaming files in bulk?"
+
+  - id: "ch08-04-batch-operations-007"
+    front: "How do scripts serve double duty beyond automation?"
+    back: "They also serve as documentation — the naming or organization logic is preserved in code, not just memory."
+    tags: ["scripting", "documentation"]
+    difficulty: "basic"
+
+  - id: "ch08-04-batch-operations-008"
+    front: "When a batch operation fails partway through, what does a well-designed agent do with the failed files?"
+    back: "Leaves failed files untouched in their original location and reports which ones failed and why."
+    tags: ["error-handling", "partial-failure"]
+    difficulty: "intermediate"
+
+  - id: "ch08-04-batch-operations-009"
+    front: "Why is a reusable script more valuable than the files it renamed?"
+    back: "Renamed files are a one-time result. The script captures the naming logic permanently — it works on future files, documents the convention, and produces consistent results every time."
+    tags: ["reusability", "automation"]
+    difficulty: "intermediate"
+    why: "What pattern from earlier in the chapter made the same argument about rules outlasting their output?"

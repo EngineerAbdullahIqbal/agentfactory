@@ -1,0 +1,122 @@
+deck:
+  id: ch10-00-from-csv-to-databases
+  title: "When Bash and Python Hit the Wall"
+  description: Flashcards covering the escalation from CSV scripts to relational databases, schema clarity, foreign keys, and when to escalate from Chapter 9 patterns.
+  tags:
+  - csv-limits
+  - schema
+  - foreign-keys
+  - escalation
+  - relational-database
+  version: 1
+cards:
+- id: ch10-00-from-csv-to-databases-001
+  type: recall
+  difficulty: basic
+  front: What is a schema in the context of databases?
+  back: "A formal blueprint defining columns, types, and table relationships."
+  tags:
+  - schema
+  - relational-database
+- id: ch10-00-from-csv-to-databases-002
+  type: thinking
+  difficulty: intermediate
+  front: Your CSV script passes all tests but silently produces wrong monthly totals. How does this happen?
+  back: "BECAUSE CSV workflows fail one edge case at a time (conflicting date definitions, missing filters), THEREFORE bugs appear in production without any visible error."
+  why: "What makes silent failures harder to catch than crash failures?"
+  tags:
+  - csv-limits
+  - silent-failure
+- id: ch10-00-from-csv-to-databases-003
+  type: recall
+  difficulty: basic
+  front: What is a foreign key?
+  back: "A column that points to a row in another table, creating an enforceable link."
+  tags:
+  - foreign-keys
+  - relational-database
+- id: ch10-00-from-csv-to-databases-004
+  type: thinking
+  difficulty: intermediate
+  front: Why is the escalation trigger "every new question requires a new loop" a sign your data model is failing?
+  back: "BECAUSE each new filter combination means rewriting application logic, THEREFORE you are manually reimplementing database behavior that SQL handles natively in one query."
+  why: "How does query reuse in SQL eliminate the new-loop-per-question problem?"
+  tags:
+  - escalation
+  - csv-limits
+- id: ch10-00-from-csv-to-databases-005
+  type: recall
+  difficulty: basic
+  front: In the Braintrust/Vercel benchmark, what was the SQL agent's accuracy vs the Bash agent's accuracy on structured data queries?
+  back: "SQL: 100% accuracy. Bash: ~53% accuracy."
+  tags:
+  - benchmark
+  - sql
+- id: ch10-00-from-csv-to-databases-006
+  type: thinking
+  difficulty: advanced
+  front: "SQL scored 100% accuracy in the benchmark, yet the lesson says hybrid verification is still needed. Why?"
+  back: "BECAUSE 'usually right' and 'provably right for THIS report' are different claims, THEREFORE high-stakes outputs need independent verification to confirm correctness for the specific query, not just the tool's general accuracy."
+  why: "When would SQL-only be sufficient without any independent check?"
+  tags:
+  - benchmark
+  - hybrid-verification
+- id: ch10-00-from-csv-to-databases-007
+  type: recall
+  difficulty: intermediate
+  front: "CSV World relies on hope for consistency. What does the Relational World rely on instead?"
+  back: "Enforcement via schema, foreign keys, and constraints."
+  tags:
+  - schema
+  - relational-database
+- id: ch10-00-from-csv-to-databases-008
+  type: thinking
+  difficulty: intermediate
+  front: Why does the lesson say re-running the same SQL query is not independent verification?
+  back: "BECAUSE the same query with the same bug produces the same wrong answer both times, THEREFORE you confirm determinism, not correctness — a different code path is required."
+  why: "What properties must a second verification path have to be truly independent?"
+  tags:
+  - hybrid-verification
+  - escalation
+- id: ch10-00-from-csv-to-databases-009
+  type: recall
+  difficulty: intermediate
+  front: "According to the escalation matrix, name two situations where you should stay with Chapter 9 patterns?"
+  back: "One user, one monthly file, one known report."
+  tags:
+  - escalation
+  - csv-limits
+- id: ch10-00-from-csv-to-databases-010
+  type: thinking
+  difficulty: intermediate
+  front: "Two scripts handle dates differently: one uses calendar months, another uses rolling 30 days. Why is this a CSV-world failure mode?"
+  back: "BECAUSE convention-based workflows have no enforced standard for date boundaries, THEREFORE each script author makes independent choices that silently diverge under real usage."
+  why: "How does a schema-enforced Date column prevent this divergence?"
+  tags:
+  - csv-limits
+  - schema
+- id: ch10-00-from-csv-to-databases-011
+  type: recall
+  difficulty: intermediate
+  front: What are three failure signals that your script-based workflow should escalate to a database?
+  back: "1. Same filter logic in 3+ scripts\n2. Missing ownership rules for entity links\n3. Manual cleanup needed after failed writes"
+  tags:
+  - escalation
+  - failure-signals
+- id: ch10-00-from-csv-to-databases-012
+  type: thinking
+  difficulty: advanced
+  front: Why do teams typically escalate from scripts to databases too late?
+  back: "BECAUSE each new request feels small enough to handle with one more loop, THEREFORE the total system grows large and fragile before anyone names the problem."
+  why: "What leading indicator would help a team recognize the escalation point earlier?"
+  tags:
+  - escalation
+  - csv-limits
+- id: ch10-00-from-csv-to-databases-013
+  type: recall
+  difficulty: basic
+  front: What is a relational database?
+  back: "A system storing data in linked tables with enforced rules and one consistent truth."
+  tags:
+  - relational-database
+  - schema

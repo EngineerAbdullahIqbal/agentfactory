@@ -327,3 +327,7 @@ You're deploying your own app to the cloud. What secrets does it need? (Database
 ### Safety Note
 
 Never commit a `.env` file or paste database credentials directly into source code. If you accidentally push credentials to a public repository, rotate them immediately in your Neon dashboard -- do not assume "nobody saw it." Credential scanners run continuously on public GitHub repositories, and exposed passwords are typically exploited within minutes.
+
+## Flashcards Study Aid
+
+<Flashcards />

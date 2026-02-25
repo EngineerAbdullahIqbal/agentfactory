@@ -147,7 +147,7 @@ Should I proceed with this plan, or would you like a different
 naming pattern?
 ```
 
-You look at the preview. Something's wrong. The agent threw away useful information — the dates. `screenshot-001.png` tells you nothing about *when* the screenshot was taken. Six months from now, you'll have no idea what `screenshot-047.png` contains or why you took it.
+You look at the preview. Something's wrong. The agent threw away useful information — the dates. `screenshot-001.png` tells you nothing about _when_ the screenshot was taken. Six months from now, you'll have no idea what `screenshot-047.png` contains or why you took it.
 
 ```
 You: Actually, include the date. Make it 'screenshot-2024-01-15-001.png'
@@ -382,3 +382,7 @@ the filename. Can you extract it and use it in the rename?
 ```
 
 **What you're practicing:** Content-aware batch operations. You're moving beyond filename-based operations to using file contents as input. This is how real automation handles documents where the metadata you need is inside the file, not in its name.
+
+## Flashcards Study Aid
+
+<Flashcards />

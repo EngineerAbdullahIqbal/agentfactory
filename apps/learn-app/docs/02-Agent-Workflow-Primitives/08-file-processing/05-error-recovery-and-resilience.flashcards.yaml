@@ -1,0 +1,59 @@
+deck:
+  id: "ch08-05-error-recovery"
+  title: "Error Recovery and Resilience"
+  description: "Deliberate practice with destruction, state comparison for diagnosis, and why scripts beat agents for consistent recovery."
+  tags: ["file-processing", "error-recovery", "resilience", "backup"]
+  version: 1
+
+cards:
+  - id: "ch08-05-error-recovery-001"
+    front: "What is the 'fire drill' concept in file management?"
+    back: "Practicing recovery when stakes are low to build muscle memory instead of panic."
+    tags: ["deliberate-practice", "fire-drill"]
+    difficulty: "intermediate"
+
+  - id: "ch08-05-error-recovery-002"
+    front: "What are the three steps of the recovery workflow?"
+    back: "1. Restore (from backup or rules)\n2. Verify (compare against known good state)\n3. Proceed"
+    tags: ["recovery-workflow", "steps"]
+    difficulty: "basic"
+
+  - id: "ch08-05-error-recovery-003"
+    front: "You deliberately flatten an organized folder, losing all category structure. Why does practicing this destruction build confidence rather than waste time?"
+    back: "The verified backup makes it completely safe, and the emotional experience — anxiety of destruction followed by relief of recovery — creates muscle memory that replaces panic with process during real mistakes."
+    tags: ["deliberate-practice", "confidence"]
+    difficulty: "intermediate"
+    why: "What other skills benefit from practicing failure in a safe environment before facing real stakes?"
+
+  - id: "ch08-05-error-recovery-004"
+    front: "What is state comparison in the context of error recovery?"
+    back: "Comparing current file state against a known good backup to identify exactly what changed, what is missing, or what went wrong."
+    tags: ["state-comparison", "diagnosis"]
+    difficulty: "basic"
+
+  - id: "ch08-05-error-recovery-005"
+    front: "You ask the agent to restore files today, and it works. You ask again next month — it uses different flags and skips verification. Why does a restore.sh script solve this?"
+    back: "The agent is ephemeral — each session interprets fresh, possibly differently. A script is eternal — it executes the exact same verified steps every time, independent of agent interpretation."
+    tags: ["ephemeral-vs-eternal", "principle-2"]
+    difficulty: "intermediate"
+    why: "What is the general rule for when you should convert an agent conversation into a script?"
+
+  - id: "ch08-05-error-recovery-006"
+    front: "Why should recovery be a planned step in every workflow rather than an emergency response?"
+    back: "Planned recovery means you already have a backup, a comparison baseline, and a tested restore process. Emergency recovery means improvising under stress with no safety net."
+    tags: ["recovery-planning", "workflow"]
+    difficulty: "intermediate"
+    why: "How does planning for failure before starting relate to the safety-first pattern from Lesson 2?"
+
+  - id: "ch08-05-error-recovery-007"
+    front: "What is the most powerful recovery prompt when you are unsure what went wrong?"
+    back: "\"Compare current state against backup and show me what is missing or different.\""
+    tags: ["prompt-pattern", "state-comparison"]
+    difficulty: "basic"
+
+  - id: "ch08-05-error-recovery-008"
+    front: "Why should you ask the agent to write restore.sh instead of asking it to restore your files directly?"
+    back: "Asking the agent to restore gives a one-time result that depends on the agent's interpretation. Asking it to write a script gives a deterministic tool that works the same way every time — even without the agent."
+    tags: ["scripting", "ephemeral-vs-eternal"]
+    difficulty: "advanced"
+    why: "This mirrors Principle 2: Code as Universal Interface. What other recovery tasks should be scripted rather than delegated?"

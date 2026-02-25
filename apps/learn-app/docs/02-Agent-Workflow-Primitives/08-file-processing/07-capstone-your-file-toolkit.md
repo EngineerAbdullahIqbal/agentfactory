@@ -209,7 +209,7 @@ recover, search, and verify. For each template, include the key
 phrases that trigger the right agent behavior.
 ```
 
-This toolkit is the chapter's most important deliverable. The organized folders will get messy again. The scripts will need updates. But the *templates* — the patterns for how you direct an agent — those are permanently useful.
+This toolkit is the chapter's most important deliverable. The organized folders will get messy again. The scripts will need updates. But the _templates_ — the patterns for how you direct an agent — those are permanently useful.
 
 ---
 
@@ -217,18 +217,18 @@ This toolkit is the chapter's most important deliverable. The organized folders 
 
 You've been learning the Seven Principles without memorizing them. Let's make explicit what emerged through practice.
 
-| Lesson                   | What You Did                         | Principle That Emerged              |
-| ------------------------ | ------------------------------------ | ----------------------------------- |
-| 1. Survey                | Ran bash commands to analyze folder  | **P1: Bash is the Key**             |
-| 1. Survey                | Made chaos visible through reports   | **P7: Observability**               |
-| 2. Safety First          | Created backup before changes        | **P6: Constraints and Safety**      |
-| 2. Safety First          | Verified backup was complete         | **P3: Verification as Core Step**   |
-| 3. Organization          | Documented rules in rules.md         | **P5: Persisting State in Files**   |
-| 3. Organization          | Tested on one file first             | **P4: Small, Reversible Decomp.**   |
-| 4. Batch Operations      | Generated reusable script            | **P2: Code as Universal Interface** |
-| 5. Error Recovery        | Restored from backup after mistake   | **P3 + P6: Verify + Safety**        |
-| 6. Search & Discovery    | Described problem, agent chose tools | **P1 + P2: Bash + Code**            |
-| 6. Search & Discovery    | Created persistent index of results  | **P5: Persisting State in Files**   |
+| Lesson                | What You Did                         | Principle That Emerged              |
+| --------------------- | ------------------------------------ | ----------------------------------- |
+| 1. Survey             | Ran bash commands to analyze folder  | **P1: Bash is the Key**             |
+| 1. Survey             | Made chaos visible through reports   | **P7: Observability**               |
+| 2. Safety First       | Created backup before changes        | **P6: Constraints and Safety**      |
+| 2. Safety First       | Verified backup was complete         | **P3: Verification as Core Step**   |
+| 3. Organization       | Documented rules in rules.md         | **P5: Persisting State in Files**   |
+| 3. Organization       | Tested on one file first             | **P4: Small, Reversible Decomp.**   |
+| 4. Batch Operations   | Generated reusable script            | **P2: Code as Universal Interface** |
+| 5. Error Recovery     | Restored from backup after mistake   | **P3 + P6: Verify + Safety**        |
+| 6. Search & Discovery | Described problem, agent chose tools | **P1 + P2: Bash + Code**            |
+| 6. Search & Discovery | Created persistent index of results  | **P5: Persisting State in Files**   |
 
 All seven principles showed up naturally. You didn't study them from a textbook. You experienced them through action. And you saw them reinforce each other — safety enabled experimentation, verification caught errors, persistence made rules reusable.
 
@@ -240,33 +240,33 @@ Throughout this chapter, you observed the agent using these commands. You don't 
 
 ### Core Commands
 
-| Command    | Plain English                           | Lesson     |
-| ---------- | --------------------------------------- | ---------- |
-| `ls`       | **List** files in a directory           | 1, 3       |
-| `find`     | **Find** files by name or date          | 1, 2, 6   |
-| `wc -l`    | **Word count** (count lines)            | 1, 2       |
-| `du -sh`   | **Disk usage** (human-readable sizes)   | 1          |
-| `cp`       | **Copy** files                          | 2, 5       |
-| `mv`       | **Move** (or rename) files              | 3, 4       |
-| `rm -rf`   | **Remove** recursively (dangerous!)     | 5          |
-| `mkdir`    | **Make directory**                      | 2, 3       |
-| `mkdir -p` | **Make directory** (create parents too) | 4          |
-| `cat`      | **Display** file contents               | 3          |
-| `sort -rh` | **Sort** (reverse, human-readable)      | 1          |
-| `head -10` | Show **first 10** lines                 | 4          |
-| `diff`     | Show **differences** between files      | 5          |
-| `cp -r`    | **Copy** recursively (entire folders)   | 5          |
-| `chmod`    | **Change** file permissions             | 5          |
-| `grep`     | **Search** inside files                 | 6          |
-| `grep -l`  | Search inside, show matching **files**  | 6          |
-| `grep -i`  | Search **case-insensitive**             | 6          |
+| Command    | Plain English                           | Lesson  |
+| ---------- | --------------------------------------- | ------- |
+| `ls`       | **List** files in a directory           | 1, 3    |
+| `find`     | **Find** files by name or date          | 1, 2, 6 |
+| `wc -l`    | **Word count** (count lines)            | 1, 2    |
+| `du -sh`   | **Disk usage** (human-readable sizes)   | 1       |
+| `cp`       | **Copy** files                          | 2, 5    |
+| `mv`       | **Move** (or rename) files              | 3, 4    |
+| `rm -rf`   | **Remove** recursively (dangerous!)     | 5       |
+| `mkdir`    | **Make directory**                      | 2, 3    |
+| `mkdir -p` | **Make directory** (create parents too) | 4       |
+| `cat`      | **Display** file contents               | 3       |
+| `sort -rh` | **Sort** (reverse, human-readable)      | 1       |
+| `head -10` | Show **first 10** lines                 | 4       |
+| `diff`     | Show **differences** between files      | 5       |
+| `cp -r`    | **Copy** recursively (entire folders)   | 5       |
+| `chmod`    | **Change** file permissions             | 5       |
+| `grep`     | **Search** inside files                 | 6       |
+| `grep -l`  | Search inside, show matching **files**  | 6       |
+| `grep -i`  | Search **case-insensitive**             | 6       |
 
 ### Connectors
 
-| Symbol      | Plain English                                | Example                                                          |
-| ----------- | -------------------------------------------- | ---------------------------------------------------------------- |
-| `\|` (pipe) | "**then**" — chain commands together         | `find ... \| wc -l` = "find files, then count them"              |
-| `xargs`     | "**for each**" — converts text to arguments  | `find ... \| xargs grep` = "find files, then search inside each" |
+| Symbol      | Plain English                               | Example                                                          |
+| ----------- | ------------------------------------------- | ---------------------------------------------------------------- |
+| `\|` (pipe) | "**then**" — chain commands together        | `find ... \| wc -l` = "find files, then count them"              |
+| `xargs`     | "**for each**" — converts text to arguments | `find ... \| xargs grep` = "find files, then search inside each" |
 
 ### Flags Worth Knowing
 
@@ -349,7 +349,7 @@ def organize_new_files(watch_folder: Path):
 schedule.every(1).hour.do(organize_new_files, Path("~/Downloads"))
 ```
 
-Every function in that script maps to a lesson you completed. `create_timestamped_backup` is Lesson 2. `apply_rules` is Lesson 3. `verify_all_files_accounted_for` is Lesson 5. The workflows are identical. Automation just removes *you* as the trigger.
+Every function in that script maps to a lesson you completed. `create_timestamped_backup` is Lesson 2. `apply_rules` is Lesson 3. `verify_all_files_accounted_for` is Lesson 5. The workflows are identical. Automation just removes _you_ as the trigger.
 
 The gap between "I type a prompt" and "it runs automatically" is smaller than you think. It's not a different skill — it's the same skill with a scheduler attached.
 
@@ -359,15 +359,15 @@ The gap between "I type a prompt" and "it runs automatically" is smaller than yo
 
 By completing the checkpoints throughout this chapter, you should now have:
 
-| Item                   | Location                | Status                  |
-| ---------------------- | ----------------------- | ----------------------- |
-| `FILE-INVENTORY.md`    | In `file-organizer/`    | ✅ Lesson 1 checkpoint  |
-| `backup/`              | With timestamped folder | ✅ Lesson 2 checkpoint  |
-| `rules.md`             | With edge cases added   | ✅ Lesson 3 checkpoint  |
-| `ORGANIZER-LOG.md`     | Full history            | ✅ Lesson 3 checkpoint  |
-| `organized/`           | Files categorized       | ✅ Lesson 3 checkpoint  |
-| Recovery exercise      | Completed               | ✅ Lesson 5 checkpoint  |
-| `MY-PROMPT-TOOLKIT.md` | Your prompt templates   | ✅ This lesson          |
+| Item                   | Location                | Status                 |
+| ---------------------- | ----------------------- | ---------------------- |
+| `FILE-INVENTORY.md`    | In `file-organizer/`    | ✅ Lesson 1 checkpoint |
+| `backup/`              | With timestamped folder | ✅ Lesson 2 checkpoint |
+| `rules.md`             | With edge cases added   | ✅ Lesson 3 checkpoint |
+| `ORGANIZER-LOG.md`     | Full history            | ✅ Lesson 3 checkpoint |
+| `organized/`           | Files categorized       | ✅ Lesson 3 checkpoint |
+| Recovery exercise      | Completed               | ✅ Lesson 5 checkpoint |
+| `MY-PROMPT-TOOLKIT.md` | Your prompt templates   | ✅ This lesson         |
 
 If you're missing any items, go back to the relevant lesson and complete the checkpoint. The toolkit is the most important deliverable — it's what you'll use long after this chapter is done.
 
@@ -431,15 +431,19 @@ Here's what changed between Lesson 1 and now.
 
 In Lesson 1, you asked the agent to analyze your Downloads folder. You watched it work. You were impressed that it ran six commands in 30 seconds.
 
-Now? You wouldn't just *watch*. You'd check whether it backed up first. You'd question its categorization rules. You'd ask for a preview before batch operations. You'd verify the results against a known state. You'd ask for a script, not a one-time fix.
+Now? You wouldn't just _watch_. You'd check whether it backed up first. You'd question its categorization rules. You'd ask for a preview before batch operations. You'd verify the results against a known state. You'd ask for a script, not a one-time fix.
 
-That shift — from passive observer to active director — is the real deliverable. Not the organized folder. Not the scripts. Not the toolkit document. The skill of *knowing what to demand from an agent* before trusting its output.
+That shift — from passive observer to active director — is the real deliverable. Not the organized folder. Not the scripts. Not the toolkit document. The skill of _knowing what to demand from an agent_ before trusting its output.
 
-The agent is ephemeral. Your conversation ends, context resets, the next session starts fresh. But the patterns you've internalized — survey before acting, backup before changing, verify before trusting, script before repeating — those persist in *you*. They transfer to email management, project organization, data pipelines, and every domain where you direct AI agents.
+The agent is ephemeral. Your conversation ends, context resets, the next session starts fresh. But the patterns you've internalized — survey before acting, backup before changing, verify before trusting, script before repeating — those persist in _you_. They transfer to email management, project organization, data pipelines, and every domain where you direct AI agents.
 
 Your Downloads folder is organized. Your toolkit is built. You're ready for automation.
 
 ---
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 ## 🔄 Session Management Note
 

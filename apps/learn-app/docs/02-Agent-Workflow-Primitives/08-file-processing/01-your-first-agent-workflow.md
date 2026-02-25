@@ -249,7 +249,7 @@ Read it left to right: "**Find** in **Downloads**, only **files**, named `*.pdf`
 | `-h` | Human-readable (KB, MB, GB)  | **h**uman    |
 | `-r` | Reverse order                | **r**everse  |
 | `-s` | Summary (totals only)        | **s**ummary  |
-| `-a` | All (including hidden files)  | **a**ll      |
+| `-a` | All (including hidden files) | **a**ll      |
 
 When the agent ran `du -sh`, that's "**d**isk **u**sage, **s**ummary, **h**uman-readable."
 
@@ -287,12 +287,12 @@ This is fundamentally different from learning bash commands yourself. You're not
 
 The pattern generalizes. Try these variations:
 
-| Your Problem                     | The Prompt                                                                                   |
-| -------------------------------- | -------------------------------------------------------------------------------------------- |
-| Messy Desktop                    | "Help me understand my Desktop. What's here, what's old, what's taking up space?"            |
-| Mystery disk usage               | "Help me understand where my disk space is going. What folders are largest?"                  |
-| Project scattered across folders | "Help me understand where files related to [project name] are scattered."                    |
-| Duplicate photos                 | "Help me understand if I have duplicate photos. Show me likely duplicates."                   |
+| Your Problem                     | The Prompt                                                                        |
+| -------------------------------- | --------------------------------------------------------------------------------- |
+| Messy Desktop                    | "Help me understand my Desktop. What's here, what's old, what's taking up space?" |
+| Mystery disk usage               | "Help me understand where my disk space is going. What folders are largest?"      |
+| Project scattered across folders | "Help me understand where files related to [project name] are scattered."         |
+| Duplicate photos                 | "Help me understand if I have duplicate photos. Show me likely duplicates."       |
 
 The specifics change. The pattern stays the same.
 
@@ -373,5 +373,9 @@ and '-10' mean? Teach me to read this command.
 **What you're practicing:** Just-in-time learning. Instead of memorizing a textbook, you ask the agent to teach you the specific syntax relevant to the problem you just solved. The agent becomes your tutor, explaining commands in context.
 
 ---
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 Your Downloads folder is visible now. But visibility creates a new problem. You can see exactly what's there — and some of it matters. Tax documents. Financial spreadsheets. Irreplaceable photos buried under random downloads. If the next step goes wrong, those files could disappear. And unlike code, your files don't have `git revert`.

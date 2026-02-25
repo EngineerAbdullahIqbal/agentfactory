@@ -1,0 +1,83 @@
+deck:
+  id: "ch09-02-testing-loop"
+  title: "The Testing Loop"
+  description: "Exit codes, zero-trust verification, known-answer test data, and the division of labor between human evidence criteria and agent-generated tests"
+  tags: ["verification", "exit-codes", "zero-trust", "testing"]
+  version: 1
+
+cards:
+  - id: "ch09-02-testing-loop-001"
+    front: "In buggy_sum.py, what does the line `if line[0] in '6789': continue` do?"
+    back: "Silently skips any number starting with digits 6, 7, 8, or 9."
+    tags: ["buggy-sum", "logic-error"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-002"
+    front: "buggy_sum.py passes the test with 10, 20, 30 but fails with 10, 60, 30. Why does the choice of test data matter?"
+    back: "The first set only uses digits 1-3, never triggering the skip condition. Bugs hide in 'nice' data — test data must include values that stress every code path."
+    tags: ["test-data-selection", "verification"]
+    difficulty: "intermediate"
+    why: "What categories of test values should you always include for numerical scripts?"
+
+  - id: "ch09-02-testing-loop-003"
+    front: "What does exit code 0 mean in Bash?"
+    back: "The script ran without crashing (process terminated normally)."
+    tags: ["exit-codes"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-004"
+    front: "Exit code 0 means 'didn't crash.' What does it NOT mean?"
+    back: "It does not mean the output is correct or the logic is right."
+    tags: ["exit-codes", "verification"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-005"
+    front: "Why can't exit codes catch logic errors like buggy_sum.py skipping numbers?"
+    back: "Exit codes only detect crashes and exceptions. A script that produces wrong output via flawed logic still terminates normally with exit code 0 — only test data with known answers exposes the error."
+    tags: ["exit-codes", "logic-errors"]
+    difficulty: "intermediate"
+    why: "What additional verification would you need beyond exit codes for a financial script?"
+
+  - id: "ch09-02-testing-loop-006"
+    front: "What Bash command shows the exit code of the most recently run command?"
+    back: "echo $? — run it immediately after the command you care about."
+    tags: ["exit-codes", "bash"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-007"
+    front: "What are the four steps of the zero-trust verification pattern?"
+    back: "1. Known answer first\n2. Simple test data\n3. Multiple cases\n4. Compare output to expectation"
+    tags: ["zero-trust", "verification-pattern"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-008"
+    front: "Why must the human — not the agent — choose the verification approach for a script?"
+    back: "Only the human knows which answers are easy to verify mentally and which input ranges match real-world data. The agent knows common failure modes but not your domain context."
+    tags: ["division-of-labor", "verification"]
+    difficulty: "advanced"
+    why: "What happens if you let the agent choose both the test data and the expected answers?"
+
+  - id: "ch09-02-testing-loop-009"
+    front: "What does `sys.exit(1)` signal in a Python script?"
+    back: "Failure — a non-zero exit code the caller can check."
+    tags: ["exit-codes", "python"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-010"
+    front: "Why does sum.py print errors to sys.stderr instead of sys.stdout?"
+    back: "stderr is separate from stdout, so error messages appear in the terminal without polluting data flowing through pipes."
+    tags: ["stderr", "stdout", "pipes"]
+    difficulty: "intermediate"
+
+  - id: "ch09-02-testing-loop-011"
+    front: "What is the verification prompt pattern that works for any tool?"
+    back: "\"Verify [tool] with test data [X], expected output [Y].\""
+    tags: ["verification-pattern", "prompt-pattern"]
+    difficulty: "basic"
+
+  - id: "ch09-02-testing-loop-012"
+    front: "A script produces correct output on integers but you haven't tested decimals or negatives. Why is this insufficient verification?"
+    back: "Each data type can trigger different bugs — float parsing, sign handling, and edge cases like empty input all exercise distinct code paths that integer-only tests never reach."
+    tags: ["test-coverage", "verification"]
+    difficulty: "advanced"
+    why: "What minimum set of data types should you test for any numerical script?"

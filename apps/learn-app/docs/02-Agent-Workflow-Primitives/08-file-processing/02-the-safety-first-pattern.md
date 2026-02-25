@@ -100,11 +100,11 @@ Here's what happens when you skip the backup.
 
 You ask the agent to organize your Downloads folder. It moves 400 files into categories. Clean, fast, satisfying. Then you notice: your tax documents aren't in the `documents/` folder. They're not in `spreadsheets/` either. You check `misc/`. Not there. You check the original Downloads folder. It's empty — the agent moved everything out.
 
-Your 1099 forms are gone. Not deleted — *misplaced*. They're sitting in a folder called `archives/` because the agent categorized `.pdf` files older than a year as "archival." You didn't know that rule existed. You didn't ask. And now you're spending 30 minutes hunting through subfolders for documents your accountant needs by Friday.
+Your 1099 forms are gone. Not deleted — _misplaced_. They're sitting in a folder called `archives/` because the agent categorized `.pdf` files older than a year as "archival." You didn't know that rule existed. You didn't ask. And now you're spending 30 minutes hunting through subfolders for documents your accountant needs by Friday.
 
-That's the *good* outcome. The bad outcome is a naming collision: two files called `report.pdf` from different folders, and the agent overwrites one with the other. The bad outcome is a permissions error halfway through a batch move that leaves 200 files in limbo — half moved, half not, and you can't remember which were where.
+That's the _good_ outcome. The bad outcome is a naming collision: two files called `report.pdf` from different folders, and the agent overwrites one with the other. The bad outcome is a permissions error halfway through a batch move that leaves 200 files in limbo — half moved, half not, and you can't remember which were where.
 
-This lesson exists because of that gap between "the agent did what I asked" and "the agent did what I *meant*."
+This lesson exists because of that gap between "the agent did what I asked" and "the agent did what I _meant_."
 
 > **The paradox:** The backup constraint doesn't limit you. It frees you. Every safety rule you think slows you down actually speeds you up. Without a safety net, you hesitate at every step. With one, you experiment without fear. The 2 minutes you spend on backup save the 20 minutes of anxiety that would otherwise paralyze every decision.
 
@@ -195,7 +195,7 @@ Notice what just happened. The agent didn't assume what you wanted. It asked. Th
 
 **2. You verified, not just trusted.** The agent could have said "Done!" after copying. Instead, you directed it to compare counts: 47 PDFs in source, 47 in backup. Numbers match. Backup complete. Trust, but verify — always.
 
-**3. The order was the whole point.** Backup → Verify → Then make changes. Not the other way around. The backup *enables* the changes that follow.
+**3. The order was the whole point.** Backup → Verify → Then make changes. Not the other way around. The backup _enables_ the changes that follow.
 
 ---
 
@@ -292,8 +292,8 @@ This pattern extends beyond file organization. It's a universal safety mindset:
 | ------------------------ | --------------------------------- |
 | **File organization**    | Backup before moving files        |
 | **Code changes**         | Commit before refactoring         |
-| **Database updates**     | Export before modifying            |
-| **System configuration** | Snapshot before changing settings  |
+| **Database updates**     | Export before modifying           |
+| **System configuration** | Snapshot before changing settings |
 
 The common thread: **create a reversible state before any irreversible action**.
 
@@ -384,5 +384,9 @@ from my backup. Show me the commands but don't actually run them yet.
 **Verification is non-negotiable.** A backup that might have failed is worse than no backup. Always confirm completeness. Always ask for error reports.
 
 **This pattern is universal.** Backup-before-change applies to files, code, databases, and any system where actions might be irreversible.
+
+## Flashcards Study Aid
+
+<Flashcards />
 
 Your files are backed up. You can experiment without fear. But here's the question that matters now: which files should live together? A PDF named "Q4-Budget-Draft.pdf" — is that a financial document or a Q4 project file? Your backup makes the answer cheap to get wrong. So how do you design rules that handle ambiguity?
