@@ -26,4 +26,4 @@ Real-world CSV data has commas inside quoted fields (like `"AMAZON, INC."`) that
 ### Connections
 
 - **Builds on**: sum.py (Lesson 1) and verification habit (Lesson 2) — the same "verify before trusting" instinct caught this silent bug
-- **Leads to**: Making scripts permanent (Lesson 4) — the lesson ends with a concrete challenge: close your terminal, open a new one, and try to run `sum-expenses`. "Command not found" is the problem Lesson 4 solves
+- **Leads to**: Decomposing into composable tools (Lesson 4) — you now have two installed commands (sum.py, sum-expenses), but each answers only one question. Lesson 4 breaks the monolith into small tools that chain through pipes to answer any question

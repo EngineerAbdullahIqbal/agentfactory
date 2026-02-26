@@ -35,5 +35,6 @@ The reflection section distinguishes what the workflow looked like from what the
 
 ### Connections
 
-- **Builds on**: All previous lessons — broken math (L1), testing loop (L2), CSV parsing (L3), permanent toolkit (L4), false-positive guards (L5)
-- **Leads to**: Practice exercises (Lesson 7) and more complex data workflows in later chapters
+- **Builds on**: All previous lessons — broken math (L1), testing loop (L2), CSV parsing and merging (L3), permanent toolkit (L4), false-positive guards and domain transfer (L5)
+- **Challenge section**: Uses student grade data (not finance or server logs) to prove the workflow transfers to any domain — DR CHARLES is the "Dr. Pepper" of gradebooks, EXTRA CREDIT with 0 max points is the division-by-zero trap
+- **Leads to**: More complex data workflows in later chapters

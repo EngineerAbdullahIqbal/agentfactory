@@ -1,60 +1,37 @@
 ### Core Concept
 
-If you have to remember where a tool lives, it's not a tool yet. A script becomes a real tool when you can run it by name from any directory. Shell aliases stored in config files (`.bashrc` or `.zshrc`) make commands permanent across terminal sessions. The test: close your terminal, open a new one, and the command still works.
+The Unix philosophy: build small tools that each do one thing, then chain them with pipes. A monolithic script with 6 flags is impossible to test and impossible to debug. Three single-purpose scripts — each reading stdin and writing stdout — answer questions the monolith never could, because the pipeline changes while the tools stay fixed.
 
 ### Key Mental Models
 
-- **Script vs tool gap**: A script in a random folder requires remembering the full path every time. A tool is available everywhere by name. Twenty minutes of setup now prevents hours of "I know I built this already" frustration later.
-- **Config file persistence**: Your shell reads `.bashrc` or `.zshrc` every time a terminal opens. Anything in that file is permanent. `source` reloads it without reopening.
-- **Two things that make it work**: The shebang (`#!/usr/bin/env python3`) tells the OS which interpreter to use when running the file directly — without it, `chmod +x` alone won't work. Shell config files run on terminal startup — that's the entire persistence mechanism, not magic.
+- **The flag trap**: Every flag you add to a script multiplies the things that can go wrong. `sum-expenses.py --sum --average --count --threshold 100 --top --limit 5` is untestable because of flag interaction.
+- **Decomposition reveals hidden architecture**: sum-expenses.py was secretly doing three jobs (extract column, filter negatives, sum). Breaking it apart doesn't add work — it reveals the composable architecture hiding inside.
+- **Ignorance is a feature**: extract-column.py knows nothing about bank statements. It extracts a column from ANY CSV. The less a tool knows about its context, the more contexts it works in.
+- **Same data, different questions**: `cat bank.csv | extract-column Amount | filter "< 0" | stats` gives expense totals. Change the pipeline to `filter "< -100" | stats` and you get large expenses only. Zero code changes.
 
 ### Critical Patterns
 
-- Prompt pattern: "I want to use [script] from anywhere. Make it a permanent command I can run like: `cat file.csv | sum-expenses`"
-- The setup sequence: `mkdir -p ~/tools` → `cp script.py ~/tools/` → `chmod +x` → add alias to shell config → `source` to reload
-- The agent checks `echo $SHELL` first — `.zshrc` for zsh, `.bashrc` for bash — before editing the config
+- Decomposition prompt: "Decompose [big script] into small tools that each do one thing. Each tool reads stdin and writes stdout so I can chain them with pipes."
+- Three composable tools: `extract-column.py` (pulls one column from any CSV), `filter.py` (keeps numbers matching a condition), `stats.py` (prints sum, count, average, min, max)
+- Pipeline verification: the pipeline output should match sum-expenses output — same answer through a different path proves both approaches are correct
 
-### Command Reference
+### The Three Tools
 
-| Command                | What It Does                       | Memory Trick                      |
-| ---------------------- | ---------------------------------- | --------------------------------- |
-| `mkdir -p ~/tools`     | Creates your personal tools folder | **p** = create **p**arents too    |
-| `chmod +x script.py`   | Makes file executable              | **ch**ange **mod**e + e**x**ecute |
-| `alias name='command'` | Creates a shortcut                 | Like a **nickname** for a command |
-| `source ~/.zshrc`      | Reloads shell config               | Load the **source** of settings   |
-
-### Diagnostic Chain: When It Breaks
-
-The lesson includes a troubleshooting section for when tools stop working months later. Three things can break, checked in order:
-
-1. **Does the alias exist?** `alias sum-expenses` — if "not found," the shell config didn't load it
-2. **Does the script exist where the alias points?** `ls -la ~/tools/sum-expenses.py` — if missing, the script was moved or deleted
-3. **Can the script actually run?** `python3 ~/tools/sum-expenses.py <<< "10"` — if error, Python version mismatch or missing shebang
-
-| Symptom | Check | Fix |
-|---------|-------|-----|
-| "command not found" | `alias sum-expenses` | Re-add alias to shell config, then `source` |
-| "No such file" | `ls ~/tools/sum-expenses.py` | Script was moved — update the alias path |
-| "Permission denied" | `ls -la ~/tools/sum-expenses.py` | Re-run `chmod +x ~/tools/sum-expenses.py` |
-| Script errors on run | `python3 --version` | Python version changed — check shebang line |
-
-This is the difference between someone who set up a tool and someone who *owns* a tool. For portability, the lesson suggests keeping `~/tools` as a git repository so setup on any new machine is `git clone` + copy alias lines.
+| Tool | Usage | What It Does |
+|------|-------|-------------|
+| extract-column.py | `cat data.csv \| extract-column Amount` | Pulls one column by name or index |
+| filter.py | `filter "< 0"` | Keeps numbers matching a condition |
+| stats.py | reads numbers from stdin | Prints sum, count, average, min, max |
 
 ### Common Mistakes
 
-- Forgetting to run `source ~/.zshrc` after adding an alias — the current terminal won't see the new alias until the config is reloaded
-- Not testing in a fresh terminal — `source` proves the alias works now, but only a new terminal proves it's truly permanent
-- Leaving scripts scattered across project folders instead of organizing them in one place like `~/tools` — people rebuild scripts from scratch months later because they can't find the original
-- Assuming `chmod +x` alone is enough — the shebang line is also required so the OS knows what interpreter to use
-- Not knowing the diagnostic chain when a tool breaks months later — check alias → check file → check Python, in that order
-
-### Try With AI Prompts
-
-- **Prompt 1 (Batch Install)**: Install multiple scripts at once — `sum.py`, `sum-expenses.py`, `count-lines.py` — into `~/tools` and create aliases for all of them. Teaches the agent-handles-repetition principle: describe the full scope once and let the agent repeat the setup pattern across scripts.
-- **Prompt 2 (PATH vs Aliases)**: Add `~/tools` to PATH instead of using aliases. Teaches advanced tool installation and the tradeoff between aliases (simple, explicit) and PATH modification (system-wide, no alias needed) — when each approach is the better choice.
-- **Prompt 3 (Diagnose Broken Installation)**: Walk through diagnosing "command not found" after a fresh terminal open. Teaches troubleshooting the installation chain: three root causes — alias not in the config file, config file not being loaded, or script path changed. Builds understanding of how the pieces connect, not just how to set them up.
+- Thinking decomposition means more work — it means more flexibility with less debugging, because each tool is independently verifiable
+- Making tools too specific (bank-only) instead of general (any CSV) — generic tools compose with everything
+- Not verifying that the pipeline produces the same answer as the monolith — verification proves both approaches are correct
+- Confusing "small script" with "limited script" — stats.py does five calculations but is still single-purpose because all five operate on the same input type
 
 ### Connections
 
-- **Builds on**: sum-expenses.py from Lesson 3
-- **Leads to**: Tax categorization with regex (Lesson 5) — your tools can sum totals, but they can't distinguish "DR PEPPER SNAPPLE" from a doctor visit; categorization requires pattern matching across merchant names
+- **Builds on**: sum-expenses.py from Lesson 3 — the monolith being decomposed
+- **Principle connection**: P2 (Code as Universal Interface) and P4 (Small, Reversible Decomposition) — small tools become universal interfaces because their simplicity makes them context-independent
+- **Leads to**: Tax categorization (Lesson 5) — your tools can extract, filter, and summarize, but they can't look at a merchant name and decide if it's medical, charitable, or business. That requires pattern matching.

@@ -1,6 +1,6 @@
 ### Core Concept
 
-Dr. Pepper is not a doctor. Simple keyword matching produces false positives that corrupt your data — and on a tax return, corrupted data is a fraudulent deduction. The lesson embeds a reader challenge: spot the bugs in the first categorizer output before they're revealed. Regex word boundaries (`\b`) match whole words only, and false-positive guard lists checked before categories prevent known bad matches. The workflow: build a naive version, discover it's wrong, then fix with precision.
+Dr. Pepper is not a doctor. Simple keyword matching produces false positives that corrupt your data — and on a tax return, corrupted data is a fraudulent deduction. The lesson embeds a reader challenge: spot the bugs in the first categorizer output before they're revealed. Regex word boundaries (`\b`) match whole words only, and false-positive guard lists checked before categories prevent known bad matches. The workflow: build a naive version, discover it's wrong, then fix with precision. Then the lesson proves the entire pattern transfers to a completely different domain — server logs — where the `/health` endpoint returning 404 is the "Dr. Pepper" of server monitoring (expected behavior, not a real error).
 
 ### Key Mental Models
 
@@ -20,7 +20,7 @@ The lesson deliberately shows the buggy first output and stops — asking reader
 
 - Categorization prompt: "Categorize [data] by [criteria]." Start simple, then fix false positives with: "[X] is showing up as [Y]. Fix it."
 - Regex word boundaries: `r'\bKEYWORD\b'` for standalone word matching
-- Batch processing: `find folder/ -name "*.csv" | xargs cat | python script.py` processes multiple files in one command
+- Batch processing: `cat folder/*.csv | python script.py` processes multiple files in one command (the capstone covers CSV merging with `head`/`tail` for multi-file workflows)
 - **Extending categories without regex**: To add a new merchant, describe what should and shouldn't match — "Add TARGET PHARMACY to medical, but not TARGET by itself." The agent writes the regex; students describe the match/no-match criteria. Students never need to write regex themselves.
 
 ### Common Mistakes
@@ -33,4 +33,5 @@ The lesson deliberately shows the buggy first output and stops — asking reader
 ### Connections
 
 - **Builds on**: CSV parsing (Lesson 3) and permanent tools (Lesson 4)
-- **Leads to**: Full tax preparation capstone (Lesson 6) — the tools built across this chapter (sum.py, a verifier, a parser, an installer, a categorizer) each work and are tested; the capstone assembles them into one system: one conversation, one folder, one report your accountant can actually use
+- **Domain transfer**: The server logs section proves the workflow is not finance-specific — FALSE_POSITIVES became KNOWN_BENIGN, word boundaries became endpoint/status_code tuples, but the guard-before-categorize pattern is identical
+- **Leads to**: The capstone (Lesson 6) assembles everything into one system: one conversation, one folder of bank statements, one report your accountant can actually use
