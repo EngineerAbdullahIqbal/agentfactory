@@ -145,9 +145,7 @@ if __name__ == "__main__":
     print(found)
 ```
 
-:::note You do not need to understand this code yet
-This code uses Python features — functions, loops, lists, and more — that you will learn in later chapters. Right now, the goal is not to read the code. The goal is to see what ruff does with it. Just type the code exactly as shown, run the commands below, and focus on the tool's output.
-:::
+You will learn the Python features in this code in later chapters. For now, type it exactly as shown and focus on what ruff reports.
 
 This code runs without errors. Python will execute it and produce the correct output. But it has problems that ruff will catch.
 
@@ -396,6 +394,12 @@ uv run ruff format --check .
 If ruff reports issues, do not fix them by hand yet. First, ask the AI: *"Ruff found these issues in your code: [paste ruff output]. Why did you include these, and how should I fix them?"* Compare the AI's explanation to what you learned about rule codes in this lesson. Then run `uv run ruff check --fix .` and `uv run ruff format .` to clean up.
 
 **What you're learning:** This is the iterative cycle you will use throughout the course: generate code with AI, verify it with tools, ask AI to explain what the tools found, then fix and re-verify. You are not trusting the AI blindly, and you are not ignoring it either. The tools catch what reading alone cannot, and the AI helps you understand what the tools report. This three-way collaboration -- you, AI, and tools -- is how professional developers work.
+
+### Ruff and AI-Generated Code
+
+When Claude Code or any AI assistant generates Python, it optimizes for correctness, not cleanliness. It may import a module it considered using and then decided against. It may use a slightly inconsistent naming convention because it matched a training example rather than your project's style. It may leave a `print()` debugging statement it added while reasoning through the problem.
+
+None of these are serious bugs. But left unchecked across dozens of AI-generated files, they accumulate into a codebase that is hard to read and harder to maintain. Ruff's job is to catch this category of problem automatically, before it reaches a commit. Think of ruff not as a tool for correcting your habits, but as the quality filter at the end of the AI generation pipeline. Your habit is simply to run it.
 
 ---
 

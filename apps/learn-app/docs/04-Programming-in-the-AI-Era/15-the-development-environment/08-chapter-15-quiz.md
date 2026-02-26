@@ -30,7 +30,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 0,
       explanation: "The 'test later' anti-pattern means specifications fade from memory. If the developer had written 'assert get_notes(\"meeting\") == [{\"title\": \"Meeting\"}]' alongside the code, the test would document exactly what the function returns. Without it, the developer's increasingly uncertain recollection is the only specification. Option B is wrong because linting catches style issues and unused code, not return type expectations. Option C is incorrect because global packages do not change what a function returns. Option D is wrong because virtual environments affect which packages are available, not the behavior of code already written.",
-      source: "Lesson 1: Why the Toolchain Comes First"
+      source: "Lesson 6: Testing With pytest"
     },
     {
       question: "Emma draws five boxes on a whiteboard -- uv, pyright, ruff, pytest, Git -- and says 'removing any one leaves a gap that willpower cannot fill.' James suggests dropping pyright since his code runs fine without types. If the team removes pyright, which specific failure mode opens up?",
@@ -54,7 +54,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 3,
       explanation: "James installed requests into his global Python environment, which means it exists only on his machine. Without a pyproject.toml listing requests as a dependency and a virtual environment isolating the project, there is no way for Emma's machine to know the package is needed. Option A is wrong because the error is ModuleNotFoundError, not a network error -- the package was never installed, not blocked from downloading. Option B is incorrect because requests is a stable, widely-used library that was not removed. Option C is wrong because Python package imports do not require administrator privileges. In professional development, uv add requests would record the dependency.",
-      source: "Lesson 1: Why the Toolchain Comes First"
+      source: "Lesson 2: Installing uv and Creating SmartNotes"
     },
     {
       question: "An AI assistant generates 50 lines of Python in seconds. The developer reads through the code for ten minutes looking for problems but misses an unused import on line 3 and a wrong variable name on line 41. Which discipline stack principle explains why reading alone was insufficient?",
@@ -66,7 +66,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 0,
       explanation: "The discipline stack principle is that tools replace willpower with infrastructure. AI generates code faster than humans can review it, so automated verification (ruff for the unused import, pyright for type mismatches, pytest for behavior) provides the safety net at matching speed. Option B is wrong because AI-generated code is standard Python that humans can read. Option C replaces one manual review with another, still relying on attention rather than automation. Option D is fabricated -- Python has no special compiler flags for AI-generated code. The lesson explicitly states that the discipline stack matters more in the AI era because verification must match generation speed.",
-      source: "Lesson 1: Why the Toolchain Comes First"
+      source: "Lesson 4: Ruff -- Your Code Quality Guardian"
     },
     {
       question: "A team of five developers works without a linter. During code review, the reviewer spends 25 minutes pointing out inconsistent spacing, unused imports, and quote style differences. None of these comments are about logic or design. Which discipline stack tool would have prevented this wasted review time?",
@@ -78,7 +78,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 3,
       explanation: "ruff catches unused imports, inconsistent spacing, and style violations automatically before code reaches review. Running ruff check and ruff format ensures mechanical quality issues are resolved instantly, freeing reviewers to focus on design and logic. Option A is wrong because pytest checks behavioral correctness, not formatting or imports. Option B is incorrect because Git records changes but does not analyze code quality or reject commits based on style. Option C is wrong because pyright checks type annotations, not spacing or import hygiene. The lesson emphasizes that ruff is the first stage of the verification pipeline.",
-      source: "Lesson 1: Why the Toolchain Comes First"
+      source: "Lesson 4: Ruff -- Your Code Quality Guardian"
     },
     {
       question: "James installs packages globally with pip and skips creating a virtual environment. After three months, two of his projects need conflicting versions of the same library. Which anti-pattern combination caused this version conflict?",
@@ -102,7 +102,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 1,
       explanation: "uv implements Axiom I (Shell as Orchestrator) because one shell command orchestrates Python versions, virtual environments, dependencies, and script execution. pyright implements Axiom V (Types Are Guardrails) because it walks along every type annotation verifying that data types match. The developer had the tools swapped. Option A is wrong because tests map to pytest, not uv, and pipeline maps to ruff, not pyright. Option C is wrong because version control maps to Git, not uv. Option D is wrong because verification pipeline maps to ruff, not uv. The axiom-to-tool mapping is: uv=I, pyright=V, pytest=VII, Git=VIII, ruff=IX.",
-      source: "Lesson 1: Why the Toolchain Comes First"
+      source: "Lesson 2: Installing uv and Creating SmartNotes"
     },
     {
       question: "James argues that ruff (Axiom IX) and pytest (Axiom VII) cover the same ground because both find problems in code. Emma disagrees. Who is correct, and what is the key distinction?",
@@ -114,7 +114,7 @@ Test your understanding of the Python discipline stack by solving real-world sce
       ],
       correctOption: 3,
       explanation: "Emma is correct. ruff checks code structure and style -- unused imports, undefined names, formatting consistency -- while pytest checks behavior -- does the function return the right value for the right input. A function can pass all ruff checks but return wrong results, and a function can pass all tests but have unused imports. They cover non-overlapping categories. Option A is wrong because F841 detects unused variables, not behavioral bugs. Option B is wrong because Git preserves history but does not verify correctness. Option C is wrong because ruff does not generate test assertions. The pipeline works because each tool covers a different gap.",
-      source: "Lesson 1: Why the Toolchain Comes First"
+      source: "Lesson 6: Testing With pytest"
     },
     {
       question: "A developer considers installing Python the traditional way, saying 'I will just download it from python.org.' Emma says uv replaces that entire workflow. The developer has python.org open in their browser. What should they do instead?",
@@ -563,13 +563,13 @@ Test your understanding of the Python discipline stack by solving real-world sce
     {
       question: "James edits his working format_title function, realizes the original was better, and tries to undo. The undo history is gone because he closed the file between versions. He has no Git commits. What should he have done differently to prevent this loss?",
       options: [
-        "He should have copied the function to a separate backup file before making any changes to it",
-        "He should have used pyright to create a checkpoint of the function's type signatures before editing",
         "He should have run 'git add . && git commit -m \"working format_title\"' before starting the rewrite",
+        "He should have used pyright to create a checkpoint of the function's type signatures before editing",
+        "He should have copied the function to a separate backup file before making any changes to it",
         "He should have run the function through pytest first so the test output would preserve the code"
       ],
-      correctOption: 2,
-      explanation: "A git commit before rewriting would have recorded the working function as a permanent snapshot. If the rewrite went wrong, James could recover with git log and git checkout. This is Axiom VIII (Version Control is Memory) in practice. Option A works in theory but is fragile and does not scale. Option B is wrong because pyright checks types, not snapshots. Option D is wrong because pytest output shows pass/fail results, not source code. The lesson opens with this exact scenario as the motivation for Git.",
+      correctOption: 0,
+      explanation: "A git commit before rewriting would have recorded the working function as a permanent snapshot. If the rewrite went wrong, James could recover with git log and git checkout. This is Axiom VIII (Version Control is Memory) in practice. Option C works in theory but is fragile and does not scale. Option B is wrong because pyright checks types, not snapshots. Option D is wrong because pytest output shows pass/fail results, not source code. The lesson opens with this exact scenario as the motivation for Git.",
       source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {
@@ -600,12 +600,12 @@ Test your understanding of the Python discipline stack by solving real-world sce
       question: "A developer runs 'git init' in SmartNotes, then 'git add .' and 'git commit -m \"initial project\"'. The next day they accidentally delete main.py and panic. What Git command can recover the deleted file from the commit?",
       options: [
         "git pull origin main to download the file from the remote server that automatically saved everything",
-        "git stash pop to retrieve the file from Git's automatic backup clipboard memory buffer storage",
         "git checkout HEAD -- main.py to restore the file from the most recent commit snapshot in history",
+        "git stash pop to retrieve the file from Git's automatic backup clipboard memory buffer storage",
         "git reset --hard to revert the entire repository to its factory default empty initial state"
       ],
-      correctOption: 2,
-      explanation: "git checkout HEAD -- main.py restores main.py from the most recent commit without affecting other files. This is Axiom VIII (Version Control is Memory) in practice -- the commit recorded the file permanently. Option A is wrong because no remote server was set up. Option B is wrong because git stash is for temporarily shelving changes, not recovering from commits. Option D is destructive and would discard all uncommitted changes without selectively restoring one file. The lesson explains that commits are permanent checkpoints.",
+      correctOption: 1,
+      explanation: "git checkout HEAD -- main.py restores main.py from the most recent commit without affecting other files. This is Axiom VIII (Version Control is Memory) in practice -- the commit recorded the file permanently. Option A is wrong because no remote server was set up. Option C is wrong because git stash is for temporarily shelving changes, not recovering from commits. Option D is destructive and would discard all uncommitted changes without selectively restoring one file. The lesson explains that commits are permanent checkpoints.",
       source: "Lesson 7: Git -- Your Version Control Memory"
     },
     {

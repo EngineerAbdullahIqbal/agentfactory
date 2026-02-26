@@ -54,9 +54,7 @@ In Lesson 4, James ran ruff on his first block of Python code and discovered the
 
 Emma gives James two files. Both contain the same piece of code -- called `greet` -- that takes a name and returns a greeting.
 
-:::note You do not need to understand the Python syntax below yet
-These code examples use features you will learn in later chapters. Right now, focus on the difference between the two versions — one has type labels, one does not.
-:::
+You will learn the Python syntax in later chapters. For now, focus on the difference between the two versions -- one has type labels, one does not.
 
 The first file has no type information:
 
@@ -108,7 +106,19 @@ The bug was caught without executing a single line of code. James reads the mess
 
 Python does not check what kind of data your code uses ahead of time. When you write code that accepts a `name`, Python does not know or care whether `name` will hold text, a number, or something else entirely. It figures it out only when the code is already running.
 
-This flexibility is convenient for small projects. It becomes dangerous in real ones:
+This flexibility is convenient for small projects. It becomes dangerous in real ones. Here is a concrete example:
+
+```python
+def get_username(user_id: int) -> str:
+    # Imagine this looks up a user in a database
+    if user_id == 0:
+        return None  # Bug: returns None, not str
+    return "alice"
+```
+
+Python runs this without complaint. The function promises to return text (`str`) but sometimes returns `None` instead. The caller writes `greeting = "Hello, " + get_username(0)` and gets a crash -- not at the line with the bug, but at a completely different line, in a completely different context. Without pyright, this bug hides until someone passes the right input at the wrong time. With pyright in strict mode, the error appears instantly: `Type "None" is not assignable to return type "str"`.
+
+The broader pattern:
 
 | Scenario | What Happens Without Type Checking |
 |----------|----------------------------------|
@@ -134,7 +144,7 @@ You may know Python as "dynamically typed" -- a language where variables can hol
 | Aspect | Detail |
 |--------|--------|
 | **Creator** | Microsoft |
-| **Version** | 1.1.408 |
+| **Version** | Check with `uv run pyright --version` |
 | **Speed** | Analyzes most projects in under a second |
 | **Modes** | off, basic, standard (default), strict |
 | **Configuration** | `[tool.pyright]` section in `pyproject.toml` |
@@ -191,9 +201,7 @@ This matters more in the AI era than it ever did before. When AI generates code,
 
 Consider the difference:
 
-:::note You do not need to understand the Python syntax below yet
-These code examples use features you will learn in later chapters. Right now, focus on the difference between the two versions — one has type labels, one does not.
-:::
+As before, focus on the difference between the typed and untyped versions -- not the syntax itself.
 
 ```python
 # Without types: what kind of data does this code accept? What does it return?
@@ -219,9 +227,7 @@ The typed version tells you everything upfront: `process` expects text and gives
 
 Open the SmartNotes `main.py` and replace its contents with the following code. This version has deliberate type problems that Python will run without complaint but pyright will catch:
 
-:::note You do not need to understand this code yet
-This code uses Python features — type labels and more — that you will learn in later chapters. Right now, the goal is to see what pyright does with it. Just type the code exactly as shown, run the commands below, and focus on pyright's output.
-:::
+Type this code exactly as shown and focus on pyright's output, not the syntax details.
 
 ```python
 def greet(name: str) -> str:
@@ -359,20 +365,7 @@ You should see `0 errors, 0 warnings, 0 informations`. If you still see errors, 
 
 ### Strict Mode vs Standard Mode
 
-Your SmartNotes project uses `typeCheckingMode = "strict"`. What would happen with standard mode instead?
-
-In standard mode, pyright would still catch the three explicit type errors above (passing a number where text is expected, etc.) -- those are basic mismatches. But standard mode would NOT catch code that is missing type labels entirely.
-
-Consider this code:
-
-```python
-# Standard mode: no error (type labels not required)
-# Strict mode: error -- reportUnknownParameterType
-def process(data):
-    return data.strip()
-```
-
-In standard mode, pyright ignores this code because it has no type labels to check. In strict mode, pyright reports an error: `data` has an unknown type. Strict mode requires you to declare what kind of data every piece of code expects. This is why the course uses strict -- it ensures complete coverage, leaving nothing unchecked.
+Your SmartNotes project uses `typeCheckingMode = "strict"`. In standard mode, pyright catches explicit type mismatches (passing a number where text is expected) but ignores code that has no type labels at all. Strict mode requires every piece of code to declare its types -- nothing goes unchecked. This is why the course starts with strict: it ensures complete coverage from day one.
 
 ---
 

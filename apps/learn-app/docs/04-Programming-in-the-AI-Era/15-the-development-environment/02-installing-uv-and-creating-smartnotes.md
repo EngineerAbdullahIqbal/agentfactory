@@ -176,6 +176,8 @@ That single command verifies the Python version, creates or syncs the virtual en
 
 SmartNotes is the project you will build across every chapter from here forward. It starts as a single file. By the end of the course, it will be a full application with types, tests, a database, an API, and deployment configuration. Right now, you create its foundation.
 
+It is worth knowing where SmartNotes is going. In later chapters, SmartNotes will grow into an AI-powered agent: one that can ingest your notes, reason over them, surface connections you did not notice, and eventually run without you present. In Part 6, you will see what it takes to package a project like this into a Digital FTE -- an autonomous agent you can deploy, monitor, and sell as a managed product. The `pyproject.toml` you are about to configure is the same file that will declare your agent's dependencies in production. The test suite you will write with pytest is the same mechanism that will verify your agent's behavior before you give it autonomous access to a user's data. This is not a toy project you will discard after Chapter 15. Build it carefully.
+
 Open your terminal and run:
 
 ```bash

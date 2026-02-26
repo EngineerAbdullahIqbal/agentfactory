@@ -208,6 +208,12 @@ git add . && git commit -m "Verified: all tools pass"
 
 That is the complete cycle: write code, verify it with the pipeline, commit the verified result. Every chapter from here forward follows this pattern.
 
+### Commit Granularity When Working With AI
+
+When James writes code himself, he adds features gradually -- a few lines at a time. A commit naturally captures one small change. But when James asks Claude Code to implement a feature, the AI may produce thirty files and four hundred lines in a single response. If James runs the pipeline, everything passes, and he makes one giant commit called "Add user authentication," he has lost something important: the ability to understand or reverse parts of what the AI built.
+
+The professional habit is to break AI-generated work into logical commits even when the AI delivered it all at once. Review the output, identify the natural seams -- data models, API routes, tests, configuration -- and commit each piece separately with a descriptive message. This means `git log` still tells a story a month from now. It means if the authentication logic needs to be replaced, James can do it without disturbing the test infrastructure the AI also built. Small commits are not just good hygiene -- they are the mechanism that keeps you in control of a codebase that AI is helping you build faster than any one person could review at once.
+
 ---
 
 ## Anti-Patterns
@@ -298,33 +304,33 @@ Also write one pytest test for this function.
 Every command from this chapter in one place. You can copy any command directly into your terminal.
 
 ```bash
-# Project setup (Lesson 2)
+# Project setup (Lesson 2: Installing uv and Creating SmartNotes)
 uv init smartnotes              # Create a new project
 uv run main.py                  # Run a file inside the project environment
 
-# Dependencies (Lesson 3)
+# Dependencies (Lesson 3: The pyproject.toml and the Discipline Stack)
 uv add --dev pytest pyright ruff  # Install dev tools (updates pyproject.toml + uv.lock + .venv)
 uv sync                          # Sync environment from lockfile (for teammates)
 
-# Linting and formatting (Lesson 4)
+# Linting and formatting (Lesson 4: Ruff -- Your Code Quality Guardian)
 uv run ruff check .              # Find bugs and style violations
 uv run ruff check --fix .        # Auto-fix safe issues
 uv run ruff format .             # Format code consistently
 uv run ruff format --check .     # Check formatting without changing files
 
-# Type checking (Lesson 5)
+# Type checking (Lesson 5: Pyright -- Your Type Safety Net)
 uv run pyright                   # Check all type annotations
 
-# Testing (Lesson 6)
+# Testing (Lesson 6: Testing With pytest)
 uv run pytest                    # Run all tests
 
-# Version control (Lesson 7)
+# Version control (Lesson 7: Git -- Your Version Control Memory)
 git init                         # Initialize a repository
 git add .                        # Stage all files
 git commit -m "message"          # Record a snapshot
 git log --oneline                # View commit history
 
-# The complete verification pipeline (Lesson 7)
+# The complete verification pipeline (Lesson 7: Git -- Your Version Control Memory)
 uv run ruff check . && uv run pyright && uv run pytest
 ```
 

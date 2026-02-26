@@ -5,7 +5,7 @@
 | User Says              | Interpretation                | Example                    |
 | ---------------------- | ----------------------------- | -------------------------- |
 | `ch 11` / `chapter 11` | Chapter 11 (single chapter)   | AI-Native IDEs (in Part 3) |
-| `part 4` / `p4`        | Part 4 (all chapters in part) | Coding for Problem Solving |
+| `part 4` / `p4`        | Part 4 (all chapters in part) | Programming in the AI Era |
 | `5` (bare number)      | **AMBIGUOUS**                 | Must ask user to clarify   |
 
 ## Authoritative Source: The Filesystem
@@ -42,7 +42,7 @@ ls -d apps/learn-app/docs/*/11-*/
 
 # For "part 4" / "p4" → Find part folder:
 ls -d apps/learn-app/docs/04-*/
-# Returns: apps/learn-app/docs/04-Coding-for-Problem-Solving/
+# Returns: apps/learn-app/docs/04-Programming-in-the-AI-Era/
 
 # For bare "5" → AMBIGUOUS, ask user first!
 ```
@@ -54,7 +54,7 @@ ls -d apps/learn-app/docs/04-*/
 ls apps/learn-app/docs/03-SDD-RI-Fundamentals/11-ai-native-ides/*.md | wc -l
 
 # Count chapters in a part:
-ls -d apps/learn-app/docs/04-Coding-for-Problem-Solving/*/ | wc -l
+ls -d apps/learn-app/docs/04-Programming-in-the-AI-Era/*/ | wc -l
 ```
 
 ```bash
@@ -78,7 +78,7 @@ Is this correct?"
 Chapter numbers are **global across the book**, not local to parts.
 
 - `ch 11` → Chapter 11 (lives in Part 3, folder `11-*`)
-- `part 4` → Part 4 (folder `04-Coding-for-Problem-Solving/`)
+- `part 4` → Part 4 (folder `04-Programming-in-the-AI-Era/`)
 
 **`ch 4` ≠ `part 4`** — completely different locations!
 

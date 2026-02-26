@@ -54,6 +54,10 @@ Every lesson in this chapter builds on the same project: **SmartNotes**, a perso
 
 By Lesson 7, your SmartNotes project will have a passing linter, a passing type checker, a passing test suite, and a clean Git history. That is the starting line for real Python development.
 
+:::note About the code examples in this chapter
+Lessons 4 through 6 include Python code that uses features you have not learned yet -- functions, loops, type labels, and more. You do not need to understand the code. The goal is to see what the tools do with it. Type the code exactly as shown, run the commands, and focus on the tool output.
+:::
+
 ## The Axiom Connections
 
 Each tool in the discipline stack maps directly to an axiom you learned in Chapter 14. These are not abstract connections -- each tool is the concrete enforcement mechanism for its axiom.
