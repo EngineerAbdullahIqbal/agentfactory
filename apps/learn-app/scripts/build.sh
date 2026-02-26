@@ -37,12 +37,15 @@ echo "==> Building locale: en (default)"
 npx docusaurus build --locale en
 
 echo "==> Building locale: ur"
-npx docusaurus build --locale ur --out-dir build-ur
+# When building a single non-default locale separately, Docusaurus uses
+# the configured baseUrl ("/") for all asset and link references — it does
+# NOT add the locale path prefix. We override BASE_URL so all generated
+# URLs (assets, docs, canonical) correctly reference /ur/... paths.
+BASE_URL="/ur/" npx docusaurus build --locale ur --out-dir build-ur
 
-# Merge: when building a single non-default locale, Docusaurus outputs
-# everything at the ROOT of the output dir (not in a ur/ subdirectory).
-# The en build expects ur content at build/ur/, so move the entire ur
-# output there.
+# Merge: the ur build outputs files at the ROOT of build-ur/ (not in a
+# ur/ subdirectory). Copy them into build/ur/ so Vercel serves them at
+# the /ur/ path matching the URLs in the HTML.
 mkdir -p build/ur
 cp -r build-ur/* build/ur/
 rm -rf build-ur
