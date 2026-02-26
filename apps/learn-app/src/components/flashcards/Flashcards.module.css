@@ -889,6 +889,71 @@
   color: var(--ifm-font-color-base);
 }
 
+/* ===== XP Panel ===== */
+.xpPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  background: rgba(16, 185, 129, 0.06);
+  border: 1px solid rgba(16, 185, 129, 0.15);
+  border-radius: 16px;
+  animation: slideUp 0.3s ease;
+}
+
+[data-theme="dark"] .xpPanel {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.xpAmount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+[data-theme="dark"] .xpAmount {
+  color: #34d399;
+}
+
+.firstCompletion {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7c3aed;
+}
+
+[data-theme="dark"] .badge {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+}
+
+.ctaLink {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.ctaLink:hover {
+  text-decoration: underline;
+}
+
 .exitButton {
   background: #1a1a2e;
   color: #ffffff;

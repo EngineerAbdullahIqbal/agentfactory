@@ -139,6 +139,7 @@ async def update_user_progress(
     xp_delta: int = 0,
     quizzes_delta: int = 0,
     lessons_delta: int = 0,
+    flashcards_delta: int = 0,
     perfect_scores_delta: int = 0,
     badge_count_delta: int = 0,
     current_streak: int | None = None,
@@ -169,6 +170,7 @@ async def update_user_progress(
     progress.total_xp += xp_delta
     progress.quizzes_completed += quizzes_delta
     progress.lessons_completed += lessons_delta
+    progress.flashcards_completed += flashcards_delta
     progress.perfect_scores += perfect_scores_delta
     progress.badge_count += badge_count_delta
 

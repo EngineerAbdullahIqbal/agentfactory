@@ -256,3 +256,8 @@ export function useAuth() {
   }
   return context;
 }
+
+/** Safe version that returns null when AuthProvider is not in the tree. */
+export function useOptionalAuth(): AuthContextType | null {
+  return useContext(AuthContext) ?? null;
+}

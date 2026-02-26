@@ -6,8 +6,8 @@ from progress_api.services.engine.badges import BADGE_DEFINITIONS, evaluate_badg
 class TestBadgeDefinitions:
     """Verify badge definitions are complete."""
 
-    def test_fourteen_badges_defined(self):
-        assert len(BADGE_DEFINITIONS) == 14
+    def test_seventeen_badges_defined(self):
+        assert len(BADGE_DEFINITIONS) == 17
 
     def test_all_badges_have_required_fields(self):
         for badge_id, badge in BADGE_DEFINITIONS.items():

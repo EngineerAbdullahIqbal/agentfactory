@@ -14,7 +14,15 @@ from fastapi.responses import JSONResponse  # noqa: E402
 from .config import settings  # noqa: E402
 from .core.exceptions import ProgressAPIException  # noqa: E402
 from .core.lifespan import lifespan  # noqa: E402
-from .routes import health, leaderboard, lesson, preferences, progress, quiz  # noqa: E402
+from .routes import (  # noqa: E402
+    flashcard,
+    health,
+    leaderboard,
+    lesson,
+    preferences,
+    progress,
+    quiz,
+)
 
 # Configure logging
 logging.basicConfig(
@@ -91,6 +99,7 @@ app.add_middleware(
 # Include routers
 app.include_router(health.router, tags=["Health"])
 app.include_router(quiz.router, prefix="/api/v1", tags=["Quiz"])
+app.include_router(flashcard.router, prefix="/api/v1", tags=["Flashcard"])
 app.include_router(lesson.router, prefix="/api/v1", tags=["Lesson"])
 app.include_router(progress.router, prefix="/api/v1", tags=["Progress"])
 app.include_router(leaderboard.router, prefix="/api/v1", tags=["Leaderboard"])

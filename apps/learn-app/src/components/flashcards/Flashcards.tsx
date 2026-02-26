@@ -11,6 +11,10 @@ import FlashcardCard from "./FlashcardCard";
 import RatingButtons from "./RatingButtons";
 import { useFSRS } from "./useFSRS";
 import Link from "@docusaurus/Link";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { useOptionalAuth } from "@/contexts/AuthContext";
+import { completeFlashcardSession } from "@/lib/progress-api";
+import type { FlashcardCompleteResponse } from "@/lib/progress-types";
 import styles from "./Flashcards.module.css";
 
 export default function Flashcards({ cards: deck }: FlashcardsProps) {
@@ -23,6 +27,21 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   const [ratedCards, setRatedCards] = useState<Map<string, "missed" | "gotit">>(
     new Map(),
   );
+
+  // XP tracking state
+  const [xpResult, setXpResult] = useState<FlashcardCompleteResponse | null>(
+    null,
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const hasSubmittedRef = useRef(false);
+
+  const { siteConfig } = useDocusaurusContext();
+  const progressApiUrl =
+    (siteConfig.customFields?.progressApiUrl as string) ||
+    "http://localhost:8002";
+
+  const auth = useOptionalAuth();
+  const session = auth?.session ?? null;
 
   // Close fullscreen on Escape
   useEffect(() => {
@@ -248,9 +267,36 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
   // (currentIndex stays on last card after rating, but isFlipped resets to false)
   const allRated = ratedCards.size >= totalCards;
   const sessionDone = allRated && isLastCard && !isFlipped;
+
+  // Auto-submit to progress API when session completes
+  useEffect(() => {
+    if (!sessionDone || hasSubmittedRef.current || !session || !deck) return;
+    hasSubmittedRef.current = true;
+    setIsSubmitting(true);
+
+    // Derive chapter_slug from current URL path
+    const pathSegments = window.location.pathname.split("/");
+    const docsIndex = pathSegments.indexOf("docs");
+    const chapterSlug =
+      docsIndex >= 0
+        ? pathSegments.slice(docsIndex + 1, docsIndex + 3).join("/")
+        : "unknown";
+
+    completeFlashcardSession(progressApiUrl, {
+      deck_id: deck.deck.id,
+      chapter_slug: chapterSlug,
+      cards_correct: gotItCount,
+      cards_total: totalCards,
+    })
+      .then((result) => setXpResult(result))
+      .catch((err) => console.warn("[flashcards] XP submit failed:", err))
+      .finally(() => setIsSubmitting(false));
+  }, [sessionDone, session, deck, progressApiUrl, gotItCount, totalCards]);
+
   if (sessionDone) {
     const total = missedCount + gotItCount;
     const pct = total > 0 ? Math.round((gotItCount / total) * 100) : 0;
+    const estimatedXp = Math.round((gotItCount / Math.max(total, 1)) * 50);
     return (
       <div
         className={`${styles.container} ${isFullscreen ? styles.fullscreen : ""}`}
@@ -275,12 +321,47 @@ export default function Flashcards({ cards: deck }: FlashcardsProps) {
             </div>
           </div>
           <div className={styles.sessionPct}>{pct}% correct</div>
+
+          {/* XP result panel */}
+          {session && xpResult && (
+            <div className={styles.xpPanel}>
+              <span className={styles.xpAmount}>+{xpResult.xp_earned} XP</span>
+              {xpResult.is_first_completion && (
+                <span className={styles.firstCompletion}>
+                  First completion!
+                </span>
+              )}
+              {!xpResult.is_first_completion && xpResult.xp_earned === 0 && (
+                <span className={styles.firstCompletion}>Streak credited</span>
+              )}
+              {xpResult.new_badges.map((badge) => (
+                <span key={badge.id} className={styles.badge}>
+                  {badge.name}
+                </span>
+              ))}
+            </div>
+          )}
+          {session && isSubmitting && (
+            <div className={styles.xpPanel}>
+              <span className={styles.firstCompletion}>Saving...</span>
+            </div>
+          )}
+          {!session && (
+            <div className={styles.xpPanel}>
+              <Link className={styles.ctaLink} to="/auth/signin">
+                Sign in to earn ~{estimatedXp} XP
+              </Link>
+            </div>
+          )}
+
           <button
             className={styles.exitButton}
             onClick={() => {
               setCurrentIndex(0);
               setIsFlipped(false);
               setRatedCards(new Map());
+              hasSubmittedRef.current = false;
+              setXpResult(null);
             }}
           >
             Review Again

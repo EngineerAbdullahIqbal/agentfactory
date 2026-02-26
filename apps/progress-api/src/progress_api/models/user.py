@@ -28,3 +28,4 @@ class User(SQLModel, table=True):
     badges: list["UserBadge"] = Relationship(back_populates="user")  # noqa: F821
     quiz_attempts: list["QuizAttempt"] = Relationship(back_populates="user")  # noqa: F821
     progress: Optional["UserProgress"] = Relationship(back_populates="user")  # noqa: F821
+    flashcard_completions: list["FlashcardCompletion"] = Relationship(back_populates="user")  # noqa: F821

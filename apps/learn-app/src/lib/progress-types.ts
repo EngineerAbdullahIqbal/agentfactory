@@ -40,6 +40,22 @@ export interface LessonCompleteResponse {
   xp_earned: number;
 }
 
+export interface FlashcardCompleteRequest {
+  deck_id: string;
+  chapter_slug: string;
+  cards_correct: number;
+  cards_total: number;
+}
+
+export interface FlashcardCompleteResponse {
+  xp_earned: number;
+  total_xp: number;
+  is_first_completion: boolean;
+  score_pct: number;
+  streak: StreakInfo;
+  new_badges: BadgeEarned[];
+}
+
 export interface ProgressResponse {
   user: { display_name: string; avatar_url: string | null };
   stats: {
@@ -50,6 +66,7 @@ export interface ProgressResponse {
     quizzes_completed: number;
     perfect_scores: number;
     lessons_completed: number;
+    flashcards_completed: number;
     badge_count: number;
   };
   badges: BadgeEarned[];
@@ -90,7 +107,7 @@ export interface BadgeDefinition {
   icon: string;
 }
 
-/** All 14 Phase-1 badge definitions (mirrors backend BADGE_DEFINITIONS). */
+/** All badge definitions (mirrors backend BADGE_DEFINITIONS). */
 export const BADGE_DEFINITIONS: Record<string, BadgeDefinition> = {
   "first-steps": {
     id: "first-steps",
@@ -175,5 +192,23 @@ export const BADGE_DEFINITIONS: Record<string, BadgeDefinition> = {
     name: "Elite",
     description: "Reach top 100 on leaderboard",
     icon: "\uD83D\uDC51",
+  },
+  "first-deck": {
+    id: "first-deck",
+    name: "Memory Lane",
+    description: "Complete your first flashcard deck",
+    icon: "\uD83C\uDCCF",
+  },
+  "deck-master-10": {
+    id: "deck-master-10",
+    name: "Deck Master",
+    description: "Complete 10 unique flashcard decks",
+    icon: "\uD83C\uDFC5",
+  },
+  "perfect-recall": {
+    id: "perfect-recall",
+    name: "Total Recall",
+    description: "Score 100% on any flashcard deck",
+    icon: "\uD83E\uDDE0",
   },
 };

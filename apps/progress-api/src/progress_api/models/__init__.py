@@ -5,6 +5,7 @@ from sqlmodel import SQLModel
 from .activity import ActivityDay
 from .badge import UserBadge
 from .chapter import Chapter, ChapterAlias
+from .flashcard import FlashcardCompletion
 from .lesson import LessonCompletion
 from .progress import UserProgress
 from .quiz import QuizAttempt
@@ -15,6 +16,7 @@ __all__ = [
     "ActivityDay",
     "Chapter",
     "ChapterAlias",
+    "FlashcardCompletion",
     "LessonCompletion",
     "QuizAttempt",
     "User",
