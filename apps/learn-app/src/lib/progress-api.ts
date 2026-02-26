@@ -6,12 +6,7 @@ import type {
   ProgressResponse,
   LeaderboardResponse,
 } from "./progress-types";
-
-const getAuthHeaders = (): Record<string, string> => {
-  const token = localStorage.getItem("ainative_id_token");
-  if (!token) return {};
-  return { Authorization: `Bearer ${token}` };
-};
+import { getAuthHeaders } from "./api-utils";
 
 export async function submitQuizScore(
   baseUrl: string,

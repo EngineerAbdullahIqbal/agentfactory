@@ -14,6 +14,8 @@
 import React from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { LearnerProfileProvider } from '@/contexts/LearnerProfileContext';
+import { RequireProfile } from '@/components/RequireProfile';
 import { PyodideProvider } from '@/contexts/PyodideContext';
 import { AnalyticsTracker } from '@/components/AnalyticsTracker';
 import { StudyModeProvider } from '@/contexts/StudyModeContext';
@@ -27,17 +29,21 @@ export default function Root({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthProvider authUrl={authUrl} oauthClientId={oauthClientId}>
-      <ProgressProvider>
-      <PyodideProvider>
-        <StudyModeProvider>
-          <VoiceReadingProvider>
-            <AnalyticsTracker>
-              {children}
-            </AnalyticsTracker>
-          </VoiceReadingProvider>
-        </StudyModeProvider>
-      </PyodideProvider>
-      </ProgressProvider>
+      <LearnerProfileProvider>
+        <RequireProfile>
+          <ProgressProvider>
+            <PyodideProvider>
+              <StudyModeProvider>
+                <VoiceReadingProvider>
+                  <AnalyticsTracker>
+                    {children}
+                  </AnalyticsTracker>
+                </VoiceReadingProvider>
+              </StudyModeProvider>
+            </PyodideProvider>
+          </ProgressProvider>
+        </RequireProfile>
+      </LearnerProfileProvider>
     </AuthProvider>
   );
 }

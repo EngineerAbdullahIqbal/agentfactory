@@ -36,6 +36,10 @@ const PRACTICE_ENABLED = process.env.PRACTICE_ENABLED === "true";
 const PROGRESS_API_URL =
   process.env.PROGRESS_API_URL || "http://localhost:8002";
 
+// Learner Profile API URL - personalized learning profiles
+const LEARNER_PROFILE_API_URL =
+  process.env.LEARNER_PROFILE_API_URL || "http://localhost:8004";
+
 // ChatKit domain key for OpenAI ChatKit (register at OpenAI dashboard for production)
 const CHATKIT_DOMAIN_KEY =
   process.env.CHATKIT_DOMAIN_KEY?.trim() || "domain_pk_localhost_dev";
@@ -62,6 +66,7 @@ const config: Config = {
     tokenMeteringApiUrl: TOKEN_METERING_API_URL,
     chatkitDomainKey: CHATKIT_DOMAIN_KEY,
     progressApiUrl: PROGRESS_API_URL,
+    learnerProfileApiUrl: LEARNER_PROFILE_API_URL,
     practiceEnabled: PRACTICE_ENABLED,
   },
 
