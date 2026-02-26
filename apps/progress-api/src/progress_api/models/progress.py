@@ -14,6 +14,7 @@ class UserProgress(SQLModel, table=True):
     total_xp: int = Field(default=0)
     quizzes_completed: int = Field(default=0)
     lessons_completed: int = Field(default=0)
+    flashcards_completed: int = Field(default=0)
     perfect_scores: int = Field(default=0)
     current_streak: int = Field(default=0)
     longest_streak: int = Field(default=0)

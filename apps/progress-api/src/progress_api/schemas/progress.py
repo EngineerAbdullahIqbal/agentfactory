@@ -22,6 +22,7 @@ class StatsInfo(BaseModel):
     current_streak: int
     longest_streak: int
     lessons_completed: int
+    flashcards_completed: int = 0
     badge_count: int
 
 

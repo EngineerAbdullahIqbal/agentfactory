@@ -99,6 +99,25 @@ BADGE_DEFINITIONS: dict[str, BadgeDefinition] = {
         description="Reach the top 100 on the leaderboard",
         category="ranking",
     ),
+    # Flashcard badges
+    "first-deck": BadgeDefinition(
+        id="first-deck",
+        name="Memory Lane",
+        description="Complete your first flashcard deck",
+        category="milestone",
+    ),
+    "deck-master-10": BadgeDefinition(
+        id="deck-master-10",
+        name="Deck Master",
+        description="Complete 10 unique flashcard decks",
+        category="achievement",
+    ),
+    "perfect-recall": BadgeDefinition(
+        id="perfect-recall",
+        name="Total Recall",
+        description="Score 100% on any flashcard deck",
+        category="achievement",
+    ),
 }
 
 
@@ -150,5 +169,54 @@ def evaluate_badges(
 
     # Part completion and capstone badges are evaluated elsewhere
     # (requires DB query for all chapters in part — not a pure function)
+
+    return new_badges
+
+
+def evaluate_flashcard_badges(
+    *,
+    score_pct: int,
+    is_first_deck_ever: bool,
+    unique_decks_completed: int,
+    current_streak: int,
+    existing_badge_ids: set[str],
+) -> list[str]:
+    """Evaluate which new flashcard badges should be awarded.
+
+    Args:
+        score_pct: Score percentage (0-100)
+        is_first_deck_ever: Whether this is the user's very first deck completion
+        unique_decks_completed: Total unique decks completed (including this one)
+        current_streak: Current streak length in days (after this activity)
+        existing_badge_ids: Set of badge IDs the user already has
+
+    Returns:
+        List of new badge IDs to award (excludes already-earned badges)
+    """
+    new_badges: list[str] = []
+
+    def _award(badge_id: str) -> None:
+        if badge_id not in existing_badge_ids:
+            new_badges.append(badge_id)
+
+    # First deck ever
+    if is_first_deck_ever:
+        _award("first-deck")
+
+    # Perfect recall
+    if score_pct == 100:
+        _award("perfect-recall")
+
+    # Deck master: 10 unique decks
+    if unique_decks_completed >= 10:
+        _award("deck-master-10")
+
+    # Streak badges (shared with quiz — flashcard activity counts too)
+    if current_streak >= 3:
+        _award("on-fire")
+    if current_streak >= 7:
+        _award("week-warrior")
+    if current_streak >= 30:
+        _award("dedicated")
 
     return new_badges

@@ -95,6 +95,7 @@ async def get_progress(
             current_streak=0,
             longest_streak=0,
             lessons_completed=0,
+            flashcards_completed=0,
             badge_count=0,
         )
     else:
@@ -106,6 +107,7 @@ async def get_progress(
             current_streak=progress.current_streak,
             longest_streak=progress.longest_streak,
             lessons_completed=progress.lessons_completed,
+            flashcards_completed=progress.flashcards_completed,
             badge_count=progress.badge_count,
         )
 
