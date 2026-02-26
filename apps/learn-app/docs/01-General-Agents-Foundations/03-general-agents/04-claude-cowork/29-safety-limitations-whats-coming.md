@@ -232,11 +232,28 @@ When using Connectors, external APIs have rate limits:
 
 ---
 
-## What's Coming
+## What's Arrived and What's Coming
 
-Anthropic is actively developing Cowork. Here's what to expect:
+Some features that were "upcoming" when Cowork launched have now shipped. Here is what's delivered and what remains on the horizon.
 
-### Knowledge Bases
+### Delivered: Plugins and Expanded Connectors
+
+The connector ecosystem has matured significantly:
+
+- **50+ Connectors** spanning productivity, communication, design, engineering, finance, and healthcare
+- **Plugins layer**: Bundles connectors with skills, slash commands, and sub-agents into workflow packages (see Lesson 28)
+- **Enterprise features**: Organization marketplaces, OpenTelemetry tracking, per-user provisioning
+- **13 new enterprise connectors** (February 2026): Google Workspace suite, DocuSign, Apollo, and others
+
+If your tools are covered by the Connectors Directory, integration is one-click. If not, MCP lets you build custom integrations.
+
+### Delivered: Unified UI
+
+The Claude Desktop app now includes three tabs — Chat, Cowork, and Code — in a single application. Skills transfer across all tabs.
+
+**Still coming:** Deeper integration with seamless mode switching and fully consistent settings across all interfaces.
+
+### Coming: Knowledge Bases
 
 **The gap:** General memory captures preferences and patterns automatically, but you cannot yet curate structured reference libraries for Claude to search.
 
@@ -249,109 +266,55 @@ Anthropic is actively developing Cowork. Here's what to expect:
 
 **Impact:** You'll be able to ask "What did I decide about X last month?" and Claude will search your curated Knowledge Base, combining it with what general memory already knows about your preferences.
 
-### Unified UI (In Progress)
-
-**Current state:** The Claude Desktop app now includes a Code tab alongside Chat and Cowork, meaning all three interfaces share one application.
-
-**Still coming:** Deeper integration where you can:
-
-- Switch between terminal and desktop modes more seamlessly
-- Use Skills across both interfaces without separate configuration
-- Have fully consistent settings and context across all modes
-
-**Impact:** Less context switching, more fluid workflows. The shared application is the first step; tighter integration is ongoing.
-
-### Expanded Connectors and Plugins (Delivered)
-
-**Current:** Over 50 connectors are now available in the Connectors Directory, spanning productivity, communication, design, engineering, finance, and healthcare.
-
-**New -- Plugins:** Anthropic introduced a Plugins layer that bundles connectors with skills and workflows. Prebuilt plugin templates cover HR, design, engineering, operations, financial analysis, and more. In February 2026, 13 new enterprise connectors shipped covering Google Workspace (Drive, Calendar, Gmail), DocuSign, Apollo, and others.
-
-**Impact:** The connector ecosystem is now broad enough for most professional workflows. If your tools aren't covered, MCP connectors let you build custom integrations.
-
-### Enhanced Multi-Modal Capabilities
+### Coming: Enhanced Multi-Modal Capabilities
 
 **Current:** Strong text and document processing, with improved image understanding in Cowork.
 
-**Coming:** Better handling of:
+**Coming:** Better handling of advanced image analysis, audio transcription, and video content understanding.
 
-- Advanced image analysis and manipulation
-- Audio transcription and analysis
-- Video content understanding
+### Coming: Collaboration Features
 
-**Impact:** Cowork will work with richer media types, not just documents and text.
-
-### Collaboration Features
-
-**Future:** Shared workspaces where teams can:
-
-- Grant Claude access to shared resources
-- Maintain team Knowledge Bases
-- Use shared Skills and conventions
-
-**Impact:** Cowork as a team collaboration tool, not just individual productivity.
-
----
-
-## Planning for the Future
-
-Understanding what's coming helps you plan:
-
-**Short-term (next 3 months):**
-
-- Take advantage of general memory and the 50+ connectors already available
-- Build foundational Skills that work across Code and Cowork
-- Establish workspace organization practices
-
-**Medium-term (6-12 months):**
-
-- Prepare for Knowledge Bases by organizing documents meaningfully
-- Explore Plugins for team workflows and domain-specific automation
-- Design workflows that will benefit from structured persistent memory
-
-**Long-term:**
-
-- Think about Cowork as part of a broader AI strategy
-- Consider how Skills and automations scale across your organization
-- Plan for the convergence of Code and Cowork interfaces
+**Future:** Shared workspaces where teams can grant Claude access to shared resources, maintain team Knowledge Bases, and use shared Skills and conventions.
 
 ---
 
 ## When to Wait vs. Proceed
 
-**Wait if:**
+**Available now — proceed if you need:**
 
-- You need structured, searchable knowledge repositories (Knowledge Bases coming)
-- You need team collaboration features (on the roadmap)
-- You're on Linux (no official desktop support yet)
+- General memory (preferences and conventions across sessions)
+- 50+ Connectors and Plugins for workflow automation
+- Built-in Skills for document processing (docx, xlsx, pptx, pdf)
+- Browser integration for web-based workflows
+- macOS or Windows desktop environment
 
-**Proceed if:**
+**Not yet available — wait if you need:**
 
-- You work on macOS or Windows
-- You have file organization or document processing needs
-- You want to learn the patterns that will apply to future features
+- Structured, searchable knowledge repositories (Knowledge Bases coming)
+- Team collaboration features (on the roadmap)
+- Linux desktop support (no official support yet)
 
-**The key insight:** Learning Cowork patterns isn't wasted time, even if specific features are coming. The mental model -- agentic AI, filesystem access, Skills, approval workflows -- will remain relevant as capabilities expand.
+**Prepare now for what's coming:**
+
+- Organize documents meaningfully so future Knowledge Base indexing is effective
+- Build Skills that work across Code and Cowork tabs
+- Design workflows with team-shareable components in mind
+
+**The key insight:** Learning Cowork patterns now builds transferable expertise. The mental model — agentic AI, filesystem access, Skills, approval workflows, Plugins — persists across updates. Investing in current capabilities is not wasted even as new features arrive.
 
 ## Try With AI
 
-\*\*Audit Your Workspace:"
+**Audit Your Safety Decisions:**
 
-> "Review my current file structure. Are there sensitive documents mixed with project files? What should I reorganize before using Claude Cowork more extensively? Help me create a safer workspace layout."
+> "Review the Cowork tasks we completed in Lessons 25-28. For each one, identify: (1) What folder access did we grant? Was it the minimum necessary? (2) Did we review the execution plan before approving? (3) Were there any red flags we should have caught? Create a personal safety checklist based on what we learned."
 
-**What you're learning:** Security-minded organization -- structuring your work for safe AI collaboration. Good workspace design prevents accidents.
+**What you're learning:** Safety reflection — turning the abstract safety principles from this lesson into concrete habits based on your actual Cowork experience. A personal checklist is more effective than a generic one because it addresses your real workflow.
 
-\*\*Plan Around Current Capabilities:"
+**Plan Around Current and Coming Features:**
 
-> "Based on Cowork's current capabilities -- general memory for preferences, 50+ connectors, but no Knowledge Bases yet -- how should I organize my work? What files or documentation would help maintain detailed context between sessions? Create a template that complements what general memory already captures."
+> "Based on what Cowork can do today (general memory, 50+ connectors, Plugins, built-in Skills) and what's coming (Knowledge Bases, collaboration), design a two-phase workflow: Phase 1 uses what's available now, Phase 2 prepares for what's coming. What should I automate now? What should I prepare for but wait on? What document organization would make Knowledge Bases most effective when they arrive?"
 
-**What you're learning:** Working within constraints -- designing processes that leverage what exists today (general memory, connectors, plugins) while preparing for what's next (Knowledge Bases, deeper integration).
-
-\*\*🏗️ Prepare for Upcoming Features:"
-
-> "Knowledge Bases are coming. How should I organize my documents now to prepare? What folder structure, naming conventions, and document organization would make future AI retrieval more effective?"
-
-**What you're learning:** Forward-thinking organization—structuring work not just for today's use but for future AI capabilities. Good document organization serves both human and AI needs.
+**What you're learning:** Capability-based planning — making decisions based on what's available versus what's coming, rather than waiting for a perfect future state. This is the same skill you'll use when evaluating any evolving AI platform.
 
 ## Flashcards Study Aid
 

@@ -229,17 +229,11 @@ Skills you build in one tab work across all tabs. A Skill created in Claude Code
 
 **What you're learning:** Workflow analysis—identifying where agentic AI creates value. This skill helps you recognize opportunities for automation in your daily work.
 
-\*\*💡 Compare the Interfaces:"
+**Compare the Interfaces:**
 
 > "Create a comparison table: What can I do in Claude Code that I can't do in Cowork? What can I do in Cowork that I can't do in Code? When would I choose each?"
 
 **What you're learning:** Tool selection—understanding that different interfaces serve different use cases. The same underlying AI, optimized for different contexts.
-
-\*\*🏗️ Design a Cowork Workflow:"
-
-> "Based on what I do, describe a workflow where Cowork would save me time. What files would it access? What would I ask it to do? What's the benefit over manual work?"
-
-**What you're learning:** Solution design—translating your work patterns into agentic AI workflows. This is how you identify opportunities to apply Claude Cowork effectively.
 
 ---
 

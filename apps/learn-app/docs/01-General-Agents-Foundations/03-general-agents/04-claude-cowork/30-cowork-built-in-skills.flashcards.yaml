@@ -185,3 +185,11 @@ cards:
     tags: [plugin-architecture, skill-composition]
     difficulty: "advanced"
     why: "What kinds of workflows become possible when Skills are bundled into Plugins?"
+
+  - id: "ch03-cowork-built-in-skills-025"
+    type: thinking
+    front: "How does cross-app orchestration in Cowork eliminate manual work between document formats?"
+    back: "Cowork chains built-in Skills across formats — e.g., xlsx Skill reads and analyzes data, then pptx Skill creates a presentation using that analysis. Context passes between Skills automatically, eliminating the export-reformat-import cycle."
+    tags: [cross-app, skill-composition, orchestration]
+    difficulty: "intermediate"
+    why: "What manual steps does cross-app orchestration replace in a typical Excel-to-PowerPoint reporting workflow?"

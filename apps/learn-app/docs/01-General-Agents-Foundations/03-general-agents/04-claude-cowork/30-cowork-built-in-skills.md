@@ -309,7 +309,28 @@ An open-source community is also building and sharing Skills at [github.com/anth
 - Built-in capabilities don't cover your use case
 - You want to encode expertise that applies across document types
 
-**Skills within the broader Plugin architecture:** Skills are now one component within Cowork's Plugin system. A Plugin can bundle multiple Skills together with Connectors and slash commands into a complete workflow package. For example, a "Legal Review" Plugin might combine the built-in docx Skill with a custom contract-analysis Skill and a court-filing Connector. See Lesson 28 for how Plugins, Skills, and Connectors fit together.
+**Skills within the Plugin architecture:** Skills are now one component within Cowork's Plugin system. A Plugin can bundle multiple Skills — both built-in and custom — together with Connectors and slash commands into a complete workflow package. For example, a "Legal Review" Plugin might combine the built-in docx Skill with a custom contract-analysis Skill and a court-filing Connector. See Lesson 28 for how Plugins, Skills, and Connectors fit together.
+
+### Cross-App Orchestration
+
+Built-in Skills become most powerful when chained across applications. Cowork can pass context between different document formats in a single workflow:
+
+**Example: Excel to PowerPoint pipeline**
+
+> "Read the Q4 sales data from 'quarterly-results.xlsx'. Identify the top 5 regions by revenue and the 3 fastest-growing product lines. Then create a PowerPoint presentation called 'q4-executive-summary.pptx' with: a title slide, a chart slide showing regional performance (using the xlsx data), a slide highlighting growth trends, and an action items slide. Use the formatting style from 'template.pptx' if it exists."
+
+Claude uses the xlsx Skill to read and analyze the spreadsheet, then the pptx Skill to create the presentation — passing the analysis context between formats without you exporting, reformatting, or copy-pasting anything.
+
+**Other cross-app patterns:**
+
+| Source → Destination     | What Happens                                                        |
+| ------------------------ | ------------------------------------------------------------------- |
+| **PDF → docx**           | Extract contract terms from PDF, create editable summary in Word    |
+| **xlsx → docx**          | Analyze spreadsheet data, generate formatted report document        |
+| **Multiple PDFs → xlsx** | Extract data from several PDFs, compile into structured spreadsheet |
+| **docx → pptx**          | Convert a written brief into presentation slides                    |
+
+The key insight: individual Skills handle format mechanics, but cross-app orchestration is where Cowork eliminates the manual glue work between applications.
 
 **Example combination:**
 
@@ -363,30 +384,23 @@ An open-source community is also building and sharing Skills at [github.com/anth
 
 ## Try With AI
 
-\*\*🔍 Explore Built-in Skills:"
+**Design a Cross-App Workflow:**
 
-> "Choose a document format I work with regularly (Word, Excel, PowerPoint, or PDF). Create a simple example file and ask Claude to do something useful with it using the built-in Skill. What works well? What are the limitations?"
+> "I work with [describe your document types — e.g., Excel reports, Word proposals, PDF contracts, PowerPoint decks]. Design a workflow where Claude chains two or more built-in Skills together: read data from one format, process it, and output in another. Include the exact prompt I would use and explain which Skills handle which step."
 
-**What you're learning:** Hands-on capability assessment—understanding what built-in Skills can actually do by testing them. Direct experience is more valuable than reading documentation.
+**What you're learning:** Cross-app orchestration design — understanding how to chain built-in Skills across document formats to eliminate the manual copy-paste-reformat cycle. This is where built-in Skills create the most time savings.
 
-\*\*💡 Combine Built-in and Custom:"
+**Combine Built-in and Custom Skills for Real Work:**
 
-> "Design a workflow that uses both a built-in Skill and a custom Skill. For example: Use the docx Skill to create a document, combined with a custom Skill for domain-specific content generation (like 'technical documentation' or 'marketing copy')."
+> "Pick a task I do that requires both format handling (creating or editing a docx/xlsx/pptx) AND domain-specific reasoning (e.g., financial analysis, legal review, technical documentation standards). Design a workflow that uses a built-in Skill for the format work and describes what a custom Skill would add for the domain reasoning. What would the combined output look like compared to using either alone?"
 
-**What you're learning:** Skill composition—understanding how to combine built-in capabilities with custom expertise. This combination is where Cowork becomes most powerful.
-
-\*\*🏗️ Test Real-World Scenarios:"
-
-> "Pick a real document I've worked with recently. How could Claude's built-in Skills have helped? Recreate a simplified version and test. What would have saved me time?"
-
-**What you're learning:** Practical application—connecting Cowork's capabilities to your actual work. Identifying real opportunities to apply these Skills makes the learning concrete.
+**What you're learning:** Skill composition — understanding why format mechanics (built-in) and domain expertise (custom) are separate capabilities that multiply each other's value when combined.
 
 ---
 
 ## What's Next
 
 You've explored Cowork's interface, workflows, browser integration, connectors, and built-in Skills. The final lesson in this Cowork section brings everything together with a decision framework—helping you choose between Claude Code and Claude Cowork for any given task, and understanding when to use both together.
-
 
 ## Flashcards Study Aid
 

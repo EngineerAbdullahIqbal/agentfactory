@@ -130,8 +130,8 @@ cards:
     why: "How would you structure permission scopes for an HR Connector used only for onboarding checklist lookups?"
 
   - id: "ch03-28-plugins-and-connectors-020"
-    front: "What Connector access does the Free Cowork plan provide compared to Pro, Max, Team, and Enterprise plans?"
-    back: "Free: browse directory only.\nPro+: full install, custom MCP URL Connectors, interactive apps."
+    front: "What Plugin and Connector access does the Free Cowork plan provide compared to paid plans?"
+    back: "Free: no access to Plugins or Connectors.\nPro, Max, Team, Enterprise: full install, custom MCP URL Connectors, interactive apps."
     tags: ["connectors", "plans", "cowork"]
     difficulty: "intermediate"
 
@@ -141,3 +141,28 @@ cards:
     tags: ["plugins", "cowork", "architecture"]
     difficulty: "intermediate"
     why: "What would you add or remove from the Engineering Plugin template to match a DevOps-focused team?"
+
+  - id: "ch03-28-plugins-and-connectors-022"
+    front: "What do slash commands in a Plugin present instead of requiring free-text prompts?"
+    back: "Structured forms — a fill-in UI with labeled fields that guide the user to provide exactly the inputs the workflow needs."
+    tags: ["plugins", "slash-commands", "structured-forms"]
+    difficulty: "basic"
+
+  - id: "ch03-28-plugins-and-connectors-023"
+    front: "What are four enterprise Plugin features for organizations deploying at scale?"
+    back: "1. Organization marketplace (curated Plugin distribution)\n2. OpenTelemetry tracking (usage and performance monitoring)\n3. Per-user provisioning (role-based Plugin assignment)\n4. Auto-install policies (new members get correct Plugins automatically)"
+    tags: ["plugins", "enterprise"]
+    difficulty: "intermediate"
+
+  - id: "ch03-28-plugins-and-connectors-024"
+    front: "Why are Plugins described as 'portable file systems you own'?"
+    back: "Plugins are not locked to Cowork. The same Plugin works across Cowork, the Claude Agent SDK, and any future Claude surface that supports the format — so building a Plugin is not a bet on a single interface."
+    tags: ["plugins", "portability", "architecture"]
+    difficulty: "intermediate"
+    why: "How does portability change the ROI calculation when deciding whether to build a custom Plugin?"
+
+  - id: "ch03-28-plugins-and-connectors-025"
+    front: "How do you build a custom Plugin without waiting for Anthropic to create one?"
+    back: "Use the Plugin Create tool inside Cowork: describe what the Plugin should do, Claude generates the structure, then you test and publish. You can also use private GitHub repos as Plugin sources (beta)."
+    tags: ["plugins", "custom-plugins"]
+    difficulty: "intermediate"

@@ -193,16 +193,9 @@ You can preview, download, or open artifacts directly from this panel.
 
 Let's put Cowork to work with a practical first task: organizing a messy folder.
 
-**Setup:** Create a test folder with some disorganized files:
+**Setup:** Pick a real folder you already have — your Downloads folder, a project folder with mixed files, or any workspace that could use organization. Grant Claude Cowork access to that folder.
 
-```bash
-mkdir -p ~/test-cowork
-cd ~/test-cowork
-# Create some messy test files
-touch "document 1.txt" "REPORT final.docx" "image.JPG" "notes (1).txt" "data (2).csv"
-```
-
-**Task:** In Claude Cowork, grant access to `~/test-cowork` and ask:
+**Task:** In Claude Cowork, ask:
 
 > "Organize these files by type: put all text files in a 'docs' folder, all Word documents in an 'office' folder, and all images in an 'images' folder. Use consistent naming."
 
@@ -308,23 +301,17 @@ As you start using Cowork, keep these safety principles in mind:
 
 ## Try With AI
 
-\*\*🔍 Explore Your Environment:"
+**Plan Your First Real Cowork Task:**
 
-> "I want to use Claude Cowork for [specific task]. What folder structure should I set up? What files do I need? Help me plan the workspace before I start."
+> "I work with [describe your actual documents and files]. What is one task I do weekly that involves organizing, processing, or creating files? Design the Cowork prompt I would use — include what folder to grant access to, what outcome I want, and what constraints matter (e.g., don't delete anything, preserve folder structure)."
 
-**What you're learning:** Workspace design—thinking through how to organize your work for effective AI collaboration. Good workspace design makes Cowork more effective.
+**What you're learning:** Task design for agentic AI — translating a real work need into a specific, safe Cowork prompt. The folder access decision and constraint specification are the skills that make Cowork effective from day one.
 
-\*\*💡 Test the Limits:"
+**Test the Approval Workflow:**
 
-> "Give Claude a moderately complex task in your test folder: something that would take you 10-15 minutes manually. Compare the time, accuracy, and effort. What did Claude do well? What would you change?"
+> "In your granted folder, ask Claude to rename 3 files using a consistent naming pattern. Before approving, read the Execution Panel carefully: What files will change? What will the new names be? Approve only if every change looks correct. Then describe what you observed in the propose-approve-execute cycle."
 
-**What you're learning:** Capability assessment—understanding what Cowork excels at and where human oversight still matters. This helps you choose the right tasks for automation.
-
-\*\*🏗️ Design Your Workflow:"
-
-> "Based on how I work, describe a weekly routine where Claude Cowork would save me time. When would I use it? What tasks would I delegate? What would I still do manually?"
-
-**What you're learning:** Process integration—thinking about how AI fits into your existing workflow rather than replacing it entirely. The most effective automation enhances, not replaces.
+**What you're learning:** Approval workflow fluency — the habit of reading the execution plan before clicking approve. This is the single most important safety skill for Cowork, and practicing it on a small operation builds the reflex before you attempt bulk operations.
 
 ---
 

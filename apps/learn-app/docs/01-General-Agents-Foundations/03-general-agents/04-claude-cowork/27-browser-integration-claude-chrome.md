@@ -311,23 +311,17 @@ Enterprise and Team administrators can set allowlists and blocklists to control 
 
 ## Try With AI
 
-**🔍 Identify Browser Tasks:**
+**Identify Your Browser Automation Candidates:**
 
-> "What repetitive web-based tasks do I do? Email cleanup, data extraction from dashboards, form filling, research across multiple sites? List 3 tasks where I spend time clicking and typing in the browser."
+> "List 3 web-based tasks I do regularly that involve repetitive clicking, typing, or navigating between pages (e.g., email cleanup, dashboard data extraction, form filling, research across multiple sites). For each one, estimate: how long it takes manually, how often I do it, and whether Claude's browser automation could handle it given the speed and limitation constraints from this lesson."
 
-**What you're learning:** Task identification—recognizing where browser automation creates value. Web-based repetitive work is a prime candidate for automation.
+**What you're learning:** Task-tool matching — applying the speed considerations and limitation constraints from this lesson to real browser tasks. Not every web task benefits from automation; identifying the right candidates prevents frustration.
 
-\*\*💡 Design a Browser Workflow:"
+**Design a Browser Workflow with the Five-Step Loop:**
 
-> "Pick one web-based task from my list. Design a Claude workflow: What pages does it need to visit? What data does it need to extract or enter? What's the success criteria? Write out the prompt."
+> "Pick one browser task from my list. Map it to Claude's five-step browser loop: What would Page Analysis find? What Context Understanding is needed? What Action Plan would Claude propose? What Execution steps happen? How would Verification confirm success? Write the complete prompt and flag any steps where I'd need to handle authentication or CAPTCHAs manually."
 
-**What you're learning:** Workflow design for browser automation—thinking through navigation, data extraction, and execution patterns specific to web environments.
-
-\*\*🏗️ Test and Iterate:"
-
-> "Run the browser workflow I designed. Watch what Claude does. What worked smoothly? Where did it get confused? How would I refine the prompt or approach for next time?"
-
-**What you're learning:** Debugging automation—understanding how to observe, diagnose, and improve automated workflows. Browser automation requires iteration and refinement.
+**What you're learning:** Workflow design for browser automation — thinking through each step of the browser loop before executing. This planning prevents the most common browser automation failures (authentication blocks, CAPTCHA interruptions, dynamic content issues).
 
 ---
 

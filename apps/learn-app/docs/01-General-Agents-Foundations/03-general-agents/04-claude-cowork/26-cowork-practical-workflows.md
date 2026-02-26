@@ -284,30 +284,23 @@ The key insight: Cowork doesn't just speed up tasks—it makes tasks feasible th
 
 ## Try With AI
 
-**🔍 Audit Your Work:**
+**Apply the Four Workflow Patterns to Your Work:**
 
-> "What repetitive tasks do I do weekly or daily that involve files or documents? List 5 tasks where I copy-paste content, manually organize files, or switch between applications. For each, estimate how much time it takes."
+> "The lesson describes four Cowork workflow patterns: Explore First, Propose Then Execute, Handle Variation, and Report Results. Pick a real task I do weekly that involves files or documents. Walk me through how each pattern would apply to that specific task — what would Claude explore, what would the proposal look like, what variations might it encounter, and what should the results report include? Write the complete Cowork prompt."
 
-**What you're learning:** Opportunity identification—recognizing where automation creates value. The first step in workflow design is knowing what to automate.
+**What you're learning:** Pattern application — translating abstract workflow patterns into concrete task design. The four patterns are a universal framework that applies to any Cowork task, not just the examples in this lesson.
 
-\*\*💡 Design a Workflow:"
+**Measure the Automation Value:**
 
-> "Pick one repetitive task from my list. Design a Cowork workflow: What would I ask Claude to do? What's the expected outcome? What files or data does it need? Write out the complete prompt."
+> "Pick a task from my work and fill in this table: (1) How long does it take manually? (2) How often do I do it? (3) Does it ever get skipped because it takes too long? Now design the Cowork prompt for that task and estimate the automated time. What is the real value — is it pure time savings, or does automation make a previously-skipped task feasible?"
 
-**What you're learning:** Workflow design—translating manual processes into agentic AI instructions. This skill applies to any automation tool.
-
-\*\*🏗️ Execute and Measure:"
-
-> "Run the workflow I designed. Measure: How long did it take? How accurate was the result? What would I refine for next time? Compare to my manual process."
-
-**What you're learning:** Iteration and optimization—the cycle of improvement that applies to all process automation. The first version is a starting point, not the final state.
+**What you're learning:** Value assessment — understanding that automation value is not just speed improvement but also task feasibility. The most impactful Cowork workflows are often tasks that never got done manually.
 
 ---
 
 ## What's Next
 
 These workflows demonstrate Cowork's capabilities with local files. The next lesson explores browser integration, extending Cowork's reach to web-based workflows and automating interactions with websites and web applications.
-
 
 ## Flashcards Study Aid
 

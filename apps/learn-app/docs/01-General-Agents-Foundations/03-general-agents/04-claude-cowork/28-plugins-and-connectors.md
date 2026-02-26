@@ -161,6 +161,14 @@ The Anthropic Connectors Directory lists 50+ Connectors across categories:
 | **Figma**           | Design files        | Access designs, components, and comments |
 | **Canva**           | Design platform     | Browse and reference design assets       |
 | **WordPress**       | Content management  | Manage posts, pages, and media           |
+| **Apollo**          | Sales intelligence  | Contact and account data enrichment      |
+| **Clay**            | Data enrichment     | Automated lead research and scoring      |
+| **Outreach**        | Sales engagement    | Sequence management and analytics        |
+| **Similarweb**      | Web analytics       | Traffic and competitive intelligence     |
+| **MSCI**            | Financial data      | ESG ratings and market analytics         |
+| **FactSet**         | Financial research  | Market data and company analysis         |
+| **LegalZoom**       | Legal services      | Document templates and filings           |
+| **Harvey**          | Legal AI            | Legal research and analysis              |
 
 You don't write code. You don't configure servers. You authenticate, grant permissions, and Claude can access the data.
 
@@ -217,9 +225,9 @@ Some Connectors also render **interactive apps** inline in the chat. For example
 
 In Claude Desktop (Cowork mode):
 
-1. Click the settings/gear icon
-2. Navigate to "Connectors" or "Integrations"
-3. You'll see available Connectors
+1. Click the **Customize** menu (bottom-left of the chat input)
+2. Select **Connectors** from the menu
+3. You'll see available Connectors organized by category
 
 ### Step 2: Add a Connector
 
@@ -240,10 +248,10 @@ Start with read-only access. Only enable read-write when you trust the workflow 
 
 ### Access Tiers
 
-Not all plans have the same access:
+Plugins and Connectors require a paid plan:
 
-- **Free plan**: Browse the Connectors Directory (read-only access to listings)
 - **Pro, Max, Team, Enterprise**: Full Connector installation, custom Connectors via MCP URL, and interactive apps
+- **Free plan**: No access to Plugins or Connectors
 
 ---
 
@@ -319,6 +327,51 @@ Claude:
 
 ---
 
+## Slash Commands and Structured Forms
+
+Plugins can expose **slash commands** — shortcuts you type in the chat input (like `/weekly-report` or `/standup-summary`). When you invoke a slash command, Cowork can present a **structured form** — a fill-in UI with labeled fields — instead of requiring you to type a free-text prompt. You fill in the form fields, click submit, and the Plugin executes the workflow with your inputs.
+
+This matters because structured forms reduce ambiguity. Instead of hoping Claude interprets your free-text prompt correctly, the form guides you to provide exactly the inputs the workflow needs.
+
+---
+
+## Building Custom Plugins
+
+You don't have to wait for Anthropic or partners to build a Plugin for your workflow. The **Plugin Create** tool lets you build custom Plugins directly inside Cowork:
+
+1. Describe what your Plugin should do
+2. Claude generates the Plugin structure (Connectors, skills, slash commands)
+3. You test, refine, and publish
+
+**Private GitHub repositories** can also serve as Plugin sources (currently in beta). This means your team can maintain internal Plugins in version control, with updates deployed through standard git workflows.
+
+---
+
+## Enterprise Features
+
+For organizations deploying Plugins at scale:
+
+- **Organization marketplace**: Admins curate and distribute approved Plugins across the company
+- **OpenTelemetry tracking**: Monitor Plugin usage, performance, and errors through standard observability tools
+- **Per-user provisioning**: Assign specific Plugin sets to roles or departments automatically
+- **Auto-install policies**: New team members get the right Plugins on day one without manual setup
+
+These features mean Plugins scale from individual productivity to organization-wide automation.
+
+---
+
+## Portability: Plugins Beyond Cowork
+
+A key architectural insight: **Plugins are portable file systems you own.** They aren't locked to the Cowork desktop interface. The same Plugin works across:
+
+- **Cowork** (desktop workflows)
+- **Claude Agent SDK** (programmatic agent orchestration)
+- Any future Claude surface that supports the Plugin format
+
+This portability means investing in Plugin creation isn't a bet on a single interface. The workflows you build today carry forward as Claude's platform evolves.
+
+---
+
 ## Current Limitations
 
 Plugins and Connectors are powerful but have constraints:
@@ -369,17 +422,17 @@ Plugins and Connectors require granting Claude access to your external accounts.
 
 ## Try With AI
 
-**Audit Your Data Sources:**
+**Map Your Data Sources to Connectors:**
 
-> "What services do I use regularly that contain data I reference in my work? Google Drive, Notion, Slack, GitHub, Jira? Which 3 services would be most valuable to connect to Claude Cowork, and would any existing Plugin templates (HR, Finance, Legal, Design, Engineering, Operations) match my role?"
+> "List the 5 services where I spend the most time accessing data for my work (e.g., Google Drive, Slack, Jira, Salesforce). For each one, check whether a Connector exists in the Anthropic directory (50+ available). Then identify which 2-3 would save the most time if Claude could query them directly in a single prompt — and describe one specific multi-source task I do today that would benefit."
 
-**What you're learning:** Data source inventory — understanding where your information lives and what Plugins or Connectors would be most valuable to integrate. This assessment guides which packages to prioritize.
+**What you're learning:** Data source mapping — connecting your real workflow to the Connector ecosystem. This is the first step to replacing manual export/import with live multi-source queries.
 
-**Design a Combined Workflow:**
+**Design a Plugin for Your Role:**
 
-> "Pick a task I do that involves data from multiple sources. Design a workflow that uses Plugins and Connectors: What local files are involved? What external services? What skills or slash commands would help? Write the complete prompt."
+> "Based on what you know about my work, design a custom Plugin for my role. Include: (1) which Connectors it would bundle, (2) two slash commands with structured form fields for tasks I repeat weekly, (3) one custom skill for domain reasoning I apply often. Explain why this bundle is more valuable than using each component separately."
 
-**What you're learning:** Multi-source workflow design — thinking through how to combine local files with external data through Plugins. This is where bundled capabilities provide the most value.
+**What you're learning:** Plugin architecture thinking — understanding how bundling Connectors, skills, and slash commands into a single package creates compound value. This is the mental model that separates using Cowork from designing workflows in Cowork.
 
 ---
 
