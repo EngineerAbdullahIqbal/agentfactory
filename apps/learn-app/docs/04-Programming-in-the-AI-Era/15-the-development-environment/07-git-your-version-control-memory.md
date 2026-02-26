@@ -208,6 +208,12 @@ git add . && git commit -m "Verified: all tools pass"
 
 That is the complete cycle: write code, verify it with the pipeline, commit the verified result. Every chapter from here forward follows this pattern.
 
+### Commit Granularity When Working With AI
+
+When James writes code himself, he adds features gradually -- a few lines at a time. A commit naturally captures one small change. But when James asks Claude Code to implement a feature, the AI may produce thirty files and four hundred lines in a single response. If James runs the pipeline, everything passes, and he makes one giant commit called "Add user authentication," he has lost something important: the ability to understand or reverse parts of what the AI built.
+
+The professional habit is to break AI-generated work into logical commits even when the AI delivered it all at once. Review the output, identify the natural seams -- data models, API routes, tests, configuration -- and commit each piece separately with a descriptive message. This means `git log` still tells a story a month from now. It means if the authentication logic needs to be replaced, James can do it without disturbing the test infrastructure the AI also built. Small commits are not just good hygiene -- they are the mechanism that keeps you in control of a codebase that AI is helping you build faster than any one person could review at once.
+
 ---
 
 ## Anti-Patterns
