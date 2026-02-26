@@ -205,11 +205,11 @@ sudo systemctl start my-agent
 
 ### Blue-Green Deployment
 
-Run two copies of your agent (blue and green). One is live, the other is idle. Deploy to the idle one, verify it works, then switch traffic. If the new version fails, switch back instantly.
+Run two copies of your agent (blue and green). One is live, the other is idle. Deploy to the idle one, verify it works, then cut traffic over through your router (reverse proxy/load balancer). If the new version fails, switch back instantly.
 
-**Pros**: Zero downtime. Instant rollback. You verify before switching.
+**Pros**: Near-zero downtime with a proper routing cutover. Instant rollback. You verify before switching.
 
-**Cons**: Requires two service files and temporarily uses double the resources during the switch.
+**Cons**: Requires two service files, a routing layer for real cutover, and temporarily uses double the resources during the switch.
 
 ### Rolling Deployment
 
@@ -224,10 +224,10 @@ If you run multiple instances of the same agent (say three copies behind a load 
 | Pattern | Best For | Downtime | Rollback Speed | Resource Cost | Complexity |
 |---------|----------|----------|----------------|---------------|------------|
 | **Simple restart** | Development, staging, low-traffic agents | Seconds to minutes | Manual (slow) | 1x (minimal) | Low |
-| **Blue-green** | Production single-server agents | Zero | Instant (switch back) | 2x during switch | Medium |
+| **Blue-green** | Production single-server agents (with reverse proxy/load balancer) | Near-zero | Instant (switch back) | 2x during switch | Medium |
 | **Rolling** | Multi-instance production agents | Zero | Gradual (per instance) | 1x + 1 instance | High |
 
-**For most single-server agent deployments, blue-green is the sweet spot.** It eliminates downtime without requiring the multi-instance infrastructure that rolling deployments need. The rest of this lesson focuses on implementing it.
+**For most single-server agent deployments, blue-green is the sweet spot.** It can eliminate user-visible downtime when your router switches traffic only after health checks pass. The rest of this lesson focuses on implementing that pattern.
 
 ---
 
@@ -237,7 +237,7 @@ Blue-green deployment uses two systemd services -- one "blue" and one "green." A
 
 ### Step 1: Create Two Service Files
 
-The blue service runs on port 8000, the green on port 8001. A symlink determines which one is "live."
+The blue service runs on port 8000, the green on port 8001. A control-state file tracks the active color, and your router handles real traffic cutover.
 
 Create the blue service:
 
@@ -254,7 +254,7 @@ StartLimitBurst=5
 
 [Service]
 Type=simple
-User=nobody
+User=agent-runner
 WorkingDirectory=/opt/agent-blue
 ExecStart=/usr/local/bin/uvicorn agent_main:app --host 0.0.0.0 --port 8000
 Restart=on-failure
@@ -281,7 +281,7 @@ StartLimitBurst=5
 
 [Service]
 Type=simple
-User=nobody
+User=agent-runner
 WorkingDirectory=/opt/agent-green
 ExecStart=/usr/local/bin/uvicorn agent_main:app --host 0.0.0.0 --port 8001
 Restart=on-failure
@@ -293,12 +293,14 @@ CPUQuota=25%
 WantedBy=multi-user.target
 ```
 
-Set up the directory structure:
+Set up the dedicated service user and directory structure:
 
 ```bash
+sudo id -u agent-runner >/dev/null 2>&1 || sudo useradd -r -s /usr/sbin/nologin -d /opt -M agent-runner
 sudo mkdir -p /opt/agent-blue /opt/agent-green
 sudo cp /opt/agent/agent_main.py /opt/agent-blue/
 sudo cp /opt/agent/agent_main.py /opt/agent-green/
+sudo chown -R agent-runner:agent-runner /opt/agent-blue /opt/agent-green
 ```
 
 **Output:**
@@ -347,11 +349,11 @@ echo "blue" | sudo tee /opt/agent-active-color
 blue
 ```
 
-This file is the single source of truth. Scripts read it to know which instance is currently serving traffic.
+This file is control state only. Scripts read it to know which color should be considered active. It does **not** reroute external traffic by itself.
 
 ### Step 3: The Blue-Green Deploy Script
 
-This script automates the full deployment: deploy to the idle instance, verify health, switch, and provide rollback.
+This script automates the full deployment: deploy to the idle instance, verify health, mark control state, perform a routing cutover, and provide rollback.
 
 ```bash
 sudo nano /usr/local/bin/blue-green-deploy.sh
@@ -359,7 +361,7 @@ sudo nano /usr/local/bin/blue-green-deploy.sh
 
 ```bash
 #!/bin/bash
-# blue-green-deploy.sh - Zero-downtime deployment for agent_main.py
+# blue-green-deploy.sh - Health-gated blue-green deployment for agent_main.py
 set -euo pipefail
 
 NEW_CODE_DIR="${1:?Usage: blue-green-deploy.sh /path/to/new/code}"
@@ -404,10 +406,12 @@ HEALTH_RESPONSE=$(curl -sf "http://localhost:${TARGET_PORT}/health" 2>&1) || {
 echo "Health response: $HEALTH_RESPONSE"
 echo "Health check passed."
 
-# Step 4: Switch traffic (update the active-color file)
-echo "[4/5] Switching live traffic to $TARGET_COLOR..."
+# Step 4: Mark active color and perform routing cutover
+echo "[4/5] Marking $TARGET_COLOR as active in control state..."
 echo "$TARGET_COLOR" | sudo tee "$ACTIVE_COLOR_FILE" > /dev/null
-echo "Live instance is now: $TARGET_COLOR (port $TARGET_PORT)"
+echo "Control state updated: $TARGET_COLOR"
+echo "ACTION REQUIRED: update your reverse proxy/load balancer to port ${TARGET_PORT}."
+read -r -p "Press Enter only after traffic cutover is confirmed... " _
 
 # Step 5: Stop the old instance
 echo "[5/5] Stopping old instance (my-agent-${CURRENT_COLOR})..."
@@ -464,8 +468,10 @@ Done.
 [3/5] Checking health on port 8001...
 Health response: {"status":"healthy","agent":"running","timestamp":"2026-02-11T10:35:12.456789"}
 Health check passed.
-[4/5] Switching live traffic to green...
-Live instance is now: green (port 8001)
+[4/5] Marking green as active in control state...
+Control state updated: green
+ACTION REQUIRED: update your reverse proxy/load balancer to port 8001.
+[Press Enter after cutover]
 [5/5] Stopping old instance (my-agent-blue)...
 Done.
 
@@ -481,12 +487,13 @@ To rollback, run:
 
 ### Step 5: Rollback Procedure
 
-If the new version has a bug that the health check didn't catch, rollback is three commands:
+If the new version has a bug that the health check didn't catch, rollback is three commands plus one routing change:
 
 ```bash
 sudo systemctl start my-agent-blue
 sudo systemctl stop my-agent-green
 echo blue | sudo tee /opt/agent-active-color
+# Then switch your reverse proxy/load balancer back to port 8000
 ```
 
 **Output:**
@@ -537,7 +544,7 @@ sudo nano /etc/logrotate.d/agent-logs
     delaycompress
     missingok
     notifempty
-    create 0640 nobody nobody
+    create 0640 agent-runner agent-runner
     postrotate
         systemctl reload my-agent-blue my-agent-green 2>/dev/null || true
     endscript
@@ -554,14 +561,14 @@ Each directive serves a purpose:
 | `delaycompress` | Wait one rotation before compressing (so the most recent rotated file is still plain text for easy reading) |
 | `missingok` | Don't error if a log file is missing |
 | `notifempty` | Skip rotation if the log file is empty |
-| `create 0640 nobody nobody` | Create new log file with these permissions and ownership |
+| `create 0640 agent-runner agent-runner` | Create new log file with these permissions and ownership |
 | `postrotate` | After rotating, signal the service to reopen log files |
 
 Create the log directory:
 
 ```bash
 sudo mkdir -p /var/log/agent
-sudo chown nobody:nobody /var/log/agent
+sudo chown agent-runner:agent-runner /var/log/agent
 ```
 
 **Output:**
@@ -657,7 +664,44 @@ Top 5 directories by size:
 
 ### Health Check Scheduling with cron
 
-In [Lesson 9](./09-process-control-systemd.md), you created the canonical health check script at `/usr/local/bin/check-agent-health.sh`. Instead of duplicating that script here, schedule it with cron so it runs automatically.
+In [Lesson 9](./09-process-control-systemd.md), you created the canonical health check script at `/usr/local/bin/check-agent-health.sh`. For blue-green setups, add a thin wrapper so cron checks whichever color is currently active.
+
+Create the active-color-aware wrapper:
+
+```bash
+sudo nano /usr/local/bin/check-active-agent-health.sh
+```
+
+```bash
+#!/bin/bash
+set -euo pipefail
+
+ACTIVE_COLOR_FILE="/opt/agent-active-color"
+ACTIVE_COLOR=$(cat "$ACTIVE_COLOR_FILE")
+
+case "$ACTIVE_COLOR" in
+  blue)
+    SERVICE="my-agent-blue"
+    PORT=8000
+    ;;
+  green)
+    SERVICE="my-agent-green"
+    PORT=8001
+    ;;
+  *)
+    echo "[FAIL] Unknown active color: $ACTIVE_COLOR"
+    exit 1
+    ;;
+esac
+
+/usr/local/bin/check-agent-health.sh "$SERVICE" "$PORT"
+```
+
+Make it executable:
+
+```bash
+sudo chmod +x /usr/local/bin/check-active-agent-health.sh
+```
 
 Add cron entries for both health checks and disk monitoring:
 
@@ -669,7 +713,7 @@ Add these lines:
 
 ```
 # Agent health check every 5 minutes
-*/5 * * * * /usr/local/bin/check-agent-health.sh my-agent-blue >> /var/log/agent/health-check.log 2>&1
+*/5 * * * * /usr/local/bin/check-active-agent-health.sh >> /var/log/agent/health-check.log 2>&1
 
 # Disk space check every hour
 0 * * * * /usr/local/bin/check-disk-space.sh >> /var/log/agent/disk-alerts.log 2>&1
@@ -684,7 +728,7 @@ sudo crontab -l
 **Output:**
 ```
 # Agent health check every 5 minutes
-*/5 * * * * /usr/local/bin/check-agent-health.sh my-agent-blue >> /var/log/agent/health-check.log 2>&1
+*/5 * * * * /usr/local/bin/check-active-agent-health.sh >> /var/log/agent/health-check.log 2>&1
 
 # Disk space check every hour
 0 * * * * /usr/local/bin/check-disk-space.sh >> /var/log/agent/disk-alerts.log 2>&1

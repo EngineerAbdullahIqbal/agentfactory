@@ -316,6 +316,8 @@ Add this content:
 [Unit]
 Description=Production Digital FTE Agent
 After=network.target
+StartLimitBurst=5
+StartLimitIntervalSec=60
 
 [Service]
 Type=simple
@@ -327,10 +329,6 @@ ExecStart=/usr/local/bin/uvicorn agent_main:app --host 0.0.0.0 --port 8000
 # Restart policy: recover from crashes, not intentional stops
 Restart=on-failure
 RestartSec=5
-
-# Start-limit protection: stop retrying after repeated failures
-StartLimitBurst=5
-StartLimitIntervalSec=60
 
 # Resource limits: prevent runaway consumption
 MemoryMax=512M
@@ -352,8 +350,8 @@ Each directive traces to the specification:
 | `User=agent-prod` | Security: dedicated non-root user |
 | `Restart=on-failure` | Service: restart on crash, stay stopped on intentional stop |
 | `RestartSec=5` | Service: 5-second delay between restarts |
-| `StartLimitBurst=5` | Service: max 5 restarts in the interval |
-| `StartLimitIntervalSec=60` | Service: 60-second window for counting restarts |
+| `StartLimitBurst=5` | Unit: max 5 restart attempts in the interval |
+| `StartLimitIntervalSec=60` | Unit: 60-second window for counting restarts |
 | `MemoryMax=512M` | Service: 512MB memory ceiling |
 | `CPUQuota=25%` | Service: 25% CPU ceiling |
 
@@ -798,6 +796,8 @@ cat > "$SERVICE_FILE" << 'EOF'
 [Unit]
 Description=Production Digital FTE Agent
 After=network.target
+StartLimitBurst=5
+StartLimitIntervalSec=60
 
 [Service]
 Type=simple
@@ -807,8 +807,6 @@ WorkingDirectory=/opt/agent-prod
 ExecStart=/usr/local/bin/uvicorn agent_main:app --host 0.0.0.0 --port 8000
 Restart=on-failure
 RestartSec=5
-StartLimitBurst=5
-StartLimitIntervalSec=60
 MemoryMax=512M
 CPUQuota=25%
 

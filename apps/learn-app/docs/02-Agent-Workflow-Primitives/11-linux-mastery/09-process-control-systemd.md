@@ -703,15 +703,15 @@ Add this content:
 # Location: Taught in Lesson 9, section "Agent Health Checks"
 set -euo pipefail
 
-SERVICE_NAME="${1:?Usage: check-agent-health.sh <service-name>}"
+SERVICE_NAME="${1:?Usage: check-agent-health.sh <service-name> [port]}"
+HEALTH_PORT="${2:-8000}"
 
 check_service() {
     systemctl is-active --quiet "$SERVICE_NAME"
 }
 
 check_health_endpoint() {
-    local port="${2:-8000}"
-    curl -sf "http://localhost:${port}/health" > /dev/null 2>&1
+    curl -sf "http://localhost:${HEALTH_PORT}/health" > /dev/null 2>&1
 }
 
 check_resources() {
@@ -721,7 +721,7 @@ check_resources() {
 }
 
 main() {
-    echo "=== Agent Health Check: $SERVICE_NAME ==="
+    echo "=== Agent Health Check: $SERVICE_NAME (port ${HEALTH_PORT}) ==="
 
     if check_service; then
         echo "[OK] Service is running"
@@ -757,12 +757,12 @@ sudo chmod +x /usr/local/bin/check-agent-health.sh
 Run it:
 
 ```bash
-check-agent-health.sh my-agent
+check-agent-health.sh my-agent 8000
 ```
 
 **Output:**
 ```
-=== Agent Health Check: my-agent ===
+=== Agent Health Check: my-agent (port 8000) ===
 [OK] Service is running
 [OK] Health endpoint responding
 Memory: 54857728
