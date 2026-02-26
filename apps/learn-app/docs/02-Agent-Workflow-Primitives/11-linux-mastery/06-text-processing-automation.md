@@ -139,7 +139,7 @@ That is the difference text processing makes. Without it, you are opening an 847
 This lesson gives you those four commands -- and the mental model for chaining them into any pipeline you need. In Lesson 5, you wrote bash scripts with variables, functions, and error handling. Now you will learn the three text processing tools that turn raw log files into actionable intelligence: `grep` to find patterns, `sed` to transform text, and `awk` to extract and compute across fields. Then you will schedule these analyses to run automatically with `cron`, so your monitoring works even when you are not watching.
 
 :::tip[The principle]
-Text processing is not about memorizing commands -- it is about knowing which tool focuses the lens and which tool counts what is left.
+One pipeline. Fifteen minutes. 847 megabytes of logs, no dashboard, no GUI. The Unix text tools are your search engine when there is nothing else.
 :::
 
 ## Setting Up a Sample Log File
@@ -173,6 +173,84 @@ EOF
 ```
 
 This log simulates three agents running over 50 minutes with a mix of INFO, WARNING, and ERROR entries. You will use it throughout this lesson.
+
+---
+
+## Wildcards and Globbing
+
+Before diving into grep and sed, you need file pattern matching — the ability to work with groups of files at once. Every agent produces multiple log files. You need to target them without typing each name.
+
+### The * Wildcard (Any Characters)
+
+The `*` matches zero or more characters:
+
+```bash
+cd ~/agents/customer-bot/logs
+touch agent.log error.log access.log debug.log
+ls *.log
+```
+
+**Output:**
+```
+access.log  agent.log  debug.log  error.log
+```
+
+You can use `*` anywhere in a pattern:
+
+```bash
+touch report-jan.csv report-feb.csv report-mar.csv summary.csv
+ls report-*.csv
+```
+
+**Output:**
+```
+report-feb.csv  report-jan.csv  report-mar.csv
+```
+
+The pattern `report-*.csv` matched all files starting with `report-` and ending with `.csv`, excluding `summary.csv`.
+
+### The ? Wildcard (Single Character)
+
+The `?` matches exactly one character:
+
+```bash
+touch agent-1.log agent-2.log agent-3.log agent-10.log
+ls agent-?.log
+```
+
+**Output:**
+```
+agent-1.log  agent-2.log  agent-3.log
+```
+
+Notice `agent-10.log` was not matched — `?` matches exactly one character, not two. This precision helps when you need to target specific file groups.
+
+### The [] Wildcard (Character Set)
+
+Square brackets match any single character from a set:
+
+```bash
+ls agent-[12].log
+```
+
+**Output:**
+```
+agent-1.log  agent-2.log
+```
+
+You can also specify ranges:
+
+```bash
+touch file-a.txt file-b.txt file-c.txt file-1.txt file-2.txt
+ls file-[a-c].txt
+```
+
+**Output:**
+```
+file-a.txt  file-b.txt  file-c.txt
+```
+
+Wildcards apply to grep, cp, mv, and rm — not just ls. That is what makes them indispensable for log processing.
 
 ---
 
@@ -911,4 +989,6 @@ a race condition? How do production systems handle this?"
 
 ---
 
-You can now extract, count, and pattern-match anything from any log file. Text processing turns raw data into intelligence. But the most valuable intelligence is useless if your server is not hardened against the people who should not have it. Session 2 is complete. Session 3 starts with the question every production engineer eventually faces: who can access your server, what can they do, and how do you make sure the wrong people cannot do any of it?
+You can now extract, count, and pattern-match anything from any log file, and schedule those analyses to run while you sleep. SupportBot will generate hundreds of log entries per hour. The cron job you set up in this lesson is what keeps its log directory from filling the disk -- and the grep pipelines are how you will diagnose its failures in production without a GUI.
+
+But SupportBot running with full root access to that log directory is a deployment waiting to be compromised. One misconfigured endpoint, one leaked API key, and an attacker owns not just SupportBot's logs but the entire server. The next lesson changes that -- you will lock down file permissions, create a dedicated service user, and ensure SupportBot can only touch exactly what it needs.

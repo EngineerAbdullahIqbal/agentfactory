@@ -808,4 +808,6 @@ When debugging on production servers, prefer read-only diagnostic commands (`jou
 
 ---
 
-You now have a systematic methodology for diagnosing any agent failure. But diagnosis is reactive -- you wait for something to break. The next lesson asks a different question: what if you could turn every manual operation into a reusable pattern before it breaks? When the same 40-line deployment sequence works the third time because you finally wrote it down once, that's workflow integration. That's what's next.
+Every tool in this lesson -- journalctl filters, network diagnosis, disk monitoring, process inspection -- is what you reach for when SupportBot stops working at 3am and you need a root cause, not a restart. The triage methodology does not care whether the failure is a memory leak, a full disk, or a DNS change. It finds the answer the same way every time.
+
+You have been deploying one agent at a time. But what happens when you have five SupportBots across five servers? Deploying each manually is five times the work and five times the chance of error. The next lesson solves that -- turning your deployment sequence into a reusable skill that works the same way on every server, every time.

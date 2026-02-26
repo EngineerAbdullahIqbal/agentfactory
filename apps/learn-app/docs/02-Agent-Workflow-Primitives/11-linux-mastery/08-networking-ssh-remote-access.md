@@ -925,4 +925,6 @@ Include a rollback plan for each step in case something goes wrong.
 
 ---
 
-Your agent is now accessible: correctly bound, firewall configured, SSH secured. But accessible is not the same as reliable. What happens when your server reboots for a security patch? What happens when your agent crashes at 3am and nobody notices until 9am? The next lesson shows you how to make your agent unkillable -- not by hoping it never crashes, but by building a service that automatically restarts, logs everything, and survives every reboot.
+SupportBot listens on port 8080. Without the skills in this lesson, you would have no way to test whether that port is accessible, blocked, or already claimed by another process. You can now bind it to the right address, punch a hole through the firewall for exactly that port, and SSH into the production server to manage it -- all without exposing anything you should not.
+
+But right now SupportBot is still a process you started manually. One server reboot and it is gone. The next lesson turns that process into a service that survives anything short of a hardware failure.

@@ -362,6 +362,32 @@ Your agent is running as a system service.
 
 ## Service Lifecycle Commands
 
+Before diving into commands, here is how systemd manages the lifecycle of your agent service:
+
+```
+[systemctl enable --now my-agent]
+              ↓
+    [systemd reads unit file]
+              ↓
+  [Process starts as agent user]    ← running: systemctl status shows active
+              │
+      ┌───────┴────────┐
+      │                │
+  [crash]         [systemctl stop]
+      ↓                ↓
+ [RestartSec=5s]   [stopped: manual]
+      ↓
+  [restart attempt]
+      │
+      ├── attempts < StartLimitBurst → [process restarts] ──→ back to running
+      │
+      └── attempts ≥ StartLimitBurst → [failed state]
+                                            ↓
+                               [systemctl reset-failed my-agent]
+                                            ↓
+                                   [ready to restart again]
+```
+
 These five commands manage the full lifecycle of any systemd service:
 
 ```bash
@@ -926,4 +952,6 @@ Always test service configurations on a non-production server first. A misconfig
 
 ---
 
-Your agent is now a production service -- it starts on boot, restarts on crash, and logs everything. But "everything is fine" is not a debugging strategy. What happens when it is not fine? When the logs show nothing, the service keeps restarting, and the /health endpoint returns 500? The next lesson teaches you what to do after the restart does not fix it -- the systematic art of finding root causes before your customers find them first.
+SupportBot is now a service. It starts on boot, restarts on crash, logs to journalctl, and runs as a dedicated non-root user. This is production-grade deployment -- the kind that lets you sleep through a server reboot without waking up to 47 Slack messages.
+
+The problem is that SupportBot WILL fail in ways you did not predict. A memory leak at 3am. A dependency that silently changes its API. A disk that fills up because nobody configured log rotation. The next lesson teaches you to find out why -- without restarting blindly until it accidentally works again.

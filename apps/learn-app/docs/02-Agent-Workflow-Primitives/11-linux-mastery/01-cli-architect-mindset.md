@@ -112,7 +112,7 @@ Three days later, at 11pm, she got the email. A customer had been waiting forty 
 
 That moment -- staring at a terminal with a downed agent and no map of the filesystem -- is where CLI skills stop being "nice to have" and become the difference between an agent that recovers in minutes and one that stays down until morning. Aisha's agent was well-built. Her deployment was sound. But she had never learned to navigate the server it lived on, and that single gap turned a five-minute fix into a three-hour ordeal.
 
-Every AI agent you build will end up on a Linux server. Not on your laptop with its comfortable desktop and drag-and-drop file manager. On a headless machine in the cloud, accessible only through a command-line interface. Docker containers, cloud VMs, remote systems -- none of them have graphical desktops. The terminal is not a relic from the 1970s. It is the native interface for every server your agents will ever run on.
+Every AI agent you build will end up on a Linux server. Not on your laptop with its comfortable desktop and drag-and-drop file manager. On a headless machine in the cloud — headless means no monitor, no keyboard, no graphical desktop; just the network and the command line — accessible only through a command-line interface. Docker containers, cloud VMs, remote systems -- none of them have graphical desktops. The terminal is not a relic from the 1970s. It is the native interface for every server your agents will ever run on.
 
 In Chapter 6, Principle 1 established that Bash is the Key -- the single capability that transforms AI from a passive advisor into an active agent. Claude uses Bash to act. You need Bash to deploy, manage, and rescue the agents that use it. This lesson is where that key becomes real in your hands. You will open a terminal, find out where you are, look around, move between directories, and build the mental model that makes all future Linux work intuitive. Every command you run will show its output so you can verify what happened. By the end, you will navigate with confidence -- and Aisha's midnight panic will never be yours.
 
@@ -153,13 +153,19 @@ Unlike Windows, which uses drive letters (C:\, D:\), Linux organizes everything 
 
 ```
 /  (root — everything starts here)
-├── home/       ← where you work and develop
+├── home/                      ← you work here (cd ~ takes you home)
 │   └── yourname/
-├── etc/        ← agent config files live here
-├── var/        ← agent logs and runtime data
-│   └── log/
-├── usr/        ← installed tools your agents use
-└── opt/        ← third-party agent deployments
+│       ├── .bashrc            ← your shell config (hidden — ls -la shows it)
+│       └── .ssh/              ← your SSH keys (hidden — L7, L8)
+├── etc/                       ← ALL configuration files
+│   ├── systemd/system/        ← service unit files go here (L9)
+│   └── ssh/sshd_config        ← SSH server config (L7, L8)
+├── var/                       ← everything that changes at runtime
+│   └── log/                   ← agent logs and system logs (L10)
+├── usr/                       ← installed programs and utilities
+│   └── bin/                   ← where grep, python, curl live
+└── opt/                       ← third-party apps — YOUR AGENTS LIVE HERE
+    └── agent-prod/            ← SupportBot's production home (L12)
 ```
 
 Open your terminal and go to the top of the tree:
@@ -259,24 +265,17 @@ Those last two entries (`.` and `..`) are not just display artifacts. They are r
 
 ### Move There (cd)
 
+`cd` changes your working directory. After running it, `pwd` confirms your new location:
+
 ```bash
-cd /etc
-pwd
+cd /etc                # → move into the system configuration directory
+pwd                    # → confirm: /etc
+ls                     # → see what configuration files live here
 ```
 
 **Output:**
 ```
 /etc
-```
-
-`cd` changes your working directory. After running it, `pwd` confirms your new location. Let us explore what lives in `/etc`:
-
-```bash
-ls
-```
-
-**Output:**
-```
 apt  bash.bashrc  crontab  hostname  hosts  nginx  passwd  ssh  systemd
 ```
 
@@ -285,8 +284,8 @@ These are configuration files for the entire system. When you deploy an agent, i
 Return home with the shortcut:
 
 ```bash
-cd ~
-pwd
+cd ~                   # → the ~ character always means "my home directory"
+pwd                    # → confirm: /home/yourname
 ```
 
 **Output:**
@@ -294,7 +293,7 @@ pwd
 /home/yourname
 ```
 
-The `~` character always means "my home directory." It is the fastest way to get back to base.
+The `~` is the fastest way to get back to base.
 
 ## Absolute vs Relative Paths
 
@@ -335,31 +334,22 @@ The path `bin` does not start with `/`, so the shell interprets it relative to w
 
 ### Navigating Up with ..
 
-The `..` shortcut moves you up one level:
+The `..` shortcut moves you up one level, and you can chain it to traverse multiple levels:
 
 ```bash
-cd ..
-pwd
+cd ..                  # → move up one level (from /usr/bin to /usr)
+pwd                    # → /usr
+cd ../home             # → move up to / then down into /home
+pwd                    # → /home
 ```
 
 **Output:**
 ```
 /usr
-```
-
-You can chain `..` to move up multiple levels:
-
-```bash
-cd ../home
-pwd
-```
-
-**Output:**
-```
 /home
 ```
 
-This moved up from `/usr` to `/`, then down into `/home` -- all in one command.
+The second command moved up from `/usr` to `/`, then down into `/home` -- all in one command.
 
 ### When to Use Which
 
@@ -449,18 +439,23 @@ Then explain which you'd use in a deployment script vs interactive debugging.
 **What you're learning:** Building judgment about when to use absolute paths (scripts, automation, deployment) versus relative paths (interactive work, quick exploration). This directly applies when you write agent deployment scripts later in this chapter.
 
 ```
-Design a mental model diagram for the Linux filesystem as a building:
-- What floor is / (root)?
-- Where do residents live (/home)?
-- Where is the control room (/etc)?
-- Where are the activity logs kept (/var)?
-- Where is the tool shed (/usr)?
+Give me a navigation drill. SupportBot crashed at 3am and I need to
+diagnose it fast. Quiz me through these steps — show me the starting
+location, ask what command I'd type, then reveal the answer:
 
-Then extend the analogy: if I'm deploying a Digital FTE (an AI agent that
-runs 24/7), where in this building does it live, and why?
+1. I'm in /home/developer/. Find the SupportBot service file in
+   /etc/systemd/system/ using only two commands.
+2. I'm in /etc/systemd/system/. Navigate to SupportBot's log directory
+   at /var/log/agents/ using a relative path.
+3. I'm in /var/log/agents/. Check which log file was modified most
+   recently without moving directories.
+4. Navigate home in one keystroke.
+
+After I answer each one, tell me if I was right and show the fastest
+alternative if a shorter command exists.
 ```
 
-**What you're learning:** Translating filesystem structure into a spatial mental model. Spatial reasoning makes navigation intuitive rather than mechanical -- you stop memorizing paths and start understanding the architecture.
+**What you're learning:** Navigation under pressure. Real incidents don't wait for you to remember paths — this drill builds the reflex of moving through the filesystem in 2-3 commands, not 10.
 
 ---
 

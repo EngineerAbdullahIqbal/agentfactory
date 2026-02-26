@@ -589,4 +589,6 @@ When using pipes and redirection, be careful with the `>` operator -- it overwri
 
 ---
 
-You can now navigate, manipulate files, and extract exactly what you need from log files. Three lessons in, you have the basics of an operator. But there's a problem every operator hits: SSH sessions die. Laptops close. Network drops. And when that happens, every running process dies with it. That's where Lesson 4 begins -- making everything you run survive your disconnection. The next lesson shows you that the difference between an agent that runs once and an agent that runs forever is not the code. It's whether you know tmux.
+You can now edit configuration files, chain commands into pipelines, and redirect output exactly where it needs to go. Three lessons in, you have the basics of an operator who can interrogate a system and get answers.
+
+SupportBot's configuration files live in `/etc/systemd/` and `/opt/supportbot/` -- and in Lesson 4, you will need to edit them while your SSH session is still alive. That is the problem. SSH sessions die. Laptops close. Networks drop. And when your connection dies, every running process dies with it -- including the configuration edit you were halfway through saving. The next lesson makes your terminal sessions unkillable with tmux, so you never lose work to a dropped connection again.

@@ -197,7 +197,11 @@ $ wc -l DEPLOYMENT-SPEC.md
 30 DEPLOYMENT-SPEC.md
 ```
 
-Read through each section. Notice how every requirement is testable. "Dedicated system user" is not a vague goal — it maps to a specific check: `ps -eo user,comm | grep uvicorn` must show `agent-prod`, not `root`. This is what separates a specification from a wish list.
+Read through each section. Notice how every requirement is testable.
+
+:::note[Checkpoint 1 of 4 — Specification Complete (~20 min)]
+Before continuing: your `DEPLOYMENT-SPEC.md` should have all four sections filled in with measurable success criteria. If any section is blank or vague ("make it secure" is not measurable), stop here and complete it. The implementation is only as good as the spec. "Dedicated system user" is not a vague goal — it maps to a specific check: `ps -eo user,comm | grep uvicorn` must show `agent-prod`, not `root`. This is what separates a specification from a wish list.
+:::
 
 ---
 
@@ -295,6 +299,10 @@ drwxr-xr-x 4 root       root       4096 Feb 11 10:00 ..
 ```
 
 Every file is owned by `agent-prod`. The agent process can read its own files, but the restricted user cannot modify system files outside this directory.
+
+:::note[Checkpoint 2 of 4 — Infrastructure Ready (~20 min)]
+Before continuing: verify user exists (`id agent-prod`), directory exists (`ls /opt/agent-prod/`), and files are owned correctly (`ls -la /opt/agent-prod/` shows `agent-prod` as owner). All three checks must pass. If any fails, fix it before writing the service file.
+:::
 
 ### Step 5: Write the systemd Service File (Service Definition + Security)
 
@@ -400,6 +408,10 @@ sudo systemctl status agent-prod
 ```
 
 Look at the `Memory` line — it shows `(max: 512.0M)`, confirming your resource limit is applied.
+
+:::note[Checkpoint 3 of 4 — Service Running (~20 min)]
+Before continuing: `systemctl is-active agent-prod` should return `active`, and `systemctl show agent-prod --property=MemoryMax` should return `536870912`. If either fails, check `journalctl -u agent-prod -n 20 --no-pager` for the error, then fix the service file and re-run `systemctl daemon-reload && systemctl restart agent-prod`.
+:::
 
 ### Step 7: Configure the Firewall (Security Requirements)
 
@@ -721,6 +733,10 @@ VALIDATION FAILED — review failed checks against DEPLOYMENT-SPEC.md
 ```
 
 When a layer fails, work backward: Layer 2 (Network) failed but Layer 1 (Service) passed means the service is running but not responding. Check if uvicorn bound to the right port (`ss -tlnp | grep 8000`) or if the firewall is blocking local connections.
+
+:::note[Checkpoint 4 of 4 — Validation Complete (~20 min)]
+Before continuing: `sudo bash validate-deployment.sh` should print `ALL CHECKS PASSED — deployment meets specification` with 8 passed, 0 failed. If any layer fails, trace it to the corresponding section in your DEPLOYMENT-SPEC.md, fix the underlying issue, and re-run the script. Only continue to packaging once every layer passes — a partially-validated deployment is not ready to be packaged as repeatable.
+:::
 
 ---
 

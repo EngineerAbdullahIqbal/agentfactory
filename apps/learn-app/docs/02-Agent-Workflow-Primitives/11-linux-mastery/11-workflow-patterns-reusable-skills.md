@@ -1193,4 +1193,6 @@ Always test deployment scripts on a non-production server first. Blue-green depl
 
 ---
 
-You now have reusable patterns that deploy any agent consistently. The final lesson is different in kind from everything before it: instead of learning techniques to use later, you will use all the techniques now -- to deploy a real FastAPI agent to a real server using a specification you write first. The capstone is not a test. It is the first production deployment you will actually keep.
+The deployment skill you package in this lesson IS the SupportBot deployment. Lesson 12 uses it. One command, one clean server, one running production agent. Every principle you encoded -- non-root users, restart policies, resource limits, health verification -- fires automatically.
+
+Lesson 12 is the moment everything connects. You will write the specification, deploy SupportBot to a production server, validate five layers of production readiness, and package the result as a script anyone on your team can run. The midnight panic from Lesson 1 was the problem. Lesson 12 is the solution you built with your own hands across eleven lessons of Linux mastery.

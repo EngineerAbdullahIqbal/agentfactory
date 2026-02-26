@@ -37,7 +37,7 @@ In Chapter 6, Principle 1 established that **Bash is the Key** -- the single cap
 Claude uses Bash to act. Your agents use Bash to run. And you need Bash to deploy, manage, and rescue the agents that depend on it. Every `systemd` unit file you write, every `ssh` tunnel you open, every `grep` through a log file -- these are Principle 1 in practice. This chapter is not supplementary Linux skills. It is the practical vocabulary of the Digital FTE architecture.
 
 :::tip[Chapter Thesis]
-Restart is a reflex. Root cause analysis is a skill. This chapter builds the skill.
+Most agent failures aren't bad code — they're missing Linux skills. Developers who know Linux fix production in minutes. Developers who don't rebuild from scratch. This chapter ends guessing.
 :::
 
 ## Connection to the Digital FTE Vision
@@ -99,22 +99,22 @@ Not everyone needs every lesson. Choose the path that fits your situation:
 
 ### Detailed Lessons
 
-| Lesson | Title | Focus | Layer | Track | Duration |
-|--------|-------|-------|-------|-------|----------|
-| [Lesson 1](./01-cli-architect-mindset.md) | The CLI Architect Mindset | Terminal, filesystem, navigation | L1: Manual Foundation | **CORE** | 45 min |
-| [Lesson 2](./02-file-operations-mastery.md) | File Operations Mastery | Create, copy, move, delete files | L1: Manual Foundation | **CORE** | 45 min |
-| [Lesson 3](./03-text-editing-pipes-streams.md) | Text Editing, Pipes & I/O Streams | nano, pipes, redirection | L1: Manual Foundation | **CORE** | 50 min |
-| [Lesson 4](./04-persistent-sessions-tmux.md) | Persistent Sessions with tmux | Sessions surviving disconnections | L2: AI Collaboration | Full | 55 min |
-| [Lesson 5](./05-bash-scripting-foundations.md) | Bash Scripting Foundations | Variables, error handling, functions | L2: AI Collaboration | **CORE** | 55 min |
-| [Lesson 6](./06-text-processing-automation.md) | Text Processing & Automation | grep, sed, awk, cron | L2: AI Collaboration | Full | 55 min |
-| [Lesson 7](./07-security-hardening.md) | Security Hardening & Least Privilege | Users, permissions, SSH keys | L2: AI Collaboration | Full | 60 min |
-| [Lesson 8](./08-networking-ssh-remote-access.md) | Networking Fundamentals & SSH | Ports, localhost, curl, SSH | L2: AI Collaboration | Full | 60 min |
-| [Lesson 9](./09-process-control-systemd.md) | Process Control & Systemd Services | Agent services, restart policies | L2: AI Collaboration | **CORE** | 60 min |
-| [Lesson 10](./10-debugging-troubleshooting.md) | Debugging & Troubleshooting | Systematic diagnosis methodology | L2: AI Collaboration | Full | 60 min |
-| [Lesson 11](./11-workflow-patterns-reusable-skills.md) | Workflow Patterns & Reusable Skills | Deployment patterns, SKILL.md | L3: Intelligence | Full | 65 min |
-| [Lesson 12](./12-capstone-production-deployment.md) | Capstone: Spec-First Deployment | End-to-end Digital FTE deployment | L4: Spec-Driven | **CORE** | 90 min |
-| [Lesson 13](./13-linux-mastery-exercises.md) | Practice: Linux Mastery Exercises | Hands-on exercises across all chapter skills | L1-L4: All Layers | -- | 180 min |
-| [Quiz](./14-chapter-quiz.md) | Chapter Quiz | Assessment covering all lessons | -- | -- | 30 min |
+| Lesson | Title | Focus | Layer | Track | Duration | Difficulty |
+|--------|-------|-------|-------|-------|----------|------------|
+| [Lesson 1](./01-cli-architect-mindset.md) | The CLI Architect Mindset | Terminal, filesystem, navigation | L1: Manual Foundation | **CORE** | 45 min | ⭐ |
+| [Lesson 2](./02-file-operations-mastery.md) | File Operations Mastery | Create, copy, move, delete files | L1: Manual Foundation | **CORE** | 45 min | ⭐ |
+| [Lesson 3](./03-text-editing-pipes-streams.md) | Text Editing, Pipes & I/O Streams | nano, pipes, redirection | L1: Manual Foundation | **CORE** | 50 min | ⭐ |
+| [Lesson 4](./04-persistent-sessions-tmux.md) | Persistent Sessions with tmux | Sessions surviving disconnections | L2: AI Collaboration | Full | 55 min | ⭐⭐ |
+| [Lesson 5](./05-bash-scripting-foundations.md) | Bash Scripting Foundations | Variables, error handling, functions | L2: AI Collaboration | **CORE** | 55 min | ⭐⭐ |
+| [Lesson 6](./06-text-processing-automation.md) | Text Processing & Automation | grep, sed, awk, cron | L2: AI Collaboration | Full | 55 min | ⭐⭐ |
+| [Lesson 7](./07-security-hardening.md) | Security Hardening & Least Privilege | Users, permissions, SSH keys | L2: AI Collaboration | Full | 60 min | ⭐⭐⭐ |
+| [Lesson 8](./08-networking-ssh-remote-access.md) | Networking Fundamentals & SSH | Ports, localhost, curl, SSH | L2: AI Collaboration | Full | 60 min | ⭐⭐ |
+| [Lesson 9](./09-process-control-systemd.md) | Process Control & Systemd Services | Agent services, restart policies | L2: AI Collaboration | **CORE** | 60 min | ⭐⭐⭐ |
+| [Lesson 10](./10-debugging-troubleshooting.md) | Debugging & Troubleshooting | Systematic diagnosis methodology | L2: AI Collaboration | Full | 60 min | ⭐⭐ |
+| [Lesson 11](./11-workflow-patterns-reusable-skills.md) | Workflow Patterns & Reusable Skills | Deployment patterns, SKILL.md | L3: Intelligence | Full | 65 min | ⭐⭐⭐ |
+| [Lesson 12](./12-capstone-production-deployment.md) | Capstone: Spec-First Deployment | End-to-end Digital FTE deployment | L4: Spec-Driven | **CORE** | 90 min | ⭐⭐⭐⭐ |
+| [Lesson 13](./13-linux-mastery-exercises.md) | Practice: Linux Mastery Exercises | Hands-on exercises across all chapter skills | L1-L4: All Layers | -- | 180 min | ⭐⭐⭐ |
+| [Quiz](./14-chapter-quiz.md) | Chapter Quiz | Assessment covering all lessons | -- | -- | 30 min | — |
 
 **Core Track** (~6.5 hours): Lessons 1, 2, 3, 5, 9, 12 — the minimum path to a production agent deployment.
 
@@ -152,6 +152,25 @@ Linux commands can be destructive. This chapter includes explicit safety warning
 - Verification steps ensure commands worked as intended
 
 **Practice first**: Use a VM, container, or non-production server. Never experiment on production systems.
+
+## Quick Reference: Linux Terms in Plain English
+
+New to Linux? These 12 terms appear throughout the chapter. Each definition is two sentences maximum.
+
+| Term | Plain English |
+|------|--------------|
+| **Shell** | The program that reads your commands and tells the OS to run them. On Linux servers, this is almost always bash. |
+| **Terminal** | The window application that shows your shell. Terminal = the glass, shell = the voice on the other end. |
+| **Directory** | What Windows calls a "folder." On Linux, we say "directory" — same concept, different word. |
+| **Root** | Two meanings: `/` is the top of the filesystem tree, and `root` is the superuser account with unlimited power. Context tells you which. |
+| **Daemon** | A service that runs in the background, started at boot, not attached to any terminal. Your agents become daemons in Lesson 9. |
+| **Port** | A numbered channel for network communication. Your agent listens on a specific port (e.g., 8080) for incoming requests. |
+| **Process** | Any running program. Your agent is a process with an ID number (PID). |
+| **Pipe** | The `\|` character. Takes the output of one command and feeds it as input to the next. |
+| **Redirect** | Sending output to a file (`>`) instead of the screen. `>>` appends; `>` overwrites. |
+| **Absolute path** | A file address starting from `/`. Works regardless of where you are (e.g., `/var/log/agent.log`). |
+| **sudo** | "Run this as root." Grants temporary admin power for one command. Use sparingly; misuse causes real damage. |
+| **Environment variable** | A named value available to all processes in a session. Used for secrets, configuration, and API keys. |
 
 ## Let's Begin
 

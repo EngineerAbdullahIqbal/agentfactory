@@ -257,7 +257,22 @@ You may need to log out and back in for group changes to take effect. Now files 
 
 ## File Permissions: chmod and chown
 
-Every file has three permission sets -- owner, group, and others -- each with read (`r`=4), write (`w`=2), and execute (`x`=1) bits. Add the values for numeric notation: `700` means owner gets 7 (read+write+execute), group gets 0, others get 0.
+Every file has three permission sets -- owner, group, and others -- each with read (`r`=4), write (`w`=2), and execute (`x`=1) bits.
+
+```
+Permission string from ls -la:   -rw-r--r--
+                                   │││ │││ │││
+                                   │││ │││ └─── Others:  r-- = 4 (read only)
+                                   │││ └─────── Group:   r-- = 4 (read only)
+                                   │└─────────── Owner:  rw- = 6 (read + write)
+                                   └──────────── File type: - = regular file
+
+Numeric: 644 = owner(6) group(4) others(4)
+Numeric: 700 = owner(7) group(0) others(0)  ← agent secrets: owner-only
+Numeric: 755 = owner(7) group(5) others(5)  ← executables: owner writes, others run
+```
+
+Add the bit values to get numeric notation: `700` means owner gets 7 (read+write+execute), group gets 0, others get 0.
 
 | Numeric | Symbolic    | Meaning                               |
 | ------- | ----------- | ------------------------------------- |
@@ -741,4 +756,6 @@ What security issues do you see? What chmod commands would fix them?
 
 ---
 
-Your server is now hardened: dedicated user, correct permissions, SSH keys only, password authentication off. But a locked server that nobody can reach is just a locked room. In the next lesson, you'll learn how your agents talk to the outside world -- ports, protocols, firewalls, and the SSH tunnel that makes remote access both secure and reliable. You've locked the door. Now let's make sure the right people can still get in.
+Everything in this chapter builds toward one deployment. In Lesson 12, you will stand up **SupportBot** -- a real production FastAPI agent -- as a service that handles customer requests 24/7. SupportBot needs a dedicated user with no login shell, its files owned to that user, and its API keys in a `.env` file only that user can read. You now know how to set all three up.
+
+But a perfectly secured agent that nobody can reach is useless. The next lesson answers: how do you expose SupportBot's port 8080 to the right people while blocking everyone else? You have locked the door. Now you need to make sure the right traffic can still get in.
