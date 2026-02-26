@@ -50,6 +50,8 @@ differentiation:
 
 # Why the Toolchain Comes First
 
+This chapter is about five tools. The projects here are small -- SmartNotes is a learning vehicle. But the toolchain you build in this chapter is the exact same toolchain you will use in Part 6 when you build your first Digital FTE -- an autonomous AI agent that runs in production, handles real work, and can be sold as a product. The habits you form now determine the quality of the agents you ship later.
+
 Chapter 14 ended with ten axioms -- a complete engineering philosophy for working with AI-generated code. You know the principles. You understand why the shell orchestrates, why types are guardrails, why tests are specifications. But principles on paper do not ship software. It is time to build the workbench.
 
 James opens his laptop on Monday morning, confident. He has read all ten axioms. He understands orchestration, types, tests, version control. Now he wants to write Python. He creates a file called `app.py`, writes a few lines that import `requests` and print a formatted greeting, and runs `python app.py`. The terminal prints "Hello from SmartNotes!" -- clean, no errors. James pushes the file to the team repository, writes "initial commit" in the message box, and closes his laptop. Done.
