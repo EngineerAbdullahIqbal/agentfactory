@@ -1,141 +1,141 @@
 deck:
-  id: "ch03-26-plugins-and-connectors"
+  id: "ch03-28-plugins-and-connectors"
   title: "Plugins and Connectors: Extending Cowork's Reach"
   description: "Covers Plugin architecture, Connectors as pre-packaged MCP servers, the MCP vs Connectors distinction, Connector setup, combination power, limitations, and security principles."
   tags: ["plugins", "connectors", "mcp", "cowork", "integrations"]
   version: 1
 
 cards:
-  - id: "ch03-26-plugins-and-connectors-001"
+  - id: "ch03-28-plugins-and-connectors-001"
     front: "In Claude Cowork, what is a Plugin?"
     back: "A bundled workflow package: Connectors, skills, slash commands, and sub-agents in one-click install."
     tags: ["plugins", "cowork"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-002"
+  - id: "ch03-28-plugins-and-connectors-002"
     front: "What four components can a Plugin bundle together?"
     back: "1. Connectors\n2. Skills\n3. Slash commands\n4. Sub-agents"
     tags: ["plugins", "architecture"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-003"
+  - id: "ch03-28-plugins-and-connectors-003"
     front: "How is installing a Plugin more useful than adding individual Connectors one by one?"
     back: "A Plugin combines Connectors with skills, slash commands, and sub-agents. Individual Connectors only add data access — you lack shortcuts and automation. Bundling delivers complete workflows, not just connections."
     tags: ["plugins", "cowork", "architecture"]
     difficulty: "intermediate"
     why: "Which Plugin component beyond the Connector would save the most time in a real workflow?"
 
-  - id: "ch03-26-plugins-and-connectors-004"
+  - id: "ch03-28-plugins-and-connectors-004"
     front: "In Claude Cowork, what is a Connector?"
     back: "A pre-packaged remote MCP server that links Claude to an external data source."
     tags: ["connectors", "mcp"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-005"
+  - id: "ch03-28-plugins-and-connectors-005"
     front: "What are the three layers in the Cowork integration architecture, from lowest to highest?"
     back: "1. Protocol layer: MCP\n2. Integration layer: Connector\n3. Workflow Package layer: Plugin"
     tags: ["connectors", "architecture", "mcp"]
     difficulty: "intermediate"
 
-  - id: "ch03-26-plugins-and-connectors-006"
+  - id: "ch03-28-plugins-and-connectors-006"
     front: "Why does Cowork treat MCP and Connectors as separate concepts even though Connectors are MCP servers?"
     back: "The distinction is audience and ownership, not technology. MCP targets developers who build and host their own servers. Connectors target knowledge workers — Anthropic and partners maintain the servers so no coding is required."
     tags: ["connectors", "mcp", "architecture"]
     difficulty: "intermediate"
     why: "What would knowledge workers lose if Connectors didn't exist and they had to use raw MCP directly?"
 
-  - id: "ch03-26-plugins-and-connectors-007"
+  - id: "ch03-28-plugins-and-connectors-007"
     front: "MCP requires programming. What does using a Connector in Cowork require instead?"
     back: "Authentication and permission grant only — no programming."
     tags: ["connectors", "mcp"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-008"
+  - id: "ch03-28-plugins-and-connectors-008"
     front: "Why do Connectors use remote MCP servers hosted in the cloud rather than local servers?"
     back: "Cloud-hosted servers work across all Claude platforms — web, desktop, mobile, and API — without local setup. Local MCP servers only run on the machine hosting them, which breaks portability."
     tags: ["connectors", "mcp", "architecture"]
     difficulty: "intermediate"
     why: "What would a knowledge worker lose if Connectors required a locally running server?"
 
-  - id: "ch03-26-plugins-and-connectors-009"
+  - id: "ch03-28-plugins-and-connectors-009"
     front: "What are the four steps to set up a Connector in Claude Cowork?"
     back: "1. Authentication\n2. Permission Grant\n3. Tool Registration\n4. Querying"
     tags: ["connectors", "setup"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-010"
+  - id: "ch03-28-plugins-and-connectors-010"
     front: "What are the two main Connector permission scopes in Cowork?"
     back: "Read-only and Read-write."
     tags: ["connectors", "security"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-011"
+  - id: "ch03-28-plugins-and-connectors-011"
     front: "Why should you start with read-only permissions when setting up a new Connector?"
     back: "Read-write access lets Claude modify external data. Without understanding exactly what Claude will do, granting write access risks unintended changes. Read-only lets you verify behavior before enabling modification."
     tags: ["connectors", "security"]
     difficulty: "intermediate"
     why: "How would you decide when a specific workflow is trusted enough to enable read-write access?"
 
-  - id: "ch03-26-plugins-and-connectors-012"
+  - id: "ch03-28-plugins-and-connectors-012"
     front: "What are the six Connector categories in the Anthropic Connectors Directory?"
     back: "Document/Knowledge, Communication, Development, Business Data, Design, Content"
     tags: ["connectors", "categories"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-013"
+  - id: "ch03-28-plugins-and-connectors-013"
     front: "A team prepares quarterly reports by manually exporting from Google Sheets, Notion, and Slack. How do Connectors change this workflow?"
     back: "A single prompt queries all three sources simultaneously with live data. No manual exports, no copy-paste, no version drift — one request replaces three separate downloads and manual assembly."
     tags: ["connectors", "workflows", "combination"]
     difficulty: "intermediate"
     why: "Why is combining multiple Connectors in one prompt more valuable than each Connector used separately?"
 
-  - id: "ch03-26-plugins-and-connectors-014"
+  - id: "ch03-28-plugins-and-connectors-014"
     front: "What are the six department-specific Plugin template categories in Cowork?"
     back: "HR, Finance, Legal, Design, Engineering, Operations"
     tags: ["plugins", "cowork"]
     difficulty: "basic"
 
-  - id: "ch03-26-plugins-and-connectors-015"
+  - id: "ch03-28-plugins-and-connectors-015"
     front: "Name any 3 of the 5 current limitations of Cowork Connectors."
     back: "Rate limits, re-authentication required periodically, read-only-only (some connectors), external service downtime, data freshness (snapshots not live streams)"
     tags: ["connectors", "limitations"]
     difficulty: "intermediate"
 
-  - id: "ch03-26-plugins-and-connectors-016"
+  - id: "ch03-28-plugins-and-connectors-016"
     front: "Why do Connectors provide data snapshots instead of real-time streams?"
     back: "External APIs return point-in-time responses, not live feeds. Connectors fetch current data at query time. Changes made after Claude's query won't appear until the next query is issued."
     tags: ["connectors", "limitations", "data"]
     difficulty: "advanced"
     why: "What workflows are unsuitable for Connectors because they require real-time data?"
 
-  - id: "ch03-26-plugins-and-connectors-017"
+  - id: "ch03-28-plugins-and-connectors-017"
     front: "Why should Cowork Connector permissions follow the Principle of Least Privilege?"
     back: "Broader access than necessary increases exposure without adding value. Limiting to read-only or specific folders means a mistake or unexpected Claude behavior can't affect data outside the task's scope."
     tags: ["connectors", "security"]
     difficulty: "intermediate"
     why: "How would you define the minimum necessary scope for a Connector used only for monthly sales reports?"
 
-  - id: "ch03-26-plugins-and-connectors-018"
+  - id: "ch03-28-plugins-and-connectors-018"
     front: "A colleague connects their entire Google Drive and full Slack workspace to Cowork with read-write access on day one. What is the risk?"
     back: "Over-provisioned access creates unnecessary exposure. Claude can modify data across the entire workspace, not just what the task requires. Any error or misunderstood instruction could alter files unintentionally."
     tags: ["connectors", "security"]
     difficulty: "advanced"
     why: "How would you apply the Principle of Least Privilege to limit this risk specifically?"
 
-  - id: "ch03-26-plugins-and-connectors-019"
+  - id: "ch03-28-plugins-and-connectors-019"
     front: "Why do HR and financial system Connectors require extra caution compared to document Connectors?"
     back: "They expose sensitive personal and financial data. Unauthorized access or unintended modification risks privacy violations, regulatory non-compliance, and financial harm — stakes far higher than a shared document folder."
     tags: ["connectors", "security"]
     difficulty: "advanced"
     why: "How would you structure permission scopes for an HR Connector used only for onboarding checklist lookups?"
 
-  - id: "ch03-26-plugins-and-connectors-020"
+  - id: "ch03-28-plugins-and-connectors-020"
     front: "What Connector access does the Free Cowork plan provide compared to Pro, Max, Team, and Enterprise plans?"
     back: "Free: browse directory only.\nPro+: full install, custom MCP URL Connectors, interactive apps."
     tags: ["connectors", "plans", "cowork"]
     difficulty: "intermediate"
 
-  - id: "ch03-26-plugins-and-connectors-021"
+  - id: "ch03-28-plugins-and-connectors-021"
     front: "How does a Plugin's customizability change its value compared to using a fixed department template?"
     back: "Templates are starting points. Removing unused components reduces noise; adding domain-specific Connectors or custom slash commands makes the Plugin match the actual workflow. A tailored Plugin delivers higher value than a generic one."
     tags: ["plugins", "cowork", "architecture"]

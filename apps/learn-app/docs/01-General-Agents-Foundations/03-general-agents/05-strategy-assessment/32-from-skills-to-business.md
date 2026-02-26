@@ -1,9 +1,9 @@
 ---
 slug: /General-Agents-Foundations/general-agents/from-skills-to-business
 title: "From Skills to Business: Monetizing Agent Expertise"
-sidebar_position: 30
+sidebar_position: 32
 chapter: 3
-lesson: 30
+lesson: 32
 duration_minutes: 20
 chapter_type: Concept
 running_example_id: digital-fte-model
@@ -90,7 +90,7 @@ teaching_guide:
 
 # Legacy compatibility (Docusaurus)
 prerequisites:
-  - "Completion of Lessons 01-26 in this chapter"
+  - "Completion of Lessons 01-28 in this chapter"
   - "Understanding of Skills, MCP, Claude Code, and Claude Cowork basics"
 ---
 

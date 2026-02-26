@@ -1,61 +1,61 @@
 deck:
-  id: "ch03-31-cross-vendor-landscape"
+  id: "ch03-33-cross-vendor-landscape"
   title: "The Cross-Vendor Landscape: Your Skills Are Portable"
   description: "Cross-vendor concept mapping, AAIF standards convergence, SWE-bench literacy, and poly-agentic development."
   tags: ["cross-vendor", "aaif", "standards", "portability", "swe-bench"]
   version: 1
 
 cards:
-  - id: "ch03-31-cross-vendor-landscape-001"
+  - id: "ch03-33-cross-vendor-landscape-001"
     type: recall
     front: "What three founding projects did the Agentic AI Foundation (AAIF) receive when it formed in December 2025?"
     back: "1. MCP (Model Context Protocol)\n2. AGENTS.md\n3. goose"
     tags: ["aaif", "standards"]
     difficulty: "basic"
 
-  - id: "ch03-31-cross-vendor-landscape-002"
+  - id: "ch03-33-cross-vendor-landscape-002"
     type: recall
     front: "What is the fourth standard beyond the three AAIF founding projects, and where does its specification live?"
     back: "Agent Skills (SKILL.md format) at agentskills.io."
     tags: ["agent-skills", "standards"]
     difficulty: "basic"
 
-  - id: "ch03-31-cross-vendor-landscape-003"
+  - id: "ch03-33-cross-vendor-landscape-003"
     type: recall
     front: "What are the three design philosophies of Claude Code, OpenAI Codex, and Gemini CLI?"
     back: "Claude Code: accuracy-first.\nCodex: async delegation.\nGemini CLI: open and accessible."
     tags: ["philosophies", "cross-vendor"]
     difficulty: "intermediate"
 
-  - id: "ch03-31-cross-vendor-landscape-004"
+  - id: "ch03-33-cross-vendor-landscape-004"
     type: recall
     front: "Which model holds the top SWE-bench Verified score as of February 2026, and what is the score?"
     back: "Claude Opus 4.5 at 80.9%."
     tags: ["swe-bench", "benchmarks"]
     difficulty: "basic"
 
-  - id: "ch03-31-cross-vendor-landscape-005"
+  - id: "ch03-33-cross-vendor-landscape-005"
     type: recall
     front: "Claude Code stores Skills in .claude/skills/. Where do Codex and Gemini CLI store them?"
     back: "Codex: .agents/skills/\nGemini CLI: .gemini/skills/"
     tags: ["directory-mapping", "portability"]
     difficulty: "basic"
 
-  - id: "ch03-31-cross-vendor-landscape-006"
+  - id: "ch03-33-cross-vendor-landscape-006"
     type: recall
     front: "According to cited sources, what percentage of code does AI write at Microsoft and Google?"
     back: "~30% at Microsoft, 25%+ at Google."
     tags: ["industry-adoption", "statistics"]
     difficulty: "basic"
 
-  - id: "ch03-31-cross-vendor-landscape-007"
+  - id: "ch03-33-cross-vendor-landscape-007"
     type: recall
     front: "What are the MCP adoption figures cited in the lesson?"
     back: "10,000+ active public servers, 97M monthly SDK downloads."
     tags: ["mcp", "adoption"]
     difficulty: "intermediate"
 
-  - id: "ch03-31-cross-vendor-landscape-008"
+  - id: "ch03-33-cross-vendor-landscape-008"
     type: thinking
     front: "Why can't you directly compare a SWE-bench Verified score with a SWE-bench Pro score?"
     back: "BECAUSE Pro uses harder multi-file problems than Verified, THEREFORE a lower Pro score does not mean worse performance — it means a harder test, making direct comparison invalid."
@@ -63,7 +63,7 @@ cards:
     difficulty: "intermediate"
     why: "What should you check besides benchmark scores when choosing a coding agent?"
 
-  - id: "ch03-31-cross-vendor-landscape-009"
+  - id: "ch03-33-cross-vendor-landscape-009"
     type: thinking
     front: "How does the Concept Mapping Table prove that learning Claude Code doesn't lock you into one vendor?"
     back: "BECAUSE every major Claude Code concept (CLAUDE.md, Skills, MCP, hooks, subagents, teams) has direct equivalents in Codex and Gemini CLI, THEREFORE learning Claude Code transfers — only directory names change, the patterns are the same."
@@ -71,7 +71,7 @@ cards:
     difficulty: "intermediate"
     why: "Which concepts from the mapping table are standardized under AAIF, and which remain vendor-specific?"
 
-  - id: "ch03-31-cross-vendor-landscape-010"
+  - id: "ch03-33-cross-vendor-landscape-010"
     type: thinking
     front: "Why does poly-agentic development outperform committing to a single coding agent?"
     back: "BECAUSE different tools have different strengths (Claude Code for architecture, Codex for parallel bulk tasks, Gemini CLI for large codebases), THEREFORE choosing per task beats forcing one tool to do everything."
@@ -79,7 +79,7 @@ cards:
     difficulty: "intermediate"
     why: "What factors determine which tool to use for a specific task?"
 
-  - id: "ch03-31-cross-vendor-landscape-011"
+  - id: "ch03-33-cross-vendor-landscape-011"
     type: thinking
     front: "Why are Skills portable across Claude Code, Codex, and Gemini CLI?"
     back: "BECAUSE all three follow the same Agent Skills specification (agentskills.io) with identical SKILL.md format, THEREFORE Skills are portable — only the directory path differs (.claude/ vs .agents/ vs .gemini/)."
@@ -87,7 +87,7 @@ cards:
     difficulty: "intermediate"
     why: "What vendor-specific metadata might still need adjustment when porting a Skill?"
 
-  - id: "ch03-31-cross-vendor-landscape-012"
+  - id: "ch03-33-cross-vendor-landscape-012"
     type: thinking
     front: "Why did competing vendors like Anthropic, OpenAI, and Google donate key projects to a shared foundation?"
     back: "BECAUSE developers invest more when their work transfers across vendors, THEREFORE shared standards grow the overall market faster than proprietary lock-in — interoperable tools increase adoption for everyone."
@@ -95,7 +95,7 @@ cards:
     difficulty: "advanced"
     why: "How does this parallel the formation of other industry standards bodies like the W3C or Linux Foundation?"
 
-  - id: "ch03-31-cross-vendor-landscape-013"
+  - id: "ch03-33-cross-vendor-landscape-013"
     type: thinking
     front: "Why does MCP tool connectivity expand the security attack surface for AI agents?"
     back: "BECAUSE agents call external servers, read files, and execute commands through MCP, THEREFORE a compromised MCP server can enable prompt injection, data exfiltration, or unintended code execution — risks absent without tool connectivity."
@@ -103,7 +103,7 @@ cards:
     difficulty: "advanced"
     why: "What precautions should you take before connecting an MCP server from an unknown publisher?"
 
-  - id: "ch03-31-cross-vendor-landscape-014"
+  - id: "ch03-33-cross-vendor-landscape-014"
     type: thinking
     front: "Why does Codex default to cloud sandbox execution while Claude Code runs locally?"
     back: "BECAUSE Codex is designed for async fire-and-forget delegation with parallel cloud sandboxes, THEREFORE it defaults to cloud execution — while Claude Code runs locally to prioritize developer-in-the-loop accuracy with direct terminal access."

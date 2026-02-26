@@ -1,9 +1,9 @@
 ---
 slug: /General-Agents-Foundations/general-agents/browser-integration-claude-chrome
 title: "Browser Integration: Claude in Chrome"
-sidebar_position: 25
+sidebar_position: 27
 chapter: 3
-lesson: 25
+lesson: 27
 duration_minutes: 18
 chapter_type: Practical
 running_example_id: browser-integration
@@ -63,7 +63,7 @@ version: "1.0.0"
 
 # Legacy compatibility (Docusaurus)
 prerequisites:
-  - "Completion of Lesson 24: Cowork in Action"
+  - "Completion of Lesson 26: Cowork in Action"
   - "Google Chrome browser installed"
   - "Claude Desktop with Cowork enabled"
 
@@ -74,7 +74,7 @@ teaching_guide:
   key_points:
     - "The browser extension acts as a remote control -- Claude Desktop does the reasoning while the extension executes browser actions, which explains why it requires both to be connected"
     - "Browser automation is fundamentally slower than file operations due to page loads, DOM parsing, and JavaScript execution -- the speed comparison table quantifies this"
-    - "The five-step browser loop (page analysis, context understanding, action planning, execution, verification) mirrors the propose-approve-execute pattern from Lesson 24"
+    - "The five-step browser loop (page analysis, context understanding, action planning, execution, verification) mirrors the propose-approve-execute pattern from Lesson 26"
     - "Security boundaries are explicit: selective activation per site, reviewing actions before execution, avoiding password fields, and deactivating the extension when done"
   misconceptions:
     - "Students expect browser automation to be as fast as file operations -- the speed considerations table shows page loads take seconds versus milliseconds for filesystem reads"
@@ -89,7 +89,7 @@ teaching_guide:
     - "Demo the email cleanup workflow (Workflow 1) on a disposable email account -- students see the full navigation and confirmation cycle without risking their real inbox"
     - "Use the speed considerations table to set expectations before students try their first browser task -- knowing page loads take 1-5 seconds prevents frustration with perceived slowness"
     - "Have students create a personal 'activation whitelist' of 5 sites where they would enable the extension, and a 'blacklist' of sites they would exclude, using the security principles as criteria"
-    - "Connect the 'when to use browser integration' decision framework back to Lesson 22's Code vs Cowork table -- both teach tool selection based on task characteristics"
+    - "Connect the 'when to use browser integration' decision framework back to Lesson 24's Code vs Cowork table -- both teach tool selection based on task characteristics"
   assessment_quick_check:
     - "Describe the five-step loop that Claude follows when working on a webpage, from page analysis to verification"
     - "Name two limitations of browser automation listed in the lesson and explain why each cannot be solved by the extension alone"

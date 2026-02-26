@@ -23,5 +23,5 @@ Plugins are installable workflow packages that bundle Connectors, skills, slash 
 
 ### Connections
 
-- **Builds on**: Lesson 12 (MCP fundamentals), Lesson 25 (browser integration)
-- **Leads to**: Lesson 27 (Cowork safety, limitations, and upcoming features)
+- **Builds on**: Lesson 12 (MCP fundamentals), Lesson 27 (browser integration)
+- **Leads to**: Lesson 29 (Cowork safety, limitations, and upcoming features)

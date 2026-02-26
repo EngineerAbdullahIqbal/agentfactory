@@ -248,14 +248,14 @@ The `blocks` and `blockedBy` fields form a dependency graph. A task with unresol
 
 You already know subagents from Lesson 11. When should you use teams instead?
 
-| Scenario | Subagents | Agent Teams |
-| --- | --- | --- |
-| "Summarize this report" | Focused, result-only | Overkill for one task |
-| "Evaluate this opportunity from 3 stakeholder perspectives" | Perspectives cannot discuss each other's findings | Use this -- perspectives challenge each other |
-| "Research 5 vendors and summarize each" | Each returns a summary | Only if they need to compare and rank |
-| "Plan a product launch across marketing, engineering, and operations" | Cannot coordinate across functions | Use this -- each owns their function, they sync |
-| "Draft a client email" | Quick and cheap | Way too expensive |
-| "Investigate why customer satisfaction dropped" | Anchors on first theory found | Use this -- competing hypotheses |
+| Scenario                                                              | Subagents                                         | Agent Teams                                     |
+| --------------------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------- |
+| "Summarize this report"                                               | Focused, result-only                              | Overkill for one task                           |
+| "Evaluate this opportunity from 3 stakeholder perspectives"           | Perspectives cannot discuss each other's findings | Use this -- perspectives challenge each other   |
+| "Research 5 vendors and summarize each"                               | Each returns a summary                            | Only if they need to compare and rank           |
+| "Plan a product launch across marketing, engineering, and operations" | Cannot coordinate across functions                | Use this -- each owns their function, they sync |
+| "Draft a client email"                                                | Quick and cheap                                   | Way too expensive                               |
+| "Investigate why customer satisfaction dropped"                       | Anchors on first theory found                     | Use this -- competing hypotheses                |
 
 **The decision rule**: If teammates need to talk to each other, use teams. If they just report back, use subagents.
 
@@ -546,7 +546,7 @@ survives debate is most likely correct. Write the consensus to FINDINGS.md.
 
 ### What's Next
 
-Lesson 21 provides hands-on exercises to practice everything from this lesson -- market research sprints, event planning pipelines, feature prioritization debates, client proposal pipelines, and capstone projects across four professional domains. After that, Lesson 22 introduces **Claude Cowork** -- Claude's desktop application.
+Lesson 21 provides hands-on exercises to practice everything from this lesson -- market research sprints, event planning pipelines, feature prioritization debates, client proposal pipelines, and capstone projects across four professional domains. After that, Lesson 22 introduces **Worktrees** -- giving each Claude session its own isolated copy of the repository so parallel work never conflicts.
 
 ---
 
@@ -569,7 +569,6 @@ Lesson 21 provides hands-on exercises to practice everything from this lesson --
 > "Think of a complex problem in your professional domain that would benefit from parallel investigation. Design 3-4 specialist roles -- what does each investigate, and how do they share findings? Create the team and run it. After the team finishes, reflect: which findings only emerged because the specialists could discuss with each other?"
 
 **What you're learning:** Decomposing problems into parallel workstreams and coordinating independent specialists. This skill -- breaking a complex question into focused investigations that cross-pollinate -- extends to any professional domain where multiple perspectives produce better answers than one.
-
 
 ## Flashcards Study Aid
 

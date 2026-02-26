@@ -7,4 +7,4 @@ sidebar_position: 0
 
 The final section ties everything together with strategic decision-making. You'll learn when to choose Claude Code versus Cowork, how to turn skills into business value, and how the cross-vendor landscape shapes your tool choices. The chapter quiz validates your understanding across all five sections.
 
-**Lessons 29-32** transition from tool proficiency to strategic thinking about general agents in your work.
+**Lessons 31-34** transition from tool proficiency to strategic thinking about general agents in your work.

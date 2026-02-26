@@ -184,7 +184,7 @@ A Skill is **encoded expertise**—a document (SKILL.md) that teaches Claude a p
 
 Your domain expertise, encoded as a Skill, is intellectual property. When you create a Skill that automates financial audits, legal contract review, or sales outreach—that's not just a tool for yourself. That's **something you can sell**.
 
-In Lesson 30, we show you exactly how these Skills become revenue. For now: every Skill you build in this chapter is a potential product.
+In Lesson 32, we show you exactly how these Skills become revenue. For now: every Skill you build in this chapter is a potential product.
 
 ---
 

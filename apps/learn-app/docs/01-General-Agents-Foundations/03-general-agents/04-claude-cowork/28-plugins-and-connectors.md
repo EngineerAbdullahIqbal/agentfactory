@@ -1,9 +1,9 @@
 ---
 slug: /General-Agents-Foundations/general-agents/plugins-and-connectors
 title: "Plugins and Connectors: Extending Cowork's Reach"
-sidebar_position: 26
+sidebar_position: 28
 chapter: 3
-lesson: 26
+lesson: 28
 duration_minutes: 16
 chapter_type: Concept
 running_example_id: connectors-introduction
@@ -85,7 +85,7 @@ teaching_guide:
     - "Walk through the quarterly report scenario in 'The Combination Power' section — have students map it to their own multi-source workflows"
     - "Use the MCP vs Connectors comparison table to reinforce that the difference is who builds and maintains the server, not the underlying protocol"
     - "Emphasize the Connector categories (Document, Communication, Development, Business Data, Design, Content) and ask students which category matters most for their role"
-    - "Connect back to Lesson 12 (MCP) and Lesson 25 (browser integration) to show the progression: custom MCP → browser automation → pre-built Plugins and Connectors"
+    - "Connect back to Lesson 12 (MCP) and Lesson 27 (browser integration) to show the progression: custom MCP → browser automation → pre-built Plugins and Connectors"
   assessment_quick_check:
     - "Name two differences between MCP servers (Lesson 12) and Connectors (this lesson)."
     - "What does a Plugin bundle together?"
@@ -95,13 +95,13 @@ teaching_guide:
 # Legacy compatibility (Docusaurus)
 prerequisites:
   - "Completion of Lesson 12: MCP Integration (for context)"
-  - "Completion of Lesson 25: Browser Integration"
+  - "Completion of Lesson 27: Browser Integration"
   - "Claude Cowork installed and configured"
 ---
 
 # Plugins and Connectors: Extending Cowork's Reach
 
-In Lesson 25, you explored browser integration for web-based workflows. Now you will connect Cowork to the services where your real data lives — Google Drive, Slack, Jira, and dozens more — through Plugins and Connectors.
+In Lesson 27, you explored browser integration for web-based workflows. Now you will connect Cowork to the services where your real data lives — Google Drive, Slack, Jira, and dozens more — through Plugins and Connectors.
 
 You learned about MCP (Model Context Protocol) in Lesson 12 — how developers create servers that expose tools to Claude Code. **Plugins and Connectors bring the same capability to Cowork, but without requiring any development work.**
 

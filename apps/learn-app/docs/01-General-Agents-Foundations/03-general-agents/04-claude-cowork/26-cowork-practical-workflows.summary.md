@@ -23,5 +23,5 @@ Cowork's value is not just speed—it makes tasks feasible that you would otherw
 
 ### Connections
 
-- **Builds on**: Cowork setup, folder access, and the approval workflow from Lesson 23
-- **Leads to**: Browser integration, extending Cowork from local files to web-based workflows (Lesson 25)
+- **Builds on**: Cowork setup, folder access, and the approval workflow from Lesson 25
+- **Leads to**: Browser integration, extending Cowork from local files to web-based workflows (Lesson 27)

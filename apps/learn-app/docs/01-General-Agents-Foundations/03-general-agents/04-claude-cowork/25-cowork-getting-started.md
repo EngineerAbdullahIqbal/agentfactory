@@ -1,9 +1,9 @@
 ---
 slug: /General-Agents-Foundations/general-agents/cowork-getting-started
 title: "Getting Started with Cowork"
-sidebar_position: 23
+sidebar_position: 25
 chapter: 3
-lesson: 23
+lesson: 25
 duration_minutes: 20
 chapter_type: Practical
 running_example_id: cowork-setup
@@ -63,7 +63,7 @@ version: "1.0.0"
 
 # Legacy compatibility (Docusaurus)
 prerequisites:
-  - "Completion of Lesson 22: From Terminal to Desktop"
+  - "Completion of Lesson 24: From Terminal to Desktop"
   - "macOS or Windows (x64) computer"
   - "Anthropic subscription (Pro, Max, Team Premium, or Enterprise required for Cowork)"
 

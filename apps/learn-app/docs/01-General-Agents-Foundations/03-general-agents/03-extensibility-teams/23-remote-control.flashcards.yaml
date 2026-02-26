@@ -1,0 +1,101 @@
+deck:
+  id: ch03-23-remote-control
+  title: 'Remote Control: Sessions Without Boundaries'
+  description: Flashcards covering Remote Control — starting remote sessions, relay architecture, tmux survival, and multi-device workflow decisions.
+  tags:
+  - remote-control
+  - session-management
+  - mobile-access
+  - claude-code
+  version: 1
+cards:
+- id: ch03-23-remote-control-001
+  difficulty: basic
+  front: What CLI command starts a new Remote Control session?
+  back: claude remote-control
+  tags:
+  - remote-control
+  - commands
+- id: ch03-23-remote-control-002
+  difficulty: basic
+  front: What slash command enables Remote Control in an existing Claude Code session?
+  back: /remote-control (or the shorthand /rc)
+  tags:
+  - remote-control
+  - commands
+- id: ch03-23-remote-control-003
+  difficulty: basic
+  front: How do you display the QR code for phone access during a Remote Control session?
+  back: Press spacebar to show or hide the QR code.
+  tags:
+  - remote-control
+  - qr-code
+- id: ch03-23-remote-control-004
+  difficulty: basic
+  front: Which subscription plans support Remote Control?
+  back: Pro and Max plans only. Team, Enterprise, and API keys are not supported.
+  tags:
+  - remote-control
+  - subscription
+- id: ch03-23-remote-control-005
+  difficulty: intermediate
+  front: Where does code actually execute during a Remote Control session — on your machine or in the cloud?
+  back: BECAUSE Remote Control uses your local machine as the execution engine with the Anthropic API as a message relay, THEREFORE all code runs locally on your machine. The web or mobile interface is just a window into the local session.
+  why: Addresses the most common misconception about Remote Control architecture.
+  tags:
+  - remote-control
+  - architecture
+- id: ch03-23-remote-control-006
+  difficulty: intermediate
+  front: Why does Remote Control use outbound-only HTTPS connections?
+  back: BECAUSE inbound connections would require opening ports on the user's machine and changing firewall rules, THEREFORE outbound-only HTTPS means no firewall changes are needed — the local session calls out to the Anthropic API, which routes messages between devices.
+  why: Connects the security design choice to practical network configuration impact.
+  tags:
+  - remote-control
+  - security
+- id: ch03-23-remote-control-007
+  difficulty: intermediate
+  front: What is the difference between /rc and claude remote-control?
+  back: /rc enables Remote Control within an existing session and carries over conversation history. claude remote-control starts a fresh session and supports --verbose, --sandbox, and --no-sandbox flags that /rc does not.
+  tags:
+  - remote-control
+  - commands
+- id: ch03-23-remote-control-008
+  difficulty: intermediate
+  front: Why does the tmux survival trick prevent session death when you close the terminal?
+  back: BECAUSE tmux runs as a separate server process independent of your terminal window, THEREFORE the Claude process stays alive inside tmux even after the terminal that started it is closed.
+  why: Explains the process lifecycle relationship between terminal emulators, tmux, and child processes.
+  tags:
+  - remote-control
+  - tmux
+- id: ch03-23-remote-control-009
+  difficulty: advanced
+  front: When should you use Remote Control instead of Claude Code on the Web?
+  back: BECAUSE Remote Control runs on your local machine with access to your filesystem, MCP servers, and project configuration, THEREFORE use it when you need your local environment accessible from another device. Use Claude Code on the Web when you want to work without any local machine — no repo cloned, no local setup needed.
+  why: Tests understanding of the architectural difference driving the decision framework.
+  tags:
+  - remote-control
+  - decision-framework
+- id: ch03-23-remote-control-010
+  difficulty: advanced
+  front: Why is combining worktrees with Remote Control more powerful than either alone?
+  back: BECAUSE worktrees provide branch isolation (changes do not affect your main working directory) and Remote Control provides device mobility (monitor from phone), THEREFORE combining them gives you isolated, monitorable parallel work — feature development runs safely in a separate directory while you stay informed from anywhere.
+  why: Tests synthesis of two separate concepts into a combined workflow design.
+  tags:
+  - remote-control
+  - worktrees
+  - power-combo
+- id: ch03-23-remote-control-011
+  difficulty: intermediate
+  front: What happens to a Remote Control session if your machine loses network for more than 10 minutes?
+  back: The session times out and the process exits. You need to run claude remote-control again to start a new session.
+  tags:
+  - remote-control
+  - limitations
+- id: ch03-23-remote-control-012
+  difficulty: basic
+  front: How many remote sessions can a single Claude Code instance support at a time?
+  back: One remote session at a time per Claude Code instance.
+  tags:
+  - remote-control
+  - limitations

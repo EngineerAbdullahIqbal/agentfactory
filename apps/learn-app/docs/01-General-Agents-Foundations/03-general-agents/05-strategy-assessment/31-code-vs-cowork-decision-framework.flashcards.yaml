@@ -1,47 +1,47 @@
 deck:
-  id: "ch03-29-code-vs-cowork"
+  id: "ch03-31-code-vs-cowork"
   title: "Code vs. Cowork: A Decision Framework"
   description: "Choosing between Claude Code and Claude Cowork based on task type, hybrid workflow patterns, and the convergence path."
   tags: ["claude-code", "claude-cowork", "decision-framework", "hybrid-workflows"]
   version: 1
 
 cards:
-  - id: "ch03-29-code-vs-cowork-001"
+  - id: "ch03-31-code-vs-cowork-001"
     type: recall
     front: "What is the simple rule for choosing between Claude Code and Claude Cowork?"
     back: "Code for code, Cowork for documents."
     tags: ["decision-framework", "simple-rule"]
     difficulty: "basic"
 
-  - id: "ch03-29-code-vs-cowork-002"
+  - id: "ch03-31-code-vs-cowork-002"
     type: recall
     front: "What three criteria does the decision framework evaluate when choosing between Claude Code and Cowork?"
     back: "1. Primary artifact type\n2. Goal\n3. Comfort level"
     tags: ["decision-framework", "criteria"]
     difficulty: "basic"
 
-  - id: "ch03-29-code-vs-cowork-003"
+  - id: "ch03-31-code-vs-cowork-003"
     type: recall
     front: "Claude Code has native git operations. What does Claude Cowork have instead?"
     back: "Native browser integration and Connectors."
     tags: ["interface-comparison", "capabilities"]
     difficulty: "basic"
 
-  - id: "ch03-29-code-vs-cowork-004"
+  - id: "ch03-31-code-vs-cowork-004"
     type: recall
     front: "What three hybrid workflow patterns combine Claude Code and Cowork?"
     back: "1. Development + Documentation\n2. Analysis + Presentation\n3. Script + Distribution"
     tags: ["hybrid-workflows", "patterns"]
     difficulty: "intermediate"
 
-  - id: "ch03-29-code-vs-cowork-005"
+  - id: "ch03-31-code-vs-cowork-005"
     type: recall
     front: "What three things do Claude Code and Claude Cowork share under the hood?"
     back: "Same Claude model, same agentic architecture, same Skills system."
     tags: ["shared-architecture", "interface-comparison"]
     difficulty: "basic"
 
-  - id: "ch03-29-code-vs-cowork-006"
+  - id: "ch03-31-code-vs-cowork-006"
     type: thinking
     front: "Why do hybrid workflows using both Code and Cowork outperform picking a single interface?"
     back: "BECAUSE each interface is optimized for different artifact types, THEREFORE splitting work at natural boundaries uses each tool's strength instead of forcing one to handle what the other does better."
@@ -49,7 +49,7 @@ cards:
     difficulty: "intermediate"
     why: "Where are the natural boundaries in your own work where you'd switch interfaces?"
 
-  - id: "ch03-29-code-vs-cowork-007"
+  - id: "ch03-31-code-vs-cowork-007"
     type: thinking
     front: "How can a Skill created in Claude Code also work in Claude Cowork?"
     back: "BECAUSE Skills encode expertise rather than interface-specific behavior, THEREFORE the same SKILL.md runs in both — the Skill provides knowledge while the interface provides the execution mechanism."
@@ -57,7 +57,7 @@ cards:
     difficulty: "intermediate"
     why: "What kind of Skill content would break this portability by being interface-dependent?"
 
-  - id: "ch03-29-code-vs-cowork-008"
+  - id: "ch03-31-code-vs-cowork-008"
     type: thinking
     front: "Why should you invest in agentic reasoning and Skill design rather than interface-specific habits?"
     back: "BECAUSE Code and Cowork are converging into a unified interface, THEREFORE interface-specific habits become obsolete — but agentic reasoning and Skill design transfer because they are independent of how you access Claude."
@@ -65,7 +65,7 @@ cards:
     difficulty: "intermediate"
     why: "Which specific interface habits would become obsolete after convergence?"
 
-  - id: "ch03-29-code-vs-cowork-009"
+  - id: "ch03-31-code-vs-cowork-009"
     type: thinking
     front: "A data science project needs Python scripts, Jupyter notebooks, and a stakeholder PDF report. Why use both interfaces?"
     back: "BECAUSE Code handles Python with terminal and git integration while Cowork handles PDF reports with document Skills, THEREFORE using both covers the full workflow — neither alone handles both needs efficiently."
@@ -73,7 +73,7 @@ cards:
     difficulty: "intermediate"
     why: "At what point in this workflow would you switch from Code to Cowork?"
 
-  - id: "ch03-29-code-vs-cowork-010"
+  - id: "ch03-31-code-vs-cowork-010"
     type: thinking
     front: "Why does choosing between Claude Code and Cowork matter less over time?"
     back: "BECAUSE the interfaces are converging toward a unified experience, THEREFORE today's choice creates no lock-in — the underlying mental models of agentic reasoning, Skill design, and workflow thinking transfer regardless."

@@ -18,5 +18,5 @@ Safe, effective Cowork use rests on one security principle — folder access is 
 - Confusing current limitations with the tool being unready — Cowork is production-capable within its current scope
 
 ### Connections
-- **Builds on**: Lessons 19-26 (full Cowork chapter — agentic tasks, Skills, browser integration, Plugins)
-- **Leads to**: Lesson 28 (Cowork built-in skills)
+- **Builds on**: Lessons 24-28 (full Cowork chapter — agentic tasks, Skills, browser integration, Plugins)
+- **Leads to**: Lesson 30 (Cowork built-in skills)

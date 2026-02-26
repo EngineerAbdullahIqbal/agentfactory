@@ -1,54 +1,54 @@
 deck:
-  id: "ch03-30-skills-to-business"
+  id: "ch03-32-skills-to-business"
   title: "From Skills to Business: Monetizing Agent Expertise"
   description: "Digital FTE economics, four revenue models, the Agent Factory business model, and what you can sell today."
   tags: ["business-model", "digital-fte", "monetization", "agent-factory"]
   version: 1
 
 cards:
-  - id: "ch03-30-skills-to-business-001"
+  - id: "ch03-32-skills-to-business-001"
     type: recall
     front: "Traditional consulting: sell your time hourly. Selling an Agent Skill?"
     back: "Encode expertise once, sell it repeatedly to unlimited customers."
     tags: ["skills-as-ip", "consulting"]
     difficulty: "basic"
 
-  - id: "ch03-30-skills-to-business-002"
+  - id: "ch03-32-skills-to-business-002"
     type: recall
     front: "What is a Digital FTE?"
     back: "An AI agent packaged and priced like an employee unit."
     tags: ["digital-fte", "definition"]
     difficulty: "basic"
 
-  - id: "ch03-30-skills-to-business-003"
+  - id: "ch03-32-skills-to-business-003"
     type: recall
     front: "What are the four revenue models for AI agents?"
     back: "1. Subscription\n2. Success fee\n3. License\n4. Marketplace"
     tags: ["revenue-models", "monetization"]
     difficulty: "basic"
 
-  - id: "ch03-30-skills-to-business-004"
+  - id: "ch03-32-skills-to-business-004"
     type: recall
     front: "What is the Agent Factory business workflow from expertise to revenue?"
     back: "Expertise -> Specification -> Claude Code -> Agent + Skills -> Revenue"
     tags: ["agent-factory", "workflow"]
     difficulty: "intermediate"
 
-  - id: "ch03-30-skills-to-business-005"
+  - id: "ch03-32-skills-to-business-005"
     type: recall
     front: "What three revenue models can you use immediately after Chapter 3?"
     back: "1. Skill licenses\n2. Done-for-you services\n3. Consulting + handoff"
     tags: ["monetization", "immediate-revenue"]
     difficulty: "intermediate"
 
-  - id: "ch03-30-skills-to-business-006"
+  - id: "ch03-32-skills-to-business-006"
     type: recall
     front: "In the Digital SDR case study, what were the cost and volume results?"
     back: "80% cost cut, 20x volume increase."
     tags: ["digital-fte", "case-study"]
     difficulty: "basic"
 
-  - id: "ch03-30-skills-to-business-007"
+  - id: "ch03-32-skills-to-business-007"
     type: thinking
     front: "Why is cloning a Digital FTE fundamentally different from hiring another employee?"
     back: "BECAUSE cloning a Digital FTE is instant and zero-cost with no recruiting, training, or ramp time, THEREFORE each clone maintains identical quality — unlike new hires who vary in capability and take months to onboard."
@@ -56,7 +56,7 @@ cards:
     difficulty: "intermediate"
     why: "What kinds of work resist this cloning advantage?"
 
-  - id: "ch03-30-skills-to-business-008"
+  - id: "ch03-32-skills-to-business-008"
     type: thinking
     front: "Why does the Agent Factory business model produce compounding returns?"
     back: "BECAUSE creation cost is low (Claude Code does the work) while resale value is high and scalability is infinite, THEREFORE each Skill earns more over time without proportional cost increases — producing compounding returns."
@@ -64,7 +64,7 @@ cards:
     difficulty: "intermediate"
     why: "How does this differ from scaling a traditional SaaS product?"
 
-  - id: "ch03-30-skills-to-business-009"
+  - id: "ch03-32-skills-to-business-009"
     type: thinking
     front: "How do Digital FTEs achieve 90-95% cost savings per task compared to human employees?"
     back: "BECAUSE Digital FTEs run 24/7 without salary, benefits, or ramp time, THEREFORE marginal cost per task drops to API compute cents versus human labor dollars — achieving 90-95% savings."
@@ -72,7 +72,7 @@ cards:
     difficulty: "intermediate"
     why: "Which types of tasks see the largest savings, and which resist automation?"
 
-  - id: "ch03-30-skills-to-business-010"
+  - id: "ch03-32-skills-to-business-010"
     type: thinking
     front: "Why is the OpenAI Apps marketplace compared to the mobile App Store moment?"
     back: "BECAUSE the marketplace offers 800M+ users with no sales friction and single-click adoption, THEREFORE it replicates the App Store dynamics that let individual developers reach millions without enterprise sales cycles."
@@ -80,7 +80,7 @@ cards:
     difficulty: "advanced"
     why: "What determines whether a Skill wins in a marketplace versus a direct sales model?"
 
-  - id: "ch03-30-skills-to-business-011"
+  - id: "ch03-32-skills-to-business-011"
     type: thinking
     front: "Why can't you deploy customer-facing production agents after Chapter 3 alone?"
     back: "BECAUSE production agents need hosted APIs, guardrails, and safety controls beyond Skills and MCP, THEREFORE Chapter 3 alone is insufficient — Agent SDKs and deployment patterns taught in Part 6 are required."
@@ -88,7 +88,7 @@ cards:
     difficulty: "intermediate"
     why: "What could go wrong if you deployed a Skill directly to customers without production guardrails?"
 
-  - id: "ch03-30-skills-to-business-012"
+  - id: "ch03-32-skills-to-business-012"
     type: thinking
     front: "A consultant earns $200/hour reviewing contracts. How does encoding that expertise into a Skill change the economics?"
     back: "BECAUSE the Skill serves unlimited clients simultaneously at near-zero marginal cost, THEREFORE revenue decouples from time — one hour of encoding replaces thousands of consulting hours."

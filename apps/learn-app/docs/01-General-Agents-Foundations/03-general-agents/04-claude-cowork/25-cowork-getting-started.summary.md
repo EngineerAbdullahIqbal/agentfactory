@@ -23,5 +23,5 @@ Setting up Claude Cowork is a one-time configuration of three things—installin
 
 ### Connections
 
-- **Builds on**: Claude Cowork concepts and the agent vs. chatbot distinction from Lesson 22
-- **Leads to**: Practical Cowork workflows for documents and file operations (Lesson 24)
+- **Builds on**: Claude Cowork concepts and the agent vs. chatbot distinction from Lesson 24
+- **Leads to**: Practical Cowork workflows for documents and file operations (Lesson 26)

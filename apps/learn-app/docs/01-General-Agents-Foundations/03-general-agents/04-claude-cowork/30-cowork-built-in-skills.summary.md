@@ -18,5 +18,5 @@ Cowork ships with four pre-installed Skills for common document formats — docx
 - Treating built-in Skills and custom Skills as interchangeable — they serve different purposes and are most powerful when combined
 
 ### Connections
-- **Builds on**: Lesson 26 (Plugins and Connectors — Skills as Plugin components), Lesson 27 (safety and limitations)
+- **Builds on**: Lesson 28 (Plugins and Connectors — Skills as Plugin components), Lesson 29 (safety and limitations)
 - **Leads to**: Final Cowork lesson on choosing between Claude Code and Claude Cowork

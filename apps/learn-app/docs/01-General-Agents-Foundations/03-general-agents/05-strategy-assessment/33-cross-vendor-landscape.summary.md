@@ -33,5 +33,5 @@ The skills you learned in this chapter aren't Claude Code-specific—they're ind
 
 ### Connections
 - **Builds on**: All Chapter 3 concepts (CLAUDE.md, Skills, MCP, hooks, plugins, subagents, teams) are now understood as portable industry patterns
-- **Leads to**: Chapter Quiz (Lesson 32) testing understanding across all 31 lessons, then application in later chapters
+- **Leads to**: Chapter Quiz (Lesson 34) testing understanding across all 33 lessons, then application in later chapters
 - **Career Impact**: Investment in these patterns compounds across every tool you touch—learning one deeply means learning the underlying architecture of all agentic coding tools

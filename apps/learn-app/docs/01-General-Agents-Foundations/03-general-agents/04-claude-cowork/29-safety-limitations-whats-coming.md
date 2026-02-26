@@ -1,9 +1,9 @@
 ---
 slug: /General-Agents-Foundations/general-agents/safety-limitations-whats-coming
 title: "Safety, Limitations, and What's Coming"
-sidebar_position: 27
+sidebar_position: 29
 chapter: 3
-lesson: 27
+lesson: 29
 duration_minutes: 14
 chapter_type: Concept
 running_example_id: safety-and-limitations
@@ -86,7 +86,7 @@ teaching_guide:
 
 # Legacy compatibility (Docusaurus)
 prerequisites:
-  - "Completion of Lessons 19-23 in this chapter"
+  - "Completion of Lessons 24-28 in this chapter"
   - "Working Claude Cowork installation"
 ---
 
