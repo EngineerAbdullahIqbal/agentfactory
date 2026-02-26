@@ -79,7 +79,7 @@ Not everyone needs every lesson. Choose the path that fits your situation:
   → Core Track: L1, L2, L3, L5, L9, L12 — ~6.5 hours
 
 ▸ Want full Linux operational fluency for ongoing agent work?
-  → Full Track: all 12 lessons — ~10.5 hours
+  → Full Track: Lessons 1-12 — ~10.5 hours
 
 ▸ Already know basic Linux but want agent-specific skills?
   → Skip to L5 (Bash), then L9 (Systemd), then L12 (Capstone) — ~3.5 hours
@@ -118,7 +118,7 @@ Not everyone needs every lesson. Choose the path that fits your situation:
 
 **Core Track** (~6.5 hours): Lessons 1, 2, 3, 5, 9, 12 — the minimum path to a production agent deployment.
 
-**Full Track** (~10.5 hours): All 12 lessons for complete Linux operational fluency.
+**Full Track** (~10.5 hours): Lessons 1-12 for complete Linux operational fluency.
 
 ## Prerequisites
 

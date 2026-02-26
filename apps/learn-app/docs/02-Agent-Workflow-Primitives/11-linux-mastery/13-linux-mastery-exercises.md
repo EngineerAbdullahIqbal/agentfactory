@@ -86,7 +86,7 @@ teaching_guide:
 
 # Practice: Linux Mastery Exercises
 
-These exercises cover all 12 lessons of Chapter 11. Rather than one undifferentiated 3-hour block, they are organized into five sessions matching the chapter's session structure. Each session builds directly on the lessons in that group.
+These exercises cover the 12 instructional lessons of Chapter 11 (Lessons 1-12). Rather than one undifferentiated 3-hour block, they are organized into five sessions matching the chapter's session structure. Each session builds directly on the lessons in that group.
 
 **How to use this lesson:**
 - Complete one session per day if you want spaced practice
@@ -572,7 +572,7 @@ Lessons covered: Advanced Patterns & Reusable Skills, Capstone Deployment
 
 > **Choose one (or more). This is where everything comes together — no starter prompts provided.**
 
-Capstones are different from the exercises above. There are no guided prompts — you design the entire approach yourself. Each project requires applying skills from across all 12 lessons to solve a realistic production scenario. Where module exercises test individual skills, capstones test your ability to orchestrate those skills into a coherent, documented pipeline. The quality of your documentation matters as much as the result — someone should be able to follow your process and reproduce it on a different server.
+Capstones are different from the exercises above. There are no guided prompts — you design the entire approach yourself. Each project requires applying skills from across Lessons 1-12 to solve a realistic production scenario. Where module exercises test individual skills, capstones test your ability to orchestrate those skills into a coherent, documented pipeline. The quality of your documentation matters as much as the result — someone should be able to follow your process and reproduce it on a different server.
 
 <ExerciseCard id="A" title="Full Production Deployment" />
 
