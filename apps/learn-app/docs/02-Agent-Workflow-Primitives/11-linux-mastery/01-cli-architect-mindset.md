@@ -1,5 +1,6 @@
 ---
 sidebar_position: 1
+sidebar_label: "Lesson 1: The CLI Architect Mindset"
 title: "The CLI Architect Mindset"
 description: "Discover why command-line mastery is essential for building AI agents that live on servers, and learn to navigate the Linux filesystem with confidence"
 keywords: ["linux", "cli", "terminal", "shell", "bash", "filesystem", "navigation", "pwd", "ls", "cd", "paths", "agent deployment"]

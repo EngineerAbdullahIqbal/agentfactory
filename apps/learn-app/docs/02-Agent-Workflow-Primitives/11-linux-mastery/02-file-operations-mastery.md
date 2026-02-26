@@ -1,5 +1,6 @@
 ---
 sidebar_position: 2
+sidebar_label: "Lesson 2: File Operations Mastery"
 chapter: 11
 lesson: 2
 title: "File Operations Mastery"

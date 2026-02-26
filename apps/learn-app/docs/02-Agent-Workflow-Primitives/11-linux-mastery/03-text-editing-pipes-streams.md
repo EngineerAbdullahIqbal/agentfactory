@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+sidebar_label: "Lesson 3: Text Editing, Pipes & I/O Streams"
 chapter: 11
 lesson: 3
 title: "Text Editing, Pipes & I/O Streams"
