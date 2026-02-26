@@ -71,9 +71,9 @@ teaching_guide:
     - "The verification-first orchestration pattern (test data → verify → real data) is the capstone's central contribution — it combines every lesson into one disciplined workflow"
     - "All Seven Principles appeared naturally in a single workflow — presented as a brief callback to Chapter 6 rather than a full exercise, since students already did the mapping in Ch6 L9"
     - "The 'NEEDS REVIEW' section demonstrates that good automation flags ambiguity for human judgment rather than making silent decisions"
-    - "The CSV merging technique (head -1 for header + tail -n +2 -q for data rows) is a practical Unix pattern students will reuse whenever combining structured files"
+    - "The CSV merging technique (head -1 for header + tail -n +2 -q for data rows) is introduced here where it is needed — processing a full year of monthly files at scale"
   misconceptions:
-    - "Students think the capstone requires new skills — it actually requires orchestrating Lessons 1-5 in sequence, which is a different and harder challenge than learning each individually"
+    - "Students think the capstone requires new skills — it actually requires orchestrating Lessons 1-6 in sequence, which is a different and harder challenge than learning each individually"
     - "Students may skip the verification step because they trust the categorizer from Lesson 5 — the capstone insists on verification with test data even for tools that worked before, because data changes"
     - "Students assume 'accountant-ready report' means perfect categorization — the NEEDS REVIEW section shows that flagging ambiguity is more professional than guessing"
   discussion_prompts:
@@ -86,22 +86,16 @@ teaching_guide:
     - "The reflection table (what it looked like vs what you actually learned) is a powerful closing tool — have students add their own row for what THEY learned that is not in the table"
     - "End by asking students to name one domain outside tax prep where the verification-first orchestration pattern would apply — this ensures transfer learning"
   assessment_quick_check:
-    - "Ask students to describe the five steps of the capstone workflow from memory: test data, build categorizer, verify, process real files, flag ambiguous"
+    - "Ask students to describe the capstone workflow steps from memory: test data, build categorizer, verify, combine multi-file CSVs, process real files, flag ambiguous"
     - "Ask: 'Why does the workflow insist on verification BEFORE processing real files?' — tests understanding of verification-first as a principle, not just a step"
     - "Have students map at least 5 of the 7 principles to specific capstone steps from memory"
 ---
 
 # Capstone: Tax Season Prep
 
-You spent five lessons building tools. Each works. Each is verified. Now put them together.
+Six tools, five lessons of verification habits, one question: can you orchestrate them into a workflow that runs every year?
 
-From the very first lesson, the README promised you this:
-
-```bash
-cat ~/finances/2025/*.csv | tax-prep
-```
-
-That command doesn't exist yet. This lesson builds it — then shows you how the same pattern transfers to any domain you work in.
+You have a library of Unix-styled Python commands in `~/tools`, a verification habit that won't let you submit numbers you haven't proved, and 12 months of bank CSVs sitting in `~/finances/2025/`. Now put them together.
 
 :::tip No bank CSV yet? Start here.
 
@@ -127,13 +121,16 @@ Those hand-calculated numbers are your verification baseline.
 
 ## Step 1: Take Inventory
 
-You have three tools in `~/tools`:
+You have a library of tools in `~/tools`:
 
-| Tool | What It Does |
-|------|-------------|
-| `sum.py` | Sums decimal numbers from stdin |
-| `sum-expenses.py` | Extracts and sums the Amount column from bank CSVs |
-| `tax-categorize.py` | Categorizes transactions, prints subtotals by category |
+| Tool | What It Does | Built In |
+|------|-------------|----------|
+| `sum.py` | Sums decimal numbers from stdin | Lesson 1 |
+| `sum-expenses.py` | Extracts and sums the Amount column from bank CSVs | Lesson 3 |
+| `extract-column.py` | Pulls one column from any CSV | Lesson 4 |
+| `filter.py` | Keeps numbers matching a condition | Lesson 4 |
+| `stats.py` | Prints sum, count, average, min, max | Lesson 4 |
+| `tax-categorize.py` | Categorizes transactions, prints subtotals by category | Lesson 5 |
 
 What's missing: a `tax-prep` command that adds a POTENTIAL DEDUCTIONS total and runs from any folder without typing `python3 ~/tools/...`.
 
@@ -241,7 +238,7 @@ Business: $89.50
 POTENTIAL DEDUCTIONS: $408.62
 ```
 
-DR PEPPER SNAPPLE and CVSMITH CONSULTING are absent. The totals match your hand calculations. That's the verification. Now you can trust it on real data.
+DR PEPPER SNAPPLE and CVSMITH CONSULTING are absent. The totals match your hand calculations. Now you can trust it on real data.
 
 :::warning Checkpoint: Prove tax-prep Is Permanent
 
@@ -255,7 +252,31 @@ If you see the report — your command is installed. If you see "command not fou
 
 ## Step 4: Process a Full Year
 
-For multiple monthly statements, combine them first:
+Your bank exports one CSV per month. By year's end, you'll have twelve files. If you `cat *.csv` to combine them, every file's header row — `Date,Description,Amount` — ends up mixed into the data. Your script sees the header eleven times where it expects numbers.
+
+The fix uses two commands you already know from Chapter 8:
+
+```bash
+# Header from first file only
+head -1 ~/finances/2025/january.csv > ~/finances/combined-2025.csv
+
+# Data rows from ALL files (skip each file's header)
+tail -n +2 -q ~/finances/2025/*.csv >> ~/finances/combined-2025.csv
+
+# Now process the clean combined file
+cat ~/finances/combined-2025.csv | tax-prep
+```
+
+| Command | What It Does |
+|---------|-------------|
+| `head -1` | First line only (the header row) |
+| `tail -n +2` | Everything from line 2 onward (skips header) |
+| `-q` | Quiet mode — no filename prefixes in output |
+| `>>` | Append (don't overwrite) |
+
+Result: one file, one header row, all data rows.
+
+For multiple monthly statements, you can also skip the intermediate file entirely:
 
 ```bash
 # Combine 12 months into one file (single header, all data rows)
@@ -285,137 +306,98 @@ Remember the Seven Principles from Chapter 6? You just used all of them in one w
 | **Bash is the Key** | `cat`, `head`, `tail`, pipes orchestrated all data flow |
 | **Code as Universal Interface** | Python scripts executed computation — no hallucinated math |
 | **Verification as Core Step** | Test data with hand-calculated totals BEFORE real files |
-| **Small, Reversible Decomposition** | Five standalone tools, each testable independently |
+| **Small, Reversible Decomposition** | Composable single-purpose tools (L4), each testable independently |
 | **Persisting State in Files** | Scripts in `~/tools`, report saved to a file |
 | **Constraints and Safety** | False positive guards prevented miscategorized deductions |
 | **Observability** | Every transaction printed before the totals section |
 
-## Worked Example: Server Log Analysis
-
-The same pattern — build tools, verify with known data, process everything — transfers to any domain with CSV data. Here's how it looks on server logs.
-
-```
-You: I have a folder ~/logs/2025/ with weekly server log CSVs
-(week01.csv through week52.csv). Each has timestamp, endpoint,
-status_code, response_time_ms.
-
-Help me:
-1. Categorize responses: Success (2xx), Client Error (4xx), Server Error (5xx)
-2. Calculate error rates per category
-3. Flag endpoints with unusually high error rates
-
-IMPORTANT: Verify with test data before processing real logs.
-```
-
-```
-Claude Code: Verify first — smart. Let me set up the workflow.
-
-[Creates: test_week01.csv]
-timestamp,endpoint,status_code,response_time_ms
-2025-01-06T08:00:00,/api/users,200,45
-2025-01-06T08:01:00,/api/orders,201,120
-2025-01-06T08:02:00,/api/users,404,12
-2025-01-06T08:03:00,/health,404,3
-2025-01-06T08:04:00,/api/orders,500,5002
-2025-01-06T08:05:00,/api/payments,200,89
-2025-01-06T08:06:00,/api/payments,502,30001
-
-Expected: Success=3, Client Error=2, Server Error=2
-
-[Creates: log-analyzer.py]
-[Runs verification against test data]
-
-NEEDS REVIEW:
-  - /health 404 (3ms) — health check failures are often expected during deployment
-
-That /health 404 is the DR PEPPER of server logs. Adding it to known-benign patterns.
-
-[Updates log-analyzer.py with KNOWN_BENIGN list]
-[Re-runs — totals match]
-
-Verified. Ready for real logs.
-```
-
-```
-You: Verified. Process all 52 weekly files.
-```
-
-```
-Claude Code:
-[Runs: head -1 week01.csv > all-2025.csv]
-[Runs: tail -n +2 -q week*.csv >> all-2025.csv]
-[Runs: python log-analyzer.py all-2025.csv > ops-report-2025.txt]
-
-SUCCESS (2xx): 847,892 requests (94.8%) — Avg 78.3ms
-CLIENT ERROR (4xx): 38,456 requests (4.3%)
-SERVER ERROR (5xx): 7,855 requests (0.9%)
-
-HIGH ERROR ENDPOINTS:
-  /api/payments — 8.2% error rate — INVESTIGATE
-  /api/search — 6.1% error rate — INVESTIGATE
-
-NEEDS REVIEW (31 items): /api/v1/legacy 503 (892x), /api/webhooks 408 (234x)...
-
-Report saved: ops-report-2025.txt
-```
-
-Same five steps. Different domain. The /health 404 is the DR PEPPER of server logs — a false positive with a different name but the same solution. The pattern transferred completely.
-
-## The CSV Merging Technique
-
-The agent combined multiple CSVs without duplicating headers. Worth knowing for any multi-file workflow:
+:::tip When Things Break — Quick Diagnostic Chain
+Six months from now, something will stop working. Maybe you updated your shell, maybe Python changed versions, maybe you moved to a new machine. Here's what to check:
 
 ```bash
-# Header from first file only
-head -1 january.csv > combined.csv
+# 1. Does the alias exist?
+alias tax-prep
+# If "not found" → re-add to ~/.zshrc (or ~/.bashrc), then source
 
-# Data rows from ALL files (skip each file's header)
-tail -n +2 -q *.csv >> combined.csv
+# 2. Does the script exist where the alias points?
+ls -la ~/tools/tax-categorize.py
+# If "not found" → script was moved or deleted
+
+# 3. Can the script run?
+python3 ~/tools/tax-categorize.py <<< "Date,Description,Amount"
+# If error → Python version mismatch or missing shebang
 ```
 
-| Command | What It Does |
-|---------|-------------|
-| `head -1` | First line only (the header row) |
-| `tail -n +2` | Everything from line 2 onward (skips header) |
-| `-q` | Quiet mode — no filename prefixes in output |
-| `>>` | Append (don't overwrite) |
+| Symptom | Check | Fix |
+|---------|-------|-----|
+| "command not found" | `alias tax-prep` | Re-add alias to shell config, then `source` |
+| "No such file" | `ls ~/tools/tax-categorize.py` | Script was moved — update the alias path |
+| "Permission denied" | `ls -la ~/tools/tax-categorize.py` | Re-run `chmod +x ~/tools/tax-categorize.py` |
+| Script errors on run | `python3 --version` | Python version changed — check shebang line |
 
-Result: one file, one header row, all data rows.
+Setup is the agent's job. Diagnosis is yours — because when it breaks at 11pm before a deadline, you need to know the three places to look.
+:::
 
 ---
 
 ## The Victory
 
-**Before Chapter 9:**
+Before this chapter, Bash couldn't add decimals and you had no way to catch silent bugs in agent-generated code. Now you have a library of verified Unix-styled Python commands, a verification habit that applies to any domain, and the instinct to catch the agent's mistakes before they become yours. Tax prep was the exercise. The skill is the workflow.
 
-- Bash could not add decimals
-- Asking AI to calculate felt risky (because it is)
-- Manual spreadsheet work for any numerical analysis
-- No systematic way to catch silent bugs in agent-generated code
+## Challenge: Prove It Transfers (30 Minutes)
 
-**After Chapter 9:**
+You've run the tax prep workflow on financial data. Lesson 5 proved it works on server logs. Now prove you can do it from scratch on a domain neither lesson covered — no walkthrough, just the goal.
 
-- You know when to prompt directly vs. when to build verified code
-- You verify before you trust — regardless of the domain
-- You catch the agent's mistakes before they become your mistakes
-- You have tools in `~/tools` that work tomorrow, not just today
+Save this as `~/grades/midterm-2025.csv`:
 
-Tax prep was the exercise. The skill is knowing when a wrong number has consequences — and building the verification habit that catches it before anyone else does.
+```csv
+Student,Assignment,Score,Max_Points,Category
+Alice,Homework 1,85,100,homework
+Bob,Homework 1,92,100,homework
+Alice,Quiz 1,18,20,quiz
+Bob,Quiz 1,15,20,quiz
+Charlie,Homework 1,0,100,homework
+Alice,Midterm,78,100,exam
+Bob,Midterm,88,100,exam
+Charlie,Quiz 1,19,20,quiz
+DR CHARLES,Homework 1,95,100,homework
+Alice,EXTRA CREDIT,5,0,bonus
+Charlie,Midterm,72,100,exam
+DR CHARLES,Quiz 1,20,20,quiz
+```
 
-## Reflection: What You Are Actually Learning
+**Your task:**
+
+1. Calculate each student's weighted average (homework 30%, quizzes 20%, exams 50%)
+2. Handle the edge cases: DR CHARLES is a student named Charles, not a "DR" prefix to filter. EXTRA CREDIT has Max_Points=0 — division by zero trap. Charlie has a 0/100 homework
+3. Flag students with any single score below 60%
+4. Produce a grade report with per-student averages and an AT-RISK section
+
+**Hand-calculate first:**
+
+| Student | Homework | Quiz | Exam | Weighted Avg |
+|---------|----------|------|------|-------------|
+| Alice | 85% | 90% | 78% | 82.5% |
+| Bob | 92% | 75% | 88% | 86.6% |
+| Charlie | 0% | 95% | 72% | 55.0% |
+| DR CHARLES | 95% | 100% | — | (no exam) |
+
+**Edge cases to handle:** Charlie has a 0/100 homework — that's your at-risk flag. EXTRA CREDIT has Max_Points=0 — your script crashes or silently produces infinity unless you handle it. DR CHARLES is a student named Charles, not a "DR" prefix to filter.
+
+If your report handles all three edge cases, the pattern transferred. You didn't need bank statements or server logs. You needed the workflow.
+
+## Reflection: What You Actually Learned
 
 The agent wrote all the code. You made all the decisions that mattered.
 
 | What It Looked Like | What You Actually Learned |
 |---------------------|--------------------------|
-| Building sum.py | Directing agents to create tools *you* designed |
-| Testing with known data | Trusting nothing until you have verified it |
-| CSV parsing with Python | Redirecting an agent when its first approach fails |
-| Spotting Dr. Pepper | Finding bugs in output that looks correct |
-| Installing tax-prep | Assembling verified tools into a permanent workflow |
+| Building sum.py and decomposing into tools | Designing Unix-style architectures where each piece is independently testable |
+| Testing with known data, spotting Dr. Pepper | Trusting nothing until you've verified it — and finding bugs in output that looks correct |
+| CSV parsing, redirecting the agent from awk | Redirecting an agent when its first approach fails — your domain knowledge steers the fix |
 | Writing the prompts | Specifying outcomes and interfaces — the one contribution the agent cannot make for itself |
 
-The specific tools (Python, regex, find/xargs) will change. The patterns will not. And the role — human as director, agent as implementer — will not change either.
+The specific tools (Python, regex, find/xargs) will change. The patterns — verify first, compose through pipes, guard against false positives — will not.
 
 ---
 

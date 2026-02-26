@@ -93,7 +93,7 @@ teaching_guide:
 
 # The Testing Loop
 
-Here's a script. It sums numbers from stdin, just like yours. Run it:
+Unix commands return exit codes for a reason — they tell the next command in the pipeline whether to proceed. But exit code 0 only means "didn't crash." It says nothing about whether the answer is right. Here's a script that sums numbers from stdin, just like yours. Run it:
 
 ```python
 # buggy_sum.py - Sums numbers from stdin
@@ -134,6 +134,8 @@ The output says `Total: 40.0`. The exit code is 0. No errors. No warnings. But t
 And here's the uncomfortable part: **if you'd only tested with 10, 20, 30, you'd never have known.** The bug is invisible on "nice" test data. It only surfaces when your input includes numbers starting with high digits — exactly the kind of thing real financial data is full of.
 
 This is the verification paradox. You built sum.py in Lesson 1. It ran. It produced a number. Exit code 0. But you have no evidence it's correct — you've been trusting code you never proved works.
+
+In Chapter 8's file processing lessons, you learned to verify backups before deleting originals — the Safety-First Pattern from Lesson 2 drilled the habit of "check before you act." The same instinct applies here, except the stakes are different. A missing file is obvious. A wrong number is invisible.
 
 ## The Trick
 
@@ -230,6 +232,10 @@ Exit code 0. No errors. No warnings. The answer is wrong — it should be 100 �
 `$?` holds the exit code of the **most recent** command — run `echo $?` immediately after the command you care about.
 :::
 
+:::note Why Your Totals Might Be Off by a Penny
+Python uses floating-point math, which can produce surprises: `0.1 + 0.2` gives `0.30000000000000004`, not `0.3`. For the amounts in this chapter, `round(total, 2)` handles it — and you'll verify the result against known answers anyway. If you ever need penny-perfect precision across thousands of transactions, tell Claude Code: "Use Python's Decimal module for exact arithmetic." For now, `float` plus your verification habit catches any drift before it matters.
+:::
+
 ### Your Python Scripts Return Exit Codes Too
 
 The scripts you're building aren't just passive files — they're commands, and commands return exit codes. Right now, `sum.py` returns 0 when it works and 1 when Python raises an unhandled exception. But you can make that intentional:
@@ -296,20 +302,7 @@ This works because:
 
 The tool changes. The verification pattern stays the same.
 
-## Who Directed What
-
-Step back and look at how the work actually divided in this lesson.
-
-| Decision | Who Made It | Why the Other Couldn't |
-|---|---|---|
-| Test with known-answer data | You | Only you know which answers are easy to verify mentally |
-| Include numbers starting with every digit 0-9 | You | Only you know real financial data includes amounts like $67.80 |
-| Volunteer decimal and negative test cases | Agent | Agent knows common failure modes for float arithmetic |
-| Write automated test assertions | Agent | Agent handles the mechanics of comparison |
-
-The agent is fast at generating test cases. But the agent cannot know which answers are easy for you to verify in your head, or which ranges your real bank data will include. Those decisions required your domain knowledge.
-
-This is the verification version of the director's move: **you set the evidence criteria, the agent generates the evidence.** The human contribution isn't writing Python — it's knowing what "correct" looks like before the test runs.
+The division of labor here is worth noticing: the agent is fast at generating test cases and knows common failure modes (decimals, negatives, empty input). But only you know which answers are easy to verify in your head, and only you know that real bank data includes amounts starting with every digit 0-9. **You set the evidence criteria, the agent generates the evidence.** The human contribution isn't writing Python — it's knowing what "correct" looks like before the test runs.
 
 ## Checkpoint: Verify YOUR sum.py
 
@@ -350,7 +343,7 @@ Think about unusual inputs: empty files, non-numeric lines, very
 large numbers, special characters. List cases I should test.
 ```
 
-**What you're learning:** The director's first move in verification — getting the agent to surface failure modes you haven't considered. You ask for a list, not an answer. The agent contributes technical knowledge (dollar signs break float(), Unicode crashes, overflow is real). You contribute domain knowledge (which of these actually exist in your bank data). Between you, the test plan is more thorough than either could produce alone.
+**What you're learning:** Getting the agent to surface failure modes you haven't considered. You ask for a list, not an answer. The agent contributes technical knowledge (dollar signs break float(), Unicode crashes, overflow is real). You contribute domain knowledge (which of these actually exist in your bank data). Between you, the test plan is more thorough than either could produce alone.
 
 ### Prompt 2: Automate Verification
 
@@ -374,4 +367,4 @@ The script works fine on other inputs. Exit code is 0.
 Help me find the bug. What could cause 60 to be skipped?
 ```
 
-**What you're learning:** The debug version of the director's move. You bring the evidence (expected: 100, actual: 40, exit code: 0). The agent brings mechanism knowledge (line[0] checks, digit ranges, why high-digit numbers get dropped). Neither can debug without the other: you needed to *observe* that 60 was skipped; the agent needed to *know* what code patterns produce that symptom. The division of labor in debugging mirrors the division of labor in building.
+**What you're learning:** Collaborative debugging. You bring the evidence (expected: 100, actual: 40, exit code: 0). The agent brings mechanism knowledge (line[0] checks, digit ranges, why high-digit numbers get dropped). Neither can debug without the other: you needed to *observe* that 60 was skipped; the agent needed to *know* what code patterns produce that symptom.

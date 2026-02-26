@@ -95,11 +95,11 @@ teaching_guide:
 
 # From Broken Math to Your First Tool
 
-Somewhere in your bank statement, Dr. Pepper is hiding among your medical expenses. Not the drink — the merchant name. A simple keyword search for "DR" flags every Dr. Pepper purchase as a doctor visit, silently inflating your tax deductions. File that return and you've committed fraud by algorithm. By the end of this chapter, you'll build a tool that catches exactly that trap — processing a full year of bank statements into an accountant-ready report with one command.
+Bash commands files. `ls`, `find`, `mv`, `cp` — every file operation from Chapter 8 ran through the same foundation. Now try this: type `echo $((14.50 + 23.75))` in your terminal. Syntax error. The tool that moved a thousand files can't add two prices. This is where Bash hits a wall and Python enters your Unix toolkit.
 
-That's what makes computation errors dangerous: they don't look like errors. The total is plausible. You copy it into a spreadsheet, nobody questions it — until someone does the math by hand six months later and the numbers don't add up.
+This chapter teaches you to build Python scripts that slot into your terminal exactly where Bash falls short — reading from stdin, writing to stdout, chaining through pipes. The agent writes the code. You make the decisions. By chapter end, you'll have a library of verified commands that process a full year of bank statements into a tax-ready report. (Along the way, you'll discover that a soda called Dr. Pepper keeps getting flagged as a medical expense — and build the tool that catches it.)
 
-But first, you need to solve a more fundamental problem: your terminal can't even add decimals.
+But first: your terminal can't even add decimals.
 
 ## Watch Bash Fail
 
@@ -142,9 +142,9 @@ The rule for this chapter:
 | "What's the sum of these amounts?" | Unreliable at scale | LLM predicts, doesn't compute   |
 | "Write Python to sum these numbers"| Reliable            | Python executes, doesn't predict |
 
-## Building sum.py with Claude Code
+## Building Your First Python Unix Command
 
-You have a file of expenses, one decimal number per line. You need the total. Bash errors out. LLM head-math hallucinates. You need code that executes.
+You have a file of expenses, one decimal number per line. You need the total. Bash errors out. LLM head-math hallucinates. You need code that executes — and you need it to behave like every other command in your toolkit: read stdin, write stdout, chain with pipes.
 
 :::tip Challenge: 60 Seconds on the Clock
 Before asking Claude for help, try to solve this yourself. You need to sum decimal numbers in the terminal. Bash's `$((...))` won't work. Can you find another way?
@@ -192,27 +192,17 @@ In seconds, you have a reusable tool. The agent didn't calculate in its head (wh
 
 ### What the Agent Built
 
-The key lines in sum.py:
-
-- **`for line in sys.stdin`** -- reads piped input one line at a time
-- **`float(line)`** -- converts text like `"127.89"` to a decimal Python can compute with
-- **`print(f"Total: {total:.2f}")`** -- outputs the result, rounded to 2 decimal places
-
-`sys.stdin` is where piped data arrives. Your script doesn't know or care where the data came from — a file, another command, or typed input. It just reads lines and sums them.
+Three lines make sum.py a Unix command: **`for line in sys.stdin`** reads piped input, **`float(line)`** converts text to decimals, and **`print(f"Total: {total:.2f}")`** writes the result to stdout. Your script doesn't know or care where the data came from — a file, another command, or typed input. It just reads lines and sums them.
 
 ### How the Pipe Connects Everything
 
-When you run `cat expenses.txt | python sum.py`, the pipe takes whatever `cat` outputs and feeds it directly into your script's `sys.stdin`. Small tools, chained together. Every script in this chapter follows that design — it's the Unix philosophy: programs that do one thing well and compose through pipes.
+When you run `cat expenses.txt | python sum.py`, the pipe takes whatever `cat` outputs and feeds it directly into your script's `sys.stdin`. Small tools, chained together — like LEGO bricks that snap together through pipes. A tool that reads stdin and writes stdout is **composable**: it connects to any other tool without modification. Every script in this chapter follows that design.
 
 ### And Sometimes a Script Is the Wrong Tool
 
-You have three receipts from lunch and need to submit a reimbursement. Do you build a script? No. You ask the AI in chat, it adds three numbers, and even if it's off by a cent, nobody cares. The script would take longer to build than the task takes to finish.
+Three receipts from lunch? Just ask the AI to add them — even if it's off by a cent, nobody cares. Same for one-off calculations on data you'll never see again. Scripts pay for themselves when data is too large to sanity-check manually, or when being wrong has consequences.
 
-Same logic applies to one-off calculations on data you'll never see again. A quick sanity check on a number your coworker sent you. A unit conversion you need once. If you'll run the calculation once and delete the data, prompting directly is the right call.
-
-And if the answer is easy to verify by eye — you can glance at the output and know it's right — the overhead of a script isn't earning its keep. Scripts pay for themselves when the data is too large or too complex to sanity-check manually.
-
-The rule: if the calculation is repeated, financial, or where being wrong has consequences, build the script and verify it. If it's one-time and low-stakes, prompt directly.
+The rule: if the calculation is repeated, financial, or high-stakes, build the script and verify it. If it's one-time and low-stakes, prompt directly.
 
 :::warning Stop. Do This Now.
 Open Claude Code. Ask it to build sum.py. Run it on three numbers. Don't proceed to Lesson 2 until you see output in your terminal.
@@ -230,9 +220,9 @@ echo -e "100.50\n25.75\n14.25" | python3 sum.py
 Expected output: `Total: 140.5`
 :::
 
-## Prompt Quality Determines Tool Quality
+## Designing Unix Commands Through Prompts
 
-The prompt you gave Claude Code was specific in two ways: it named the data format (decimal numbers, one per line) and it specified *stdin*. That specificity drove the quality of the result. The same underlying problem — sum decimal numbers — produces three different outcomes depending on how you ask:
+The prompt you gave Claude Code was specific in two ways: it named the data format (decimal numbers, one per line) and it specified *stdin*. Those two details are what made the result a composable Unix command instead of a throwaway answer. The same underlying problem — sum decimal numbers — produces three different outcomes depending on how you ask:
 
 | What you said | What the agent returned | Pipeable? | Works next month? |
 |---|---|---|---|

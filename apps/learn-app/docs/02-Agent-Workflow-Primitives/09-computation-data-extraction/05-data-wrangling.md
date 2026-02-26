@@ -1,21 +1,25 @@
 ---
 sidebar_position: 6
-title: "Data Wrangling"
+title: "Data Wrangling & Domain Transfer"
 chapter: 9
 lesson: 5
 layer: L2
-duration_minutes: 30
-description: "Watch Claude Code categorize bank transactions with regex patterns and false-positive guards, then process multiple files"
+duration_minutes: 40
+description: "Build a tax categorizer with false-positive guards, then prove the entire workflow transfers to server logs"
 keywords:
   [
     "regex",
     "regular expressions",
     "re module",
-    "find",
-    "xargs",
     "data extraction",
     "pattern matching",
     "tax categorization",
+    "false positives",
+    "word boundaries",
+    "batch processing",
+    "domain transfer",
+    "find",
+    "xargs",
   ]
 
 skills:
@@ -33,12 +37,19 @@ skills:
     digcomp_area: "Pattern Recognition"
     measurable_at_this_level: "Student can explain why word boundaries prevent false matches"
 
-  - name: "Batch File Processing"
+  - name: "Iterative Refinement Through Failure"
     proficiency_level: "A2"
-    category: "Technical"
+    category: "Applied"
     bloom_level: "Apply"
-    digcomp_area: "Automation"
-    measurable_at_this_level: "Student uses find and xargs to process multiple files"
+    digcomp_area: "Critical Thinking"
+    measurable_at_this_level: "Student can identify false positives in categorizer output and direct the agent to fix them"
+
+  - name: "Pattern Transfer Across Domains"
+    proficiency_level: "A2"
+    category: "Conceptual"
+    bloom_level: "Apply"
+    digcomp_area: "Computational Thinking"
+    measurable_at_this_level: "Student applies the same verification-first workflow to a non-financial domain"
 
 learning_objectives:
   - objective: "Direct Claude Code to build a transaction categorizer with false-positive guards"
@@ -51,14 +62,19 @@ learning_objectives:
     bloom_level: "Understand"
     assessment_method: "Student can explain why \\bCVS\\b matches 'CVS PHARMACY' but not 'CVSMITH'"
 
-  - objective: "Use find and xargs to batch process multiple CSV files"
+  - objective: "Apply the build-test-fix loop to iteratively improve categorization accuracy"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student executes: find . -name '*.csv' | xargs cat | python tax-categorize.py"
+    assessment_method: "Student identifies false positives and directs agent to add guards"
+
+  - objective: "Apply the computation workflow to a non-financial domain"
+    proficiency_level: "A2"
+    bloom_level: "Apply"
+    assessment_method: "Student builds and verifies a log analyzer using the same patterns from Lessons 1-4"
 
 cognitive_load:
-  new_concepts: 5
-  assessment: "5 concepts (categorization logic, false positives, regex word boundaries, false positive guards, batch processing). Categorization and false positives are A2; regex word boundaries and batch processing with find/xargs stretch into B1 territory. Students are not expected to write regex — only to understand why the agent's patterns work."
+  new_concepts: 4
+  assessment: "4 concepts (categorization logic, false positives/word boundaries, iterative refinement, domain transfer). Within A2 range. The domain transfer adds minimal load because the process is identical — only the vocabulary changes."
 
 differentiation:
   extension_for_advanced: "Handle case sensitivity, regex anchors for precision, more complex patterns"
@@ -67,12 +83,13 @@ differentiation:
 teaching_guide:
   lesson_type: "core"
   session_group: 3
-  session_title: "Data Wrangling and Capstone"
+  session_title: "Data Wrangling, Domain Transfer, and Capstone"
   key_points:
     - "The Dr. Pepper false positive is the chapter's signature teaching moment — simple keyword matching ('DR' in description) silently inflates tax deductions, which is fraud by algorithm"
     - "Regex word boundaries (\\b) solve partial matching: \\bCVS\\b matches 'CVS PHARMACY' but not 'CVSMITH' — this single concept prevents an entire category of false positives"
     - "FALSE_POSITIVES checked BEFORE categories demonstrates that execution order matters — guards must run first or the match happens before the guard can block it"
-    - "The find | xargs cat | python pipeline chains three Unix tools to process 12 months of bank statements in one command — the composability from Lesson 1 scales to real workflows"
+    - "The domain switch from bank statements to server logs proves the tools and patterns are not specific to finance — the /health 404 is the 'Dr. Pepper' of server logs"
+    - "The iterative loop (build → test → find false positives → fix) is the lesson's workflow pattern — emphasize that no one designs perfect categorization rules on the first try"
   misconceptions:
     - "Students think the first categorizer output 'looks right' — the false positives (Dr. Pepper, CVSMITH) are deliberately plausible enough to miss on casual inspection"
     - "Students confuse regex word boundaries with exact string matching — \\bCVS\\b still matches 'CVS PHARMACY' and 'CVS/STORE' because the boundary is at word edges, not string edges"
@@ -84,19 +101,22 @@ teaching_guide:
   teaching_tips:
     - "Let students see the FIRST output (with false positives) and ask them to find the bugs BEFORE revealing them — this builds the inspection habit"
     - "Draw the regex word boundary concept on the board with 'CVSMITH' and show where \\b does and does not trigger — visual learners need to see the boundary positions"
-    - "The batch processing pipeline (find | xargs cat | python) is worth walking through step by step — each pipe adds one capability"
     - "The iterative loop (build → test → find false positives → fix) is the lesson's workflow pattern — emphasize that no one designs perfect categorization rules on the first try"
   assessment_quick_check:
     - "Ask: 'Why does matching DR in a transaction description catch both doctor visits and Dr. Pepper?' — tests understanding of substring vs word boundary matching"
     - "Give students the pattern \\bCVS\\b and ask which of these it matches: 'CVS PHARMACY', 'CVSMITH', 'MY CVS RECEIPT', 'MCVS' — tests regex boundary understanding"
-    - "Ask students to explain the three stages of the batch pipeline: find, xargs cat, python script — tests understanding of Unix composability"
+    - "Ask: 'Why must false positive guards run BEFORE category matching?' — tests understanding of execution order"
 ---
 
 # Data Wrangling
 
-In Lesson 4, you built a permanent toolkit of reusable scripts. Now you'll put one of those tools to work on a real problem: tax categorization.
+:::note Halftime Check: Your Unix Toolkit
+Four lessons in, you have five Python commands that behave like native Unix tools — reading stdin, writing stdout, chaining through pipes. Plus a verification habit and an installation pattern that makes each tool permanent. Everything from here builds on top of that toolkit — not beside it.
+:::
 
-sum-expenses gives you totals. But tax season needs CATEGORIES -- medical, charitable, business. Your accountant doesn't want "Total: $4,215.52." They want:
+In Lesson 4, you decomposed sum-expenses into composable tools — extract-column, filter, stats — each doing one job, chaining through pipes. Those generic tools answer any question you can express as "extract, filter, summarize." But tax season needs a different kind of answer.
+
+sum-expenses gives you totals. But tax season needs CATEGORIES — medical, charitable, business. Your accountant doesn't want "Total: $4,215.52." They want:
 
 - Medical expenses: $1,891.20
 - Charitable donations: $1,550.00
@@ -237,13 +257,14 @@ def categorize(description):
     return None
 ```
 
-Look at what the agent changed -- and WHY each fix solves a specific false positive.
+Two fixes make this work:
 
-**`\bCVS\b` fixes CVSMITH.** The `\b` is a word boundary -- it marks where a word starts or ends. So `\bCVS\b` matches "CVS PHARMACY" (CVS is a complete word) but NOT "CVSMITH" (CVS is part of a longer word). Without boundaries, `CVS` matches any string containing those letters.
+| Fix | What It Does | Example |
+|-----|-------------|---------|
+| `\bCVS\b` (word boundaries) | Matches "CVS" as a complete word only | Matches "CVS PHARMACY", blocks "CVSMITH" |
+| `FALSE_POSITIVES` checked first | Guards run before category matching | "DR PEPPER" excluded before "DR" triggers medical |
 
-**`FALSE_POSITIVES` checked first fixes Dr. Pepper.** The pattern `\bDR\.?\s*PEPPER\b` matches "DR PEPPER" and "DR. PEPPER" (the `\.?` makes the period optional). Because false positives are checked BEFORE categories, Dr. Pepper gets excluded before "DR" can trigger a medical match. Order matters -- guards run first.
-
-**`\b(AMZN|AMAZON)\b` shows the pattern generalizes.** If you later need to match Amazon transactions, the same word boundary technique catches "AMZN" and "AMAZON" without matching "AMAZONIA" or "CAMZN."
+The `\b` is a word boundary — it marks where a word starts or ends. Without it, `CVS` matches any string containing those three letters in sequence. With it, `\bCVS\b` only matches when CVS stands alone. The same technique works for any merchant: `\b(AMZN|AMAZON)\b` catches Amazon without matching "AMAZONIA."
 
 :::tip Extending Categories Without Writing Regex
 You don't need to understand regex to add new merchants. To add TARGET PHARMACY to medical, just tell Claude Code:
@@ -278,69 +299,56 @@ Dr. Pepper and CVSMITH are gone. DR MARTINEZ MEDICAL still matches because it co
 
 **Checkpoint:** Run the categorizer on YOUR bank data from Lesson 3. How many transactions does it categorize? How many false positives do you spot?
 
-## Processing Multiple Files
-
-You have 12 months of bank statements. Processing them one by one would be tedious.
-
-```
-You: I have a folder with 12 months of bank statements (january.csv through
-december.csv). Process them all at once.
-```
-
-```
-Claude Code: I'll use find and xargs to batch process all CSV files.
-
-[Runs: find statements/ -name "*.csv" | xargs cat | python tax-categorize.py]
-
-MEDICAL: CVS/PHARMACY #1234: $45.67
-MEDICAL: WALGREENS #5678: $23.45
-MEDICAL: DR MARTINEZ MEDICAL: $150.00
-MEDICAL: PHARMACY RX PLUS: $67.80
-CHARITABLE: UNITED WAY DONATION: $100.00
-CHARITABLE: RED CROSS DONATION: $50.00
-BUSINESS: OFFICE DEPOT #901: $89.50
-BUSINESS: STAPLES #2233: $42.30
-... (hundreds more lines across 12 months)
-
---- TOTALS ---
-Medical: $1,891.20
-Charitable: $1,550.00
-Business: $774.32
-```
-
-**How the pipeline works:**
-
-```bash
-find statements/ -name "*.csv" | xargs cat | python tax-categorize.py
-```
-
-1. `find` locates all CSV files in the statements folder
-2. `xargs cat` reads them all and combines the output
-3. `tax-categorize.py` categorizes and sums everything
-
-One command processes an entire year of transactions.
-
 :::caution Regex Is a Stopgap, Not a Solution
 The FALSE_POSITIVES list works for known edge cases. But it's brittle — every new false positive requires a manual update. You'll never anticipate every "DR SOMETHING" that isn't a doctor.
 
-In a real workflow, regex handles the high-confidence matches. Everything else goes into a "NEEDS REVIEW" file for human judgment. The capstone in Lesson 6 does exactly this — the report's NEEDS REVIEW section is the honest answer to "what do you do when pattern matching isn't enough?" Don't pretend regex solves semantic ambiguity. It buys you the easy 80%. The hard 20% requires a human.
+In a real workflow, regex handles the high-confidence matches. Everything else goes into a "NEEDS REVIEW" file for human judgment. The capstone does exactly this — the report's NEEDS REVIEW section is the honest answer to "what do you do when pattern matching isn't enough?" Regex buys you the easy 80%. The hard 20% requires a human.
 :::
 
-## The Pattern
+## Prove It Transfers: Server Logs
 
-Two prompt patterns emerged in this lesson:
+Your categorizer catches Dr. Pepper. Your tools chain through pipes. Your bank statement workflow is solid. But here's the question that separates a tutorial exercise from a transferable skill: **does the pattern work on data that isn't bank statements?**
 
-**Categorization:** `"Categorize [data] by [criteria]."`
+Imagine you manage a web application. Your monitoring system exports weekly log CSVs:
 
-Start simple -- let the agent build a first version. Then test it and look for false positives yourself. When you find them, tell the agent: `"[X] is showing up as [Y]. Fix it."` This iterative loop produces better results than trying to anticipate every edge case upfront.
+```csv
+timestamp,endpoint,status_code,response_time_ms
+2025-01-06T08:00:00,/api/users,200,45
+2025-01-06T08:01:00,/api/orders,201,120
+2025-01-06T08:02:00,/api/users,404,12
+2025-01-06T08:03:00,/health,404,3
+2025-01-06T08:04:00,/api/orders,500,5002
+2025-01-06T08:05:00,/api/payments,200,89
+2025-01-06T08:06:00,/api/payments,502,30001
+```
 
-**Batch processing:** `"I have [multiple files matching pattern]. Process them all at once."`
+You need to categorize responses (Success, Client Error, Server Error) and flag problem endpoints. Replace "medical expenses" with "server errors" and you're running the same workflow. Start exactly where you'd start with bank data — test data with known answers:
 
-This signals you want file discovery with `find`, batch execution with `xargs`, and aggregated results.
+```
+You: I have server log CSVs with timestamp, endpoint, status_code,
+response_time_ms columns. Build me a log-analyzer that categorizes
+by status code: Success (2xx), Client Error (4xx), Server Error (5xx).
 
-You've been building tools one at a time: sum.py, a verification workflow, a CSV parser, a permanent alias, a categorizer. Each works. Each is tested. Each handles edge cases. Separately, they're useful. Together, they're a tax preparation system.
+But first — create test data with 7 rows and verify the counts.
+Expected: Success=3, Client Error=2, Server Error=2.
+```
 
-The capstone puts it all together. One conversation. One folder of bank statements. One report your accountant can actually use.
+The agent builds `log-analyzer.py`, runs it on the test data, and the counts match. But scan the output more carefully. That `/health` endpoint returned 404 — is that actually a problem?
+
+### The Dr. Pepper of Server Logs
+
+Health check endpoints return 404 during deployments. It's expected behavior, not an error. But your log analyzer counts it as a client error, inflating your error rate — just like Dr. Pepper inflated your medical deductions.
+
+```
+You: The /health 404 is expected during deployments, not a real error.
+Add a KNOWN_BENIGN list like the FALSE_POSITIVES in the tax categorizer.
+```
+
+The agent adds a guard list. FALSE_POSITIVES became KNOWN_BENIGN. Word boundary regex became endpoint/status_code tuples. The concept — guard against known exceptions before categorizing — is identical. The domain changed; the pattern didn't.
+
+The workflow is the workflow. Build tools, verify first, guard false positives — only the domain knowledge changed. Dr. Pepper became `/health 404`. Medical categories became status codes. And that domain knowledge is yours, not the agent's.
+
+Your categorizer works on one file. But tax season means 12 months of bank statements, not one. The capstone puts it all together.
 
 ---
 
@@ -359,7 +367,7 @@ Write a regex pattern that matches all these but does NOT match:
 Explain why word boundaries matter here.
 ```
 
-**What you're learning:** The director's move for pattern work — you supply the real-world examples (AMZN MKTP US, AMAZON.COM, AMAZON PRIME) AND the false positives to avoid (AMAZONIA, CAMZN). The agent has the regex knowledge. You have the data knowledge. The quality of the pattern is determined by how precisely you describe what should and shouldn't match — not by your ability to write regex.
+**What you're learning:** You supply the real-world examples (AMZN MKTP US, AMAZON.COM, AMAZON PRIME) AND the false positives to avoid (AMAZONIA, CAMZN). The agent has the regex knowledge. You have the data knowledge. The quality of the pattern is determined by how precisely you describe what should and shouldn't match — not by your ability to write regex.
 
 ### Prompt 2: Handle a New False Positive
 
@@ -383,4 +391,4 @@ Help me add these categories to tax-categorize.py:
 What false positives might I need to guard against?
 ```
 
-**What you're learning:** Shifting from reactive to proactive directing. Instead of waiting to discover a false positive, you ask the agent to surface them before they hit real data. "What false positives might I need to guard against?" is a director's question — you're leveraging the agent's pattern knowledge to stress-test your own domain decisions before they cause a problem.
+**What you're learning:** Shifting from reactive to proactive. Instead of waiting to discover a false positive, you ask the agent to surface them before they hit real data. "What false positives might I need to guard against?" leverages the agent's pattern knowledge to stress-test your domain decisions before they cause a problem.

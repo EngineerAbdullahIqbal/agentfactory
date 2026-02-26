@@ -1,284 +1,325 @@
 ---
 sidebar_position: 5
-title: "Your Permanent Toolkit"
+title: "One Tool, One Job"
 chapter: 9
 lesson: 4
 layer: L2
-duration_minutes: 20
-description: "Transform scattered scripts into permanent commands you can run from anywhere, forever"
+duration_minutes: 25
+description: "Decompose a monolithic script into composable Unix-style tools that chain through pipes"
 keywords:
   [
-    "alias",
-    "chmod",
-    "shebang",
-    "shell config",
-    "bashrc",
-    "zshrc",
-    "PATH",
-    "permanent commands",
-    "tools directory",
+    "unix philosophy",
+    "composable tools",
+    "single responsibility",
+    "pipeline",
+    "decomposition",
+    "stdin stdout",
+    "extract column",
+    "filter",
+    "stats",
   ]
 
 # HIDDEN SKILLS METADATA
 skills:
-  - name: "Creating Permanent Commands"
-    proficiency_level: "A2"
-    category: "Technical"
-    bloom_level: "Create"
-    digcomp_area: "System Administration"
-    measurable_at_this_level: "Student creates alias in shell config and verifies it persists across terminal sessions"
-
-  - name: "Understanding Shell Configuration"
-    proficiency_level: "A2"
-    category: "Technical"
-    bloom_level: "Understand"
-    digcomp_area: "Digital Environment"
-    measurable_at_this_level: "Student can explain the role of .bashrc/.zshrc and how aliases persist"
-
-  - name: "Tool Organization Pattern"
+  - name: "Composable Tool Design"
     proficiency_level: "A2"
     category: "Applied"
     bloom_level: "Apply"
+    digcomp_area: "Computational Thinking"
+    measurable_at_this_level: "Student can direct Claude Code to build single-purpose stdin/stdout scripts and chain them with pipes"
+
+  - name: "Understanding the Unix Philosophy"
+    proficiency_level: "A2"
+    category: "Conceptual"
+    bloom_level: "Understand"
     digcomp_area: "Problem Solving"
-    measurable_at_this_level: "Student organizes scripts in ~/tools and creates reusable aliases"
+    measurable_at_this_level: "Student can explain why three small tools are better than one big script with flags"
+
+  - name: "Pipeline Construction"
+    proficiency_level: "A2"
+    category: "Technical"
+    bloom_level: "Apply"
+    digcomp_area: "Digital Content Creation"
+    measurable_at_this_level: "Student can construct multi-step pipelines that answer different data questions from the same source"
 
 learning_objectives:
-  - objective: "Create a persistent shell alias for a Python script"
-    proficiency_level: "A2"
-    bloom_level: "Create"
-    assessment_method: "Student creates alias that works after terminal restart"
-
-  - objective: "Explain how shell config files make aliases permanent"
-    proficiency_level: "A2"
-    bloom_level: "Understand"
-    assessment_method: "Student can describe the role of .bashrc/.zshrc in alias persistence"
-
-  - objective: "Organize scripts into a personal tools directory"
+  - objective: "Direct Claude Code to decompose a monolithic script into three composable tools"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student has ~/tools with executable scripts and working aliases"
+    assessment_method: "Student prompts agent to build extract-column, filter, and stats as separate stdin/stdout scripts"
+
+  - objective: "Explain why small composable tools are more testable and debuggable than large multi-purpose scripts"
+    proficiency_level: "A2"
+    bloom_level: "Understand"
+    assessment_method: "Student articulates why a bug in filter.py only breaks one pipe segment, not the whole pipeline"
+
+  - objective: "Construct pipelines that answer different questions from the same data source"
+    proficiency_level: "A2"
+    bloom_level: "Apply"
+    assessment_method: "Student chains tools in different orders to get expense totals, counts, and top transactions"
 
 cognitive_load:
   new_concepts: 3
-  assessment: "3 concepts (shell config files, aliases, executable permissions) within A2 limit"
+  assessment: "3 concepts (composability principle, tool decomposition, pipeline construction) within A2 limit"
 
 differentiation:
-  extension_for_advanced: "Add ~/tools to PATH instead of using aliases, explore creating bash completion for custom commands"
-  remedial_for_struggling: "Focus on just one alias for sum-expenses. Get that working before adding more."
+  extension_for_advanced: "Build a sort.py tool, explore argument parsing with sys.argv, chain 4+ tools in a single pipeline"
+  remedial_for_struggling: "Focus on understanding the three tools conceptually. Run the pre-built pipeline before building your own."
 
 teaching_guide:
   lesson_type: "core"
   session_group: 2
-  session_title: "Real Data and Permanent Tools"
+  session_title: "Composable Tools and Data Wrangling"
   key_points:
-    - "'If you have to remember where a tool lives, it is not a tool yet' is the lesson's thesis — the gap between 'script that works' and 'tool you actually use' is installation"
-    - "The four-step installation process (organize in ~/tools, chmod +x, alias in shell config, source to reload) is a repeatable pattern for any script in any language"
-    - "The shebang line (#!/usr/bin/env python3) is what makes a script executable without explicitly calling python3 — it bridges the gap between Python scripts and shell commands"
-    - "The checkpoint (close terminal, reopen, verify command works) is the only way to prove the alias is truly permanent — not just loaded in the current session"
+    - "The Unix philosophy — 'do one thing well' — is the design principle behind every tool in this chapter; this lesson makes it explicit"
+    - "sum-expenses.py was secretly three responsibilities in one file (extract, filter, sum) — decomposing it reveals the composable architecture hiding inside"
+    - "P2 (Code as Universal Interface) and P4 (Small, Reversible Decomposition) work together: small tools ARE the interface, and each is independently testable"
+    - "The same data source (bank.csv) answers completely different questions depending on which tools you chain — the data stays fixed, the pipeline changes"
   misconceptions:
-    - "Students think aliases are the same as running 'python3 script.py' — the alias makes the script available by name from any directory, which is a fundamentally different level of accessibility"
-    - "Students may skip the checkpoint because 'it worked in this terminal' — the source command only affects the current session, and the alias is not truly permanent until it survives a terminal restart"
-    - "Students confuse chmod +x (file permission) with the alias (shell shortcut) — both are needed but serve different purposes in making a script behave like a command"
+    - "Students think decomposition means more work — it means more flexibility with less debugging, because each tool is independently verifiable"
+    - "Students may think extract-column only works on bank CSVs — it works on ANY CSV because it knows nothing about bank statements, only columns"
+    - "Students confuse 'small script' with 'limited script' — stats.py does five calculations but is still a single-purpose tool because all five operate on the same input type"
   discussion_prompts:
-    - "Have you ever rebuilt a script from scratch because you could not find where you saved the original? What would have been different if it were an installed command?"
-    - "The lesson says 'you described the outcome, the agent handled every step.' How is specifying 'cat file.csv | sum-expenses' as the desired format a design decision?"
-    - "Why does the agent check which shell you are using before adding the alias? What would go wrong if it guessed?"
+    - "sum-expenses.py gives the right answer. Why would you break something that works into three separate scripts?"
+    - "extract-column knows nothing about bank statements. Why is that ignorance a feature, not a limitation?"
+    - "If filter.py has a bug, how many of your pipelines break? What if sum-expenses.py has a bug?"
   teaching_tips:
-    - "Start with the frustration scenario: type 'sum-expenses' in a random directory and see 'command not found' — that visceral failure motivates the entire lesson"
-    - "The command table (mkdir -p, chmod +x, alias, source) with memory tricks is worth putting on the board — students will reference it repeatedly"
-    - "Make sure students actually close and reopen their terminals for the checkpoint — many will try 'source' alone and think they are done"
-    - "Connect back to Chapter 8 Lesson 4: rename-screenshots.sh was a reusable script, but it was not installed as a command — this lesson shows the missing step"
+    - "Start by showing the monster script with 6 flags and ask students to find the bug — the complexity demonstrates the problem before the solution"
+    - "Run cat bank.csv | extract-column Amount | filter '< 0' | stats live and then immediately change the pipeline to answer a different question — the speed of recombination is the lesson"
+    - "Have students predict what 'cat bank.csv | extract-column Description' outputs before running it — this builds pipeline reasoning"
+    - "The verification step (pipeline output matches sum-expenses output) connects back to L2 — same answer through a different path proves both approaches are correct"
   assessment_quick_check:
-    - "Ask: 'What is the difference between having sum-expenses.py in a folder and having sum-expenses as an alias?' — tests understanding of tool installation"
-    - "Ask students to explain what the shebang line does and why it matters for making scripts executable"
-    - "Ask: 'You open a new terminal and sum-expenses is not found. What three things should you check?' — tests understanding of the full installation chain"
+    - "Ask: 'What three tools would you chain to find the 5 largest expenses?' — tests pipeline construction thinking"
+    - "Ask: 'extract-column works on bank CSVs. Can it work on a CSV of student grades?' — tests understanding that the tool is data-agnostic"
+    - "Ask: 'You added a --verbose flag to stats.py. Which other tools need to change?' — answer: none, tests understanding of tool independence"
 ---
 
-# Your Permanent Toolkit
+# One Tool, One Job
 
-It's next month. You're sitting in `~/finances/` with a fresh bank statement. You know you built a script that handles CSV parsing perfectly — it dealt with quoted fields, commas inside merchant names, the works. But where did you put it? Was it in `~/projects/chapter8/`? Or `~/Desktop/scripts/`? You try `python3 sum-expenses.py` and get `No such file or directory`. The script exists somewhere on your machine, and you can't find it.
+The Unix way: one tool, one job, infinite combinations.
 
-**If you have to remember where a tool lives, it's not a tool yet.**
-
-This isn't hypothetical. People build useful scripts, forget to make them permanent, and six months later rebuild the same thing from scratch because they can't find the original. The script worked. The workflow worked. But it was never installed, so it rotted in a forgotten folder. Twenty minutes of setup now saves hours of "I know I built this already" frustration later.
-
-Real tools are available everywhere, instantly, by name. You type `ls` from any folder, not `/usr/bin/ls`. Your scripts deserve the same treatment. This lesson makes that happen.
-
-## The Problem
-
-Here's what that frustration looks like in practice:
+Your accountant calls with three questions: "What's the total?" "What was the average?" "How many purchases were over $100?" You have one script. It answers one question. So you start adding flags — `--average`, `--count`, `--threshold`, `--top`, `--limit`. Six months later:
 
 ```bash
-cd ~/finances
-cat january-statement.csv | python3 sum-expenses.py
+python3 sum-expenses.py --sum --average --count --threshold 100 --top --limit 5 --filter negatives
+```
+
+Impossible to test (which flag combination broke?), impossible to debug (which feature caused the wrong number?), impossible to explain. The script that does everything is the script that breaks everything.
+
+There's a better way. It's been hiding in every command you've typed since Lesson 1.
+
+## The Pattern You Already Know
+
+Look at what you've been doing all chapter:
+
+```bash
+cat expenses.txt | python3 sum.py
+cat bank.csv | python3 sum-expenses.py
+```
+
+`cat` does one thing: read a file. Your script does one thing: process the data. The pipe connects them. Neither tool knows about the other. Neither needs to.
+
+This is the Unix philosophy: **build small tools that each do one thing, then chain them with pipes.** Every tool reads stdin, writes stdout. Every tool is ignorant of what comes before or after it in the pipeline. That ignorance is the feature — it means any tool connects to any other tool without modification.
+
+Your sum-expenses script violates this principle. It reads CSV AND extracts a column AND filters negatives AND sums. Four responsibilities in one file. Time to break it apart.
+
+:::warning Your Turn First — 3 Minutes
+Before you ask Claude Code for help, try this yourself. Look at what sum-expenses.py does:
+
+1. Reads a CSV
+2. Extracts the Amount column
+3. Filters for negative amounts (debits)
+4. Sums the result
+
+If you had to split this into separate scripts — each reading stdin and writing stdout — how would you divide the work? How many scripts? What would each one do?
+
+Write down your decomposition (even just bullet points) before reading on. Then compare your design to what Claude Code builds. Did you split in the same places? Did you make the tools more specific (bank-only) or more general (any CSV)?
+:::
+
+## Building Three Tools
+
+Open Claude Code:
+
+```
+You: I want to decompose my CSV processing into small, chainable tools.
+Build me three separate scripts that each do ONE thing:
+
+1. extract-column.py — reads CSV from stdin, outputs just one column
+   (by name or number), one value per line
+2. filter.py — reads numbers from stdin, keeps only those matching
+   a condition like "< 0" or "> 100"
+3. stats.py — reads numbers from stdin, prints sum, count, average,
+   min, and max
+```
+
+The agent builds all three. Here's what each one does:
+
+**extract-column.py** — `cat data.csv | extract-column Amount`
+```python
+reader = csv.DictReader(sys.stdin)
+for row in reader:
+    print(row[column])             # One value per line to stdout
+```
+
+**filter.py** — `filter "< 0"` keeps numbers matching a condition
+```python
+for line in sys.stdin:
+    value = float(line.strip())
+    if op(value, threshold):       # op parsed from "< 0", "> 100", etc.
+        print(line.strip())
+```
+
+**stats.py** — reads numbers from stdin, prints sum, count, average, min, max
+```python
+numbers = [float(line) for line in sys.stdin if line.strip()]
+print(f"Sum: {sum(numbers):.2f}")  # Plus count, average, min, max
+```
+
+The full scripts are in your working directory. Three scripts, each reading stdin, each writing stdout. None knows about bank statements — only about columns, numbers, and conditions.
+
+## The Power of Recombination
+
+Now watch what happens when you chain them:
+
+```bash
+# Total expenses (same answer as sum-expenses):
+cat ~/finances/sample-2025.csv | extract-column Amount | filter "< 0" | stats
 ```
 
 **Output:**
-
 ```
-python3: can't open file 'sum-expenses.py': No such file or directory
+Sum:     -1751.29
+Count:   28
+Average: -62.55
+Min:     -200.00
+Max:     -4.99
 ```
 
-You'd need the full path:
+Same data. Five answers instead of one. And you didn't modify a single script — you just connected tools that already existed.
+
+Now change the question:
 
 ```bash
-cat january-statement.csv | python3 ~/projects/chapter8/sum-expenses.py
+# How many transactions over $100?
+cat ~/finances/sample-2025.csv | extract-column Amount | filter "< -100" | stats
 ```
 
-That works, but it's fragile. You have to remember the exact path. If you move the script, every command breaks. This is the gap between "a script that works" and "a tool you actually use."
-
-## The Conversation
-
-Ask Claude Code to solve this permanently:
-
-```
-You: I want to use sum-expenses from anywhere on my system.
-Make it a permanent command I can run like: cat file.csv | sum-expenses
+```bash
+# What are the merchant names?
+cat ~/finances/sample-2025.csv | extract-column Description
 ```
 
-```
-Claude Code: I'll set that up. First, let me create a dedicated
-tools directory and move your script there.
-
-[Runs: mkdir -p ~/tools]
-[Runs: cp sum-expenses.py ~/tools/sum-expenses.py]
-[Runs: chmod +x ~/tools/sum-expenses.py]
-
-Now I need to check which shell you're using.
-
-[Runs: echo $SHELL]
-/bin/zsh
-
-You're using zsh, so I'll add an alias to your .zshrc.
-
-[Appends to ~/.zshrc:]
-alias sum-expenses='python3 ~/tools/sum-expenses.py'
-
-[Runs: source ~/.zshrc]
-
-Done! Try it from any directory:
-cat any_file.csv | sum-expenses
+```bash
+# What's the average income (positive amounts)?
+cat ~/finances/sample-2025.csv | extract-column Amount | filter "> 0" | stats
 ```
 
-Notice what the agent did: it didn't just create the alias. It organized your script into `~/tools`, made it executable, checked your shell, and reloaded the config. You described the outcome you wanted. The agent handled every step to get there.
+**Same three tools. Four different questions. Zero code changes.**
 
-And notice where you refined the interaction: you specified the exact command format you wanted (`cat file.csv | sum-expenses`). That specificity told the agent you wanted a pipe-compatible alias, not just "make it accessible." Your clear intent shaped the solution.
-
-## The Agent's Toolkit
-
-Each command the agent ran serves a specific purpose:
-
-| Command                | What It Does                       | Memory Trick                      |
-| ---------------------- | ---------------------------------- | --------------------------------- |
-| `mkdir -p ~/tools`     | Creates your personal tools folder | **p** = create **p**arents too    |
-| `chmod +x script.py`   | Makes file executable              | **ch**ange **mod**e + e**x**ecute |
-| `alias name='command'` | Creates a shortcut                 | Like a **nickname** for a command |
-| `source ~/.zshrc`      | Reloads shell config               | Load the **source** of settings   |
-
-## How It Works
-
-Two things make this work:
-
-**The shebang line** (`#!/usr/bin/env python3`) tells your OS to use Python when running the file directly. Without it, `chmod +x` alone isn't enough — the file needs to declare what runs it.
-
-**Shell config files** (`.zshrc` or `.bashrc`) run every time you open a terminal. The agent added your alias there so it loads on startup. `source ~/.zshrc` reloads it immediately without closing the terminal.
-
-| Your shell (`echo $SHELL`) | Config file |
+| What You Asked | Pipeline |
 |---|---|
-| `/bin/zsh` | `~/.zshrc` |
-| `/bin/bash` | `~/.bashrc` |
+| Total expenses | `extract-column Amount \| filter "< 0" \| stats` |
+| Large expenses only | `extract-column Amount \| filter "< -100" \| stats` |
+| All merchant names | `extract-column Description` |
+| Average income | `extract-column Amount \| filter "> 0" \| stats` |
 
-:::warning Checkpoint: Prove It's Permanent
+The data doesn't change. The tools don't change. Only the pipeline changes — and that's just a different arrangement of the same building blocks.
 
-This is the moment where a script becomes a tool. Don't skip it.
+## Why This Is Better
 
-1. Close your terminal completely
-2. Open a brand new terminal
-3. Navigate to your home directory: `cd ~`
-4. Type: `sum-expenses`
-5. If you see usage info or an error about missing input — your command is installed
-6. If you see "command not found" — go back and check your alias
+A bug in `filter.py` breaks one pipe segment — not your entire workflow. You test each tool with three numbers from stdin instead of every flag combination. And when you need a new capability — say, sorting by amount — you build `sort-numbers.py`, test it in isolation, and plug it into the pipeline. The existing tools don't know it exists and don't need to. Small tools answer questions you haven't thought of yet because the pipeline changes, not the tools.
 
-The new terminal has no memory of what you did before. It only knows what's in your shell config file. If `sum-expenses` works here, it works everywhere, forever.
+## The Principle Connection
 
+Two of the Seven Principles from Chapter 6 come alive here:
+
+**P2: Code as Universal Interface.** `extract-column` doesn't know it's processing bank statements. It extracts a column from ANY CSV — bank data, payroll, student grades, server logs. The tool is universal *because* it's small. The less a tool knows about its context, the more contexts it works in.
+
+**P4: Small, Reversible Decomposition.** If `filter.py` has a bug, you fix one script and re-test it with `echo -e "10\n-5\n20" | filter "< 0"`. If `sum-expenses.py` has a bug, you're debugging 30 lines of intertwined logic. Small tools have small blast radii.
+
+These two principles reinforce each other. Small tools (P4) become universal interfaces (P2) because their simplicity makes them context-independent.
+
+:::tip The Retrospective Insight
+Look back at sum-expenses.py from Lesson 3. It was doing three jobs: extracting the Amount column, filtering for negatives, and summing the result. It worked — but it could only answer one question. The three-tool decomposition doesn't replace sum-expenses; it reveals the composable architecture that was hiding inside it.
+
+You can keep sum-expenses.py for the common case — it's a convenient shortcut. But when you need a question it can't answer, you have the building blocks to construct any pipeline you need.
 :::
 
-## When It Breaks (And It Will)
+## Install Your Library
 
-Six months from now, something will stop working. Maybe you updated your shell, maybe you reinstalled Python, maybe you moved your scripts to a new machine. The agent won't be there with the exact context of today's session. You need to know what to check.
+Same pattern as Lesson 3. Ask Claude Code to install all three as permanent commands in `~/tools` with aliases. Your directory now has a library:
 
-Here's the diagnostic chain — the three things that can break:
-
-```bash
-# 1. Does the alias exist in your current session?
-alias sum-expenses
-# If "not found" → your shell config didn't load it
-
-# 2. Does the script exist where the alias points?
-ls -la ~/tools/sum-expenses.py
-# If "not found" → the script was moved or deleted
-
-# 3. Can the script actually run?
-python3 ~/tools/sum-expenses.py <<< "10"
-# If error → Python version mismatch or missing shebang
+```
+~/tools/
+├── sum.py              # Lesson 1
+├── sum-expenses.py     # Lesson 3
+├── extract-column.py   # This lesson
+├── filter.py           # This lesson
+└── stats.py            # This lesson
 ```
 
-| Symptom | Check | Fix |
-|---------|-------|-----|
-| "command not found" | `alias sum-expenses` | Re-add alias to shell config, then `source` |
-| "No such file" | `ls ~/tools/sum-expenses.py` | Script was moved — update the alias path |
-| "Permission denied" | `ls -la ~/tools/sum-expenses.py` | Re-run `chmod +x ~/tools/sum-expenses.py` |
-| Script errors on run | `python3 --version` | Python version changed — check shebang line |
+:::warning Checkpoint: Prove the Pipeline Works
+Run this and verify the expense total matches what sum-expenses produced in Lesson 3:
 
-This is the difference between someone who set up a tool and someone who *owns* a tool. Setup is the agent's job. Diagnosis is yours — because when it breaks at 11pm before a deadline, you need to know the three places to look.
-
-:::tip Moving to a New Machine
-When you set up a new computer or reinstall your OS, you need two things: the `~/tools` directory (copy it over) and the aliases in your shell config (copy the relevant lines from `~/.zshrc` or `~/.bashrc`). That's it. Your entire toolkit travels in two copy operations.
-
-A more robust approach: keep `~/tools` as a git repository. Then setup on any new machine is:
 ```bash
-git clone your-tools-repo ~/tools
-# Copy alias lines to ~/.zshrc
-source ~/.zshrc
+cat ~/finances/sample-2025.csv | extract-column Amount | filter "< 0" | stats
 ```
+
+The Sum line should show your expense total. Same answer, different architecture — but now you can ask questions sum-expenses never could.
+
+Then try a question sum-expenses CAN'T answer:
+
+```bash
+cat ~/finances/sample-2025.csv | extract-column Amount | filter "< -100" | stats
+```
+
+If both work, your composable toolkit is operational.
 :::
 
-The agent handled the tedious parts (checking your shell, finding the right config file, setting permissions). You made one design decision: "I want `cat file.csv | sum-expenses` to work from anywhere." Everything else followed from that. And now you know what to check when it breaks.
+You made the architecture decision — three tools, not one, each reading stdin and writing stdout. The agent made every implementation decision within that architecture. That's the director's role at its clearest: you decide what to build and how the pieces connect. The agent decides how each piece works inside.
 
-The interesting question is what you DO with permanent tools. Right now, `sum-expenses` gives you one number: the total. Your accountant needs categories — medical, charitable, business — broken out separately. And your bank data is full of merchant names that look like they belong in one category but don't. (How confident are you that "DR PEPPER SNAPPLE" won't end up in your medical deductions?)
+## The Pattern
+
+```
+"Decompose [big script] into small tools that each do one thing.
+Each tool reads stdin and writes stdout so I can chain them with pipes."
+```
+
+This prompt pattern works because it gives the agent two constraints: single responsibility (one thing) and composability (stdin/stdout). Everything else — the language, the parsing logic, the error handling — is the agent's call.
+
+You can extract, filter, and summarize any column in any CSV. But tax season needs something these generic tools can't do: look at a merchant name and decide if it's medical, charitable, or business. That's not filtering — that's *judgment*. And judgment needs patterns.
 
 ---
 
 ## Try With AI
 
-### Prompt 1: Batch Install Multiple Scripts
+### Prompt 1: Extend stats.py
 
 ```
-I have 3 scripts I use regularly: sum.py, sum-expenses.py, and a
-count-lines.py I wrote earlier. Help me set up ~/tools with all of
-them and create aliases for each one. Show me the final state of
-my .zshrc aliases section.
+My stats.py prints sum, count, average, min, and max. Add median
+and standard deviation. Keep the stdin reading pattern so it still
+works in pipelines.
 ```
 
-**What you're learning:** Scope, not steps. You describe the outcome (3 scripts, all available everywhere, aliases listed in .zshrc) and the agent handles every repetitive step without being told the sequence. You made one decision — "install all three" — and the agent inferred mkdir, chmod, alias, and source for each. That ratio (one director decision → many agent steps) is what makes agentic work efficient.
+**What you're learning:** Extending a tool without breaking its interface. stats.py gains two capabilities, but its contract — reads numbers from stdin, prints results to stdout — doesn't change. Every existing pipeline that uses stats.py gets the new statistics for free. That's what composability buys you: improvements propagate without rewiring.
 
-### Prompt 2: PATH vs Aliases
-
-```
-Instead of aliases, can I add ~/tools to my PATH so I can run
-scripts directly by name without an alias? What are the pros and
-cons of PATH vs aliases?
-```
-
-**What you're learning:** Asking the agent to surface a tradeoff so YOU can make the call. You don't need to know whether PATH or aliases is "right" — you need to know your constraints (how many scripts, portability, maintenance burden). The agent knows the mechanics of both. You know your situation. "What are the pros and cons?" is a director's question: gather the options, then decide.
-
-### Prompt 3: Diagnose a Broken Installation
+### Prompt 2: Build a New Tool
 
 ```
-I set up sum-expenses as an alias yesterday, but today in a new
-terminal it says "command not found." Walk me through how to
-diagnose this step by step. What are the most common causes?
+Build me a top.py script that reads numbers from stdin and prints
+the N largest values. Default to 5 if no argument given.
+I want to use it like: cat bank.csv | extract-column Amount | filter "< 0" | top 3
 ```
 
-**What you're learning:** The debug version of directing — observation is yours, diagnosis is the agent's. You supply the evidence: which terminal, which command, what error message, what you changed yesterday. The agent maps your observation to a cause in the installation chain (alias missing from config? config not sourced? script path moved?). Without your observation, the agent is guessing. Without the agent's knowledge of the chain, you're checking random things. Together, you find it fast.
+**What you're learning:** Adding a new capability to your toolkit without touching existing tools. You specified the interface (`top 3`), the input source (stdin), and the output behavior (print N values). The agent handles implementation. Tomorrow, if you need the N smallest instead, you build `bottom.py` — same pattern, new tool, zero changes to anything else.
 
+### Prompt 3: When NOT to Decompose
+
+```
+I have a 15-line Python script that converts temperatures from
+Fahrenheit to Celsius. It reads from stdin and writes to stdout.
+Should I decompose it further, or is it already a good single-purpose
+tool? When does decomposition stop being helpful?
+```
+
+**What you're learning:** The boundary of decomposition. Not every script needs splitting — a 15-line single-purpose tool that reads stdin and writes stdout is already following the Unix philosophy. The agent's answer teaches you to recognize when a tool is "done" — when splitting it further would create tools too small to be useful on their own. The rule: if a tool does one thing and you can test it with one command, it's small enough.

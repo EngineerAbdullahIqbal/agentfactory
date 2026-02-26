@@ -4,8 +4,8 @@ title: "Parsing Real Data"
 chapter: 9
 lesson: 3
 layer: L2
-duration_minutes: 25
-description: "Direct Claude Code to build a CSV parser that handles the traps hiding in real bank statements"
+duration_minutes: 30
+description: "Direct Claude Code to build a CSV parser that handles the traps hiding in real bank statements, then install it as a permanent command"
 keywords:
   [
     "CSV",
@@ -40,6 +40,13 @@ skills:
     digcomp_area: "Data Processing"
     measurable_at_this_level: "Student can modify a script to match their specific CSV column layout"
 
+  - name: "Installing Scripts as Permanent Commands"
+    proficiency_level: "A2"
+    category: "Technical"
+    bloom_level: "Apply"
+    digcomp_area: "System Administration"
+    measurable_at_this_level: "Student creates alias in shell config and verifies it persists across terminal sessions"
+
 learning_objectives:
   - objective: "Direct Claude Code to build a CSV parser for bank statements"
     proficiency_level: "A2"
@@ -56,9 +63,14 @@ learning_objectives:
     bloom_level: "Apply"
     assessment_method: "Student modifies column references to match their bank's CSV layout"
 
+  - objective: "Install a Python script as a permanent shell command"
+    proficiency_level: "A2"
+    bloom_level: "Apply"
+    assessment_method: "Student creates alias that works after terminal restart"
+
 cognitive_load:
-  new_concepts: 3
-  assessment: "3 concepts (CSV quoting complexity, awk limitation, csv module) within A2 limit of 5"
+  new_concepts: 4
+  assessment: "4 concepts (CSV quoting complexity, awk limitation, csv module, chmod/alias installation) within A2 limit"
 
 differentiation:
   extension_for_advanced: "Add command-line column selection, explore csv.DictReader for named columns"
@@ -94,9 +106,19 @@ teaching_guide:
 
 # Parsing Real Data
 
-You download your bank statement, point sum-expenses at it, and get a number. It looks reasonable. You almost move on. Then something nags at you — that Amazon order was $89.50, but you can't find it in the output. You scroll through the CSV and spot the problem: `"AMAZON, INC."` — a comma hiding inside quotes. Your script just silently split that merchant name in half and summed the wrong column.
+:::warning Try This First — 10 Seconds
+Run this in your terminal before reading on:
 
-This is the wall that every real-world data task hits. Clean test data behaves. Real data cheats.
+```bash
+echo '2024-01-07,"AMAZON, INC.",-89.50' | awk -F',' '{print $3}'
+```
+
+What did you expect to see? What did you actually get?
+:::
+
+Your first Python command handled clean numbers. Real data fights back. You download your bank statement, point your tool at it, and get a number that looks reasonable — until you notice that $89.50 Amazon order is missing from the total. The culprit: `"AMAZON, INC."` — a comma hiding inside quotes. Your script split that merchant name in half and summed the wrong column. No error. No warning. Just a wrong total.
+
+This is the same lesson from Chapter 8 in a different domain: real folders had hidden files and spaces in filenames. Real CSVs have commas inside quoted fields.
 
 :::warning Checkpoint: Use YOUR Bank Data
 Download your actual bank statement as CSV. Most banks offer this under "Download Transactions" or "Export" in online banking.
@@ -119,12 +141,9 @@ Date,Description,Amount
 
 You need to sum the Amount column. Simple, right? Let's ask Claude Code.
 
-## The First Attempt (Where Claude Gets It Wrong)
+## The First Attempt
 
-```
-You: I have a bank statement CSV with Date, Description, and Amount
-columns. Help me sum the Amount column.
-```
+Ask Claude Code to sum the Amount column. It reaches for awk — fast and reasonable:
 
 ```
 Claude Code: I'll extract and sum the third column.
@@ -134,40 +153,19 @@ Claude Code: I'll extract and sum the third column.
 -133.43
 ```
 
-The number looks plausible. But something nags you. That Amazon order was $89.50 — shouldn't the total be higher? You dig into the raw data and spot it:
+The number looks plausible. But that Amazon order was $89.50 — shouldn't the total be higher? Check the problem row:
 
 ```bash
 echo '2024-01-07,"AMAZON, INC.",-89.50' | awk -F',' '{print $3}'
 ```
 
-**Output:**
+**Output:** ` INC."` — garbage. awk split on the comma inside `"AMAZON, INC."`, saw four fields instead of three, and silently treated ` INC."` as zero. Some rows work, some silently fail. The trap only triggers on quoted fields — the worst kind of bug.
 
-```
- INC."
-```
-
-That's garbage. Not `-89.50`. Not even close. awk split on EVERY comma, including the one inside the quoted field `"AMAZON, INC."`. It saw four fields instead of three:
-
-1. `2024-01-07`
-2. `"AMAZON`
-3. ` INC."`
-4. `-89.50`
-
-Field 3 is ` INC."` — awk treated that as a number (silently becoming 0) and kept going. No error. No warning. Just a wrong total that looked reasonable enough to miss.
-
-Try the rows WITHOUT quotes and they work fine:
-
-```bash
-echo '2024-01-02,Coffee Shop,-5.50' | awk -F',' '{print $3}'
-```
-
-**Output:** `-5.50` — correct. The trap only triggers on quoted fields. Some rows work, some silently fail. This is the worst kind of bug.
-
-**This is a real Claude Code moment.** The agent gave you a working command — it ran, produced output, exited cleanly. But it was wrong. The agent doesn't know your data has commas inside quoted fields unless you tell it. This is where YOUR verification catches what the agent missed.
+The agent gave you a working command that exited cleanly. But it was wrong. The agent doesn't know your data has commas inside quoted fields unless you tell it. This is where your verification catches what the agent missed.
 
 ## Redirecting the Agent
 
-Now bring your discovery back to Claude Code:
+Bring your discovery back to Claude Code:
 
 ```
 You: The awk approach breaks on rows like "AMAZON, INC." where
@@ -175,42 +173,17 @@ commas hide inside quoted fields. The total is wrong. I need a
 solution that handles CSV quoting correctly.
 ```
 
-```
-Claude Code: You're right — awk treats every comma as a delimiter,
-even inside quotes. I'll use Python's csv module which understands
-quoting rules.
+The agent switches to Python's `csv` module. The key lines of `sum-expenses.py`:
 
-[Creates: sum-expenses.py]
-
-#!/usr/bin/env python3
-# sum-expenses.py - Sum the Amount column from bank statement CSV
-import sys
+```python
 import csv
-
-total = 0.0
-reader = csv.reader(sys.stdin)
-next(reader)  # Skip header row
-
+reader = csv.reader(sys.stdin)     # Understands quoting rules
+next(reader)                        # Skip header row
 for row in reader:
-    amount_str = row[2]  # Amount is 3rd column (index 2)
-    amount = float(amount_str.replace('$', '').replace(',', ''))
-    if amount < 0:  # Only sum debits (negative amounts)
-        total += abs(amount)
-
-print(f"Total expenses: ${total:.2f}")
-
-[Creates: test_bank.csv]
-Date,Description,Amount
-2024-01-02,Coffee Shop,-5.50
-2024-01-03,Grocery Store,-127.43
-2024-01-07,"AMAZON, INC.",-89.50
-
-[Runs: cat test_bank.csv | python sum-expenses.py]
-
-Total: $222.43
+    amount = float(row[2])          # Amount is 3rd column (index 2)
 ```
 
-Look at what just happened. The agent's first instinct (awk) was reasonable but wrong for your data. You caught the error through verification — the same pattern from Lesson 2. Then you told the agent *exactly what went wrong*, and it switched to the right tool. The agent knew about Python's csv module. You knew about your data. Neither could have solved this alone.
+The agent tests it on the problem data and gets the correct total. The full script is in your working directory — the important thing is what just happened: the agent's first instinct (awk) was reasonable but wrong for your data. You caught the error through verification, told the agent *exactly what went wrong*, and it switched to the right tool. The agent knew about `csv` module. You knew about your data. Neither could have solved this alone.
 
 :::tip Why Filter for Negatives?
 Notice the script checks `if amount < 0` before summing. Bank CSVs use negative numbers for debits (money out) and positive numbers for credits (refunds, deposits). Without this filter, a $500 refund would be counted as a $500 expense — silently inflating your total. This is the kind of bug that passes every test with expense-only data and breaks the moment real data includes a refund. If your bank uses a different convention (separate Debit/Credit columns, all positive amounts), tell Claude Code about your format and it will adapt the filter.
@@ -256,7 +229,47 @@ The second prompt gives context that guides the agent to the right tool. You're 
 
 Three lessons in, you've built two scripts that work and one habit that matters more than both of them: never trust output you haven't verified. That habit just saved you from a silent CSV parsing bug that the agent itself introduced.
 
-Your scripts work. But try this: close your terminal, open a new one, navigate to a different folder, and run `sum-expenses`. You'll get "command not found." The script exists somewhere on your machine, and you can't use it without remembering the exact path. That's not a tool — that's a file you'll lose.
+## Make It Permanent
+
+Your scripts work. But try this: close your terminal, open a new one, navigate to a different folder, and run `sum-expenses`. You'll get "command not found." The script exists somewhere on your machine, and you can't use it without remembering the exact path. **If you have to remember where a tool lives, it's not a tool yet.**
+
+Ask Claude Code to fix this:
+
+```
+You: I want to use sum-expenses from anywhere on my system.
+Make it a permanent command I can run like: cat file.csv | sum-expenses
+```
+
+```
+Claude Code: I'll set that up.
+
+[Runs: mkdir -p ~/tools]
+[Runs: cp sum-expenses.py ~/tools/sum-expenses.py]
+[Runs: chmod +x ~/tools/sum-expenses.py]
+[Runs: echo $SHELL]
+/bin/zsh
+
+[Appends to ~/.zshrc:]
+alias sum-expenses='python3 ~/tools/sum-expenses.py'
+
+[Runs: source ~/.zshrc]
+
+Done! Try it from any directory:
+cat any_file.csv | sum-expenses
+```
+
+The agent organized your script into `~/tools`, made it executable, checked your shell, and reloaded the config. You described the outcome; the agent handled every step.
+
+:::warning Checkpoint: Prove It's Permanent
+1. Close your terminal completely
+2. Open a brand new terminal
+3. Navigate to your home directory: `cd ~`
+4. Type: `sum-expenses`
+5. If you see usage info or an error about missing input — your command is installed
+6. If you see "command not found" — check your alias in `~/.zshrc` (or `~/.bashrc` if you use bash)
+:::
+
+You've just installed your second Unix-style command. The first (`sum.py`) handles numbers. This one handles structured data. The pattern is the same: stdin in, result out, pipes connect everything. But one tool isn't a toolkit — and the next lesson shows why that matters.
 
 ---
 
