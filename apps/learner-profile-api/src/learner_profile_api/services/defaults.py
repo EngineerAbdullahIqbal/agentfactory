@@ -57,11 +57,15 @@ def apply_defaults_to_profile_data(
     communication: dict,
     delivery: dict,
     expertise: dict,
+    accessibility: dict | None = None,
 ) -> tuple[dict, dict]:
     """Merge Appendix B defaults into communication and delivery dicts.
 
     Only fills in fields that are None/missing. Does NOT overwrite
     any value the user explicitly provided.
+
+    Spec Appendix B: include_visual_descriptions defaults to true
+    when accessibility.screen_reader is true.
     """
     programming_level = expertise.get("programming", {}).get("level", "beginner")
 
@@ -74,5 +78,10 @@ def apply_defaults_to_profile_data(
     for key, default_val in delivery_defaults.items():
         if delivery.get(key) is None:
             delivery[key] = default_val
+
+    # Conditional default: include_visual_descriptions = true when screen_reader = true
+    if accessibility and accessibility.get("screen_reader") is True:
+        if delivery.get("include_visual_descriptions") is None or delivery.get("include_visual_descriptions") is False:
+            delivery["include_visual_descriptions"] = True
 
     return communication, delivery

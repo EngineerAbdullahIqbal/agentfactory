@@ -9,6 +9,7 @@ import api_infra
 from api_infra.core.redis_cache import get_redis, start_redis, stop_redis
 
 from .database import close_db, init_db
+from ..services.phm_client import close_client as close_phm_client
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +57,7 @@ async def lifespan(app: FastAPI):
         logger.info("SHUTDOWN")
         logger.info("=" * 60)
 
+        await close_phm_client()
         await close_db()
         await stop_redis()
 

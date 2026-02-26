@@ -23,15 +23,15 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Create FastAPI app
+# Create FastAPI app — OpenAPI docs enabled in dev mode only
 app = FastAPI(
     title="Learner Profile API",
     description="Profile CRUD, onboarding, PHM sync, progressive profiling",
     version="0.1.0",
     lifespan=lifespan,
-    docs_url=None,
-    redoc_url=None,
-    openapi_url=None,
+    docs_url="/docs" if settings.dev_mode else None,
+    redoc_url="/redoc" if settings.dev_mode else None,
+    openapi_url="/openapi.json" if settings.dev_mode else None,
 )
 
 # CORS

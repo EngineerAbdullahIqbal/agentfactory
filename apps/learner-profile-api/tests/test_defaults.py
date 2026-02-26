@@ -71,3 +71,36 @@ class TestApplyDefaultsToProfileData:
         assert comm["tone"] == "formal"
         assert delivery["output_format"] == "prose"
         assert delivery["include_code_samples"] is False
+
+    def test_screen_reader_enables_visual_descriptions(self):
+        """Spec Appendix B: screen_reader=true -> include_visual_descriptions=true."""
+        comm = {}
+        delivery = {"include_visual_descriptions": None}
+        expertise = {"programming": {"level": "beginner"}}
+        accessibility = {"screen_reader": True}
+
+        comm, delivery = apply_defaults_to_profile_data(
+            comm, delivery, expertise, accessibility
+        )
+        assert delivery["include_visual_descriptions"] is True
+
+    def test_no_screen_reader_keeps_false(self):
+        """screen_reader=false -> include_visual_descriptions stays false."""
+        comm = {}
+        delivery = {}
+        expertise = {"programming": {"level": "beginner"}}
+        accessibility = {"screen_reader": False}
+
+        comm, delivery = apply_defaults_to_profile_data(
+            comm, delivery, expertise, accessibility
+        )
+        assert delivery["include_visual_descriptions"] is False
+
+    def test_no_accessibility_param_keeps_false(self):
+        """No accessibility dict -> include_visual_descriptions stays false."""
+        comm = {}
+        delivery = {}
+        expertise = {"programming": {"level": "beginner"}}
+
+        comm, delivery = apply_defaults_to_profile_data(comm, delivery, expertise)
+        assert delivery["include_visual_descriptions"] is False

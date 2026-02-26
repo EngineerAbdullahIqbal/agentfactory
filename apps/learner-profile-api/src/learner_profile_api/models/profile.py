@@ -7,9 +7,6 @@ from typing import Any
 from sqlalchemy.dialects.postgresql import JSONB  # dialect-specific, not in SQLModel
 from sqlmodel import Column, DateTime, Field, Index, SQLModel, text
 
-# Use JSON for SQLite compatibility in tests, JSONB for PostgreSQL
-_JSON_TYPE = JSONB().with_variant(Column("data", type_=None).type, "sqlite")
-
 
 def _json_column(server_default: str = "'{}'"):
     """Create a JSONB column that falls back to JSON for SQLite."""

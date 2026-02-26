@@ -56,6 +56,9 @@ class Settings(BaseSettings):
     # Server
     port: int = 8004
 
+    # Rate limiting
+    rate_limit_enabled: bool = True
+
     # PHM settings
     phm_allow_downrank: bool = False
 

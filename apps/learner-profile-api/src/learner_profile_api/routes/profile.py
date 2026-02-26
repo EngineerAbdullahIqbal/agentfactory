@@ -175,7 +175,7 @@ async def get_profile_by_learner(
 
     # Admin role check: dev_mode grants admin access;
     # in production, require "admin" role in JWT claims
-    is_admin = settings.dev_mode or user.get("role") == "admin"
+    is_admin = settings.dev_mode or user.role == "admin"
     if not is_admin:
         raise HTTPException(
             status_code=403,

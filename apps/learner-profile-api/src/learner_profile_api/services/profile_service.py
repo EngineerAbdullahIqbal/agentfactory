@@ -206,8 +206,9 @@ async def create_profile(
 
     # Apply Appendix B defaults for communication/delivery
     # (fills None fields with spec defaults without polluting model_fields_set)
+    accessibility_dict = data.accessibility.model_dump()
     communication_dict, delivery_dict = apply_defaults_to_profile_data(
-        communication_dict, delivery_dict, expertise_dict,
+        communication_dict, delivery_dict, expertise_dict, accessibility_dict,
     )
 
     profile = LearnerProfile(
@@ -220,7 +221,7 @@ async def create_profile(
         goals=data.goals.model_dump(),
         communication=communication_dict,
         delivery=delivery_dict,
-        accessibility=data.accessibility.model_dump(),
+        accessibility=accessibility_dict,
         onboarding_completed=False,
         onboarding_sections_completed={},
         field_sources={},
