@@ -33,6 +33,7 @@ import { usePracticeServer } from "@/components/TerminalPanel/usePracticeServer"
 import { PracticeContext } from "@/contexts/PracticeContext";
 import { PracticeSetupCard } from "@/components/PracticeSetupCard";
 import { PracticeErrorCard } from "@/components/PracticeErrorCard";
+import { CompletenessBanner } from "@/components/profile/CompletenessBanner";
 
 // Lazy-load terminal (requires DOM)
 const TerminalPanel = React.lazy(() =>
@@ -806,6 +807,7 @@ export default function ContentWrapper(props: Props): React.ReactElement {
             </button>
           </div>
         )}
+        {isLoggedIn && <CompletenessBanner />}
         <Content {...props} />
         {isLeafPage &&
           isLoggedIn &&

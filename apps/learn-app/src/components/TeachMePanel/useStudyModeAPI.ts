@@ -7,16 +7,33 @@
 
 import { useCallback } from 'react';
 import { useStudyMode, type Message, type ChatMode } from '../../contexts/StudyModeContext';
+import { useLearnerProfile } from '../../contexts/LearnerProfileContext';
+import type { ProfileResponse } from '../../lib/learner-profile-types';
 
 // =============================================================================
 // Types
 // =============================================================================
+
+interface LearnerProfileSummary {
+  expertise_level?: string;
+  communication_prefs?: {
+    language_complexity?: string | null;
+    verbosity?: string | null;
+    tone?: string | null;
+  };
+  accessibility?: {
+    screen_reader?: boolean;
+    cognitive_load_preference?: string;
+    dyslexia_friendly?: boolean;
+  };
+}
 
 interface ChatRequest {
   lessonPath: string;
   userMessage: string;
   conversationHistory: Message[];
   mode: ChatMode;
+  learnerProfile?: LearnerProfileSummary;
 }
 
 interface ChatResponse {
@@ -45,6 +62,27 @@ const API_BASE_URL = typeof window !== 'undefined'
   : 'http://localhost:8000/api';
 
 // =============================================================================
+// Helpers
+// =============================================================================
+
+function buildProfileSummary(profile: ProfileResponse | null): LearnerProfileSummary | undefined {
+  if (!profile) return undefined;
+  return {
+    expertise_level: profile.expertise?.programming?.level,
+    communication_prefs: {
+      language_complexity: profile.communication?.language_complexity,
+      verbosity: profile.communication?.verbosity,
+      tone: profile.communication?.tone,
+    },
+    accessibility: {
+      screen_reader: profile.accessibility?.screen_reader,
+      cognitive_load_preference: profile.accessibility?.cognitive_load_preference,
+      dyslexia_friendly: profile.accessibility?.dyslexia_friendly,
+    },
+  };
+}
+
+// =============================================================================
 // Hook
 // =============================================================================
 
@@ -56,6 +94,7 @@ export function useStudyModeAPI() {
     setLoading,
     setError,
   } = useStudyMode();
+  const { profile } = useLearnerProfile();
 
   /**
    * Send a message to the AI and get a response
@@ -89,12 +128,14 @@ export function useStudyModeAPI() {
     // Add user message to conversation immediately
     addMessage(storageKey, userMsg);
 
-    // Prepare request
+    // Prepare request (include learner profile if available)
+    const learnerProfile = buildProfileSummary(profile);
     const request: ChatRequest = {
       lessonPath,
       userMessage,
       conversationHistory: conversation.messages,
       mode: effectiveMode,
+      ...(learnerProfile && { learnerProfile }),
     };
 
     setLoading(true);
@@ -134,7 +175,7 @@ export function useStudyModeAPI() {
       setError(errorMessage);
       setLoading(false);
     }
-  }, [mode, getCurrentConversation, addMessage, setLoading, setError]);
+  }, [mode, profile, getCurrentConversation, addMessage, setLoading, setError]);
 
   return {
     sendMessage,
