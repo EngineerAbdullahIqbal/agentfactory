@@ -89,11 +89,11 @@ This is the evolved schema incorporating all Phase 1 research findings and user 
 
 ```json
 {
-  "id": "UUID v4 — internal primary key, auto-generated",
+  "id": "UUID v4 — internal primary key, auto-generated, never exposed in API",
   "learner_id": "string — JWT `sub` claim from auth. NOT a UUID we generate. This is the auth identity string.",
   "name": "string | null",
-  "profile_created": "ISO-8601 datetime",
-  "last_updated": "ISO-8601 datetime",
+  "created_at": "ISO-8601 datetime (timezone-aware UTC)",
+  "updated_at": "ISO-8601 datetime (timezone-aware UTC) — updated on every profile modification",
   "profile_version": "1.1",
   "consent_given": "boolean — GDPR consent for profile data storage",
   "consent_date": "ISO-8601 datetime | null"
@@ -104,7 +104,7 @@ This is the evolved schema incorporating all Phase 1 research findings and user 
 |---|---|---|
 | `id` | `[NEW]` | Internal UUID v4 primary key. Never exposed in API responses. |
 | `learner_id` | `[CLARIFIED]` | Auth subject string from JWT `sub`. NOT auto-generated, NOT UUID v4. This is the stable identity from SSO. |
-| `last_updated` | `[NEW]` | Staleness detection. Updated on every profile modification |
+| `created_at` / `updated_at` | `[RENAMED]` | Was `profile_created` / `last_updated`. Aligned with DB column names. `[P0-R2-5 FIX]` |
 | `consent_given` | `[NEW]` | GDPR requirement. Must be `true` for profile to be stored |
 | `consent_date` | `[NEW]` | When consent was granted |
 
@@ -201,7 +201,7 @@ This is the evolved schema incorporating all Phase 1 research findings and user 
 ```json
 {
   "goals": {
-    "primary_learning_goal": "string (max 500 chars)",
+    "primary_learning_goal": "string | null (max 500 chars) — null until user provides it [P0-R2-6 FIX]",
     "secondary_goals": ["string (max 200 chars each, max 5 items)"],
     "urgency": "low | medium | high",
     "urgency_note": "string | null (max 200 chars)",
@@ -293,6 +293,7 @@ All fields optional. Defaults are conservative (standard, no special needs assum
 | `include_code_samples` deterministic chain | Evaluation order: (1) If user explicitly set → use user value. (2) If `programming.level == none` → `false`. (3) If `programming.level >= beginner` → `true`. Note: `programming.level` defaults to `beginner`, so a brand-new profile gets `true` — but this is inferred, not user-set, so `_field_sources` records it as `inferred`. | `[P1-1 FIX]` |
 | `code_verbosity` dependency | `include_code_samples` is `false` | `code_verbosity` is ignored |
 | `domain_name` conditional | `domain.level` is `none` | `domain_name` should be null |
+| `include_visual_descriptions` conditional | `accessibility.screen_reader` is `true` | Default to `true` (provide alt-text descriptions). Otherwise `false`. `[P1-R2-3 FIX]` |
 | Inferred `language_complexity` | Not set by learner | Derive from expertise levels (see Onboarding Inference Rules) |
 | Inferred `tone` | Not set by learner | Derive from `language_complexity` |
 | Inferred `code_verbosity` | Not set by learner | `programming.level: none→N/A, beginner→fully-explained, intermediate→annotated, advanced/expert→minimal` |
@@ -469,8 +470,10 @@ Every non-identity field has a source tracked in `_field_sources: dict[str, str]
 
 ### Skip Behavior
 
-- Every section is skippable. "Skip for now" (de-emphasized text link, not button)
+- Every phase is skippable. "Skip for now" (de-emphasized text link, not button)
 - Skipping applies defaults for that section (Appendix B)
+- **Skipping counts as completion for `onboarding_progress`** `[P1-R2-2 FIX]` — the user made a deliberate choice. `sections_completed[phase] = true` regardless of skip. The distinction between "skipped" and "filled" is tracked via `_field_sources` (skipped fields remain `default`-sourced).
+- AI enrichment (Phase 4) skip: counts as completed. `ai_enrichment: true` in `sections_completed`. The phase is explicitly optional — skipping is the expected path for most users.
 - `consent_given` is the ONLY required field (GDPR)
 
 ### Onboarding Abandonment
@@ -645,7 +648,7 @@ All endpoints prefixed with `/api/v1/profiles`.
 | Method | Path | Purpose | Auth | Success | Error |
 |---|---|---|---|---|---|
 | `GET` | `/health` | Health check (Redis + DB ping) | None | 200 | 503 |
-| `POST` | `/` | Create profile (requires `consent_given: true`). If soft-deleted profile exists for this user, **restores** it (clears `deleted_at`, resets onboarding). Returns 200 for restore, 201 for new. | Required | 201/200 | 400 (no consent), 409 (active profile exists) |
+| `POST` | `/` | Create profile (requires `consent_given: true`). If soft-deleted profile exists, **restores** it (clears `deleted_at`, preserves data + onboarding). Returns 200 for restore, 201 for new. | Required | 201/200 | 400 (no consent), 409 (active profile exists) |
 | `GET` | `/me` | Get current user's profile | Required | 200 | 404 (no profile) |
 | `GET` | `/{learner_id}` | Get profile by ID (admin/service) | Required (admin) | 200 | 403, 404 |
 | `PATCH` | `/me` | Update profile (partial, replace semantics per section) | Required | 200 | 404, 422 |
@@ -653,7 +656,7 @@ All endpoints prefixed with `/api/v1/profiles`.
 | `DELETE` | `/me` | Soft-delete profile | Required | 204 | 404 |
 | `DELETE` | `/me/gdpr-erase` | Hard delete — true erasure (GDPR) | Required | 204 | 404 |
 | `GET` | `/me/onboarding-status` | Onboarding completion state | Required | 200 | 404 |
-| `PATCH` | `/me/onboarding/{section}` | Mark section complete + store data | Required | 200 | 404, 422 |
+| `PATCH` | `/me/onboarding/{section}` | Mark onboarding phase complete + store data. Valid `{section}` values: `goals`, `expertise`, `professional_context`, `accessibility`, `ai_enrichment`. Returns 404 for unknown phase names. `[P1-R2-1 FIX]` | Required | 200 | 404, 422 |
 | `POST` | `/me/sync-from-phm` | Pull PHM data into profile | Required | 200 | 404, 502 (PHM unavailable) |
 | `GET` | `/me/completeness` | Profile completeness score + next recommended field | Required | 200 | 404 |
 
@@ -661,11 +664,28 @@ All endpoints prefixed with `/api/v1/profiles`.
 
 **Valid section names for `/me/sections/{section}` (I-5):** `expertise`, `professional_context`, `goals`, `communication`, `delivery`, `accessibility`. Case-sensitive, lowercase. Returns 404 for unknown sections.
 
-**PATCH semantics (M-4):** JSONB sections use **replace** semantics, not deep merge. Sending `{ "expertise": { "programming": { "level": "advanced" } } }` replaces the entire `expertise` section. Concurrent updates to the same section may lose changes. Acceptable for v1 (single-user profiles).
+**PATCH semantics (M-4, P0-R2-3 FIX):** JSONB sections use **replace** semantics, not deep merge. However, **only explicitly-provided fields update `_field_sources`** to `user`. Fields filled by Pydantic defaults during deserialization are detected via `model_fields_set` (Pydantic v2) and **excluded from source updates**.
+
+**Implementation detail:**
+```python
+# In service layer, after receiving validated ProfileUpdate:
+update_data = body.model_dump(exclude_unset=True)  # Only fields client actually sent
+# For each section in update_data:
+#   1. Replace entire JSONB section in DB (replace semantics)
+#   2. Walk the section model's .model_fields_set recursively
+#   3. Only fields in model_fields_set → _field_sources[field] = "user"
+#   4. Fields NOT in model_fields_set → preserve existing _field_sources entry
+```
+
+**Example:** Client sends `{ "expertise": { "programming": { "level": "advanced" } } }`:
+- `expertise` section is fully replaced in DB (replace semantics)
+- `expertise.programming.level` → `_field_sources = "user"` (explicitly sent)
+- `expertise.ai_ml.level` → keeps existing `_field_sources` (e.g., `"inferred"`) because it was Pydantic default, not in `model_fields_set`
+- Concurrent updates to the same section: last write wins. Acceptable for v1 (single-user profiles).
 
 **Delete lifecycle (I-4, P0-2 FIX):**
 - Soft delete (`DELETE /me`): sets `deleted_at`, profile hidden from `GET /me`. Recoverable.
-- Restore after soft delete: `POST /` on a soft-deleted profile **restores** the existing row (clears `deleted_at`, resets `onboarding_sections_completed`). Does NOT create a new row. Learner gets their old data back with onboarding reset.
+- Restore after soft delete: `POST /` on a soft-deleted profile **restores** the existing row (clears `deleted_at`, preserves all data and onboarding state). Does NOT create a new row. Learner gets their profile back exactly as it was. `[D-13 nuance FIX]` — no onboarding reset on restore; old progress is valid.
 - Fresh start: To truly start over, GDPR-erase first (`DELETE /me/gdpr-erase`), then `POST /` creates a new row.
 - GDPR erase (`DELETE /me/gdpr-erase`): works on both active AND soft-deleted profiles. Irreversible. After erase, `POST /` creates a genuinely new profile.
 
@@ -679,7 +699,7 @@ All endpoints prefixed with `/api/v1/profiles`.
 | `PATCH /me/onboarding/*` | 60 requests | 1 hour |
 | `POST /me/sync-from-phm` | 5 requests | 1 hour |
 | `GET /me/completeness` | 60 requests | 1 minute |
-| `POST /` | 1 per user | Lifetime (unique constraint) |
+| `POST /` | 5 requests | 1 hour | `[P0-R2-2 FIX]` Unique constraint handles dedup (409). Rate limit prevents abuse, but allows restore-after-soft-delete. |
 
 Uses the same Redis Lua-based atomic rate limiting from `api_infra/core/rate_limit.py`.
 
@@ -788,7 +808,7 @@ class AccessibilitySection(BaseModel):
 # === Request models ===
 
 class ProfileCreate(BaseModel):
-    consent_given: bool  # Must be True — enforced in route handler as 400, NOT here (P1-3 FIX)
+    consent_given: bool = False  # Defaults to False so missing field → handler returns 400, not FastAPI 422 (P0-R2-1 FIX)
     name: str | None = Field(None, max_length=255)
     expertise: ExpertiseSection = Field(default_factory=ExpertiseSection)
     professional_context: ProfessionalContextSection = Field(default_factory=ProfessionalContextSection)
@@ -796,8 +816,8 @@ class ProfileCreate(BaseModel):
     communication: CommunicationSection = Field(default_factory=CommunicationSection)
     delivery: DeliverySection = Field(default_factory=DeliverySection)
     accessibility: AccessibilitySection = Field(default_factory=AccessibilitySection)
-    # NOTE: No field_validator for consent here. Route handler checks consent_given
-    # and returns 400 (consent_required) before any other validation runs.
+    # Route handler checks: if not body.consent_given → return 400 (consent_required).
+    # By defaulting to False, missing field reaches the handler instead of triggering FastAPI 422.
 
 class ProfileUpdate(BaseModel):
     """All fields optional. Only provided fields are updated."""
@@ -894,9 +914,22 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 | `delivery` | 0.10 | Drives format (often inferred or defaulted) |
 | `accessibility` | 0.10 | Drives accessibility adaptations |
 
-**Section "filled" definition:** A section is filled if at least one non-null value exists — whether user-set, inferred, or default. A brand new profile with all defaults has `profile_completeness > 0` because defaults are functional.
+**Section "filled" scoring — weighted by provenance `[P0-R2-4 FIX]`:**
 
-**`highest_impact_missing`:** Returns sections where the user has NOT explicitly set any values, ordered by weight. Static priority within a section: `primary_learning_goal` > `programming.level` > `ai_ml.level` > `domain.level` > `current_role` > `industry` > remaining fields. Uses `_field_sources` to distinguish user-set from default.
+Each field within a section contributes to completeness based on its `_field_sources` entry:
+
+| Source | Contribution Weight | Rationale |
+|---|---|---|
+| `user` | 1.0 | Explicitly provided — highest signal |
+| `phm` | 0.8 | Evidence-based from tutoring — strong signal |
+| `inferred` | 0.4 | Derived from other fields — moderate signal |
+| `default` | 0.0 | System default — no signal, no contribution |
+
+**Section completeness** = (sum of field contribution weights in section) / (count of fields in section). Then weighted by section weight from table above.
+
+**Result:** A brand new profile with all defaults has `profile_completeness = 0.0`. As the user fills in fields or PHM updates fire, completeness rises meaningfully. A profile where half the fields are inferred from expertise maxes out around ~0.45, not 1.0.
+
+**`highest_impact_missing`:** Returns sections with the lowest `user`-sourced field ratio, ordered by section weight. Static priority within a section: `primary_learning_goal` > `programming.level` > `ai_ml.level` > `domain.level` > `current_role` > `industry` > remaining fields.
 
 ### Cache Strategy
 
@@ -944,7 +977,7 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 | `test_expertise_enum_validation` | `expertise.domain[0].level: "superexpert"` → 422 |
 | `test_consent_returns_400_not_422` | `POST /` with `consent_given: false` → 400 (not 422). `[P1-3]` |
 | `test_learner_id_is_jwt_sub` | Profile's `learner_id` matches JWT `sub` claim exactly. `[P0-1]` |
-| `test_restore_after_soft_delete` | `POST /` after soft delete → 200, restores existing row. `[P0-2]` |
+| `test_restore_after_soft_delete` | `POST /` after soft delete → 200, restores existing row with data + onboarding preserved. `[P0-2]` |
 
 ### P1 — Must Pass Before v1 Launch
 
@@ -965,6 +998,7 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 | `test_domain_auto_primary` | Create profile with 1 domain, no `is_primary` set → auto-marked `true`. `[P1-2]` |
 | `test_misconceptions_capped_at_5` | Submitting 6 misconceptions → 422 or truncated |
 | `test_accessibility_in_onboarding` | Accessibility phase tracked in `sections_completed`, fields stored correctly |
+| `test_onboarding_skip_counts_as_complete` | Skip AI enrichment phase → `sections_completed["ai_enrichment"] = true`, fields remain `default`-sourced in `_field_sources`. `[P1-R2-2]` |
 | `test_tools_in_use_item_length` | `tools_in_use` item with 60 chars → 422. `[P1-5]` |
 | `test_secondary_goals_item_length` | `secondary_goals` item with 250 chars → 422. `[P1-5]` |
 | `test_dev_mode_bypasses_auth` | `DEV_MODE=true` → requests succeed without token |
@@ -978,7 +1012,9 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 | `test_duplicate_topics_deduplicated` | `topics_already_mastered: ["Python", "python"]` → stored as one entry |
 | `test_unicode_in_all_fields` | Arabic name, Urdu notes → stored and returned correctly |
 | `test_profile_version_set_automatically` | Client cannot override `profile_version` |
-| `test_restore_after_soft_delete` | `POST /` after soft delete → 200, restores existing row, clears `deleted_at`, resets onboarding. `[P0-2 FIX]` |
+| `test_restore_preserves_data_and_onboarding` | `POST /` after soft delete → 200, restores existing row with all data + onboarding state intact. `[D-13 nuance]` |
+| `test_patch_only_marks_explicit_fields_as_user_source` | PATCH with `{expertise: {programming: {level: "advanced"}}}` → `_field_sources["expertise.programming.level"] = "user"`, but `_field_sources["expertise.ai_ml.level"]` unchanged. `[P0-R2-3]` |
+| `test_completeness_zero_for_fresh_profile` | New profile with all defaults → `profile_completeness = 0.0`. `[P0-R2-4]` |
 | `test_audit_log_created_on_update` | Every PATCH creates an audit log entry |
 | `test_rate_limit_returns_429` | Exceed `PATCH /me` rate limit → 429 with `Retry-After` header and `rate_limited` error code. `[P2-1]` |
 | `test_concurrent_updates_last_write_wins` | Two simultaneous PATCHes to same section → deterministic last-write-wins (later timestamp overwrites). No crash, no partial merge. `[P2-2 FIX]` |
@@ -1025,6 +1061,11 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 | D-15 | Field provenance | **`_field_sources` map** | `user > phm > inferred > default` priority. Enables PHM respect + future downranking. `[P0-5]` |
 | D-16 | PHM downranking | **Disabled in v1, config flag for future** | `PHM_ALLOW_DOWNRANK=false`. When enabled, PHM can lower `inferred`-sourced values. |
 | D-17 | Accessibility onboarding | **Include in Phase 3.5** | User confirmed: must collect accessibility needs during first-session experience. |
+| D-18 | Consent HTTP status | **400 via handler, not 422 via Pydantic** | `consent_given` defaults to `False` in model so missing field reaches handler, not FastAPI validation. `[P0-R2-1]` |
+| D-19 | PATCH provenance tracking | **Use `model_fields_set` for explicit-only marking** | Prevents Pydantic defaults from being marked `user`-sourced. `[P0-R2-3]` |
+| D-20 | Completeness scoring | **Weight by `_field_sources` provenance** | `user=1.0, phm=0.8, inferred=0.4, default=0.0`. Prevents always-1.0 trap. `[P0-R2-4]` |
+| D-21 | Restore preserves state | **No onboarding reset on restore** | Old progress is valid. GDPR-erase + recreate for true fresh start. `[D-13 nuance]` |
+| D-22 | Onboarding skip semantics | **Skip counts as phase complete** | Distinction tracked via `_field_sources` (skipped = `default`). `[P1-R2-2]` |
 
 ---
 
@@ -1032,7 +1073,7 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 
 | PHM Field | Profile Field | Transform |
 |---|---|---|
-| `expertise_level.domain_expertise` | `expertise.domain[0].level` (primary) | Direct enum mapping |
+| `expertise_level.domain_expertise` | `expertise.domain[0].level` (primary) | Direct enum mapping. `[P1-R2-4 FIX]` If `expertise.domain` is empty, auto-create entry: `{ "level": <PHM value>, "domain_name": null, "is_primary": true }`. If non-empty, update the `is_primary: true` entry's level. |
 | `expertise_level.programming_experience` | `expertise.programming.level` | Direct enum mapping |
 | `expertise_level.ai_ml_familiarity` | `expertise.ai_ml.level` | Direct enum mapping |
 | `expertise_level.business_experience` | `expertise.business.level` | Direct enum mapping |
@@ -1074,6 +1115,7 @@ Tracks how ready the profile is for downstream personalization. Includes inferre
 | `delivery.include_code_samples` | `false` | When `programming.level == none` or absent |
 | `delivery.include_code_samples` | `true` | When `programming.level >= beginner` |
 | `delivery.code_verbosity` | Inferred from `programming.level` | `beginner→fully-explained, intermediate→annotated, advanced/expert→minimal` |
+| `delivery.include_visual_descriptions` | `false` | `[P1-R2-3 FIX]` Added. Only relevant for screen reader users — set to `true` when `accessibility.screen_reader = true`. |
 | `delivery.language` | `English` | |
 | `delivery.language_proficiency` | `native` | |
 | `accessibility.screen_reader` | `false` | |

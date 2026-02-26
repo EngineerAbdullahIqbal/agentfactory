@@ -1,7 +1,9 @@
+> **LEGACY DOCUMENT** — This is the original v1.0 research input. The authoritative schema is now `specs/learner-profile/spec.md` (v1.1). Key differences: `learner_id` is now auth sub string (not UUID), `topics_to_skip` merged into `topics_already_mastered`, `ai_ml.level` enum standardized, accessibility section added, defaults changed from `intermediate` to `beginner`, and many other refinements. Do NOT use this file as a template for implementation.
+
 # Learner Profile Schema for Content Personalization
-**Version:** 1.0 — Static Content Personalization
+**Version:** 1.0 — Static Content Personalization (SUPERSEDED by spec.md v1.1)
 **Purpose:** Drives the five dimensions of content personalization (vocabulary, examples, depth, structure, tone).
-**Usage:** Fill out this profile for a learner, then pass it alongside the source lesson to the Content Personalization Prompt.
+**Usage:** ~~Fill out this profile for a learner, then pass it alongside the source lesson to the Content Personalization Prompt.~~ See `spec.md` for current schema.
 
 ---
 
