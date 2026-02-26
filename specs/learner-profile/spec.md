@@ -669,6 +669,8 @@ All endpoints prefixed with `/api/v1/profiles`.
 
 **PATCH semantics `[P0-R3-1 FIX]`:** JSONB sections use **merge** semantics — only explicitly-sent fields are written; omitted fields keep their existing values. This prevents data loss when a client updates one nested field without resending the entire section.
 
+**Concurrency requirement `[P0-R4-2 FIX]`:** To prevent lost updates under concurrent PATCHes, apply merge updates inside a DB transaction that locks the profile row (`SELECT ... FOR UPDATE`) before reading the existing JSONB and writing the merged result.
+
 **Implementation algorithm:**
 ```python
 # In service layer, after receiving validated ProfileUpdate/SectionUpdate:
@@ -695,7 +697,7 @@ def merge_section(existing_json: dict, update_model: BaseModel) -> dict:
 - `expertise.programming.level` → updated to `"advanced"`, `field_sources = "user"`
 - `expertise.ai_ml.level` → **unchanged** (keeps existing value AND existing `field_sources`)
 - `expertise.domain` → **unchanged** (not in `model_fields_set`)
-- Concurrent updates to different fields within the same section: safe (merge preserves untouched fields). Same field: last write wins. Acceptable for v1 (single-user profiles).
+- Concurrent updates to different fields within the same section: safe **when serialized by row lock** (merge preserves untouched fields). Same field: last commit wins.
 
 **Delete lifecycle (I-4, P0-2 FIX):**
 - Soft delete (`DELETE /me`): sets `deleted_at`, profile hidden from `GET /me`. Recoverable.
@@ -881,7 +883,7 @@ class CompletenessResponse(BaseModel):
     highest_impact_missing: list[str]  # Dotted FIELD paths (not section names), ordered by impact [P1-R4-3 FIX]
     # Example: ["goals.primary_learning_goal", "expertise.programming.level", "professional_context.current_role"]
     # Returns up to 5 fields. Only includes fields that are `default`-sourced (no user/phm/inferred value).
-    # Priority order: primary_learning_goal > programming.level > ai_ml.level > domain.level > current_role > industry > remaining by section weight.
+    # Priority order: goals.primary_learning_goal > expertise.programming.level > expertise.ai_ml.level > expertise.domain > professional_context.current_role > professional_context.industry > remaining by section weight.
 
 class ErrorResponse(BaseModel):
     """Standard error response for all non-2xx responses."""
@@ -946,7 +948,7 @@ Each field within a section contributes to completeness based on its `field_sour
 
 **Result:** A brand new profile with all defaults has `profile_completeness = 0.0`. As the user fills in fields or PHM updates fire, completeness rises meaningfully. A profile where half the fields are inferred from expertise maxes out around ~0.45, not 1.0.
 
-**`highest_impact_missing`:** Returns sections with the lowest `user`-sourced field ratio, ordered by section weight. Static priority within a section: `primary_learning_goal` > `programming.level` > `ai_ml.level` > `domain.level` > `current_role` > `industry` > remaining fields.
+**`highest_impact_missing`:** Returns up to 5 dotted field paths that are still `default`-sourced (i.e., missing from `field_sources`), ordered by impact. Priority order: `goals.primary_learning_goal` > `expertise.programming.level` > `expertise.ai_ml.level` > `expertise.domain` > `professional_context.current_role` > `professional_context.industry` > remaining by section weight.
 
 ### Cache Strategy
 
@@ -954,6 +956,15 @@ Each field within a section contributes to completeness based on its `field_sour
 |---|---|---|---|
 | Profile | `lp:profile:{learner_id}` | 30 min | Any profile update |
 | Onboarding status | `lp:onboarding:{learner_id}` | 10 min | Section completion |
+
+### Scale & Performance Targets (50k users, 3 AI consumers)
+
+This service is read-heavy. The hot path is `GET /me` during lesson personalization (3 AI consumers: TutorClaw, Teach Me Mode, Personalized Content Tab).
+
+**Targets (v1):**
+- Redis caching enabled by default (30 min TTL) with strict invalidation on any update.
+- Avoid redundant fetches: orchestrator fetches once per request and passes the profile to downstream AI consumers.
+- Keep DB queries per request ≤1 (cache hit → 0 DB queries).
 
 ### GDPR Implementation
 
@@ -1009,7 +1020,7 @@ Each field within a section contributes to completeness based on its `field_sour
 | `test_phm_respects_provenance` | PHM sync does not overwrite `user`-sourced fields. `[P0-5]` |
 | `test_phm_misconception_transform` | PHM string misconception → `{topic, misconception}` object with placeholder text. `[P0-3]` |
 | `test_inference_rules_from_expertise` | `programming: none` → inferred `language_complexity: plain` |
-| `test_inference_setsfield_sources` | After inference, `field_sources` records `inferred` for affected fields. `[P0-5]` |
+| `test_inference_sets_field_sources` | After inference, `field_sources` records `inferred` for affected fields. `[P0-5]` |
 | `test_user_override_preserves_source` | User sets `language_complexity` manually → `field_sources` records `user`, inference doesn't overwrite. `[P0-5]` |
 | `test_domain_array_with_primary` | Create profile with 2 domains, exactly one `is_primary: true` |
 | `test_domain_auto_primary` | Create profile with 1 domain, no `is_primary` set → auto-marked `true`. `[P1-2]` |
@@ -1034,7 +1045,8 @@ Each field within a section contributes to completeness based on its `field_sour
 | `test_completeness_zero_for_fresh_profile` | New profile with all defaults → `profile_completeness = 0.0`. `[P0-R2-4]` |
 | `test_audit_log_created_on_update` | Every PATCH creates an audit log entry |
 | `test_rate_limit_returns_429` | Exceed `PATCH /me` rate limit → 429 with `Retry-After` header and `rate_limited` error code. `[P2-1]` |
-| `test_concurrent_updates_last_write_wins` | Two simultaneous PATCHes to same section → deterministic last-write-wins (later timestamp overwrites). No crash, no partial merge. `[P2-2 FIX]` |
+| `test_concurrent_updates_different_fields_do_not_clobber` | Two simultaneous PATCHes to the same section updating different fields → both changes persist (no lost update). Requires row lock / equivalent transactional merge. `[P0-R4-2]` |
+| `test_concurrent_updates_same_field_last_write_wins` | Two simultaneous PATCHes updating the same field → last commit wins deterministically. No crash. `[P2-2 FIX]` |
 
 ---
 
@@ -1087,6 +1099,7 @@ Each field within a section contributes to completeness based on its `field_sour
 | D-24 | Inference timing | **Deferred until real data exists** | Inference does NOT run at profile creation (all defaults = meaningless). Runs after first user/PHM expertise update. `[P0-R3-2]` |
 | D-25 | `domain_name` requirement | **Optional at API, prompted in UI** | PHM and defaults may create domain entries with null `domain_name`. UI encourages filling it. `[P0-R3-3]` |
 | D-26 | Admin route path | **`/admin/by-learner/{learner_id}`** | Avoids JWT sub encoding issues (`auth0\|...`) and route shadowing. `[P1-R3-1]` |
+| D-27 | Concurrent PATCH behavior | **Row-level lock for merge updates** | Prevents lost updates when multiple clients/consumers PATCH different fields concurrently. `[P0-R4-2]` |
 
 ---
 
