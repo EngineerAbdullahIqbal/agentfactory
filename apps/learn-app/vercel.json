@@ -1,6 +1,13 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/ur",
+      "destination": "/",
+      "statusCode": 302
+    }
+  ],
   "rewrites": [
     {
       "source": "/ur/((?!assets|static|img|favicon|search-index|sitemap).*)",
