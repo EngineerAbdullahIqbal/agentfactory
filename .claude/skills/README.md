@@ -14,14 +14,15 @@ This guide resolves collisions between related skills and provides clear decisio
 
 **Skills**: `chapter-evaluator` + `content-evaluation-framework`
 
-| Aspect | chapter-evaluator | content-evaluation-framework |
-|--------|------------------|------------------------------|
-| **Purpose** | Diagnose specific problems | Gate decision (pass/fail) |
-| **When** | During development (find issues) | Before publication (go/no-go) |
-| **Output** | Detailed findings + improvement recommendations | Weighted score (75%+ = pass) |
-| **User** | Authors (improving content) | Reviewers (publication gate) |
+| Aspect      | chapter-evaluator                               | content-evaluation-framework  |
+| ----------- | ----------------------------------------------- | ----------------------------- |
+| **Purpose** | Diagnose specific problems                      | Gate decision (pass/fail)     |
+| **When**    | During development (find issues)                | Before publication (go/no-go) |
+| **Output**  | Detailed findings + improvement recommendations | Weighted score (75%+ = pass)  |
+| **User**    | Authors (improving content)                     | Reviewers (publication gate)  |
 
 **CORRECT WORKFLOW**:
+
 ```
 Author develops lesson
   ↓
@@ -29,7 +30,7 @@ Author runs chapter-evaluator → "What's wrong with this?"
   ↓
 Author identifies issues + uses remediation skills:
   - Low Clarity? → Use technical-clarity
-  - Low Engagement? → Use code-example-generator
+  - Low Engagement? → Use exercise-pack
   - Low Scaffolding? → Use concept-scaffolding
   ↓
 Author revises content
@@ -40,6 +41,7 @@ PASS → Publish | FAIL → Return to author with chapter-evaluator
 ```
 
 **DO NOT**:
+
 - Use chapter-evaluator as final gate (it's diagnostic, not pass/fail)
 - Use content-evaluation-framework during development (doesn't identify what's wrong)
 - Ask "which one?" — use BOTH in sequence
@@ -48,16 +50,17 @@ PASS → Publish | FAIL → Return to author with chapter-evaluator
 
 ### 2. Teaching AI Collaboration: DESIGN FIRST, THEN CODE
 
-**Skills**: `ai-collaborate-teaching` + `code-example-generator`
+**Skills**: `ai-collaborate-teaching` + `exercise-pack`
 
-| Aspect | ai-collaborate-teaching | code-example-generator |
-|--------|------------------------|------------------------|
-| **Purpose** | Design lesson balance | Generate specific examples |
-| **Scope** | Whole lesson structure | Individual code examples |
+| Aspect       | ai-collaborate-teaching                                  | exercise-pack                                  |
+| ------------ | -------------------------------------------------------- | ---------------------------------------------- |
+| **Purpose**  | Design lesson balance                                    | Generate specific examples                     |
+| **Scope**    | Whole lesson structure                                   | Individual code examples                       |
 | **Question** | "How should this lesson mix foundation/AI/verification?" | "What code example demonstrates this concept?" |
-| **Output** | 40/40/20 balance plan | Runnable code with validation |
+| **Output**   | 40/40/20 balance plan                                    | Runnable code with validation                  |
 
 **CORRECT WORKFLOW**:
+
 ```
 Lesson concept defined
   ↓
@@ -66,15 +69,16 @@ Use ai-collaborate-teaching → "Design the lesson balance"
 Lesson should be 40% foundation + 40% AI + 20% verification
   ↓
 For EACH section needing code:
-  Use code-example-generator → Generate specific examples
+  Use exercise-pack → Generate specific examples
   (Examples must follow Spec→Prompt→Code→Validation)
   ↓
 Assemble lesson with code examples fitting the 40/40/20 structure
 ```
 
 **DO NOT**:
+
 - Skip ai-collaborate-teaching and jump to code examples (no balance)
-- Use code-example-generator randomly (examples must fit lesson design)
+- Use exercise-pack randomly (examples must fit lesson design)
 
 ---
 
@@ -82,13 +86,14 @@ Assemble lesson with code examples fitting the 40/40/20 structure
 
 **Skills**: `learning-objectives` + `concept-scaffolding` + `technical-clarity`
 
-| Skill | Question | Output | When |
-|-------|----------|--------|------|
-| learning-objectives | "What will students DO?" | SMART outcomes + Bloom's levels + assessments | PLAN (first) |
-| concept-scaffolding | "How will students LEARN it?" | 3-7 step progression + cognitive load limits | DESIGN (second) |
-| technical-clarity | "Is this clear to read?" | Prose refinement + jargon checks | POLISH (third) |
+| Skill               | Question                      | Output                                        | When            |
+| ------------------- | ----------------------------- | --------------------------------------------- | --------------- |
+| learning-objectives | "What will students DO?"      | SMART outcomes + Bloom's levels + assessments | PLAN (first)    |
+| concept-scaffolding | "How will students LEARN it?" | 3-7 step progression + cognitive load limits  | DESIGN (second) |
+| technical-clarity   | "Is this clear to read?"      | Prose refinement + jargon checks              | POLISH (third)  |
 
 **CORRECT WORKFLOW**:
+
 ```
 Step 1: Define learning objectives
   → What outcomes? (Bloom's Create level)
@@ -103,7 +108,7 @@ Step 2: Design progression to reach objectives
   → Output: scaffolding_plan.md
 
 Step 3: Write lesson content following scaffolding
-  → Use code-example-generator for worked examples
+  → Use exercise-pack for worked examples
   → Use ai-collaborate-teaching for 40/40/20 balance
   → Output: lesson.md (draft)
 
@@ -119,6 +124,7 @@ Step 5: Verify against outcomes
 ```
 
 **DO NOT**:
+
 - Write lesson first, define objectives after (backwards)
 - Skip scaffolding design (jump straight to writing)
 - Polish prose before content is solid (wrong priority)
@@ -143,16 +149,16 @@ Step 5: Verify against outcomes
 #### 🛠️ IMPLEMENT & CREATE
 
 **"Generate a working code example"**
-→ Use `code-example-generator`
+→ Use `exercise-pack`
 
 **"Generate a full PhD-level exam from notes"**
-→ Use `mit-exam-generator`
+→ Use `assessment-architect`
 
 **"Generate a lesson summary for quick review"**
 → Use `summary-generator`
 
 **"Create a production skill from scratch"**
-→ Use `skill-creator-pro`
+→ Use `skill-validator`
 
 **"Create platform skills/agents/specs correctly"**
 → Use `canonical-format-checker`
@@ -186,16 +192,18 @@ Step 5: Verify against outcomes
 ### 1. PEDAGOGICAL DESIGN (Objectives + Progression)
 
 **Core**: `learning-objectives` → `concept-scaffolding`
+
 - **learning-objectives**: WHAT will students achieve
 - **concept-scaffolding**: HOW they'll learn it
 - **Support**: `technical-clarity` (polish), `ai-collaborate-teaching` (balance)
 
 ### 2. CONTENT CREATION (Write + Generate)
 
-**Core**: `code-example-generator` + `ai-collaborate-teaching`
-- **code-example-generator**: Create specific examples
+**Core**: `exercise-pack` + `ai-collaborate-teaching`
+
+- **exercise-pack**: Create specific examples
 - **ai-collaborate-teaching**: Design lesson structure
-- **Support**: `mit-exam-generator` (assessments), `summary-generator` (review)
+- **Support**: `assessment-architect` (assessments), `summary-generator` (review)
 
 ### 3. QUALITY GATES (Diagnose + Gate + Validate)
 
@@ -205,7 +213,7 @@ Step 5: Verify against outcomes
 
 ### 4. PLATFORM STANDARDS (Skills + Specs + Patterns)
 
-**Creation**: `skill-creator-pro`
+**Creation**: `skill-validator`
 **Validation**: `skill-validator`, `canonical-format-checker`
 **Support**: `skills-proficiency-mapper`
 
@@ -218,7 +226,7 @@ Step 5: Verify against outcomes
 ```
 1. Define objectives → learning-objectives
 2. Design progression → concept-scaffolding
-3. Generate examples → code-example-generator
+3. Generate examples → exercise-pack
 4. Design lesson balance → ai-collaborate-teaching
 5. Write content following scaffolding
 6. Polish prose → technical-clarity
@@ -238,7 +246,7 @@ Step 5: Verify against outcomes
 1. Run chapter-evaluator → Get detailed analysis
 2. For each low-scoring dimension:
    - Low Clarity? → Fix with technical-clarity
-   - Low Engagement? → Use code-example-generator for better examples
+   - Low Engagement? → Use exercise-pack for better examples
    - Low Scaffolding? → Redesign with concept-scaffolding
    - Low Objectives? → Clarify with learning-objectives
 3. Re-run chapter-evaluator
@@ -254,7 +262,7 @@ Step 5: Verify against outcomes
 
 ```
 1. Determine skill type (Builder/Guide/Automation/Analyzer/Validator)
-2. Run skill-creator-pro → Get domain expertise + structure
+2. Run skill-validator → Get domain expertise + structure
 3. Implement skill + bundled resources
 4. Run skill-validator → Check quality (9-category scoring)
 5. Fix any failures identified
@@ -287,9 +295,9 @@ Step 5: Verify against outcomes
 These skills have clear, non-overlapping purposes:
 
 - **summary-generator**: Extract key concepts from lessons (unique)
-- **mit-exam-generator**: Generate rigorous exams (specialized, no overlap)
-- **skill-creator-pro**: Create production skills (unique domain)
-- **skill-validator**: Validate skills (complements skill-creator-pro)
+- **assessment-architect**: Generate rigorous exams (specialized, no overlap)
+- **skill-validator**: Create production skills (unique domain)
+- **skill-validator**: Validate skills (complements skill-validator)
 - **canonical-format-checker**: Prevent format drift (specialized niche)
 - **skills-proficiency-mapper**: Map proficiency levels (unique function)
 
@@ -304,7 +312,7 @@ Is it about lesson content?
   ├─ YES
   │   ├─ Define learning outcomes? → learning-objectives
   │   ├─ Design progression? → concept-scaffolding
-  │   ├─ Generate code example? → code-example-generator
+  │   ├─ Generate code example? → exercise-pack
   │   ├─ Balance lesson structure? → ai-collaborate-teaching
   │   ├─ Fix prose clarity? → technical-clarity
   │   ├─ Diagnose problems? → chapter-evaluator
@@ -313,8 +321,8 @@ Is it about lesson content?
   │   └─ Create lesson summary? → summary-generator
   │
   └─ NO, it's about something else
-    ├─ Exams/assessments? → mit-exam-generator
-    ├─ Creating a skill? → skill-creator-pro
+    ├─ Exams/assessments? → assessment-architect
+    ├─ Creating a skill? → skill-validator
     ├─ Validating a skill? → skill-validator
     ├─ Teaching platform patterns? → canonical-format-checker
     ├─ Mapping skill proficiency? → skills-proficiency-mapper
@@ -340,6 +348,7 @@ Is it about lesson content?
 ## FEEDBACK & UPDATES
 
 If skills change or new collisions emerge:
+
 1. Update the relevant workflow section above
 2. Update the decision tree
 3. Test the workflow with a real task

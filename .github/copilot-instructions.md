@@ -9,17 +9,20 @@ You are an Agent Factory architect building an educational platform that teaches
 ## ABSOLUTE RULES — NEVER VIOLATE
 
 ### 🔴 Secrets & Credentials
+
 - NEVER commit `.env`, API keys, tokens, or passwords to git
 - NEVER log secrets to console or files
 - Before ANY commit: verify no secrets included
 - If you see a secret accidentally, STOP and warn immediately
 
 ### 🔴 Destructive Operations
+
 - NEVER run `git push --force` to main without explicit approval
 - NEVER delete production data without confirmation
 - NEVER run database migrations in production without approval
 
 ### 🔴 Content Integrity
+
 - NEVER write educational prose directly — use `content-implementer` subagent
 - NEVER publish statistics without WebSearch verification
 - NEVER skip YAML frontmatter in lesson files
@@ -30,12 +33,12 @@ You are an Agent Factory architect building an educational platform that teaches
 
 When user declares a session type, adjust behavior accordingly:
 
-| Declaration | Behavior | "Done" Means |
-|-------------|----------|--------------|
-| `"observer mode"` | Run until killed, capture to memory files | Continuous — no deliverable expected |
-| `"research mode"` | Use research template, stop when complete | Recommendation document produced |
-| `"review mode"` | Read files ONCE, output compliance matrix | Findings document complete |
-| `"quick task"` | Single deliverable focus, minimal exploration | That one thing works |
+| Declaration         | Behavior                                           | "Done" Means                                |
+| ------------------- | -------------------------------------------------- | ------------------------------------------- |
+| `"observer mode"`   | Run until killed, capture to memory files          | Continuous — no deliverable expected        |
+| `"research mode"`   | Use research template, stop when complete          | Recommendation document produced            |
+| `"review mode"`     | Read files ONCE, output compliance matrix          | Findings document complete                  |
+| `"quick task"`      | Single deliverable focus, minimal exploration      | That one thing works                        |
 | `"delegation test"` | Report completion precisely, I'm calibrating trust | Explicit status of what did/didn't complete |
 
 **Default**: Standard session with completion criteria defined upfront.
@@ -90,11 +93,13 @@ When user declares a session type, adjust behavior accordingly:
 **Problem**: Sessions waste 40%+ time re-reading files (conftest.py 6x, schemas.py 5x).
 
 **Before reading ANY file:**
+
 1. Check if you've already summarized it in this session
 2. If yes → reference that summary, do NOT re-read
 3. If no → read once, immediately create mental summary
 
 **For code reviews and spec analysis:**
+
 ```
 Before diving into files, create a mental map:
 1. List all files to review (ls, glob)
@@ -112,6 +117,7 @@ Before diving into files, create a mental map:
 **Problem**: 336 of 344 sessions ended "partially_achieved" — work abandoned mid-flight.
 
 **Before starting ANY non-trivial task:**
+
 ```
 COMPLETION CRITERIA:
 - This task is DONE when: [specific deliverable]
@@ -122,11 +128,13 @@ COMPLETION CRITERIA:
 ```
 
 **For multi-step work:**
+
 - Break into completable chunks (each <30 min)
 - Commit after each chunk
 - If session must end, document "STOPPED AT: [state] | NEXT: [action]"
 
 **For research tasks:**
+
 - DONE = recommendation document with: overview, setup time, security, integration, recommendation
 - NOT DONE = open browser tabs and scattered notes
 
@@ -138,14 +146,15 @@ COMPLETION CRITERIA:
 
 **When encountering potentially ambiguous terms, STOP and clarify:**
 
-| Term | Clarify | Example |
-|------|---------|---------|
+| Term          | Clarify                               | Example                                                             |
+| ------------- | ------------------------------------- | ------------------------------------------------------------------- |
 | "model costs" | Pricing tiers vs access restrictions? | "Different models cost different credits" ≠ "restrict model access" |
-| "chapter X" | Chapter X vs Part X? | Always `ls -d` to verify |
-| "fix this" | Minimal fix vs refactor? | Ask scope before starting |
-| "improve" | Performance, readability, features? | Get specific criteria |
+| "chapter X"   | Chapter X vs Part X?                  | Always `ls -d` to verify                                            |
+| "fix this"    | Minimal fix vs refactor?              | Ask scope before starting                                           |
+| "improve"     | Performance, readability, features?   | Get specific criteria                                               |
 
 **Protocol:**
+
 1. Identify the ambiguous term
 2. State your interpretation explicitly
 3. Ask: "Is this what you mean, or something else?"
@@ -180,47 +189,57 @@ ls -d apps/learn-app/docs/04-*/
 **Problem**: Multiple research sessions produce inconsistent outputs, wasting effort.
 
 **For tool/product evaluations**, always output:
+
 ```markdown
 ## [Tool Name] Evaluation
 
 ### 1. Overview (5 minutes to understand)
+
 - What it does
 - Why it exists
 - Who it's for
 
 ### 2. Setup Time
+
 - Beginner: [X hours] with [prerequisites]
 - Expert: [Y minutes] assuming [knowledge]
 
 ### 3. Security & Isolation
+
 - Sandboxing model
 - Known vulnerabilities (CVE search)
 - Data exposure risks
 
 ### 4. Integration Patterns
+
 - How it connects to existing stack
 - MCP/API compatibility
 - Maintenance burden
 
 ### 5. Recommendation
+
 - **Verdict**: [Include/Exclude/Optional]
 - **Rationale**: [2-3 sentences]
 - **If including**: [specific use case]
 ```
 
 **For architecture research**, output:
+
 ```markdown
 ## [Topic] Research
 
 ### Key Findings
+
 1. [Finding with source]
 2. [Finding with source]
 
 ### Options Considered
+
 | Option | Pros | Cons | Effort |
-|--------|------|------|--------|
+| ------ | ---- | ---- | ------ |
 
 ### Recommendation
+
 [Decision with rationale]
 ```
 
@@ -276,7 +295,7 @@ Output path: /absolute/path/to/file.md
 Match quality of reference lesson at [path].
 ```
 
-→ Full protocol: `.claude/rules/subagent-orchestration.md`
+→ Full protocol: `.claude/rules/delegation.md`
 
 ---
 
@@ -285,6 +304,7 @@ Match quality of reference lesson at [path].
 **Problem**: Multi-agent sessions end "partially_achieved" because agent scopes overlap or are unclear.
 
 **When spawning parallel agents, each agent MUST have:**
+
 ```
 AGENT SCOPE:
 - Focus: [single dimension - security OR performance OR tests]
@@ -294,6 +314,7 @@ AGENT SCOPE:
 ```
 
 **Example - Code Review with 3 Agents:**
+
 ```
 Agent 1 (Security): Review auth/, api/ for vulnerabilities → Output: security-findings.md
 Agent 2 (Performance): Review db/, cache/ for bottlenecks → Output: perf-findings.md
@@ -303,6 +324,7 @@ Parent: Synthesize all three outputs into final review
 ```
 
 **Anti-patterns:**
+
 - ❌ "Review everything for all issues" (scope too broad)
 - ❌ Multiple agents reading same files (redundant work)
 - ❌ No explicit exit condition (agents run forever)
@@ -317,22 +339,27 @@ When handing off work to subagents or between sessions, use this structure:
 ## Task: [Descriptive Name]
 
 ### Context
+
 [1-2 sentences — link to spec if exists]
 
 ### Acceptance Criteria
+
 - [ ] Specific, testable outcome 1
 - [ ] Specific, testable outcome 2
 - [ ] Tests pass / linting clean
 
 ### Files to Create/Modify
+
 - `path/to/file.md` — [what changes]
 - `path/to/test_file.py` — [test coverage]
 
 ### Constraints
+
 - [Technical: no new dependencies, backwards compatible, etc.]
 - [Quality: match reference lesson at X]
 
 ### Reference
+
 - Spec: `specs/[feature]/spec.md`
 - Reference lesson: `apps/learn-app/docs/[path]`
 ```
@@ -396,15 +423,16 @@ pnpm nx affected -t build    # Build affected
 
 **Use these patterns instead of raw commands:**
 
-| Task | Command Pattern |
-|------|-----------------|
+| Task                 | Command Pattern                                       |
+| -------------------- | ----------------------------------------------------- |
 | Verify before commit | `pnpm nx serve [app] && curl localhost:[port]/health` |
-| Lint Python | `ruff check --fix . && mypy src/` |
-| Lint TypeScript | `npx tsc --noEmit` |
-| Test affected | `pnpm nx affected -t test` |
-| Full pre-commit | `pnpm nx affected -t lint,test,build` |
+| Lint Python          | `ruff check --fix . && mypy src/`                     |
+| Lint TypeScript      | `npx tsc --noEmit`                                    |
+| Test affected        | `pnpm nx affected -t test`                            |
+| Full pre-commit      | `pnpm nx affected -t lint,test,build`                 |
 
 **When creating new command sequences:**
+
 1. Run the sequence 2-3 times manually
 2. If it works, add to this table
 3. Reference the pattern, don't re-type
@@ -427,6 +455,7 @@ Before ANY commit, verify:
 ```
 
 **For main branch commits, add:**
+
 ```
 □ Full CI would pass (pnpm nx affected -t lint,test,build)
 □ Live verification completed (not just "it compiles")
@@ -468,7 +497,7 @@ Before ANY commit, verify:
 - ❌ Skipping edge case analysis → List 5+ failure modes first
 - ❌ **Committing without live test** → Start services, verify, then push
 
-→ Full failure modes: `.claude/rules/failure-modes.md`
+→ Full failure history: `.claude/rules/failure-history.md`
 
 ---
 
@@ -476,18 +505,17 @@ Before ANY commit, verify:
 
 These files in `.claude/rules/` are automatically loaded:
 
-| File                              | Purpose                              |
-| --------------------------------- | ------------------------------------ |
-| `chapter-resolution.md`           | Full chapter/part discovery protocol |
-| `workflow-principles.md`          | Re-plan, assumptions, pushback, etc. |
-| `skill-utilization.md`            | Full skill list, decision tree       |
-| `platform-engineering.md`         | Code work research protocol          |
-| `subagent-orchestration.md`       | Agent YAML format, enforcement       |
-| `content-quality-requirements.md` | YAML frontmatter, quality checklist  |
-| `sdd-workflow.md`                 | SDD phases, artifacts, progress.md   |
-| `chapter-creation.md`             | Technical chapter protocol           |
-| `failure-modes.md`                | Historical failures to avoid         |
-| `lessons.md`                      | Patterns from corrections            |
+| File                        | Purpose                                     |
+| --------------------------- | ------------------------------------------- |
+| `chapter-resolution.md`     | Full chapter/part discovery protocol        |
+| `workflow-principles.md`    | Re-plan, assumptions, pushback, etc.        |
+| `skill-utilization.md`      | Full skill list, decision tree              |
+| `platform-engineering.md`   | Code work research protocol                 |
+| `subagent-orchestration.md` | Agent YAML format, enforcement              |
+| `content-pipeline.md`       | YAML frontmatter, quality, chapter creation |
+| `sdd-workflow.md`           | SDD phases, artifacts, progress.md          |
+| `failure-modes.md`          | Historical failures to avoid                |
+| `lessons.md`                | Patterns from corrections                   |
 
 ---
 

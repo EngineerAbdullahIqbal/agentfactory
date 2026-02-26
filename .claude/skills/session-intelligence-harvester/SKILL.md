@@ -14,6 +14,7 @@ Transform session learnings into permanent organizational intelligence by implem
 ## When to Use This Skill
 
 **Automatic Triggers** (proactively suggest harvesting):
+
 - Session corrected format drift (wrong file structure, YAML, invocation)
 - Session added missing checks to orchestration files
 - Session identified failure mode worth preventing
@@ -21,6 +22,7 @@ Transform session learnings into permanent organizational intelligence by implem
 - PHR was created documenting significant learning
 
 **Manual Triggers** (user requests):
+
 - "Harvest learnings from this session"
 - "Capture session intelligence"
 - "What should we encode from this work?"
@@ -69,17 +71,17 @@ Analyze the session by answering these questions. Write your analysis to track p
 
 Use this routing table. Route learnings to the component where they will be discovered at the right time:
 
-| Learning Type | Target Component | Location | What to Add | When It Triggers |
-|---------------|------------------|----------|-------------|------------------|
-| Context-gathering gaps | CLAUDE.md | Section I | New step in context protocol | Before ANY platform work |
-| Failure mode example | CLAUDE.md | Failure modes | Named example with correction | When similar situation detected |
-| Pedagogical framework | Constitution | Section IIa | Teaching method update | During lesson design |
-| Agent convergence pattern | Agent file | Convergence Patterns | Pattern + why + correction | During agent execution |
-| Agent self-monitoring | Agent file | Self-Monitoring Checklist | New checklist item | Before agent finalizes output |
-| Canonical source lookup | Multiple agents | Analysis Questions | Cross-reference check | During planning phase |
-| Reusable workflow | New skill | .claude/skills/ | New SKILL.md | When user invokes skill |
-| Orchestration check | Command file | Phase 0 or relevant phase | New validation step | During workflow execution |
-| Format specification | Canonical source chapter | Lesson content | Authoritative format | When teaching that pattern |
+| Learning Type             | Target Component         | Location                  | What to Add                   | When It Triggers                |
+| ------------------------- | ------------------------ | ------------------------- | ----------------------------- | ------------------------------- |
+| Context-gathering gaps    | CLAUDE.md                | Section I                 | New step in context protocol  | Before ANY platform work        |
+| Failure mode example      | CLAUDE.md                | Failure modes             | Named example with correction | When similar situation detected |
+| Pedagogical framework     | Constitution             | Section IIa               | Teaching method update        | During lesson design            |
+| Agent convergence pattern | Agent file               | Convergence Patterns      | Pattern + why + correction    | During agent execution          |
+| Agent self-monitoring     | Agent file               | Self-Monitoring Checklist | New checklist item            | Before agent finalizes output   |
+| Canonical source lookup   | Multiple agents          | Analysis Questions        | Cross-reference check         | During planning phase           |
+| Reusable workflow         | New skill                | .claude/skills/           | New SKILL.md                  | When user invokes skill         |
+| Orchestration check       | Command file             | Phase 0 or relevant phase | New validation step           | During workflow execution       |
+| Format specification      | Canonical source chapter | Lesson content            | Authoritative format          | When teaching that pattern      |
 
 **WHY ROUTING MATTERS**: Learnings placed in the wrong component don't prevent recurrence. A check in `content-implementer.md` won't help if the error happens during `chapter-planner` execution.
 
@@ -119,17 +121,19 @@ For each identified learning:
 **Take action**: Edit each target file. Use the Edit tool to make changes.
 
 For each update:
+
 1. Read the target file (if not already read)
 2. Locate the exact insertion point
 3. Apply the edit using Edit tool
 4. Verify the edit was applied correctly
 
 Track completion:
+
 ```
 Updates Progress:
 - [x] CLAUDE.md - Added failure mode section
 - [x] chapter-planner.md - Added convergence pattern 6
-- [ ] sp.loopflow.v2.md - Adding Phase 0 check (in progress)
+- [x] sp.loopflow.v2.md - Removed (deprecated, replaced by native Plan Mode)
 - [ ] content-implementer.md - Pending
 ```
 
@@ -156,6 +160,7 @@ Before finalizing, verify each of these (check the box as you confirm):
    - Why this improves future work
 
 2. **Commit changes** with descriptive message:
+
    ```
    feat(intelligence): Harvest session learnings into RII
 
@@ -231,10 +236,10 @@ After completing harvest, provide summary:
 
 ### Learnings Extracted: [N]
 
-| # | Learning | Type | Target | Status |
-|---|----------|------|--------|--------|
-| 1 | [Title] | [Type] | [File] | Applied |
-| 2 | [Title] | [Type] | [File] | Applied |
+| #   | Learning | Type   | Target | Status  |
+| --- | -------- | ------ | ------ | ------- |
+| 1   | [Title]  | [Type] | [File] | Applied |
+| 2   | [Title]  | [Type] | [File] | Applied |
 
 ### Updates Applied
 
@@ -242,13 +247,16 @@ After completing harvest, provide summary:
 2. **[File]**: [What was added] (lines X-Y)
 
 ### PHR Created
+
 - Path: [PHR path]
 - Stage: [Stage]
 
 ### Canonical Sources Referenced
+
 - [Pattern]: [Chapter X Lesson Y]
 
 ### Commit
+
 - Hash: [commit hash]
 - Message: [commit message summary]
 ```
@@ -260,6 +268,7 @@ After completing harvest, provide summary:
 **Session**: Fixed skill format to use domain-based structure
 
 **Analysis**:
+
 ```
 CORRECTIONS MADE:
 - Wrong: .claude/skills/section-writer.md (flat file, no domain)
@@ -278,17 +287,20 @@ CLASSIFICATION:
 ```
 
 **Updates Applied**:
+
 1. CLAUDE.md: Updated agent architecture section
 2. skill-creator: Added domain organization requirement
 3. session-intelligence-harvester: Updated routing table with domain paths
 4. Moved all skills to authoring/ or engineering/
 5. Moved all agents to authoring/ or engineering/
 6. Generals Skills are at .claude/skills/
+
 ### Example 2: Missing Validation (Single File)
 
 **Session**: Discovered lessons weren't checking chapter-index.md for prerequisites
 
 **Analysis**:
+
 ```
 CORRECTIONS MADE:
 - Wrong: Started chapter work without reading chapter-index.md
@@ -300,6 +312,7 @@ CLASSIFICATION:
 ```
 
 **Updates Applied**:
+
 1. CLAUDE.md: Added Step 1 to read chapter-index.md with specific extraction requirements
 
 ### Example 3: Hallucinated Facts (Chapter 2 Incident)
@@ -307,6 +320,7 @@ CLASSIFICATION:
 **Session**: Wrote 6 lessons with unverified statistics, dates, and adoption numbers
 
 **Analysis**:
+
 ```
 CORRECTIONS MADE:
 - Wrong: "50-75% time savings" for goose
@@ -331,6 +345,7 @@ CLASSIFICATION:
 ```
 
 **Updates Applied**:
+
 1. CLAUDE.md: Added "Content Fact-Checking (MANDATORY)" section
 2. CLAUDE.md: Added failure mode example to Failure Prevention list
 3. Documented factual-verifier agent invocation pattern

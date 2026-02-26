@@ -100,8 +100,8 @@ Ask yourself:
 
 **Canonical source lookup**:
 
-- **Skills**: `.claude/skills/authoring/<name>/SKILL.md` (content) or `.claude/skills/engineering/<name>/SKILL.md` (platform) or .claude/skills
-- **Agents**: `.claude/agents/authoring/<name>.md` (content) or `.claude/agents/engineering/<name>.md` (platform) or .claude/agents
+- **Skills**: `.claude/skills/<name>/SKILL.md`
+- **Agents**: `.claude/agents/<name>.md`
 - **ADRs**: `specs/<feature>/adrs/`
 - **PHRs**: `history/prompts/<feature>/`
 - **Specifications**: `specs/<feature>/spec.md`

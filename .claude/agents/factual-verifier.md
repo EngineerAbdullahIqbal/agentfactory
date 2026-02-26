@@ -10,7 +10,7 @@ skills: fetch-library-docs
 
 Before verifying ANY content, you MUST:
 
-1. **Read fact-checking skill** (if exists): `.claude/skills/fact-check-lesson/SKILL.md`
+1. **Read fact-checking command** (if exists): `.claude/commands/fact-check-lesson.md`
 2. **Use WebSearch/WebFetch** for primary source verification
 3. **Report skills used** in completion output
 

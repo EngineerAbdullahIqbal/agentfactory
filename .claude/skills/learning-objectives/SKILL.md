@@ -8,6 +8,7 @@ description: Generate measurable learning outcomes aligned with Bloom's taxonomy
 ## Purpose
 
 Enable educators to create **measurable, actionable learning objectives** aligned with Bloom's taxonomy and CEFR proficiency levels. This skill helps:
+
 - Define what students will achieve (not just what topics they'll cover)
 - Ensure objectives are specific and testable (not vague)
 - Identify prerequisites and scaffold learning progressively
@@ -21,6 +22,7 @@ Enable educators to create **measurable, actionable learning objectives** aligne
 ## When to Activate
 
 Use this skill when:
+
 - Planning curriculum or lesson design and need to define learning outcomes
 - Creating assessments and want to align them with clear objectives
 - Designing a course and need measurable outcomes for accreditation
@@ -31,27 +33,32 @@ Use this skill when:
 ## Evals-First Objective Design (Constitution v4.0.1)
 
 **CRITICAL WORKFLOW**:
+
 1. **Evals First**: Review success criteria from chapter spec BEFORE writing objectives
 2. **Objectives Second**: Design learning objectives that lead to eval success
 3. **Alignment Third**: Ensure each objective maps to at least one success eval
 4. **Validation Fourth**: Verify objectives are measurable and aligned
 
 **Template**:
+
 ```markdown
 ### Objective Design (Evals-First)
 
 **Source**: Chapter spec at `specs/part-X/chapter-Y/spec.md`
 
 **Success Evals from Spec**:
+
 1. 75%+ write valid specification (business goal: reduce iteration cycles)
 2. 80%+ identify vague requirements (business goal: prevent scope creep)
 
 **Learning Objectives Designed to Achieve Evals**:
+
 - LO-001: Write clear specifications → Eval #1
 - LO-002: Identify ambiguous requirements → Eval #2
 ```
 
 **Do NOT** create objectives without:
+
 - ✅ Reference to approved spec with success evals
 - ✅ Explicit mapping: Objective → Eval → Business Goal
 - ✅ Measurability aligned with eval criteria
@@ -61,6 +68,7 @@ Use this skill when:
 ### Step 1: Understand the Context
 
 When a request comes in to generate learning objectives, first understand:
+
 - **What topic or concept?** (Python decorators, OOP, async/await, etc.)
 - **Who are the learners?** (Beginners, intermediate, advanced)
 - **How long to teach?** (30 minutes, 2 hours, full unit)
@@ -73,6 +81,7 @@ If you're not familiar with the specific topic's cognitive levels, read:
 📖 [reference/blooms-taxonomy-programming.md](reference/blooms-taxonomy-programming.md)
 
 This document maps Bloom's 6 levels to programming contexts with:
+
 - Action verbs for each level (Remember, Understand, Apply, Analyze, Evaluate, Create)
 - Programming examples
 - Assessment methods for each level
@@ -83,6 +92,7 @@ Read the guidance on prerequisite analysis:
 📖 [reference/prerequisite-analysis.md](reference/prerequisite-analysis.md)
 
 For your objectives, determine:
+
 - What must learners know BEFORE tackling the main concept?
 - List prerequisites at Remember/Understand level (not deep mastery)
 - Trace dependency chains to foundational knowledge
@@ -97,6 +107,7 @@ This guides you to pair objectives with realistic assessment approaches (code ex
 ### Step 5: Generate Objectives with CEFR Proficiency Levels
 
 For each topic, create 3-5 objectives (typically):
+
 - At least one from each level needed for the topic (Remember through Create)
 - Progressively building in complexity
 - Each with clear statement, context, prerequisites, assessment method, and success criteria
@@ -106,6 +117,7 @@ Use the template as guidance:
 📄 [templates/learning-objective-template.yml](templates/learning-objective-template.yml)
 
 **Key principle**: Each objective should answer:
+
 - **What will learners DO?** (verb from Bloom's level)
 - **In what context?** (the specific situation or problem)
 - **How will we know they succeeded?** (measurable criteria)
@@ -116,26 +128,31 @@ Use the template as guidance:
 **Align objectives with international proficiency standards** (from skills-proficiency-mapper v2.0):
 
 **A1 (Beginner - Recognition)**:
+
 - Bloom's: Remember/Understand only
 - Example: "Identify Python syntax for defining a function"
 - Measurable: Recognition, not production
 
 **A2 (Elementary - Guided Application)**:
+
 - Bloom's: Understand/Apply with scaffolding
 - Example: "Complete a function definition with provided hints"
 - Measurable: Application with support
 
 **B1 (Intermediate - Independent Application)**:
+
 - Bloom's: Apply independently
 - Example: "Implement a function from clear specification without assistance"
 - Measurable: Real-world application without scaffolding
 
 **B2 (Upper-Intermediate - Analysis)**:
+
 - Bloom's: Analyze/Evaluate
 - Example: "Compare two implementations and justify which is more maintainable"
 - Measurable: Evaluation with justification
 
 **C1 (Advanced - Creation/Synthesis)**:
+
 - Bloom's: Evaluate/Create
 - Example: "Design a system architecture for scalable deployment"
 - Measurable: Original design with trade-off analysis
@@ -147,11 +164,13 @@ Use the template as guidance:
 **CRITICAL**: AI-native learning objectives must include ability to work WITH AI in bidirectional co-learning partnership (per Section IIb forcing functions), not just independently.
 
 **Traditional Objective Format**:
+
 ```
 LO-001: Implement user authentication (independent skill)
 ```
 
 **AI-Native Objective Format**:
+
 ```
 LO-001: Implement user authentication working with AI as co-learning partner
   - Use AI as Teacher: Learn security patterns from AI suggestions
@@ -163,21 +182,25 @@ LO-001: Implement user authentication working with AI as co-learning partner
 **Three-Role Objective Types**:
 
 **1. AI as Teacher Objectives** (Student learns from AI):
+
 - "Identify pattern suggested by AI that improves code quality"
 - "Explain trade-offs in AI's proposed approaches"
 - "Apply AI-suggested pattern to new context"
 
 **2. AI as Student Objectives** (Student teaches AI):
+
 - "Write specification that produces correct code on first try"
 - "Provide feedback that improves AI's next iteration"
 - "Clarify requirements when AI asks for disambiguation"
 
 **3. AI as Co-Worker Objectives** (Collaborative iteration):
+
 - "Iterate with AI to converge on optimal solution"
 - "Make strategic decisions while AI handles tactical implementation"
 - "Validate AI outputs for correctness and appropriateness"
 
 **Example AI-Native Objective Set**:
+
 ```yaml
 - id: "LO-AUTH-001"
   statement: "Implement OAuth authentication working with AI as co-learning partner"
@@ -195,6 +218,7 @@ LO-001: Implement user authentication working with AI as co-learning partner
 ```
 
 **Objective Balance for AI-Native Content**:
+
 - 60-70%: Traditional technical skills
 - 20-30%: Co-learning skills (working WITH AI)
 - 10-20%: Validation/verification skills
@@ -208,12 +232,14 @@ python .claude/skills/learning-objectives/scripts/validate-objectives.py objecti
 ```
 
 The script checks:
+
 - ✅ Objectives use action verbs (not vague words like "understand" or "know")
 - ✅ Objectives are specific and testable
 - ✅ Verbs match the Bloom's level
 - ✅ Required fields present (context, assessment, success criteria)
 
 If validation fails, review the error messages and refine:
+
 - Replace vague verbs with specific action verbs from Bloom's level
 - Add missing context or success criteria
 - Make statements more specific (not just topic names)
@@ -221,6 +247,7 @@ If validation fails, review the error messages and refine:
 ### Step 7: Refine and Finalize
 
 Based on validation feedback:
+
 - Revise any objectives with errors
 - Ensure the objective sequence makes sense (build progressively)
 - Verify prerequisites are necessary but not excessive
@@ -255,6 +282,7 @@ objectives:
 - [ ] Objectives align with complexity tier constraints (see Constitution)
 
 ### Objective snippet
+
 ```
 - [ID: LO-001 | Bloom: L3-Apply]
   Statement: Implement X in Y context
@@ -412,12 +440,14 @@ objectives:
 ## Common Patterns
 
 ### Pattern 1: Short Tutorial (30 minutes)
+
 - 1 Understand objective
 - 1 Apply objective
 - 1 Analyze objective
 - ~Total: 3 objectives
 
 ### Pattern 2: Standard Lesson (1-2 hours)
+
 - 1 Remember objective (if foundational topic)
 - 1 Understand objective
 - 2 Apply objectives (different contexts/complexities)
@@ -425,6 +455,7 @@ objectives:
 - ~Total: 4-5 objectives
 
 ### Pattern 3: Full Unit (3-5 hours)
+
 - 1 Remember (terminology)
 - 1 Understand (concepts)
 - 2-3 Apply (varied contexts)
@@ -434,6 +465,7 @@ objectives:
 - ~Total: 7-8 objectives
 
 ### Pattern 4: Capstone/Project Course
+
 - Lightweight foundational objectives (Remember/Understand)
 - Multiple Apply objectives with increasing complexity
 - Strong Analyze/Evaluate/Create focus
@@ -448,6 +480,7 @@ objectives:
 **Why it's bad**: Not measurable. What does "understand" mean? How will you know if they understand?
 
 **Solution**: Use specific action verb and add context
+
 - ✅ "Explain how a decorator wraps a function to modify its behavior"
 - ✅ "Implement a custom decorator that logs function calls"
 
@@ -456,6 +489,7 @@ objectives:
 **Problem**: Created 15 objectives for 1-hour lesson
 
 **Solution**: Reduce to 3-5 objectives. Ask:
+
 - Which are essential? (Keep)
 - Which are "nice to have"? (Remove or move to extension)
 - Are some redundant? (Consolidate)
@@ -465,6 +499,7 @@ objectives:
 **Problem**: Prerequisites include "Master Python" and "Understand all design patterns"
 
 **Solution**: Be minimal. Ask: "What's the absolute minimum they need to know to start learning this?"
+
 - Too deep: "Master all data structures"
 - Just right: "Understand how lists work with indexing"
 
@@ -473,6 +508,7 @@ objectives:
 **Problem**: Only created Remember and Apply objectives
 
 **Solution**:
+
 1. Read blooms-taxonomy-programming.md §4-6 for Analyze/Evaluate/Create examples
 2. Ask: "What can learners do with this knowledge?" (Points toward Create)
 3. Add analysis question: "Compare this approach with X..."
@@ -482,11 +518,9 @@ objectives:
 
 This skill works well with:
 
-**→ exercise-designer skill**: Once you have learning objectives, use that skill to create practice exercises aligned to each objective's Bloom's level
+**→ exercise-pack skill**: Once you have learning objectives, use that skill to create practice exercises aligned to each objective's Bloom's level
 
 **→ technical-clarity skill**: Use to review the clarity of your objective statements
-
-**→ code-example-generator skill**: Use to create examples that demonstrate Apply-level objectives
 
 ## Emerging Topics: Agentic AI & Model Context Protocol (MCP)
 
@@ -583,6 +617,7 @@ objectives:
 ```
 
 **Key Considerations for Advanced Topics**:
+
 - These topics may require deeper prerequisites (solid Python, API design knowledge)
 - Use spiral learning: revisit concepts at increasing depth (basic agent → advanced orchestration)
 - Include both theory (understanding architecture) and practice (implementing tools)
@@ -602,6 +637,7 @@ objectives:
 ---
 
 **Ready to generate objectives?** Provide:
+
 - Topic/concept to teach
 - Target learner level (beginner/intermediate/advanced)
 - Available teaching time

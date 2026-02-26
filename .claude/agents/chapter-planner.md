@@ -639,15 +639,14 @@ Students will implement error handling using AI collaboration, demonstrating all
 **Canonical source lookup**:
 
 ```markdown
-| Pattern            | Domain             | Path                                         |
-| ------------------ | ------------------ | -------------------------------------------- |
-| Authoring Skills   | Content creation   | `.claude/skills/authoring/<name>/SKILL.md`   |
-| Engineering Skills | Platform/tooling   | `.claude/skills/engineering/<name>/SKILL.md` |
-| Authoring Agents   | Content workflows  | `.claude/agents/authoring/<name>.md`         |
-| Engineering Agents | Platform workflows | `.claude/agents/engineering/<name>.md`       |
-| ADRs               | Decisions          | `specs/<feature>/adrs/`                      |
-| PHRs               | History            | `history/prompts/<feature>/`                 |
-| Specifications     | Design             | `specs/<feature>/spec.md`                    |
+| Pattern            | Domain             | Path                                   |
+| ------------------ | ------------------ | -------------------------------------- |
+| Skills             | All domains        | `.claude/skills/<name>/SKILL.md`       |
+| Authoring Agents   | Content workflows  | `.claude/agents/authoring/<name>.md`   |
+| Engineering Agents | Platform workflows | `.claude/agents/engineering/<name>.md` |
+| ADRs               | Decisions          | `specs/<feature>/adrs/`                |
+| PHRs               | History            | `history/prompts/<feature>/`           |
+| Specifications     | Design             | `specs/<feature>/spec.md`              |
 ```
 
 **Validation workflow**:
@@ -872,7 +871,7 @@ Pedagogical-designer: "VALIDATED. Dependency order satisfied."
 
 **Why this is convergence**: Generating plausible-looking formats from training data instead of reading actual canonical sources. Results in inconsistent student learning.
 
-**Example failure**: Teaching skills without domain organization. The canonical format requires domain folders: `.claude/skills/authoring/<name>/SKILL.md` for content skills or `.claude/skills/engineering/<name>/SKILL.md` for platform skills.
+**Example failure**: Teaching skills with incorrect paths. The canonical format uses a flat structure: `.claude/skills/<name>/SKILL.md` for all skills.
 
 **Correction**:
 

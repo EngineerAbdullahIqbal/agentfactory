@@ -9,6 +9,7 @@ This checklist evaluates content against the **CoLearning Python & Agentic AI: T
 ## Instructions
 
 For each section, evaluate content and mark:
+
 - ✅ **Pass** — Fully compliant with constitutional requirement
 - ⚠️ **Partial** — Partially compliant but needs minor improvement
 - ❌ **Fail** — Non-compliant, requires significant revision
@@ -319,51 +320,49 @@ For each section, evaluate content and mark:
 
 ---
 
-
 ## Section 4: Domain Skills Application (The 9 CoLearning Skills)
-
 
 ### Skill Application Verification
 
-
 Verify appropriate application of the 9 domain skills for chapter type:
 
-
 **1. learning-objectives** 🔴
+
 - [ ] Clear, measurable learning outcomes stated (Bloom's taxonomy)
 - [ ] 3-4 learning objectives appropriate for content scope
 
 **2. concept-scaffolding** 🔴
+
 - [ ] Complex topics broken into progressive steps
 - [ ] 3-4 core concepts per lesson (optimal cognitive load)
 - [ ] Clear prerequisite chains
 
-**3. code-example-generator**
-- [ ] High-quality, runnable code with type hints and docstrings (technical chapters)
-- [ ] All code tested and verified
-- [ ] N/A for conceptual chapters
+**3. exercise-pack**
 
-**4. exercise-designer**
 - [ ] Effective practice exercises aligned with learning objectives
 - [ ] Range of difficulty levels
 - [ ] Clear prompts and model solutions
 
-**5. assessment-builder**
+**4. assessment-architect**
+
 - [ ] Meaningful quizzes, Quick Checks, or evaluations embedded
 - [ ] Assessments test stated learning objectives
 - [ ] Multiple Bloom's taxonomy levels
 
-**6. technical-clarity** 🔴
+**5. technical-clarity** 🔴
+
 - [ ] Clear, accessible explanations free of jargon gatekeeping
 - [ ] Technical terms defined on first use
 - [ ] Multiple explanation styles used
 
-**7. book-scaffolding**
+**6. concept-scaffolding**
+
 - [ ] Content structure appropriate for book position
 - [ ] Clear narrative continuity with previous chapters
 - [ ] Cognitive load appropriate for scaffolding level
 
-**8. ai-augmented-teaching** 🔴
+**7. ai-collaborate-teaching** 🔴
+
 - [ ] AI tools effectively integrated as learning partners
 - [ ] "Learning WITH AI" philosophy demonstrated
 - [ ] AI used for understanding, not just code generation
@@ -464,12 +463,15 @@ Verify appropriate application of the 9 domain skills for chapter type:
 ## Evidence Summary
 
 **Strengths (Constitution Compliance)**:
+
 - [List specific areas where content excels in constitutional adherence]
 
 **Violations or Gaps**:
+
 - [List specific constitutional violations with evidence]
 
 **Required Actions**:
+
 - [Prioritized list of revisions needed for constitutional compliance]
 
 ---
@@ -487,6 +489,7 @@ Verify appropriate application of the 9 domain skills for chapter type:
 7. **Determine overall verdict** based on critical items
 
 **Remember:**
+
 - Constitution compliance is a **GATE** — fails block all progress
 - Be objective and evidence-based in assessments
 - Cite specific passages for every verdict

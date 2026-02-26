@@ -176,20 +176,20 @@ nx g @nx/next:app my-app --dry-run
 
 ```bash
 # PR stacking helper (from monorepo-workflow skill)
-.claude/skills/engineering/monorepo/monorepo-workflow/scripts/stack-prs.sh [action]
+.claude/skills/nx-monorepo/scripts/stack-prs.sh [action]
 
 # Create breaking change announcement
-.claude/skills/engineering/monorepo/monorepo-workflow/scripts/breaking-change.sh
+.claude/skills/nx-monorepo/scripts/breaking-change.sh
 ```
 
 ### Team & Ownership
 
 ```bash
 # Generate CODEOWNERS from directory structure
-.claude/skills/engineering/monorepo/monorepo-team-lead/scripts/generate-codeowners.sh
+.claude/skills/nx-monorepo/scripts/generate-codeowners.sh
 
 # Human vs AI task routing decision
-.claude/skills/engineering/monorepo/monorepo-team-lead/scripts/routing-decision.sh
+.claude/skills/nx-monorepo/scripts/routing-decision.sh
 ```
 
 ## Decision Principles

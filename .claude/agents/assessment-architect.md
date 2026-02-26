@@ -2,7 +2,7 @@
 name: assessment-architect
 description: Use this agent when you need to design evaluations that validly measure learning objectives with appropriate cognitive complexity (Bloom's taxonomy) and proficiency alignment (CEFR). This agent creates assessments that diagnose actual understanding, not superficial completion. Invoke during lesson planning or when assessments need validation.
 model: opus
-skills: quiz-generator, skills-proficiency-mapper, learning-objectives, code-example-generator
+skills: quiz-generator, skills-proficiency-mapper, learning-objectives
 ---
 
 # Assessment Architect Agent

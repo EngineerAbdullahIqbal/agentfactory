@@ -26,6 +26,7 @@ ls -la <chapter-path>/*.md | grep -v summary | grep -v README | grep -v quiz
 ```
 
 For each lesson file, extract:
+
 - YAML frontmatter (learning objectives, cognitive load, skills, layer)
 - Word count
 - Section structure (headings)
@@ -39,15 +40,16 @@ Evaluate as a beginner encountering this content for the first time.
 
 #### 2.1 Engagement Score (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Compelling hook, real-world relevance clear, I want to keep reading |
-| 7-8 | Interesting enough, some engaging moments, minor dry spots |
-| 5-6 | Functional but forgettable, reads like documentation |
-| 3-4 | Boring, walls of text, no compelling reason to continue |
-| 1-2 | Would abandon after first section |
+| Score | Criteria                                                            |
+| ----- | ------------------------------------------------------------------- |
+| 9-10  | Compelling hook, real-world relevance clear, I want to keep reading |
+| 7-8   | Interesting enough, some engaging moments, minor dry spots          |
+| 5-6   | Functional but forgettable, reads like documentation                |
+| 3-4   | Boring, walls of text, no compelling reason to continue             |
+| 1-2   | Would abandon after first section                                   |
 
 **Check for:**
+
 - Opening hook (does first paragraph grab attention?)
 - Real-world scenarios (why does this matter to ME?)
 - Story/narrative flow vs disconnected facts
@@ -57,13 +59,14 @@ Evaluate as a beginner encountering this content for the first time.
 
 #### 2.2 Length Assessment
 
-| Verdict | Criteria |
-|---------|----------|
-| Too Short | Missing examples, concepts unexplained, abrupt endings, "I don't understand" |
-| Just Right | Each concept has sufficient depth, examples clarify, natural flow |
-| Too Long | Repetitive explanations, over-elaborated points, could cut 30%+ |
+| Verdict    | Criteria                                                                     |
+| ---------- | ---------------------------------------------------------------------------- |
+| Too Short  | Missing examples, concepts unexplained, abrupt endings, "I don't understand" |
+| Just Right | Each concept has sufficient depth, examples clarify, natural flow            |
+| Too Long   | Repetitive explanations, over-elaborated points, could cut 30%+              |
 
 **Word count benchmarks:**
+
 - Conceptual lesson: 1,000-1,400 words
 - Hands-on lesson: 1,200-1,600 words
 - Installation/setup: 800-1,200 words (focused)
@@ -71,15 +74,16 @@ Evaluate as a beginner encountering this content for the first time.
 
 #### 2.3 Clarity Score (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Crystal clear, no re-reading needed, "aha" moments |
-| 7-8 | Mostly clear, occasional re-read for complex parts |
-| 5-6 | Understandable with effort, some confusing sections |
-| 3-4 | Frequently confused, missing context, jargon unexplained |
-| 1-2 | Cannot follow, assumes knowledge I don't have |
+| Score | Criteria                                                 |
+| ----- | -------------------------------------------------------- |
+| 9-10  | Crystal clear, no re-reading needed, "aha" moments       |
+| 7-8   | Mostly clear, occasional re-read for complex parts       |
+| 5-6   | Understandable with effort, some confusing sections      |
+| 3-4   | Frequently confused, missing context, jargon unexplained |
+| 1-2   | Cannot follow, assumes knowledge I don't have            |
 
 **Check for:**
+
 - Jargon introduced before defined
 - Logical flow between paragraphs
 - Transitions between sections
@@ -88,15 +92,16 @@ Evaluate as a beginner encountering this content for the first time.
 
 #### 2.4 Hands-On Effectiveness (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Clear steps, achievable, builds confidence, "I did it!" |
-| 7-8 | Mostly clear, minor ambiguity, successful completion likely |
-| 5-6 | Workable but confusing steps, may need to troubleshoot |
-| 3-4 | Missing steps, unclear what to do, likely to get stuck |
-| 1-2 | Cannot complete without external help |
+| Score | Criteria                                                    |
+| ----- | ----------------------------------------------------------- |
+| 9-10  | Clear steps, achievable, builds confidence, "I did it!"     |
+| 7-8   | Mostly clear, minor ambiguity, successful completion likely |
+| 5-6   | Workable but confusing steps, may need to troubleshoot      |
+| 3-4   | Missing steps, unclear what to do, likely to get stuck      |
+| 1-2   | Cannot complete without external help                       |
 
 **Check for:**
+
 - Step-by-step instructions (numbered, clear)
 - Expected output/results shown
 - Troubleshooting guidance
@@ -104,15 +109,16 @@ Evaluate as a beginner encountering this content for the first time.
 
 #### 2.5 Progression Clarity (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Clear path from start to mastery, each lesson builds on previous |
-| 7-8 | Generally progressive, minor jumps between lessons |
-| 5-6 | Some logical progression, noticeable gaps |
-| 3-4 | Disconnected lessons, unclear how they relate |
-| 1-2 | Random ordering, no clear learning path |
+| Score | Criteria                                                         |
+| ----- | ---------------------------------------------------------------- |
+| 9-10  | Clear path from start to mastery, each lesson builds on previous |
+| 7-8   | Generally progressive, minor jumps between lessons               |
+| 5-6   | Some logical progression, noticeable gaps                        |
+| 3-4   | Disconnected lessons, unclear how they relate                    |
+| 1-2   | Random ordering, no clear learning path                          |
 
 **Check for:**
+
 - Opening connections ("In Lesson N-1, you learned X. Now...")
 - Running example threaded through chapter
 - Skills building on each other
@@ -120,15 +126,16 @@ Evaluate as a beginner encountering this content for the first time.
 
 #### 2.6 Confidence Score (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | "I can definitely do this now" - ready to apply independently |
-| 7-8 | "I mostly understand and could figure out the rest" |
-| 5-6 | "I kind of get it but would need help applying it" |
-| 3-4 | "I'm confused about when/how to use this" |
-| 1-2 | "I have no idea what I just read" |
+| Score | Criteria                                                      |
+| ----- | ------------------------------------------------------------- |
+| 9-10  | "I can definitely do this now" - ready to apply independently |
+| 7-8   | "I mostly understand and could figure out the rest"           |
+| 5-6   | "I kind of get it but would need help applying it"            |
+| 3-4   | "I'm confused about when/how to use this"                     |
+| 1-2   | "I have no idea what I just read"                             |
 
 **Check for:**
+
 - Practice opportunities before moving on
 - Verification steps ("you should see X")
 - Real-world application examples
@@ -140,15 +147,16 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 #### 3.1 Learning Objectives Quality (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | SMART objectives, measurable, aligned to content and assessment |
-| 7-8 | Clear objectives, mostly measurable, good alignment |
-| 5-6 | Objectives present but vague or partially aligned |
-| 3-4 | Weak objectives, not measurable, poor alignment |
-| 1-2 | Missing or meaningless objectives |
+| Score | Criteria                                                        |
+| ----- | --------------------------------------------------------------- |
+| 9-10  | SMART objectives, measurable, aligned to content and assessment |
+| 7-8   | Clear objectives, mostly measurable, good alignment             |
+| 5-6   | Objectives present but vague or partially aligned               |
+| 3-4   | Weak objectives, not measurable, poor alignment                 |
+| 1-2   | Missing or meaningless objectives                               |
 
 **Check for:**
+
 - Bloom's taxonomy verb alignment (Remember → Create)
 - Measurable criteria ("can explain", "can create", "can distinguish")
 - Assessment method specified
@@ -156,20 +164,22 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 #### 3.2 Cognitive Load Management (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Appropriate concepts for level, well-scaffolded, no overload |
-| 7-8 | Generally appropriate, minor overload moments |
-| 5-6 | Some cognitive overload, too many concepts at once |
-| 3-4 | Significant overload, concepts piled without consolidation |
-| 1-2 | Overwhelming, no chance of retention |
+| Score | Criteria                                                     |
+| ----- | ------------------------------------------------------------ |
+| 9-10  | Appropriate concepts for level, well-scaffolded, no overload |
+| 7-8   | Generally appropriate, minor overload moments                |
+| 5-6   | Some cognitive overload, too many concepts at once           |
+| 3-4   | Significant overload, concepts piled without consolidation   |
+| 1-2   | Overwhelming, no chance of retention                         |
 
 **Benchmarks by proficiency:**
+
 - A1-A2: 3-5 new concepts per lesson
 - B1-B2: 5-7 new concepts per lesson
 - C1-C2: 7-10 new concepts per lesson
 
 **Check for:**
+
 - New concepts counted in frontmatter
 - Concepts introduced one at a time
 - Practice before new concept introduced
@@ -177,15 +187,16 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 #### 3.3 Scaffolding Quality (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Perfect progression, each concept builds on previous, no gaps |
-| 7-8 | Good scaffolding, minor jumps that students can bridge |
-| 5-6 | Some scaffolding gaps, requires prior knowledge not taught |
-| 3-4 | Significant gaps, assumes knowledge not in prerequisites |
-| 1-2 | No scaffolding, concepts appear randomly |
+| Score | Criteria                                                      |
+| ----- | ------------------------------------------------------------- |
+| 9-10  | Perfect progression, each concept builds on previous, no gaps |
+| 7-8   | Good scaffolding, minor jumps that students can bridge        |
+| 5-6   | Some scaffolding gaps, requires prior knowledge not taught    |
+| 3-4   | Significant gaps, assumes knowledge not in prerequisites      |
+| 1-2   | No scaffolding, concepts appear randomly                      |
 
 **Check for:**
+
 - Prerequisites listed and actually prerequisite
 - Concepts introduced before used
 - Increasing complexity curve
@@ -193,14 +204,15 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 #### 3.4 Pedagogical Layer Appropriateness (1-10)
 
-| Layer | Expected Characteristics |
-|-------|-------------------------|
-| L1 (Foundation) | Manual-first, understand before automate, no AI shortcuts |
-| L2 (Collaboration) | AI as Teacher/Student/Co-Worker, learning through interaction |
-| L3 (Intelligence) | Pattern recognition, creating reusable intelligence (skills/subagents) |
-| L4 (Orchestration) | Capstone, combining components, spec-driven development |
+| Layer              | Expected Characteristics                                               |
+| ------------------ | ---------------------------------------------------------------------- |
+| L1 (Foundation)    | Manual-first, understand before automate, no AI shortcuts              |
+| L2 (Collaboration) | AI as Teacher/Student/Co-Worker, learning through interaction          |
+| L3 (Intelligence)  | Pattern recognition, creating reusable intelligence (skills/subagents) |
+| L4 (Orchestration) | Capstone, combining components, spec-driven development                |
 
 **Check for:**
+
 - Layer declared in frontmatter
 - Content matches layer expectations
 - Layer progression through chapter (L1 → L2 → L3 → L4)
@@ -208,15 +220,16 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 #### 3.5 Try With AI Effectiveness (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Prompts directly extend lesson, specific, build skills |
-| 7-8 | Good prompts, mostly connected to content |
-| 5-6 | Generic prompts, loosely connected |
-| 3-4 | Copy-paste prompts, don't match lesson |
-| 1-2 | Missing or irrelevant prompts |
+| Score | Criteria                                               |
+| ----- | ------------------------------------------------------ |
+| 9-10  | Prompts directly extend lesson, specific, build skills |
+| 7-8   | Good prompts, mostly connected to content              |
+| 5-6   | Generic prompts, loosely connected                     |
+| 3-4   | Copy-paste prompts, don't match lesson                 |
+| 1-2   | Missing or irrelevant prompts                          |
 
 **Check for:**
+
 - 2-3 prompts per lesson (not 1, not 5+)
 - Prompts reference lesson content specifically
 - Progressive difficulty across prompts
@@ -224,15 +237,16 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 #### 3.6 Assessment/Verification Quality (1-10)
 
-| Score | Criteria |
-|-------|----------|
-| 9-10 | Clear verification at each step, students know if they succeeded |
-| 7-8 | Good verification for most exercises |
-| 5-6 | Some verification, students may be unsure of success |
-| 3-4 | Weak verification, students can't tell if they're on track |
-| 1-2 | No verification, students have no idea if they succeeded |
+| Score | Criteria                                                         |
+| ----- | ---------------------------------------------------------------- |
+| 9-10  | Clear verification at each step, students know if they succeeded |
+| 7-8   | Good verification for most exercises                             |
+| 5-6   | Some verification, students may be unsure of success             |
+| 3-4   | Weak verification, students can't tell if they're on track       |
+| 1-2   | No verification, students have no idea if they succeeded         |
 
 **Check for:**
+
 - "Expected output" shown for commands
 - "You should see X" confirmations
 - Error states explained
@@ -246,22 +260,22 @@ Evaluate as an instructional designer assessing pedagogical soundness.
 
 These dimensions BLOCK publication if below 7/10. Fix these first.
 
-| Dimension | Why Critical | Remediation |
-|-----------|-------------|------------|
-| **Clarity** | If unclear, nothing works. Confused students abandon. | Use `technical-clarity` skill |
-| **Scaffolding** | Poor progression breaks learning. Students can't build on prior knowledge. | Use `concept-scaffolding` skill |
-| **Layer Appropriateness** | Wrong layer means students lack prerequisites or are under-challenged. | Redesign layer; check prerequisites |
+| Dimension                 | Why Critical                                                               | Remediation                         |
+| ------------------------- | -------------------------------------------------------------------------- | ----------------------------------- |
+| **Clarity**               | If unclear, nothing works. Confused students abandon.                      | Use `technical-clarity` skill       |
+| **Scaffolding**           | Poor progression breaks learning. Students can't build on prior knowledge. | Use `concept-scaffolding` skill     |
+| **Layer Appropriateness** | Wrong layer means students lack prerequisites or are under-challenged.     | Redesign layer; check prerequisites |
 
 ### Important Dimensions (6+)
 
 These should be strong but minor issues are fixable.
 
-| Dimension | Target | Remediation |
-|-----------|--------|------------|
-| **Engagement** | 6+ | Use `code-example-generator` for better examples |
-| **Learning Objectives** | 6+ | Use `learning-objectives` skill |
-| **Assessment/Verification** | 6+ | Add verification steps; clarity checks |
-| **Cognitive Load** | 6+ | Reduce concepts per lesson; add practice |
+| Dimension                   | Target | Remediation                                       |
+| --------------------------- | ------ | ------------------------------------------------- |
+| **Engagement**              | 6+     | Add more worked examples and interactive elements |
+| **Learning Objectives**     | 6+     | Use `learning-objectives` skill                   |
+| **Assessment/Verification** | 6+     | Add verification steps; clarity checks            |
+| **Cognitive Load**          | 6+     | Reduce concepts per lesson; add practice          |
 
 ### Enhancement Dimensions (5+)
 
@@ -302,6 +316,7 @@ ELSE:
 ### Example Decision
 
 **Chapter Evaluation Results:**
+
 - Clarity: 8 ✅
 - Scaffolding: 7 ✅
 - Layer Appropriateness: 8 ✅
@@ -319,6 +334,7 @@ ELSE:
 After scoring, identify specific missing elements:
 
 #### Content Gaps
+
 - Missing examples (concept taught but not demonstrated)
 - Missing hands-on (theory without practice)
 - Missing "why" (what but not why it matters)
@@ -326,6 +342,7 @@ After scoring, identify specific missing elements:
 - Missing transitions (lessons don't connect)
 
 #### Structural Gaps
+
 - Missing opening hook
 - Missing running example continuity
 - Missing "What's Next" closure
@@ -333,6 +350,7 @@ After scoring, identify specific missing elements:
 - Missing code examples for technical content
 
 #### Pedagogical Gaps
+
 - Objectives not assessed
 - Cognitive overload unaddressed
 - Layer mismatch (content doesn't match declared layer)
@@ -364,14 +382,14 @@ Generate analysis in this structure:
 
 ### Scores
 
-| Dimension | Score | Verdict |
-|-----------|-------|---------|
-| Engagement | X/10 | [One-line summary] |
-| Length | [Short/Right/Long] | [One-line summary] |
-| Clarity | X/10 | [One-line summary] |
-| Hands-On | X/10 | [One-line summary] |
-| Progression | X/10 | [One-line summary] |
-| Confidence | X/10 | [One-line summary] |
+| Dimension   | Score              | Verdict            |
+| ----------- | ------------------ | ------------------ |
+| Engagement  | X/10               | [One-line summary] |
+| Length      | [Short/Right/Long] | [One-line summary] |
+| Clarity     | X/10               | [One-line summary] |
+| Hands-On    | X/10               | [One-line summary] |
+| Progression | X/10               | [One-line summary] |
+| Confidence  | X/10               | [One-line summary] |
 
 **Overall Student Experience**: X/10
 
@@ -383,20 +401,20 @@ Generate analysis in this structure:
 
 1. [Specific issue from student perspective]
 2. [Specific issue from student perspective]
-...
+   ...
 
 ## Teacher Analysis
 
 ### Scores
 
-| Dimension | Score | Verdict |
-|-----------|-------|---------|
-| Learning Objectives | X/10 | [One-line summary] |
-| Cognitive Load | X/10 | [One-line summary] |
-| Scaffolding | X/10 | [One-line summary] |
-| Layer Appropriateness | X/10 | [One-line summary] |
-| Try With AI | X/10 | [One-line summary] |
-| Assessment | X/10 | [One-line summary] |
+| Dimension             | Score | Verdict            |
+| --------------------- | ----- | ------------------ |
+| Learning Objectives   | X/10  | [One-line summary] |
+| Cognitive Load        | X/10  | [One-line summary] |
+| Scaffolding           | X/10  | [One-line summary] |
+| Layer Appropriateness | X/10  | [One-line summary] |
+| Try With AI           | X/10  | [One-line summary] |
+| Assessment            | X/10  | [One-line summary] |
 
 **Overall Pedagogical Quality**: X/10
 
@@ -408,79 +426,90 @@ Generate analysis in this structure:
 
 1. [Specific issue from teacher perspective]
 2. [Specific issue from teacher perspective]
-...
+   ...
 
 ## Gap Analysis
 
 ### Content Gaps
 
-| Gap | Lesson(s) | Impact |
-|-----|-----------|--------|
-| [Missing element] | L0X | High/Med/Low |
+| Gap               | Lesson(s) | Impact       |
+| ----------------- | --------- | ------------ |
+| [Missing element] | L0X       | High/Med/Low |
+
 ...
 
 ### Structural Gaps
 
-| Gap | Lesson(s) | Impact |
-|-----|-----------|--------|
-| [Missing element] | L0X | High/Med/Low |
+| Gap               | Lesson(s) | Impact       |
+| ----------------- | --------- | ------------ |
+| [Missing element] | L0X       | High/Med/Low |
+
 ...
 
 ### Pedagogical Gaps
 
-| Gap | Lesson(s) | Impact |
-|-----|-----------|--------|
-| [Missing element] | L0X | High/Med/Low |
+| Gap               | Lesson(s) | Impact       |
+| ----------------- | --------- | ------------ |
+| [Missing element] | L0X       | High/Med/Low |
+
 ...
 
 ## Improvement Recommendations
 
 ### Priority 1 (Critical)
 
-| # | Problem | Fix | Effort | Lesson(s) |
-|---|---------|-----|--------|-----------|
-| 1 | [Issue] | [Action] | Low/Med/High | L0X |
+| #   | Problem | Fix      | Effort       | Lesson(s) |
+| --- | ------- | -------- | ------------ | --------- |
+| 1   | [Issue] | [Action] | Low/Med/High | L0X       |
+
 ...
 
 ### Priority 2 (Important)
 
-| # | Problem | Fix | Effort | Lesson(s) |
-|---|---------|-----|--------|-----------|
-| 1 | [Issue] | [Action] | Low/Med/High | L0X |
+| #   | Problem | Fix      | Effort       | Lesson(s) |
+| --- | ------- | -------- | ------------ | --------- |
+| 1   | [Issue] | [Action] | Low/Med/High | L0X       |
+
 ...
 
 ### Priority 3 (Nice-to-Have)
 
-| # | Problem | Fix | Effort | Lesson(s) |
-|---|---------|-----|--------|-----------|
-| 1 | [Issue] | [Action] | Low/Med/High | L0X |
+| #   | Problem | Fix      | Effort       | Lesson(s) |
+| --- | ------- | -------- | ------------ | --------- |
+| 1   | [Issue] | [Action] | Low/Med/High | L0X       |
+
 ...
 
 ## Publication Decision
 
 ### Gate Status
-| Gate | Dimension | Score | Status |
-|------|-----------|-------|--------|
-| 🚧 BLOCK if <7 | Clarity | X/10 | ✅/❌ |
-| 🚧 BLOCK if <7 | Scaffolding | X/10 | ✅/❌ |
-| 🚧 BLOCK if <7 | Layer Appropriateness | X/10 | ✅/❌ |
+
+| Gate           | Dimension             | Score | Status |
+| -------------- | --------------------- | ----- | ------ |
+| 🚧 BLOCK if <7 | Clarity               | X/10  | ✅/❌  |
+| 🚧 BLOCK if <7 | Scaffolding           | X/10  | ✅/❌  |
+| 🚧 BLOCK if <7 | Layer Appropriateness | X/10  | ✅/❌  |
 
 ### Publication Verdict
+
 **Status**: [PASS ✅ | CONDITIONAL | REVISE]
 **Recommendation**: [Ready for publication | Fix gates first | Needs revision plan]
 
 ## Next Steps
 
 If PASS:
+
 - [ ] Ready for publication
 - [ ] Note: Optional improvements in Priority 3 section above
 
 If CONDITIONAL:
+
 - [ ] Content is functional
 - [ ] Recommended: Address Priority 1 issues in next iteration
 - [ ] Can publish now; plan revision cycle
 
 If REVISE:
+
 - [ ] STOP: Fix gate dimensions first
 - [ ] [Gate dimension 1]: [Specific action]
 - [ ] [Gate dimension 2]: [Specific action]
@@ -489,15 +518,15 @@ If REVISE:
 
 ## Summary Metrics
 
-| Metric | Value |
-|--------|-------|
-| Total Lessons | X |
-| Average Word Count | X |
-| Student Score | X/10 |
-| Teacher Score | X/10 |
-| Overall Score | X/10 |
-| Gate Pass? | Yes/No |
-| Critical Issues | X |
+| Metric             | Value   |
+| ------------------ | ------- |
+| Total Lessons      | X       |
+| Average Word Count | X       |
+| Student Score      | X/10    |
+| Teacher Score      | X/10    |
+| Overall Score      | X/10    |
+| Gate Pass?         | Yes/No  |
+| Critical Issues    | X       |
 | Estimated Fix Time | X hours |
 ```
 
@@ -506,6 +535,7 @@ If REVISE:
 Compare evaluated chapters against high-quality reference lessons. The skill should automatically identify and read a reference lesson from Part 1 or Part 6 for comparison when available.
 
 Reference lesson patterns to look for:
+
 - `01-agent-factory-paradigm/01-digital-fte-revolution.md`
 - `33-introduction-to-ai-agents/01-what-is-an-ai-agent.md`
 
@@ -514,6 +544,7 @@ Reference lesson patterns to look for:
 ### references/
 
 See `references/` for detailed rubrics:
+
 - `student-rubric.md` - Detailed student perspective evaluation criteria
 - `teacher-rubric.md` - Detailed teacher perspective evaluation criteria
 - `word-count-benchmarks.md` - Word count guidelines by lesson type

@@ -14,12 +14,14 @@
 **Never read the same file twice in a session.**
 
 When starting any task involving multiple files:
+
 1. **Map first**: `ls` or `glob` to identify all relevant files
 2. **Read once**: Go through each file exactly once
 3. **Summarize immediately**: After reading, note key points mentally
 4. **Reference summaries**: When you need information, use your notes not the file
 
 **Signs you're violating this**:
+
 - Reading conftest.py to "check something"
 - Opening schemas.py "again to confirm"
 - Re-reading a spec "to make sure"
@@ -33,6 +35,7 @@ When starting any task involving multiple files:
 **Every session should start with explicit "done" criteria.**
 
 Before beginning work:
+
 ```
 DELIVERABLES FOR THIS SESSION:
 1. [Specific artifact or outcome]
@@ -52,12 +55,14 @@ CHECKPOINTS:
 **When a request could mean multiple things, always ask.**
 
 Red flags that require clarification:
+
 - Vague scope words: "improve", "fix", "clean up", "refactor"
 - Domain-specific terms: "model costs", "credits", "access"
 - Numeric ambiguity: "chapter 5" vs "part 5"
 - Implicit assumptions: "the API", "that file", "the bug"
 
 **Protocol**:
+
 ```
 I notice [term] could mean:
 (a) [interpretation 1]
@@ -82,7 +87,7 @@ If implementation hits unexpected resistance (3+ failed attempts, scope creep, u
 
 After ANY correction from the user:
 
-1. Capture the pattern in `.claude/rules/lessons.md`
+1. Capture the pattern in `.claude/rules/failure-history.md`
 2. Write a rule that prevents the same mistake
 3. Review lessons at session start
 

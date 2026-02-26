@@ -15,23 +15,28 @@ description: Execute autonomous end-to-end SDD-RI workflow with parallel subagen
 **Autonomous mode means EXECUTE fully, not SKIP or ABBREVIATE.**
 
 ### Rule 1: EVERY PHASE EXECUTES FULLY
+
 - ❌ FORBIDDEN: Skipping /sp.clarify because "spec looks complete"
 - ❌ FORBIDDEN: Outputting command names without executing them
 - ❌ FORBIDDEN: Reducing content quality to "finish faster"
 - ✅ REQUIRED: Execute each phase with full prompts, wait for completion
 
 ### Rule 2: QUALITY CANNOT BE TRADED FOR SPEED
+
 - ❌ FORBIDDEN: Skipping validators to ship faster
 - ❌ FORBIDDEN: Weak "Try With AI" sections (must have 3 prompts)
 - ❌ FORBIDDEN: Missing YAML frontmatter (skills, learning_objectives required)
 - ✅ REQUIRED: All validators must pass before commit
 
 ### Rule 3: SUBAGENT PROMPTS MUST BE COMPLETE
+
 - ❌ FORBIDDEN: Short prompts like "write lesson 1"
 - ✅ REQUIRED: Include absolute paths, quality reference, execution rules, requirements
 
 ### Rule 4: PROGRESS TRACKING IS MANDATORY
+
 After each phase, report:
+
 ```
 ✅ PHASE [N] COMPLETE: [Phase Name]
    Output: [file paths created]
@@ -40,6 +45,7 @@ After each phase, report:
 ```
 
 ### Rule 5: PHR CREATION IS NOT OPTIONAL
+
 - PHRs MUST be created in Step 6.1 before commit
 - Skipping PHRs because "we're almost done" is a FAILURE
 
@@ -61,12 +67,14 @@ In autonomous mode, you EXECUTE rather than propose. Each phase completes fully 
 **December 2025 Async Subagent Capabilities:**
 
 Claude Code now supports **async subagents** that run in the background:
+
 - Up to **10 concurrent subagents** with automatic queuing for more
 - Each subagent has **isolated context window** (no cross-contamination)
 - Background agents **wake up main agent** when complete
 - Use **Ctrl+B** to send running agent to background
 
 **Parallelization Strategy:**
+
 - Phase 0-3: Sequential (need human approval gates)
 - Phase 4 (Implement): **PARALLELIZE** lesson generation across subagents
 - Phase 5 (Validate): **PARALLELIZE** validation checks
@@ -91,17 +99,17 @@ Claude Code now supports **async subagents** that run in the background:
 │     ↓                                                           │
 │  /sp.clarify → Resolve ambiguities (if any)                    │
 │     ↓                                                           │
-│  /sp.plan → Generate plan.md                                    │
+│  Native Plan Mode → Generate plan.md                            │
 │     ↓                                                           │
 │  ⏸️ GATE: User approves plan (REQUIRED)                         │
 │     ↓                                                           │
-│  /sp.tasks → Generate tasks.md                                  │
+│  Native TaskCreate → Generate tasks                             │
 │     ↓                                                           │
-│  /sp.analyze → Cross-artifact consistency check                 │
+│  Cross-artifact consistency check (Grep/Glob)                   │
 │     ↓                                                           │
 │  ⏸️ GATE: User approves tasks (REQUIRED)                        │
 │     ↓                                                           │
-│  /sp.implement → Execute tasks (PARALLEL subagents)             │
+│  Subagent delegation via Task tool (PARALLEL)                   │
 │     ↓                                                           │
 │  /sp.taskstoissues → Create GitHub issues (optional)            │
 │     ↓                                                           │
@@ -177,12 +185,12 @@ ls .claude/agents/ .claude/skills/ 2>/dev/null
 
 ### Step 0.2: Determine Work Type
 
-| Signal | Work Type | Primary Agents |
-|--------|-----------|----------------|
-| Chapter/lesson/module | **Content** | chapter-planner, content-implementer, validation-auditor |
-| Feature/API/service | **Engineering** | spec-architect, plan architect, implementer |
-| Skill/subagent/command | **Intelligence** | skill-creator, validation |
-| Infrastructure/deploy | **Platform** | engineering agents |
+| Signal                 | Work Type        | Primary Agents                                           |
+| ---------------------- | ---------------- | -------------------------------------------------------- |
+| Chapter/lesson/module  | **Content**      | chapter-planner, content-implementer, validation-auditor |
+| Feature/API/service    | **Engineering**  | spec-architect, plan architect, implementer              |
+| Skill/subagent/command | **Intelligence** | skill-creator, validation                                |
+| Infrastructure/deploy  | **Platform**     | engineering agents                                       |
 
 ### Step 0.3: Confirm Autonomous Mode
 
@@ -217,6 +225,7 @@ Args: [feature-name from context]
 ```
 
 **What /sp.specify does:**
+
 - Creates `specs/[feature-name]/spec.md`
 - Uses spec-template.md
 - Gathers requirements from context
@@ -248,6 +257,7 @@ Prompt: |
 **STOP AND WAIT FOR USER APPROVAL**
 
 Present the spec summary:
+
 ```
 SPEC CREATED: specs/[feature]/spec.md
 
@@ -281,6 +291,7 @@ Args: [feature-name]
 ```
 
 **What /sp.clarify does:**
+
 - Analyzes spec for ambiguities
 - Asks up to 5 targeted clarification questions
 - Encodes answers back into spec.md
@@ -292,14 +303,10 @@ Args: [feature-name]
 
 ## PHASE 2: PLANNING
 
-### Step 2.1: Invoke /sp.plan
+### Step 2.1: Use Native Plan Mode
 
-```
-Skill: sp.plan
-Args: [feature-name]
-```
+Enter native Plan Mode (EnterPlanMode tool) to design the implementation plan:
 
-**What /sp.plan does:**
 - Creates `specs/[feature-name]/plan.md`
 - Designs implementation architecture
 - Identifies lessons/tasks/components
@@ -311,6 +318,7 @@ Args: [feature-name]
 **STOP AND WAIT FOR USER APPROVAL**
 
 Present the plan summary:
+
 ```
 PLAN CREATED: specs/[feature]/plan.md
 
@@ -325,33 +333,26 @@ Architecture Decisions:
 
 Approve plan to continue? (yes/no/feedback)
 ```
+
 </approval_gate>
 
 ---
 
 ## PHASE 3: TASK GENERATION
 
-### Step 3.1: Invoke /sp.tasks
+### Step 3.1: Use Native TaskCreate
 
-```
-Skill: sp.tasks
-Args: [feature-name]
-```
+Use native TaskCreate tool to generate tasks from the plan:
 
-**What /sp.tasks does:**
-- Creates `specs/[feature-name]/tasks.md`
+- Creates tasks in the native task system
 - Generates actionable task checklist
-- Orders by dependencies
-- Includes acceptance criteria
+- Orders by dependencies (using addBlockedBy)
+- Includes acceptance criteria in descriptions
 
 ### Step 3.2: Cross-Artifact Analysis
 
-```
-Skill: sp.analyze
-Args: [feature-name]
-```
+Use Grep/Glob to validate spec-plan-tasks alignment:
 
-**What /sp.analyze does:**
 - Validates spec ↔ plan ↔ tasks alignment
 - Identifies gaps or inconsistencies
 - Suggests fixes if needed
@@ -362,6 +363,7 @@ Args: [feature-name]
 **STOP AND WAIT FOR USER APPROVAL**
 
 Present tasks summary:
+
 ```
 TASKS CREATED: specs/[feature]/tasks.md
 ANALYSIS: [Pass/Issues found]
@@ -373,6 +375,7 @@ Tasks:
 
 Ready to implement? (yes/no/feedback)
 ```
+
 </approval_gate>
 
 ---
@@ -383,29 +386,27 @@ Ready to implement? (yes/no/feedback)
 **PARALLELIZE IMPLEMENTATION**
 
 For content work (lessons/chapters):
+
 - Spawn **parallel content-implementer subagents**
 - Each subagent handles ONE lesson independently
 - Max 10 concurrent subagents
 - Queue additional tasks automatically
 
 For engineering work:
+
 - Spawn appropriate engineering agents
 - Parallelize independent components
 - Serialize dependent components
-</async_subagent_protocol>
+  </async_subagent_protocol>
 
-### Step 4.1: Invoke /sp.implement
+### Step 4.1: Delegate to Subagents via Task Tool
 
-```
-Skill: sp.implement
-Args: [feature-name]
-```
+Use the Task tool to spawn parallel subagents for implementation:
 
-**What /sp.implement does:**
-- Reads tasks.md
+- Reads tasks from native task system
 - Spawns parallel subagents for independent tasks
 - Coordinates task execution
-- Updates tasks.md with completion status
+- Updates task status with TaskUpdate
 
 ### Step 4.2: Parallel Subagent Spawning (Content Work)
 
@@ -434,6 +435,7 @@ run_in_background: true
 ```
 
 **Critical Rules for Subagent Prompts:**
+
 1. Include "Execute autonomously without confirmation"
 2. Specify ABSOLUTE output path
 3. Include "DO NOT create new directories"
@@ -464,6 +466,7 @@ Args: [feature-name]
 ```
 
 **What /sp.taskstoissues does:**
+
 - Converts tasks.md to GitHub issues
 - Creates proper labels and milestones
 - Links issues to spec
@@ -476,10 +479,11 @@ Args: [feature-name]
 **PARALLELIZE VALIDATION**
 
 Run multiple validators concurrently:
+
 - validation-auditor (comprehensive quality)
 - factual-verifier (accuracy checks)
 - educational-validator (pedagogical compliance)
-</async_subagent_protocol>
+  </async_subagent_protocol>
 
 ### Step 5.1: Spawn Parallel Validators
 
@@ -548,6 +552,7 @@ Args: "Implemented [feature-name] with [N] lessons/components"
 ```
 
 **Why PHRs matter**:
+
 - Enables spaced repetition learning
 - Creates searchable pattern library
 - Provides audit trail for future reference
@@ -560,6 +565,7 @@ Args: [feature-name]
 ```
 
 **What /sp.git.commit_pr does:**
+
 - Reviews all changes (git status, git diff)
 - Creates meaningful commit message
 - Pushes to remote
@@ -615,10 +621,9 @@ SUBAGENTS_SPAWNED=$(cat .claude/activity-logs/subagent-usage.jsonl | jq -r "sele
 ╠══════════════════════════════════════════════════════════════════════╣
 ║  [Count] × sp.specify                                                ║
 ║  [Count] × sp.clarify                                                ║
-║  [Count] × sp.plan                                                   ║
-║  [Count] × sp.tasks                                                  ║
-║  [Count] × sp.analyze                                                ║
-║  [Count] × sp.implement                                              ║
+║  [Count] × Native Plan Mode                                          ║
+║  [Count] × Native TaskCreate                                         ║
+║  [Count] × Task tool (subagent delegation)                           ║
 ║  [Count] × sp.git.commit_pr                                          ║
 ║  [Count] × [other skills...]                                         ║
 ║                                                                      ║
@@ -671,6 +676,7 @@ SUBAGENTS_SPAWNED=$(cat .claude/activity-logs/subagent-usage.jsonl | jq -r "sele
 ### Rule 1: Approval Gates Are Mandatory
 
 Even in autonomous mode, these gates REQUIRE human approval:
+
 1. Spec approval (Phase 1)
 2. Plan approval (Phase 2)
 3. Tasks approval (Phase 3)
@@ -680,6 +686,7 @@ Even in autonomous mode, these gates REQUIRE human approval:
 ### Rule 2: Implementation is Fully Autonomous
 
 Once tasks are approved, execute WITHOUT asking:
+
 - Spawn subagents
 - Write files
 - Run validators
@@ -691,6 +698,7 @@ Once tasks are approved, execute WITHOUT asking:
 ### Rule 3: Parallelize Aggressively
 
 Use parallel subagents for:
+
 - Independent lesson generation
 - Independent component implementation
 - Multiple validators simultaneously
@@ -700,6 +708,7 @@ Use parallel subagents for:
 ### Rule 4: Subagent Prompts Must Be Self-Contained
 
 Each subagent operates in isolated context. Include:
+
 - Full task description
 - Absolute file paths
 - All relevant constraints
@@ -709,6 +718,7 @@ Each subagent operates in isolated context. Include:
 ### Rule 5: Record PHRs Throughout
 
 Create PHR for:
+
 - Each phase completion
 - Each iteration/feedback round
 - Each significant decision
@@ -718,6 +728,7 @@ Use stage: `spec`, `plan`, `tasks`, `green`, `misc` as appropriate
 ### Rule 6: Validation Before Commit
 
 NEVER commit without running validators:
+
 - validation-auditor for comprehensive check
 - factual-verifier for accuracy
 - educational-validator for pedagogy
@@ -730,16 +741,17 @@ Fix issues before committing.
 
 Before ANY lesson is considered complete, verify:
 
-| Check | Requirement | Failure Mode |
-|-------|-------------|--------------|
-| **YAML Frontmatter** | Full skills, learning_objectives, cognitive_load, differentiation | Missing metadata = incomplete |
-| **Narrative Opening** | Real-world scenario, 2-3 paragraphs | Generic intro = weak hook |
-| **Evidence Depth** | Tables, diagrams, business impact | Text-only = unconvincing |
-| **Try With AI** | 3 prompts with "What you're learning" explanations | 1 prompt = insufficient practice |
-| **Safety Note** | Topic-specific practitioner concerns | Missing = incomplete |
-| **Fact-Checking** | WebSearch for stats, dates, quotes | Memory-based = hallucination risk |
+| Check                 | Requirement                                                       | Failure Mode                      |
+| --------------------- | ----------------------------------------------------------------- | --------------------------------- |
+| **YAML Frontmatter**  | Full skills, learning_objectives, cognitive_load, differentiation | Missing metadata = incomplete     |
+| **Narrative Opening** | Real-world scenario, 2-3 paragraphs                               | Generic intro = weak hook         |
+| **Evidence Depth**    | Tables, diagrams, business impact                                 | Text-only = unconvincing          |
+| **Try With AI**       | 3 prompts with "What you're learning" explanations                | 1 prompt = insufficient practice  |
+| **Safety Note**       | Topic-specific practitioner concerns                              | Missing = incomplete              |
+| **Fact-Checking**     | WebSearch for stats, dates, quotes                                | Memory-based = hallucination risk |
 
 **Subagent prompt must include**:
+
 ```
 Match quality of reference lesson at:
 apps/learn-app/docs/01-Introducing-AI-Driven-Development/01-agent-factory-paradigm/01-digital-fte-revolution.md
@@ -754,18 +766,21 @@ Required elements:
 ### Rule 8: Fact-Checking is Non-Negotiable
 
 **Never trust memory for**:
+
 - Statistics ("75% of engineers...")
 - Dates ("Released October 16, 2025...")
 - Adoption numbers ("60,000+ projects...")
 - Quotes from executives
 
 **Always WebSearch before writing** claims about:
+
 - Time savings
 - User/adoption counts
 - Launch/release dates
 - Company statements
 
 **Distinguish similar concepts**:
+
 - AAIF = governance body (like USB Implementers Forum)
 - MCP = connectivity standard (like USB itself)
 - These are NOT interchangeable
@@ -776,33 +791,33 @@ Required elements:
 
 ### Skill Invocation Sequence
 
-| Phase | Skill | Purpose |
-|-------|-------|---------|
-| 1 | `/sp.specify` | Create specification |
-| 1.5 | `/sp.clarify` | Resolve ambiguities |
-| 2 | `/sp.plan` | Create implementation plan |
-| 3 | `/sp.tasks` | Generate task checklist |
-| 3.5 | `/sp.analyze` | Cross-artifact validation |
-| 4 | `/sp.implement` | Execute tasks (parallel) |
-| 4.5 | `/sp.taskstoissues` | Create GitHub issues |
-| 5 | validators | Quality gates (parallel) |
-| 6 | `/sp.git.commit_pr` | Commit and PR |
+| Phase | Tool/Command          | Purpose                    |
+| ----- | --------------------- | -------------------------- |
+| 1     | `/sp.specify`         | Create specification       |
+| 1.5   | `/sp.clarify`         | Resolve ambiguities        |
+| 2     | Native Plan Mode      | Create implementation plan |
+| 3     | Native TaskCreate     | Generate task checklist    |
+| 3.5   | Grep/Glob             | Cross-artifact validation  |
+| 4     | Task tool (subagents) | Execute tasks (parallel)   |
+| 4.5   | `/sp.taskstoissues`   | Create GitHub issues       |
+| 5     | validators            | Quality gates (parallel)   |
+| 6     | `/sp.git.commit_pr`   | Commit and PR              |
 
 ### Parallel Subagent Types
 
-| Subagent | Purpose | Max Concurrent |
-|----------|---------|----------------|
-| content-implementer | Lesson/chapter creation | 10 |
-| validation-auditor | Quality validation | 10 |
-| factual-verifier | Accuracy checks | 5 |
-| educational-validator | Pedagogy compliance | 5 |
+| Subagent              | Purpose                 | Max Concurrent |
+| --------------------- | ----------------------- | -------------- |
+| content-implementer   | Lesson/chapter creation | 10             |
+| validation-auditor    | Quality validation      | 10             |
+| factual-verifier      | Accuracy checks         | 5              |
+| educational-validator | Pedagogy compliance     | 5              |
 
 ### Keyboard Shortcuts
 
-| Shortcut | Action |
-|----------|--------|
+| Shortcut | Action                           |
+| -------- | -------------------------------- |
 | `Ctrl+B` | Send current agent to background |
-| `/tasks` | View background task status |
+| `/tasks` | View background task status      |
 
 ---
 
@@ -811,6 +826,7 @@ Required elements:
 **User**: "Take the reins and ship Chapter 15 on Python UV. Use autonomous mode."
 
 **Assistant**:
+
 ```
 AUTONOMOUS MODE ACTIVATED
 
@@ -840,10 +856,11 @@ Approve spec to continue? (yes/no/feedback)
 **User**: "yes"
 
 **Assistant**:
+
 ```
 Proceeding to Phase 2: Planning...
 
-[Invokes /sp.plan]
+[Enters native Plan Mode]
 
 PLAN CREATED: specs/chapter-15-python-uv/plan.md
 

@@ -1,6 +1,37 @@
 # Spec-Driven Development Workflow
 
-**The Four-Phase SDD Workflow** — front-load thinking so implementation becomes execution.
+## SDD Levels (from Chapter 5)
+
+| Level | Name               | When to Use                                                     | Artifacts                                                   |
+| ----- | ------------------ | --------------------------------------------------------------- | ----------------------------------------------------------- |
+| 1     | **Spec-First**     | ~80% of tasks. Quick features, bug fixes, single-session work   | Constraints + success criteria in a single lightweight file |
+| 2     | **Spec-Anchored**  | Multi-session features, unclear requirements, learning new tech | Full artifact set: spec.md, progress.md, research/, adrs/   |
+| 3     | **Spec-as-Source** | Experimental. Generated code from specs                         | Spec IS the implementation                                  |
+
+### Decision Heuristic
+
+Use SDD Level 2+ when ANY of these are true:
+
+- `files_affected > 5`
+- `requirements_unclear == true`
+- `learning_new_tech == true`
+- Work spans multiple sessions
+
+Otherwise, Level 1 (lightweight spec or no spec) is sufficient.
+
+### Lightweight Spec Pattern (Level 1)
+
+```markdown
+## [Feature Name]
+
+**Constraints**: [what NOT to do]
+**Success criteria**: [how to verify it works]
+**Approach**: [1-3 sentences]
+```
+
+---
+
+**The Four-Phase SDD Workflow (Level 2)** — front-load thinking so implementation becomes execution.
 
 ## Phase 1: Research (Parallel Subagents)
 
@@ -108,22 +139,24 @@ specs/<feature>/
 
 ## SpecKit Commands (Active)
 
-| Command             | Purpose                              | When to Use            |
-| ------------------- | ------------------------------------ | ---------------------- |
-| `/sp.specify`       | Create/update feature specifications | Starting new features  |
-| `/sp.git.commit_pr` | Autonomous git workflows             | Committing and PRs     |
-| `/sp.phr`           | Record prompt history                | After significant work |
-| `/sp.constitution`  | Update constitution                  | Governance changes     |
-| `/sp.chapter`       | Research-first chapter creation      | New technical chapters |
+| Command                | Purpose                              | When to Use            |
+| ---------------------- | ------------------------------------ | ---------------------- |
+| `/sp.specify`          | Create/update feature specifications | Starting new features  |
+| `/sp.git.commit_pr`    | Autonomous git workflows             | Committing and PRs     |
+| `/sp.phr`              | Record prompt history                | After significant work |
+| `/sp.constitution`     | Update constitution                  | Governance changes     |
+| `/sp.chapter`          | Research-first chapter creation      | New technical chapters |
+| `/sp.taskstoissues`    | Convert tasks to GitHub issues       | GitHub issue tracking  |
+| `/sp.autonomous`       | End-to-end autonomous SDD workflow   | Full feature execution |
+| `/sp.adr`              | Architecture Decision Records        | Recording decisions    |
+| `/sp.clarify`          | Resolve spec ambiguities             | After spec creation    |
+| `/sp.checklist`        | Generate validation checklists       | Pre-commit/pre-publish |
+| `/sp.reverse-engineer` | Reverse-engineer existing code       | Understanding legacy   |
+| `/sp.git.sync-sso`     | Sync SSO changes                     | SSO deployments        |
 
-### Deprecated (Use Native Features)
+**Native replacements for removed commands:**
 
-| Deprecated          | Replacement                                         |
-| ------------------- | --------------------------------------------------- |
-| `/sp.plan`          | Use native Plan Mode (EnterPlanMode tool)           |
-| `/sp.tasks`         | Use native Tasks (TaskCreate, TaskList, TaskUpdate) |
-| `/sp.implement`     | Use Ch5 L7 pattern with subagents                   |
-| `/sp.analyze`       | Use Grep/Glob directly                              |
-| `/sp.taskstoissues` | Only if GitHub integration needed                   |
-
-**Why deprecated**: These duplicate native Claude Code capabilities. Use native features for better integration.
+- Planning: Use native Plan Mode (EnterPlanMode tool) instead of former `/sp.plan`
+- Task management: Use native TaskCreate/TaskList/TaskUpdate instead of former `/sp.tasks`
+- Implementation: Use subagent delegation via Task tool instead of former `/sp.implement`
+- Analysis: Use Grep/Glob directly instead of former `/sp.analyze`

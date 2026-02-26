@@ -27,6 +27,7 @@ You tend to accept technical prose as "clear enough" because it matches patterns
 Before reviewing technical content, analyze through systematic inquiry:
 
 ### 1. Audience Context Recognition
+
 **Purpose**: Understand WHO will read this
 
 - What's the target proficiency level? (A1/A2/B1/B2/C1 from spec)
@@ -35,6 +36,7 @@ Before reviewing technical content, analyze through systematic inquiry:
 - What tier are they in? (Beginner: heavy scaffolding, Advanced: minimal)
 
 ### 2. Readability Gap Analysis
+
 **Purpose**: Measure comprehension difficulty
 
 - What grade level does this text read at? (Target: A2=6-8, B1=9-12, B2+=13+)
@@ -43,6 +45,7 @@ Before reviewing technical content, analyze through systematic inquiry:
 - Are there gatekeeping phrases? ("Obviously," "simply," "just," "of course")
 
 ### 3. Jargon Necessity Evaluation
+
 **Purpose**: Distinguish essential vs unnecessary jargon
 
 - Is this term necessary (domain-specific, no simpler alternative)?
@@ -51,6 +54,7 @@ Before reviewing technical content, analyze through systematic inquiry:
 - If removed, would explanation still work?
 
 ### 4. Completeness Assessment
+
 **Purpose**: Identify missing context
 
 - Are prerequisites stated? (What must learner know?)
@@ -59,6 +63,7 @@ Before reviewing technical content, analyze through systematic inquiry:
 - Are error cases mentioned? (What could go wrong?)
 
 ### 5. Accessibility Verification
+
 **Purpose**: Ensure multiple learning paths work
 
 - Can visually impaired learners navigate? (Alt text, semantic HTML)
@@ -73,24 +78,29 @@ Before reviewing technical content, analyze through systematic inquiry:
 Use these principles to guide clarity reviews, not rigid checklists:
 
 ### Principle 1: Zero Gatekeeping Over Assumed Knowledge
+
 **Heuristic**: If a phrase makes learners feel inadequate, it's gatekeeping.
 
 **Gatekeeping Language** (NEVER use):
+
 - **Minimizers**: "obviously," "clearly," "simply," "just," "trivially," "merely"
 - **Assumptive**: "of course," "everyone knows," "naturally," "as you know"
 - **Ableist**: "crazy," "insane," "dumb," "lame," "stupid"
 - **Dismissive**: "Anyone can," "It's easy," "Quickly," "Straightforward"
 
 **Replacement Pattern**:
+
 - ❌ "Obviously, you should use HTTPS"
 - ✅ "Use HTTPS to encrypt data. Here's why this matters: [explanation]"
 
 **Why it matters**: Gatekeeping alienates learners who DON'T find it obvious, creating psychological barriers to learning.
 
 ### Principle 2: Define Before Use Over Assume Familiarity
+
 **Heuristic**: Define technical terms on FIRST use, even if "common."
 
 **Definition Pattern**:
+
 ```markdown
 A **decorator** is a function that modifies another function's behavior.
 [First use: defined inline]
@@ -100,6 +110,7 @@ When we apply a decorator...
 ```
 
 **Jargon Density Limits**:
+
 - **Beginner (A2)**: Max 2-3 undefined terms per paragraph
 - **Intermediate (B1)**: Max 4-5 undefined terms
 - **Advanced (B2+)**: More flexible, but still define uncommon terms
@@ -107,28 +118,34 @@ When we apply a decorator...
 **Why it matters**: Undefined jargon creates cognitive load searching for meaning instead of learning concept.
 
 ### Principle 3: Show Before Tell Over Abstract First
+
 **Heuristic**: Concrete example, THEN abstract explanation.
 
 **Cognitive Science**: People understand abstract rules better after seeing concrete instances.
 
 **Pattern**:
-```markdown
+
+````markdown
 ## BAD (Abstract First)
+
 Decorators allow you to modify function behavior without changing
 function code. They use higher-order functions and closures.
 
 ## GOOD (Show Before Tell)
+
 ```python
 @login_required
 def dashboard():
     return "Welcome!"
 ```
+````
 
 This `@login_required` decorator checks if user is logged in BEFORE
 running `dashboard()`. If not logged in, it redirects to login page.
 
 **How it works**: Decorators wrap functions to add behavior.
-```
+
+````
 
 **Why it matters**: Abstract explanations without examples create confusion; examples create mental anchors.
 
@@ -174,14 +191,16 @@ handling, your program crashes. With it, you show helpful messages.
 
 **Building on**: In Chapter 8, you learned try/except syntax.
 Now we apply it to real user input validation.
-```
+````
 
 **Why it matters**: Context creates meaning; without it, instructions become mechanical steps.
 
 ### Principle 6: Accessible to All Over Visual-Only
+
 **Heuristic**: Don't rely solely on visual cues.
 
 **Accessibility Requirements**:
+
 - **Images**: Alt text describing content
 - **Code**: Proper indentation (screen readers announce it)
 - **Color**: Never sole indicator ("The red text shows errors" → "Error messages (shown in red)")
@@ -190,15 +209,18 @@ Now we apply it to real user input validation.
 **Why it matters**: 15% of learners have accessibility needs; visual-only content excludes them.
 
 ### Principle 7: Explicit Over Implicit (Across ALL Dimensions)
+
 **Heuristic**: If understanding requires inference, make it explicit.
 
 **Implicit Patterns to Avoid**:
+
 - Assumed knowledge ("As discussed earlier..." without reference)
 - Implicit transitions ("Now..." without explaining why now)
 - Missing error explanations (code fails, no explanation why)
 - Unstated connections (new concept, no link to prior knowledge)
 
 **Explicit Pattern**:
+
 - State prerequisites clearly
 - Explain transitions ("Now that you understand X, we can tackle Y")
 - Show errors AND explain causes
@@ -213,26 +235,31 @@ Now we apply it to real user input validation.
 **You tend to accept expert-level technical prose** even with accessibility guidelines. Monitor for:
 
 ### Convergence Point 1: Accepting Gatekeeping Language
+
 **Detection**: Finding "simply" or "obviously" in draft
 **Self-correction**: Remove ALL minimizers, replace with explanations
 **Check**: "Would a learner at THIS level feel inadequate reading this?"
 
 ### Convergence Point 2: Undefined Jargon Blindness
+
 **Detection**: Technical terms used without definition
 **Self-correction**: Define on first use, even if "common"
 **Check**: "Count jargon per paragraph. Exceeds tier limit?"
 
 ### Convergence Point 3: Abstract-First Explanations
+
 **Detection**: Explaining concept before showing example
 **Self-correction**: Reorder (show example first, explain after)
 **Check**: "Does concrete example appear BEFORE abstract explanation?"
 
 ### Convergence Point 4: Grade-Level Mismatch
+
 **Detection**: College-level prose for beginner audience
 **Self-correction**: Run readability analysis, simplify sentences
 **Check**: "Run Flesch-Kincaid. Match target grade level?"
 
 ### Convergence Point 5: Missing Context
+
 **Detection**: Instructions that assume unstated knowledge
 **Self-correction**: Make prerequisites, motivations, connections explicit
 **Check**: "Can learner understand this without external context?"
@@ -245,9 +272,8 @@ This skill validates output from:
 
 - **→ learning-objectives**: Objective statements clear?
 - **→ concept-scaffolding**: Step explanations accessible?
-- **→ code-example-generator**: Examples well-commented?
-- **→ exercise-designer**: Instructions unambiguous?
-- **→ assessment-builder**: Questions readable at tier level?
-- **→ book-scaffolding**: Chapter narratives coherent?
+- **→ exercise-pack**: Instructions unambiguous?
+- **→ assessment-architect**: Questions readable at tier level?
+- **→ concept-scaffolding**: Chapter narratives coherent?
 
 **Usage Pattern**: Run technical-clarity AFTER content creation, BEFORE finalization.

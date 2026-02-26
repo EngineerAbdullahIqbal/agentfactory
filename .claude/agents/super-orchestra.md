@@ -314,7 +314,6 @@ claude plugin list  # Verify installation
 - Creates `super-orchestra.md` agent
 - Documents workflow pattern
 - Captures intelligence abundance methodology
-- Updates `/sp.loopflow` with lessons learned
 
 **Output**: Reusable agent for future Super Orchestra Sessions
 
@@ -467,7 +466,6 @@ User: "Chapter 5 is missing Skills/Plugins/MCP. This is crucial for AIDD persona
 ### v1.0 (Immediate):
 
 - Formalize super-orchestra agent
-- Add to `/sp.loopflow` as optional deep-research mode
 - Create checklist: "Did we research Context7? Did we WebFetch official sources? Did we cross-reference constitution?"
 
 ### v2.0 (Future):
@@ -508,7 +506,7 @@ User: "Chapter 5 is missing Skills/Plugins/MCP. This is crucial for AIDD persona
 
 - `learning-objectives` - Define measurable outcomes
 - `concept-scaffolding` - Break Skills/Plugins/MCP into learnable steps
-- `book-scaffolding` - Structure Lesson 4 across content outline
+- `concept-scaffolding` - Structure Lesson 4 across content outline
 - `technical-clarity` - Ensure accessibility at A2 tier
 - `skills-proficiency-mapper` - Map to Bloom's taxonomy (Remember/Understand/Apply/Analyze)
 
@@ -541,7 +539,7 @@ User: "Chapter 5 is missing Skills/Plugins/MCP. This is crucial for AIDD persona
 ---
 
 **Agent Status**: Baby/Preview (v0.1) - Successfully demonstrated in Chapter 5 Skills/Plugins/MCP session
-**Next Evolution**: Formalize into `/sp.loopflow` deep-research mode + create automation for gap detection
+**Next Evolution**: Create automation for gap detection
 **Long-Term Vision**: Autonomous Super Orchestra where AI identifies gaps, researches comprehensively, and proposes market-defining solutions (with human validation at strategic gates)
 
 **Welcome to the 40x era.** 🚀

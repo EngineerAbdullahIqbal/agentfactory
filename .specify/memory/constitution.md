@@ -1,55 +1,83 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Agent Factory Constitution
 
-## Core Principles
+## I. Architecture
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+The Agent Factory is an educational platform teaching domain experts to build sellable AI agents. It is an Nx monorepo with pnpm.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Applications** (`apps/`):
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- `learn-app` — Docusaurus MDX book (content in `apps/learn-app/docs/`)
+- `sso` — Better Auth single sign-on (port 3001)
+- `content-api` — FastAPI content service (port 8003)
+- `practice-server` — Express + WebSocket terminal environment
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Agent Infrastructure** (`.claude/`):
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+- `skills/` — Atomic operations (SKILL.md with YAML frontmatter)
+- `agents/` — Subagent definitions for orchestrated workflows
+- `commands/` — Slash commands (`sp.*` prefix)
+- `rules/` — Auto-loaded modular rules
 
-### [PRINCIPLE_6_NAME]
+**Specifications**: `specs/<feature>/` — one folder per feature, contains spec, plan, tasks, research, ADRs.
 
+**Content structure**: Parts are top-level folders (`NN-Name/`), chapters are nested (`NN-Name/NN-chapter/`). Chapter numbers are global across the book. Always discover paths via `ls -d`, never guess.
 
-[PRINCIPLE__DESCRIPTION]
+---
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## II. Technology
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+| Layer          | Stack                                         |
+| -------------- | --------------------------------------------- |
+| Frontend       | TypeScript, Docusaurus (MDX), React           |
+| Backend APIs   | Python, FastAPI                               |
+| Auth           | Better Auth SSO, Device Flow (RFC 8628), JWKS |
+| Database       | PostgreSQL (Neon)                             |
+| Build          | pnpm, Nx (affected builds, per-app serving)   |
+| AI Integration | Claude Code agents, skills, MCP tools         |
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+---
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## III. Quality
+
+1. **Educational content is never written directly.** All lesson prose goes through the `content-implementer` subagent. Code, specs, configs, and SKILL.md are exempt.
+2. **YAML frontmatter is mandatory** on all lesson files — skills, learning objectives, metadata.
+3. **Facts and statistics require WebSearch verification** before publication.
+4. **Live verification before commits** — start services, make real requests, check logs. "It compiles" is not verification.
+5. **Skills before subagents** — check the skill list before spawning a subagent. If an atomic skill exists, use it.
+6. **Read files once per session.** Summarize immediately, reference the summary. Never re-read.
+7. **Pedagogical layers must match student knowledge.** L1 (Manual) through L4 (Spec-Driven) — always verify Part number to determine layer.
+
+---
+
+## IV. Security
+
+1. **Never commit secrets.** No `.env`, API keys, tokens, or passwords in git. Scan every diff before committing.
+2. **No force push to main** without explicit user approval.
+3. **No production-destructive operations** (data deletion, migrations) without confirmation.
+4. **Validate at system boundaries only** — trust internal code and framework guarantees. Validate user input and external API responses.
+5. **Auth tokens**: opaque tokens validated via SSO userinfo; JWTs verified locally via JWKS (cached 1 hour).
+
+---
+
+## V. Workflow
+
+1. **Spec-Driven Development (SDD)** for major features:
+   - Research (parallel subagents) -> Specification (`/sp.specify`) -> Refinement (interview) -> Implementation (task delegation, atomic commits)
+2. **One task per session.** Context degrades after ~20 turns. Don't mix implementation with strategic planning.
+3. **Define "done" upfront.** State deliverables and acceptance criteria before starting work.
+4. **Delegate implementation.** Main session orchestrates; subagents implement. Main session doing heavy work guarantees failure.
+5. **Clarify ambiguity immediately.** When a term could mean multiple things, ask before assuming. Never interpret broadly when a narrow interpretation exists.
+6. **Learning loop.** After any correction, capture the pattern in `rules/failure-history.md` with a prevention rule.
+7. **Structured handoffs.** Use the Task Handoff Format (context, acceptance criteria, files, constraints, references) for all delegation.
+
+---
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution is the authoritative source of project principles. It supersedes ad-hoc decisions but is subordinate to explicit user instructions in the moment.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+- Amendments require updating this file with a new version number and date.
+- All agent work (skills, subagents, commands) must comply with these principles.
+- CLAUDE.md provides operational rules that implement these principles. When in conflict, clarify with the user.
+
+**Version**: 1.0.0 | **Ratified**: 2026-02-26 | **Last Amended**: 2026-02-26

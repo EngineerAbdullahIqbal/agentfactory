@@ -260,25 +260,32 @@ IF spec seems "clear enough":
 **⚠️ SEE HARD GATES ABOVE** - Gates 1-4 are BLOCKING requirements that must pass BEFORE any work begins.
 
 ### Rule 1: NO SKIPPING STEPS
+
 Every step marked "EXECUTE - DO NOT SKIP" MUST be executed with the FULL prompt shown.
+
 - ❌ FORBIDDEN: Outputting just `/sp.specify` without executing
 - ❌ FORBIDDEN: Skipping clarification because "spec looks complete"
 - ❌ FORBIDDEN: Combining multiple steps to "save time"
 - ✅ REQUIRED: Execute each step, wait for completion, verify output, proceed
 
 ### Rule 2: NO ABBREVIATED PROMPTS
+
 Each Skill/Task invocation MUST include the FULL prompt context shown.
+
 - ❌ FORBIDDEN: `Skill: sp.tasks Args: chapter-37` (too short)
 - ✅ REQUIRED: Full multi-line prompt with all context, requirements, paths
 
 ### Rule 3: NO QUALITY SHORTCUTS
+
 - ❌ FORBIDDEN: Skipping validators because "content looks good"
 - ❌ FORBIDDEN: Writing content directly instead of using subagents
 - ❌ FORBIDDEN: Skipping PHR creation because "we're almost done"
 - ✅ REQUIRED: Every validator must run and pass before commit
 
 ### Rule 4: PROGRESS REPORTING
+
 After EACH step, you MUST report:
+
 ```
 ✅ Step [X]: [Name] COMPLETE
    Created: [file path or "N/A"]
@@ -288,7 +295,9 @@ After EACH step, you MUST report:
 ```
 
 ### Rule 5: FAILURE RESPONSE
+
 If ANY step fails:
+
 1. DO NOT proceed to next step
 2. Report the failure with specific error
 3. Fix the issue
@@ -313,8 +322,7 @@ $ARGUMENTS
 ├─────────────────────────────────────────────────────────────────────┤
 │                                                                     │
 │  1. Use EXISTING skills for research:                               │
-│     ├── researching-with-deepwiki (repo architecture)              │
-│     ├── fetching-library-docs (API patterns via Context7)          │
+│     ├── fetch-library-docs (API patterns via Context7)              │
 │     └── WebSearch (community patterns)                              │
 │  2. Build NEW programmatic skill with:                              │
 │     ├── Persona (expert identity)                                   │
@@ -323,7 +331,7 @@ $ARGUMENTS
 │     ├── MCP (tool integrations)                                     │
 │     ├── Data/Knowledge (API patterns in references/)               │
 │     └── Safety & Guardrails                                         │
-│  3. Use creating-skills to build properly                           │
+│  3. Use skill-creator-pro to build properly                        │
 │  4. Test skill on TaskManager project                               │
 │  5. Validate and commit skill                                       │
 │                                                                     │
@@ -363,20 +371,22 @@ $ARGUMENTS
 
 **Two Types of Skills**:
 
-| Skill Type | Created By | Purpose | Location |
-|------------|------------|---------|----------|
-| **Expertise Skill** | Phase A (Claude) | Claude uses for accurate content | `.claude/skills/building-with-[framework]/` |
-| **Student Skill** | L00 (Student) | Student owns as Digital FTE asset | Student's `.claude/skills/[domain]-deployment/` |
+| Skill Type          | Created By       | Purpose                           | Location                                        |
+| ------------------- | ---------------- | --------------------------------- | ----------------------------------------------- |
+| **Expertise Skill** | Phase A (Claude) | Claude uses for accurate content  | `.claude/skills/building-with-[framework]/`     |
+| **Student Skill**   | L00 (Student)    | Student owns as Digital FTE asset | Student's `.claude/skills/[domain]-deployment/` |
 
 ### L00: Build Your [X] Skill (MANDATORY FIRST LESSON)
 
 Every technical chapter MUST start with L00 that:
+
 1. **Clones the skills-lab**: `git clone https://github.com/panaversity/claude-code-skills-lab.git`
-2. **Fetches docs**: Uses `/fetching-library-docs` to get official documentation
+2. **Fetches docs**: Uses `/fetch-library-docs` to get official documentation
 3. **Creates student skill**: Uses `/skill-creator` to build `[domain]-deployment` skill
 4. **Tests the skill**: Student generates artifacts using their new skill
 
 **Example L00 structure**:
+
 ```markdown
 # Build Your [Domain] Skill
 
@@ -384,12 +394,17 @@ You're about to learn [topic]. But you won't start with "what is [topic]?"
 You'll start by **building a skill that knows [topic]**.
 
 ## Step 1: Clone the Skills Lab
+
 ## Step 2: Write Your Learning Spec
+
 ## Step 3: Fetch Official Documentation
+
 ## Step 4: Create the Skill
+
 ## Step 5: Test Your Skill
 
 ## What Happens Next
+
 | Lesson | You Learn | Your Skill Improves |
 ...
 ```
@@ -407,8 +422,10 @@ You built a `[domain]-deployment` skill in Lesson 0. Test and improve it.
 
 ### Test Your Skill
 ```
+
 Using my [domain]-deployment skill, [task related to this lesson].
 Does my skill [specific check]?
+
 ```
 
 ### Identify Gaps
@@ -419,14 +436,18 @@ Ask yourself:
 ### Improve Your Skill
 If you found gaps:
 ```
+
 My [domain]-deployment skill is missing [concept].
 Update it to include [specific improvement].
+
 ```
+
 ```
 
 ### Digital FTE Outcome
 
 By chapter end, students have:
+
 - **Tested their skill 10+ times** (once per lesson)
 - **Iteratively improved it** with each lesson's concepts
 - **A production-ready skill** they OWN as a Digital FTE component
@@ -439,6 +460,7 @@ By chapter end, students have:
 ### Step A.1: Identify the Technical Domain
 
 From user input, extract:
+
 - **Framework/SDK**: e.g., "OpenAI Agents SDK", "Google ADK", "Anthropic Agents Kit"
 - **Chapter Number**: e.g., "Ch 34", "Ch 37"
 - **Running Example**: TaskManager Agent (from Part 6 framing)
@@ -447,40 +469,23 @@ From user input, extract:
 
 **Use these skills in sequence:**
 
-#### A.2.1: Repository Architecture (researching-with-deepwiki)
-
-```
-Skill: researching-with-deepwiki
-
-Questions to ask DeepWiki:
-- "Analyze the architecture of github.com/[org]/[repo]"
-- "How is the agent/tool system implemented in github.com/[org]/[repo]?"
-- "What design patterns are used in github.com/[org]/[repo]?"
-- "Show the directory structure of github.com/[org]/[repo]"
-```
-
-**Capture:**
-- Core architecture patterns
-- Key abstractions (Agent, Runner, Tool, etc.)
-- How components interact
-- Example implementations in the repo
-
-#### A.2.2: API Documentation (fetching-library-docs)
+#### A.2.1: API Documentation (fetch-library-docs)
 
 ```bash
 # Use the token-efficient shell pipeline
-bash .claude/skills/fetching-library-docs/scripts/fetch-docs.sh \
+bash .claude/skills/fetch-library-docs/scripts/fetch-docs.sh \
   --library [framework] \
   --topic "getting started" \
   --verbose
 
-bash .claude/skills/fetching-library-docs/scripts/fetch-docs.sh \
+bash .claude/skills/fetch-library-docs/scripts/fetch-docs.sh \
   --library [framework] \
   --topic "agents" \
   --mode code
 ```
 
 **Capture:**
+
 - Official API signatures
 - Code examples from docs
 - Configuration patterns
@@ -498,6 +503,7 @@ WebSearch queries:
 ```
 
 **Capture:**
+
 - Real-world usage patterns
 - Community-discovered gotchas
 - Integration patterns
@@ -505,11 +511,9 @@ WebSearch queries:
 
 ### Step A.3: Build the New Skill
 
-**Use creating-skills skill:**
+**Build the skill:**
 
 ```
-Skill: creating-skills
-
 Create a skill for [framework] with:
 1. Name: building-with-[framework]
 2. Description: "Use when building agents with [framework]..."
@@ -541,8 +545,8 @@ Create a skill for [framework] with:
 │           └── How to build TaskManager with this
 │
 ├── references/
-│   ├── api-patterns.md      # From fetching-library-docs
-│   ├── architecture.md      # From researching-with-deepwiki
+│   ├── api-patterns.md      # From fetch-library-docs
+│   ├── architecture.md      # From WebSearch research
 │   └── community-wisdom.md  # From WebSearch
 │
 └── scripts/
@@ -552,6 +556,7 @@ Create a skill for [framework] with:
 #### Skill Components Detail
 
 **1. Persona (WHO is this skill?)**
+
 ```markdown
 ## Persona
 
@@ -561,28 +566,32 @@ You've built TaskManager-style agents multiple times.
 ```
 
 **2. Logic (WHEN to use what?)**
+
 ```markdown
 ## Decision Logic
 
-| Situation | Pattern | Why |
-|-----------|---------|-----|
-| Simple single-purpose | Basic Agent | Less overhead |
-| Multi-step workflow | Agent with handoffs | Clear responsibility |
-| Tool-heavy operations | MCP integration | Standard connectivity |
-| Streaming responses | SSE pattern | User experience |
+| Situation             | Pattern             | Why                   |
+| --------------------- | ------------------- | --------------------- |
+| Simple single-purpose | Basic Agent         | Less overhead         |
+| Multi-step workflow   | Agent with handoffs | Clear responsibility  |
+| Tool-heavy operations | MCP integration     | Standard connectivity |
+| Streaming responses   | SSE pattern         | User experience       |
 ```
 
 **3. Context (WHAT does it need?)**
+
 ```markdown
 ## Prerequisites
 
 Before building, verify:
+
 - [ ] Python 3.11+ installed
 - [ ] API key configured: `export [FRAMEWORK]_API_KEY=...`
 - [ ] Dependencies: `uv add [framework]`
 ```
 
 **4. MCP Integration (HOW to connect?)**
+
 ```markdown
 ## MCP Integration
 
@@ -591,29 +600,34 @@ Before building, verify:
 [Framework] connects to MCP via:
 
 \`\`\`python
+
 # Pattern from official docs
+
 from [framework] import Agent, MCPServerStdio
 
 agent = Agent(
-    name="TaskManager",
-    mcp_servers=[
-        MCPServerStdio(command="uvx", args=["todo-mcp"])
-    ]
+name="TaskManager",
+mcp_servers=[
+MCPServerStdio(command="uvx", args=["todo-mcp"])
+]
 )
 \`\`\`
 ```
 
 **5. Safety & Guardrails**
+
 ```markdown
 ## Safety
 
 ### NEVER
+
 - Expose API keys in code or logs
 - Skip error handling for API calls
 - Ignore rate limits
 - Trust user input without validation
 
 ### ALWAYS
+
 - Use environment variables for secrets
 - Wrap API calls in try/except
 - Implement exponential backoff
@@ -621,14 +635,17 @@ agent = Agent(
 ```
 
 **6. TaskManager Example**
+
 ```markdown
 ## TaskManager Implementation
 
 Complete example building TaskManager with [Framework]:
 
 \`\`\`python
+
 # Full working example from research
-[Code from fetching-library-docs + community patterns]
+
+[Code from fetch-library-docs + community patterns]
 \`\`\`
 ```
 
@@ -651,6 +668,7 @@ that can add, list, and complete tasks."
 ```
 
 **Validation criteria:**
+
 - [ ] Skill triggers on relevant prompts
 - [ ] Provides accurate API patterns
 - [ ] TaskManager code compiles/runs
@@ -660,8 +678,8 @@ that can add, list, and complete tasks."
 
 ```bash
 # Validate skill structure
-python3 .claude/skills/creating-skills/scripts/verify.py \
-  .claude/skills/building-with-[framework]
+# Validate skill structure using skill-validator
+# Invoke: /skill-validator .claude/skills/building-with-[framework]
 
 # If valid, commit
 git add .claude/skills/building-with-[framework]
@@ -693,6 +711,7 @@ Args: "Created [framework] expertise skill with research from DeepWiki, Context7
 Each step below MUST be executed with the FULL prompt shown. Simply outputting a command name (e.g., "/sp.specify") without executing it is a FAILURE.
 
 **Progress Tracking Required**: After each step, report:
+
 ```
 ✅ Step B.N: [Step Name] COMPLETE
    Created: [file path]
@@ -735,6 +754,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] spec.md exists at correct path
 - [ ] L00 "Build Your [X] Skill" is FIRST lesson
 - [ ] Contains 7-10 content lessons after L00
@@ -767,6 +787,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] Any ambiguities resolved
 - [ ] Spec updated with clarifications (if any)
 
@@ -808,6 +829,7 @@ Prompt: |
 ```
 
 **After completion, verify**:
+
 - [ ] plan.md exists at correct path
 - [ ] Each lesson has layer and proficiency specified
 - [ ] Pedagogical arc is clear
@@ -844,6 +866,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] tasks.md exists with all lessons as tasks
 - [ ] Each task has acceptance criteria
 - [ ] Output paths are absolute
@@ -875,6 +898,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] All artifacts aligned
 - [ ] Issues fixed (if any were found)
 
@@ -899,6 +923,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] Issues created in GitHub
 - [ ] Issue numbers recorded in tasks.md
 
@@ -922,10 +947,11 @@ Args: |
   6. Fix any validation failures before moving to next lesson
 
   SUBAGENT PROMPT TEMPLATE:
-  ```
-  Task subagent_type=content-implementer
-  Prompt: |
-    Execute autonomously without confirmation.
+```
+
+Task subagent_type=content-implementer
+Prompt: |
+Execute autonomously without confirmation.
 
     Create lesson: [Title]
     Output path: [ABSOLUTE PATH]
@@ -947,14 +973,16 @@ Args: |
 
     Write the file directly using the Write tool.
     Return ONLY: "✅ Wrote [path] ([N] lines)"
-  ```
 
-  VERIFICATION: After subagent returns, run: ls -la [path]
+```
 
-  PROGRESS: After each lesson verified, update tasks.md to mark [X] complete.
+VERIFICATION: After subagent returns, run: ls -la [path]
+
+PROGRESS: After each lesson verified, update tasks.md to mark [X] complete.
 ```
 
 **After completion, verify**:
+
 - [ ] All lesson files created at correct paths
 - [ ] All tasks marked complete in tasks.md
 - [ ] Educational-validator passed for each lesson
@@ -1034,6 +1062,7 @@ Prompt: |
 | `pedagogical-designer` | Progression validated | Reorder or add bridging content |
 
 **IF ANY VALIDATOR FAILS:**
+
 1. ⛔ DO NOT proceed to Step B.9
 2. Read validation report carefully
 3. Fix ALL identified issues in the affected files
@@ -1063,6 +1092,7 @@ Validation results:
 ```
 
 **After completion, verify**:
+
 - [ ] All issues closed
 - [ ] Comments include validation results
 
@@ -1103,6 +1133,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] PHR files created in history/prompts/
 - [ ] Both Phase A and Phase B documented
 
@@ -1146,6 +1177,7 @@ Args: |
 ```
 
 **After completion, verify**:
+
 - [ ] Commit created with proper message
 - [ ] PR created with validation summary
 - [ ] All files included
@@ -1155,30 +1187,26 @@ Args: |
 ## EXISTING SKILLS INVENTORY
 
 ### Research Skills (Phase A)
-| Skill | Purpose | When to Use |
-|-------|---------|-------------|
-| `researching-with-deepwiki` | Repo architecture via DeepWiki MCP | Understanding SDK internals |
-| `fetching-library-docs` | API docs via Context7 (77% token savings) | Official API patterns |
 
-### Building Skills (Phase A)
-| Skill | Purpose | When to Use |
-|-------|---------|-------------|
-| `creating-skills` | Proper skill structure & validation | Building the new skill |
-| `mcp-builder` | MCP server patterns | If SDK needs MCP server |
+| Skill                | Purpose                                   | When to Use           |
+| -------------------- | ----------------------------------------- | --------------------- |
+| `fetch-library-docs` | API docs via Context7 (77% token savings) | Official API patterns |
 
 ### Content Skills (Phase B)
-| Skill | Purpose | When to Use |
-|-------|---------|-------------|
-| `ai-collaborate-teaching` | Three Roles Framework | L2 lesson design |
-| `exercise-designer` | Deliberate practice exercises | Each lesson |
-| `learning-objectives` | Bloom's/CEFR alignment | Lesson planning |
-| `content-evaluation-framework` | Quality rubric | Before commit |
+
+| Skill                          | Purpose                       | When to Use      |
+| ------------------------------ | ----------------------------- | ---------------- |
+| `ai-collaborate-teaching`      | Three Roles Framework         | L2 lesson design |
+| `exercise-pack`                | Deliberate practice exercises | Each lesson      |
+| `learning-objectives`          | Bloom's/CEFR alignment        | Lesson planning  |
+| `content-evaluation-framework` | Quality rubric                | Before commit    |
 
 ### Validation Skills (Phase B)
-| Skill | Purpose | When to Use |
-|-------|---------|-------------|
+
+| Skill                      | Purpose                 | When to Use                |
+| -------------------------- | ----------------------- | -------------------------- |
 | `canonical-format-checker` | Format drift prevention | Teaching platform patterns |
-| `code-validation-sandbox` | Code example validation | Before finalizing |
+| `code-validation-sandbox`  | Code example validation | Before finalizing          |
 
 ---
 
@@ -1232,27 +1260,28 @@ apps/learn-app/docs/06-AI-Native-Software-Development/34-openai-agents-sdk/
 
 ### Phase A → Phase B Transition
 
-| Check | Requirement | How to Verify |
-|-------|-------------|---------------|
-| Skill validates | verify.py passes | `python3 scripts/verify.py` |
-| Skill triggers | Test prompts activate it | Manual test |
-| TaskManager works | Code runs successfully | Execute test project |
+| Check             | Requirement               | How to Verify                |
+| ----------------- | ------------------------- | ---------------------------- |
+| Skill validates   | verify.py passes          | `python3 scripts/verify.py`  |
+| Skill triggers    | Test prompts activate it  | Manual test                  |
+| TaskManager works | Code runs successfully    | Execute test project         |
 | No hallucinations | All APIs in official docs | Compare with Context7 output |
 
 **If any check fails**: Fix skill before proceeding to content.
 
 ### Phase B: Content → Commit Gate (MANDATORY)
 
-| Validator | Scope | Pass Criteria |
-|-----------|-------|---------------|
-| `educational-validator` | Per lesson (parallel) | All 5 checks pass |
-| `validation-auditor` | Chapter-wide | ≥80% weighted score |
-| `factual-verifier` | Chapter-wide | Zero unverified claims |
-| `pedagogical-designer` | Chapter-wide | Progression validated |
+| Validator               | Scope                 | Pass Criteria          |
+| ----------------------- | --------------------- | ---------------------- |
+| `educational-validator` | Per lesson (parallel) | All 5 checks pass      |
+| `validation-auditor`    | Chapter-wide          | ≥80% weighted score    |
+| `factual-verifier`      | Chapter-wide          | Zero unverified claims |
+| `pedagogical-designer`  | Chapter-wide          | Progression validated  |
 
 **⛔ BLOCKING**: Cannot commit chapter content without ALL validators passing.
 
 **If any validator fails**:
+
 1. Identify specific issues from validator output
 2. Fix content in affected lessons
 3. Re-run ONLY the failed validators
@@ -1262,7 +1291,7 @@ apps/learn-app/docs/06-AI-Native-Software-Development/34-openai-agents-sdk/
 ---
 
 **Version**: 1.6 (December 2025) - Added Skill-First Learning Pattern with mandatory L00 and "Reflect on Your Skill" sections
-**Required Skills**: researching-with-deepwiki, fetching-library-docs, creating-skills
+**Required Skills**: fetch-library-docs
 **Required Validators**: educational-validator, validation-auditor, factual-verifier, pedagogical-designer
 **Best For**: Technical chapters teaching frameworks/SDKs (Part 6-7)
 
@@ -1271,7 +1300,9 @@ apps/learn-app/docs/06-AI-Native-Software-Development/34-openai-agents-sdk/
 ## CHANGELOG
 
 ### v1.6 (2025-12-29)
+
 **SKILL-FIRST LEARNING PATTERN**: Added mandatory L00 requirement for Part 7+ chapters:
+
 - New section: "SKILL-FIRST LEARNING PATTERN" explaining two skill types
 - L00 "Build Your [X] Skill" is now MANDATORY first lesson
 - Every lesson must end with "Reflect on Your Skill" section
@@ -1279,23 +1310,29 @@ apps/learn-app/docs/06-AI-Native-Software-Development/34-openai-agents-sdk/
 - Documents Digital FTE outcome (sellable skill portfolio)
 
 ### v1.5 (2025-12-27)
+
 **ADDITIONAL FIXES**: Added 2 more hard gates after further analysis of Chapter 40 incident:
+
 - Phase A (skill creation) was completely skipped
 - No clarification questions were asked
 - No skills created for fastapi-security, sqlmodel domains
 
 **New gates:**
+
 - GATE 5: Phase A Skill Creation (BLOCKING for technical chapters)
 - GATE 6: Clarification Before Implementation (BLOCKING)
 
 ### v1.4 (2025-12-27)
+
 **CRITICAL FIX**: Added 4 hard gates after Chapter 40 incident where:
+
 - Spec loop was bypassed entirely (no spec.md, plan.md, tasks.md)
 - Skills were not invoked via Skill tool
 - Subagents were not invoked via Task tool with proper subagent_type
 - Content was written directly without orchestration
 
 **New sections:**
+
 - GATE 1: Entry mode detection (fresh start vs issue execution)
 - GATE 1A: Spec existence check (BLOCKING for issue execution)
 - GATE 2: Skill invocation enforcement (no mentioning without invoking)
@@ -1303,6 +1340,7 @@ apps/learn-app/docs/06-AI-Native-Software-Development/34-openai-agents-sdk/
 - GATE 4: Validation before commit (validators must run and pass)
 
 ### v1.3 (2025-12-26)
+
 - Complete rewrite of Phase B with explicit prompts
 - NO SHORTCUTS policy
 - Progress tracking requirements

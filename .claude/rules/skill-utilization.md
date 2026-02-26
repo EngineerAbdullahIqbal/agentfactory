@@ -33,13 +33,14 @@
 ```
 Code Review & Analysis:
 - /spec-review                  → Single-pass spec-vs-implementation review
-- /code-review:code-review      → PR code review
 
 Content Quality:
 - /content-evaluation-framework  → 6-category rubric scoring
 - /content-refiner              → Fix Gate 4 failures
 - /technical-clarity            → Grandma Test, jargon check
-- /fact-check-lesson            → Verify factual claims
+- /fact-check-lesson            → Verify factual claims (command)
+- /canonical-format-checker     → Validate lesson/skill canonical format
+- /enrich-teaching-guide        → Enhance teaching guide content
 
 Pedagogy:
 - /learning-objectives          → Generate measurable outcomes
@@ -50,13 +51,14 @@ Pedagogy:
 Assessment:
 - /quiz-generator               → 50-question interactive quizzes
 - /assessment-architect         → Certification exams
+- /exercise-pack                → Generate exercise sets
+- /generate-flashcards          → Create flashcard decks
 
 Research:
 - /fetch-library-docs           → Official docs via Context7
 - /session-intelligence-harvester → Extract session learnings
 
 Creation:
-- /skill-creator-pro            → Build new skills
 - /skill-validator              → Validate skill quality
 ```
 

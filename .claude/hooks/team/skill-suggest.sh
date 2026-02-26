@@ -43,36 +43,10 @@ if echo "$PROMPT_LOWER" | grep -qE '\b(test|tdd|jest|pytest|spec|unit test)\b' 2
     REASONS="${REASONS}  - /tdd: Test-driven development patterns\n"
 fi
 
-if echo "$PROMPT_LOWER" | grep -qE '\b(bug|debug|fix|error|broken|failing)\b' 2>/dev/null; then
-    SUGGESTIONS="${SUGGESTIONS}systematic-debugging "
-    REASONS="${REASONS}  - /systematic-debugging: Root cause analysis methodology\n"
-fi
-
-if echo "$PROMPT_LOWER" | grep -qE '\b(nextjs|next\.js|app router|server component)\b' 2>/dev/null; then
-    SUGGESTIONS="${SUGGESTIONS}building-nextjs-apps "
-    REASONS="${REASONS}  - /building-nextjs-apps: Next.js 16 patterns\n"
-fi
-
-if echo "$PROMPT_LOWER" | grep -qE '\b(fastapi|sqlmodel|pydantic|async)\b' 2>/dev/null; then
-    SUGGESTIONS="${SUGGESTIONS}fastapi-backend "
-    REASONS="${REASONS}  - /fastapi-backend: FastAPI patterns\n"
-fi
-
 # Documentation/Research
 if echo "$PROMPT_LOWER" | grep -qE '\b(docs|documentation|how to|api reference)\b' 2>/dev/null; then
     SUGGESTIONS="${SUGGESTIONS}fetch-library-docs "
     REASONS="${REASONS}  - /fetch-library-docs: Get official library documentation\n"
-fi
-
-# Planning/Collaboration
-if echo "$PROMPT_LOWER" | grep -qE '\b(interview|requirements|spec|why|scope|clarify)\b' 2>/dev/null; then
-    SUGGESTIONS="${SUGGESTIONS}interview "
-    REASONS="${REASONS}  - /interview: Discover requirements before implementing\n"
-fi
-
-if echo "$PROMPT_LOWER" | grep -qE '\b(code review|review pr|pull request)\b' 2>/dev/null; then
-    SUGGESTIONS="${SUGGESTIONS}code-review "
-    REASONS="${REASONS}  - /code-review: PR review with best practices\n"
 fi
 
 # Output suggestions if any
