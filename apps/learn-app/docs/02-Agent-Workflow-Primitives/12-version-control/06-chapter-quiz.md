@@ -500,7 +500,7 @@ options: [
 ],
 correctOption: 0,
 explanation: "The most efficient practice is to document the working pattern as reusable instructions. Create a prompt template capturing your authentication requirements, preferences, and context so future requests require minimal explanation—turn successful interactions into repeatable patterns. Option B misunderstands AI limitations. Claude doesn't remember previous conversations or implementations unless you provide that context explicitly. AI sessions are independent; you must build your own knowledge management system. Option C is dangerous. Blindly copying code without understanding creates security vulnerabilities, technical debt, and prevents you from adapting solutions to specific project needs. Understanding is always required. Option D throws away a useful tool because of inefficient usage. The problem isn't AI assistance; it's lack of documentation. Solve the documentation problem rather than abandoning a helpful tool. The solution: after successful AI interactions, document: 1) The prompt that worked well, 2) Specific requirements or constraints, 3) Modifications you typically make to AI output, 4) Edge cases to verify. This turns one-time problem-solving into reusable intellectual property. You build a personal library of effective AI prompts and patterns.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "Your team follows this Git workflow for AI experiments: 1) Create branch, 2) Request AI code, 3) Test thoroughly, 4) Create PR with 'AI-generated' label, 5) Merge after review. A new team member asks why you have a documented workflow instead of just 'using Git naturally'. What value does the documented workflow provide?",
@@ -512,7 +512,7 @@ options: [
 ],
 correctOption: 1,
 explanation: "The documented workflow provides shared understanding of team practices and expectations. Everyone knows the process for AI experiments—no confusion about when to branch, how to label PRs, or review expectations. This consistency improves collaboration and reduces miscommunication. Option A is absurd; workflows don't prevent Git usage—they guide it. Team members still use all necessary Git commands, just with shared conventions about when and how. Option C is impossibly optimistic. Workflows improve process consistency; they don't guarantee code quality. Testing, review, and good engineering practices produce quality—workflows structure how teams apply those practices. Option D is nonsensical. Documentation reduces certain communications (like repeatedly explaining 'How do we handle AI code?'), but teams still need rich communication about requirements, design decisions, blockers, etc. Documentation supplements communication, not replaces it. Benefits of documented workflows: 1) Onboarding new members is faster, 2) Decisions are consistent across the team, 3) Processes improve through documented iteration, 4) Implicit knowledge becomes explicit and shareable. Without documentation, every team member might handle AI experiments differently, creating confusion and inconsistency.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "After six months working with AI tools, you notice you repeatedly use three Git patterns: 'AI exploration branch' (test AI suggestions), 'Incremental AI integration' (merge AI code in small pieces), and 'AI-transparent PR' (document AI usage clearly). What do these patterns represent?",
@@ -524,7 +524,7 @@ options: [
 ],
 correctOption: 2,
 explanation: "These patterns represent reusable strategies you've refined through experience—workflows that proved effective through trial and error, now codified for consistent application. They're your learned best practices for AI-assisted development. Option B is far too absolute. These are your effective patterns, not universal mandates. Different teams, projects, or individuals might develop different effective patterns. Multiple valid approaches exist. Option A misunderstands pattern value. These aren't workarounds for AI limitations—they're thoughtful approaches to AI integration that will remain relevant as tools improve. How you test, integrate, and document AI code matters regardless of AI sophistication. Option D dismisses the value of refined process. While patterns add structure, they increase efficiency by eliminating repeated decision-making ('What should I do here?'). Known patterns make work faster and more consistent, not slower. Good patterns emerge from: 1) Experience (trying approaches and seeing results), 2) Reflection (analyzing what worked and why), 3) Codification (documenting patterns for reuse), 4) Iteration (refining patterns based on new experience). Patterns are professional expertise made concrete and shareable.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "You create a document titled 'Git Workflow for AI Experimentation' with sections on branching strategy, commit message conventions, and PR documentation standards. A colleague says this is over-engineering and developers should just figure things out themselves. What value does explicit workflow documentation provide for AI-driven development?",
@@ -536,7 +536,7 @@ options: [
 ],
 correctOption: 3,
 explanation: "Explicit workflow documentation reduces cognitive load by answering common questions upfront—'How should I branch for AI experiments?', 'How do I document AI usage in PRs?'—freeing mental energy for actual problem-solving rather than process decisions. Option B misrepresents documentation's purpose. Good documentation provides guidance and defaults, not rigid constraints. Developers still make judgments about when to deviate from patterns based on specific situations—documentation informs judgment, not replaces it. Option C is impossibly rigid and ignores developer individuality. Different developers will approach problems differently even with shared workflows. Documentation standardizes process, not thinking or code output. Option A is incorrect; documentation complements training, not replaces it. You still need to understand Git fundamentals, but documentation provides team-specific conventions and patterns beyond basic Git knowledge. Without workflow documentation, every developer invents their own approaches (inconsistent), repeatedly makes the same decisions (inefficient), and hits the same obstacles others already solved (wasteful). Documentation captures and shares collective learning, making the entire team more effective. For AI development, this is especially valuable because the field is new and best practices are still emerging.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "You maintain a personal document with AI prompts that worked well for common tasks: 'Generate REST API endpoint', 'Create form validation', 'Write unit tests'. You include context about what makes each prompt effective. What practice does this represent?",
@@ -548,7 +548,7 @@ options: [
 ],
 correctOption: 0,
 explanation: "This practice represents building personal intellectual property from AI experimentation. You're capturing what works—effective prompts, useful context, successful approaches—and turning one-time discoveries into reusable assets. This is knowledge management applied to AI tools. Option B mischaracterizes knowledge capture as intellectual laziness. Documenting effective approaches doesn't mean avoiding thought—it means not re-solving solved problems. You still think deeply when applying prompts to new situations, customizing them, and evaluating AI output. Option C overgeneralizes personal documentation. These prompts work for you in your contexts with your preferences. They're valuable starting points for others but not universal templates. Sharing them is helpful; claiming universal applicability is overreaching. Option D creates a false dichotomy. Effective AI prompt libraries complement programming knowledge; they don't replace it. You need programming knowledge to write good prompts, evaluate AI output, and debug when things fail. Knowledge and tools work together. Building prompt libraries is like any professional knowledge management: chefs keep recipe collections with notes on techniques, writers maintain style guides with effective phrases, developers document design patterns with implementation notes. AI prompts are another tool in your professional toolkit worthy of systematic organization and refinement.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "After documenting your Git workflows for AI development, you share the document with your team. Three months later, you revisit it and realize several patterns are outdated—you've learned better approaches. What does this illustrate about workflow documentation?",
@@ -560,7 +560,7 @@ options: [
 ],
 correctOption: 1,
 explanation: "This illustrates that documentation should evolve as you learn more effective practices. Documentation is a living artifact that captures current best understanding—it should be updated as practices improve, not abandoned because they change. Option A uses change as an excuse to avoid documentation—counterproductive. Yes, practices evolve, but that means documentation needs updating, not that it's pointless. Outdated documentation is still better than no documentation; you can update it as you learn. Option C treats documentation as immutable canon—unrealistic and harmful. Practices improve through experience; documentation should reflect those improvements. Static documentation becomes increasingly disconnected from reality and loses value over time. Option D is too pessimistic about documentation's value timeline. Even if documentation requires quarterly updates, it provides value continuously between updates. The effort to update is far less than the collective effort of everyone figuring things out independently. Healthy documentation practices include: 1) Date documentation so readers know currency, 2) Assign owners responsible for updates, 3) Solicit feedback from users, 4) Schedule periodic reviews, 5) Celebrate updates as learning milestones. Documentation that evolves reflects a learning organization.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "Your workflow documentation includes a decision tree: 'Is this an experiment? → Create branch. Is the experiment successful? → Create PR. Did tests pass? → Merge.' A teammate says this is too simplistic and real development is more complex. What value does simplified pattern documentation provide?",
@@ -572,7 +572,7 @@ options: [
 ],
 correctOption: 2,
 explanation: "Simplified patterns provide clear default paths while allowing for justified exceptions. Most situations fit standard patterns—having a clear default eliminates decision paralysis. For unusual situations, developers can thoughtfully deviate from the pattern. Option B misunderstands documentation's role. Patterns guide human judgment; they don't automate it. Developers still evaluate each situation—patterns just provide a strong starting point so judgment focuses on whether deviation is warranted, not on inventing process from scratch. Option A is impossibly optimistic. No pattern covers every scenario perfectly. Patterns optimize for common cases while allowing flexibility for edge cases. Perfect decisions require judgment that patterns inform but don't replace. Option D suggests patterns create rigidity, but good patterns explicitly acknowledge exceptions. Documentation might say: 'This decision tree covers 90% of scenarios. For complex situations involving X, Y, or Z, consult with the team.' The value of simple patterns: 1) Reduce cognitive load for common cases, 2) Establish shared team defaults, 3) Make deviations visible and discussable, 4) Speed up onboarding. Complex reality doesn't mean documentation should be complex—it means documentation should cover common cases clearly while acknowledging complexity exists.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "You've documented this pattern: 'Before requesting AI code, commit your working code. This creates a clean restore point if the AI's suggestion doesn't work.' A new developer asks why this matters since they can just use git restore anytime. What additional value does the pre-AI commit provide?",
@@ -584,7 +584,7 @@ options: [
 ],
 correctOption: 3,
 explanation: "The pre-AI commit creates a clear boundary showing exactly what the AI changed. You can diff between the commit before the AI request and after, seeing precisely the AI's contributions—valuable for review, understanding, and debugging. Option B is incorrect; the pre-AI commit doesn't affect how `git restore` works. You can restore files to any commit, including the pre-AI one, regardless of when you made commits. The commit doesn't change Git's restore capabilities. Option C misunderstands the pattern's purpose—it's about clarity and safety, not about changing AI output quality. The AI generates the same code whether or not you committed beforehand. The commit helps you manage and evaluate that code. Option A is impossibly optimistic. No Git practice eliminates bugs. The commit helps you identify and recover from bugs by clearly showing what changed, but it doesn't prevent bugs from existing in AI-generated code. The pattern workflow: working code (commit) → request AI changes → review diff showing exactly what AI did → test → keep (commit) or discard (restore). This creates clear checkpoints and attribution—you always know what the AI contributed versus what you wrote.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "After accumulating 20 documented Git patterns for AI development, you realize you only regularly use five of them. The other 15 are rarely relevant. Should you remove the infrequent patterns from your documentation?",
@@ -596,7 +596,7 @@ options: [
 ],
 correctOption: 0,
 explanation: "Keep all patterns but organize by frequency—put common patterns first for easy access, and keep rare patterns in a separate section for when unusual situations arise. All patterns have value; organization determines usability. Option B uses the wrong deletion criteria. Infrequent patterns can be extremely valuable when specific situations arise. A pattern you use twice a year might be critical those two times. Frequency doesn't equal importance—edge cases still need documentation. Option C drastically overreacts to uneven pattern usage. The fact that five patterns see heavy use proves documentation's value for those patterns. Having 15 additional patterns for less common scenarios is good preparation, not waste. Option D misunderstands documentation's purpose. Documentation exists precisely so you don't need to memorize everything. You can look up edge case patterns when needed rather than keeping all 20 in working memory. Effective organization strategies: 1) 'Common Patterns' section with your top five, 2) 'Specialized Patterns' section with situation-specific approaches, 3) Table of contents for quick navigation, 4) Tags or categories (e.g., 'branching', 'merging', 'documentation'). Good documentation serves both daily use and rare situations—optimize for both.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "You're teaching a junior developer your Git workflows for AI development. They ask, 'Should I follow these patterns exactly, or can I modify them?' What's the most helpful response?",
@@ -608,7 +608,7 @@ options: [
 ],
 correctOption: 1,
 explanation: "The most helpful response is: understand the principles behind patterns, then adapt to your situations. Patterns capture what generally works, but understanding why lets you modify them intelligently when circumstances differ from standard cases. Option A creates inflexible adherence that breaks down when facing situations the patterns don't perfectly fit. Rigid rule-following without understanding prevents learning and adaptation—you become a pattern-executing robot rather than a thinking developer. Option C throws away valuable accumulated knowledge. Yes, independent thinking matters, but ignoring documented patterns means repeating mistakes others already solved. Learning from others' experience is efficient and smart. Option D makes patterns performative rather than useful—you'd follow them for appearances rather than because they improve your work. This defeats the entire purpose of having patterns, which is to make development more effective, not to perform compliance. Good use of patterns: 1) Learn the pattern and why it exists, 2) Apply it to standard situations, 3) Recognize when your situation differs from standard, 4) Adapt the pattern based on your understanding of principles, 5) Document your adaptation if it proves effective. Patterns are starting points for judgment, not replacements for it.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 },
 {
 question: "You've documented these commit message patterns for AI work: 'ai-gen: Initial implementation from Claude', 'ai-fix: Corrected AI output', 'ai-test: Verified AI suggestion works'. A teammate suggests just using standard messages like 'Add feature' and 'Fix bug'. What value do the AI-specific commit message patterns provide?",
@@ -620,7 +620,7 @@ options: [
 ],
 correctOption: 2,
 explanation: "AI-specific commit message patterns enable searching commit history for AI contributions specifically. You can quickly find all AI-generated code, analyze patterns in AI suggestions, or review AI-assisted commits when debugging—valuable metadata for understanding your codebase. Option B focuses on superficial appearance rather than practical value. Commit message length or impressiveness doesn't matter; clarity and searchability do. The AI prefix adds information value, not cosmetic value. Option A attributes impossible powers to commit messages. How you describe commits has no effect on code quality. Messages document what exists; they don't change whether bugs exist in the code itself. Option D contradicts the pattern's actual effect—these prefixes make AI usage more visible, not less. If you wanted to hide AI usage, you wouldn't use AI-specific prefixes. The pattern explicitly increases transparency. Benefits of AI-specific prefixes: 1) Historical analysis: 'How often do AI suggestions need fixes?', 2) Debugging: 'Was this problem introduced by AI or my code?', 3) Learning: 'Which AI prompts led to commits that never needed fixes?', 4) Team visibility: Others quickly see AI's role in project evolution. Consistent commit message conventions turn Git history into searchable, analyzable data.",
-source: "Lesson 5: Reusable Git Patterns"
+source: "Lesson 4: Code Review, Pull Requests & Reusable Patterns"
 }
 ]}
 questionsPerBatch={18}
