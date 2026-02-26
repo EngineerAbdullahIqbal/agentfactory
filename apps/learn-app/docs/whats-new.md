@@ -18,6 +18,9 @@ Track meaningful updates to the book. This page is automatically updated when do
 <!-- CHANGELOG_START - Do not remove this marker -->
 
 ### 2026-02-26
+- Fix/quiz counter inflation ([#773](https://github.com/panaversity/agentfactory/pull/773))
+
+### 2026-02-26
 
 - Rewamp Chapter 11 ([#771](https://github.com/panaversity/agentfactory/pull/771))
 
