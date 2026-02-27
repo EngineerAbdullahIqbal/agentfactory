@@ -2,6 +2,10 @@
 sidebar_position: 9
 title: "Chapter 9: Computation & Data Extraction Workflow"
 description: "Build Unix-styled Python utilities that process bank statements and prepare tax reports with 100% accuracy"
+slides:
+  source: "https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-2/chapter-09/computation-data-extraction.pdf"
+  title: "Computation & Data Extraction Workflow"
+  height: 700
 ---
 
 # Chapter 9: Computation & Data Extraction Workflow
@@ -13,6 +17,8 @@ The file processing chapter gave you power over files: finding them, organizing 
 Now try adding up the dollar amounts in a bank statement. `echo $((14.50 + 23.75))` throws a syntax error. Bash — the tool that moved a thousand files without breaking a sweat — can't add two prices. The foundation has a hard wall: **decimal math**.
 
 This chapter breaks through that wall. You'll build Python scripts that slot into your Unix toolkit exactly where Bash falls short — reading from stdin, writing to stdout, chaining through pipes. The agent writes the code. You make the decisions. The language changes; the workflow doesn't.
+
+## 📚 Teaching Aid
 
 ## What You'll Build
 
