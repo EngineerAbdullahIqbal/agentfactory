@@ -1,0 +1,96 @@
+deck:
+  id: "ch12-01-git-foundations"
+  title: "Git Foundations"
+  description: "Core Git concepts — commits as snapshots, the staging area, viewing changes with diff, and three levels of undo."
+  tags: ["git", "version-control", "commits", "staging", "undo"]
+  version: 1
+
+cards:
+  - id: "ch12-01-git-foundations-001"
+    front: "What does `git init` create inside your project folder?"
+    back: "A hidden `.git` directory that stores the entire project history."
+    tags: ["git", "repository"]
+    difficulty: "basic"
+
+  - id: "ch12-01-git-foundations-002"
+    front: "In Git, what is a commit?"
+    back: "A snapshot of your entire project at one moment in time."
+    tags: ["git", "commit", "snapshot"]
+    difficulty: "basic"
+
+  - id: "ch12-01-git-foundations-003"
+    front: "Why does Git snapshot the entire project folder instead of tracking individual file saves?"
+    back: "Individual file saves can't capture cross-file relationships. A project-wide snapshot lets you rewind everything to a consistent state, because files depend on each other."
+    tags: ["git", "snapshot", "design"]
+    difficulty: "intermediate"
+    why: "What would go wrong if you could only undo changes to one file at a time?"
+
+  - id: "ch12-01-git-foundations-004"
+    front: "What is the Git staging area?"
+    back: "An in-between step where you choose which files go into the next commit."
+    tags: ["git", "staging"]
+    difficulty: "basic"
+
+  - id: "ch12-01-git-foundations-005"
+    front: "Why does Git require a staging step instead of automatically committing all changes?"
+    back: "You often have temporary files, personal notes, or half-finished work that shouldn't be in the snapshot. Staging gives you control over exactly what gets committed."
+    tags: ["git", "staging", "workflow"]
+    difficulty: "intermediate"
+    why: "When would committing everything automatically cause problems?"
+
+  - id: "ch12-01-git-foundations-006"
+    front: "What does `git status` show?"
+    back: "Which files are untracked, modified, or staged for the next commit."
+    tags: ["git", "status"]
+    difficulty: "basic"
+
+  - id: "ch12-01-git-foundations-007"
+    front: "In `git diff` output, what do lines starting with `-` and `+` mean?"
+    back: "`-` lines were removed.\n`+` lines were added."
+    tags: ["git", "diff"]
+    difficulty: "basic"
+
+  - id: "ch12-01-git-foundations-008"
+    front: "You edited a file but haven't staged it. What Git command discards those changes?"
+    back: "`git restore <file>`"
+    tags: ["git", "undo", "restore"]
+    difficulty: "basic"
+
+  - id: "ch12-01-git-foundations-009"
+    front: "You accidentally staged the wrong file. How do you unstage it without losing your edits?"
+    back: "`git restore --staged <file>`"
+    tags: ["git", "undo", "staging"]
+    difficulty: "intermediate"
+
+  - id: "ch12-01-git-foundations-010"
+    front: "You committed a mistake and want to undo the commit but keep your files. What command do you use?"
+    back: "`git reset HEAD~1`"
+    tags: ["git", "undo", "reset"]
+    difficulty: "intermediate"
+
+  - id: "ch12-01-git-foundations-011"
+    front: "Sarah ran `git reset --hard` to fix one broken file but lost her uncommitted volunteer list. Why?"
+    back: "`git reset --hard` resets ALL files to the last commit, not just one. Any uncommitted changes across the entire project are permanently erased because they were never snapshotted."
+    tags: ["git", "undo", "reset-hard", "danger"]
+    difficulty: "intermediate"
+    why: "How could Sarah have fixed only the broken file without losing other work?"
+
+  - id: "ch12-01-git-foundations-012"
+    front: "What Git undo command should you use for each scenario: unstaged edit, staged wrong file, bad commit?"
+    back: "Unstaged edit: `git restore <file>`\nStaged wrong file: `git restore --staged <file>`\nBad commit: `git reset HEAD~1`"
+    tags: ["git", "undo", "decision-tree"]
+    difficulty: "intermediate"
+
+  - id: "ch12-01-git-foundations-013"
+    front: "A teammate says 'I'll just use git reset --hard to undo one file.' Why is that the wrong tool?"
+    back: "`git reset --hard` resets the entire project, not one file. It destroys all uncommitted changes everywhere — the correct tool for one file is `git restore <file>`."
+    tags: ["git", "undo", "reset-hard", "anti-pattern"]
+    difficulty: "advanced"
+    why: "Why doesn't Git add a confirmation dialog before destructive operations?"
+
+  - id: "ch12-01-git-foundations-014"
+    front: "How did the Pixar Toy Story 2 incident demonstrate the need for version control?"
+    back: "A delete command destroyed 90% of production files, and backup systems had silently failed. Only an employee's home copy saved the project."
+    tags: ["version-control", "backup", "pixar"]
+    difficulty: "intermediate"
+    why: "What does 'silently failed backups' teach about untested safety systems?"

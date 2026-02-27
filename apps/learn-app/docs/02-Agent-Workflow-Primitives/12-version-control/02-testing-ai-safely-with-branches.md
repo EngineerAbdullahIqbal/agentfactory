@@ -318,3 +318,9 @@ That's what the next lesson solves.
 **Know when NOT to branch:**
 
 > "I'm tempted to create a branch for every tiny change. Give me five realistic scenarios and for each one, tell me whether I should branch or commit directly to main — and explain why. Help me build instinct for when branching is overkill."
+
+---
+
+## Flashcards Study Aid
+
+<Flashcards />
