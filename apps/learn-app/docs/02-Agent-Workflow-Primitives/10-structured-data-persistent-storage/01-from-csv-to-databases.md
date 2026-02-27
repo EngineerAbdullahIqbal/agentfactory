@@ -4,7 +4,7 @@ title: "When Bash and Python Hit the Wall"
 chapter: 10
 lesson: 0
 duration_minutes: 20
-description: "Identify exactly when Chapter 9 workflows should escalate to schema + relational storage"
+description: "Identify exactly when Computation & Data Extraction workflows should escalate to schema + relational storage"
 keywords: ["CSV limits", "schema clarity", "foreign keys", "persistent queries"]
 skills:
   - name: "Limitation Diagnosis"
@@ -20,7 +20,7 @@ skills:
     digcomp_area: "Data Literacy"
     measurable_at_this_level: "Student can explain why schema-aware systems outperform text matching for structured queries"
 learning_objectives:
-  - objective: "Diagnose when Chapter 9 patterns should escalate to SQL"
+  - objective: "Diagnose when Computation & Data Extraction patterns should escalate to SQL"
     proficiency_level: "A1"
     bloom_level: "Analyze"
     assessment_method: "Student can name at least 3 script-centric breakpoints"
@@ -49,11 +49,11 @@ teaching_guide:
     - "Students believe they need a database for everything — the escalation matrix shows when CSV is still the right call"
     - "Students confuse 'independent verification' with 're-running the same query' — a separate computation path is required"
   discussion_prompts:
-    - "Think about your Chapter 9 tax-prep script — how many filtering loops would you need for 4 users across 3 years with monthly breakdowns?"
+    - "Think about your Computation & Data Extraction tax-prep script — how many filtering loops would you need for 4 users across 3 years with monthly breakdowns?"
     - "What is the real cost of 'it worked in the demo but fails in production'? Can you think of a real example?"
     - "When would you deliberately choose to stay with CSV even after reading this lesson?"
   teaching_tips:
-    - "Start with the tax-prep scenario — students have built this in Chapter 9 so the pain point is real and personal"
+    - "Start with the tax-prep scenario — students have built this in the Computation & Data Extraction chapter so the pain point is real and personal"
     - "The 'Two Worlds Side by Side' ASCII diagram is whiteboard-worthy — draw it and let students label the differences"
     - "Spend time on the escalation matrix — students need judgment about WHEN to escalate, not just HOW"
     - "The failure signal checklist makes a good 'raise your hand if you have seen this' moment"
@@ -65,9 +65,9 @@ teaching_guide:
 
 # When Bash and Python Hit the Wall
 
-**Continuity delta:** Chapter 8 gave you file control. Chapter 9 gave you deterministic computation. Chapter 10 adds durable relational memory. In this chapter your agent will write all the database code. Your job is to make architecture decisions and verify the results.
+**Continuity delta:** The File Processing chapter gave you file control. The Computation & Data Extraction chapter gave you deterministic computation. This chapter adds durable relational memory. In this chapter your agent will write all the database code. Your job is to make architecture decisions and verify the results.
 
-You built `tax-prep.py` in Chapter 9. It was your best work -- a clean script that reads CSV files, computes totals, and produces an accurate yearly tax report. You ran it, the numbers checked out, and you felt that satisfaction of a job done right. Now imagine your manager walks in on Monday morning and says: "Great report. Can you break it down by month, by user, by category? And we need it for the last three years. Oh, and make sure nobody can delete a user who still has expenses tied to them."
+You built `tax-prep.py` in the Computation & Data Extraction chapter. It was your best work -- a clean script that reads CSV files, computes totals, and produces an accurate yearly tax report. You ran it, the numbers checked out, and you felt that satisfaction of a job done right. Now imagine your manager walks in on Monday morning and says: "Great report. Can you break it down by month, by user, by category? And we need it for the last three years. Oh, and make sure nobody can delete a user who still has expenses tied to them."
 
 Your stomach drops. Not because the requirements are unreasonable, but because you can already see what happens next: you will spend the rest of the week writing loops. One loop to filter by month. Another to filter by user. Another to cross-reference categories. Another to check for orphaned records before deletes. Each loop works in isolation. Together, they become a tangle of special cases that nobody (including you, three months from now) wants to debug.
 
@@ -82,7 +82,7 @@ Your stomach drops. Not because the requirements are unreasonable, but because y
 
 ## The Exact Moment It Breaks
 
-Your Chapter 9 script handles one question just fine — for example, computing all Medical deductions and returning `Medical deductions: $2,847.50`. Clean. Correct. Now stack on the real requirements:
+Your Computation & Data Extraction script handles one question just fine — for example, computing all Medical deductions and returning `Medical deductions: $2,847.50`. Clean. Correct. Now stack on the real requirements:
 
 - "Show Food spending for Alice in March 2024."
 - "Compare Q1 vs Q2 by category."
@@ -152,12 +152,12 @@ Why this wins:
 
 Practical shift:
 
-- Chapter 9 asked, "Can I compute this report?"
-- Chapter 10 asks, "Can I keep this truth stable across many reports and writes?"
+- The Computation & Data Extraction chapter asked, "Can I compute this report?"
+- This chapter asks, "Can I keep this truth stable across many reports and writes?"
 
 Quick escalation matrix:
 
-| Situation                                    | Stay with Chapter 9 pattern | Escalate to Chapter 10 pattern |
+| Situation                                    | Stay with Computation & Data Extraction pattern | Escalate to Structured Data pattern |
 | -------------------------------------------- | --------------------------- | ------------------------------ |
 | One user, one monthly file, one known report | Yes                         | No                             |
 | Multiple users need shared history           | No                          | Yes                            |
@@ -168,7 +168,7 @@ Quick escalation matrix:
 Use this matrix as a decision aid, not ideology. The point is to reduce hidden maintenance cost before it becomes operational pain.
 
 :::tip[Pause and Reflect]
-Think about your own Chapter 9 work. How many different filtering loops did you write? If a new question arrived tomorrow, would you write yet another loop -- or is there a pattern emerging?
+Think about your own Computation & Data Extraction work. How many different filtering loops did you write? If a new question arrived tomorrow, would you write yet another loop -- or is there a pattern emerging?
 :::
 
 ## One Common Failure
@@ -198,7 +198,7 @@ Failure signal checklist:
 ### Prompt 1: Breakpoint Diagnosis
 
 ```text
-My Chapter 9 script reads CSV and computes totals.
+My Computation & Data Extraction script reads CSV and computes totals.
 Now I need:
 1) multi-user history
 2) month/category/user filtering
@@ -210,12 +210,12 @@ For each requirement:
 - name the exact relational feature that solves it
 ```
 
-**What you're learning:** You are mapping each pain point in your current workflow to a specific database feature. This builds the vocabulary you will use throughout Chapter 10 -- foreign keys, constraints, transactions -- and shows you that each feature exists to solve a real problem, not as academic overhead.
+**What you're learning:** You are mapping each pain point in your current workflow to a specific database feature. This builds the vocabulary you will use throughout this chapter -- foreign keys, constraints, transactions -- and shows you that each feature exists to solve a real problem, not as academic overhead.
 
 ### Prompt 2: Escalation Rule
 
 ```text
-Give me a decision rule for when to stay with Chapter 9 patterns
+Give me a decision rule for when to stay with Computation & Data Extraction patterns
 versus when to escalate to SQLAlchemy + PostgreSQL.
 Use concrete examples, not generic advice.
 Include at least one case where staying with CSV is the right call.
@@ -244,7 +244,7 @@ Analyze my domain the way we analyzed the budget tracker:
 - [ ] I can explain why schema reduces ambiguity and bug surface.
 - [ ] I can name one FK rule that prevents invalid relationships.
 - [ ] I can state when hybrid verification is optional vs required.
-- [ ] I can articulate the Chapter 9 -> 10 escalation trigger in one sentence.
+- [ ] I can articulate the Computation & Data Extraction to Structured Data escalation trigger in one sentence.
 
 ## Flashcards Study Aid
 

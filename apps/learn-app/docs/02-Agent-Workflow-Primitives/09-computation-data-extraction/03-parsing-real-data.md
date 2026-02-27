@@ -118,7 +118,7 @@ What did you expect to see? What did you actually get?
 
 Your first Python command handled clean numbers. Real data fights back. You download your bank statement, point your tool at it, and get a number that looks reasonable — until you notice that $89.50 Amazon order is missing from the total. The culprit: `"AMAZON, INC."` — a comma hiding inside quotes. Your script split that merchant name in half and summed the wrong column. No error. No warning. Just a wrong total.
 
-This is the same lesson from Chapter 8 in a different domain: real folders had hidden files and spaces in filenames. Real CSVs have commas inside quoted fields.
+This is the same lesson from the File Processing chapter in a different domain: real folders had hidden files and spaces in filenames. Real CSVs have commas inside quoted fields.
 
 :::warning Checkpoint: Use YOUR Bank Data
 Download your actual bank statement as CSV. Most banks offer this under "Download Transactions" or "Export" in online banking.

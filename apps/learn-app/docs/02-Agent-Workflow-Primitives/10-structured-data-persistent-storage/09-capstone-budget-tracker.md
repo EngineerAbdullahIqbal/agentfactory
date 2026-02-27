@@ -149,7 +149,7 @@ Output:
   Queries used: 1
 ```
 
-"Queries used: 1" is the signal that matters. One database call produced the full grouped report. Compare that to the Chapter 9 approach: nested loops, manual grouping, custom sorting — all doing what one SQL query handles natively.
+"Queries used: 1" is the signal that matters. One database call produced the full grouped report. Compare that to the Computation & Data Extraction approach: nested loops, manual grouping, custom sorting — all doing what one SQL query handles natively.
 :::
 
 ## Directing the Release Gate
@@ -247,7 +247,7 @@ If any answer is "no," the capstone is still in progress.
 Look at what you've built across this chapter. In Lesson 0, you had a script that couldn't handle a second user. Now you have a cloud-deployed, transactionally safe, independently verified system. What's the single most important concept you learned along the way?
 :::
 
-Chapter 9 deliverable: one tax report for one person. Chapter 10 deliverable: a cloud-deployed, multi-user, transactionally safe, independently verified financial system. Same you. Different tools. Different capability.
+Computation & Data Extraction deliverable: one tax report for one person. Structured Data deliverable: a cloud-deployed, multi-user, transactionally safe, independently verified financial system. Same you. Different tools. Different capability.
 
 ## Try With AI
 

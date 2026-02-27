@@ -37,5 +37,5 @@ The lesson closes on an open question: the script produced 186.38 and exited cle
 
 ### Connections
 
-- **Builds on**: Terminal basics and pipe operator from Chapter 8 (File Processing)
+- **Builds on**: Terminal basics and pipe operator from the File Processing chapter
 - **Leads to**: Verification with test data (Lesson 2) — how do you know that number is right?

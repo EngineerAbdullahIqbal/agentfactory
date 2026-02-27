@@ -1,11 +1,11 @@
 ### Core Concept
 
-A verification-first workflow tests the entire pipeline with known data before processing real files. The capstone challenge: point Claude Code at a folder of bank statement CSVs and produce a categorized tax report with verified totals in 40 minutes. After the attempt, the lesson briefly calls back to the Seven Principles from Chapter 6 — not as a mapping exercise (students did that in Ch6 L9), but as a short bullet list showing where each principle surfaced naturally in the workflow.
+A verification-first workflow tests the entire pipeline with known data before processing real files. The capstone challenge: point Claude Code at a folder of bank statement CSVs and produce a categorized tax report with verified totals in 40 minutes. After the attempt, the lesson briefly calls back to the Seven Principles from the Seven Principles chapter — not as a mapping exercise (students did that in Seven Principles Lesson 9), but as a short bullet list showing where each principle surfaced naturally in the workflow.
 
 ### Key Mental Models
 
 - **Verification-first orchestration**: Create test data with hand-calculated totals, verify the pipeline matches, then process real data. Trust is earned through proof, not assumption. The pipeline filters for debits only (`amount < 0`) before categorizing — credits and refunds are excluded so they don't inflate expense totals.
-- **Seven Principles callback**: After the attempt, a brief bullet list shows where each principle surfaced in the workflow. This is a recognition exercise, not a new mapping — students already did the full mapping in Ch6 L9. The point is that the principles appeared without being forced.
+- **Seven Principles callback**: After the attempt, a brief bullet list shows where each principle surfaced in the workflow. This is a recognition exercise, not a new mapping — students already did the full mapping in Seven Principles Lesson 9. The point is that the principles appeared without being forced.
 - **Decisions over commands**: The agent writes all the code. The reader makes all the decisions that matter — when to trust output, when to redirect, and when to question what looks correct.
 
 ### The Reference Implementation's Placement and Realistic Struggle

@@ -63,7 +63,7 @@ teaching_guide:
 
 # Build Your Database Skill
 
-In Lesson 0, you identified exactly when Chapter 9's file-based workflows hit the wall. Now you will prove -- in under five minutes -- that a database actually solves the core problem: data that survives after your program exits.
+In Lesson 0, you identified exactly when the Computation & Data Extraction chapter's file-based workflows hit the wall. Now you will prove -- in under five minutes -- that a database actually solves the core problem: data that survives after your program exits.
 
 Close the program. Open it again. Is your data still there?
 
@@ -205,9 +205,9 @@ description: Build persistent data layers with SQLAlchemy + PostgreSQL (Neon).
   - Multi-user persistence
   - Query-heavy workflows
 - Decision logic:
-  - One-off local script -> Chapter 9 style
-  - Persistent multi-user app -> Chapter 10 style
-  - High-stakes financial report -> Chapter 10 + independent verification
+  - One-off local script -> Computation & Data Extraction chapter style
+  - Persistent multi-user app -> Structured Data style
+  - High-stakes financial report -> Structured Data + independent verification
 - Guardrails:
   - Never hardcode DB credentials
   - Always rollback failed writes

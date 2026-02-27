@@ -2,9 +2,9 @@
 Chapter 10 begins when evolving query demands make loop-based CSV logic too brittle. Schema and relational constraints become the next required primitive.
 
 ### Continuity Bridge
-- Chapter 8: Bash for file operations and orchestration
-- Chapter 9: Python for deterministic parsing and computation
-- Chapter 10: SQLAlchemy + PostgreSQL for persistent relational truth
+- File Processing: Bash for file operations and orchestration
+- Computation & Data Extraction: Python for deterministic parsing and computation
+- Structured Data: SQLAlchemy + PostgreSQL for persistent relational truth
 
 ### Key Mental Models
 - New question per loop is a scaling smell.

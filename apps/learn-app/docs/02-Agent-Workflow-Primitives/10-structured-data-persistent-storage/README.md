@@ -17,7 +17,7 @@ status: published
 > Same data. Same questions. Different tools.
 > -- Braintrust/Vercel, "Testing if Bash is All You Need"
 
-Your Chapter 9 tax script works perfectly -- for one person, one year, one question. Then your boss asks for monthly breakdowns by user and category across three years. You add a loop. She asks for rolling averages. You add another loop. She asks which users overspent in Q3 relative to their Q1 budgets. You stare at your screen and realize you are writing a database engine inside a Python script, one painful `for` loop at a time.
+Your tax script in Computation & Data Extraction works perfectly -- for one person, one year, one question. Then your boss asks for monthly breakdowns by user and category across three years. You add a loop. She asks for rolling averages. You add another loop. She asks which users overspent in Q3 relative to their Q1 budgets. You stare at your screen and realize you are writing a database engine inside a Python script, one painful `for` loop at a time.
 
 Here is what that ceiling looks like in code:
 
@@ -57,11 +57,11 @@ Part 2 tells a constraint-driven escalation story:
 - You escalate to SQL when persistence, relationships, and query flexibility become the primary concern.
 - You add hybrid verification only when output risk justifies the extra cost.
 
-If you can explain that sequence clearly at chapter end, continuity from Chapters 8 and 9 is intact.
+If you can explain that sequence clearly at chapter end, continuity from the File Processing and Computation & Data Extraction chapters is intact.
 
-## The Chapter 9 Ceiling
+## The Computation & Data Extraction Ceiling
 
-A Chapter 9 script can be excellent and still hit hard limits:
+A Computation & Data Extraction chapter scripts can be excellent and still hit hard limits:
 
 - **New question, new loop.** Every evolving query means rewriting application logic instead of just asking a different question.
 - **Relationships enforced by convention.** Nothing stops you from inserting an expense under a category that does not exist. Correctness depends on memory and discipline.
@@ -85,9 +85,9 @@ By moving to SQLAlchemy + Neon PostgreSQL, you gain:
 
 | Stage      | Primary Tool            | Strength                                                           | Breakpoint                                                     |
 | ---------- | ----------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------- |
-| Chapter 8  | Bash                    | File discovery, batch operations, workflow control                 | Weak for decimal computation and schema-aware querying         |
-| Chapter 9  | Python                  | Deterministic parsing and computation                              | Brittle for long-lived, multi-user, relationship-heavy queries |
-| Chapter 10 | SQLAlchemy + PostgreSQL | Persistent structure, relational integrity, safe concurrent writes | High-stakes reports may still need independent verification    |
+| File Processing                | Bash                    | File discovery, batch operations, workflow control                 | Weak for decimal computation and schema-aware querying         |
+| Computation & Data Extraction  | Python                  | Deterministic parsing and computation                              | Brittle for long-lived, multi-user, relationship-heavy queries |
+| Structured Data                | SQLAlchemy + PostgreSQL | Persistent structure, relational integrity, safe concurrent writes | High-stakes reports may still need independent verification    |
 
 This chapter does not replace earlier tools. It adds the right tool when the old tool reaches its boundary.
 
@@ -105,7 +105,7 @@ A Neon-backed Budget Tracker you designed, your agent built, and you verified en
 
 By chapter end, you should be able to answer these five questions:
 
-1. Why do Chapter 9 loops become expensive and fragile for evolving structured queries?
+1. Why do Computation & Data Extraction loops become expensive and fragile for evolving structured queries?
 2. How do schema and constraints prevent silent data corruption?
 3. Why is a transaction boundary a business correctness boundary?
 4. When is SQL-only enough, and when is independent verification worth the extra cost?
@@ -127,7 +127,7 @@ By chapter end, you should be able to answer these five questions:
 
 | Lesson                        | Outcome                                                        | Fast Visible Win                                                   |
 | ----------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------ |
-| L0 From CSV to Databases      | Decide when Chapter 9 patterns should escalate to SQL          | Name 3 concrete breakpoints in your current workflow               |
+| L0 From CSV to Databases      | Decide when Computation & Data Extraction patterns should escalate to SQL          | Name 3 concrete breakpoints in your current workflow               |
 | L1 Build Your Database Skill  | Verify data survives after your agent's program exits          | Direct agent to prove persistence; read the verification output    |
 | L2 Models as Code             | Describe your data model clearly enough for an agent to build  | Review agent's schema output against your plain-English description |
 | L3 Creating and Reading Data  | Verify agent-written CRUD is safe and correct                  | Direct agent to store and retrieve one row; confirm the output     |
@@ -139,7 +139,7 @@ By chapter end, you should be able to answer these five questions:
 
 ## Prerequisites
 
-- Chapter 9 complete
+- Computation & Data Extraction chapter complete
 - Terminal access
 - Neon free account
 - No Python or SQL knowledge required — your agent writes all the code

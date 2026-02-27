@@ -69,7 +69,7 @@ teaching_guide:
   session_title: "Data Wrangling and Capstone"
   key_points:
     - "The verification-first orchestration pattern (test data → verify → real data) is the capstone's central contribution — it combines every lesson into one disciplined workflow"
-    - "All Seven Principles appeared naturally in a single workflow — presented as a brief callback to Chapter 6 rather than a full exercise, since students already did the mapping in Ch6 L9"
+    - "All Seven Principles appeared naturally in a single workflow — presented as a brief callback to the Seven Principles chapter rather than a full exercise, since students already did the mapping in Seven Principles Lesson 9"
     - "The 'NEEDS REVIEW' section demonstrates that good automation flags ambiguity for human judgment rather than making silent decisions"
     - "The CSV merging technique (head -1 for header + tail -n +2 -q for data rows) is introduced here where it is needed — processing a full year of monthly files at scale"
   misconceptions:
@@ -255,7 +255,7 @@ If you see the report — your command is installed. If you see "command not fou
 
 Your bank exports one CSV per month. By year's end, you'll have twelve files. If you `cat *.csv` to combine them, every file's header row — `Date,Description,Amount` — ends up mixed into the data. Your script sees the header eleven times where it expects numbers.
 
-The fix uses two commands you already know from Chapter 8:
+The fix uses two commands you already know from the File Processing chapter:
 
 ```bash
 # Header from first file only
@@ -300,7 +300,7 @@ The command from the README works exactly as promised.
 
 ## What Just Happened?
 
-Remember the Seven Principles from Chapter 6? You just used all of them in one workflow — without a checklist, without thinking about it. That is the point. Principles are not rules you consult. They are habits you act on.
+Remember the Seven Principles from the Seven Principles chapter? You just used all of them in one workflow — without a checklist, without thinking about it. That is the point. Principles are not rules you consult. They are habits you act on.
 
 | Principle | Where It Appeared |
 |-----------|------------------|

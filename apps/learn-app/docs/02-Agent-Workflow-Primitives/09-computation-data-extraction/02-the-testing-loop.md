@@ -84,7 +84,7 @@ teaching_guide:
     - "Have students run buggy_sum.py themselves and see exit code 0 alongside a wrong answer — the visceral experience of 'no error but wrong' is the lesson's core teaching moment"
     - "The exit code table is reference material, not the main point — spend more time on the verification pattern than on memorizing exit codes"
     - "Emphasize the division of labor: the agent creates multiple test cases (integers, decimals, negatives) but the human chose the known-answer approach in the first place"
-    - "Connect back to Chapter 8 Lesson 2's verification pattern — 'verify the backup is complete' uses the same zero-trust philosophy applied to file counts instead of calculations"
+    - "Connect back to File Processing Lesson 2's verification pattern — 'verify the backup is complete' uses the same zero-trust philosophy applied to file counts instead of calculations"
   assessment_quick_check:
     - "Ask: 'Your script outputs 186.38 with exit code 0. How do you know if that number is right?' — tests whether students reach for verification, not just trust the exit code"
     - "Give students a buggy scenario: 'A filter script keeps numbers > 20 from input 10, 30, 50 but only returns 30.' Ask what they would check first"
@@ -135,7 +135,7 @@ And here's the uncomfortable part: **if you'd only tested with 10, 20, 30, you'd
 
 This is the verification paradox. You built sum.py in Lesson 1. It ran. It produced a number. Exit code 0. But you have no evidence it's correct — you've been trusting code you never proved works.
 
-In Chapter 8's file processing lessons, you learned to verify backups before deleting originals — the Safety-First Pattern from Lesson 2 drilled the habit of "check before you act." The same instinct applies here, except the stakes are different. A missing file is obvious. A wrong number is invisible.
+In the File Processing chapter's lessons, you learned to verify backups before deleting originals — the Safety-First Pattern from Lesson 2 drilled the habit of "check before you act." The same instinct applies here, except the stakes are different. A missing file is obvious. A wrong number is invisible.
 
 ## The Trick
 

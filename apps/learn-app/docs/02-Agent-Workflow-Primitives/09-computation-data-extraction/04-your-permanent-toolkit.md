@@ -231,7 +231,7 @@ A bug in `filter.py` breaks one pipe segment — not your entire workflow. You t
 
 ## The Principle Connection
 
-Two of the Seven Principles from Chapter 6 come alive here:
+Two of the Seven Principles from the Seven Principles chapter come alive here:
 
 **P2: Code as Universal Interface.** `extract-column` doesn't know it's processing bank statements. It extracts a column from ANY CSV — bank data, payroll, student grades, server logs. The tool is universal *because* it's small. The less a tool knows about its context, the more contexts it works in.
 

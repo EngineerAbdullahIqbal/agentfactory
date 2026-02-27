@@ -27,7 +27,7 @@ Best practice: answer once without notes, then review misses and retake after ta
 - relationship and query reasoning
 - transaction integrity
 - Neon operations and security
-- Chapter 8 -> 9 -> 10 tool escalation judgment
+- File Processing -> Computation & Data Extraction -> Structured Data tool escalation judgment
 
 ## Question-to-Outcome Map
 
@@ -78,11 +78,11 @@ options: [
 "Hybrid from the start of every project"
 ],
 correctOption: 0,
-explanation: "Part 2 follows a constraint-driven escalation: Bash for file movement and orchestration (Chapter 8), Python for deterministic computation (Chapter 9), SQL for persistence and relational integrity (Chapter 10), and hybrid verification only when output risk justifies the overhead. Each tool enters when the previous one hits a boundary, not before.",
+explanation: "Part 2 follows a constraint-driven escalation: Bash for file movement and orchestration (File Processing), Python for deterministic computation (Computation & Data Extraction), SQL for persistence and relational integrity (Structured Data), and hybrid verification only when output risk justifies the overhead. Each tool enters when the previous one hits a boundary, not before.",
 source: "Chapter README"
 },
 {
-question: "Why does Chapter 9-style looping become risky at Chapter 10 scale?",
+question: "Why does Computation & Data Extraction-style looping become risky at Structured Data scale?",
 options: [
 "Neon rejects loop-generated inserts from Python scripts",
 "Python cannot handle dates or time zones reliably",
@@ -102,7 +102,7 @@ options: [
 "Bash was more accurate for small structured datasets"
 ],
 correctOption: 1,
-explanation: "SQL: 100% accuracy, $0.51, 45 seconds. Bash: 52.7% accuracy, $3.34, 401 seconds. The right tool for structured data is not just faster -- it is correct. This is the empirical basis for Chapter 10's escalation from scripts to SQL.",
+explanation: "SQL: 100% accuracy, $0.51, 45 seconds. Bash: 52.7% accuracy, $3.34, 401 seconds. The right tool for structured data is not just faster -- it is correct. This is the empirical basis for the Structured Data chapter's escalation from scripts to SQL.",
 source: "Chapter README / Lesson 0"
 },
 {
@@ -114,7 +114,7 @@ options: [
 "For structured data querying requiring accuracy and consistency"
 ],
 correctOption: 3,
-explanation: "Bash excels at file operations and orchestration -- that is Chapter 8 territory. For structured data queries requiring accuracy, SQL is the right escalation. The Braintrust benchmark showed Bash achieving only 52.7% accuracy on structured queries, making it unreliable for any scenario where correctness matters.",
+explanation: "Bash excels at file operations and orchestration -- that is File Processing territory. For structured data queries requiring accuracy, SQL is the right escalation. The Braintrust benchmark showed Bash achieving only 52.7% accuracy on structured queries, making it unreliable for any scenario where correctness matters.",
 source: "Chapter README / Lesson 0"
 },
 {

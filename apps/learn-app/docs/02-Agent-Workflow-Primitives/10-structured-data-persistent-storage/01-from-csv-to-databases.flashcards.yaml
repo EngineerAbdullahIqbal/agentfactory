@@ -1,7 +1,7 @@
 deck:
   id: ch10-00-from-csv-to-databases
   title: "When Bash and Python Hit the Wall"
-  description: Flashcards covering the escalation from CSV scripts to relational databases, schema clarity, foreign keys, and when to escalate from Chapter 9 patterns.
+  description: Flashcards covering the escalation from CSV scripts to relational databases, schema clarity, foreign keys, and when to escalate from Computation & Data Extraction patterns.
   tags:
   - csv-limits
   - schema
@@ -81,7 +81,7 @@ cards:
 - id: ch10-00-from-csv-to-databases-009
   type: recall
   difficulty: intermediate
-  front: "According to the escalation matrix, name two situations where you should stay with Chapter 9 patterns?"
+  front: "According to the escalation matrix, name two situations where you should stay with Computation & Data Extraction patterns?"
   back: "One user, one monthly file, one known report."
   tags:
   - escalation

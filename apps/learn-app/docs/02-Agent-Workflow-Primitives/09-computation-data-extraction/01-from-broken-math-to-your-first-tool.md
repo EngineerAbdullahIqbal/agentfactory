@@ -80,7 +80,7 @@ teaching_guide:
     - "Students may think sum.py is trivial — the value is not the script itself but the stdin/pipe composability pattern that makes it chainable with any Bash command"
   discussion_prompts:
     - "If you asked an AI to sum 100 expense amounts and it gave you a wrong total, would you notice? What makes silent math errors so dangerous for financial data?"
-    - "The lesson says 'describe the data problem, not the implementation.' How is this different from the prompt patterns in Chapter 8?"
+    - "The lesson says 'describe the data problem, not the implementation.' How is this different from the prompt patterns in the File Processing chapter?"
     - "Why does the script read from stdin instead of opening a specific file? What does that design decision enable?"
   teaching_tips:
     - "Start by having students actually type 'echo $((1.2 + 2.3))' in their terminals — seeing the error firsthand is more convincing than reading about it"
@@ -95,7 +95,7 @@ teaching_guide:
 
 # From Broken Math to Your First Tool
 
-Bash commands files. `ls`, `find`, `mv`, `cp` — every file operation from Chapter 8 ran through the same foundation. Now try this: type `echo $((14.50 + 23.75))` in your terminal. Syntax error. The tool that moved a thousand files can't add two prices. This is where Bash hits a wall and Python enters your Unix toolkit.
+Bash commands files. `ls`, `find`, `mv`, `cp` — every file operation from the File Processing chapter ran through the same foundation. Now try this: type `echo $((14.50 + 23.75))` in your terminal. Syntax error. The tool that moved a thousand files can't add two prices. This is where Bash hits a wall and Python enters your Unix toolkit.
 
 This chapter teaches you to build Python scripts that slot into your terminal exactly where Bash falls short — reading from stdin, writing to stdout, chaining through pipes. The agent writes the code. You make the decisions. By chapter end, you'll have a library of verified commands that process a full year of bank statements into a tax-ready report. (Along the way, you'll discover that a soda called Dr. Pepper keeps getting flagged as a medical expense — and build the tool that catches it.)
 

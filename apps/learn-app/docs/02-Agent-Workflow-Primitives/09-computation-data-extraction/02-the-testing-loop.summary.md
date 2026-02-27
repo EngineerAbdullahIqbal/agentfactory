@@ -32,5 +32,5 @@ Exit code 0 means "didn't crash," not "correct answer." The lesson opens with a 
 
 ### Connections
 
-- **Builds on**: sum.py from Lesson 1; zero-trust philosophy from Chapter 8 Lesson 2 (verify the backup is complete)
+- **Builds on**: sum.py from Lesson 1; zero-trust philosophy from File Processing chapter Lesson 2 (verify the backup is complete)
 - **Leads to**: Real bank data with CSV quoting traps (Lesson 3) — the lesson ends by dropping the reader directly into the next problem: what happens when real-world data (commas in merchant names, dollar signs in amounts, header rows) hits a script built for clean numbers

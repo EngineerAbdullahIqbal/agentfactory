@@ -80,7 +80,7 @@ teaching_guide:
     - "The assessment rubric works as a self-evaluation tool — have students rate themselves before and after completing exercises to track growth across all five criteria"
     - "Capstone C requires real bank data with real privacy implications — remind students to redact account numbers and sensitive details before processing"
   assessment_quick_check:
-    - "Ask students to recite the seven-step Data Processing Framework from memory — it is the chapter's core deliverable alongside the File Processing Framework from Chapter 8"
+    - "Ask students to recite the seven-step Data Processing Framework from memory — it is the chapter's core deliverable alongside the File Processing Framework from the File Processing chapter"
     - "Present a broken pipeline scenario and ask students where they would look first: inside the scripts or at the interfaces between them"
     - "Ask: 'What is the difference between a Build exercise and a Debug exercise? Which develops a more transferable skill, and why?'"
 ---
