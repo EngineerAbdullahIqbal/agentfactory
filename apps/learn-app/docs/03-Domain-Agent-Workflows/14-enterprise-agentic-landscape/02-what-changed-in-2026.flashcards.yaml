@@ -1,0 +1,70 @@
+deck:
+  id: "ch14-02-what-changed-in-2026"
+  title: "What Changed in 2026"
+  description: "The architectural platform shift, Anthropic Cowork and OpenAI Frontier, knowledge-worker-led deployment, and enterprise implications."
+  tags: ["platform-shift", "cowork", "frontier", "enterprise-ai", "knowledge-worker"]
+  version: 1
+
+cards:
+  - id: "ch14-02-platform-shift-001"
+    front: "What was the nature of the shift that arrived in early 2026?"
+    back: "An architectural shift -- not a model improvement. Production-grade platforms arrived that put knowledge workers, not developers, in the position of designing and deploying domain-specific agents."
+    tags: ["platform-shift", "definition"]
+    difficulty: "basic"
+
+  - id: "ch14-02-platforms-002"
+    front: "Name the two dominant enterprise AI platforms that emerged in early 2026."
+    back: "Anthropic Cowork and OpenAI Frontier."
+    tags: ["cowork", "frontier", "platforms"]
+    difficulty: "basic"
+
+  - id: "ch14-02-core-insight-003"
+    front: "What core insight do both Cowork and Frontier share?"
+    back: "The limiting factor in enterprise AI adoption is not compute or model capability. It is the institutional knowledge that makes an agent useful in a specific domain -- and the only people who possess that knowledge are the domain experts themselves."
+    tags: ["core-insight", "knowledge-worker"]
+    difficulty: "basic"
+
+  - id: "ch14-02-generation-shift-004"
+    front: "How did the primary user of enterprise AI platforms change between 2024 and 2026?"
+    back: "2024: Developer builds, domain expert advises (knowledge flows through interpretation).\n2026: Domain expert designs, platform deploys (knowledge encoded directly)."
+    tags: ["platform-shift", "user-change"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the fundamental shift in who designs agents"
+
+  - id: "ch14-02-three-capabilities-005"
+    front: "What three capabilities do the 2026 platforms share that 2024 tools lacked?"
+    back: "1. Natural language configuration (experts describe behaviour in professional language, not code)\n2. Domain knowledge encoding (experts teach agents their institutional knowledge)\n3. Production deployment (agents deployed into live workflows with security and governance)"
+    tags: ["capabilities", "platform-shift"]
+    difficulty: "intermediate"
+
+  - id: "ch14-02-demonstration-006"
+    front: "What was significant about the February 2026 enterprise demonstrations?"
+    back: "Agents were shown operating in real enterprise workflows -- querying live financial data, processing contracts, coordinating across building models -- at a level of accuracy that crossed the deployment threshold. They were not answering questions about the work; they were doing the work."
+    tags: ["demonstration", "threshold"]
+    difficulty: "basic"
+
+  - id: "ch14-02-not-model-007"
+    front: "Why was the 2026 shift about platforms, not models?"
+    back: "BECAUSE the AI models of mid-2025 were already capable enough, the bottleneck was not model performance. What was missing was the platform layer that made those models accessible to domain experts. THEREFORE the breakthrough was architectural, not algorithmic."
+    tags: ["platform-shift", "reasoning"]
+    difficulty: "intermediate"
+    why: "Reinforces that the shift solved an access problem, not a capability problem"
+
+  - id: "ch14-02-information-loss-008"
+    front: "What happens to domain knowledge when a developer interprets a domain expert's requirements?"
+    back: "Information is lost at every handoff. The expert describes their knowledge, the developer translates it into code, and the translation introduces ambiguity and missed edge cases -- resulting in rounds of correction that delay deployment indefinitely."
+    tags: ["knowledge-transfer", "information-loss"]
+    difficulty: "intermediate"
+
+  - id: "ch14-02-structural-position-009"
+    front: "What is the structural implication of the platform shift for knowledge workers?"
+    back: "The professional who can encode domain expertise and deploy it as an agent is in a structurally different competitive position from the one who cannot. This gap will widen over the next several years."
+    tags: ["career-implications", "strategic"]
+    difficulty: "basic"
+
+  - id: "ch14-02-market-impact-010"
+    front: "How did financial markets respond to the February 2026 demonstrations?"
+    back: "Enterprise software valuations adjusted as analysts repriced the probability that organisations would renew seat licences for tools that an agent could now operate on their behalf."
+    tags: ["market-impact", "disruption"]
+    difficulty: "advanced"
+    why: "Connects the platform shift to broader economic consequences beyond the AI industry"

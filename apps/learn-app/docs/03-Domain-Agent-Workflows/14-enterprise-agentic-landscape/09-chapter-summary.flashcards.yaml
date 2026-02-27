@@ -1,0 +1,94 @@
+deck:
+  id: ch14-09-chapter-summary
+  title: Chapter 14 Summary -- Enterprise Agentic Landscape
+  description: Synthesis and integration questions connecting all chapter frameworks into a decision system for enterprise AI deployment.
+  tags:
+    - chapter-synthesis
+    - decision-framework
+    - enterprise-ai
+    - deployment-readiness
+  version: 1
+
+cards:
+  - id: ch14-09-chapter-summary-001
+    front: What was the structural problem that caused enterprise AI to stall in 2024-2025?
+    back: There was no structural solution for transferring domain expertise into deployable agent instructions. The technology existed but the knowledge transfer mechanism did not.
+    tags:
+      - pilot-trap
+      - knowledge-transfer
+    difficulty: basic
+
+  - id: ch14-09-chapter-summary-002
+    front: How do the chapter's eight frameworks form a decision chain rather than independent models?
+    back: Each framework answers a specific question, and the answer determines which framework you need next. Problem diagnosis leads to platform selection, which leads to monetisation framing, which requires maturity assessment, which maps to domain profile, which informs the deployment conversation.
+    tags:
+      - decision-chain
+      - synthesis
+    difficulty: intermediate
+    why: What happens if you skip a step in the chain -- for example, selecting a monetisation model before assessing maturity?
+
+  - id: ch14-09-chapter-summary-003
+    front: What are the three core insights that tie the entire chapter together?
+    back: "1. The problem is knowledge transfer, not technology\n2. Every deployment decision flows from the knowledge question\n3. Qualification before proposal -- always"
+    tags:
+      - core-insights
+      - synthesis
+    difficulty: intermediate
+
+  - id: ch14-09-chapter-summary-004
+    front: Why did the 2026 platforms (Cowork and Frontier) solve the knowledge transfer problem when earlier AI tools did not?
+    back: They put the knowledge worker -- not the developer -- in the position of authoring and operating domain agents. This removed the bottleneck of needing technical intermediaries to encode domain expertise.
+    tags:
+      - platform-shift
+      - knowledge-worker
+    difficulty: intermediate
+    why: What would need to change for this approach to work in domains where knowledge workers are not comfortable with digital tools?
+
+  - id: ch14-09-chapter-summary-005
+    front: In what order should you use the chapter's frameworks when approaching a new deployment?
+    back: "1. Knowledge question (whose expertise)\n2. Maturity assessment (is the org ready)\n3. Platform selection (Cowork or Frontier)\n4. Monetisation framing (how to capture value)\n5. Domain mapping (which deployment guide)"
+    tags:
+      - decision-sequence
+      - practical-application
+    difficulty: intermediate
+
+  - id: ch14-09-chapter-summary-006
+    front: Why does the same decision framework produce different deployment answers for a startup sales team versus a large law firm?
+    back: Because the knowledge question yields different answers (sales heuristics vs legal clause expertise), the maturity level differs, the platform fit differs (team-level vs enterprise-wide), and the monetisation model differs (success fee vs license). The framework is consistent; the inputs change.
+    tags:
+      - contextual-application
+      - synthesis
+    difficulty: advanced
+    why: What is the minimum information you need about an organisation to start running it through the decision framework?
+
+  - id: ch14-09-chapter-summary-007
+    front: What is the relationship between Chapter 14 (strategic vocabulary) and Chapter 15 (technical architecture)?
+    back: Chapter 14 provides the frameworks to evaluate, qualify, and frame enterprise AI deployments. Chapter 15 provides the technical blueprint -- what a Cowork plugin looks like from the inside. The strategic vocabulary becomes the language used to explain what the architecture is doing and why.
+    tags:
+      - chapter-relationship
+      - vocabulary-to-architecture
+    difficulty: basic
+
+  - id: ch14-09-chapter-summary-008
+    front: What should you do if your professional domain does not match any of the seven listed domains?
+    back: The frameworks still apply -- the maturity model, monetisation models, and platform comparison are domain-agnostic. The seven domain chapters provide the most detailed deployment guides, but the methodology transfers to any domain with institutional knowledge at risk.
+    tags:
+      - domain-generalisability
+      - framework-application
+    difficulty: intermediate
+
+  - id: ch14-09-chapter-summary-009
+    front: What are the eight self-assessment questions from the chapter summary checklist?
+    back: "Can you explain: (1) the Pilot Trap, (2) when Cowork vs Frontier fits, (3) why knowledge workers are central, (4) which monetisation model fits your domain, (5) your org's maturity level, (6) which domain matches your expertise, (7) the knowledge question for your deployment, (8) how to qualify and frame a stakeholder conversation."
+    tags:
+      - self-assessment
+      - deployment-readiness
+    difficulty: intermediate
+
+  - id: ch14-09-chapter-summary-010
+    front: "True or false: You need to master every framework in the chapter before taking any action toward deployment."
+    back: "False. Start with the maturity assessment and the knowledge question. These two steps tell you what type of action is appropriate. A Level 1 organisation starts with education; a Level 3 organisation starts with governance planning."
+    tags:
+      - action-orientation
+      - practical-first-steps
+    difficulty: basic

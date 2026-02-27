@@ -1,0 +1,243 @@
+---
+sidebar_position: 4
+title: "Two Platforms, One Paradigm"
+description: "Compare Anthropic Cowork and OpenAI Frontier architectures, understand their deployment models, and apply a decision framework for choosing the right platform for your organisation"
+keywords: ["Anthropic Cowork", "OpenAI Frontier", "enterprise AI platforms", "SKILL.md", "semantic layer", "platform decision framework", "product-led growth", "enterprise sales"]
+chapter: 14
+lesson: 4
+duration_minutes: 30
+
+# HIDDEN SKILLS METADATA
+skills:
+  - name: "Compare Cowork and Frontier Architectures"
+    proficiency_level: "A2"
+    category: "Conceptual"
+    bloom_level: "Understand"
+    digcomp_area: "Information Literacy"
+    measurable_at_this_level: "Student can describe the core architectural difference between Cowork (modular plugin environment with SKILL.md) and Frontier (unified semantic layer) and name at least two distinguishing features of each"
+
+  - name: "Apply Platform Decision Framework"
+    proficiency_level: "B1"
+    category: "Applied"
+    bloom_level: "Apply"
+    digcomp_area: "Problem-Solving"
+    measurable_at_this_level: "Student can apply the three-question decision framework (organisational scope, procurement reality, nature of knowledge) to a given scenario and recommend the appropriate platform with justification"
+
+  - name: "Identify Organisational Fit"
+    proficiency_level: "B1"
+    category: "Applied"
+    bloom_level: "Apply"
+    digcomp_area: "Problem-Solving"
+    measurable_at_this_level: "Student can assess a described organisation and determine whether Cowork or Frontier better fits its structure, budget, and knowledge distribution"
+
+learning_objectives:
+  - objective: "Describe the architectural differences between Anthropic Cowork and OpenAI Frontier, including their deployment models and target buyers"
+    proficiency_level: "A2"
+    bloom_level: "Understand"
+    assessment_method: "Student can list three differences between Cowork and Frontier across architecture, deployment model, and target buyer"
+
+  - objective: "Apply a three-question decision framework to determine which platform fits a given organisational context"
+    proficiency_level: "B1"
+    bloom_level: "Apply"
+    assessment_method: "Given a scenario describing an organisation's scope, budget, and knowledge distribution, student selects the correct platform and explains why"
+
+  - objective: "Evaluate the trade-offs of bottom-up versus top-down AI adoption for a specific organisation"
+    proficiency_level: "B1"
+    bloom_level: "Apply"
+    assessment_method: "Student articulates at least two advantages and two risks of each adoption path for a described organisation"
+
+cognitive_load:
+  new_concepts: 5
+  concepts_list:
+    - "SKILL.md as agent instruction file"
+    - "config.yaml as metadata layer"
+    - "MCP connectors as integration infrastructure"
+    - "Semantic layer as unified intelligence infrastructure"
+    - "Product-led growth versus enterprise sales"
+  assessment: "5 concepts at the upper edge of A2 range (5-7). Concepts are grouped into two clear clusters (Cowork architecture, Frontier architecture), reducing cross-concept interference."
+
+differentiation:
+  extension_for_advanced: "Research a third enterprise AI platform (Google Agentspace, Microsoft Copilot Studio) and position it on the Cowork-Frontier spectrum using the decision framework"
+  remedial_for_struggling: "Focus only on the decision framework's three questions and practise applying them to two familiar organisations before studying the architectural details"
+
+teaching_guide:
+  lesson_type: "core"
+  session_group: 2
+  session_title: "Platform Landscape"
+  key_points:
+    - "Cowork and Frontier represent two genuinely different deployment philosophies, not just competing products -- understanding both prevents premature platform commitment"
+    - "The SKILL.md file is the defining innovation of Cowork: a plain-English document that knowledge workers author without engineering support"
+    - "Frontier targets enterprise-wide transformation through a semantic layer, sold top-down via consulting partnerships"
+    - "The decision framework (scope, procurement, knowledge distribution) prevents the common mistake of choosing a platform based on brand preference rather than organisational fit"
+  misconceptions:
+    - "Students assume one platform is 'better' than the other -- emphasise that fitness depends on organisational context, not technical superiority"
+    - "Students confuse SKILL.md with code or configuration files -- it is a plain-English instruction document authored by domain experts"
+    - "Students think Frontier is only for large companies -- it targets enterprise-wide deployment regardless of company size, though procurement complexity increases with organisational size"
+  discussion_prompts:
+    - "If you had to deploy an AI agent for your team next month, which platform would you start with and why?"
+    - "What would need to change in your organisation for the other platform to become the better choice?"
+    - "Can you think of a scenario where a company might use both platforms simultaneously for different purposes?"
+  teaching_tips:
+    - "Start with the SKILL.md concept -- it is the most tangible and relatable element for knowledge workers, and it anchors the rest of the Cowork architecture"
+    - "Use the decision framework as an interactive exercise: present 2-3 fictional organisations and have students apply the three questions"
+    - "Emphasise that for most Part 3 readers, Cowork is the starting point -- this reduces decision anxiety and focuses attention on the hands-on exercises ahead"
+  assessment_checks:
+    - question: "What is a SKILL.md file and who writes it?"
+      expected_response: "A plain-English instruction document that defines an agent's persona, principles, constraints, and behaviours. It is written by a knowledge worker, not a developer."
+    - question: "Name the three questions in the platform decision framework."
+      expected_response: "Organisational scope (team vs enterprise-wide), procurement reality (team budget vs capital expenditure), and nature of knowledge (concentrated in one team vs cross-functional)."
+---
+
+# Two Platforms, One Paradigm
+
+In Lesson 3, you established that knowledge workers -- not developers -- are the central figures in the enterprise agentic transition. Now the question becomes practical: which platform do you actually use to deploy a domain agent?
+
+The enterprise agentic landscape in 2026 is shaped by two dominant platforms. They share the same underlying paradigm -- large language models executing structured tasks against enterprise data -- but they differ fundamentally in who they target, how they deploy, and what they assume about your organisation. Understanding both, their architectures, their strengths, and their limitations, is a prerequisite for every deployment decision this book will ask you to make.
+
+This lesson introduces both platforms and gives you a decision framework to choose between them. By the end, you will not be guessing. You will be qualifying.
+
+## Anthropic Cowork: The Knowledge Worker's Platform
+
+Cowork is a modular plugin environment built for knowledge workers who need to deploy domain-specific agents without engineering support. Its defining architectural feature is the **SKILL.md file**: a plain-English instruction document that you, the domain expert, author yourself.
+
+A SKILL.md defines an agent's persona, operating principles, domain constraints, and response behaviours. It is not code. It is not configuration in the traditional sense. It is a structured English document that tells the agent who it is, what it knows, what it must never do, and how it should respond.
+
+### The Three Components
+
+| Component | Who Creates It | What It Does |
+|-----------|---------------|--------------|
+| **SKILL.md** | Knowledge worker (you) | Defines the agent's persona, principles, domain knowledge, and constraints in plain English |
+| **config.yaml** | IT administrator | Sets metadata: model version, token limits, access permissions, compliance flags |
+| **Connector scripts** | Developer (one-time setup) | Integrates with enterprise systems via MCP (Model Context Protocol) -- handed to you as infrastructure |
+
+The division of labour is deliberate. You write the intelligence (SKILL.md). IT handles the guardrails (config.yaml). Engineering builds the plumbing once (connectors), then gets out of the way.
+
+### Production Connectors
+
+Cowork ships with production-ready connectors for the systems knowledge workers already use: Salesforce, HubSpot, Gmail, Outlook, Confluence, Notion, SharePoint, Snowflake, BigQuery, DocuSign, Jira, Bloomberg, Revit APIs, clinical documentation systems, and legal research platforms. When you write a SKILL.md that says "pull the latest pipeline data from Salesforce," the connector handles authentication, API calls, and data formatting. You never see it.
+
+The connector ecosystem is Anthropic's primary infrastructure investment. Connector builders receive a share of the subscription revenue from deployments that use their connectors, creating the same kind of developer community dynamics that have driven the expansion of other platform ecosystems. The marketplace through which connectors are published and distributed is growing rapidly, and this revenue-sharing model is its engine.
+
+### Deployment Model
+
+Cowork follows a **product-led growth** model. Adoption is bottom-up: one team tries it, sees results, tells the next team. Procurement happens at the team level -- a department budget line, not a board-level capital expenditure. This means you can start deploying agents within weeks, not months.
+
+### The Typical Cowork Adopter
+
+The organisations that have adopted Cowork most deeply typically started with a single team, a single vertical, and a single agent -- and expanded from there. The profile is the technically sophisticated team inside a larger organisation: the FP&A team that deployed a financial research agent before the CFO had approved a formal AI strategy. The in-house legal team that stood up a contract triage tool six months before IT had finished its vendor assessment. The architecture practice that deployed a BIM coordination assistant because the project manager could not wait for a platform decision. These teams share a characteristic: they have domain expertise that they understand is deployable in agent form, and they are not willing to wait for institutional processes to catch up.
+
+## OpenAI Frontier: The Enterprise Transformation Platform
+
+Frontier takes a fundamentally different approach. Where Cowork gives individual teams a powerful plugin, Frontier provides the entire organisation with a **semantic layer** -- a unified intelligence infrastructure that sits across all systems.
+
+### What a Semantic Layer Means
+
+Think of a semantic layer as a translation service that understands the meaning of data across every system in the organisation. When the finance team says "revenue," the sales team says "bookings," and the operations team says "throughput," a semantic layer knows these are related concepts and can reason across them.
+
+Frontier manages agent identity, permissions, and cross-department context centrally. An agent deployed through Frontier does not belong to one team. It belongs to the organisation and can access data and workflows across departments -- subject to governance rules defined at the enterprise level.
+
+### Deployment Model
+
+Frontier is sold **top-down** through Forward Deployed Engineers and consulting firm partnerships (Deloitte, McKinsey, Accenture, Capgemini). Early adopters include HP, Intuit, Oracle, State Farm, Thermo Fisher, and Uber.
+
+Procurement is enterprise-wide: capital expenditure, legal review, security assessment, executive sponsorship. The deployment timeline is measured in quarters, not weeks. But the payoff is proportional: Frontier deployments touch every department, not just one team.
+
+## Side-by-Side Comparison
+
+| Dimension | Anthropic Cowork | OpenAI Frontier |
+|-----------|-----------------|-----------------|
+| **Target buyer** | Team lead, department head | C-suite, CIO/CTO |
+| **Architecture** | Modular plugins (SKILL.md + connectors) | Unified semantic layer |
+| **Agent scope** | Single team or function | Cross-department, enterprise-wide |
+| **Adoption path** | Bottom-up (product-led growth) | Top-down (enterprise sales) |
+| **Procurement** | Team budget | Capital expenditure + legal/security review |
+| **Time to first agent** | Weeks | Quarters |
+| **Knowledge assumption** | Concentrated in a specific team | Distributed across the organisation |
+| **Governance model** | Team-level permissions | Centralised enterprise governance |
+
+## The Decision Framework
+
+When choosing a platform, ask three questions:
+
+### Question 1: Organisational Scope
+
+**Is the problem contained within one team or function, or does it span the enterprise?**
+
+- If one team has the knowledge, owns the data, and will use the agent, Cowork fits. A compliance team building a regulatory review agent is a Cowork deployment.
+- If the problem requires reasoning across departments -- say, connecting sales pipeline data to finance forecasts to operations capacity -- Frontier is designed for that cross-functional intelligence.
+
+### Question 2: Procurement Reality
+
+**Can you fund this from a team budget, or does it require capital expenditure?**
+
+- If your department can allocate budget without board approval, Cowork's product-led model lets you move fast. You deploy, measure value, and expand.
+- If the investment requires a legal review, security assessment, and executive sponsorship, you are already in Frontier territory. The procurement process matches the platform's deployment model.
+
+### Question 3: Nature of Knowledge
+
+**Is the domain knowledge concentrated in one team or distributed across the organisation?**
+
+- If one expert or small team holds the knowledge needed to instruct the agent -- a senior architect who knows building codes, a compliance officer who knows regulatory requirements -- Cowork's SKILL.md model works. That expert writes the instructions.
+- If the knowledge lives in multiple systems and no single person holds the complete picture, Frontier's semantic layer can synthesise across sources in ways that a single SKILL.md cannot.
+
+### Where Most Readers Start
+
+For most Part 3 readers, **Cowork is the starting point**. You have domain expertise concentrated in your team. You have a team-level budget. You want results in weeks, not quarters. All hands-on exercises in this book use Cowork.
+
+This does not mean Frontier is irrelevant to you. Understanding Frontier helps you recognise when your organisation is ready for enterprise-wide deployment -- and positions you to lead that conversation when the time comes. The platform decision is revisited in Chapter 24 for readers who are advising organisations on longer-term architecture choices.
+
+## Try With AI
+
+Use these prompts in Anthropic Cowork or your preferred AI assistant to explore these concepts further.
+
+### Prompt 1: Personal Application
+
+```
+I work in [describe your role and team -- e.g., "a 12-person HR team
+at a mid-size financial services company"]. We are considering deploying
+an AI agent to help with [describe a specific task -- e.g., "screening
+job applications against our competency framework"]. Based on the
+Cowork vs Frontier decision framework, help me determine which platform
+fits our situation. Ask me the three questions (organisational scope,
+procurement reality, nature of knowledge) and then make a recommendation.
+```
+
+**What you're learning:** You are practising the decision framework against your own organisational context. The AI helps you think through each question honestly rather than guessing.
+
+### Prompt 2: Framework Analysis
+
+```
+Here are two fictional organisations. For each one, tell me whether
+Cowork or Frontier is the better starting platform and explain why
+using the three-question framework.
+
+Organisation A: A 200-person law firm where the litigation team
+(15 people) wants an agent to review discovery documents. The team
+has its own budget and the senior partner has deep knowledge of the
+firm's review standards.
+
+Organisation B: A 5,000-person healthcare company where the CEO wants
+to connect patient intake, clinical documentation, billing, and
+compliance into a single AI-driven workflow. The project has
+board-level sponsorship and a $2M budget.
+```
+
+**What you're learning:** You are testing whether you can apply the framework to unfamiliar scenarios. Getting the right answer for both organisations confirms you understand the framework, not just the vocabulary.
+
+### Prompt 3: Domain Research
+
+```
+Research the current state of enterprise AI platform adoption in
+[YOUR INDUSTRY -- e.g., "architecture and construction," "financial
+services," "healthcare"]. What platforms are organisations in my
+industry actually using? Are they following a bottom-up (team-level)
+or top-down (enterprise-wide) adoption pattern? What does that suggest
+about whether Cowork or Frontier is gaining traction first?
+```
+
+**What you're learning:** You are connecting the abstract framework to real adoption patterns in your industry. This grounds your platform decision in evidence, not theory.
+
+
+## Flashcards Study Aid
+
+<Flashcards />

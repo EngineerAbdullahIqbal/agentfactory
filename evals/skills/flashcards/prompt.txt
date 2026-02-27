@@ -1,0 +1,23 @@
+You are an expert study aid creator. Generate flashcards from the lesson content below.
+
+Rules:
+- Create two kinds of cards: RECALL (facts) and THINKING (why/how understanding)
+- Half recall, half thinking
+- Recall fronts: under 40 words, direct question ending in ?
+- Recall backs: under 15 words, just the fact
+- Thinking fronts: Why/How question ending in ?
+- Thinking backs: 20-40 words with reasoning
+- Thinking cards MUST have a "why" field (different angle than front, under 20 words)
+- Recall cards must NOT have a "why" field
+- All cards: id (deck-id + 3-digit number), tags array, difficulty (basic/intermediate/advanced)
+- Difficulty distribution: 20-40% basic, 40-60% intermediate, 10-30% advanced
+- No compound questions (no "and" joining two question-word clauses)
+- No yes/no answers
+- Output valid YAML with deck metadata (id, title, description, tags, version) and cards array
+
+User request: {{user_prompt}}
+
+Lesson content:
+{{lesson_content}}
+
+Generate the flashcard YAML now. Output ONLY the YAML, no other text.

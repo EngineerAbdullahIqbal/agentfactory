@@ -1,0 +1,70 @@
+deck:
+  id: "ch14-01-the-year-that-did-not-deliver"
+  title: "The Year That Did Not Deliver"
+  description: "Enterprise AI stagnation, the Pilot Trap pattern, the knowledge transfer gap, and the wrapper vs agent distinction."
+  tags: ["enterprise-ai", "pilot-trap", "knowledge-transfer", "ai-adoption"]
+  version: 1
+
+cards:
+  - id: "ch14-01-pilot-trap-001"
+    front: "What is the Pilot Trap?"
+    back: "The organisational condition in which AI investment produces demonstrations but not deployments, enthusiasm but not adoption, capability but not change."
+    tags: ["pilot-trap", "definition"]
+    difficulty: "basic"
+
+  - id: "ch14-01-pilot-trap-002"
+    front: "Name three symptoms of the Pilot Trap."
+    back: "1. Perpetual pilot (same proof-of-concept running 12+ months with no deployment date)\n2. Slide-driven outcomes (primary output is presentations, not working systems)\n3. Vendor dependency (cannot articulate AI goals without a vendor present)\n4. Enthusiasm without adoption (executives excited, actual work unchanged)"
+    tags: ["pilot-trap", "symptoms"]
+    difficulty: "basic"
+
+  - id: "ch14-01-knowledge-gap-003"
+    front: "What is the knowledge transfer gap?"
+    back: "The structural gap between domain experts (who understand the work) and system builders (who can deploy AI) -- with no clear mechanism for encoding domain knowledge into agents."
+    tags: ["knowledge-transfer", "definition"]
+    difficulty: "basic"
+
+  - id: "ch14-01-knowledge-gap-004"
+    front: "Why couldn't better AI models alone close the knowledge transfer gap?"
+    back: "BECAUSE model capability was not the bottleneck. The problem was that no one could encode domain-specific knowledge (like what 'genuine risk' means for a specific organisation) into a deployed system. THEREFORE more capable models produced more capable general-purpose output, not domain-specific agents."
+    tags: ["knowledge-transfer", "reasoning"]
+    difficulty: "intermediate"
+    why: "Tests whether student understands the structural nature of the gap vs a technology limitation"
+
+  - id: "ch14-01-wrapper-agent-005"
+    front: "What is the difference between a wrapper and an agent in enterprise AI?"
+    back: "A wrapper adds AI to one existing tool for one specific task (e.g., chatbot in Slack).\nAn agent operates autonomously across multiple systems, makes decisions, sequences workflows, and acts on its own initiative."
+    tags: ["wrapper", "agent", "distinction"]
+    difficulty: "basic"
+
+  - id: "ch14-01-wrapper-agent-006"
+    front: "By the end of 2025, did most enterprises have wrappers or agents?"
+    back: "Most enterprises had wrappers. Almost none had deployed agents. The distance between the two was the knowledge transfer gap, not a technology gap."
+    tags: ["wrapper", "agent", "adoption"]
+    difficulty: "basic"
+
+  - id: "ch14-01-structural-007"
+    front: "Why was the Pilot Trap a structural problem rather than a technology problem?"
+    back: "BECAUSE the models were capable enough by mid-2024, but organisations lacked a mechanism for domain experts to encode their knowledge into deployable agents. THEREFORE the failure was in organisational design (no pathway from expertise to deployment), not in AI capability."
+    tags: ["pilot-trap", "structural"]
+    difficulty: "intermediate"
+    why: "Distinguishes between the many surface explanations (models not ready, procurement slow) and the root structural cause"
+
+  - id: "ch14-01-domain-expert-008"
+    front: "What do domain experts have that system builders lack, according to the knowledge transfer gap?"
+    back: "Deep contextual knowledge of how the work actually gets done -- institutional knowledge expressed through judgment calls and experience, not in any format a software system can consume."
+    tags: ["domain-expert", "knowledge-transfer"]
+    difficulty: "basic"
+
+  - id: "ch14-01-system-builder-009"
+    front: "What do system builders have that domain experts lack?"
+    back: "The ability to build and deploy software systems -- but without sufficient domain understanding to build the right system for a specific professional context."
+    tags: ["system-builder", "knowledge-transfer"]
+    difficulty: "basic"
+
+  - id: "ch14-01-diagnosis-010"
+    front: "If an organisation's AI initiative has been in pilot for 14 months and the primary output is executive presentations, what pattern is this?"
+    back: "BECAUSE the initiative produces demonstrations but not deployments (perpetual pilot, slide-driven outcomes), this is the Pilot Trap pattern. THEREFORE the organisation needs to address the knowledge transfer gap, not invest in more pilots."
+    tags: ["pilot-trap", "diagnosis", "applied"]
+    difficulty: "advanced"
+    why: "Tests the ability to diagnose the Pilot Trap from a scenario description"

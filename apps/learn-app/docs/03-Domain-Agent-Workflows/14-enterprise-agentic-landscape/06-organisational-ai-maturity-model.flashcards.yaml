@@ -1,0 +1,83 @@
+deck:
+  id: "ch14-06-organisational-ai-maturity-model"
+  title: "Organisational AI Maturity Model"
+  description: "Five-level maturity model for assessing organisational AI readiness, from Awareness through Transformation, with diagnostic indicators and appropriate interventions."
+  tags: ["maturity-model", "organisational-readiness", "awareness", "experimentation", "integration", "optimisation", "transformation", "post-pilot-trap"]
+  version: 1
+
+cards:
+  - id: "ch14-06-maturity-001"
+    front: "What are the five levels of the Organisational AI Maturity Model, in order?"
+    back: "1. Awareness -- AI on agenda, not in operations.\n2. Experimentation -- active pilots, isolated results.\n3. Integration -- production agents with governance.\n4. Optimisation -- multi-vertical portfolio, measured ROI.\n5. Transformation -- organisational redesign around agent capability."
+    tags: ["levels", "overview"]
+    difficulty: "basic"
+
+  - id: "ch14-06-maturity-002"
+    front: "What is the Post-Pilot Trap?"
+    back: "The transition zone between Level 2 (Experimentation) and Level 3 (Integration), where organisations have run successful pilots but fail to move to structured, governed production deployment. Most enterprise AI stalls here."
+    tags: ["post-pilot-trap", "level-2"]
+    difficulty: "basic"
+
+  - id: "ch14-06-maturity-003"
+    front: "Why is a Level 1 organisation not a good candidate for domain agent deployment?"
+    back: "BECAUSE there is no governance, no data strategy, no designated AI owner, and no organisational infrastructure to support an agent, THEREFORE deploying technology fails not because the agent is inadequate but because the organisation cannot support it. The appropriate intervention is education, not deployment."
+    tags: ["level-1", "intervention"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why readiness matters, not just the level description"
+
+  - id: "ch14-06-maturity-004"
+    front: "At what maturity level do most large enterprises sit in early 2026?"
+    back: "Level 2 (Experimentation). They have active pilots and interested leadership, but have not yet moved to structured, governed production deployment."
+    tags: ["level-2", "current-state"]
+    difficulty: "basic"
+
+  - id: "ch14-06-maturity-005"
+    front: "What is the appropriate intervention for a Level 2 organisation?"
+    back: "Deploy team-level Cowork agents with measurable value and minimal governance overhead. Pick one domain, one team, one agent. Measure value. Use the evidence to justify the investment needed to reach Level 3."
+    tags: ["level-2", "intervention"]
+    difficulty: "intermediate"
+
+  - id: "ch14-06-maturity-006"
+    front: "At which maturity level are Part 3 domain agents most naturally at home?"
+    back: "Level 3 (Integration). This level has the formal AI strategy, executive sponsorship, IT involvement, and governance policies needed to support production agent deployments."
+    tags: ["level-3", "part-3"]
+    difficulty: "basic"
+
+  - id: "ch14-06-maturity-007"
+    front: "What distinguishes Level 3 (Integration) from Level 2 (Experimentation)?"
+    back: "Level 3 has: a formal AI strategy with executive sponsorship, IT with a defined role in agent infrastructure, at least one agent connected to production systems, governance policies covering data access and escalation, and sustained deployment budget. Level 2 has pilots but lacks this infrastructure."
+    tags: ["level-2", "level-3", "comparison"]
+    difficulty: "intermediate"
+    why: "Tests the ability to distinguish adjacent levels -- the hardest assessment task"
+
+  - id: "ch14-06-maturity-008"
+    front: "What is the recommended deployment approach at Level 3?"
+    back: "Deploy a single vertical fully: one domain, one team, one agent, full stack. SKILL.md by the domain expert, connectors by IT, governance in place, value being tracked. Emphasise depth over breadth."
+    tags: ["level-3", "intervention"]
+    difficulty: "intermediate"
+
+  - id: "ch14-06-maturity-009"
+    front: "What strategic question defines Level 4 (Optimisation)?"
+    back: "The question shifts from 'should we deploy AI?' to 'how do we optimise our AI portfolio?' Investment decisions are driven by measured ROI across multiple deployed agents."
+    tags: ["level-4", "strategy"]
+    difficulty: "intermediate"
+
+  - id: "ch14-06-maturity-010"
+    front: "What changes at Level 5 (Transformation) that distinguishes it from Level 4?"
+    back: "Job descriptions change. Human-agent boundaries are explicitly negotiated. Organisational structure is redesigned around agent capabilities. AI governance becomes a permanent standing function, not a project."
+    tags: ["level-5", "transformation"]
+    difficulty: "intermediate"
+
+  - id: "ch14-06-maturity-011"
+    front: "Why might deploying a Frontier-style enterprise-wide AI system be premature for a Level 2 organisation?"
+    back: "BECAUSE Level 2 lacks the governance infrastructure, executive sponsorship, and cross-department coordination needed for enterprise-wide deployment, THEREFORE a Frontier deployment would overwhelm the organisation's capacity. Team-level Cowork deployments build the track record and infrastructure needed to support enterprise-wide systems later."
+    tags: ["level-2", "frontier", "readiness"]
+    difficulty: "advanced"
+    why: "Connects maturity assessment to platform selection from Lesson 4"
+
+  - id: "ch14-06-maturity-012"
+    front: "Is maturity purely a technology question? What else is required to advance levels?"
+    back: "No. Advancing levels also requires governance (policies, oversight), leadership (executive sponsorship, designated AI owner), and organisational design (roles, processes, budget allocation). Technology alone does not move an organisation up the maturity scale."
+    tags: ["maturity", "governance", "leadership"]
+    difficulty: "advanced"
+    why: "Challenges the common misconception that maturity equals technical capability"

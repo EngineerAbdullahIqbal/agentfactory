@@ -1,0 +1,113 @@
+deck:
+  id: ch14-07-seven-domains
+  title: The Seven Domains
+  description: Seven professional domains where institutional knowledge is hardest to encode and where Cowork's infrastructure supports production deployment.
+  tags:
+    - enterprise-domains
+    - institutional-knowledge
+    - domain-expertise
+    - knowledge-lock-in
+  version: 1
+
+cards:
+  - id: ch14-07-seven-domains-001
+    front: What are the seven professional domains addressed in Part 3?
+    back: "1. Finance and Banking\n2. Legal and Compliance\n3. Sales and Revenue\n4. HR and Operations\n5. Healthcare Operations\n6. Architecture and Engineering\n7. Technical Documentation and Specification"
+    tags:
+      - seven-domains
+      - recall
+    difficulty: basic
+
+  - id: ch14-07-seven-domains-002
+    front: What common problem do all seven professional domains share?
+    back: Institutional knowledge lock-in -- valuable expertise locked inside individual professionals and unavailable to the organisation as a whole.
+    tags:
+      - institutional-knowledge
+      - common-problem
+    difficulty: basic
+
+  - id: ch14-07-seven-domains-003
+    front: Why were these specific seven domains chosen over other possible domains?
+    back: They represent the clearest cases where three conditions converge -- the domain expertise is highly specific, encoding that expertise is currently difficult, and Cowork's connector infrastructure supports production deployment today.
+    tags:
+      - domain-selection
+      - selection-criteria
+    difficulty: intermediate
+    why: Does this mean other domains cannot benefit from agent deployment, or just that these seven have the most mature infrastructure?
+
+  - id: ch14-07-seven-domains-004
+    front: In Finance and Banking, what is the expertise at risk that goes beyond running financial models?
+    back: The senior analyst's understanding of which data sources to trust under which conditions, the banker's calibration for which risk signals actually predict credit events, and the CFO's judgment about which regulatory requirements are material.
+    tags:
+      - finance
+      - domain-expertise
+    difficulty: intermediate
+    why: Why does this judgment take years to develop when the tools themselves can be learned in weeks?
+
+  - id: ch14-07-seven-domains-005
+    front: What explicit boundary does the Healthcare Operations domain set?
+    back: It explicitly excludes clinical decision support and diagnosis. The governance requirements for clinical decisions are different in kind from operational decisions.
+    tags:
+      - healthcare
+      - governance-boundary
+    difficulty: basic
+
+  - id: ch14-07-seven-domains-006
+    front: What is the expertise at risk in Legal and Compliance?
+    back: The experienced lawyer's understanding of which clause patterns are genuinely dangerous in which contexts and jurisdictions -- a standard clause might be enforceable in one jurisdiction and meaningless in another.
+    tags:
+      - legal
+      - jurisdictional-knowledge
+    difficulty: intermediate
+
+  - id: ch14-07-seven-domains-007
+    front: What is the expertise at risk in Sales and Revenue?
+    back: The top performer's qualification logic -- the signals, heuristics, and pattern recognitions that distinguish a prospect worth pursuing from one that will consume resources without converting.
+    tags:
+      - sales
+      - qualification-logic
+    difficulty: intermediate
+    why: Why is this knowledge particularly hard to document compared to other domain expertise?
+
+  - id: ch14-07-seven-domains-008
+    front: In HR and Operations, why does the written policy sometimes give a different answer than the experienced HR professional?
+    back: Because the experienced HR professional understands the intent behind policies, the exceptions routinely granted, and the human context that formal documentation never captures.
+    tags:
+      - hr-operations
+      - policy-intent
+    difficulty: intermediate
+    why: What risks arise when an agent encodes the informal exceptions without the judgment about when those exceptions are appropriate?
+
+  - id: ch14-07-seven-domains-009
+    front: What makes Architecture and Engineering unique among the seven domains in terms of technology requirements?
+    back: It uses a custom MCP server for Revit model interaction, requiring a domain-specific connector that other domains do not need.
+    tags:
+      - architecture
+      - mcp-server
+      - revit
+    difficulty: intermediate
+
+  - id: ch14-07-seven-domains-010
+    front: What are the five steps of the cross-domain deployment methodology?
+    back: "1. Identify the institutional knowledge at risk\n2. Encode that knowledge into agent instructions\n3. Connect the agent to domain-specific data sources via connectors\n4. Deploy with appropriate governance\n5. Validate against the expertise of the professional whose knowledge was encoded"
+    tags:
+      - deployment-methodology
+      - cross-domain
+    difficulty: basic
+
+  - id: ch14-07-seven-domains-011
+    front: In Technical Documentation, what is the difference between structural completeness and functional completeness of a specification?
+    back: Structural completeness means all sections are filled in. Functional completeness means a developer reading it will not need to come back with questions. The ability to distinguish these is the expertise that takes years to develop.
+    tags:
+      - technical-documentation
+      - specification-quality
+    difficulty: advanced
+    why: How would you encode this distinction into agent instructions?
+
+  - id: ch14-07-seven-domains-012
+    front: If your professional work spans multiple domains, how should you approach the domain chapters (17-23)?
+    back: Read the domain chapter closest to your primary expertise first. The deployment patterns learned there transfer to any adjacent domain because the methodology is consistent across all seven.
+    tags:
+      - cross-domain
+      - reading-strategy
+    difficulty: basic

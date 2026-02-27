@@ -1,0 +1,93 @@
+deck:
+  id: ch14-08-starting-conversation
+  title: Starting the Conversation
+  description: Using the chapter's frameworks as vocabulary for real deployment conversations -- qualifying maturity, framing value by stakeholder, and leading with the knowledge question.
+  tags:
+    - deployment-conversation
+    - stakeholder-framing
+    - conversation-qualification
+    - knowledge-question
+  version: 1
+
+cards:
+  - id: ch14-08-starting-conversation-001
+    front: What is the most common mistake in enterprise AI deployment conversations?
+    back: Proposing a solution before understanding the organisational context. Qualification must come before proposal.
+    tags:
+      - qualification
+      - common-mistake
+    difficulty: basic
+
+  - id: ch14-08-starting-conversation-002
+    front: What does a Level 1 (Awareness) organisation need in a deployment conversation?
+    back: Education -- a briefing explaining what domain agents are and why they matter. NOT a deployment proposal or technical architecture.
+    tags:
+      - maturity-model
+      - level-1
+    difficulty: basic
+
+  - id: ch14-08-starting-conversation-003
+    front: What does a Level 3 (Departmental) organisation need in a deployment conversation?
+    back: Governance -- a deployment plan with a measurement framework. They have already run pilots and need help scaling, not introductory education.
+    tags:
+      - maturity-model
+      - level-3
+    difficulty: basic
+
+  - id: ch14-08-starting-conversation-004
+    front: What is the knowledge question that should start every deployment conversation?
+    back: "Whose expertise, encoded in what form, available to whom, operating under what constraints?"
+    tags:
+      - knowledge-question
+      - foundation
+    difficulty: basic
+
+  - id: ch14-08-starting-conversation-005
+    front: Why does a sales leader respond to success-fee economics but not subscription pricing?
+    back: Because success-fee creates aligned incentives -- they pay only when the agent delivers measurable results. Subscription framing sounds like a cost centre, while success-fee framing sounds like a revenue investment.
+    tags:
+      - stakeholder-framing
+      - sales-leader
+    difficulty: intermediate
+    why: When might a sales leader prefer subscription pricing over success-fee?
+
+  - id: ch14-08-starting-conversation-006
+    front: What monetisation framing resonates with a CFO, and why?
+    back: License with ROI projection -- because it fits capital expenditure framing, ensures data sovereignty, and allows total cost of ownership analysis that CFOs are trained to evaluate.
+    tags:
+      - stakeholder-framing
+      - cfo
+    difficulty: intermediate
+
+  - id: ch14-08-starting-conversation-007
+    front: What are the five steps of a well-structured deployment conversation?
+    back: "1. Qualify (assess maturity level)\n2. Identify (ask the knowledge question)\n3. Frame (match value to stakeholder)\n4. Position (place on platform landscape)\n5. Scope (map to domain profile)"
+    tags:
+      - conversation-structure
+      - deployment-sequence
+    difficulty: intermediate
+
+  - id: ch14-08-starting-conversation-008
+    front: Why does the knowledge question come before platform selection in a deployment conversation?
+    back: Because the answers to the knowledge question (whose expertise, in what form, for whom, under what constraints) determine which platform fits. Platform selection without answering the knowledge question is guessing.
+    tags:
+      - knowledge-question
+      - platform-selection
+    difficulty: intermediate
+    why: What happens when an organisation selects a platform first and then tries to fit the knowledge question to it?
+
+  - id: ch14-08-starting-conversation-009
+    front: How should you frame value when speaking with an IT leader about domain agent deployment?
+    back: Lead with the platform comparison (Cowork vs Frontier), focusing on architecture fit, integration requirements, and the security model. IT leaders evaluate infrastructure compatibility before business value.
+    tags:
+      - stakeholder-framing
+      - it-leader
+    difficulty: intermediate
+
+  - id: ch14-08-starting-conversation-010
+    front: What does Chapter 15 provide that Chapter 14 does not?
+    back: Chapter 15 provides the technical architecture -- what a Cowork plugin looks like from the inside. Chapter 14 provides the strategic vocabulary to evaluate, qualify, and frame deployments, but not the implementation blueprint.
+    tags:
+      - chapter-transition
+      - architecture
+    difficulty: basic

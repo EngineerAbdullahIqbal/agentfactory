@@ -1,0 +1,83 @@
+deck:
+  id: "ch14-04-two-platforms-one-paradigm"
+  title: "Two Platforms, One Paradigm"
+  description: "Anthropic Cowork vs OpenAI Frontier architectures, deployment models, and the three-question decision framework for choosing the right enterprise AI platform."
+  tags: ["enterprise-ai", "cowork", "frontier", "platform-selection", "SKILL.md", "semantic-layer"]
+  version: 1
+
+cards:
+  - id: "ch14-04-two-platforms-001"
+    front: "What is a SKILL.md file in the Anthropic Cowork architecture?"
+    back: "A plain-English instruction document authored by a knowledge worker (not a developer) that defines an agent's persona, operating principles, domain constraints, and response behaviours."
+    tags: ["cowork", "SKILL.md"]
+    difficulty: "basic"
+
+  - id: "ch14-04-two-platforms-002"
+    front: "What are the three components of a Cowork agent deployment, and who creates each?"
+    back: "1. SKILL.md -- created by the knowledge worker (domain expert).\n2. config.yaml -- created by the IT administrator (metadata, permissions).\n3. Connector scripts -- created by a developer (one-time MCP integration infrastructure)."
+    tags: ["cowork", "architecture"]
+    difficulty: "intermediate"
+
+  - id: "ch14-04-two-platforms-003"
+    front: "What is a semantic layer in the context of OpenAI Frontier?"
+    back: "A unified intelligence infrastructure that sits across all enterprise systems, understands the meaning of data across departments, and manages agent identity, permissions, and cross-department context centrally."
+    tags: ["frontier", "semantic-layer"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the core architectural concept that distinguishes Frontier from Cowork"
+
+  - id: "ch14-04-two-platforms-004"
+    front: "How does Cowork's adoption model differ from Frontier's?"
+    back: "Cowork follows product-led growth (bottom-up): one team adopts, sees results, tells the next team. Procurement is at team-budget level.\nFrontier follows enterprise sales (top-down): sold through consulting firms to C-suite. Procurement requires capital expenditure and legal/security review."
+    tags: ["adoption", "deployment"]
+    difficulty: "basic"
+
+  - id: "ch14-04-two-platforms-005"
+    front: "What are the three questions in the platform decision framework?"
+    back: "1. Organisational scope: Team/function problem or enterprise-wide?\n2. Procurement reality: Team budget or capital expenditure?\n3. Nature of knowledge: Concentrated in one team or distributed across the organisation?"
+    tags: ["decision-framework"]
+    difficulty: "basic"
+
+  - id: "ch14-04-two-platforms-006"
+    front: "If a single team holds all the domain knowledge and has its own budget, which platform is the better starting point and why?"
+    back: "Cowork. BECAUSE the knowledge is concentrated (one expert can write the SKILL.md) and procurement is at team level (no board-level approval needed), THEREFORE Cowork's bottom-up, team-level deployment model fits the organisational context."
+    tags: ["decision-framework", "cowork"]
+    difficulty: "intermediate"
+    why: "Tests ability to apply the decision framework, not just recall the questions"
+
+  - id: "ch14-04-two-platforms-007"
+    front: "When is OpenAI Frontier the appropriate choice over Cowork?"
+    back: "When the problem spans multiple departments, requires reasoning across systems, involves capital expenditure procurement, and the knowledge needed is distributed across the organisation rather than concentrated in one team."
+    tags: ["frontier", "decision-framework"]
+    difficulty: "intermediate"
+
+  - id: "ch14-04-two-platforms-008"
+    front: "What deployment timeline does Cowork typically require versus Frontier?"
+    back: "Cowork: weeks (team-level procurement, bottom-up adoption).\nFrontier: quarters (enterprise procurement, legal/security review, executive sponsorship)."
+    tags: ["deployment", "timeline"]
+    difficulty: "basic"
+
+  - id: "ch14-04-two-platforms-009"
+    front: "Why does this book use Cowork for all hands-on exercises?"
+    back: "BECAUSE most Part 3 readers have domain expertise concentrated in their team, a team-level budget, and want results in weeks rather than quarters. THEREFORE Cowork's deployment model matches their organisational reality."
+    tags: ["cowork", "practical"]
+    difficulty: "intermediate"
+    why: "Connects the platform choice to the reader's practical context"
+
+  - id: "ch14-04-two-platforms-010"
+    front: "Name three enterprise systems that have production-ready Cowork connectors."
+    back: "Any three from: Salesforce, HubSpot, Gmail, Outlook, Confluence, Notion, SharePoint, Snowflake, BigQuery, DocuSign, Jira, Bloomberg, Revit APIs, clinical docs, legal research platforms."
+    tags: ["cowork", "connectors"]
+    difficulty: "basic"
+
+  - id: "ch14-04-two-platforms-011"
+    front: "What consulting firms partner with OpenAI for Frontier deployments?"
+    back: "Deloitte, McKinsey, Accenture, and Capgemini, along with OpenAI's own Forward Deployed Engineers."
+    tags: ["frontier", "deployment"]
+    difficulty: "basic"
+
+  - id: "ch14-04-two-platforms-012"
+    front: "Can an organisation use both Cowork and Frontier? Under what circumstances would this make sense?"
+    back: "Yes. An organisation might use Cowork for team-level agents where knowledge is concentrated (e.g., a compliance team's regulatory review) while using Frontier for cross-departmental intelligence (e.g., connecting sales, finance, and operations data). The platforms serve different organisational scopes."
+    tags: ["decision-framework", "hybrid"]
+    difficulty: "advanced"
+    why: "Tests whether the student sees the platforms as complementary rather than mutually exclusive"

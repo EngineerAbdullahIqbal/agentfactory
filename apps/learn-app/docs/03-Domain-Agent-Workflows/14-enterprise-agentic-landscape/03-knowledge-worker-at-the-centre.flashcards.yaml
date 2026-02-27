@@ -1,0 +1,76 @@
+deck:
+  id: "ch14-03-knowledge-worker-at-the-centre"
+  title: "Knowledge Worker at the Centre"
+  description: "Displacement vs amplification, the expertise moat, and SKILL.md as the mechanism for encoding domain knowledge into deployable agents."
+  tags: ["knowledge-worker", "displacement", "amplification", "expertise-moat", "skill-md"]
+  version: 1
+
+cards:
+  - id: "ch14-03-displacement-001"
+    front: "What types of knowledge work are vulnerable to AI displacement?"
+    back: "High-volume, lower-judgment tasks that follow predictable rules: basic document review, template-based reporting, first-pass data extraction, and routine correspondence."
+    tags: ["displacement", "task-types"]
+    difficulty: "basic"
+
+  - id: "ch14-03-amplification-002"
+    front: "What types of knowledge work are eligible for AI amplification?"
+    back: "Tasks requiring deep, contextual, institutional knowledge: coordination problem-solving, judgment-based input evaluation, jurisdiction-specific risk assessment, and team dynamic analysis."
+    tags: ["amplification", "task-types"]
+    difficulty: "basic"
+
+  - id: "ch14-03-distinction-003"
+    front: "What is the key difference between displacement-vulnerable and amplification-eligible work?"
+    back: "Displacement-vulnerable work follows predictable rules and requires limited contextual judgment.\nAmplification-eligible work requires deep domain expertise, institutional knowledge, and professional judgment that takes years to develop."
+    tags: ["displacement", "amplification", "distinction"]
+    difficulty: "basic"
+
+  - id: "ch14-03-moat-definition-004"
+    front: "What is the expertise moat?"
+    back: "The defensible advantage created when a knowledge worker encodes deep domain expertise into an agent. This institutional knowledge -- specific to a domain, often to an organisation -- cannot be replicated by generic AI tools or by downloading a more capable model."
+    tags: ["expertise-moat", "definition"]
+    difficulty: "basic"
+
+  - id: "ch14-03-moat-mechanism-005"
+    front: "Why can't a general-purpose AI replicate the expertise moat?"
+    back: "BECAUSE the moat consists of institutional knowledge accumulated over years -- jurisdiction-specific risk patterns, data quality intuitions, team dynamic predictions -- that is not available in public training data. THEREFORE no amount of general model improvement can substitute for encoded domain expertise."
+    tags: ["expertise-moat", "reasoning"]
+    difficulty: "intermediate"
+    why: "Tests whether student understands why domain knowledge is structurally defensible"
+
+  - id: "ch14-03-two-things-006"
+    front: "What two things does a knowledge worker accomplish by encoding their expertise into an agent?"
+    back: "1. Amplifying their own output (work previously requiring personal attention at every step can be handled by the agent at scale)\n2. Establishing a moat (the encoded institutional knowledge is precisely what generic AI cannot replicate)"
+    tags: ["amplification", "expertise-moat", "dual-benefit"]
+    difficulty: "intermediate"
+
+  - id: "ch14-03-skill-md-007"
+    front: "What is a SKILL.md file in the Agent Factory framework?"
+    back: "The mechanism through which domain expertise is encoded so that an agent can carry it, apply it, and scale it. It represents the knowledge worker's accumulated expertise made deployable."
+    tags: ["skill-md", "definition"]
+    difficulty: "basic"
+
+  - id: "ch14-03-misreading-008"
+    front: "What is the common misreading of the enterprise AI transition?"
+    back: "That AI will automate knowledge workers and they will be displaced. The reality is more nuanced: some high-volume, lower-judgment tasks will be displaced, but the majority of knowledge work -- the judgment-intensive, contextual work -- is amplified, not replaced."
+    tags: ["misreading", "displacement", "amplification"]
+    difficulty: "basic"
+
+  - id: "ch14-03-generic-vs-encoded-009"
+    front: "What is the difference between generic AI output and encoded domain expertise for contract analysis?"
+    back: "Generic AI: general summary of contract clauses.\nEncoded domain expertise: risk assessment weighted by jurisdictional context, based on years of experience evaluating similar agreements."
+    tags: ["generic-vs-encoded", "example"]
+    difficulty: "intermediate"
+    why: "Makes the abstract moat concept concrete through a specific professional example"
+
+  - id: "ch14-03-not-tech-010"
+    front: "Is encoding domain expertise into a SKILL.md file a technical exercise for developers?"
+    back: "No. It is a professional exercise for domain experts. The 2026 platforms made it possible for knowledge workers to encode their expertise without needing engineering skills."
+    tags: ["skill-md", "audience"]
+    difficulty: "basic"
+
+  - id: "ch14-03-classification-011"
+    front: "An architect spends most of her day coordinating between structural engineers, HVAC teams, and local planning authorities. Is this work displacement-vulnerable or amplification-eligible?"
+    back: "BECAUSE coordination across disciplines, jurisdictions, and stakeholders requires deep contextual judgment that cannot be reduced to predictable rules, this work is amplification-eligible. THEREFORE an agent carrying her coordination knowledge would amplify her capacity rather than replace her."
+    tags: ["classification", "applied", "amplification"]
+    difficulty: "advanced"
+    why: "Tests ability to apply the displacement/amplification framework to a concrete professional scenario"

@@ -1,0 +1,116 @@
+# Flashcard Skill Eval — Promptfoo Native
+# The harness IS Promptfoo. We only write golden datasets + thin graders.
+#
+# Run:   npx promptfoo eval -c evals/skills/flashcards/promptfooconfig.yaml
+# View:  npx promptfoo view
+
+description: "Flashcard generation skill eval — model comparison + deterministic grading"
+
+providers:
+  - id: anthropic:messages:claude-haiku-4-5-20251001
+    label: Haiku
+  - id: anthropic:messages:claude-sonnet-4-20250514
+    label: Sonnet
+
+prompts:
+  - file://prompt.txt
+
+defaultTest:
+  options:
+    provider:
+      config:
+        max_tokens: 4096
+        temperature: 0
+
+tests:
+  # F01: Explicit dual prompt, single lesson
+  - vars:
+      lesson_content: file://../../flashcards/fixtures/lessons/f01-agent-memory-basics.md
+      user_prompt: "Act as an expert study aid creator. Use minimum information principle. Under 40 words. Self-contained and atomic. Focus on key terms, formulas, and relationships. Also create understanding-focused Why/How cards. Generate half from each prompt style."
+      _expected:
+        should_generate: true
+        min_cards: 8
+        max_cards: 16
+        recall_ratio_min: 0.45
+        recall_ratio_max: 0.55
+    assert:
+      - type: javascript
+        value: file://graders/deterministic.js
+
+  # F02: Implicit request, single lesson
+  - vars:
+      lesson_content: file://../../flashcards/fixtures/lessons/f02-incident-response-orchestration.md
+      user_prompt: "Create flashcards for this lesson. Make them useful for understanding, not rote memorization."
+      _expected:
+        should_generate: true
+        min_cards: 8
+        max_cards: 20
+        recall_ratio_min: 0.4
+        recall_ratio_max: 0.6
+    assert:
+      - type: javascript
+        value: file://graders/deterministic.js
+
+  # F03: Negative control — should NOT generate flashcards
+  - vars:
+      lesson_content: file://../../flashcards/fixtures/lessons/f03-non-flashcard-request.md
+      user_prompt: "Summarize this lesson in 5 bullet points. Do not generate flashcards."
+      _expected:
+        should_generate: false
+    assert:
+      - type: javascript
+        value: file://graders/deterministic.js
+
+  # F04: Formula-heavy lesson
+  - vars:
+      lesson_content: file://../../flashcards/fixtures/lessons/f04-formula-confidence-calibration.md
+      user_prompt: "Generate flashcards from this lesson. Keep cards atomic and concise, include formulas and relationships, and include Why/How understanding cards half and half."
+      _expected:
+        should_generate: true
+        min_cards: 8
+        max_cards: 18
+        recall_ratio_min: 0.45
+        recall_ratio_max: 0.55
+        require_formula_focus: true
+        min_formula_cards: 3
+    assert:
+      - type: javascript
+        value: file://graders/deterministic.js
+
+  # F05: Chapter mode — 2 lessons
+  - vars:
+      lesson_content: file://../../flashcards/fixtures/lessons/f05-chapter-combined.md
+      user_prompt: "Generate flashcards for this chapter directory. Use half recall and half understanding cards for each lesson."
+      _expected:
+        should_generate: true
+        min_cards: 8
+        max_cards: 16
+        recall_ratio_min: 0.4
+        recall_ratio_max: 0.6
+    assert:
+      - type: javascript
+        value: file://graders/deterministic.js
+
+  # LLM quality rubric — runs on all tests that should generate
+  - vars:
+      lesson_content: file://../../flashcards/fixtures/lessons/f01-agent-memory-basics.md
+      user_prompt: "Act as an expert study aid creator. Use minimum information principle. Under 40 words. Self-contained and atomic. Focus on key terms, formulas, and relationships. Also create understanding-focused Why/How cards. Generate half from each prompt style."
+      _expected:
+        should_generate: true
+    assert:
+      - type: llm-rubric
+        value: |
+          Grade these flashcards on a 0-10 scale for each criterion. Return a score and one-line rationale per criterion.
+
+          Criteria:
+          1. Minimum information atomicity — each card tests exactly one concept
+          2. Concise questions — fronts are under 40 words, no filler phrases
+          3. Self-contained — a student can answer without external context
+          4. Key terms coverage — important concepts from the lesson are represented
+          5. Recall/thinking balance — roughly half recall, half why/how cards
+          6. Answer precision — backs are concise (recall <15 words, thinking 20-40 words)
+          7. Source grounding — no hallucinated facts, everything traceable to the lesson
+          8. Non-redundancy — no duplicate or near-duplicate cards
+          9. Overall study value — would a student benefit from studying these cards?
+
+          Be strict. 10 = excellent. 5 = mediocre. Below 5 = failing.

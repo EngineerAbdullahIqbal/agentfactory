@@ -1,0 +1,84 @@
+deck:
+  id: "ch14-05-four-monetisation-models"
+  title: "Four Monetisation Models"
+  description: "Success Fee, Subscription, License, and Marketplace models for domain agent value capture, with pricing benchmarks and domain matching."
+  tags: ["monetisation", "success-fee", "subscription", "license", "marketplace", "pricing", "attribution"]
+  version: 1
+
+cards:
+  - id: "ch14-05-monetisation-001"
+    front: "What are the four monetisation models for domain agents?"
+    back: "1. Success Fee -- capture a percentage of measurable outcomes.\n2. Subscription -- recurring fee regardless of value in a given period.\n3. License -- annual contract for high-stakes, regulated domains.\n4. Marketplace -- publish SKILL.md as a reusable plugin for subscribers."
+    tags: ["models", "overview"]
+    difficulty: "basic"
+
+  - id: "ch14-05-monetisation-002"
+    front: "What is the critical precondition for using the success fee model?"
+    back: "A clean attribution methodology agreed before deployment. Without pre-agreed attribution, you cannot determine which outcomes the agent caused versus outcomes that would have happened regardless."
+    tags: ["success-fee", "attribution"]
+    difficulty: "basic"
+
+  - id: "ch14-05-monetisation-003"
+    front: "Why does the subscription model have a self-justification problem?"
+    back: "BECAUSE the fee is paid regardless of value delivered in any given period, THEREFORE the organisation must actively measure value to demonstrate the subscription is worth continuing. Without deliberate tracking, subscriptions become line items questioned during budget reviews."
+    tags: ["subscription", "weakness"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the model's structural weakness, not just its definition"
+
+  - id: "ch14-05-monetisation-004"
+    front: "Which monetisation model fits a sales domain agent that qualifies leads?"
+    back: "Success Fee. Sales outcomes (qualified leads, closed revenue) are directly measurable, making percentage-based attribution natural. Typical range: $3-8 per qualified lead, 0.5-1.5% of attributed closed revenue."
+    tags: ["success-fee", "sales"]
+    difficulty: "basic"
+
+  - id: "ch14-05-monetisation-005"
+    front: "Why is the license model appropriate for legal and healthcare domains?"
+    back: "BECAUSE these domains involve regulatory compliance, professional liability, and patient/client safety, THEREFORE both parties need contractual protections that a license agreement provides. The pricing reflects the risk profile and covers security, legal, and compliance reviews."
+    tags: ["license", "regulated"]
+    difficulty: "intermediate"
+    why: "Connects the model choice to the domain's risk characteristics"
+
+  - id: "ch14-05-monetisation-006"
+    front: "What is the IP distinction in the marketplace model?"
+    back: "Organisation-specific knowledge (internal procedures, client lists, proprietary methods) is NOT publishable. General domain best practices (how to structure a regulatory review, how to qualify leads in an industry) ARE publishable and valuable."
+    tags: ["marketplace", "IP"]
+    difficulty: "intermediate"
+
+  - id: "ch14-05-monetisation-007"
+    front: "Which monetisation model fits HR and technical documentation domains? Why?"
+    back: "Subscription. BECAUSE value in HR and documentation is continuous and diffuse (every employee benefits, none can be isolated), THEREFORE attribution to specific outcomes is impractical. A recurring fee matches the continuous value pattern."
+    tags: ["subscription", "HR", "documentation"]
+    difficulty: "intermediate"
+    why: "Tests the reasoning behind model-domain matching, not just the pairing"
+
+  - id: "ch14-05-monetisation-008"
+    front: "What three components must an attribution methodology define?"
+    back: "1. What counts as agent-attributed (what outcomes the agent caused).\n2. What the baseline is (what would have happened without the agent).\n3. Who measures (independent measurement to prevent disputes)."
+    tags: ["attribution", "success-fee"]
+    difficulty: "intermediate"
+
+  - id: "ch14-05-monetisation-009"
+    front: "What is the marginal cost of adding a new subscriber to a marketplace SKILL.md?"
+    back: "Effectively zero. The SKILL.md is written once; each additional subscriber uses the same document without additional production cost."
+    tags: ["marketplace", "economics"]
+    difficulty: "basic"
+
+  - id: "ch14-05-monetisation-010"
+    front: "What maturity level must an organisation reach before a license model deployment is appropriate?"
+    back: "Level 3 or higher (Integration). License deployments require security review, legal review, and compliance assessment -- governance infrastructure that only exists at Level 3+."
+    tags: ["license", "maturity"]
+    difficulty: "intermediate"
+
+  - id: "ch14-05-monetisation-011"
+    front: "What is the key risk of each monetisation model?"
+    back: "Success Fee: attribution disputes.\nSubscription: fails to self-justify without active measurement.\nLicense: lengthy procurement process (months).\nMarketplace: IP boundary confusion (publishing proprietary vs general knowledge)."
+    tags: ["risks", "overview"]
+    difficulty: "advanced"
+    why: "Tests comprehensive understanding of all four models' vulnerabilities"
+
+  - id: "ch14-05-monetisation-012"
+    front: "How should an organisation fix the subscription model's self-justification weakness?"
+    back: "Build measurement into the deployment from day one. Track time saved, errors prevented, queries handled -- whatever makes value visible even when it cannot be attributed to specific revenue events."
+    tags: ["subscription", "measurement"]
+    difficulty: "advanced"
+    why: "Tests ability to identify a mitigation strategy, not just name the problem"
