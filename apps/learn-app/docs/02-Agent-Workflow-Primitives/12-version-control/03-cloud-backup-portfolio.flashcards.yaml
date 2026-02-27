@@ -1,0 +1,84 @@
+deck:
+  id: "ch12-03-cloud-backup"
+  title: "Cloud Backup & Portfolio"
+  description: "Push projects to GitHub for cloud backup and career showcase — remotes, push, clone, .gitignore, and secret protection."
+  tags: ["github", "backup", "portfolio", "remote", "gitignore"]
+  version: 1
+
+cards:
+  - id: "ch12-03-cloud-backup-001"
+    front: "What is the difference between Git and GitHub?"
+    back: "Git is a local version control tool.\nGitHub is a cloud service that stores Git projects."
+    tags: ["git", "github"]
+    difficulty: "basic"
+
+  - id: "ch12-03-cloud-backup-002"
+    front: "Why does GitHub serve as both a backup system and a career portfolio?"
+    back: "As backup, it protects projects from hardware failure. As portfolio, it shows employers real projects, commit history, and problem-solving process — evidence a resume can't provide."
+    tags: ["github", "portfolio", "backup"]
+    difficulty: "intermediate"
+    why: "What does a GitHub profile reveal about you that a resume cannot?"
+
+  - id: "ch12-03-cloud-backup-003"
+    front: "What does `git remote add origin <url>` do?"
+    back: "Connects your local repository to a GitHub repository as the default cloud location."
+    tags: ["git", "remote", "origin"]
+    difficulty: "basic"
+
+  - id: "ch12-03-cloud-backup-004"
+    front: "What does `git push` do?"
+    back: "Uploads local commits to the remote repository on GitHub."
+    tags: ["git", "push"]
+    difficulty: "basic"
+
+  - id: "ch12-03-cloud-backup-005"
+    front: "What does `git clone <url>` do?"
+    back: "Downloads a complete copy of a remote project, including all files and commit history."
+    tags: ["git", "clone"]
+    difficulty: "basic"
+
+  - id: "ch12-03-cloud-backup-006"
+    front: "What does a `.gitignore` file do?"
+    back: "Tells Git which untracked files to skip — they won't be staged, committed, or pushed."
+    tags: ["git", "gitignore", "safety"]
+    difficulty: "basic"
+
+  - id: "ch12-03-cloud-backup-007"
+    front: "A file with secrets was already committed. Does adding it to `.gitignore` remove it from history?"
+    back: "Adding to `.gitignore` only prevents future tracking. The secret persists in past commits. You must run `git rm --cached <file>` and revoke the exposed secret."
+    tags: ["git", "gitignore", "security"]
+    difficulty: "intermediate"
+    why: "Why is revoking the key more important than removing the file from history?"
+
+  - id: "ch12-03-cloud-backup-008"
+    front: "Why must `.gitignore` be created before your first push to GitHub?"
+    back: "Once secrets are pushed, they exist in Git history on the remote. Deleting the file afterward doesn't remove it from past commits — anyone who clones the repo gets every version, including the one with the secret."
+    tags: ["git", "gitignore", "security"]
+    difficulty: "intermediate"
+    why: "What concrete steps must you take if you accidentally push an API key?"
+
+  - id: "ch12-03-cloud-backup-009"
+    front: "How do you untrack a file that was already committed in Git?"
+    back: "`git rm --cached <file>` then commit the change."
+    tags: ["git", "untrack"]
+    difficulty: "intermediate"
+
+  - id: "ch12-03-cloud-backup-010"
+    front: "In the 2017 GitLab incident, why did five backup systems fail to prevent data loss?"
+    back: "Automated backups had never actually run due to misconfiguration, and failure alerts were silently rejected by email filters. Untested backups are equivalent to no backups."
+    tags: ["backup", "gitlab", "testing"]
+    difficulty: "intermediate"
+    why: "How do you verify that your own backup actually works?"
+
+  - id: "ch12-03-cloud-backup-011"
+    front: "How do you verify that a GitHub backup actually works?"
+    back: "Clone the project to a separate folder and confirm all files and commit history are intact."
+    tags: ["github", "backup", "verification"]
+    difficulty: "intermediate"
+
+  - id: "ch12-03-cloud-backup-012"
+    front: "Sarah pushed her project to GitHub, then Maya noticed an API key in the code. Sarah deleted the file and pushed again. Why didn't that fix the problem?"
+    back: "Git preserves every version of every file in commit history. The key still exists in the earlier commit — anyone who clones the repo can see it. She must revoke the key and generate a new one."
+    tags: ["git", "security", "secrets"]
+    difficulty: "advanced"
+    why: "Why is 'delete and push again' a dangerous mental model for secret exposure?"

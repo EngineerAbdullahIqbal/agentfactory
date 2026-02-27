@@ -379,3 +379,9 @@ You started this chapter pressing Ctrl+Z and hoping. You're ending it with a sys
 **Add error recovery to your workflow:**
 
 > "My workflow covers the happy path. What happens when things go wrong? Help me add an error recovery section for: merge conflicts, accidental commits to the wrong branch, and pushing secrets to GitHub. For each, give me the symptom, the fix, and how to prevent it."
+
+---
+
+## Flashcards Study Aid
+
+<Flashcards />

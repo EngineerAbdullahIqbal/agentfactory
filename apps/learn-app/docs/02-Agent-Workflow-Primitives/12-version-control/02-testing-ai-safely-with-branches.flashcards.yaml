@@ -1,0 +1,76 @@
+deck:
+  id: "ch12-02-branches"
+  title: "Testing AI Safely with Branches"
+  description: "Git branches for parallel experimentation — creating, switching, merging, cleanup, and deciding when to branch."
+  tags: ["git", "branches", "merge", "experimentation"]
+  version: 1
+
+cards:
+  - id: "ch12-02-branches-001"
+    front: "In Git, what is a branch?"
+    back: "A parallel version of your entire project that doesn't interfere with other branches."
+    tags: ["git", "branches"]
+    difficulty: "basic"
+
+  - id: "ch12-02-branches-002"
+    front: "What is the `main` branch in a Git repository?"
+    back: "The trusted, stable version of the project that other branches are created from."
+    tags: ["git", "main-branch"]
+    difficulty: "basic"
+
+  - id: "ch12-02-branches-003"
+    front: "You create a file on a feature branch, then switch to main. Why does the file vanish?"
+    back: "Branch isolation means each branch has its own timeline. The file's commit only exists on the feature branch, so main doesn't know about it until you merge."
+    tags: ["git", "branch-isolation"]
+    difficulty: "intermediate"
+    why: "How does this isolation protect you when an experiment goes wrong?"
+
+  - id: "ch12-02-branches-004"
+    front: "What two commands create a branch and switch to it?"
+    back: "`git branch <name>` then `git switch <name>`\n(or `git switch -c <name>` in one step)"
+    tags: ["git", "branches", "commands"]
+    difficulty: "basic"
+
+  - id: "ch12-02-branches-005"
+    front: "What does 'fast-forward' mean when Git merges a branch?"
+    back: "Main hadn't changed since the branch was created, so Git simply moves main forward to include the new commits."
+    tags: ["git", "merge", "fast-forward"]
+    difficulty: "intermediate"
+
+  - id: "ch12-02-branches-006"
+    front: "What is the difference between `git branch -d` and `git branch -D`?"
+    back: "`-d` safely deletes only merged branches.\n`-D` force-deletes even unmerged branches."
+    tags: ["git", "branch-cleanup"]
+    difficulty: "intermediate"
+
+  - id: "ch12-02-branches-007"
+    front: "After merging a branch into main and deleting the branch name, what happens to the commits?"
+    back: "The commits are preserved in main's history. Deleting the branch only removes the label, not the work."
+    tags: ["git", "merge", "branch-cleanup"]
+    difficulty: "basic"
+
+  - id: "ch12-02-branches-008"
+    front: "Why is branching better than sequential commits when you want to compare two approaches?"
+    back: "Sequential commits mix both approaches in one timeline, making it hard to discard one cleanly. Branches keep each approach isolated so you can switch between them and delete the loser without affecting the winner."
+    tags: ["git", "branches", "experimentation"]
+    difficulty: "advanced"
+    why: "What happens to your commit history if you test two ideas sequentially and the first one was wrong?"
+
+  - id: "ch12-02-branches-009"
+    front: "Name any 3 of the 4 situations where you should branch instead of committing directly?"
+    back: "1. Testing two+ approaches\n2. Change might break something\n3. Want to review before merging\n4. Someone else works on the same project"
+    tags: ["git", "branches", "decision"]
+    difficulty: "intermediate"
+
+  - id: "ch12-02-branches-010"
+    front: "What do these branch name prefixes communicate: feature/, experiment/, bugfix/?"
+    back: "feature/ = adding something new\nexperiment/ = testing a risky idea\nbugfix/ = fixing a problem"
+    tags: ["git", "naming-conventions"]
+    difficulty: "basic"
+
+  - id: "ch12-02-branches-011"
+    front: "How should you decide whether to branch or commit directly to main?"
+    back: "If you're thinking 'this might go wrong,' branch. If the change is small, you're confident, and you're working alone, commit directly."
+    tags: ["git", "branches", "decision"]
+    difficulty: "intermediate"
+    why: "What's the cost of branching when you didn't need to, versus not branching when you should have?"

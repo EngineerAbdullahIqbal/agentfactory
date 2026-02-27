@@ -411,3 +411,9 @@ That's what branches solve — and that's the next lesson.
 **Write better commit messages:**
 
 > "Here are five bad commit messages: 'update', 'fix stuff', 'changes', 'WIP', 'asdf'. For each one, rewrite it as a clear message that explains WHY the change was made, not just WHAT changed. Then give me a template I can follow: what should the first line say? When should I add more detail?"
+
+---
+
+## Flashcards Study Aid
+
+<Flashcards />

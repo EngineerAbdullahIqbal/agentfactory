@@ -283,3 +283,9 @@ That's what the next lesson solves.
 **Simulate a disaster recovery:**
 
 > "Pretend my laptop just died. All I have is my GitHub account and a new computer. Walk me through recovering my project from scratch: installing Git, cloning, verifying everything is intact, and getting back to work. How long would this take? What would I lose if I hadn't pushed in three days?"
+
+---
+
+## Flashcards Study Aid
+
+<Flashcards />

@@ -1,0 +1,96 @@
+deck:
+  id: "ch12-04-code-review-prs"
+  title: "Code Review, Pull Requests & Reusable Patterns"
+  description: "Pull requests as review gates, diff reading, AI transparency in PRs, and three professional Git patterns."
+  tags: ["pull-request", "code-review", "patterns", "workflow"]
+  version: 1
+
+cards:
+  - id: "ch12-04-code-review-prs-001"
+    front: "What is a pull request (PR) in GitHub?"
+    back: "A request to review changes on a branch before merging them into main."
+    tags: ["pull-request", "github"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-002"
+    front: "What are the five steps of the PR workflow?"
+    back: "1. Push feature branch to GitHub\n2. Create PR (compare branch to main)\n3. GitHub shows the diff\n4. Review the changes\n5. Merge when satisfied"
+    tags: ["pull-request", "workflow"]
+    difficulty: "intermediate"
+
+  - id: "ch12-04-code-review-prs-003"
+    front: "What three questions should a PR description answer?"
+    back: "1. What changed?\n2. How was it tested?\n3. What role did AI play?"
+    tags: ["pull-request", "description"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-004"
+    front: "Why do pull requests matter even when you're working alone?"
+    back: "The forced review pause catches mistakes before they reach main. You spot errors you'd miss without re-reading, and you build the habit before collaborating with others."
+    tags: ["pull-request", "solo-developer"]
+    difficulty: "intermediate"
+    why: "What's the cost of skipping review when you assume your own code is correct?"
+
+  - id: "ch12-04-code-review-prs-005"
+    front: "Why is noting AI assistance in PR descriptions a professional strength?"
+    back: "It shows transparency and ownership — you directed the AI and verified the result. Employers see someone who works honestly and takes responsibility, not someone hiding their process."
+    tags: ["ai-assistance", "transparency"]
+    difficulty: "intermediate"
+    why: "What impression does hiding AI usage give versus disclosing it?"
+
+  - id: "ch12-04-code-review-prs-006"
+    front: "What three questions should you ask when reviewing a diff?"
+    back: "1. Does it match my intent?\n2. Is anything unexpected?\n3. Do I understand every change?"
+    tags: ["code-review", "diff"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-007"
+    front: "You see code in a PR diff that you don't understand. What should you do?"
+    back: "Don't merge. Ask your agent to explain it first."
+    tags: ["code-review", "safety"]
+    difficulty: "intermediate"
+
+  - id: "ch12-04-code-review-prs-008"
+    front: "What is Pattern 1: Commit Before Experimenting?"
+    back: "Take a snapshot of working state before trying anything risky, so you have a restore point if the experiment fails."
+    tags: ["git-pattern", "commit"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-009"
+    front: "What is Pattern 2: Branch-Test-Merge?"
+    back: "Create a branch for risky changes, test on that branch, then merge into main if it works or delete the branch if it fails."
+    tags: ["git-pattern", "branches"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-010"
+    front: "What is Pattern 3: Push for Backup?"
+    back: "Push to GitHub after meaningful work — don't wait until end of day."
+    tags: ["git-pattern", "backup"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-011"
+    front: "How does the Knight Capital incident illustrate the danger of skipping code review?"
+    back: "Unreviewed deployment changes caused massive financial losses. A single review pause — checking changes before they go live — can prevent this class of catastrophic mistake."
+    tags: ["code-review", "knight-capital"]
+    difficulty: "intermediate"
+    why: "Why is 'I wrote it, so it must be fine' a dangerous assumption?"
+
+  - id: "ch12-04-code-review-prs-012"
+    front: "What does `git switch -c <branch-name>` do?"
+    back: "Creates a new branch and switches to it in one command."
+    tags: ["git", "branches", "commands"]
+    difficulty: "basic"
+
+  - id: "ch12-04-code-review-prs-013"
+    front: "How do the three Git patterns map to the Seven Principles of General Agent Problem Solving?"
+    back: "Commit Before Experiment = Small, Reversible Decomposition.\nBranch-Test-Merge = Constraints and Safety.\nPush for Backup = Persisting State in Files."
+    tags: ["git-pattern", "seven-principles"]
+    difficulty: "advanced"
+    why: "Which two additional principles does the chapter practice through git status and commit messages?"
+
+  - id: "ch12-04-code-review-prs-014"
+    front: "A developer merges AI-generated code without reading the diff because all tests pass. Why is this still risky?"
+    back: "Tests check correctness, not intent. The code might work but do something different from what was requested — intent mismatches are invisible to automated tests."
+    tags: ["code-review", "ai-assistance", "safety"]
+    difficulty: "advanced"
+    why: "How would you catch an intent mismatch that tests can't detect?"
