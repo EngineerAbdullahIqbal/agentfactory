@@ -6,6 +6,10 @@ chapter_number: 12
 part_number: 2
 version: 2.0
 status: review
+slides:
+  source: "https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-2/chapter-12/version-control.pdf"
+  title: "Version Control & Safe Experimentation"
+  height: 700
 ---
 
 # Chapter 12: Version Control & Safe Experimentation
@@ -87,6 +91,8 @@ In [The Seven Principles of General Agent Problem Solving](/docs/General-Agents-
 | **Verification as Core Step** | Check status before and after every operation |
 | **Constraints and Safety** | Branches isolate experiments; never push untested code |
 | **Observability** | Git log shows exactly what changed, when, and why |
+
+## 📚 Teaching Aid
 
 ## What You'll Learn
 
