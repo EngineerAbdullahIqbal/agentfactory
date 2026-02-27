@@ -303,7 +303,7 @@ Use this challenge if your target role includes operations ownership or on-call 
 | Relationship correctness | Core 3              | Challenge B         |
 | Transaction safety       | Core 4              | Challenge C         |
 | Neon reliability         | Core 4              | Challenge C         |
-| Hybrid judgment          | Core 4              | Challenge A         |
+| Hybrid judgment          | —                   | Challenge A         |
 
 If you complete all Core exercises with clear evidence, you meet Chapter 10 baseline mastery. Challenge track pushes you toward production-level judgment.
 
