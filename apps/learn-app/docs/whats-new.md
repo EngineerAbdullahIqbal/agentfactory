@@ -18,6 +18,9 @@ Track meaningful updates to the book. This page is automatically updated when do
 <!-- CHANGELOG_START - Do not remove this marker -->
 
 ### 2026-02-27
+- Improve/ch9 ([#781](https://github.com/panaversity/agentfactory/pull/781))
+
+### 2026-02-27
 - feat: Add teaching slides for ch12 ([#780](https://github.com/panaversity/agentfactory/pull/780))
 
 ### 2026-02-27
