@@ -5,6 +5,10 @@ title: "Part 3: Domain Agent Workflows — Building for the Enterprise"
 
 # Part 3: Domain Agent Workflows — Building for the Enterprise
 
+## Introduction & Overview
+
+---
+
 ### A Different Kind of Builder
 
 The first two parts of this book were addressed to a specific kind of person: someone who writes code, thinks in systems, and is comfortable staring at a terminal. Part 3 is addressed to everyone else.
