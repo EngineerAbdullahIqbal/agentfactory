@@ -5,29 +5,29 @@ chapter: 10
 lesson: 1
 duration_minutes: 20
 description: "Prove persistence in under 5 minutes, then capture reusable database workflow patterns"
-keywords: ["skill ownership", "persistence proof", "SQLAlchemy", "Neon"]
+keywords: ["persistence verification", "persistence proof", "database skill", "Neon"]
 skills:
-  - name: "Skill Ownership"
+  - name: "Persistence Verification"
     proficiency_level: "A1"
     category: "Conceptual"
     bloom_level: "Understand"
     digcomp_area: "Learning Strategy"
-    measurable_at_this_level: "Student can explain why reusable patterns beat one-off memory"
+    measurable_at_this_level: "Student can verify data survives process restart by reading agent-provided verification output"
   - name: "Pattern Capture"
     proficiency_level: "A2"
     category: "Applied"
     bloom_level: "Apply"
     digcomp_area: "Digital Content Creation"
-    measurable_at_this_level: "Student can capture model/CRUD/transaction/deployment patterns in SKILL.md"
+    measurable_at_this_level: "Student can direct an agent to create a reusable database-deployment skill with persona, decision logic, and guardrails"
 learning_objectives:
-  - objective: "Prove data persists across script restarts"
+  - objective: "Verify that data persists across agent script restarts by reading verification output"
     proficiency_level: "A1"
     bloom_level: "Apply"
-    assessment_method: "Student runs write/read split scripts and confirms persistence"
-  - objective: "Create a reusable database skill scaffold"
+    assessment_method: "Student runs agent-written write/read scripts and confirms persistence from output"
+  - objective: "Direct an agent to create a reusable database-deployment skill scaffold"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student creates concise SKILL.md with decision logic"
+    assessment_method: "Student directs agent to create concise SKILL.md with decision logic"
 cognitive_load:
   new_concepts: 3
   assessment: "Persistence proof + pattern capture + guardrails"
@@ -45,8 +45,8 @@ teaching_guide:
     - "The skill scaffold grows across the chapter — this lesson plants the seed that later lessons extend"
   misconceptions:
     - "Students want to jump straight to Neon cloud setup — they must prove local persistence first or they will debug cloud config when the real issue is understanding"
-    - "Students think saving to JSON is equivalent to a database — it breaks down at relationships, concurrent writes, and query flexibility"
     - "Students confuse in-memory data (Python dict) with on-disk persistence (SQLite file) — the process boundary test makes this visceral"
+    - "Students try to write the persistence proof script themselves — they should tell the agent what to build and read the output"
   discussion_prompts:
     - "What happens to a Python dictionary when you press Ctrl+C? How is that different from what happens to the SQLite .db file?"
     - "Why is capturing a skill scaffold now more valuable than waiting until you are an expert? Think about what you forget between projects."
@@ -56,8 +56,8 @@ teaching_guide:
     - "When students hit the 'When the Proof Fails' section, let them deliberately break it (skip commit, use wrong path) to build debugging instincts"
     - "The skill scaffold appendix is a template, not a finished product — emphasize it will grow across the chapter"
   assessment_quick_check:
-    - "Explain in one sentence why a Python dictionary is not persistent"
-    - "What are the four things to check when read_later.py returns an empty list?"
+    - "What output would prove that data survived a process restart?"
+    - "What should you do if the agent's read script returns an empty list?"
     - "What must a useful SKILL.md include beyond definitions?"
 ---
 
@@ -73,8 +73,7 @@ You might be thinking: "Can't I just save to a JSON file?" You can. But try addi
 
 :::info[Key Terms for This Lesson]
 - **Persistence**: Data that survives after your program exits -- close the terminal, reboot, come back tomorrow, your data is still there
-- **ORM (Object-Relational Mapper)**: A library that lets you work with database tables using Python classes instead of raw SQL strings -- SQLAlchemy is the ORM we use
-- **declarative_base**: SQLAlchemy's starting point -- you inherit from it to create model classes that map directly to database tables
+- **Process boundary**: The moment one program ends and a new one begins -- the database file survives this; Python variables do not
 :::
 
 ## The Mistake That Wastes Hours
@@ -98,9 +97,9 @@ Process Boundary Proof:
   ┌─────────────┐             ┌─────────────┐
   │ write_once.py│             │ read_later.py│
   │              │             │              │
-  │ session.add()│             │ select(...)  │
-  │ session.     │             │ .scalars()   │
-  │   commit()   │             │ .all()       │
+  │  saves data  │             │  reads data  │
+  │  to disk     │             │  from disk   │
+  │              │             │              │
   └──────┬───────┘             └──────┬───────┘
          │                            │
          │  ┌──────────────────┐      │
@@ -114,83 +113,50 @@ Process Boundary Proof:
 
 Two separate processes. One shared database file on disk. The first process is long gone by the time the second one starts. That is persistence.
 
-### Runnable Block: `write_once.py`
+:::conversation[What you tell the agent]
+Prove that data survives after the program closes. Write two scripts:
+- write_once.py: saves a marker called "persistent-check" to a local database, then exits
+- read_later.py: opens a fresh connection and reads back all markers
 
-```python
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.orm import Session, declarative_base
+I should be able to run write_once.py, then close that program completely, then run read_later.py in a new terminal and see my marker.
+:::
 
-engine = create_engine("sqlite:///quick_persist.db")
-Base = declarative_base()
-
-
-class Marker(Base):
-    __tablename__ = "markers"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-
-
-Base.metadata.create_all(engine)
-
-with Session(engine) as session:
-    session.add(Marker(name="persistent-check"))
-    session.commit()
-
-print("Wrote marker")
-```
-
-**Output:**
-
-```text
-Wrote marker
-```
-
-### Runnable Block: `read_later.py`
-
-```python
-from sqlalchemy import Column, Integer, String, create_engine, select
-from sqlalchemy.orm import Session, declarative_base
-
-engine = create_engine("sqlite:///quick_persist.db")
-Base = declarative_base()
-
-
-class Marker(Base):
-    __tablename__ = "markers"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-
-
-with Session(engine) as session:
-    rows = session.execute(select(Marker)).scalars().all()
-    print([r.name for r in rows])
-```
-
-Run them in sequence -- two separate commands, two separate processes:
+:::output[What you verify]
+The agent writes both scripts. Now you run them:
 
 ```bash
 python write_once.py
+```
+
+Output:
+
+```
+Wrote marker
+```
+
+```bash
 python read_later.py
 ```
 
-**Output:**
+Output:
 
-```text
+```
 ['persistent-check']
 ```
 
-That list printed from a brand-new process that never called `session.add()`. The data survived because it lives on disk, not in Python's memory. (In-memory data structures like dictionaries die with the process. The `.db` file on disk does not.)
+That list printed from a brand-new process that never saved the marker. The data survived because it lives on disk, not in Python's memory.
+:::
 
 This pattern is not limited to budget trackers. Imagine a TODO app where closing the browser does not lose your tasks. Or an IoT sensor logger where temperature readings survive power outages. The principle is identical: write in one process, read in another, trust the result.
 
 ### When the Proof Fails
 
-If `read_later.py` prints an empty list, check these four things before anything else:
+If read_later.py shows an empty list, tell the agent: "The read script returned empty -- find what's missing." The agent will check:
 
-1. Confirm both scripts point to the same `sqlite:///` file path
-2. Confirm `session.commit()` runs in the write script (without it, nothing reaches disk)
-3. Confirm the read script uses the same table name and model mapping
-4. Delete the DB file and rerun both scripts to eliminate stale confusion
+1. Both scripts point to the same database file path
+2. The write script actually commits data to disk (without a commit, nothing is saved)
+3. The read script uses the same table name and data mapping
+4. Whether a stale database file is causing confusion (delete it and rerun both scripts)
 
 :::tip[Pause and Reflect]
 You just proved data survives across process boundaries. How is this different from a Python dictionary that holds data while your script runs? What happens to a dictionary when the script exits?
@@ -255,13 +221,13 @@ description: Build persistent data layers with SQLAlchemy + PostgreSQL (Neon).
 ### Prompt 1: Persistence Proof
 
 ```text
-Generate the minimal two-script SQLAlchemy persistence proof:
-Script A writes one row to sqlite:/// file storage.
-Script B reads it in a separate run.
-Explain why this proves process-boundary persistence.
+Prove that data survives after the program closes. Write two scripts:
+one that saves a marker to a local database, one that reads it back
+in a separate run. Explain why this proves data outlives the process
+that created it.
 ```
 
-**What you're learning:** You are reinforcing the core mental model -- persistence means data outlives the process that created it. Asking AI to explain "why" forces you to verify your own understanding against a second perspective. If the AI's explanation surprises you, that is a learning signal.
+**What you're learning:** You are reinforcing the core mental model -- persistence means data outlives the process that created it. Asking the agent to explain "why" forces you to verify your own understanding against a second perspective. If the explanation surprises you, that is a learning signal.
 
 ### Prompt 2: Skill Skeleton
 
@@ -271,26 +237,25 @@ Persona, When to Use, Decision Logic, Guardrails.
 Keep each section operational and beginner-friendly.
 ```
 
-**What you're learning:** You are practicing pattern capture -- turning experiential knowledge into a reusable artifact. The AI drafts the structure; you refine it with your actual project context. Notice whether the AI's decision logic matches your real workflow or needs correction.
+**What you're learning:** You are practicing pattern capture -- turning experiential knowledge into a reusable artifact. The agent drafts the structure; you refine it with your actual project context. Notice whether the decision logic matches your real workflow or needs correction.
 
 ### Prompt 3: Apply to Your Domain
 
 ```text
 Think of a project you're working on (or want to build). What data
-would you need to persist across restarts? Design a minimal two-script
-persistence proof for YOUR domain -- one script writes, another reads.
-What would prove your data survived?
+would you need to persist across restarts? Describe what a two-step
+persistence proof would look like for YOUR domain -- what would
+write_once.py save, and what would read_later.py retrieve?
 ```
 
 **What you're learning:** The persistence proof pattern transfers to ANY domain. Whether it is user profiles, sensor readings, or game saves -- the principle is the same: write in one process, read in another, trust the result.
 
 ## Checkpoint
 
-- [ ] I ran separate write/read scripts and proved persistence.
-- [ ] I can explain why this test is different from in-memory DB behavior.
-- [ ] I created a lean `/database-deployment` skill scaffold.
-- [ ] My skill contains decision logic, not just definitions.
-- [ ] My guardrails include rollback and secret handling.
+- [ ] I can explain why a Python dictionary is NOT persistent (it dies when the process exits)
+- [ ] I directed the agent to write a two-script persistence proof and verified the output showed my marker surviving
+- [ ] I know what to tell the agent if read_later.py returns an empty list
+- [ ] I created a lean /database-deployment skill scaffold with decision logic and guardrails
 
 ## Flashcards Study Aid
 

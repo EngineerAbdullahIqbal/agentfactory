@@ -2,7 +2,7 @@
 sidebar_position: 10
 chapter: 11
 lesson: 10
-title: "Lesson 10: Debugging & Troubleshooting"
+title: "Debugging & Troubleshooting"
 description: "Diagnose production agent failures systematically using journalctl, network diagnosis, disk monitoring, and process debugging. When your Digital FTE stops working, you'll know exactly where to look."
 keywords: ["debugging", "troubleshooting", "journalctl", "logs", "network diagnostics", "disk monitoring", "strace", "lsof", "triage", "agent debugging"]
 duration_minutes: 60

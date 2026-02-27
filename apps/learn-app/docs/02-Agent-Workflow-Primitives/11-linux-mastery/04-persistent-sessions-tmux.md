@@ -1,6 +1,6 @@
 ---
 sidebar_position: 4
-title: "Lesson 4: Persistent Sessions with tmux"
+title: "Persistent Sessions with tmux"
 description: "Create terminal sessions that survive disconnections, split panes for multi-task monitoring, write session scripts for repeatable layouts, and manage windows for complex agent workflows"
 keywords: ["tmux", "terminal multiplexer", "persistent sessions", "pane splitting", "named sessions", "session scripts", "window management", "copy mode", "SSH persistence"]
 chapter: 11

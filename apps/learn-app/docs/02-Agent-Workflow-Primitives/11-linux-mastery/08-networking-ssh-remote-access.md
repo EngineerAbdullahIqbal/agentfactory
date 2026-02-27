@@ -2,7 +2,7 @@
 sidebar_position: 8
 chapter: 11
 lesson: 8
-title: "Lesson 8: Networking Fundamentals & SSH Remote Access"
+title: "Networking Fundamentals & SSH Remote Access"
 description: "Understand ports, localhost vs 0.0.0.0 binding, test endpoints with curl, establish SSH connections with key-based authentication, configure ~/.ssh/config for multiple servers, and protect agent ports with ufw firewall rules."
 keywords:
   [

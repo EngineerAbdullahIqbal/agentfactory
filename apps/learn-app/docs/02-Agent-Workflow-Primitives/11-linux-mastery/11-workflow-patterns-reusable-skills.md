@@ -2,7 +2,7 @@
 sidebar_position: 11
 chapter: 11
 lesson: 11
-title: "Lesson 11: Workflow Patterns & Reusable Skills"
+title: "Workflow Patterns & Reusable Skills"
 description: "Transform repeated deployment patterns into reusable automation, and build SKILL.md files that package your Linux operations expertise for permanent reuse"
 keywords: ["deployment patterns", "blue-green deployment", "log rotation", "monitoring", "zero-downtime", "rollback", "logrotate", "disk alerts", "cron", "production workflow", "reusable skills", "SKILL.md", "automation patterns", "persona questions principles", "agent operations", "portable scripts", "fresh-system testing"]
 duration_minutes: 90

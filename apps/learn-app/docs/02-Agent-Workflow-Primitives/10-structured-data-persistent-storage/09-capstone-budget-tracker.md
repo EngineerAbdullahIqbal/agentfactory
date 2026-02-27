@@ -7,27 +7,27 @@ duration_minutes: 40
 description: "Integrate schema, CRUD, relationships, transactions, Neon, and high-stakes verification in one app"
 keywords: ["capstone", "SQLAlchemy", "Neon", "transactions", "verification", "evidence bundle"]
 skills:
-  - name: "System Integration"
+  - name: "Director-Role System Integration"
     proficiency_level: "B1"
     category: "Applied"
     bloom_level: "Create"
-    digcomp_area: "Software Development"
-    measurable_at_this_level: "Student can integrate chapter primitives into one coherent app"
+    digcomp_area: "Problem Solving"
+    measurable_at_this_level: "Student can direct an agent through schema, CRUD, transactions, deployment, and verification — all in one end-to-end flow"
   - name: "Operational Judgment"
     proficiency_level: "B1"
     category: "Applied"
     bloom_level: "Evaluate"
     digcomp_area: "Problem Solving"
-    measurable_at_this_level: "Student can decide SQL-only vs hybrid verification by risk"
+    measurable_at_this_level: "Student can decide SQL-only vs hybrid verification by risk and make an evidence-backed release decision"
 learning_objectives:
-  - objective: "Integrate all chapter primitives into one working application"
+  - objective: "Act as director through the full build: describe, verify each gate, and make a release decision"
     proficiency_level: "B1"
     bloom_level: "Create"
-    assessment_method: "Student produces a complete evidence bundle covering CRUD, rollback, Neon, and verification"
+    assessment_method: "Student produces a complete evidence bundle by reading agent output at each gate"
   - objective: "Make risk-based release decisions using evidence"
     proficiency_level: "B1"
     bloom_level: "Evaluate"
-    assessment_method: "Student can block or approve release based on verification gate output"
+    assessment_method: "Student can block or approve release based on verification gate output, not gut feeling"
 cognitive_load:
   new_concepts: 2
   assessment: "2 new concepts (evidence bundle, release gate) — all other concepts are integration of previously learned material"
@@ -120,169 +120,75 @@ Evidence Pipeline:
 
 Five gates. One chain. If any gate fails, you stop and fix before continuing. No skipping ahead.
 
-## No-N+1 Monthly Summary
+## Directing the Monthly Summary
 
-This query shape avoids the category-by-category loops that made your Chapter 9 scripts slow. One round trip to the database, grouped and sorted:
+Tell your agent to produce a grouped monthly summary using a single database call — no loops, no separate per-category queries.
 
-```python
-from datetime import date
-from decimal import Decimal
+:::conversation[What you tell the agent]
+Generate Alice's January 2024 expense summary grouped by category, sorted by highest total first.
+Use one database call — no per-category loops.
+Return category name, expense count, and total for each group.
+Show the query count in the output so I can verify it used one call.
+:::
 
-from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric, String, func, select
-from sqlalchemy.orm import Session, declarative_base
+:::output[What you verify]
 
-Base = declarative_base()
+```
+python run_summary.py
 
-
-class Category(Base):
-    __tablename__ = "categories"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-
-
-class Expense(Base):
-    __tablename__ = "expenses"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
-    date = Column(Date, nullable=False)
-
-
-def monthly_summary(engine, user_id: int, year: int, month: int) -> list[dict]:
-    start = date(year, month, 1)
-    end = date(year + (month == 12), (month % 12) + 1, 1)
-
-    with Session(engine) as session:
-        rows = session.execute(
-            select(
-                Category.name.label("category"),
-                func.count(Expense.id).label("count"),
-                func.sum(Expense.amount).label("total"),
-            )
-            .join(Expense, Expense.category_id == Category.id)
-            .where(
-                Expense.user_id == user_id,
-                Expense.date >= start,
-                Expense.date < end,
-            )
-            .group_by(Category.name)
-            .order_by(func.sum(Expense.amount).desc())
-        ).all()
-
-    return [
-        {
-            "category": row.category,
-            "count": int(row.count),
-            "total": (row.total or Decimal("0")).quantize(Decimal("0.01")),
-        }
-        for row in rows
-    ]
+Output:
+  Alice — January 2024:
+  ┌─────────────────┬───────┬──────────┐
+  │ Category        │ Count │ Total    │
+  ├─────────────────┼───────┼──────────┤
+  │ Housing         │   1   │ $1500.00 │
+  │ Food            │   3   │  $287.45 │
+  │ Transport       │   2   │   $94.20 │
+  └─────────────────┴───────┴──────────┘
+  Grand total: $1881.65
+  Queries used: 1
 ```
 
-**Output:**
+"Queries used: 1" is the signal that matters. One database call produced the full grouped report. Compare that to the Chapter 9 approach: nested loops, manual grouping, custom sorting — all doing what one SQL query handles natively.
+:::
+
+## Directing the Release Gate
+
+This is where "ready for demo" becomes "ready for release." Direct the agent to compare the SQL summary against the raw CSV ledger, using $0.01 as the mismatch tolerance.
+
+:::conversation[What you tell the agent]
+Verify Alice's January 2024 summary from two independent sources:
+1. The database (SQL path)
+2. The raw CSV ledger file (CSV path)
+
+For each category, compare the totals. If any category differs by more than $0.01, block the release and show me the mismatch details with the category name, SQL total, CSV total, and the delta.
+If all categories match, output: status: verified.
+:::
+
+:::output[What you verify]
+
 ```
-[
-  {"category": "Housing", "count": 1, "total": "1500.00"},
-  {"category": "Food", "count": 3, "total": "287.45"},
-  {"category": "Transport", "count": 2, "total": "94.20"}
-]
-```
+python verify_release.py
 
-Compare that to the Chapter 9 approach: nested loops, manual grouping, custom sorting -- all doing what one SQL query handles natively.
+Output (verified):
+  Checking Alice — January 2024...
+  Food:      SQL $287.45 | CSV $287.45 | ✓ match
+  Housing:   SQL $1500.00 | CSV $1500.00 | ✓ match
+  Transport: SQL $94.20 | CSV $94.20 | ✓ match
+  {"status": "verified"}
+  Release permitted.
 
-## User-Scoped Verification and Release Gate
-
-This is where "ready for demo" becomes "ready for release." The verification function reads the raw CSV independently -- different code path, different failure modes -- and compares totals to what SQL reports:
-
-```python
-import csv
-from decimal import Decimal
-from pathlib import Path
-
-REQUIRED_RAW_COLUMNS = {"user_id", "date", "category", "amount"}
-
-
-def verify_monthly_summary_from_raw(
-    raw_csv: Path, user_id: int, year: int, month: int
-) -> dict[str, Decimal]:
-    prefix = f"{year}-{month:02d}"
-    totals: dict[str, Decimal] = {}
-
-    with raw_csv.open("r", newline="") as f:
-        reader = csv.DictReader(f)
-
-        if not reader.fieldnames:
-            raise ValueError("raw ledger missing header row")
-
-        missing = REQUIRED_RAW_COLUMNS - set(reader.fieldnames)
-        if missing:
-            raise ValueError(f"raw ledger missing required columns: {sorted(missing)}")
-
-        for row in reader:
-            if int(row["user_id"]) != user_id:
-                continue
-            if not row["date"].startswith(prefix):
-                continue
-
-            cat = row["category"]
-            amount = Decimal(row["amount"])
-            totals[cat] = totals.get(cat, Decimal("0")) + amount
-
-    return totals
-
-
-def verify_or_block(sql_summary, raw_totals):
-    tolerance = Decimal("0.01")
-    sql_map = {
-        row["category"]: Decimal(row["total"]).quantize(Decimal("0.01"))
-        for row in sql_summary
-    }
-
-    mismatches = []
-    for category in sorted(set(sql_map) | set(raw_totals)):
-        sql_value = sql_map.get(category, Decimal("0")).quantize(Decimal("0.01"))
-        raw_value = raw_totals.get(category, Decimal("0")).quantize(Decimal("0.01"))
-        delta = abs(sql_value - raw_value)
-        if delta > tolerance:
-            mismatches.append(
-                {
-                    "category": category,
-                    "sql": str(sql_value),
-                    "raw": str(raw_value),
-                    "delta": str(delta),
-                }
-            )
-
-    if mismatches:
-        return {
-            "status": "blocked",
-            "reason": "verification_mismatch",
-            "tolerance": str(tolerance),
-            "mismatches": mismatches,
-        }
-
-    return {"status": "verified"}
+Output (blocked):
+  Checking Alice — January 2024...
+  Food:      SQL $287.45 | CSV $287.95 | ✗ delta $0.50
+  {"status": "blocked", "reason": "verification_mismatch",
+   "tolerance": "0.01",
+   "mismatches": [{"category": "Food", "sql": "287.45", "raw": "287.95", "delta": "0.50"}]}
+  Release BLOCKED — investigate before shipping.
 ```
 
-**Output (verified):**
-```json
-{"status": "verified"}
-```
-
-**Output (blocked):**
-```json
-{
-  "status": "blocked",
-  "reason": "verification_mismatch",
-  "tolerance": "0.01",
-  "mismatches": [
-    {"category": "Food", "sql": "287.45", "raw": "287.95", "delta": "0.50"}
-  ]
-}
-```
-
-When the gate returns `blocked`, you do not ship. That is not a bug in your engineering -- it is your engineering working correctly. Publishing despite a `blocked` status is a release process failure, not a query problem.
+When you see BLOCKED, you do not ship. That is your engineering working correctly. Publishing despite a `blocked` status is a release process failure, not a query problem.
+:::
 
 ## The Evidence Bundle
 
@@ -330,9 +236,10 @@ Publishing reports after a mismatch because "the SQL looks right." That is a rel
 Before you call this done, answer these honestly:
 
 - Can another engineer rerun your evidence bundle without verbal guidance?
-- Are all critical thresholds explicit (`0.01` tolerance, blocked status rules)?
+- Are all critical thresholds explicit (the $0.01 tolerance, the blocked status rules)?
 - Did you demonstrate at least one failure path, not only success?
-- Could a reviewer trace from requirement to code to evidence artifact quickly?
+- Could a reviewer trace from your requirement description to the agent's output to the evidence artifact quickly?
+- Did you describe requirements clearly enough that the agent built what you intended on the first try — or did you need to refine?
 
 If any answer is "no," the capstone is still in progress.
 
@@ -384,6 +291,14 @@ For each gate, specify: what you test, what "pass" looks like, and what "fail" m
 **What you're learning:** Evidence-driven release decisions transfer to ANY software project. Whether you're shipping a mobile app, deploying an API, or publishing a report -- the pattern is the same: define gates, run tests, collect proof, make decisions based on evidence rather than gut feeling.
 
 Your system is correct. But systems change. Users want new features. Schemas need to evolve. Data needs to migrate. Next chapter: how do you evolve a running system without breaking what works?
+
+## Checkpoint
+
+- [ ] I ran the full capstone sequence: schema → CRUD → rollback drill → Neon health check → summary → verification gate → release decision.
+- [ ] I read the evidence bundle output and made an explicit release decision (verified or blocked).
+- [ ] I directed the agent through at least one failure path and read the rollback confirmation.
+- [ ] I can explain the difference between "ready for demo" and "ready for release" in one sentence.
+- [ ] My evidence bundle could be read by another person without me explaining what any of it means.
 
 ## Flashcards Study Aid
 

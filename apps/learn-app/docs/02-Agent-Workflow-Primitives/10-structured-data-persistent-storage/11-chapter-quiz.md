@@ -118,15 +118,15 @@ explanation: "Bash excels at file operations and orchestration -- that is Chapte
 source: "Chapter README / Lesson 0"
 },
 {
-question: "Safest money type for Expense.amount is:",
+question: "When directing an agent to store expense amounts, which description produces correct money storage?",
 options: [
-"Float with rounding applied after operations",
-"String parsed to decimal at query time",
-"Numeric(10, 2) for exact decimal semantics",
-"Boolean flag paired with integer cents field"
+"Store amounts as exact dollars and cents, no rounding",
+"Store amounts as approximate numbers and round totals in the application",
+"Store amounts as text and parse them to numbers at query time",
+"Store a boolean for income or expense paired with a separate transaction count"
 ],
-correctOption: 2,
-explanation: "Financial values need exact decimal semantics. Float stores 0.1 + 0.2 as 0.30000000000000004 -- acceptable for physics simulations, unacceptable for money. Numeric(10, 2) guarantees exact cents, which is why every payment system, bank ledger, and accounting tool uses fixed-point decimals instead of floating point.",
+correctOption: 0,
+explanation: "Computers cannot store 0.1 + 0.2 as exactly 0.3 -- they store it as 0.30000000000000004. Telling the agent 'approximate number' produces that drift on every transaction. Telling the agent 'exact dollars and cents, no rounding' makes the database handle precision automatically. That tiny error -- thousandths of a cent per transaction -- compounds to hundreds of dollars at production scale.",
 source: "Lesson 2"
 },
 {

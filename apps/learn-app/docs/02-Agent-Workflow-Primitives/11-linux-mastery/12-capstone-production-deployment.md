@@ -2,7 +2,7 @@
 sidebar_position: 12
 chapter: 11
 lesson: 12
-title: "Lesson 12: Capstone — Spec-First Production Deployment"
+title: "Capstone — Spec-First Production Deployment"
 description: "Synthesize all chapter skills into a complete production deployment: write a deployment specification, implement it step-by-step, validate with layered checks, and package as a repeatable script."
 keywords: ["capstone", "production deployment", "systemd", "deployment specification", "layered validation", "deploy script", "spec-first", "agent deployment", "linux mastery"]
 duration_minutes: 90

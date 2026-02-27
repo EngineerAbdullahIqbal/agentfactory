@@ -7,27 +7,27 @@ duration_minutes: 25
 description: "Deploy SQLAlchemy models to Neon with secure config and reliable connection behavior"
 keywords: ["Neon", "PostgreSQL", "DATABASE_URL", "pool_pre_ping", "security"]
 skills:
-  - name: "Cloud Database Deployment"
+  - name: "Cloud Deployment Direction"
     proficiency_level: "A2"
-    category: "Technical"
+    category: "Applied"
     bloom_level: "Apply"
     digcomp_area: "Infrastructure"
-    measurable_at_this_level: "Student can configure a secure Neon connection with pooling and health checks"
+    measurable_at_this_level: "Student can direct an agent to configure a secure Neon connection and verify the health check output"
   - name: "Secret Management"
     proficiency_level: "A2"
     category: "Applied"
     bloom_level: "Apply"
     digcomp_area: "Safety and Security"
-    measurable_at_this_level: "Student can store credentials in .env, add .env to .gitignore, and load via dotenv"
+    measurable_at_this_level: "Student can store credentials in .env, add .env to .gitignore, and direct the agent to load them safely"
 learning_objectives:
-  - objective: "Configure a secure, pooled connection to Neon PostgreSQL"
+  - objective: "Direct an agent to configure a Neon connection and verify the SELECT 1 health check output"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student passes SELECT 1 with pool_pre_ping=True against Neon"
-  - objective: "Implement proper secret handling for database credentials"
+    assessment_method: "Student reads health check output confirming successful Neon connection"
+  - objective: "Store DATABASE_URL in .env, add .env to .gitignore, and never let credentials touch source code"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student loads DATABASE_URL from .env and .env is in .gitignore"
+    assessment_method: "Student confirms .env exists, .gitignore contains .env, and agent loaded credentials from file"
 cognitive_load:
   new_concepts: 4
   assessment: "4 concepts (connection string, connection pool, pool_pre_ping, secret handling) within A2 limit"
@@ -134,26 +134,7 @@ uv add python-dotenv psycopg2-binary
 
 If your project uses `pip` instead of `uv`, replace that with `pip install python-dotenv psycopg2-binary`.
 
-**Step 4:** Load the secret in Python, never hardcode it:
-
-```python
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL not set — check your .env file")
-```
-
-**Output:**
-
-```
-# No output if successful — the variable is loaded silently.
-# If DATABASE_URL is missing, you get:
-# ValueError: DATABASE_URL not set — check your .env file
-```
+**Step 4:** Tell your agent: "Load the database URL from my `.env` file. Never hardcode it. Raise a clear error if it is missing." Your agent writes the loading code. You verify the behavior: if the `.env` file is present, the connection loads silently. If it is missing, you see a clear error message instead of a cryptic database connection failure.
 
 That four-step checklist is your secret management baseline:
 
@@ -188,50 +169,35 @@ Connection Pool Architecture:
 +--------------------+
 ```
 
-Here is the engine setup that matches this architecture:
+Here is how you direct your agent to set up that architecture:
 
-```python
-import os
+:::conversation[What you tell the agent]
+Connect to my Neon PostgreSQL database using the DATABASE_URL from my .env file.
+Use a connection pool with a health check that tests connections before using them
+and replaces any connection older than one hour.
+Start with a small pool (3 connections) — I am on the free tier.
+Give me a health check command I can run to confirm the connection works.
+:::
 
-from dotenv import load_dotenv
-from sqlalchemy import create_engine, text
-from sqlalchemy.pool import QueuePool
-
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL not set")
-
-engine = create_engine(
-    DATABASE_URL,
-    poolclass=QueuePool,
-    pool_size=5,
-    max_overflow=10,
-    pool_pre_ping=True,
-    pool_recycle=3600,
-)
-
-with engine.connect() as conn:
-    conn.execute(text("SELECT 1"))
-
-print("Neon connection successful")
-```
-
-**Output:**
+:::output[What you verify]
 
 ```
-Neon connection successful
+python verify_neon.py
+
+Output:
+  Loading DATABASE_URL from .env...
+  Connecting to Neon PostgreSQL...
+  Running health check: SELECT 1
+  ✓ Connected. Neon is responding.
+  Pool: 3 connections, health check active, recycle: 1 hour
+  Connection verified.
 ```
 
-If you see that line, your app is talking to Neon through a healthy, pooled connection.
-
-Why `pool_pre_ping=True`? Because cloud connections die silently. Your pool thinks it has 5 healthy connections. In reality, 2 of them timed out 10 minutes ago. Pre-ping catches this before your query fails -- it sends a quick "are you alive?" check before handing a connection to your code.
-
-Why `pool_recycle=3600`? Neon (and most cloud databases) eventually drop idle connections. Recycling every hour prevents your app from using connections that the server already closed. Without this, you get mysterious "server closed the connection unexpectedly" errors that seem random but are actually predictable.
+If you see that output, your app is talking to Neon through a healthy, pooled connection.
+:::
 
 :::tip[Pause and Reflect]
-Your data just moved from a file on your laptop to a server in the cloud. What changed? Your SQLAlchemy models are identical. Your CRUD code is identical. Only the connection string changed. That is the power of an ORM -- the same Python code works with SQLite locally and PostgreSQL in the cloud.
+Your data just moved from a file on your laptop to a server in the cloud. What changed about your database code? Nothing. Only the connection string changed. The agent's models, CRUD operations, and transactions are identical — they work with the local database and with Neon without modification.
 :::
 
 ## Deterministic Error Triage
@@ -259,11 +225,11 @@ That sequence prevents guess storms -- the pattern where you change three settin
 
 Before you trust your connection in any real workload, run these five steps in order:
 
-1. Run the health check script (`SELECT 1`).
-2. Run schema creation (`Base.metadata.create_all(engine)`).
-3. Verify tables exist in the Neon SQL editor.
-4. Perform one create-plus-read round trip.
-5. Restart your process and repeat the read.
+1. Run the health check script (the agent's `verify_neon.py` — confirms `SELECT 1` passes).
+2. Direct the agent to create the schema on Neon.
+3. Verify tables exist in the Neon SQL editor (log into neon.tech, open Tables view).
+4. Direct the agent to store one row and read it back.
+5. Restart your terminal and repeat the read — this confirms data is in the cloud, not just in local memory.
 
 Step 5 is the one people skip. It confirms persistence -- that your data survived a process restart and is actually stored in the cloud, not just in local memory.
 
@@ -327,6 +293,14 @@ You're deploying your own app to the cloud. What secrets does it need? (Database
 ### Safety Note
 
 Never commit a `.env` file or paste database credentials directly into source code. If you accidentally push credentials to a public repository, rotate them immediately in your Neon dashboard -- do not assume "nobody saw it." Credential scanners run continuously on public GitHub repositories, and exposed passwords are typically exploited within minutes.
+
+## Checkpoint
+
+- [ ] I created a Neon account and have my connection string ready.
+- [ ] My connection string is in a `.env` file and `.env` is in `.gitignore`.
+- [ ] I directed the agent to configure the Neon connection and read the health check output confirming `SELECT 1` passed.
+- [ ] I ran the deployment sanity sequence: health check → schema creation → store-and-read → restart and re-read.
+- [ ] I know what to tell the agent if I see "server closed the connection unexpectedly."
 
 ## Flashcards Study Aid
 

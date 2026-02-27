@@ -6,27 +6,27 @@ chapter: 10
 lesson: 9
 duration_minutes: 120
 skills:
-  - name: "Model-Build-Debug Discipline"
+  - name: "Director-Role Verification Discipline"
     proficiency_level: "A2"
-    category: "Technical"
+    category: "Applied"
     bloom_level: "Apply"
-    digcomp_area: "Software Development"
-    measurable_at_this_level: "Student can build and debug relational apps under realistic constraints"
+    digcomp_area: "Problem Solving"
+    measurable_at_this_level: "Student can direct an agent through a database build and collect verification output as evidence"
   - name: "Operational Verification"
     proficiency_level: "B1"
     category: "Applied"
     bloom_level: "Evaluate"
     digcomp_area: "Quality Assurance"
-    measurable_at_this_level: "Student can prove correctness with evidence instead of assumptions"
+    measurable_at_this_level: "Student can prove correctness with agent-generated evidence instead of assumptions"
 learning_objectives:
-  - objective: "Build and debug relational apps independently under time constraints"
+  - objective: "Direct an agent through schema, CRUD, and relationship builds and verify each with output evidence"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student completes Core exercises with evidence artifacts"
+    assessment_method: "Student collects evidence artifacts from agent-generated outputs, not from code they wrote"
   - objective: "Produce evidence-based proof of correctness"
     proficiency_level: "B1"
     bloom_level: "Evaluate"
-    assessment_method: "Student submits EVIDENCE.md with pass/fail results for each exercise"
+    assessment_method: "Student submits EVIDENCE.md with pass/fail results, each backed by output the agent generated"
 cognitive_load:
   new_concepts: 0
   assessment: "No new concepts — exercises apply and integrate previously learned material"
@@ -43,9 +43,10 @@ teaching_guide:
     - "Getting stuck for 10+ minutes is the signal to move on and return later — later exercises often illuminate earlier blockers"
     - "Incomplete evidence for a finished exercise teaches nothing; complete evidence for half the exercises teaches the discipline that matters"
   misconceptions:
-    - "Students think exercises are optional review — they are where muscle memory forms, which is different from understanding concepts"
+    - "Students think exercises are optional review — they are where the director role becomes instinct, not just understanding"
     - "Students rush through all exercises with minimal evidence rather than producing thorough evidence for fewer exercises"
-    - "Students think 'it runs without errors' is sufficient evidence — quality gates require failure-path proof and explicit artifacts"
+    - "Students think 'it runs without errors' is sufficient evidence — quality gates require failure-path proof and explicit output artifacts"
+    - "Students write the code themselves instead of directing the agent — if a student is editing Python, they have left the director role"
   discussion_prompts:
     - "Which of the four Core exercises felt hardest? What does that tell you about which chapter concept needs another pass?"
     - "Could someone who was not in the room verify your work from EVIDENCE.md alone? What would they need that is missing?"
@@ -62,7 +63,7 @@ teaching_guide:
 
 # Structured Data Practice Exercises
 
-In the capstone you built a complete budget tracker with models, CRUD, transactions, and a Neon connection. Now you put those skills under pressure, independently and with a timer running.
+In the capstone you directed an agent through a complete budget tracker build. Now you apply those director skills under pressure, independently and with a timer running. The agent still writes the code. You still direct, describe, and verify.
 
 Getting stuck is not failure. Quitting is. These exercises are **meant** to be challenging. If everything felt easy, you would not be learning anything new. The moments where you stare at an error message and think "I have no idea what went wrong" are the moments where real understanding forms.
 
@@ -77,8 +78,8 @@ One rule above all others:
 ## How to Use
 
 1. Read the exercise brief.
-2. Implement or debug.
-3. Collect evidence artifacts.
+2. Describe the requirement to your agent and direct it to build or fix.
+3. Collect evidence artifacts from the agent's output.
 4. Write a short postmortem.
 
 ## Evidence Format (Use Across All Exercises)
@@ -106,42 +107,41 @@ Complete all four exercises below.
 
 > **Glossary for Core Track**
 >
-> | Term                 | Meaning                                                                                                    |
-> | -------------------- | ---------------------------------------------------------------------------------------------------------- |
-> | **Model integrity**  | Your SQLAlchemy models enforce correct data through types, constraints, and foreign keys, not through hope |
-> | **CRUD**             | Create, Read, Update, Delete: the four basic operations every database application needs                   |
-> | **Rollback proof**   | Evidence that a failed operation left zero partial writes in the database                                  |
-> | **Session boundary** | The explicit `with Session(engine) as session:` block where all database mutations happen                  |
-> | **N+1 query**        | A performance bug where your code runs one query per row instead of one query for all rows                 |
+> | Term                | Meaning                                                                                            |
+> | ------------------- | -------------------------------------------------------------------------------------------------- |
+> | **Schema contract** | The rules you described to your agent: required fields, unique fields, references, exact decimals  |
+> | **CRUD**            | Create, Read, Update, Delete: the four basic operations every database application needs           |
+> | **Rollback proof**  | Evidence that a failed operation left zero partial writes — proven by reading the row count output |
+> | **N+1 query**       | A performance problem where the agent's code makes one database call per row instead of one total  |
 
 <ExerciseCard id="C1" title="Model Integrity Build" />
 
 ### Core 1 - Model Integrity Build
 
-**Goal:** Build `User`, `Category`, `Expense`-style models for a new domain.
+**Goal:** Describe a domain schema to your agent and verify the agent-built schema matches your requirements.
 
-Pick a domain you find interesting: a recipe tracker, a reading list, a workout log, a pet adoption registry. The specific domain does not matter. What matters is that you define real relationships between real entities with real constraints.
+Pick a domain you find interesting: a recipe tracker, a reading list, a workout log, a pet adoption registry. The specific domain does not matter. What matters is that you describe real relationships between real entities with real constraints clearly enough that your agent builds exactly what you intended.
 
 Deliverables:
 
-- model file with constraints + foreign keys
-- `MODEL-VERIFICATION.md` with 3 query checks
+- your plain-English description of the schema (what you told the agent)
+- `MODEL-VERIFICATION.md` with 3 verification checks and their outputs
 
 Minimum evidence:
 
-- schema output
-- one invalid insert failure proof
-- one explanation of why chosen types prevent ambiguity
+- schema verification output showing all tables and constraints created
+- one invalid insert attempt output proving the constraint was enforced
+- one explanation of why the agent chose exact decimal storage for money
 
 Quality gate:
 
-- reject any solution that stores money in float
-- reject any solution that represents relationships only through free-text identifiers
+- reject any schema that stores money amounts as approximate values
+- reject any schema that represents links between entities through free-text names instead of enforced references
 
 <details>
 <summary>Hint: Where to start</summary>
 
-Start by listing the entities in your chosen domain. What are the "things"? What connects them? For a recipe tracker, the things might be `Recipe`, `Ingredient`, and `RecipeIngredient` (the join table). Once you have the entities on paper, turn them into SQLAlchemy models the same way you did in Lesson 3. Constraints and foreign keys come from asking: "What should the database refuse to store?"
+Start by listing the entities in your chosen domain in plain English. What are the "things"? What connects them? For a recipe tracker: "A Recipe has a name and serves a number of people. An Ingredient has a name and unit. A RecipeIngredient links a Recipe to an Ingredient with a quantity — a recipe can have many ingredients, and an ingredient can appear in many recipes." Once you have this written out, tell the agent: "Build a database schema from this description. Every ingredient reference must point to a real ingredient. Tell me what constraints you applied and why."
 
 </details>
 
@@ -149,30 +149,30 @@ Start by listing the entities in your chosen domain. What are the "things"? What
 
 ### Core 2 - CRUD Reliability Build
 
-**Goal:** Implement create/read/update/delete with session + rollback discipline.
+**Goal:** Direct your agent to build create/read/update/delete for your domain and verify rollback works on failure.
 
-This is the exercise where muscle memory forms. You have seen CRUD in the lessons. Now build it from scratch for your own domain, without copying and pasting. When the rollback test passes, you will feel it click.
+This is the exercise where the director discipline becomes real. You describe what you need. The agent builds it. You run the verification commands and collect the output as evidence. When the rollback test output shows zero partial rows after a failure, you will feel it click.
 
 Deliverables:
 
-- CRUD module
-- `CRUD-EVIDENCE.md` with before/after snapshots
+- your plain-English directions to the agent (what you asked it to build)
+- `CRUD-EVIDENCE.md` with before/after row-count snapshots
 
 Minimum evidence:
 
-- one successful write
-- one failed write with rollback proof
-- one query proving no accidental duplicate rows
+- one successful write output (row stored and read back)
+- one failed write output with rollback proof (row count unchanged)
+- one query output proving no accidental duplicate rows
 
 Quality gate:
 
-- reject any solution that catches exceptions without rollback
-- reject any solution that mutates state outside explicit session boundaries
+- reject any evidence that only shows the happy path
+- reject any evidence that relies on the return message instead of querying the database state
 
 <details>
 <summary>Hint: Where to start</summary>
 
-Copy the CRUD pattern from Lesson 4 and adapt it. Do not write from scratch. Adapting a working pattern to your domain is faster and teaches you to recognize which parts are universal (session management, commit/rollback) and which parts are domain-specific (the fields you create and query). Change the model names and fields, then run it.
+Tell the agent: "For my [domain] database, build four operations: store a new [entity], read all [entities], update a [entity]'s [field], and delete a [entity]. After each operation, show me the current row count. Then try to store a [entity] with an invalid [field] and prove zero rows were added." The agent builds all of this. Your job is to run the commands it gives you, read the output, and capture the results in your evidence file.
 
 </details>
 
@@ -180,30 +180,30 @@ Copy the CRUD pattern from Lesson 4 and adapt it. Do not write from scratch. Ada
 
 ### Core 3 - Relationship Query Debug
 
-**Goal:** Fix a broken relationship setup and return correct joined results.
+**Goal:** Describe broken relationship symptoms to your agent, direct it to diagnose and fix, then verify the corrected query output.
 
-This exercise is different from the others. You are not building from scratch. You are handed broken code and your job is to find what is wrong, fix it, and prove the fix works. Debugging relationship definitions is one of the most common real-world SQLAlchemy tasks.
+This exercise is different from the others. You are not starting fresh. The agent built a relationship query that is not working correctly. Your job is to describe what is failing, direct the agent to find the cause, review the fix, and prove it works. Diagnosing relationship problems by reading error output and directing a fix is one of the most common real-world tasks.
 
 Deliverables:
 
-- corrected relationship definitions
-- `RELATIONSHIP-TRACE.md`
+- your symptom description (what you told the agent was wrong)
+- `RELATIONSHIP-TRACE.md` with the before-state error, the fix direction, and the after-state proof
 
 Minimum evidence:
 
-- bidirectional navigation works
-- one `join()` query returns expected rows
-- one N+1 risk identified and corrected
+- output showing navigation works in both directions (parent to child AND child to parent)
+- one joined query output returning expected rows
+- one output showing the agent identified and resolved an N+1 risk
 
 Quality gate:
 
-- reject solutions with mismatched `back_populates`
-- reject solutions that only test one relationship direction
+- reject evidence that only tests one direction of the relationship
+- reject evidence that does not show both the broken state and the fixed state
 
 <details>
 <summary>Hint: Where to start</summary>
 
-The bug is in the relationship definitions. Check `back_populates` first. The most common mistake is that `back_populates` on one side points to a name that does not exist on the other side, or the names are swapped. Print both sides of the relationship (parent.children and child.parent) to confirm navigation works in both directions before moving to join queries.
+Start by running the existing query and reading the error output. Then tell the agent: "This relationship query is failing. Here is the error: [paste output]. The expected behavior is: when I ask for a [parent]'s [children], I should get [expected result]. Diagnose what is wrong and fix it." Then verify both directions: ask the agent to show [parent]'s [children] AND [child]'s [parent] in the output. If the numbers look right but the query makes many database calls instead of one, tell the agent: "This is an N+1 problem — rewrite it to use a single joined query."
 
 </details>
 
@@ -211,31 +211,30 @@ The bug is in the relationship definitions. Check `back_populates` first. The mo
 
 ### Core 4 - Transaction + Neon Ops Drill
 
-**Goal:** Prove atomic multi-step writes and cloud connection reliability.
+**Goal:** Direct your agent to build an atomic multi-step operation and a Neon cloud connection, then verify both with output evidence.
 
-This is the closest exercise to production work. You are combining local transaction safety with a real cloud database connection. When your forced-failure test leaves zero partial writes AND your Neon health check passes, you have completed the full Chapter 10 skill chain.
+This is the closest exercise to production work. You are combining two verification requirements: the agent's transfer operation must leave zero partial writes on failure, AND the agent's Neon connection must pass a health check. When both outputs are in your evidence file, you have completed the full Chapter 10 skill chain.
 
 Deliverables:
 
-- `transfer_*` transaction function
-- Neon connection config + health check script
-- `OPS-EVIDENCE.md`
+- your plain-English directions for the atomic operation and cloud connection
+- `OPS-EVIDENCE.md` with three verified outputs
 
 Minimum evidence:
 
-- forced failure leaves zero partial writes
-- Neon `SELECT 1` passes
-- pool settings documented and justified
+- forced failure output showing zero partial writes (row count unchanged before and after)
+- Neon health check output (`SELECT 1` confirmed)
+- pool configuration captured and justified (why those settings for your tier)
 
 Quality gate:
 
-- reject releases without rollback drill output
-- reject configs that hardcode credentials
+- reject evidence without the rollback drill output showing pre/post row counts
+- reject any configuration that puts credentials inside the code instead of a `.env` file
 
 <details>
 <summary>Hint: Where to start</summary>
 
-Start with the `SELECT 1` health check. If that works, everything else is CRUD + rollback on top of a connection you already trust. Write the health check script first, confirm it connects to Neon, then build the transfer function locally with SQLite, then switch to the Neon connection string. Small steps, each verified before the next.
+Start with the cloud connection. Tell the agent: "Connect to my Neon database using the DATABASE_URL from my .env file. Run a SELECT 1 health check and show me the output." Once that passes, tell the agent: "Now build an atomic transfer between two [entities] in my domain. Show me a successful transfer output, then force a failure and prove zero partial rows were written." Small steps, each verified before moving to the next. The connection health check first. Then rollback proof. Then collect both outputs in your evidence file.
 
 </details>
 
@@ -304,7 +303,7 @@ Use this challenge if your target role includes operations ownership or on-call 
 | Relationship correctness | Core 3              | Challenge B         |
 | Transaction safety       | Core 4              | Challenge C         |
 | Neon reliability         | Core 4              | Challenge C         |
-| Hybrid judgment          | Core 4              | Challenge A         |
+| Hybrid judgment          | —                   | Challenge A         |
 
 If you complete all Core exercises with clear evidence, you meet Chapter 10 baseline mastery. Challenge track pushes you toward production-level judgment.
 
@@ -350,18 +349,19 @@ Be strict. In production, reviewers will be stricter than you.
 **Prompt 2: Failure Scenario Generation**
 
 ```
-I built a CRUD module for [your domain] with these models:
+My agent built a database system for [your domain]. Here is the
+schema verification output it produced:
 
-[paste your model definitions]
+[paste your schema verification output]
 
-Generate 5 failure scenarios I should test:
+Generate 5 failure scenarios I should direct the agent to test:
 - 2 involving constraint violations
 - 2 involving transaction rollback
-- 1 involving a relationship navigation bug
+- 1 involving a relationship navigation problem
 
-For each scenario, tell me what to try AND what the correct
-behavior should be. I want to test these myself, not have
-you fix them.
+For each scenario, tell me what to ask the agent to try AND
+what the correct output should look like. I want to verify
+these myself by reading the agent's output — not fix them in code.
 ```
 
-**What you're learning:** You are practicing defensive thinking. Production bugs do not come from the happy path. They come from the cases you did not consider. By asking AI to generate failure scenarios, you learn to think about what could go wrong before it goes wrong, which is the core skill behind "claim nothing, prove everything."
+**What you're learning:** You are practicing defensive thinking. Production bugs do not come from the happy path. They come from the cases you did not consider. By asking AI to generate failure scenarios from your schema output, you learn to think about what could go wrong before it goes wrong, which is the core skill behind "claim nothing, prove everything."

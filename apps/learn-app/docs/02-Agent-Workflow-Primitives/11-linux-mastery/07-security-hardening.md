@@ -2,7 +2,7 @@
 sidebar_position: 7
 chapter: 11
 lesson: 7
-title: "Lesson 7: Security Hardening & Least Privilege"
+title: "Security Hardening & Least Privilege"
 description: "Create dedicated service users, configure file permissions with chmod and chown, manage environment variables with proper scoping, and handle secrets using .env files -- all following the principle of least privilege."
 keywords:
   [

@@ -4,107 +4,93 @@ title: "Models as Code"
 chapter: 10
 lesson: 2
 duration_minutes: 25
-description: "Define SQLAlchemy models as executable schema contracts"
-keywords: ["SQLAlchemy", "ORM", "models", "ForeignKey", "Numeric"]
+description: "Describe your data requirements in plain English so an agent builds a correct database schema"
+keywords: ["schema", "data model", "constraints", "foreign key", "exact decimal"]
 skills:
-  - name: "Schema Design"
+  - name: "Schema Requirement Articulation"
     proficiency_level: "A2"
-    category: "Technical"
+    category: "Applied"
     bloom_level: "Apply"
-    digcomp_area: "Software Development"
-    measurable_at_this_level: "Student can define SQLAlchemy models with correct types, constraints, and foreign keys"
+    digcomp_area: "Digital Content Creation"
+    measurable_at_this_level: "Student can describe data requirements in plain English so an agent builds a correct schema"
   - name: "Type Safety for Financial Data"
     proficiency_level: "A1"
     category: "Conceptual"
     bloom_level: "Understand"
     digcomp_area: "Data Literacy"
-    measurable_at_this_level: "Student can explain why Numeric is required for money and why Float introduces errors"
+    measurable_at_this_level: "Student can explain why money amounts need exact decimal storage, not approximate numbers"
 learning_objectives:
-  - objective: "Create a complete SQLAlchemy model file with correct types and constraints"
+  - objective: "Describe your data model clearly enough for an agent to build a correct schema"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student runs models.py and creates tables without errors"
-  - objective: "Explain why Numeric(10,2) is used instead of Float for financial values"
+    assessment_method: "Student provides a plain-English description and verifies the agent-built schema matches requirements"
+  - objective: "Explain why money amounts need exact decimal storage (no Python syntax, just the business reason)"
     proficiency_level: "A1"
     bloom_level: "Understand"
-    assessment_method: "Student can demonstrate the float precision problem and explain the fix"
+    assessment_method: "Student can articulate the rounding drift problem and why exact decimal prevents it"
 cognitive_load:
   new_concepts: 4
-  assessment: "4 concepts (nullable constraint, Numeric vs Float, ForeignKey, declarative model) within A2 limit"
+  assessment: "4 concepts (required vs optional, exact decimal vs approximate, foreign key references, unique constraints) within A2 limit"
 differentiation:
-  extension_for_advanced: "Design a project management schema (User -> Project -> Task -> TimeEntry) with appropriate types, then compare with a classmate's design choices."
-  remedial_for_struggling: "Focus on just the User model first. Add one constraint at a time (nullable, unique) and test each. Only add Category and Expense after User works."
+  extension_for_advanced: "Describe a project management schema (User, Project, Task, TimeEntry) to the agent. After it builds the schema, compare the result with a classmate's description — did different wording produce different schemas?"
+  remedial_for_struggling: "Focus on describing just one entity (User) first. Add one constraint at a time ('email is required', 'email must be unique') and verify each. Only describe Category and Expense after User works."
 teaching_guide:
   lesson_type: "core"
   session_group: 1
   session_title: "From Scripts to Databases"
   key_points:
-    - "Float vs Numeric is the single most common money bug — 0.1 + 0.2 != 0.3 in floating point, and it compounds at scale"
-    - "A model file is an executable contract, not documentation — the database enforces it on every insert and update"
-    - "nullable=False is the bouncer at the door; app-level validation is a polite sign — students must understand which to trust"
-    - "Foreign keys store IDs not names — if Alice changes her email, you update one row instead of 500 expense rows"
+    - "Approximate numbers drift — 0.1 + 0.2 is not 0.3 in a computer, and that drift compounds across millions of transactions"
+    - "A schema is an enforced contract, not documentation — the database rejects bad data automatically"
+    - "'Required' means the database refuses empty values — it is the bouncer at the door, not a polite suggestion"
+    - "Foreign keys store references, not copies — if Alice changes her email, you update one row instead of 500 expense rows"
   misconceptions:
-    - "Students think rounding floats solves the money problem — it shifts responsibility to the developer for every calculation, which is error-prone"
-    - "Students confuse the model file with documentation — it is runnable code that creates real database constraints"
-    - "Students want to store user names directly in expense rows instead of using foreign key references — leads to update anomalies"
-    - "Students assume nullable=True is a safe default — it allows empty required fields that cause downstream query bugs"
+    - "Students edit code instead of describing requirements — if a student is editing Python, they have left the director role"
+    - "Students think rounding fixes the money problem — it shifts responsibility to the developer for every calculation, which is error-prone at scale"
+    - "Students want to store user names directly in expense rows instead of using references — leads to update anomalies"
+    - "Students assume optional is a safe default — it allows empty required fields that cause downstream bugs"
   discussion_prompts:
-    - "If 0.1 + 0.2 produces 0.30000000000000004, what happens when you sum a million transactions? At what scale does this matter?"
-    - "Why does the Expense model reference users.id instead of storing Alice's name directly? What breaks when Alice changes her email?"
-    - "When would you choose nullable=True intentionally? Can you think of a field where 'no value' is meaningful, not just lazy?"
+    - "If approximate numbers drift by a tiny amount on every transaction, what happens when you sum a million transactions? At what scale does this matter?"
+    - "Why does the Expense entity reference users by ID instead of storing Alice's name directly? What breaks when Alice changes her email?"
+    - "When would you intentionally make a field optional? Can you think of a field where 'no value' is meaningful, not just lazy?"
   teaching_tips:
-    - "Start with the live Python shell demo: type 0.1 + 0.2 and watch students react — this makes the Float problem visceral"
-    - "The ER diagram is whiteboard-worthy — draw it and have students identify which lines are foreign keys and why"
-    - "Walk through the type selection guide as a decision tree, not a reference table — ask students to classify fields from their own domains"
-    - "The manual validation drill (step 3: insert duplicate email) is critical — students must see the database reject bad data"
+    - "The floating-point surprise is visceral — describe it as 'the computer says 0.1 + 0.2 is not 0.3' and watch students react"
+    - "The ER diagram is whiteboard-worthy — draw it and have students identify which lines are references and why"
+    - "Walk through the vocabulary guide as a conversation, not a table — ask students how they would describe fields from their own domains"
   assessment_quick_check:
-    - "What type should you use for a monetary amount column and why?"
-    - "Explain what nullable=False does that app-level validation cannot guarantee"
-    - "Why does the Expense table store user_id instead of the user's name?"
+    - "How would you describe a 'required' field to an agent?"
+    - "Why does money need exact decimal storage?"
+    - "What is a foreign key in plain English?"
 ---
 
 # Models as Code
 
 In Lesson 1, you proved that data survives a process restart. Now you need to answer a harder question: what shape should that data take, and who enforces the rules?
 
-Quick test: open a Python shell and type `0.1 + 0.2`. Did you get `0.3`? You did not. You got `0.30000000000000004`. Welcome to floating-point arithmetic -- and the reason your money column needs `Numeric`, not `Float`.
+Here is a fact that surprises most people: computers cannot store 0.1 + 0.2 as exactly 0.3. They store it as 0.30000000000000004. That tiny rounding error does not sound like much until you process a million transactions. At one hundred-thousandth of a cent per transaction, you are off by ten dollars. At a billion transactions, you are off by ten thousand. Banks do not tolerate "close enough," and neither should your budget tracker. This is why when you tell the agent to store money amounts, you must be explicit: "store amounts as exact dollars and cents, no rounding."
 
-That tiny rounding error does not sound like much until you process a million transactions. At one hundred-thousandth of a cent per transaction, you are off by ten dollars. At a billion transactions, you are off by ten thousand. Banks do not tolerate "close enough," and neither should your budget tracker.
+Your job in this lesson is not to write code. Your job is to describe your data clearly enough that the agent builds the right schema on the first try. You are the director. The agent is the builder. If the builder gets it wrong, the description was not clear enough.
 
 :::info[Key Terms for This Lesson]
-- **Nullable**: Whether a field can be left empty -- `nullable=False` means "this field is REQUIRED, period"
-- **Constraint**: A rule the database enforces automatically -- like a bouncer that rejects bad data before it gets in
-- **Numeric(10, 2)**: A decimal type that stores up to 10 digits with exactly 2 decimal places -- precise enough for dollars and cents without floating-point surprises
+- **Schema**: A formal blueprint that defines every table, every field, and every rule your database enforces. Think of it as the floor plan for your data -- rooms (tables), doors (connections between tables), and locks (rules that reject bad data).
+- **Constraint**: A rule the database enforces automatically. When you say "this field is always required," the database becomes the bouncer at the door -- it rejects any data that violates the rule, no exceptions.
+- **Exact decimal**: When you tell the agent to store money as "exact dollars and cents," the database stores 0.30, not 0.30000000000000004. Contrast with "approximate number," which can drift by tiny fractions that compound over millions of transactions.
+- **Foreign key**: A reference from one entity to another. When you say "each expense must reference an existing user," the database guarantees you cannot create an orphaned expense -- every expense is tied to a real person.
 :::
 
-## The Float Problem (And Its Fix)
+## The Approximate Number Problem (And Its Fix)
 
-You might be thinking: "Can't I just round the floats?" You can. But rounding is YOUR responsibility. Every calculation, every sum, every comparison -- you have to remember to round. Miss one spot and your totals drift. With `Numeric(10, 2)`, the database handles precision for you. Every value stored, every calculation performed, exact to two decimal places. No discipline required.
+You might think: "Can't the computer just round the numbers?" It can. But rounding becomes your responsibility. Every calculation, every sum, every comparison -- someone has to remember to round. Miss one spot and your totals drift. With exact decimal storage, the database handles precision for you. Every value stored, every calculation performed, exact to the penny. No discipline required.
 
-Here is the difference in practice:
+Here is the difference in plain terms:
 
-```python
-# Float: your problem
-a = 0.1 + 0.2
-print(a)           # 0.30000000000000004
-print(a == 0.3)    # False (!)
+- **Approximate number** (the default for most computers): 0.1 + 0.2 = 0.30000000000000004. Comparisons break. Totals drift.
+- **Exact decimal** (what you tell the agent to use for money): 0.1 + 0.2 = 0.30. Comparisons work. Totals stay accurate.
 
-# Numeric(10, 2): database's problem
-# Stored as exact decimal: 0.30
-# Comparisons work: 0.30 == 0.30 → True
-```
-
-**Output:**
-```
-0.30000000000000004
-False
-```
-
-Float for money is how you lose $0.00000000004 on every transaction. Doesn't sound like much until you process a million of them.
+This is why when you describe money fields to the agent, you must say "exact dollars and cents, no rounding" -- not just "a number." The difference prevents errors that compound across millions of transactions.
 
 ## The Schema Contract
 
-A model file is not documentation. It is a contract your database enforces on every insert, every update, every foreign key reference. If the data violates the contract, it gets rejected -- no exceptions, no "I forgot to validate in the app layer."
+A schema is not documentation. It is a contract your database enforces on every insert, every update, every reference. If the data violates the contract, it gets rejected -- no exceptions, no "I forgot to check in the application."
 
 Here is what our budget tracker needs:
 
@@ -130,174 +116,148 @@ Entity-Relationship Diagram:
 │ user_id (FK → users.id)         │
 │ category_id (FK → categories.id)│
 │ description                      │
-│ amount: Numeric(10,2)           │
+│ amount: exact decimal            │
 │ date                             │
 │ created_at                       │
 └──────────────────────────────────┘
 
-PK = Primary Key, FK = Foreign Key, UQ = Unique
+PK = Primary Key, FK = Foreign Key (reference), UQ = Unique (no duplicates)
 ```
 
-Three entities. Two foreign keys. One money column that uses exact decimals. This is the shape of every expense that enters your system.
+Three entities. Two references. One money column that uses exact decimals. This is the shape of every expense that enters your system.
 
 :::tip[Pause and Reflect]
-Look at the Expense model. Why does it reference `users.id` and `categories.id` instead of storing the user's name and category name directly? What would go wrong if Alice changed her email and you had her name stored in 500 expense rows?
+Look at the Expense entity. Why does it reference the user's ID instead of storing the user's name directly? What would go wrong if Alice changed her email and you had her name stored in 500 expense rows?
 :::
 
-## The Model File
+## How to Describe Your Data to the Agent
 
-Here is the complete, runnable model file. Every line is a decision about what your database will and will not accept.
+This is the core skill of this lesson. When you tell an agent to build a schema, vague descriptions produce wrong results. Precise descriptions produce correct schemas on the first try.
 
-```python
-from datetime import date, datetime, timezone
+Here is your vocabulary guide:
 
-from sqlalchemy import (
-    Column,
-    Date,
-    DateTime,
-    ForeignKey,
-    Integer,
-    Numeric,
-    String,
-    create_engine,
-)
-from sqlalchemy.orm import declarative_base
+| Business meaning | How to describe it to the agent |
+|---|---|
+| Money / price | "exact dollars and cents, no rounding" |
+| Required field | "this field is always required" |
+| Unique field | "no duplicates allowed" |
+| Link to another entity | "must reference an existing [entity]" |
+| Timestamp | "record when this was created, UTC" |
+| Optional field | "this field can be empty" |
+| Default value | "if not provided, default to [value]" |
 
-Base = declarative_base()
+The pattern is consistent: describe what the data **means to the business**, not what the code should look like. The agent translates your business meaning into the right technical implementation.
 
+## Describing the Budget Tracker Schema
 
-class User(Base):
-    __tablename__ = "users"
+Here is what a complete, precise description looks like in practice.
 
-    id = Column(Integer, primary_key=True)
-    email = Column(String(100), unique=True, nullable=False)
-    name = Column(String(100), nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+:::conversation[What you tell the agent]
+I need to track users, categories, and expenses for a personal budget tracker.
 
+**User**: email (required, no duplicates allowed), name (required), record when created in UTC.
 
-class Category(Base):
-    __tablename__ = "categories"
+**Category**: name (required, no duplicates allowed), display color (optional, default to red).
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-    color = Column(String(7), default="#FF6B6B", nullable=False)
+**Expense**: must reference an existing user (required), must reference an existing category (required), description (required), amount in exact dollars and cents (required), date (required), record when created in UTC.
 
+Build the database schema and create the tables.
+:::
 
-class Expense(Base):
-    __tablename__ = "expenses"
+Notice what this description does NOT contain: no programming terms, no type names, no syntax. It describes what the data means and what rules the database should enforce. The agent handles the rest.
 
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-    description = Column(String(200), nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
-    date = Column(Date, default=date.today, nullable=False)
-    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+:::output[What the agent builds and what you verify]
+The agent creates the schema. You run the verification command:
 
-
-if __name__ == "__main__":
-    engine = create_engine("sqlite:///budget_tracker.db")
-    Base.metadata.create_all(engine)
-    print("Schema created")
+```
+python verify_schema.py
 ```
 
-**Output:**
+You see:
+
 ```
-Schema created
+✓ Table: users (id, email, name, created_at)
+  - email: required, no duplicates
+  - name: required
+✓ Table: categories (id, name, color)
+  - name: required, no duplicates
+  - color: optional, defaults to red
+✓ Table: expenses (id, user_id, category_id, description, amount, date, created_at)
+  - user_id: must reference a real user
+  - category_id: must reference a real category
+  - amount: exact decimal (10 digits, 2 decimal places)
+  - description: required
+  - date: required
+✓ All constraints active
+Schema ready.
 ```
 
-Every `nullable=False` is a decision: this field is required. Period. You could enforce that in application code instead, but application code has bugs, gets bypassed, and changes over time. A database constraint is permanent. (Think of it this way: `nullable=False` is the bouncer at the door. App-level validation is a polite sign that says "please don't enter without a ticket." Which one do you trust more?)
+Every line in that output maps back to something you described. If something is missing or wrong, refine your description and ask the agent to rebuild.
+:::
 
-## Type Selection Guide
+## How to Describe Common Field Types
 
-Choosing the right type is not about what Python supports. It is about what the data means to the business.
+When you encounter a new field, use this guide to tell the agent what you need:
 
-| Business meaning | Recommended SQLAlchemy type | Why |
+| Business meaning | How to describe it | Why this matters |
 |---|---|---|
-| Monetary value | `Numeric(10, 2)` | Exact decimal behavior |
-| Optional free-form note | `String(...)` or `Text` | Human-readable variable content |
-| Status flag | `Boolean` | Explicit two-state logic |
-| User-facing code | `String(..., unique=True)` | Stable lookup and duplicate prevention |
-| Event time | `DateTime` (UTC default) | Ordering and incident traceability |
+| Money / price | "exact dollars and cents, no rounding" | Prevents drift across millions of transactions |
+| Required field | "this field is always required" | Database rejects missing values -- no silent gaps |
+| Unique field | "no duplicates allowed" | Database enforces uniqueness -- no duplicate emails |
+| Link to another entity | "must reference an existing [entity]" | Database rejects orphaned references |
+| Event timestamp | "record when created, UTC timezone" | Consistent ordering and incident tracing |
+| Optional with default | "optional, default to [value]" | Sensible fallback when no value is provided |
 
-The pattern is consistent: pick the type that makes invalid data impossible, not the type that is easiest to type.
-
-## Same Patterns, Different Domains
-
-These model patterns are not specific to budget tracking. The same decisions appear everywhere:
-
-**Project management** (User, Project, Task, TimeEntry):
-- `hours` uses `Numeric(6, 2)` -- not Float -- because billable hours need exact decimals
-- `task.project_id` is a ForeignKey -- you cannot log time against a project that does not exist
-- `email` is `unique=True, nullable=False` -- no duplicate accounts, no anonymous users
-
-**E-commerce** (Customer, Order, Product):
-- `price` uses `Numeric(10, 2)` -- same money rule
-- `order.customer_id` is a ForeignKey -- orphan orders break every report
-- `sku` is `String(50), unique=True` -- duplicate SKUs cause warehouse chaos
-
-The entities change. The type decisions stay the same. Money is always `Numeric`. References are always foreign keys. Required fields are always `nullable=False`.
+The entities change from project to project. The descriptions stay the same. Money is always "exact dollars and cents." References are always "must reference an existing [entity]." Required fields are always "this field is always required."
 
 ## Schema Contract Checklist
 
-Before you move on, verify your model file against this checklist:
+Before you tell the agent to build, ask yourself these questions:
 
-- every foreign key points to a real primary key
-- every required business field uses `nullable=False`
-- every row that must be unique has a uniqueness constraint
-- financial fields avoid float semantics
-- timestamp defaults are explicit and timezone-aware
+- "Have I specified which fields are required vs optional?"
+- "Have I identified money fields and specified 'exact decimal'?"
+- "Have I described the links between entities ('must reference a real X')?"
+- "Have I specified which fields must be unique ('no duplicates allowed')?"
+- "Have I described timestamp behavior ('record when created, UTC')?"
 
-## Manual Validation Drill
+If you can answer yes to all five, your description is ready. If not, refine it before handing it to the agent. A vague description produces a wrong schema, and fixing a wrong schema after data is in it is much harder than getting it right the first time.
 
-Run these steps to prove your schema works as promised:
-
-1. Run `python models.py` to create the schema
-2. Inspect tables in SQLite shell or DB browser
-3. Try inserting two users with the same email -- confirm the database rejects the second
-4. Try inserting an expense with a missing `category_id` -- confirm it fails
-5. Confirm error messages match your expectations
-
-This drill trains you to trust constraints that are proven, not assumed. If a constraint does not reject bad data when you test it, it is not a constraint -- it is a suggestion.
-
-**What breaks next?** With schema in place, write paths become the main risk. Lesson 3 tackles session discipline: how to create and read data without leaving the database in a half-written state.
+**What comes next?** With the schema in place, the next risk is writing and reading data correctly. Lesson 3 tackles how to create and read data without leaving the database in a half-written state.
 
 ## Try With AI
 
-### Prompt 1: Model Review
+### Prompt 1: Describe Your Own Data Model
 
 ```text
-Review this SQLAlchemy model file for beginner-breaking mistakes:
-- missing imports
-- wrong money type
-- weak nullability constraints
-- missing foreign keys
-Return fixes with explanations.
+I need to track [your entity — for example: recipes, workouts, invoices].
+Here is what I know about it: [describe fields in plain English].
+Help me describe it precisely enough for an agent to build a correct
+database schema. Ask me clarifying questions about required fields,
+unique fields, and links between entities.
 ```
 
-**What you're learning:** Code review is a skill that transfers to every project. By asking AI to review your model file, you learn to spot the same mistakes yourself -- missing constraints, wrong types, broken references. The AI catches what you miss today so you catch it yourself tomorrow.
+**What you're learning:** The gap between "I need to track recipes" and a precise data description is where most schema bugs hide. By practicing this translation with AI asking clarifying questions, you build the habit of specifying constraints before they become bugs.
 
-### Prompt 2: Requirement to Model
+### Prompt 2: Review My Description for Completeness
 
 ```text
-Convert this requirement into a runnable SQLAlchemy model file:
-users, projects, and time_entries.
-Use exact decimal for billable hours, enforce foreign keys, and include created_at timestamps.
+Review my data description for completeness:
+
+[paste your plain-English description here]
+
+Flag any field where the type is ambiguous, any relationship I have
+not specified clearly, and any constraint that is missing. Tell me
+what questions a database would ask if it could talk.
 ```
 
-**What you're learning:** Translating business requirements into typed models is the core skill of schema design. The gap between "we need to track time" and a correct model file is where most bugs hide. Practicing this translation builds the muscle memory to get it right on the first try.
+**What you're learning:** Reviewing descriptions for gaps is how you catch "I forgot to say unique" before the agent builds a schema that allows duplicate emails. This verification skill transfers to every project where you direct an agent to build something.
 
-### Prompt 3: Apply to Your Domain
+## Checkpoint
 
-```text
-Think of a real project you want to build. What are the 2-3 main "things" (entities) it tracks? For each entity, list the fields you'd need and whether each should be required (nullable=False) or optional. Which fields handle money? Which need to be unique? Turn your answers into SQLAlchemy model classes.
-```
-
-**What you're learning:** Model design is the foundation of every database application. The skill of translating business requirements into typed, constrained models transfers to any domain -- from healthcare records to inventory systems to social networks.
-
-### Safety Note
-
-Never run model files that drop or recreate tables against a production database. The `create_all` call in this lesson is safe for new databases, but on an existing database with real data, it can silently skip schema changes or, worse, destroy data if combined with `drop_all`. Always use migration tools (like Alembic) for production schema changes.
+- [ ] I can describe a data model to an agent in plain English, including required/optional fields and links between entities.
+- [ ] I can explain why money amounts need "exact decimal" storage, not just "a number."
+- [ ] I can describe unique constraints without writing code ("no duplicates allowed").
+- [ ] I verified the agent built what I described by reading the schema output.
 
 ## Flashcards Study Aid
 

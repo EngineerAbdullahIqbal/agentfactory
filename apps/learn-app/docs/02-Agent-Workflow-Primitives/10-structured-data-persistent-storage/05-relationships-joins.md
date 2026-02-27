@@ -4,391 +4,271 @@ title: "Relationships & Joins"
 chapter: 10
 lesson: 4
 duration_minutes: 30
-description: "Define relationships correctly and query linked data without ambiguity"
-keywords: ["relationship", "join", "back_populates", "N+1", "SQLAlchemy 2.0"]
+description: "Describe entity relationships in plain English and direct an agent to query linked data correctly"
+keywords: ["relationship", "join", "foreign key", "N+1", "linked data", "database queries"]
 skills:
-  - name: "Relationship Definition"
+  - name: "Linked Data Vocabulary"
     proficiency_level: "A2"
-    category: "Technical"
-    bloom_level: "Apply"
-    digcomp_area: "Software Development"
-    measurable_at_this_level: "Student can define bidirectional relationships with matching back_populates and appropriate cascade policies"
-  - name: "Join Query Construction"
-    proficiency_level: "A2"
-    category: "Technical"
+    category: "Applied"
     bloom_level: "Apply"
     digcomp_area: "Data Literacy"
-    measurable_at_this_level: "Student can write join queries that filter by related table fields using SQLAlchemy 2.0 style"
+    measurable_at_this_level: "Student can describe entity relationships in plain English so an agent implements correct links"
+  - name: "Join Request Articulation"
+    proficiency_level: "A2"
+    category: "Applied"
+    bloom_level: "Apply"
+    digcomp_area: "Data Literacy"
+    measurable_at_this_level: "Student can describe linked data queries in business terms so an agent writes correct joins"
   - name: "N+1 Detection and Prevention"
     proficiency_level: "B1"
     category: "Applied"
     bloom_level: "Analyze"
     digcomp_area: "Problem Solving"
-    measurable_at_this_level: "Student can identify N+1 patterns in existing code and apply selectinload to fix them"
+    measurable_at_this_level: "Student can recognize when an agent's code makes too many database trips and direct the agent to optimize"
 learning_objectives:
-  - objective: "Define bidirectional relationships with matching back_populates"
+  - objective: "Describe entity relationships in plain English using 'must reference', 'for each', and 'only include'"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student can create linked models where navigation works in both directions"
-  - objective: "Write join queries that filter by related table fields"
-    proficiency_level: "A2"
-    bloom_level: "Apply"
-    assessment_method: "Student can filter expenses by category name using explicit join"
-  - objective: "Identify and fix N+1 query anti-patterns"
+    assessment_method: "Student can articulate linked data needs in business terms that produce correct agent implementations"
+  - objective: "Recognize an N+1 pattern from query count output and direct the agent to fix it"
     proficiency_level: "B1"
     bloom_level: "Analyze"
-    assessment_method: "Student can spot lazy-loading loops and apply selectinload"
+    assessment_method: "Student can identify excessive query counts and instruct the agent to reduce them"
 cognitive_load:
-  new_concepts: 5
-  assessment: "5 concepts (relationship, back_populates, join query, N+1 pattern, selectinload) — cascade and delete-orphan are referenced but treated as advanced extensions"
+  new_concepts: 4
+  assessment: "4 concepts (relationship, foreign key, cascade, N+1 pattern) within A2/B1 limit -- all taught through business language, not code syntax"
 differentiation:
-  extension_for_advanced: "Implement a blog system (Author → Post → Comment) with cascading deletes and benchmark query counts with and without selectinload."
-  remedial_for_struggling: "Focus on Section A only (relationships and back_populates). Return to Section B (joins and N+1) after practicing the checkpoint items for Section A."
+  extension_for_advanced: "Direct the agent to build a blog system (Author, Post, Comment) with cascading deletes and benchmark query counts before and after optimization."
+  remedial_for_struggling: "Focus on the vocabulary table and the first conversation block only. Return to the N+1 section after successfully directing the agent to run a basic linked query."
 teaching_guide:
   lesson_type: "core"
   session_group: 2
   session_title: "CRUD and Session Discipline"
   key_points:
-    - "back_populates strings must match the attribute name on the other model exactly — a mismatch is a silent bug, not an error"
-    - "Cascade policy is a business decision: delete-orphan makes sense for expenses (meaningless without user) but is dangerous for shared entities like categories"
-    - "The N+1 problem turns 2 queries into 101 at scale — selectinload fixes it with one line but students must learn to spot the pattern first"
-    - "Use relationship attributes for navigation (you have one thing, want its related things) and .join() for filtering across tables"
+    - "Relationships are business rules expressed as links between data -- the agent handles the implementation, the student defines what belongs together"
+    - "Foreign keys are enforceable promises -- they prevent orphaned data like expenses pointing to deleted users"
+    - "The N+1 problem turns 2 queries into 101 at scale -- students must learn to spot it from query count output and direct the agent to fix it"
+    - "Cascade policy is a business decision: deleting a user should remove their expenses but deleting a category should not destroy every expense tagged with it"
   misconceptions:
-    - "Students think N+1 is a rare edge case — it appears in almost every loop that accesses relationship attributes and only surfaces at scale"
-    - "Students assume cascade='all, delete-orphan' is always correct — it depends on whether child rows have meaning without their parent"
-    - "Students confuse the relationship declaration with the ForeignKey column — the FK column stores the link, the relationship provides Python navigation"
-    - "Students think back_populates errors will raise exceptions — SQLAlchemy often silently accepts mismatches and just behaves unpredictably"
+    - "Students try to describe joins using SQL syntax -- they should use business language like 'for each user, show me their expenses'"
+    - "Students think N+1 is a rare edge case -- it appears in almost every loop that accesses related data and only surfaces at scale"
+    - "Students assume cascade delete is always correct -- it depends on whether child rows have meaning without their parent"
   discussion_prompts:
-    - "If you delete a user, should their expenses be deleted too? What about their comments on a shared forum? How do you decide cascade policy?"
-    - "Your app works fine with 5 users but crawls with 500 — what is the first thing you check and why?"
-    - "When would you use user.expenses vs select(Expense).join(User).where(...)? What makes the decision?"
+    - "If you delete a user, should their expenses be deleted too? What about their comments on a shared forum? How do you decide?"
+    - "Your app works fine with 5 users but crawls with 500 -- what is the first thing you check and why?"
   teaching_tips:
-    - "Split the lesson at the marked break — master Section A before moving to Section B, especially for struggling students"
-    - "The N+1 diagram is the centerpiece of Section B — draw the 101-query side vs the 2-query side and let the visual impact land"
-    - "Have students count actual queries for 5 users without selectinload, then with — making the optimization measurable builds conviction"
-    - "The two-way street analogy for back_populates is effective — draw two roads connecting User and Expense with matching street names"
+    - "The N+1 diagram is the centerpiece -- draw the 101-query side vs the 2-query side and let the visual impact land"
+    - "Have students read query count output for 5 users without optimization, then with -- making the improvement measurable builds conviction"
+    - "Encourage students to phrase requests in business terms first, then check the agent's output counts"
   assessment_quick_check:
-    - "If User.expenses has back_populates='user', what must Expense.user have?"
-    - "How many queries does a loop over 100 users accessing user.expenses fire without selectinload?"
-    - "Name one relationship where cascade delete-orphan is correct and one where it is dangerous"
+    - "How would you describe 'show all expenses for Alice' in plain English to an agent?"
+    - "If loading 100 users makes 101 database calls, what do you tell the agent?"
+    - "What's the difference between 'show all expenses for Alice' and 'show all expenses where category is Food'?"
 ---
 
 # Relationships & Joins
 
-:::caution[This lesson introduces several connected concepts. Take your time.]
-Relationships, joins, and N+1 patterns are interconnected. This lesson is split into two sections so you can master each piece before combining them.
-:::
-
 In Lesson 3, you proved that rows exist by creating and reading them back. Now you will prove that rows *belong together* correctly. A user's expenses should belong to that user, not float around unattached. A category should link to its expenses so you can ask "show me all Food purchases" in a single query.
 
-Here is the trap: your app runs fine with 5 users. Then you get 500 users, and suddenly it is making 501 database calls instead of 2. Nobody changed any code. What happened? That is the N+1 problem, and by the end of this lesson you will know exactly how to spot it and fix it.
+Here is the trap: your app runs fine with 5 users. Then you get 500 users, and suddenly it is making 501 database calls instead of 2. Nobody changed any code. What happened? That is the N+1 problem, and by the end of this lesson you will know exactly how to spot it and direct your agent to fix it.
 
 :::info[Key Terms for This Lesson]
-- **Relationship**: A declared link between two models that lets you navigate from one to the other in Python code — like a contact card that links a person to their company
-- **back_populates**: The setting that makes a relationship work in BOTH directions — if User knows about Expenses, Expenses also know about their User
-- **Cascade**: Rules that automatically propagate changes — when you delete a User, what happens to their Expenses?
-- **N+1 problem**: A hidden performance trap where loading 100 parents triggers 100 separate child queries instead of 1 — your app works fine until it suddenly doesn't
-- **selectinload**: SQLAlchemy's fix for N+1 — it prefetches related data in a single efficient query
+- **Relationship**: A link between two types of data -- like a contact card that connects a person to their company. If users have expenses, there is a relationship between them.
+- **Foreign key**: An enforceable promise that one piece of data references another that actually exists. An expense's user reference is a foreign key -- the database refuses to create an expense pointing to a user that does not exist.
+- **Cascade**: When deleting one thing automatically removes related things. Deleting a user can cascade to remove their expenses. Whether it *should* is a business decision, not a technical default.
+- **N+1 problem**: A hidden performance trap where loading 100 parents triggers 100 separate child queries instead of 1 -- your app works fine until it suddenly does not.
 :::
 
 ---
 
-## Section A: Relationships and back_populates
+## How to Ask for Linked Data
 
-### Why Relationships Break Silently
+When you need data that spans multiple entities, describe it in business terms. The agent translates your intent into the correct database operations.
 
-If relationships are missing or misconfigured, your app will often still run. The danger is quiet corruption:
-
-- Totals tied to the wrong user
-- Categories resolved inconsistently
-- Delete behavior that surprises production systems
-
-This is where many "it worked in test" systems fail after launch. Wrong relationships produce believable analytics that are still wrong.
-
-### Defining Bidirectional Relationships
-
-The goal is simple: define the link once, navigate it from either side. When you have a `User` and want their expenses, you write `user.expenses`. When you have an `Expense` and want its owner, you write `expense.user`. The `back_populates` parameter connects these two directions.
-
-Here are the models that make this work:
-
-```python
-from sqlalchemy import Column, ForeignKey, Integer, Numeric, String, create_engine, select
-from sqlalchemy.orm import Session, declarative_base, relationship, selectinload
-
-Base = declarative_base()
-
-
-class User(Base):
-    __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    email = Column(String(100), unique=True, nullable=False)
-    expenses = relationship("Expense", back_populates="user", cascade="all, delete-orphan")
-
-
-class Category(Base):
-    __tablename__ = "categories"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-    expenses = relationship("Expense", back_populates="category")
-
-
-class Expense(Base):
-    __tablename__ = "expenses"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-    description = Column(String(200), nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
-
-    user = relationship("User", back_populates="expenses")
-    category = relationship("Category", back_populates="expenses")
-
-
-engine = create_engine("sqlite:///:memory:")
-Base.metadata.create_all(engine)
-
-with Session(engine) as session:
-    alice = User(email="alice@example.com")
-    food = Category(name="Food")
-    session.add_all([alice, food])
-    session.flush()
-
-    expense = Expense(user_id=alice.id, category_id=food.id, description="Lunch", amount=12.50)
-    session.add(expense)
-    session.commit()
-
-    # Navigate from user to expenses
-    print(f"Alice's expenses: {len(alice.expenses)}")
-    # Navigate from expense to user
-    print(f"Expense owner: {alice.expenses[0].user.email}")
-```
-
-**Output:**
-```
-Alice's expenses: 1
-Expense owner: alice@example.com
-```
-
-Notice the symmetry. On the `User` side, `expenses = relationship("Expense", back_populates="user")` declares "I have many expenses." On the `Expense` side, `user = relationship("User", back_populates="expenses")` declares "I belong to one user." The string you pass to `back_populates` must match the attribute name on the other model exactly. If `User.expenses` says `back_populates="user"`, then `Expense.user` must say `back_populates="expenses"`. A mismatch here is a silent bug — SQLAlchemy may not raise an error, but navigation will behave unpredictably.
-
-The `cascade="all, delete-orphan"` on `User.expenses` means: if you delete a User, automatically delete their Expenses too. This makes sense for expenses (an expense without a user is meaningless), but would be dangerous for categories (deleting a category should not wipe out every expense ever tagged with it). Cascade policy is a business decision, not a technical default.
-
-<details>
-<summary>If you're stuck on back_populates</summary>
-
-Think of it like a two-way street sign. `User.expenses` is the road from User to Expense. `Expense.user` is the road back. `back_populates` tells SQLAlchemy these two roads connect the same relationship. Without it, SQLAlchemy treats them as two separate, unrelated relationships — changes on one side would not reflect on the other within the same session.
-
-</details>
-
-### When to Use Relationships vs Joins
-
-You now have two ways to access related data. Here is when to use each:
-
-| Need | Recommended pattern |
+| What you want | How to say it to the agent |
 |---|---|
-| You already loaded one `User` and need that user's expenses | `user.expenses` (relationship attribute) |
-| You need all expenses where `Category.name == "Food"` | `select(Expense).join(Category).where(...)` (explicit join) |
-| You need a report grouped by category | Grouped select with explicit joins and aggregates |
+| All expenses for one user | "Show me all expenses for Alice" |
+| Expenses filtered by category | "Show me only Food expenses for Alice" |
+| Data from two entities together | "For each expense, show me the category name and the user's email" |
+| Users with at least one expense | "Only include users who have at least one expense" |
+| All users, even with no expenses | "Include all users, even those with no expenses yet" |
+| Grouped totals | "For each category, show me the total amount and number of expenses" |
 
-The rule: use relationship attributes for object navigation (you have one thing, you want its related things). Use `.join()` when filtering or aggregating across tables.
+The key phrases are **"for each"** (tells the agent to link entities), **"only include"** (tells the agent to filter), and **"must reference"** (tells the agent to enforce that a link is valid). You do not need to know SQL or any programming language to describe these relationships -- you need to know what data belongs together and what questions you want answered.
 
-```python
-with Session(engine) as session:
-    # Join query: filter expenses by category name
-    food_expenses = session.execute(
-        select(Expense).join(Category).where(Category.name == "Food")
-    ).scalars().all()
+### When to Use What
 
-    print(f"Food expenses: {len(food_expenses)}")
+| Need | How to say it to the agent |
+|---|---|
+| All expenses for one loaded user | "For Alice, show me all her expenses" |
+| All expenses where category is Food | "Filter expenses where category name is Food" |
+| A report grouped by category | "Group all expenses by category with totals" |
+
+The first request starts from a specific person and navigates to their data. The second request starts from all expenses and filters by a linked attribute. The third request aggregates across all data. These are different operations and your phrasing tells the agent which one you need.
+
+---
+
+## Directing a Basic Linked Query
+
+:::conversation[What you tell the agent]
+Show me all expenses for Alice in March 2024, grouped by category.
+Include the category name and the total amount per category.
+Sort by highest total first.
+:::
+
+:::output[What you verify]
 ```
+python verify_join.py
 
-**Output:**
+Output:
+  Alice's March 2024 expenses by category:
+    Food:          $287.45 (3 expenses)
+    Transport:     $94.20  (2 expenses)
+    Entertainment: $45.00  (1 expense)
+  Total: $426.65
 ```
-Food expenses: 1
+:::
+
+What to check: the categories are real categories from your data, the totals add up, and the sort order is correct (highest first). If the agent shows categories that Alice has no expenses in, the filtering is wrong. If the total of the per-category amounts does not match the grand total, the grouping is wrong.
+
+---
+
+## Directing a Filtered Linked Query
+
+:::conversation[What you tell the agent]
+Show me only Food expenses over $50 for any user.
+Include the user's name with each expense.
+:::
+
+:::output[What you verify]
 ```
+python verify_food_filter.py
+
+Output:
+  Food expenses over $50:
+    - Alice: Groceries $52.50 (2024-01-15)
+    - Bob:   Weekly shop $78.20 (2024-01-18)
+  2 results found.
+```
+:::
+
+What to check: every result is in the Food category (not Transport, not Entertainment), every amount is over $50, and each result includes the user's name. If you see expenses from other categories, the agent's filter is wrong. If you see amounts under $50, the threshold is wrong.
 
 ---
 
 :::tip[Pause and Reflect]
-If relationships and back_populates make sense, continue to Section B. If not, re-read Section A and try defining a relationship between two models of your own choosing before moving on.
+If linked queries make sense, continue to the N+1 section. If not, re-read the vocabulary table above and try directing the agent to run one simple linked query before moving on.
 :::
 
 ---
 
-## Section B: Joins, N+1, and selectinload
+## The N+1 Problem
 
-### The N+1 Problem
-
-You might be thinking: "Why can't I just loop through each user and access their expenses?" You can. And it will work. Until it won't.
-
-Every developer discovers N+1 the hard way — usually at 2am when the staging server is crawling. Here is what happens:
+You might be thinking: "Why would the agent's code make too many database calls?" Because the most natural-looking approach -- loop through each user and grab their expenses -- is also the most wasteful.
 
 ```
 N+1 Problem (100 users):
 
-Without selectinload:          With selectinload:
-┌─────────────────┐           ┌─────────────────┐
-│ SELECT * FROM   │           │ SELECT * FROM   │
-│ users           │ 1 query   │ users           │ 1 query
-└────────┬────────┘           └────────┬────────┘
-         │                             │
-    ┌────┴────┐                   ┌────┴────┐
-    │ For each│                   │ SELECT * │
-    │ user... │                   │ FROM     │
-    └────┬────┘                   │ expenses │
-         │                        │ WHERE    │
-  ┌──────┼──────┐                 │ user_id  │ 1 query
-  │      │      │                 │ IN (...)│
-  v      v      v                 └─────────┘
-query  query  query
-  1      2    ...100              Total: 2 queries
-                                  vs 101 queries!
+Without optimization:            With optimization:
++------------------+            +------------------+
+| Get all users    | 1 query    | Get all users    | 1 query
++--------+---------+            +--------+---------+
+         |                               |
+    +----+----+                     +----+----+
+    | For each|                     | Get ALL  |
+    | user... |                     | expenses |
+    +----+----+                     | in one   |
+         |                          | query    | 1 query
+  +------+------+                   +----------+
+  |      |      |
+  v      v      v                   Total: 2 queries
+query  query  query                 vs 101 queries!
+  1      2    ...100
+
 Total: 101 queries
 ```
 
-When you access `user.expenses` inside a loop, SQLAlchemy fires a separate query for each user. With 5 users that is 6 queries — barely noticeable. With 500 users that is 501 queries, and your response time goes from milliseconds to seconds.
+If the agent writes code that loops through users and makes a separate database call for each user's expenses, you get N+1: 1 call to get users + 1 call per user = 101 calls for 100 users. This works fine with 5 users and becomes slow with 500.
 
-Here is the anti-pattern in code:
+The performance signal to monitor: if your summary gets slower as user count grows, tell the agent to check for N+1 patterns. A loop that fetches related data one-by-one is always suspicious.
 
-```python
-# N+1 ANTI-PATTERN — do not use in production
-users = session.execute(select(User)).scalars().all()
-for u in users:
-    for e in u.expenses:   # Each iteration triggers a new SELECT
-        ...
+### Directing the Fix
+
+Tell the agent: "You're making one database call per user to get their expenses. Fix this to get all expenses in a single call instead." The agent will rewrite it to use a prefetch that reduces 101 calls to 2 calls, regardless of user count.
+
+:::conversation[What you tell the agent]
+I notice your summary loop makes one database call per user to get their expenses.
+For 100 users that's 101 database calls. Fix this so it uses 2 calls total,
+no matter how many users there are.
+:::
+
+:::output[What you verify]
 ```
+python verify_query_count.py
 
-**Output (what the database sees):**
+Output:
+  Before fix: 101 queries for 100 users
+  After fix:  2 queries for 100 users
+  N+1 resolved
 ```
-SELECT * FROM users                           -- 1 query
-SELECT * FROM expenses WHERE user_id = 1      -- query 2
-SELECT * FROM expenses WHERE user_id = 2      -- query 3
-...
-SELECT * FROM expenses WHERE user_id = 100    -- query 101
-```
+:::
 
-### The Fix: selectinload
-
-The fix is one line. Tell SQLAlchemy to prefetch the related data in a single batch query:
-
-```python
-# FIXED — selectinload prefetches all expenses in one query
-users = session.execute(
-    select(User).options(selectinload(User.expenses))
-).scalars().all()
-
-for u in users:
-    for e in u.expenses:   # No extra queries — data already loaded
-        ...
-```
-
-**Output (what the database sees):**
-```
-SELECT * FROM users                                          -- 1 query
-SELECT * FROM expenses WHERE user_id IN (1, 2, 3, ... 100)  -- 1 query
--- Total: 2 queries regardless of user count
-```
-
-The performance signal to monitor: if response time rises with user count more than linearly, inspect for hidden N+1 paths first. Optimize query shape before adding infrastructure.
-
-### Practical Review Question
-
-If a teammate adds a report loop that touches `user.expenses` for each user, ask:
-
-1. What query count does this produce at 10, 100, and 1,000 users?
-2. Can we prefetch or aggregate in one query shape?
-
-That question alone catches many early performance regressions.
+What to check: the "before" number should be roughly N+1 (where N is the user count). The "after" number should be 2, regardless of how many users you have. If the "after" number still scales with user count, the fix did not work.
 
 ---
 
-## Common Failures and Safety Reminders
+## Cascade: A Business Decision
 
-**Cascade safety reminder:**
+When you define relationships, you also decide what happens when data is deleted. This is cascade policy, and it is a business decision:
 
-- `delete-orphan` can be correct for child rows that have no meaning without their parent (expenses without a user)
-- It can be dangerous for shared entities or audit records (categories shared by many expenses)
-- Always test delete behavior on non-production data before rollout
+- **Delete a user, delete their expenses**: Makes sense. An expense without a user is meaningless.
+- **Delete a category, delete all expenses in that category**: Dangerous. Expenses belong to users too, and other categories would lose data.
+- **Delete a user, keep their comments on a shared forum**: Probably correct. The comments have value to other readers even without the original author.
 
-**Relationship test plan** — treat this as a contract test suite for relationship correctness:
+When you tell the agent about your relationships, include the cascade rule: "When a user is deleted, their expenses should be deleted automatically. When a category is deleted, expenses in that category should NOT be deleted -- just remove the category link."
 
-1. Create one user and two categories
-2. Create expenses linked to both categories
-3. Query via `user.expenses` and verify count
-4. Query via `join(Category)` and verify filtered set
-5. Remove one expense from the relationship collection and verify expected cascade behavior
-
-### Alternative Domains
-
-These same patterns apply everywhere:
-
-- **Blog system**: Author → Post → Comment. An author has many posts, each post has many comments. Deleting an author cascades to their posts and comments.
-- **E-commerce**: Customer → Order → LineItem → Product. An order has many line items, but deleting an order should not delete the products (shared entities).
-
-The relationship and cascade decisions are always business decisions first, technical decisions second.
-
-**What breaks next?** Once linked reads are correct, write safety becomes the next boundary. Multi-step operations need atomic transactions — that is Lesson 5.
+---
 
 ## Try With AI
 
-**Setup:** Open Claude or ChatGPT with your budget tracker models from this chapter.
+**Setup:** Open your AI coding agent with the budget tracker project from this chapter.
 
-### Prompt 1: Relationship Contract Review
-
-```text
-Here are my SQLAlchemy models:
-
-[paste your User, Category, and Expense models]
-
-Review them and verify:
-1) back_populates matches both sides exactly
-2) FK columns match referenced PK types
-3) cascade policy is explicit and justified for each relationship
-
-Return corrected code if any mismatch exists.
-```
-
-**What you're learning:** You are practicing the skill of using AI as a code reviewer for structural correctness. Relationship mismatches are hard to spot by eye because SQLAlchemy often does not raise errors — it just behaves wrong. AI excels at this kind of pattern-matching verification.
-
-### Prompt 2: N+1 Detection
+### Prompt 1: Basic Linked Query
 
 ```text
-Here is a reporting function that loads users and prints their expenses:
-
-[paste a loop that accesses user.expenses without selectinload]
-
-1. Identify the N+1 problem in this code
-2. Show the fixed version using selectinload
-3. Explain how many queries the original fires for 100 users vs the fix
+Here's what I need: show me all expenses for each user, with the user's
+name and category name for each expense. Build the query and show me
+what the output looks like for 3 sample users with 2-3 expenses each.
 ```
 
-**What you're learning:** You are building the instinct to recognize N+1 patterns before they reach production. The AI can explain the query count math, but the real skill is learning to see the pattern yourself — a loop that accesses a relationship attribute is always suspicious.
+**What you're learning:** You are practicing the skill of describing linked data needs in business terms. The agent handles the implementation -- your job is to verify the output makes sense: correct user-expense pairings, correct category names, no missing or duplicated data.
 
-### Prompt 3: Design Relationships for Your Domain
+### Prompt 2: N+1 Detection and Fix
 
 ```text
-I'm building a [describe your project — e.g., recipe manager, task tracker, inventory system].
-
-Help me define SQLAlchemy relationships between these entities:
-[list your entities]
-
-For each relationship:
-- Should it be one-to-many or many-to-many?
-- What cascade policy makes business sense?
-- Which side gets back_populates?
-
-Show me the complete model code.
+I think your code is making one database call per user. For 100 users,
+show me how many total calls it makes, then fix it to use 2 calls total
+and show the new call count.
 ```
 
-**What you're learning:** You are moving from following examples to making relationship design decisions for your own domain. The AI helps you think through cascade policies and cardinality, but the business logic — what should happen when a parent is deleted — is your decision to make.
+**What you're learning:** You are building the instinct to question performance. When you see query counts that scale with data size, that is a signal to direct the agent to optimize. The agent knows *how* to fix it -- you need to know *when* to ask.
+
+### Prompt 3: Apply to Your Domain
+
+```text
+I'm building [your project]. I need to show [linked data from two entities].
+Describe what query you'll use, how many database calls it makes, and show
+me a sample output.
+```
+
+**What you're learning:** You are moving from following examples to making relationship decisions for your own domain. The agent helps with implementation, but the business logic -- what data belongs together and what happens when something is deleted -- is your decision to make.
 
 ## Checkpoint
 
-- [ ] I can define bidirectional relationships with matching `back_populates`.
-- [ ] I know when to use `.join()` vs relationship attribute access.
-- [ ] I can explain `cascade="all, delete-orphan"` impact before using it.
-- [ ] I can identify and fix one N+1 pattern.
-- [ ] I can validate relationship queries with expected sample rows.
+- [ ] I can describe entity relationships in plain English: "show all expenses for Alice" and "group by category with totals"
+- [ ] I can ask for filtered joined data: "only Food expenses over $50, with the user's name"
+- [ ] I can recognize an N+1 pattern from query count output and tell the agent to fix it
+- [ ] I can verify linked query results by reading the output, not by reading the Python code
 
 ## Flashcards Study Aid
 

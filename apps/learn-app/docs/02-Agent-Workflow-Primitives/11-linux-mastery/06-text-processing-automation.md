@@ -1,6 +1,6 @@
 ---
 sidebar_position: 6
-title: "Lesson 6: Text Processing & Automation"
+title: "Text Processing & Automation"
 description: "Parse agent logs with grep, sed, and awk, compose multi-tool pipelines, and schedule recurring tasks with cron for automated monitoring."
 keywords: ["grep", "sed", "awk", "text processing", "regular expressions", "cron", "crontab", "log parsing", "pipeline", "automation", "log rotation"]
 chapter: 11

@@ -2,7 +2,7 @@
 sidebar_position: 5
 chapter: 11
 lesson: 5
-title: "Lesson 5: Bash Scripting Foundations"
+title: "Bash Scripting Foundations"
 description: "Write executable bash scripts with variables, error handling, functions, and control flow to automate repeatable agent deployment tasks."
 keywords: ["bash scripting", "shell scripts", "error handling", "set -euo pipefail", "bash functions", "conditionals", "loops", "chmod", "shebang"]
 duration_minutes: 55

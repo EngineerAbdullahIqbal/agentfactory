@@ -12,22 +12,22 @@ skills:
     category: "Conceptual"
     bloom_level: "Evaluate"
     digcomp_area: "Problem Solving"
-    measurable_at_this_level: "Student can justify when hybrid verification is worth overhead"
-  - name: "Independent Verification Design"
+    measurable_at_this_level: "Student can justify when hybrid verification is worth the overhead vs when SQL-only is sufficient"
+  - name: "Independent Verification Direction"
     proficiency_level: "B1"
     category: "Applied"
     bloom_level: "Apply"
     digcomp_area: "Safety"
-    measurable_at_this_level: "Student can design a second path with different failure modes"
+    measurable_at_this_level: "Student can describe two genuinely independent verification paths and direct an agent to implement them"
 learning_objectives:
   - objective: "Distinguish true independent verification from false hybrid patterns"
     proficiency_level: "B1"
     bloom_level: "Evaluate"
-    assessment_method: "Student can identify when two paths share the same failure mode vs truly independent paths"
-  - objective: "Implement a release gate that blocks on mismatch above tolerance"
+    assessment_method: "Student can explain why re-running the same query is not verification"
+  - objective: "Direct an agent to build a release gate that blocks on mismatch above tolerance"
     proficiency_level: "B1"
     bloom_level: "Apply"
-    assessment_method: "Student demonstrates a mismatch scenario where release is correctly blocked"
+    assessment_method: "Student reads a mismatch output and identifies the correct response: block release and investigate"
 cognitive_load:
   new_concepts: 4
   assessment: "4 concepts (true vs false hybrid, scope parity, tolerance threshold, mismatch policy) within B1 range"
@@ -117,127 +117,42 @@ Look at the false hybrid example. Why is running the same SQL query twice NOT ve
 
 ### False Hybrid (Do Not Use)
 
-Here is the trap. It looks like verification but proves nothing useful:
-
-```python
-# NOT independent: same query path repeated
-sql_total_a = sql_food_total(engine, user_id=1, year=2024, month=1)
-sql_total_b = sql_food_total(engine, user_id=1, year=2024, month=1)
-assert sql_total_a == sql_total_b
-```
-
-**Output:**
-```
-# Always passes -- same function, same inputs, same bugs
-```
-
-This confirms deterministic repetition of the same failure mode. If the query has a wrong date boundary, both calls return the same wrong number. You have confirmed your bug is consistent, not that your answer is correct.
+If you ask the agent to run the same query twice and compare the results, that is not verification — it only proves the query is deterministic. If the query has a wrong date boundary, both runs return the same wrong number. You have confirmed your bug is consistent, not that your answer is correct. The rule: re-running the same SQL query is never independent verification.
 
 ### True Hybrid (Use for High-Stakes Reports)
 
-A true hybrid uses a completely different code path to arrive at the same answer. Your SQL query goes through the ORM and database engine. Your verification path parses the raw CSV ledger with plain Python. Different libraries, different parsing logic, different failure modes:
+A true hybrid uses a completely different path to arrive at the same answer. Your primary path goes through SQL: the agent queries the database. Your verification path reads the raw CSV ledger directly with a plain file reader. Different data sources. Different parsing logic. Different failure modes. If both agree, you can trust the answer.
 
-```python
-import csv
-from pathlib import Path
-from decimal import Decimal, ROUND_HALF_UP
-from datetime import date
+:::conversation[What you tell the agent]
+I need to verify this month's Food total before releasing the report.
+Compute it two independent ways:
+1. Query it from the database
+2. Compute it by reading the raw CSV ledger file directly
+If the two totals differ by more than one cent, block the release and show me the mismatch.
+If they match, confirm release is permitted.
+Use exact decimal arithmetic throughout — no rounding errors.
+:::
 
-from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric, String, func, select
-from sqlalchemy.orm import Session, declarative_base
+:::output[What you verify]
 
-Base = declarative_base()
+```
+python verify_report.py
 
+Output (verified):
+  SQL path:  $247.50
+  CSV path:  $247.50
+  ✓ Match within $0.01 tolerance
+  Status: verified — release permitted
 
-class Category(Base):
-    __tablename__ = "categories"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-
-
-class Expense(Base):
-    __tablename__ = "expenses"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
-    date = Column(Date, nullable=False)
-
-REQUIRED_RAW_COLUMNS = {"user_id", "date", "category", "amount"}
-TOLERANCE = Decimal("0.01")
-
-
-def sql_food_total(engine, user_id: int, year: int, month: int) -> Decimal:
-    start = date(year, month, 1)
-    end = date(year + (month == 12), (month % 12) + 1, 1)
-
-    with Session(engine) as session:
-        value = session.execute(
-            select(func.sum(Expense.amount))
-            .join(Category)
-            .where(
-                Expense.user_id == user_id,
-                Category.name == "Food",
-                Expense.date >= start,
-                Expense.date < end,
-            )
-        ).scalar_one_or_none()
-
-    return (value or Decimal("0")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-
-
-def verify_from_raw_csv(csv_path: Path, user_id: int, year: int, month: int) -> Decimal:
-    month_prefix = f"{year}-{month:02d}"
-    total = Decimal("0")
-
-    with csv_path.open("r", newline="") as f:
-        reader = csv.DictReader(f)
-
-        if not reader.fieldnames:
-            raise ValueError("raw ledger is missing a header row")
-
-        missing = REQUIRED_RAW_COLUMNS - set(reader.fieldnames)
-        if missing:
-            raise ValueError(f"raw ledger missing required columns: {sorted(missing)}")
-
-        for row in reader:
-            if int(row["user_id"]) != user_id:
-                continue
-            if row["category"] != "Food":
-                continue
-            if not row["date"].startswith(month_prefix):
-                continue
-            total += Decimal(row["amount"])
-
-    return total.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-
-
-def verified_food_total(engine, raw_csv_path: Path, user_id: int, year: int, month: int):
-    sql_total = sql_food_total(engine, user_id, year, month)
-    raw_total = verify_from_raw_csv(raw_csv_path, user_id, year, month)
-
-    if abs(sql_total - raw_total) <= TOLERANCE:
-        return {"status": "verified", "value": sql_total}
-
-    return {
-        "status": "mismatch",
-        "sql_value": str(sql_total),
-        "raw_value": str(raw_total),
-        "tolerance": str(TOLERANCE),
-        "action": "block release and investigate query predicates/import path",
-    }
+Output (mismatch):
+  SQL path:  $247.50
+  CSV path:  $253.10
+  ✗ Mismatch: $5.60 delta exceeds $0.01 tolerance
+  Status: BLOCKED — investigate before releasing
 ```
 
-**Output (verified case):**
-```
-{"status": "verified", "value": Decimal("247.50")}
-```
-
-**Output (mismatch case):**
-```
-{"status": "mismatch", "sql_value": "247.50", "raw_value": "253.10",
- "tolerance": "0.01", "action": "block release and investigate query predicates/import path"}
-```
+When you see BLOCKED, you do not ship. The gate worked correctly. Publishing after a mismatch is a release process failure, not a query bug.
+:::
 
 ## The Independence Checklist
 
@@ -335,6 +250,14 @@ Explain why your two paths have different failure modes.
 ```
 
 **What you're learning:** Hybrid verification is a universal quality pattern. Whether you are building financial software, medical systems, or engineering tools -- any time the COST of being wrong is high, checking with a second independent method is worth the overhead. This skill transfers far beyond databases.
+
+## Checkpoint
+
+- [ ] I can explain why re-running the same SQL query is NOT independent verification.
+- [ ] I can describe a true hybrid system in plain English: two paths, different data sources, different failure modes, same expected answer.
+- [ ] I directed the agent to build a verification gate and read the mismatch output.
+- [ ] I know the release decision rule: verified → permitted, mismatch → blocked.
+- [ ] I can name one scenario in my domain where hybrid verification is worth the overhead.
 
 ## Flashcards Study Aid
 

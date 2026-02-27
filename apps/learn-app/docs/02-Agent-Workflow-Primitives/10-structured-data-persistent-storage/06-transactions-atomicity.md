@@ -7,12 +7,12 @@ duration_minutes: 30
 description: "Protect multi-step writes with commit/rollback boundaries"
 keywords: ["transaction", "atomicity", "rollback", "commit", "SQLAlchemy"]
 skills:
-  - name: "Transaction Design"
+  - name: "Atomicity Judgment"
     proficiency_level: "A2"
-    category: "Technical"
-    bloom_level: "Apply"
-    digcomp_area: "Software Development"
-    measurable_at_this_level: "Student can implement single-session multi-step writes with try/except/rollback"
+    category: "Conceptual"
+    bloom_level: "Analyze"
+    digcomp_area: "Problem Solving"
+    measurable_at_this_level: "Student can identify which operations require atomic boundaries and direct an agent to implement them correctly"
   - name: "Atomicity Reasoning"
     proficiency_level: "B1"
     category: "Conceptual"
@@ -20,10 +20,10 @@ skills:
     digcomp_area: "Problem Solving"
     measurable_at_this_level: "Student can identify which operations require atomic boundaries and explain the failure mode without them"
 learning_objectives:
-  - objective: "Implement atomic multi-step writes with rollback on failure"
+  - objective: "Direct an agent to implement an atomic multi-step write and verify zero partial rows on failure"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student runs a forced failure and proves zero partial rows remain"
+    assessment_method: "Student reads rollback confirmation output after a forced failure"
   - objective: "Distinguish schema validity from transaction correctness"
     proficiency_level: "B1"
     bloom_level: "Analyze"
@@ -33,7 +33,7 @@ cognitive_load:
   assessment: "3 concepts (atomicity, transaction boundary, invariant checking) within A2-B1 range"
 differentiation:
   extension_for_advanced: "Implement a multi-step e-commerce checkout (reserve inventory + charge card + create order) with rollback. What happens if the charge succeeds but order creation fails?"
-  remedial_for_struggling: "Focus on the bank transfer analogy first. Then implement the single transfer_budget function. The invariant checking is important but can wait until the basic pattern clicks."
+  remedial_for_struggling: "Focus on the bank transfer analogy first. Then direct the agent to build a simple transfer and verify the row counts. Invariant checking can wait until the basic pattern clicks."
 teaching_guide:
   lesson_type: "core"
   session_group: 2
@@ -44,21 +44,21 @@ teaching_guide:
     - "Invariant checks (sum of transfer entries = 0) catch bugs that return-message checking misses entirely"
     - "Transactions protect write mechanics (all-or-nothing); input validation protects write meaning (is this sensible) — you need both"
   misconceptions:
-    - "Students think single inserts need explicit transaction wrappers — SQLAlchemy sessions already handle single-operation atomicity"
+    - "Students think single inserts need explicit transaction wrappers — a single write is already atomic by default"
     - "Students trust return messages over database state — a function can return success:false while still leaving partial rows"
-    - "Students believe catching the exception is enough — without explicit rollback, the session enters a dirty state that corrupts later queries"
-    - "Students split related writes across sessions thinking each session handles its own rollback — but Session A's commit is permanent and Session B cannot undo it"
+    - "Students believe directing the agent to catch an exception is enough — without explicit rollback, the session enters a dirty state"
+    - "Students split related writes across sessions — but the first commit is permanent and the second session cannot undo it"
   discussion_prompts:
-    - "If the debit commits in Session A and the credit fails in Session B, where did the money go? How would you detect this in production?"
+    - "If the debit commits first and the credit fails, where did the money go? How would you detect this in production?"
     - "Name three operations in your domain that require atomic boundaries and three that do not — what is the distinguishing pattern?"
   teaching_tips:
     - "Start with the bank transfer scenario — every student understands that $100 disappearing is unacceptable, making atomicity feel urgent"
     - "The transaction states diagram is whiteboard-worthy — draw BEGIN branching to either COMMIT or ROLLBACK with the transfer example"
-    - "Run the failure drill live: insert valid transfer, query count (+2), insert invalid transfer, query count (+0) — the numbers tell the story"
-    - "Emphasize the debug posture: always trust the database over return values — have students practice querying after both success and failure"
+    - "Run the failure drill: direct agent to run valid transfer (+2 rows), then invalid transfer (+0 rows) — the counts tell the story"
+    - "Emphasize the debug posture: always trust the database over return values — read the row count, not the return message"
   assessment_quick_check:
-    - "What happens if you split a debit and credit across two separate sessions and the second session fails?"
-    - "Write the one-session transaction template from memory: try/add_all/commit/except/rollback"
+    - "What happens if you split a debit and credit across two separate sessions and the second one fails?"
+    - "What do you tell the agent to prove rollback worked?"
     - "How do you prove rollback worked — by checking the return message or by querying the database?"
 ---
 
@@ -112,96 +112,58 @@ That last line is the key insight. After a rollback, your data looks exactly as 
 
 (Partial writes: because nothing says "professional software" like $100 disappearing from both accounts.)
 
-## The Transfer Function
+## Directing an Atomic Transfer
 
-Here is an atomic budget transfer using SQLAlchemy. Everything happens inside one session, wrapped in try/except/rollback. If the credit fails, the debit is rolled back. If the debit fails, nothing was written yet. Either way, your data stays consistent.
+Here is how you describe an atomic budget transfer to your agent. The key requirement is in the last line — both writes must succeed together, or neither does.
 
-```python
-from datetime import date
-from decimal import Decimal
+:::conversation[What you tell the agent]
+I need to transfer $100 from the Food budget to Entertainment.
+This must be atomic — either both the debit and credit go through, or neither does.
+If anything fails, roll back both. No partial transfers.
+Show me what happens when the transfer succeeds.
+:::
 
-from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric, String, create_engine, select
-from sqlalchemy.orm import Session, declarative_base
+:::output[What you verify]
 
-Base = declarative_base()
+```
+python test_transfer.py
 
-
-class Category(Base):
-    __tablename__ = "categories"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-
-
-class Expense(Base):
-    __tablename__ = "expenses"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
-    description = Column(String(200), nullable=False)
-    amount = Column(Numeric(10, 2), nullable=False)
-    date = Column(Date, nullable=False, default=date.today)
-
-
-engine = create_engine("sqlite:///:memory:")
-Base.metadata.create_all(engine)
-
-
-def transfer_budget(user_id: int, from_category_id: int, to_category_id: int, amount: Decimal):
-    with Session(engine) as session:
-        try:
-            from_cat = session.execute(
-                select(Category).where(Category.id == from_category_id)
-            ).scalars().first()
-            to_cat = session.execute(
-                select(Category).where(Category.id == to_category_id)
-            ).scalars().first()
-
-            if not from_cat or not to_cat:
-                raise ValueError("Category not found")
-
-            debit = Expense(
-                user_id=user_id,
-                category_id=from_category_id,
-                description=f"Transfer to {to_cat.name}",
-                amount=-amount,
-            )
-            credit = Expense(
-                user_id=user_id,
-                category_id=to_category_id,
-                description=f"Transfer from {from_cat.name}",
-                amount=amount,
-            )
-
-            session.add_all([debit, credit])
-            session.commit()
-            return {"success": True}
-        except Exception as exc:
-            session.rollback()
-            return {"success": False, "error": str(exc)}
+Output:
+  Transfer: $100.00 from Food → Entertainment
+  ✓ Debit:  -$100.00 from Food
+  ✓ Credit: +$100.00 to Entertainment
+  ✓ Committed. Net change: $0.00
+  Expense count: 2 new rows (one debit, one credit)
 ```
 
-**Output (successful transfer):**
-```
->>> transfer_budget(user_id=1, from_category_id=1, to_category_id=2, amount=Decimal("100.00"))
-{"success": True}
-```
-
-**Output (invalid category):**
-```
->>> transfer_budget(user_id=1, from_category_id=1, to_category_id=999, amount=Decimal("100.00"))
-{"success": False, "error": "Category not found"}
-```
-
-Notice the pattern: one session, one try block, one commit at the end, one rollback in the except. This is the core transaction template you will use for every multi-step write in this course.
+The net change is $0.00 — the money moved, it did not disappear. One debit row and one credit row were written in a single atomic operation.
+:::
 
 ## The Failure Drill
 
-Reading about atomicity is not the same as proving it works. Run this drill to see rollback in action:
+Reading about atomicity is not the same as proving it works. Direct your agent to simulate a failed transfer and show you the row counts before and after.
 
-1. Run transfer with valid categories — expect two new rows
-2. Run transfer with an invalid destination category — expect zero new rows
-3. Query the expense count before and after each run
-4. Confirm the invariant: successful transfers change count by exactly 2, failed transfers change count by exactly 0
+:::conversation[What you tell the agent]
+Try to transfer $100 to a category that does not exist (use ID 9999 as the destination).
+Show me the error, then query the database and prove zero new rows were created.
+:::
+
+:::output[What you verify]
+
+```
+python test_failed_transfer.py
+
+Output:
+  Attempting transfer to category 9999...
+  ✗ Failed: category 9999 does not exist
+  Rolling back...
+  Expense count before: 2
+  Expense count after:  2
+  ✓ Rollback confirmed — zero partial rows created
+```
+
+What the output means: the debit was staged but never committed because the credit failed. The rollback undid both. The count stayed at 2, proving no phantom debit leaked through.
+:::
 
 This invariant check is stronger than checking return messages alone. A function can return `{"success": False}` while still leaving partial rows behind if the rollback was missing. The only proof is querying the database directly.
 
@@ -298,11 +260,11 @@ Think of a multi-step operation in a project you're building. Maybe it's: creati
 
 ## Checkpoint
 
-- [ ] I can explain atomicity as all-or-nothing business truth.
-- [ ] I can implement one-session multi-step writes with rollback.
-- [ ] I can prove rollback with a deliberate failure drill.
-- [ ] I can identify multi-session anti-patterns in write workflows.
-- [ ] I can distinguish schema validity from transaction correctness.
+- [ ] I can explain atomicity as all-or-nothing business truth: either both writes happen, or neither does.
+- [ ] I directed the agent to build an atomic transfer and verified the output shows both debit and credit rows.
+- [ ] I directed the agent to simulate a failed transfer and read the rollback confirmation (zero partial rows).
+- [ ] I can explain why splitting related writes across two separate sessions is dangerous.
+- [ ] I can distinguish schema validity from transaction correctness: data can pass all schema rules and still be business-wrong without an atomic boundary.
 
 ## Flashcards Study Aid
 

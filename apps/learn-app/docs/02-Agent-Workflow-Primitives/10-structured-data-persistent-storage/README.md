@@ -99,13 +99,7 @@ A budget tracker that started as yearly CSV scripts now needs monthly user-level
 
 ## What You Will Build
 
-A Neon-backed Budget Tracker with:
-
-- Typed relational models (`User`, `Category`, `Expense`)
-- Safe CRUD with explicit transaction and rollback discipline
-- Relationship-aware queries and a no-N+1 summary pattern
-- Secure cloud connection setup (`DATABASE_URL`, pooling, pre-ping)
-- Selective hybrid verification for high-stakes financial outputs
+A Neon-backed Budget Tracker you designed, your agent built, and you verified end-to-end.
 
 ## Chapter Contract
 
@@ -131,24 +125,24 @@ By chapter end, you should be able to answer these five questions:
 
 ## Lesson Flow
 
-| Lesson                        | Outcome                                          | Fast Visible Win                                          |
-| ----------------------------- | ------------------------------------------------ | --------------------------------------------------------- |
-| L0 From CSV to Databases      | Diagnose the exact Chapter 9 breakpoint          | Name 3 concrete breakpoints in your current workflow      |
-| L1 Build Your Database Skill  | Prove persistence in under 5 minutes             | Write once, read later across two separate runs           |
-| L2 Models as Code             | Define reliable schema contracts                 | Create tables from one runnable model file                |
-| L3 Creating and Reading Data  | Implement safe CRUD foundations                  | Insert and read back one verified expense row             |
-| L4 Relationships and Joins    | Query linked data without ambiguity              | Filter expenses by category via explicit join             |
-| L5 Transactions and Atomicity | Prevent partial-write corruption                 | Force failure and prove rollback leaves zero partial rows |
-| L6 Connecting to Neon         | Deploy and operate in cloud constraints          | Pass `SELECT 1` with pooled pre-ping connection           |
-| L7 Hybrid Patterns            | Add independent verification only when justified | Catch a deliberate mismatch and block release             |
-| L8 Capstone                   | Integrate all patterns into one reliable app     | Produce evidence bundle with explicit release decision    |
+| Lesson                        | Outcome                                                        | Fast Visible Win                                                   |
+| ----------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------ |
+| L0 From CSV to Databases      | Decide when Chapter 9 patterns should escalate to SQL          | Name 3 concrete breakpoints in your current workflow               |
+| L1 Build Your Database Skill  | Verify data survives after your agent's program exits          | Direct agent to prove persistence; read the verification output    |
+| L2 Models as Code             | Describe your data model clearly enough for an agent to build  | Review agent's schema output against your plain-English description |
+| L3 Creating and Reading Data  | Verify agent-written CRUD is safe and correct                  | Direct agent to store and retrieve one row; confirm the output     |
+| L4 Relationships and Joins    | Ask for linked data in English; verify the result              | Describe a join in business terms; verify the agent's query output |
+| L5 Transactions and Atomicity | Decide when operations need all-or-nothing guarantees          | Direct agent to simulate a failed transfer; verify zero partial rows |
+| L6 Connecting to Neon         | Direct the cloud deployment and verify the connection          | Verify `SELECT 1 → OK` after agent configures Neon connection      |
+| L7 Hybrid Patterns            | Decide when SQL-only is enough vs when verification is needed  | Catch a deliberate mismatch; decide whether to block release       |
+| L8 Capstone                   | Act as director: describe, verify, and make a release decision | Review agent's evidence bundle and make an explicit release call   |
 
 ## Prerequisites
 
 - Chapter 9 complete
-- Python 3.10+
 - Terminal access
 - Neon free account
+- No Python or SQL knowledge required — your agent writes all the code
 
 ## No-Regression Rules
 

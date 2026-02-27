@@ -2,7 +2,7 @@
 sidebar_position: 9
 chapter: 11
 lesson: 9
-title: "Lesson 9: Process Control & Systemd Services"
+title: "Process Control & Systemd Services"
 description: "Deploy AI agents as production systemd services with restart policies, start-limit protection, resource limits, and centralized logging."
 keywords: ["systemd", "service", "daemon", "restart policy", "journalctl", "resource limits", "agent deployment", "production", "MemoryMax", "CPUQuota"]
 duration_minutes: 60

@@ -65,7 +65,7 @@ teaching_guide:
 
 # When Bash and Python Hit the Wall
 
-**Continuity delta:** Chapter 8 gave you file control. Chapter 9 gave you deterministic computation. Chapter 10 adds durable relational memory.
+**Continuity delta:** Chapter 8 gave you file control. Chapter 9 gave you deterministic computation. Chapter 10 adds durable relational memory. In this chapter your agent will write all the database code. Your job is to make architecture decisions and verify the results.
 
 You built `tax-prep.py` in Chapter 9. It was your best work -- a clean script that reads CSV files, computes totals, and produces an accurate yearly tax report. You ran it, the numbers checked out, and you felt that satisfaction of a job done right. Now imagine your manager walks in on Monday morning and says: "Great report. Can you break it down by month, by user, by category? And we need it for the last three years. Oh, and make sure nobody can delete a user who still has expenses tied to them."
 
@@ -82,21 +82,7 @@ Your stomach drops. Not because the requirements are unreasonable, but because y
 
 ## The Exact Moment It Breaks
 
-Your Chapter 9 script handles this just fine:
-
-```python
-# tax-prep.py — Chapter 9 version
-total = sum(row["amount"] for row in expenses if row["category"] == "Medical")
-print(f"Medical deductions: ${total:.2f}")
-```
-
-**Output:**
-
-```text
-Medical deductions: $2,847.50
-```
-
-Clean. Correct. Now stack on the real requirements:
+Your Chapter 9 script handles one question just fine — for example, computing all Medical deductions and returning `Medical deductions: $2,847.50`. Clean. Correct. Now stack on the real requirements:
 
 - "Show Food spending for Alice in March 2024."
 - "Compare Q1 vs Q2 by category."
