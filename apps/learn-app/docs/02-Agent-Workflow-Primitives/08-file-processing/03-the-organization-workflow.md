@@ -523,7 +523,7 @@ Your folders are organized. Your rules are documented. But here's what you might
 
 You've now completed three lessons worth of work. If your Claude Code context is getting long, this is a natural point to start a fresh session.
 
-**Why:** Remember the "Kitchen Sink Session" failure pattern from Chapter 6? Three lessons of exploration, backup, and organization creates a lot of context. Your rules and inventory are saved in files, so a fresh session can pick them up.
+**Why:** Remember the "Kitchen Sink Session" failure pattern from the Seven Principles chapter? Three lessons of exploration, backup, and organization creates a lot of context. Your rules and inventory are saved in files, so a fresh session can pick them up.
 
 **How to reset cleanly:**
 

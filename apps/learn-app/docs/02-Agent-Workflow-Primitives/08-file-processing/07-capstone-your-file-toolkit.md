@@ -449,4 +449,4 @@ Your Downloads folder is organized. Your toolkit is built. You're ready for auto
 
 You've completed the entire chapter. Commit everything and start a completely fresh session before moving to the next chapter.
 
-**Why this matters:** Seven lessons of file processing generated a lot of context — surveys, organization rules, batch scripts, recovery exercises, search patterns, and this capstone. Carrying all of that into the next chapter would be the Kitchen Sink pattern from Chapter 6. Your deliverables (`MY-PROMPT-TOOLKIT.md`, `rules.md`, scripts) are all saved in files. The next chapter starts clean.
+**Why this matters:** Seven lessons of file processing generated a lot of context — surveys, organization rules, batch scripts, recovery exercises, search patterns, and this capstone. Carrying all of that into the next chapter would be the Kitchen Sink pattern from the Seven Principles chapter. Your deliverables (`MY-PROMPT-TOOLKIT.md`, `rules.md`, scripts) are all saved in files. The next chapter starts clean.

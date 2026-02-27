@@ -326,7 +326,7 @@ You can now break things and fix them. That's a superpower most people never dev
 
 You've now completed five lessons of file processing work. If your Claude Code context is getting long — or if responses feel slower or less focused — this is a natural point to start fresh.
 
-**Why now:** Recovery exercises generate a lot of back-and-forth. Combined with Lessons 1-4, your context may be carrying exploration, organization, batch operations, and recovery all at once. That's the Kitchen Sink pattern from Chapter 6.
+**Why now:** Recovery exercises generate a lot of back-and-forth. Combined with Lessons 1-4, your context may be carrying exploration, organization, batch operations, and recovery all at once. That's the Kitchen Sink pattern from the Seven Principles chapter.
 
 **How to reset:** Commit your work, then start a new session for Lesson 6. Your `rules.md`, `FILE-INVENTORY.md`, backups, and scripts are all saved in files — your progress carries forward across sessions.
 
