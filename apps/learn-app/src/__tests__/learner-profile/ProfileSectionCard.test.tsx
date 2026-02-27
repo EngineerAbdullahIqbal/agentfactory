@@ -156,9 +156,8 @@ describe("ProfileSectionCard", () => {
         EditComponent={TestEdit}
       />,
     );
-    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByLabelText("Edit Goals & Motivation"));
     expect(screen.getByTestId("edit-input")).toBeInTheDocument();
-    expect(screen.queryByTestId("view")).not.toBeInTheDocument();
   });
 
   it("cancels edit and reverts to view mode", () => {
@@ -169,7 +168,7 @@ describe("ProfileSectionCard", () => {
         EditComponent={TestEdit}
       />,
     );
-    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByLabelText("Edit Goals & Motivation"));
     expect(screen.getByTestId("edit-input")).toBeInTheDocument();
 
     fireEvent.click(screen.getByText("Cancel"));
@@ -186,7 +185,7 @@ describe("ProfileSectionCard", () => {
         EditComponent={TestEdit}
       />,
     );
-    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByLabelText("Edit Goals & Motivation"));
     fireEvent.change(screen.getByTestId("edit-input"), {
       target: { value: "New goal" },
     });
@@ -219,7 +218,7 @@ describe("ProfileSectionCard", () => {
         EditComponent={TestEdit}
       />,
     );
-    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByLabelText("Edit Goals & Motivation"));
     fireEvent.click(screen.getByText("Save Changes"));
 
     await waitFor(() => {
@@ -231,7 +230,7 @@ describe("ProfileSectionCard", () => {
     expect(screen.getByTestId("edit-input")).toBeInTheDocument();
   });
 
-  it("shows Saving... text while save is in progress", async () => {
+  it("shows Saving… text while save is in progress", async () => {
     let resolveUpdate: (value: ProfileResponse) => void;
     mockUpdateSection.mockReturnValueOnce(
       new Promise<ProfileResponse>((resolve) => {
@@ -246,15 +245,15 @@ describe("ProfileSectionCard", () => {
         EditComponent={TestEdit}
       />,
     );
-    fireEvent.click(screen.getByText("Edit"));
+    fireEvent.click(screen.getByLabelText("Edit Goals & Motivation"));
     fireEvent.click(screen.getByText("Save Changes"));
 
-    expect(screen.getByText("Saving...")).toBeInTheDocument();
+    expect(screen.getByText("Saving…")).toBeInTheDocument();
 
     // Resolve the promise
     resolveUpdate!(mockProfile);
     await waitFor(() => {
-      expect(screen.queryByText("Saving...")).not.toBeInTheDocument();
+      expect(screen.queryByText("Saving…")).not.toBeInTheDocument();
     });
   });
 });

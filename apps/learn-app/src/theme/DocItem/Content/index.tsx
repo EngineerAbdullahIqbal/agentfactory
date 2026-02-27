@@ -807,7 +807,7 @@ export default function ContentWrapper(props: Props): React.ReactElement {
             </button>
           </div>
         )}
-        {isLoggedIn && <CompletenessBanner />}
+        {isLoggedIn && <CompletenessBanner hideDuringOnboarding />}
         <Content {...props} />
         {isLeafPage &&
           isLoggedIn &&

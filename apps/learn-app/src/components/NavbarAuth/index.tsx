@@ -24,9 +24,12 @@ import {
 import { useCredits } from "@/hooks/useCredits";
 import { useProgress } from "@/contexts/ProgressContext";
 import Link from "@docusaurus/Link";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import { useHistory } from "@docusaurus/router";
 import XPCounter from "@/components/progress/XPCounter";
 
 export function NavbarAuth() {
+  const history = useHistory();
   const { session, isLoading, signOut } = useAuth();
   const { siteConfig } = useDocusaurusContext();
   const credits = useCredits();
@@ -75,8 +78,9 @@ export function NavbarAuth() {
     return email ? email[0].toUpperCase() : "?";
   };
 
+  const profileHref = useBaseUrl("/profile");
   const handleEditProfile = () => {
-    window.location.href = "/profile";
+    history.push(profileHref);
   };
 
   if (isLoading) {
@@ -227,7 +231,7 @@ export function NavbarAuth() {
               className="cursor-pointer"
             >
               <User className="mr-2 h-4 w-4" />
-              <span>Learning Profile</span>
+              <span>Learner Profile</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => signOut()}

@@ -64,14 +64,14 @@ class TestPartialOnboardingSavesProgress:
             json={"programming": {"level": "intermediate"}},
         )
 
-        # Check onboarding status - should show 2/5 complete
+        # Check onboarding status - should show 2/6 complete
         status = await client.get(BASE + "/me/onboarding-status")
         data = status.json()
         assert data["overall_completed"] is False
         assert data["sections_completed"]["goals"] is True
         assert data["sections_completed"]["expertise"] is True
         assert data["sections_completed"]["professional_context"] is False
-        assert data["onboarding_progress"] == pytest.approx(0.4)
+        assert data["onboarding_progress"] == pytest.approx(round(2 / 6, 2))
 
 
 # ---------------------------------------------------------------------------

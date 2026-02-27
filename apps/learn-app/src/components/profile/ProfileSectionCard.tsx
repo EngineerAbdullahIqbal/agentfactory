@@ -25,6 +25,7 @@ interface ProfileSectionCardProps {
   EditComponent: React.ComponentType<{
     data: unknown;
     onChange: (data: unknown) => void;
+    fieldSources?: Record<string, string>;
   }>;
 }
 
@@ -68,19 +69,23 @@ export function ProfileSectionCard({
 
   return (
     <>
-      <Card className="h-full flex flex-col border-border/50 bg-card/40 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-border transition-all duration-300 group cursor-default relative overflow-hidden rounded-3xl">
+      <Card className="h-full flex flex-col border-border/50 bg-card/40 backdrop-blur-sm shadow-sm hover:shadow-md hover:border-border transition-colors transition-shadow duration-300 group cursor-default relative overflow-hidden rounded-3xl">
         {/* Subtle top glare effect */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <CardHeader className="flex flex-row items-start justify-between pb-4">
           <div>
-            <CardTitle className="text-xl tracking-tight leading-none">{config.label}</CardTitle>
-            <CardDescription className="mt-2 text-sm">{config.description}</CardDescription>
+            <CardTitle className="text-xl tracking-tight leading-none">
+              {config.label}
+            </CardTitle>
+            <CardDescription className="mt-2 text-sm">
+              {config.description}
+            </CardDescription>
           </div>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => handleOpenChange(true)}
-            className="rounded-full h-10 w-10 shrink-0 bg-accent/50 group-hover:bg-primary group-hover:text-primary-foreground transition-all focus-visible:ring-2 focus-visible:ring-primary/50"
+            className="rounded-full h-10 w-10 shrink-0 bg-accent/50 group-hover:bg-primary group-hover:text-primary-foreground transition-colors focus-visible:ring-2 focus-visible:ring-primary/50"
             aria-label={`Edit ${config.label}`}
           >
             <Pencil className="w-4 h-4" />
@@ -94,8 +99,12 @@ export function ProfileSectionCard({
       <Sheet open={isOpen} onOpenChange={handleOpenChange}>
         <SheetContent className="w-full sm:max-w-xl md:max-w-2xl overflow-y-auto border-l-border/50 bg-background/95 backdrop-blur-xl shadow-2xl p-0 flex flex-col">
           <SheetHeader className="p-6 md:p-8 space-y-2 border-b border-border/50 pb-6 shrink-0 bg-accent/10 text-left">
-            <SheetTitle className="text-2xl">{config.label} Settings</SheetTitle>
-            <SheetDescription className="text-base text-muted-foreground">{config.description}</SheetDescription>
+            <SheetTitle className="text-2xl">
+              {config.label} Settings
+            </SheetTitle>
+            <SheetDescription className="text-base text-muted-foreground">
+              {config.description}
+            </SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto p-6 md:p-8 relative">
@@ -104,12 +113,18 @@ export function ProfileSectionCard({
                 className="mb-6 text-sm font-medium text-destructive bg-destructive/10 px-4 py-3 rounded-xl flex items-start gap-3"
                 role="alert"
               >
-                <div className="mt-0.5"><AlertCircle className="w-4 h-4" /></div>
+                <div className="mt-0.5">
+                  <AlertCircle className="w-4 h-4" />
+                </div>
                 <span>{error}</span>
               </div>
             )}
             <div className="pb-24">
-              <EditComponent data={editData} onChange={setEditData} />
+              <EditComponent
+                data={editData}
+                onChange={setEditData}
+                fieldSources={profile?.field_sources}
+              />
             </div>
           </div>
 
@@ -128,8 +143,12 @@ export function ProfileSectionCard({
                 disabled={isSaving}
                 className="rounded-xl flex-[2] shadow-lg shadow-primary/25 text-base h-12 font-semibold"
               >
-                {isSaving ? <Loader2 className="w-5 h-5 mr-2 animate-spin" /> : <Check className="w-5 h-5 mr-2" />}
-                {isSaving ? "Saving..." : "Save Changes"}
+                {isSaving ? (
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                ) : (
+                  <Check className="w-5 h-5 mr-2" />
+                )}
+                {isSaving ? "Saving…" : "Save Changes"}
               </Button>
             </div>
           </div>

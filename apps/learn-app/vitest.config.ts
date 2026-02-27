@@ -12,7 +12,7 @@ export default defineConfig({
       ),
       "@docusaurus/useBaseUrl": resolve(
         __dirname,
-        "src/__tests__/__mocks__/docusaurus.ts",
+        "src/__tests__/__mocks__/useBaseUrl.ts",
       ),
       "@docusaurus/BrowserOnly": resolve(
         __dirname,
@@ -25,6 +25,14 @@ export default defineConfig({
       "@docusaurus/useDocusaurusContext": resolve(
         __dirname,
         "src/__tests__/__mocks__/useDocusaurusContext.ts",
+      ),
+      "@docusaurus/router": resolve(
+        __dirname,
+        "src/__tests__/__mocks__/docusaurus-router.ts",
+      ),
+      "framer-motion": resolve(
+        __dirname,
+        "src/__tests__/__mocks__/framer-motion.ts",
       ),
     },
   },

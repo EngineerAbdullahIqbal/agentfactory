@@ -61,8 +61,8 @@ export function ExpertiseLevelSelect({ value, onChange, label, id }: ExpertiseLe
     <div className="space-y-2">
       <Label htmlFor={selectId} className="text-xs font-semibold tracking-wide text-muted-foreground uppercase pl-1">{label}</Label>
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger id={selectId} className="h-14 text-lg rounded-xl border-2 border-border/50 bg-background/50 px-4 transition-all focus:ring-primary/20">
-          <SelectValue placeholder="Select level..." />
+        <SelectTrigger id={selectId} className="h-14 text-lg rounded-xl border-2 border-border/50 bg-background/50 px-4 transition-colors focus:ring-primary/20">
+          <SelectValue placeholder="Select level…" />
         </SelectTrigger>
         <SelectContent className="z-[120] rounded-xl border border-border/50 shadow-xl overflow-hidden">
           {levels.map((level) => (

@@ -40,14 +40,25 @@ JSONB_SECTIONS = [
 
 
 def _ensure_domain_auto_primary(expertise: dict) -> dict:
-    """Auto-mark the first domain entry as primary if none has is_primary=true.
+    """Ensure exactly one primary domain when domains exist.
 
-    Spec: "first entry auto-marked primary if none has is_primary=true".
+    Spec:
+    - "first entry auto-marked primary if none has is_primary=true"
+    - single primary domain (enforced)
     """
     domains = expertise.get("domain", [])
-    if domains and not any(d.get("is_primary") for d in domains):
+    if not domains:
+        return expertise
+
+    primary_indices = [i for i, d in enumerate(domains) if d.get("is_primary")]
+    if not primary_indices:
         domains[0]["is_primary"] = True
-        expertise["domain"] = domains
+    elif len(primary_indices) > 1:
+        keep = primary_indices[0]
+        for i in primary_indices:
+            domains[i]["is_primary"] = i == keep
+
+    expertise["domain"] = domains
     return expertise
 
 
@@ -602,6 +613,25 @@ async def update_onboarding_section(
 
                 changed_sections.append(key)
 
+    # Communication preferences can update multiple sections
+    if section_name == "communication_preferences" and section_data:
+        for key in ("communication", "delivery"):
+            if key in section_data and key in SECTION_MODELS:
+                model_class = SECTION_MODELS[key]
+                validated = model_class.model_validate(section_data[key])
+
+                existing_json = getattr(profile, key) or {}
+                previous_values[key] = dict(existing_json)
+
+                merged = merge_section(existing_json, validated)
+                setattr(profile, key, merged)
+
+                paths = collect_set_field_paths(validated, key)
+                for path in paths:
+                    field_source_updates[path] = "user"
+
+                changed_sections.append(key)
+
     # Check if all onboarding phases are completed
     all_completed = all(
         sections.get(phase, False) for phase in ONBOARDING_PHASES
@@ -650,6 +680,8 @@ async def sync_from_phm(
         profile.communication or {},
         profile.field_sources or {},
     )
+    expertise = _ensure_domain_auto_primary(expertise)
+    expertise = _deduplicate_mastered_topics(expertise)
 
     previous_values = {
         "expertise": dict(profile.expertise) if profile.expertise else {},

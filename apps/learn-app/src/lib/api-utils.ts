@@ -1,5 +1,7 @@
 export function getAuthHeaders(): Record<string, string> {
-  const token = localStorage.getItem("ainative_id_token");
+  const token =
+    localStorage.getItem("ainative_id_token") ||
+    localStorage.getItem("ainative_access_token");
   if (!token) return {};
   return { Authorization: `Bearer ${token}` };
 }

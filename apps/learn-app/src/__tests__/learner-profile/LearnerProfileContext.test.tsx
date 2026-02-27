@@ -103,7 +103,7 @@ const mockProfile: ProfileResponse = {
   updated_at: "2026-01-01T00:00:00Z",
 };
 
-const CACHE_KEY = "learner_profile_cache";
+const CACHE_KEY = "learner_profile_cache:test-user";
 
 // Test consumer component that displays context state
 function TestConsumer() {

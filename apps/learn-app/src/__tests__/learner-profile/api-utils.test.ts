@@ -12,6 +12,12 @@ describe("getAuthHeaders", () => {
     expect(headers).toEqual({ Authorization: "Bearer test-jwt-token" });
   });
 
+  it("falls back to access token when id token is missing", () => {
+    localStorage.setItem("ainative_access_token", "test-access-token");
+    const headers = getAuthHeaders();
+    expect(headers).toEqual({ Authorization: "Bearer test-access-token" });
+  });
+
   it("returns empty object when no token in localStorage", () => {
     const headers = getAuthHeaders();
     expect(headers).toEqual({});

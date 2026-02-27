@@ -1,9 +1,24 @@
 import React from "react";
-import { ExpertiseLevelSelect } from "@/components/profile/fields";
+import { ExpertiseLevelSelect, ChipSelect } from "@/components/profile/fields";
 import type { ExpertiseSection } from "@/lib/learner-profile-types";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+const PROGRAMMING_LANGUAGES = [
+  { value: "Python", label: "Python" },
+  { value: "JavaScript", label: "JavaScript" },
+  { value: "TypeScript", label: "TypeScript" },
+  { value: "Java", label: "Java" },
+  { value: "C#", label: "C#" },
+  { value: "Go", label: "Go" },
+  { value: "Rust", label: "Rust" },
+  { value: "Ruby", label: "Ruby" },
+  { value: "PHP", label: "PHP" },
+  { value: "Swift", label: "Swift" },
+  { value: "Kotlin", label: "Kotlin" },
+  { value: "C++", label: "C++" },
+];
 
 interface ExpertiseStepProps {
   data: ExpertiseSection;
@@ -12,7 +27,11 @@ interface ExpertiseStepProps {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+  },
 };
 
 export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
@@ -22,15 +41,16 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
       initial="hidden"
       animate="visible"
       variants={{
-        visible: { transition: { staggerChildren: 0.1 } }
+        visible: { transition: { staggerChildren: 0.1 } },
       }}
     >
-      <motion.div variants={itemVariants} className="text-center space-y-3">
+      <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
           Where are you starting from?
         </h2>
-        <p className="text-lg md:text-xl text-muted-foreground font-medium">
-          This controls the vocabulary, code depth, and concept explanations in every lesson.
+        <p className="text-lg text-muted-foreground font-medium max-w-xl">
+          This controls the vocabulary, code depth, and concept explanations in
+          every lesson.
         </p>
       </motion.div>
 
@@ -48,8 +68,31 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               }
             />
             <p className="text-xs text-muted-foreground/70 mt-2 pl-1">
-              Determines whether lessons include code samples, and how detailed the explanations are.
+              Determines whether lessons include code samples, and how detailed
+              the explanations are.
             </p>
+            {data.programming.level && data.programming.level !== "none" && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="pt-4"
+              >
+                <ChipSelect
+                  label="Languages you know"
+                  value={data.programming.languages || []}
+                  onChange={(languages) =>
+                    onChange({
+                      ...data,
+                      programming: { ...data.programming, languages },
+                    })
+                  }
+                  options={PROGRAMMING_LANGUAGES}
+                  maxSelect={10}
+                  allowCustom
+                  hint="Select all that apply, or add your own"
+                />
+              </motion.div>
+            )}
           </div>
           <div className="h-px bg-border/50 w-full" />
           <div>
@@ -64,7 +107,8 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               }
             />
             <p className="text-xs text-muted-foreground/70 mt-2 pl-1">
-              Determines whether we define terms like "agent," "RAG," and "tool use" or assume you know them.
+              Determines whether we define terms like "agent," "RAG," and "tool
+              use" or assume you know them.
             </p>
           </div>
           <div className="h-px bg-border/50 w-full" />
@@ -80,7 +124,8 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               }
             />
             <p className="text-xs text-muted-foreground/70 mt-2 pl-1">
-              Determines the business framing — ROI models, go-to-market, and monetization depth.
+              Determines the business framing — ROI models, go-to-market, and
+              monetization depth.
             </p>
           </div>
         </div>
@@ -110,12 +155,20 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
             }}
           />
           <p className="text-xs text-muted-foreground/70 -mt-2 pl-1">
-            Your domain expertise lets us use examples from your field instead of generic ones.
+            Your domain expertise lets us use examples from your field instead
+            of generic ones.
           </p>
 
-          {(data.domain[0]?.level && data.domain[0].level !== "none") && (
-            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="pt-2">
-              <Label htmlFor="onboarding-domain-name" className="text-xs font-semibold tracking-wide text-muted-foreground uppercase pl-1 mb-2 block">
+          {data.domain[0]?.level && data.domain[0].level !== "none" && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="pt-2"
+            >
+              <Label
+                htmlFor="onboarding-domain-name"
+                className="text-xs font-semibold tracking-wide text-muted-foreground uppercase pl-1 mb-2 block"
+              >
                 What is your domain?
               </Label>
               <Input
@@ -124,16 +177,20 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
                 value={data.domain[0]?.domain_name || ""}
                 onChange={(e) => {
                   const domain = [...data.domain];
-                  domain[0] = { ...domain[0], domain_name: e.target.value || null };
+                  domain[0] = {
+                    ...domain[0],
+                    domain_name: e.target.value || null,
+                  };
                   onChange({ ...data, domain });
                 }}
-                placeholder="e.g., Healthcare operations, FinTech lending, K-12 education..."
-                className="w-full text-base h-14 rounded-xl border border-border/50 bg-background/50 px-5 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-all font-medium"
+                placeholder="e.g., Healthcare operations, FinTech lending, K-12 education…"
+                className="w-full text-base h-14 rounded-xl border border-border/50 bg-background/50 px-5 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
                 maxLength={100}
                 autoFocus
               />
               <p className="text-xs text-muted-foreground/70 mt-2 pl-1">
-                Be specific — "supply chain logistics" works better than just "logistics."
+                Be specific — "supply chain logistics" works better than just
+                "logistics."
               </p>
             </motion.div>
           )}

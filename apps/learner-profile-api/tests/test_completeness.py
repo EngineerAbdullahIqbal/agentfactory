@@ -27,18 +27,19 @@ class TestOnboardingProgress:
         assert result == 0.0
 
     def test_onboarding_progress_partial(self):
-        """2 of 5 phases completed -> 0.4."""
+        """2 of 6 phases completed -> 2/6."""
         sections = {"goals": True, "expertise": True}
         result = compute_onboarding_progress(sections)
-        assert result == pytest.approx(0.4)
+        assert result == pytest.approx(2 / 6)
 
     def test_onboarding_progress_full(self):
-        """All 5 phases completed -> 1.0."""
+        """All 6 phases completed -> 1.0."""
         sections = {
             "goals": True,
             "expertise": True,
             "professional_context": True,
             "accessibility": True,
+            "communication_preferences": True,
             "ai_enrichment": True,
         }
         result = compute_onboarding_progress(sections)

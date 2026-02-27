@@ -96,6 +96,12 @@ export const LessonContent: React.FC<LessonContentProps> = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const { session, isLoading } = useAuth();
 
+  const handleTabChange = useCallback((tab: 'lesson' | 'summary') => {
+    setActiveTab(tab);
+    // Smooth scroll to top of content when switching tabs
+    contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
   // Check if user is authenticated
   const isAuthenticated = !!session && !isLoading;
 
@@ -103,12 +109,6 @@ export const LessonContent: React.FC<LessonContentProps> = ({
   if (!summaryElement) {
     return <>{children}</>;
   }
-
-  const handleTabChange = useCallback((tab: 'lesson' | 'summary') => {
-    setActiveTab(tab);
-    // Smooth scroll to top of content when switching tabs
-    contentRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, []);
 
   return (
     <div className={styles.lessonContent} ref={contentRef}>

@@ -5,7 +5,7 @@ import OnboardingWizard from "@/components/onboarding/OnboardingWizard";
 
 export default function OnboardingPage() {
   return (
-    <Layout title="Set Up Your Learning Profile" noFooter>
+    <Layout title="Set Up Your Learner Profile" noFooter>
       <BrowserOnly>{() => <OnboardingWizard />}</BrowserOnly>
     </Layout>
   );

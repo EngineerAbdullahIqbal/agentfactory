@@ -102,7 +102,7 @@ export default function OAuthCallback(): React.JSX.Element {
   }, [authUrl, oauthClientId, redirectUri]);
 
   return (
-    <Layout title="Authentication" description="Completing authentication...">
+    <Layout title="Authentication" description="Completing authentication…">
       <div style={{
         display: 'flex',
         flexDirection: 'column',
@@ -126,7 +126,7 @@ export default function OAuthCallback(): React.JSX.Element {
               }
             `}</style>
             <h2 style={{ marginTop: '1.5rem', color: 'var(--ifm-font-color-base)' }}>
-              Completing sign in...
+              Completing sign in…
             </h2>
             <p style={{ color: 'var(--ifm-font-color-secondary)' }}>
               Please wait while we authenticate you.

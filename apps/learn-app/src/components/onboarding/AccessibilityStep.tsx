@@ -26,17 +26,21 @@ export function AccessibilityStep({ data, onChange }: AccessibilityStepProps) {
         visible: { transition: { staggerChildren: 0.1 } }
       }}
     >
-      <motion.div variants={itemVariants} className="text-center space-y-3">
+      <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
           How should we deliver content?
         </h2>
-        <p className="text-lg md:text-xl text-muted-foreground font-medium">
+        <p className="text-lg text-muted-foreground font-medium max-w-xl">
           These settings adjust formatting, density, and assistive features across all lessons.
         </p>
       </motion.div>
 
       <motion.div variants={itemVariants} className="bg-background/50 border border-border/50 rounded-2xl p-6 md:p-8 shadow-sm space-y-8">
-        <AccessibilityToggles value={data} onChange={onChange} />
+        <AccessibilityToggles
+          value={data}
+          onChange={onChange}
+          includeColorBlindSafe={false}
+        />
 
         <div className="pt-6 border-t border-border/50 space-y-4">
           <Label className="text-sm font-semibold tracking-wide text-muted-foreground uppercase pl-1 opacity-90 block">
@@ -61,7 +65,7 @@ export function AccessibilityStep({ data, onChange }: AccessibilityStepProps) {
                 />
                 <Label
                   htmlFor={`onboarding-cognitive-${option.value}`}
-                  className="relative flex flex-col gap-2 rounded-2xl border-2 border-border/50 p-5 cursor-pointer transition-all duration-300 overflow-hidden bg-background/50 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 peer-data-[state=checked]:shadow-md"
+                  className="relative flex flex-col gap-2 rounded-2xl border-2 border-border/50 p-5 cursor-pointer transition-colors transition-shadow duration-300 overflow-hidden bg-background/50 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 peer-data-[state=checked]:shadow-md"
                 >
                   <div className="flex items-center justify-between">
                     <div className="text-lg font-semibold text-foreground">{option.title}</div>
@@ -94,8 +98,8 @@ export function AccessibilityStep({ data, onChange }: AccessibilityStepProps) {
           onChange={(e) =>
             onChange({ ...data, notes: e.target.value.substring(0, 300) || null })
           }
-          placeholder="e.g., I prefer dark mode, use keyboard navigation, or have limited screen time..."
-          className="w-full text-lg rounded-2xl border border-border/50 bg-background/50 px-5 py-4 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-all min-h-[120px] resize-none font-medium"
+          placeholder="e.g., I prefer dark mode, use keyboard navigation, or have limited screen time…"
+          className="w-full text-lg rounded-2xl border border-border/50 bg-background/50 px-5 py-4 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors min-h-[120px] resize-none font-medium"
           maxLength={300}
         />
       </motion.div>

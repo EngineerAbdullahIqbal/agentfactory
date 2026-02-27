@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest";
 import React from "react";
 import { render, screen, within, fireEvent } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { ExpertiseLevelSelect } from "@/components/profile/fields/ExpertiseLevelSelect";
 import { UrgencyRadio } from "@/components/profile/fields/UrgencyRadio";
 import { AccessibilityToggles } from "@/components/profile/fields/AccessibilityToggles";
@@ -8,41 +9,60 @@ import type { AccessibilitySection } from "@/lib/learner-profile-types";
 
 // ---------- ExpertiseLevelSelect ----------
 describe("ExpertiseLevelSelect", () => {
-  it("renders with label and 5 options", () => {
+  it("renders with label and shows 5 options when opened", async () => {
+    const user = userEvent.setup();
     render(
-      <ExpertiseLevelSelect value="beginner" onChange={vi.fn()} label="Programming" />
+      <ExpertiseLevelSelect
+        value="beginner"
+        onChange={vi.fn()}
+        label="Programming"
+      />,
     );
-    expect(screen.getByLabelText("Programming")).toBeInTheDocument();
 
-    const select = screen.getByLabelText("Programming") as HTMLSelectElement;
-    const options = within(select).getAllByRole("option");
+    const trigger = screen.getByLabelText("Programming");
+    expect(trigger).toBeInTheDocument();
+
+    await user.click(trigger);
+
+    const options = screen.getAllByRole("option");
     expect(options).toHaveLength(5);
-    expect(options.map((o) => o.textContent)).toEqual([
-      "None — No experience",
-      "Beginner — Just starting",
-      "Intermediate — Can work independently",
-      "Advanced — Deep experience",
-      "Expert — Can teach others",
+    const texts = options.map((o) =>
+      (o.textContent || "").replace(/\s+/g, " ").trim(),
+    );
+    expect(texts).toEqual([
+      "None— Never written code",
+      "Beginner— Written scripts or simple programs",
+      "Intermediate— Build apps, use APIs, debug independently",
+      "Advanced— Design systems, write production code",
+      "Expert— Architect large codebases, mentor others",
     ]);
   });
 
   it("displays the current value", () => {
     render(
-      <ExpertiseLevelSelect value="advanced" onChange={vi.fn()} label="AI Fluency" />
+      <ExpertiseLevelSelect
+        value="advanced"
+        onChange={vi.fn()}
+        label="AI Fluency"
+      />,
     );
-    const select = screen.getByLabelText("AI Fluency") as HTMLSelectElement;
-    expect(select.value).toBe("advanced");
+    const trigger = screen.getByLabelText("AI Fluency");
+    expect(trigger).toHaveTextContent("Advanced");
   });
 
-  it("calls onChange when a different option is selected", () => {
+  it("calls onChange when a different option is selected", async () => {
+    const user = userEvent.setup();
     const onChange = vi.fn();
     render(
-      <ExpertiseLevelSelect value="beginner" onChange={onChange} label="Programming" />
+      <ExpertiseLevelSelect
+        value="beginner"
+        onChange={onChange}
+        label="Programming"
+      />,
     );
 
-    fireEvent.change(screen.getByLabelText("Programming"), {
-      target: { value: "expert" },
-    });
+    await user.click(screen.getByLabelText("Programming"));
+    await user.click(screen.getByRole("option", { name: /Expert/i }));
     expect(onChange).toHaveBeenCalledWith("expert");
   });
 
@@ -51,9 +71,9 @@ describe("ExpertiseLevelSelect", () => {
       <ExpertiseLevelSelect value="none" onChange={vi.fn()} label="Domain Knowledge" />
     );
     const label = screen.getByText("Domain Knowledge");
-    const select = screen.getByLabelText("Domain Knowledge");
+    const trigger = screen.getByLabelText("Domain Knowledge");
     expect(label.tagName).toBe("LABEL");
-    expect(label).toHaveAttribute("for", select.id);
+    expect(label).toHaveAttribute("for", trigger.id);
   });
 
   it("uses custom id when provided", () => {
@@ -65,8 +85,8 @@ describe("ExpertiseLevelSelect", () => {
         id="my-custom-id"
       />
     );
-    const select = screen.getByLabelText("Custom");
-    expect(select.id).toBe("my-custom-id");
+    const trigger = screen.getByLabelText("Custom");
+    expect(trigger.id).toBe("my-custom-id");
   });
 });
 
@@ -82,17 +102,17 @@ describe("UrgencyRadio", () => {
     const onChange = vi.fn();
     render(<UrgencyRadio value={null} onChange={onChange} />);
 
-    fireEvent.click(screen.getByDisplayValue("high"));
+    fireEvent.click(screen.getByRole("radio", { name: /High/i }));
     expect(onChange).toHaveBeenCalledWith("high");
   });
 
   it("checks the radio matching the current value", () => {
     render(<UrgencyRadio value="medium" onChange={vi.fn()} />);
-    const mediumRadio = screen.getByDisplayValue("medium") as HTMLInputElement;
-    expect(mediumRadio.checked).toBe(true);
+    const mediumRadio = screen.getByRole("radio", { name: /Medium/i });
+    expect(mediumRadio).toHaveAttribute("aria-checked", "true");
 
-    const lowRadio = screen.getByDisplayValue("low") as HTMLInputElement;
-    expect(lowRadio.checked).toBe(false);
+    const lowRadio = screen.getByRole("radio", { name: /Low/i });
+    expect(lowRadio).toHaveAttribute("aria-checked", "false");
   });
 
   it("has proper fieldset/legend structure", () => {
@@ -113,8 +133,10 @@ describe("UrgencyRadio", () => {
 
   it("handles null value (nothing checked)", () => {
     render(<UrgencyRadio value={null} onChange={vi.fn()} />);
-    const radios = screen.getAllByRole("radio") as HTMLInputElement[];
-    expect(radios.every((r) => !r.checked)).toBe(true);
+    const radios = screen.getAllByRole("radio");
+    expect(radios.every((r) => r.getAttribute("aria-checked") !== "true")).toBe(
+      true,
+    );
   });
 });
 

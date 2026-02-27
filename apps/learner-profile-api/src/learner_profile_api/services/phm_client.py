@@ -176,42 +176,59 @@ def apply_phm_data(
     subject_specific = expertise.get("subject_specific", {})
     mastered = subject_specific.get("topics_already_mastered", [])
     misconceptions = subject_specific.get("known_misconceptions", [])
+    mastered_path = "expertise.subject_specific.topics_already_mastered"
+    misconceptions_path = "expertise.subject_specific.known_misconceptions"
+    mastered_changed = False
+    misconceptions_changed = False
 
     # Mastered topics
     if "mastered" in knowledge_map:
-        existing_topics = {t.get("topic", "").lower(): i for i, t in enumerate(mastered)}
-        for item in knowledge_map["mastered"]:
-            topic = item if isinstance(item, str) else item.get("topic", "")
-            normalized = topic.lower()
-            if normalized not in existing_topics:
-                mastered.append({"topic": topic, "treatment": "reference"})
+        if _can_override(updated_sources.get(mastered_path, "default")):
+            existing_topics = {t.get("topic", "").lower(): i for i, t in enumerate(mastered)}
+            for item in knowledge_map["mastered"]:
+                topic = item if isinstance(item, str) else item.get("topic", "")
+                normalized = topic.lower()
+                if normalized not in existing_topics:
+                    mastered.append({"topic": topic, "treatment": "reference"})
+                    mastered_changed = True
 
     # Topics to skip
     if "topics_to_skip" in knowledge_map:
-        existing_topics = {t.get("topic", "").lower(): i for i, t in enumerate(mastered)}
-        for topic in knowledge_map["topics_to_skip"]:
-            normalized = topic.lower() if isinstance(topic, str) else ""
-            if normalized in existing_topics:
-                # Upgrade from reference to skip
-                mastered[existing_topics[normalized]]["treatment"] = "skip"
-            else:
-                mastered.append({"topic": topic, "treatment": "skip"})
+        if _can_override(updated_sources.get(mastered_path, "default")):
+            existing_topics = {t.get("topic", "").lower(): i for i, t in enumerate(mastered)}
+            for topic in knowledge_map["topics_to_skip"]:
+                normalized = topic.lower() if isinstance(topic, str) else ""
+                if normalized in existing_topics:
+                    # Upgrade from reference to skip
+                    prev = mastered[existing_topics[normalized]].get("treatment")
+                    mastered[existing_topics[normalized]]["treatment"] = "skip"
+                    if prev != "skip":
+                        mastered_changed = True
+                else:
+                    mastered.append({"topic": topic, "treatment": "skip"})
+                    mastered_changed = True
 
     # Known misconceptions (string → object transform, capped at 5)
     if "known_misconceptions" in knowledge_map:
-        existing_misc_topics = {m.get("topic", "").lower() for m in misconceptions}
-        for item in knowledge_map["known_misconceptions"]:
-            topic = item if isinstance(item, str) else item.get("topic", "")
-            if topic.lower() not in existing_misc_topics and len(misconceptions) < 5:
-                misconceptions.append({
-                    "topic": topic,
-                    "misconception": "Detected via tutoring session — details pending review",
-                })
-                existing_misc_topics.add(topic.lower())
+        if _can_override(updated_sources.get(misconceptions_path, "default")):
+            existing_misc_topics = {m.get("topic", "").lower() for m in misconceptions}
+            for item in knowledge_map["known_misconceptions"]:
+                topic = item if isinstance(item, str) else item.get("topic", "")
+                if topic.lower() not in existing_misc_topics and len(misconceptions) < 5:
+                    misconceptions.append({
+                        "topic": topic,
+                        "misconception": "Detected via tutoring session — details pending review",
+                    })
+                    existing_misc_topics.add(topic.lower())
+                    misconceptions_changed = True
 
     subject_specific["topics_already_mastered"] = mastered
     subject_specific["known_misconceptions"] = misconceptions
     expertise["subject_specific"] = subject_specific
+    if mastered_changed:
+        updated_sources[mastered_path] = "phm"
+    if misconceptions_changed:
+        updated_sources[misconceptions_path] = "phm"
 
     # --- Professional Context ---
     if "current_role" in prof_context:

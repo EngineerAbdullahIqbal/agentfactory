@@ -21,6 +21,10 @@ function getBadgeVariant(level: string) {
 
 export function ExpertiseView({ data }: { data: unknown }) {
   const expertise = data as ExpertiseSection;
+  const hasNamedDomains = Boolean(
+    expertise?.domain?.some((d) => Boolean(d.domain_name)),
+  );
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4">
@@ -44,11 +48,13 @@ export function ExpertiseView({ data }: { data: unknown }) {
         </div>
       </div>
 
-      {expertise?.domain?.length > 0 && expertise.domain[0]?.domain_name && (
+      {expertise?.domain?.length > 0 && hasNamedDomains && (
         <div className="space-y-2 border border-border/50 rounded-xl p-4 bg-background/50">
           <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Domain Expertise</div>
           <div className="flex flex-wrap gap-2 pt-1">
-            {expertise.domain.map((d, i) => (
+            {expertise.domain
+              .filter((d) => Boolean(d.domain_name))
+              .map((d, i) => (
               <Badge key={i} variant={getBadgeVariant(d.level)} className="text-sm px-3 py-1">
                 {d.domain_name} — {levelLabel(d.level)}
               </Badge>

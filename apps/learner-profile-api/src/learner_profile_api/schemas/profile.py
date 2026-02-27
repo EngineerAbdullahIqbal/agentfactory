@@ -174,6 +174,7 @@ ONBOARDING_PHASES = [
     "expertise",
     "professional_context",
     "accessibility",
+    "communication_preferences",
     "ai_enrichment",
 ]
 
@@ -193,6 +194,7 @@ class ProfileResponse(BaseModel):
     communication: CommunicationSection
     delivery: DeliverySection
     accessibility: AccessibilitySection
+    field_sources: dict[str, str] = Field(default_factory=dict)
     onboarding_completed: bool
     onboarding_progress: float
     profile_completeness: float

@@ -197,12 +197,15 @@ class TestProfileRoutes:
         assert data["next_section"] is not None
 
     # ------------------------------------------------------------------
-    # 11. Mark all 5 onboarding phases -> overall_completed true
+    # 11. Mark all 6 onboarding phases -> overall_completed true
     # ------------------------------------------------------------------
     async def test_completing_all_onboarding_sections(self, client):
         await client.post(BASE + "/", json={"consent_given": True})
 
-        phases = ["goals", "expertise", "professional_context", "accessibility", "ai_enrichment"]
+        phases = [
+            "goals", "expertise", "professional_context",
+            "accessibility", "communication_preferences", "ai_enrichment",
+        ]
         for phase in phases:
             resp = await client.patch(BASE + f"/me/onboarding/{phase}")
             assert resp.status_code == 200

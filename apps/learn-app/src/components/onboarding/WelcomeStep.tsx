@@ -20,10 +20,10 @@ export function WelcomeStep({ onAgree, onDecline, isSaving }: WelcomeStepProps) 
             </div>
 
             <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-4">
-                Set up your Learning Profile
+                Set up your Learner Profile
             </h1>
             <p className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl">
-                Personalize your learning experience in ~90 seconds. We'll use your profile to tailor the curriculum to you.
+                Personalize your learning experience in ~90 seconds. You can skip anything and adjust later.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full mb-12">
@@ -77,7 +77,7 @@ export function WelcomeStep({ onAgree, onDecline, isSaving }: WelcomeStepProps) 
                     size="lg"
                     className="w-full sm:w-auto rounded-xl px-12 shadow-md shadow-primary/20 font-medium"
                 >
-                    {isSaving ? "Creating Profile..." : "Agree & continue"}
+                    {isSaving ? "Creating profile…" : "Agree & continue"}
                 </Button>
                 <Button
                     variant="link"

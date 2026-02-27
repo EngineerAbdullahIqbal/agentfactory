@@ -18,11 +18,19 @@ export type PreferredStructure =
   | "reference-lookup"
   | "problem-first";
 export type Verbosity = "concise" | "moderate" | "detailed";
-export type Tone = "formal" | "professional" | "conversational" | "peer-to-peer";
+export type Tone =
+  | "formal"
+  | "professional"
+  | "conversational"
+  | "peer-to-peer";
 export type OutputFormat = "prose" | "structured-with-headers" | "mixed";
 export type TargetLength = "short" | "medium" | "long" | "match-source";
 export type CodeVerbosity = "minimal" | "annotated" | "fully-explained";
-export type LanguageProficiency = "native" | "fluent" | "intermediate" | "basic";
+export type LanguageProficiency =
+  | "native"
+  | "fluent"
+  | "intermediate"
+  | "basic";
 export type CognitiveLoadPreference = "standard" | "reduced";
 export type MasteredTopicTreatment = "reference" | "skip";
 
@@ -146,12 +154,12 @@ export interface ProfileCreateRequest {
 
 export interface ProfileUpdateRequest {
   name?: string | null;
-  expertise?: ExpertiseSection;
-  professional_context?: ProfessionalContextSection;
-  goals?: GoalsSection;
-  communication?: CommunicationSection;
-  delivery?: DeliverySection;
-  accessibility?: AccessibilitySection;
+  expertise?: Partial<ExpertiseSection>;
+  professional_context?: Partial<ProfessionalContextSection>;
+  goals?: Partial<GoalsSection>;
+  communication?: Partial<CommunicationSection>;
+  delivery?: Partial<DeliverySection>;
+  accessibility?: Partial<AccessibilitySection>;
 }
 
 // Response types
@@ -167,6 +175,7 @@ export interface ProfileResponse {
   communication: CommunicationSection;
   delivery: DeliverySection;
   accessibility: AccessibilitySection;
+  field_sources?: Record<string, string>;
   onboarding_completed: boolean;
   onboarding_progress: number;
   profile_completeness: number;
@@ -203,6 +212,7 @@ export const ONBOARDING_PHASES = [
   "expertise",
   "professional_context",
   "accessibility",
+  "communication_preferences",
   "ai_enrichment",
 ] as const;
 export type OnboardingPhase = (typeof ONBOARDING_PHASES)[number];

@@ -17,6 +17,7 @@ interface UrgencyRadioProps {
 export function UrgencyRadio({ value, onChange, name = "urgency" }: UrgencyRadioProps) {
   return (
     <fieldset className="space-y-4">
+      <legend className="text-sm font-medium">Learning Urgency</legend>
       <RadioGroup
         value={value || ""}
         onValueChange={onChange}
@@ -32,7 +33,7 @@ export function UrgencyRadio({ value, onChange, name = "urgency" }: UrgencyRadio
             />
             <Label
               htmlFor={`${name}-${option.value}`}
-              className="flex flex-col items-start gap-1.5 rounded-xl border-2 border-border/50 bg-background/50 p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer transition-all duration-200"
+              className="flex flex-col items-start gap-1.5 rounded-xl border-2 border-border/50 bg-background/50 p-4 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer transition-colors duration-200"
             >
               <div className="font-semibold text-lg text-foreground">{option.label}</div>
               <div className="font-normal text-sm text-muted-foreground">

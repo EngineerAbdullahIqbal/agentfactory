@@ -3,11 +3,17 @@ import {
   deleteMyProfile,
   gdprEraseMyProfile,
 } from "@/lib/learner-profile-api";
+import { useAuth } from "@/contexts/AuthContext";
 import { useLearnerProfile } from "@/contexts/LearnerProfileContext";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import useBaseUrl from "@docusaurus/useBaseUrl";
+import { useHistory } from "@docusaurus/router";
 
 export function DangerZone() {
+  const history = useHistory();
+  const homeHref = useBaseUrl("/");
   const { siteConfig } = useDocusaurusContext();
+  const { session } = useAuth();
   const { refreshProfile } = useLearnerProfile();
   const apiUrl =
     (siteConfig.customFields?.learnerProfileApiUrl as string) ||
@@ -17,13 +23,24 @@ export function DangerZone() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const clearRedirectOnceKey = () => {
+    const userId = session?.user?.id;
+    if (!userId || typeof window === "undefined") return;
+    try {
+      localStorage.removeItem(`learner_profile_onboarding_redirected:${userId}`);
+    } catch {
+      // ignore
+    }
+  };
+
   const handleDelete = async () => {
     setIsDeleting(true);
     setError(null);
     try {
       await deleteMyProfile(apiUrl);
       await refreshProfile();
-      window.location.href = "/";
+      clearRedirectOnceKey();
+      history.replace(homeHref);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Failed to delete profile";
@@ -38,7 +55,8 @@ export function DangerZone() {
     try {
       await gdprEraseMyProfile(apiUrl);
       await refreshProfile();
-      window.location.href = "/";
+      clearRedirectOnceKey();
+      history.replace(homeHref);
     } catch (err) {
       const message =
         err instanceof Error ? err.message : "Failed to erase profile data";
@@ -92,7 +110,7 @@ export function DangerZone() {
                 disabled={isDeleting}
                 className="px-3 py-1.5 text-sm rounded-md bg-destructive text-destructive-foreground hover:bg-destructive/90"
               >
-                {isDeleting ? "Deleting..." : "Confirm Delete"}
+                {isDeleting ? "Deleting…" : "Confirm Delete"}
               </button>
             </div>
           )}
@@ -126,7 +144,7 @@ export function DangerZone() {
                   disabled={isDeleting}
                   className="px-3 py-1.5 text-sm rounded-md bg-destructive text-destructive-foreground hover:bg-destructive/90"
                 >
-                  {isDeleting ? "Erasing..." : "Confirm Erase"}
+                  {isDeleting ? "Erasing…" : "Confirm Erase"}
                 </button>
               </div>
             )}

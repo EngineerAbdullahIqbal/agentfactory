@@ -58,8 +58,13 @@ def _profile_to_response(profile) -> ProfileResponse:
         ProfessionalContextSection,
     )
 
-    sections_completed = profile.onboarding_sections_completed or {}
     field_sources = profile.field_sources or {}
+
+    # Backward-compat backfill: pre-v1.2 profiles that completed onboarding
+    # won't have communication_preferences in sections_completed
+    sections_completed = dict(profile.onboarding_sections_completed or {})
+    if profile.onboarding_completed and "communication_preferences" not in sections_completed:
+        sections_completed["communication_preferences"] = True
 
     onboarding_progress = compute_onboarding_progress(sections_completed)
     completeness, _ = compute_profile_completeness(field_sources)
@@ -78,6 +83,7 @@ def _profile_to_response(profile) -> ProfileResponse:
         communication=CommunicationSection.model_validate(profile.communication or {}),
         delivery=DeliverySection.model_validate(profile.delivery or {}),
         accessibility=AccessibilitySection.model_validate(profile.accessibility or {}),
+        field_sources=field_sources,
         onboarding_completed=profile.onboarding_completed,
         onboarding_progress=round(onboarding_progress, 2),
         profile_completeness=round(completeness, 2),
@@ -323,8 +329,12 @@ async def get_onboarding_status(
             detail={"error": "not_found", "message": "No profile found"},
         )
 
-    sections_completed = profile.onboarding_sections_completed or {}
     field_sources = profile.field_sources or {}
+
+    # Backward-compat backfill: pre-v1.2 profiles that completed onboarding
+    sections_completed = dict(profile.onboarding_sections_completed or {})
+    if profile.onboarding_completed and "communication_preferences" not in sections_completed:
+        sections_completed["communication_preferences"] = True
 
     # Build sections_completed with all phases
     all_sections = {phase: sections_completed.get(phase, False) for phase in ONBOARDING_PHASES}

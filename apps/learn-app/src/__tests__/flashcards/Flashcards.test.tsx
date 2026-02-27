@@ -106,7 +106,7 @@ describe("Flashcards", () => {
     render(<Flashcards cards={null} />);
 
     expect(
-      screen.getByText("Flashcards are not available for this lesson yet."),
+      screen.getByText("Flashcards Study Aid is not available for this lesson yet."),
     ).toBeInTheDocument();
   });
 

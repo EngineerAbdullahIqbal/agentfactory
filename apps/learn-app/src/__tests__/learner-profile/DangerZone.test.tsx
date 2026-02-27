@@ -10,6 +10,17 @@ vi.mock("@docusaurus/useDocusaurusContext", () => ({
   }),
 }));
 
+// Mock navigation
+const replaceMock = vi.fn();
+vi.mock("@docusaurus/router", () => ({
+  useHistory: () => ({ push: vi.fn(), replace: replaceMock, goBack: vi.fn() }),
+}));
+
+// Mock baseUrl
+vi.mock("@docusaurus/useBaseUrl", () => ({
+  default: (url: string) => url,
+}));
+
 // Mock API functions
 const mockDeleteMyProfile = vi.fn();
 const mockGdprEraseMyProfile = vi.fn();
@@ -26,17 +37,14 @@ vi.mock("@/contexts/LearnerProfileContext", () => ({
   }),
 }));
 
-// Mock window.location
-const mockLocation = { href: "" };
-Object.defineProperty(window, "location", {
-  value: mockLocation,
-  writable: true,
-});
+vi.mock("@/contexts/AuthContext", () => ({
+  useAuth: () => ({ session: { user: { id: "test-user" } } }),
+}));
 
 describe("DangerZone", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockLocation.href = "";
+    localStorage.clear();
   });
 
   it("renders Delete and GDPR Erase buttons", () => {
@@ -75,11 +83,11 @@ describe("DangerZone", () => {
     });
 
     await waitFor(() => {
-      expect(mockLocation.href).toBe("/");
+      expect(replaceMock).toHaveBeenCalledWith("/");
     });
   });
 
-  it("shows Deleting... state during delete operation", async () => {
+  it("shows Deleting… state during delete operation", async () => {
     let resolveDelete: () => void;
     mockDeleteMyProfile.mockReturnValueOnce(
       new Promise<void>((resolve) => {
@@ -91,11 +99,11 @@ describe("DangerZone", () => {
     fireEvent.click(screen.getByText("Delete"));
     fireEvent.click(screen.getByText("Confirm Delete"));
 
-    expect(screen.getByText("Deleting...")).toBeInTheDocument();
+    expect(screen.getByText("Deleting…")).toBeInTheDocument();
 
     resolveDelete!();
     await waitFor(() => {
-      expect(mockLocation.href).toBe("/");
+      expect(replaceMock).toHaveBeenCalledWith("/");
     });
   });
 
@@ -128,11 +136,11 @@ describe("DangerZone", () => {
     });
 
     await waitFor(() => {
-      expect(mockLocation.href).toBe("/");
+      expect(replaceMock).toHaveBeenCalledWith("/");
     });
   });
 
-  it("shows Erasing... state during GDPR erase operation", async () => {
+  it("shows Erasing… state during GDPR erase operation", async () => {
     let resolveErase: () => void;
     mockGdprEraseMyProfile.mockReturnValueOnce(
       new Promise<void>((resolve) => {
@@ -144,11 +152,11 @@ describe("DangerZone", () => {
     fireEvent.click(screen.getByText("GDPR Erase"));
     fireEvent.click(screen.getByText("Confirm Erase"));
 
-    expect(screen.getByText("Erasing...")).toBeInTheDocument();
+    expect(screen.getByText("Erasing…")).toBeInTheDocument();
 
     resolveErase!();
     await waitFor(() => {
-      expect(mockLocation.href).toBe("/");
+      expect(replaceMock).toHaveBeenCalledWith("/");
     });
   });
 
@@ -164,7 +172,7 @@ describe("DangerZone", () => {
     });
 
     // Should not redirect on error
-    expect(mockLocation.href).toBe("");
+    expect(replaceMock).not.toHaveBeenCalled();
     // Error message should be shown with role="alert"
     await waitFor(() => {
       const alert = screen.getByRole("alert");

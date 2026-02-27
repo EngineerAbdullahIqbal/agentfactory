@@ -12,6 +12,7 @@ export function AccessibilityEdit({
   onChange: (data: unknown) => void;
 }) {
   const a11y = data as AccessibilitySection;
+  const notes = a11y?.notes || "";
 
   return (
     <div className="space-y-4">
@@ -38,17 +39,26 @@ export function AccessibilityEdit({
         </RadioGroup>
       </fieldset>
       <div className="space-y-1.5">
-        <label htmlFor="settings-a11y-notes" className="text-sm font-medium">
-          Additional Notes
-        </label>
+        <div className="flex justify-between items-baseline">
+          <label htmlFor="settings-a11y-notes" className="text-sm font-medium">
+            Additional Notes
+          </label>
+          <span className="text-xs text-muted-foreground">
+            {notes.length} / 300
+          </span>
+        </div>
         <Textarea
           id="settings-a11y-notes"
-          value={a11y?.notes || ""}
+          value={notes}
           onChange={(e) =>
-            onChange({ ...a11y, notes: e.target.value || null })
+            onChange({
+              ...a11y,
+              notes: e.target.value.substring(0, 300) || null,
+            })
           }
-          placeholder="Any other accessibility needs..."
+          placeholder="Any other accessibility needs…"
           rows={3}
+          maxLength={300}
         />
       </div>
     </div>

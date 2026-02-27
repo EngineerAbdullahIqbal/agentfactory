@@ -15,8 +15,8 @@ import React from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { LearnerProfileProvider } from '@/contexts/LearnerProfileContext';
+import { ProfileNudgeVisibilityProvider } from '@/contexts/ProfileNudgeVisibilityContext';
 import { RequireProfile } from '@/components/RequireProfile';
-import { ProfileNudgeBanner } from '@/components/profile/ProfileNudgeBanner';
 import { Toaster } from '@/components/ui/sonner';
 import { PyodideProvider } from '@/contexts/PyodideContext';
 import { AnalyticsTracker } from '@/components/AnalyticsTracker';
@@ -32,21 +32,22 @@ export default function Root({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider authUrl={authUrl} oauthClientId={oauthClientId}>
       <LearnerProfileProvider>
-        <RequireProfile>
-          <ProgressProvider>
-            <PyodideProvider>
-              <StudyModeProvider>
-                <VoiceReadingProvider>
-                  <AnalyticsTracker>
-                    <ProfileNudgeBanner />
-                    {children}
-                    <Toaster />
-                  </AnalyticsTracker>
-                </VoiceReadingProvider>
-              </StudyModeProvider>
-            </PyodideProvider>
-          </ProgressProvider>
-        </RequireProfile>
+        <ProfileNudgeVisibilityProvider>
+          <RequireProfile>
+            <ProgressProvider>
+              <PyodideProvider>
+                <StudyModeProvider>
+                  <VoiceReadingProvider>
+                    <AnalyticsTracker>
+                      {children}
+                      <Toaster />
+                    </AnalyticsTracker>
+                  </VoiceReadingProvider>
+                </StudyModeProvider>
+              </PyodideProvider>
+            </ProgressProvider>
+          </RequireProfile>
+        </ProfileNudgeVisibilityProvider>
       </LearnerProfileProvider>
     </AuthProvider>
   );

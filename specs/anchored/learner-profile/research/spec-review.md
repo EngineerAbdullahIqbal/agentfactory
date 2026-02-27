@@ -2,7 +2,7 @@
 
 **Reviewer:** QA Lead (Phase 3)
 **Date:** 2026-02-26
-**Artifact:** `specs/learner-profile/spec.md` (785 lines)
+**Artifact:** `../spec.md`
 **Cross-referenced against:** All 5 research files + 11 user decisions
 
 ---

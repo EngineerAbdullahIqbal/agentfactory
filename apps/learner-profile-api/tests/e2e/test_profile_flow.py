@@ -121,20 +121,22 @@ class TestProfileLifecycle:
             json={"consent_given": True},
         )
 
-        # Update expertise to advanced — should trigger inference
+        # Update expertise to advanced on both axes — should trigger inference
+        # Two-axis model: tech=max(programming, ai_fluency), prof=max(business, primary domain)
         patch_resp = await client.patch(
             BASE + "/me",
             json={
                 "expertise": {
                     "programming": {"level": "advanced"},
                     "ai_fluency": {"level": "advanced"},
+                    "business": {"level": "advanced"},
                 },
             },
         )
         assert patch_resp.status_code == 200
         profile = patch_resp.json()
 
-        # Inference should have set communication preferences
+        # tech=advanced+, prof=advanced+ -> technical, peer-to-peer, concise
         assert profile["communication"]["language_complexity"] == "technical"
         assert profile["communication"]["tone"] == "peer-to-peer"
         assert profile["communication"]["verbosity"] == "concise"

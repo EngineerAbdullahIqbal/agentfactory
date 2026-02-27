@@ -16,6 +16,7 @@ import {
   updateSection as apiUpdateSection,
   completeOnboardingPhase as apiCompleteOnboardingPhase,
 } from "@/lib/learner-profile-api";
+import { buildSparsePatch } from "@/lib/buildSparsePatch";
 import type {
   ProfileResponse,
   ProfileCreateRequest,
@@ -27,7 +28,8 @@ import type {
 // localStorage Cache
 // =============================================================================
 
-const CACHE_KEY = "learner_profile_cache";
+const LEGACY_CACHE_KEY = "learner_profile_cache";
+const CACHE_KEY_PREFIX = "learner_profile_cache";
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 
 interface CachedProfile {
@@ -35,26 +37,44 @@ interface CachedProfile {
   timestamp: number;
 }
 
-function getCachedProfile(): ProfileResponse | null {
+function cacheKeyForUser(userId: string): string {
+  return `${CACHE_KEY_PREFIX}:${userId}`;
+}
+
+function clearLegacyCache(): void {
   try {
-    const raw = localStorage.getItem(CACHE_KEY);
+    localStorage.removeItem(LEGACY_CACHE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+function getCachedProfile(userId: string): ProfileResponse | null {
+  clearLegacyCache();
+  try {
+    const raw = localStorage.getItem(cacheKeyForUser(userId));
     if (!raw) return null;
     const cached: CachedProfile = JSON.parse(raw);
     if (Date.now() - cached.timestamp > CACHE_TTL_MS) {
-      localStorage.removeItem(CACHE_KEY);
+      localStorage.removeItem(cacheKeyForUser(userId));
       return null;
     }
     return cached.profile;
   } catch {
-    localStorage.removeItem(CACHE_KEY);
+    try {
+      localStorage.removeItem(cacheKeyForUser(userId));
+    } catch {
+      // ignore
+    }
     return null;
   }
 }
 
-function setCachedProfile(profile: ProfileResponse): void {
+function setCachedProfile(userId: string, profile: ProfileResponse): void {
+  clearLegacyCache();
   try {
     localStorage.setItem(
-      CACHE_KEY,
+      cacheKeyForUser(userId),
       JSON.stringify({ profile, timestamp: Date.now() }),
     );
   } catch {
@@ -62,9 +82,10 @@ function setCachedProfile(profile: ProfileResponse): void {
   }
 }
 
-function clearCachedProfile(): void {
+function clearCachedProfile(userId: string): void {
+  clearLegacyCache();
   try {
-    localStorage.removeItem(CACHE_KEY);
+    localStorage.removeItem(cacheKeyForUser(userId));
   } catch {
     // ignore
   }
@@ -110,20 +131,24 @@ export function LearnerProfileProvider({
   const [needsOnboarding, setNeedsOnboarding] = useState(false);
   const [hasAttemptedFetch, setHasAttemptedFetch] = useState(false);
   const fetchingRef = useRef(false);
+  const lastUserIdRef = useRef<string | null>(null);
 
   // Helper: set profile in both React state and localStorage
   const setProfileWithCache = useCallback((data: ProfileResponse) => {
     setProfile(data);
-    setCachedProfile(data);
-  }, []);
+    const userId = session?.user?.id;
+    if (userId) setCachedProfile(userId, data);
+  }, [session?.user?.id]);
 
   // Lazy trigger — called when context is consumed via useLearnerProfile
   const ensureProfileLoaded = useCallback(async () => {
     if (hasAttemptedFetch || fetchingRef.current || !session?.user) return;
     fetchingRef.current = true;
 
+    const userId = session.user.id;
+
     // Check localStorage cache first — avoids API call on hard refresh
-    const cached = getCachedProfile();
+    const cached = getCachedProfile(userId);
     if (cached) {
       setProfile(cached);
       setNeedsOnboarding(false);
@@ -150,21 +175,33 @@ export function LearnerProfileProvider({
     }
   }, [hasAttemptedFetch, session?.user, apiUrl, setProfileWithCache]);
 
-  // Clear state on sign-out
+  // Clear state on sign-out (or when switching users)
   useEffect(() => {
-    if (!session?.user) {
+    const currentUserId = session?.user?.id ?? null;
+    const lastUserId = lastUserIdRef.current;
+
+    if (lastUserId && lastUserId !== currentUserId) {
+      clearCachedProfile(lastUserId);
       setProfile(null);
       setNeedsOnboarding(false);
       setHasAttemptedFetch(false);
       fetchingRef.current = false;
-      clearCachedProfile();
     }
-  }, [session?.user]);
+
+    if (!currentUserId) {
+      setProfile(null);
+      setNeedsOnboarding(false);
+      setHasAttemptedFetch(false);
+      fetchingRef.current = false;
+    }
+
+    lastUserIdRef.current = currentUserId;
+  }, [session?.user?.id]);
 
   // Force-refresh: clear cache, fetch fresh from API
   const refreshProfile = useCallback(async () => {
     if (!session?.user) return;
-    clearCachedProfile();
+    clearCachedProfile(session.user.id);
     setIsLoading(true);
     try {
       const data = await getMyProfileOrNull(apiUrl);
@@ -184,21 +221,67 @@ export function LearnerProfileProvider({
 
   const updateProfile = useCallback(
     async (data: ProfileUpdateRequest): Promise<ProfileResponse> => {
-      const updated = await updateMyProfile(apiUrl, data);
+      const baseline = profile;
+      if (!baseline) {
+        const updated = await updateMyProfile(apiUrl, data);
+        setProfileWithCache(updated);
+        setNeedsOnboarding(false);
+        return updated;
+      }
+
+      const patch: ProfileUpdateRequest = {};
+
+      if (data.name !== undefined && data.name !== baseline.name) {
+        patch.name = data.name;
+      }
+
+      const sectionKeys = [
+        "expertise",
+        "professional_context",
+        "goals",
+        "communication",
+        "delivery",
+        "accessibility",
+      ] as const;
+
+      for (const key of sectionKeys) {
+        const nextValue = data[key];
+        if (nextValue === undefined) continue;
+
+        const sectionPatch = buildSparsePatch(baseline[key], nextValue);
+        if (sectionPatch !== undefined) {
+          (patch as any)[key] = sectionPatch;
+        }
+      }
+
+      if (Object.keys(patch).length === 0) return baseline;
+
+      const updated = await updateMyProfile(apiUrl, patch);
       setProfileWithCache(updated);
       setNeedsOnboarding(false);
       return updated;
     },
-    [apiUrl, setProfileWithCache],
+    [apiUrl, profile, setProfileWithCache],
   );
 
   const updateSectionFn = useCallback(
     async (section: string, data: unknown): Promise<ProfileResponse> => {
-      const updated = await apiUpdateSection(apiUrl, section, data);
+      const baseline = profile as unknown as Record<string, unknown> | null;
+      const baselineSection = baseline?.[section];
+      const patch = buildSparsePatch(baselineSection, data);
+
+      if (patch === undefined) {
+        if (!profile) {
+          throw new Error("Profile not loaded");
+        }
+        return profile;
+      }
+
+      const updated = await apiUpdateSection(apiUrl, section, patch);
       setProfileWithCache(updated);
       return updated;
     },
-    [apiUrl, setProfileWithCache],
+    [apiUrl, profile, setProfileWithCache],
   );
 
   const completeOnboardingPhaseFn = useCallback(
@@ -206,12 +289,50 @@ export function LearnerProfileProvider({
       phase: OnboardingPhase,
       data?: unknown,
     ): Promise<ProfileResponse> => {
-      const updated = await apiCompleteOnboardingPhase(apiUrl, phase, data);
+      let payload = data;
+
+      if (data !== undefined && profile) {
+        if (phase === "communication_preferences") {
+          const incoming = data as {
+            communication?: unknown;
+            delivery?: unknown;
+          };
+
+          const communicationPatch =
+            incoming.communication !== undefined
+              ? buildSparsePatch(profile.communication, incoming.communication)
+              : undefined;
+          const deliveryPatch =
+            incoming.delivery !== undefined
+              ? buildSparsePatch(profile.delivery, incoming.delivery)
+              : undefined;
+
+          const merged: Record<string, unknown> = {};
+          if (communicationPatch !== undefined)
+            merged.communication = communicationPatch;
+          if (deliveryPatch !== undefined) merged.delivery = deliveryPatch;
+
+          payload = Object.keys(merged).length > 0 ? merged : {};
+        } else if (
+          phase === "goals" ||
+          phase === "expertise" ||
+          phase === "professional_context" ||
+          phase === "accessibility"
+        ) {
+          const sectionBaseline = (profile as unknown as Record<string, unknown>)[
+            phase
+          ];
+          const patch = buildSparsePatch(sectionBaseline, data);
+          payload = patch !== undefined ? patch : {};
+        }
+      }
+
+      const updated = await apiCompleteOnboardingPhase(apiUrl, phase, payload);
       setProfileWithCache(updated);
       setNeedsOnboarding(false);
       return updated;
     },
-    [apiUrl, setProfileWithCache],
+    [apiUrl, profile, setProfileWithCache],
   );
 
   const createNewProfile = useCallback(
