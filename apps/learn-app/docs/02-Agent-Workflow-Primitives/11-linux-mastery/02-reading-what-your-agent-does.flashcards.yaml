@@ -1,0 +1,85 @@
+deck:
+  id: "ch11-02-reading-what-your-agent-does"
+  title: "Reading What Your Agent Does"
+  description: "Flashcards on Linux command anatomy, the 15-command vocabulary, reading process output, and file permissions."
+  tags: ["linux", "commands", "permissions", "processes"]
+  version: 1
+
+cards:
+  - id: "ch11-02-reading-what-your-agent-does-001"
+    front: "Every Linux command follows the same structure. What are the three parts?"
+    back: "Verb (the command itself — what to do), adverbs (flags — how to do it), and object (the argument — what to do it to). Example: 'ls -la /var/log' reads as 'List, in long format, all files in /var/log.'"
+    tags: ["commands"]
+    difficulty: "basic"
+
+  - id: "ch11-02-reading-what-your-agent-does-002"
+    front: "What does the 'd' at the start of 'drwxr-xr-x' mean?"
+    back: "It indicates the file type. 'd' means directory. A '-' in that position means regular file. It is NOT a permission — it is a type indicator."
+    tags: ["permissions"]
+    difficulty: "basic"
+
+  - id: "ch11-02-reading-what-your-agent-does-003"
+    front: "In a permission string like 'rwxr-xr-x', what do the three groups of three characters represent?"
+    back: "The first group (rwx) is the owner's permissions. The second group (r-x) is the group's permissions. The third group (r-x) is everyone else's permissions. Each group shows read (r), write (w), and execute (x) access."
+    tags: ["permissions"]
+    difficulty: "basic"
+
+  - id: "ch11-02-reading-what-your-agent-does-004"
+    front: "What does 'execute' permission mean on a directory versus on a file?"
+    back: "On a file, execute means you can run it as a program. On a directory, execute means you can enter the directory and access its contents. Without execute on a directory, you cannot cd into it or list its files."
+    tags: ["permissions"]
+    difficulty: "intermediate"
+    why: "Why might a directory be readable but not executable?"
+
+  - id: "ch11-02-reading-what-your-agent-does-005"
+    front: "In ps aux output, what do the %CPU and %MEM columns tell you?"
+    back: "%CPU shows how much processor power a process uses. %MEM shows how much RAM it uses. Low percentages (0.3% CPU, 2.1% MEM) are healthy. Very high values (95%+) indicate a problem — a stuck process or memory leak."
+    tags: ["processes"]
+    difficulty: "intermediate"
+    why: "If you saw a process at 95% CPU for hours, what might be happening?"
+
+  - id: "ch11-02-reading-what-your-agent-does-006"
+    front: "What is the difference between 'du' and 'df'?"
+    back: "du (disk usage) measures the size of specific files or directories — like a magnifying glass on a folder. df (disk free) shows total disk space available on the entire server — like a fuel gauge. du answers 'how big is this?'; df answers 'how much room is left?'"
+    tags: ["commands"]
+    difficulty: "intermediate"
+    why: "When would you use du instead of df to investigate a full disk?"
+
+  - id: "ch11-02-reading-what-your-agent-does-007"
+    front: "What does the '-h' flag mean in 'df -h'?"
+    back: "It means 'human-readable' — sizes are shown in KB, MB, or GB instead of raw bytes. Without -h, you see numbers like 25165824 blocks. With -h, you see '25G'."
+    tags: ["commands"]
+    difficulty: "basic"
+
+  - id: "ch11-02-reading-what-your-agent-does-008"
+    front: "You see '-rw-rw-r--' on a .env file containing API keys. What is the security problem?"
+    back: "The last three characters 'r--' mean everyone on the server can read the file. Since .env contains secrets like API keys and passwords, any user on the server could see them. It should be '-rw-------' (owner-only access)."
+    tags: ["permissions"]
+    difficulty: "intermediate"
+    why: "What real-world attack could result from world-readable API keys on a shared server?"
+
+  - id: "ch11-02-reading-what-your-agent-does-009"
+    front: "What is the difference between 'grep' and 'find'?"
+    back: "grep searches INSIDE files for specific text content. find locates files BY NAME, type, or date in the directory tree. grep answers 'which files contain this word?'; find answers 'where is the file called X?'"
+    tags: ["commands"]
+    difficulty: "basic"
+
+  - id: "ch11-02-reading-what-your-agent-does-010"
+    front: "What does the PID column in ps aux output represent, and when would you need it?"
+    back: "PID is the Process ID — a unique number assigned to each running program. You need it to stop a specific process (using kill). Without the PID, you cannot target a single process among all running programs."
+    tags: ["processes"]
+    difficulty: "intermediate"
+    why: "What could go wrong if you killed the wrong PID?"
+
+  - id: "ch11-02-reading-what-your-agent-does-011"
+    front: "What do 'head' and 'tail' do, and when would you use each?"
+    back: "head shows the first few lines of a file. tail shows the last few lines. Use head when you want to see the beginning (e.g., file headers, column names). Use tail when you want to see the most recent entries (e.g., the latest log lines)."
+    tags: ["commands"]
+    difficulty: "basic"
+
+  - id: "ch11-02-reading-what-your-agent-does-012"
+    front: "Why does the lesson say you should 'recognize' the 15 commands rather than 'memorize' them?"
+    back: "You are not writing commands yourself — Claude Code runs them for you. Your job is to understand what a command does when you see it in the output, not to recall exact syntax from memory. Recognition is the working skill; memorization is unnecessary overhead."
+    tags: ["commands"]
+    difficulty: "advanced"
+    why: "How does this 'recognition over memorization' approach change the way you learn new tools in an AI-assisted workflow?"

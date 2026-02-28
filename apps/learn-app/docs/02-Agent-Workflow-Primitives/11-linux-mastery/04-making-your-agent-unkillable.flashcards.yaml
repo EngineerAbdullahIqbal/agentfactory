@@ -1,0 +1,85 @@
+deck:
+  id: "ch11-04-making-your-agent-unkillable"
+  title: "Making Your Agent Unkillable"
+  description: "Flashcards on systemd services, unit files, restart policies, resource limits, and the process vs service distinction."
+  tags: ["systemd", "services", "processes", "deployment"]
+  version: 1
+
+cards:
+  - id: "ch11-04-making-your-agent-unkillable-001"
+    front: "Why does your agent die when you close the terminal or disconnect SSH?"
+    back: "A program started in a terminal becomes a child of that terminal session. When the session ends, the OS sends a signal to all child processes telling them to terminate. The agent is a child process, so it dies with the session."
+    tags: ["processes"]
+    difficulty: "basic"
+
+  - id: "ch11-04-making-your-agent-unkillable-002"
+    front: "What is the difference between a process and a service?"
+    back: "A process is like a phone call — when you hang up, the conversation is over. A service is like a security guard hired by the building — if the guard leaves, the building finds a replacement. A service is managed by the OS and survives terminal closures, reboots, and crashes."
+    tags: ["processes", "services"]
+    difficulty: "basic"
+
+  - id: "ch11-04-making-your-agent-unkillable-003"
+    front: "What is systemd and what role does it play on a Linux server?"
+    back: "systemd is the built-in service manager on modern Linux. It manages every service on the server — databases, web servers, SSH. It starts services on boot, restarts them after crashes, and enforces resource limits. It is not optional on mainstream distributions."
+    tags: ["systemd"]
+    difficulty: "basic"
+
+  - id: "ch11-04-making-your-agent-unkillable-004"
+    front: "What five questions does a systemd unit file answer?"
+    back: "(1) What should run? (ExecStart) (2) As which user? (User) (3) When should it start? (After, WantedBy) (4) What if it crashes? (Restart, RestartSec) (5) How much memory can it use? (MemoryMax)"
+    tags: ["systemd"]
+    difficulty: "intermediate"
+    why: "Why is it important that all five questions are answered in a single file rather than configured separately?"
+
+  - id: "ch11-04-making-your-agent-unkillable-005"
+    front: "What does 'Restart=on-failure' mean in a systemd unit file?"
+    back: "If the agent crashes (exits with a non-zero code), systemd restarts it automatically. If you intentionally stop it with 'systemctl stop', it stays stopped. This prevents unwanted restarts when you deliberately take the service down."
+    tags: ["systemd"]
+    difficulty: "intermediate"
+    why: "What would happen if you used Restart=always and the agent had a startup bug that made it crash immediately?"
+
+  - id: "ch11-04-making-your-agent-unkillable-006"
+    front: "What is the purpose of 'RestartSec=5' in a unit file?"
+    back: "It tells systemd to wait 5 seconds before restarting a crashed service. This prevents crash loops — if the agent has a bug causing immediate crashes, it will not restart thousands of times per minute, flooding logs and consuming resources."
+    tags: ["systemd"]
+    difficulty: "intermediate"
+    why: "What could happen to the server if RestartSec was set to 0 and the service kept crashing on startup?"
+
+  - id: "ch11-04-making-your-agent-unkillable-007"
+    front: "What does 'MemoryMax=512M' protect against?"
+    back: "It prevents a memory leak or runaway process from consuming all server RAM. If the agent exceeds 512 MB, systemd kills it. This protects other services on the same server from being affected by one misbehaving agent."
+    tags: ["systemd"]
+    difficulty: "intermediate"
+    why: "Why is this especially important on a server running multiple agents or services?"
+
+  - id: "ch11-04-making-your-agent-unkillable-008"
+    front: "What does 'WantedBy=multi-user.target' mean in the [Install] section?"
+    back: "It means the service should start automatically when the server boots into its normal operating mode. This is what makes your agent survive server reboots — systemd knows to start it as part of the boot sequence."
+    tags: ["systemd"]
+    difficulty: "basic"
+
+  - id: "ch11-04-making-your-agent-unkillable-009"
+    front: "What three commands do you need to activate a new systemd service?"
+    back: "'systemctl daemon-reload' (tell systemd to re-read service files), 'systemctl enable <service>' (start on every boot), 'systemctl start <service>' (start right now)."
+    tags: ["systemd"]
+    difficulty: "basic"
+
+  - id: "ch11-04-making-your-agent-unkillable-010"
+    front: "What does 'EnvironmentFile=/opt/agents/app/.env' do in a unit file?"
+    back: "It loads environment variables from the specified .env file before starting the service. The agent can then read database passwords, API keys, and configuration from environment variables without hardcoding them."
+    tags: ["systemd"]
+    difficulty: "basic"
+
+  - id: "ch11-04-making-your-agent-unkillable-011"
+    front: "When would you use tmux instead of systemd for keeping something running?"
+    back: "Use tmux for interactive sessions you want to keep alive — monitoring dashboards, long-running migrations you are watching. Use systemd for agents that run 24/7 unattended, because systemd also handles crash recovery, boot startup, and resource limits."
+    tags: ["services"]
+    difficulty: "advanced"
+    why: "What capabilities does systemd provide that tmux cannot?"
+
+  - id: "ch11-04-making-your-agent-unkillable-012"
+    front: "How would you view real-time logs for a systemd service?"
+    back: "Use 'journalctl -u <service-name> -f'. The -u flag filters to a specific service. The -f flag follows the log in real time, showing new entries as they appear — like a live feed."
+    tags: ["systemd"]
+    difficulty: "advanced"
+    why: "When diagnosing a live issue, why is following logs in real time more useful than reading a static log file?"

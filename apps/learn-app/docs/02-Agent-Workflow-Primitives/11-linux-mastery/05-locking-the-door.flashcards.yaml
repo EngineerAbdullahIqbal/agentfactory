@@ -1,0 +1,85 @@
+deck:
+  id: "ch11-05-locking-the-door"
+  title: "Locking the Door"
+  description: "Flashcards on Linux security: dedicated users, file permissions, SSH keys vs passwords, and the principle of least privilege."
+  tags: ["security", "permissions", "ssh-keys", "least-privilege"]
+  version: 1
+
+cards:
+  - id: "ch11-05-locking-the-door-001"
+    front: "Why should an agent never run as root?"
+    back: "Root has unrestricted access to the entire server. If the agent is compromised, an attacker gains control over everything — all files, all services, all data. A dedicated user limits damage to only the agent's own directory."
+    tags: ["security", "least-privilege"]
+    difficulty: "basic"
+
+  - id: "ch11-05-locking-the-door-002"
+    front: "What is the principle of least privilege?"
+    back: "Give every user, process, and service the minimum access they need to do their job and nothing more. Like giving a delivery driver a key to the mailbox, not the front door."
+    tags: ["least-privilege"]
+    difficulty: "basic"
+
+  - id: "ch11-05-locking-the-door-003"
+    front: "What does the command 'useradd --system --no-create-home --shell /usr/sbin/nologin agentuser' create?"
+    back: "A system service account called 'agentuser' with no home directory and no ability to log in via SSH. It exists only to own files and run the agent service — not for any human to use interactively."
+    tags: ["security"]
+    difficulty: "intermediate"
+    why: "Why is /usr/sbin/nologin important for a service account? What would happen without it?"
+
+  - id: "ch11-05-locking-the-door-004"
+    front: "What is the difference between chown and chmod?"
+    back: "chown changes WHO owns a file (ownership). chmod changes WHAT the owner, group, and others can do with the file (permissions). Ownership is about identity; permissions are about access."
+    tags: ["permissions"]
+    difficulty: "basic"
+
+  - id: "ch11-05-locking-the-door-005"
+    front: "You see '-rw-r--r--' on a .env file. What is wrong and how do you fix it?"
+    back: "The last six characters (r--r--) mean group members and everyone else can read the file. Since .env contains secrets, this exposes them to all server users. Fix with 'chmod 600' to make it '-rw-------' (owner-only read/write)."
+    tags: ["permissions", "security"]
+    difficulty: "intermediate"
+    why: "Why is readable-by-others on a secrets file more dangerous than a weak password?"
+
+  - id: "ch11-05-locking-the-door-006"
+    front: "What is 'chmod 750' on a directory, and who can access it?"
+    back: "Owner gets full access (rwx = 7). Group members can read and enter but not modify (r-x = 5). Others get no access at all (--- = 0). This lets the agent operate freely while teammates can inspect but not change files."
+    tags: ["permissions"]
+    difficulty: "intermediate"
+    why: "When would you choose 750 over 700 for an agent directory?"
+
+  - id: "ch11-05-locking-the-door-007"
+    front: "How do SSH keys work, and why are they more secure than passwords?"
+    back: "SSH keys use a cryptographic key pair: a private key (on your laptop, never shared) and a public key (on the server). The server verifies your identity using math, not a guessable string. A password can be brute-forced; a cryptographic key pair cannot."
+    tags: ["ssh-keys"]
+    difficulty: "basic"
+
+  - id: "ch11-05-locking-the-door-008"
+    front: "What are the two files created by ssh-keygen, and where should each one live?"
+    back: "The private key (~/.ssh/id_ed25519) stays on your local machine and must never be shared. The public key (~/.ssh/id_ed25519.pub) is placed on every server you need access to. Sharing the public key is safe; sharing the private key compromises all access."
+    tags: ["ssh-keys"]
+    difficulty: "intermediate"
+    why: "What should you do immediately if you suspect your private key has been exposed?"
+
+  - id: "ch11-05-locking-the-door-009"
+    front: "Why should password authentication be disabled on a server after setting up SSH keys?"
+    back: "Automated bots constantly scan the internet trying common password combinations (admin/admin, root/password). Disabling passwords eliminates brute-force attacks entirely — there is no password to guess. Only holders of the correct private key can connect."
+    tags: ["ssh-keys", "security"]
+    difficulty: "intermediate"
+    why: "What precaution must you take BEFORE disabling password authentication?"
+
+  - id: "ch11-05-locking-the-door-010"
+    front: "What do the 47,000 failed login attempts in the auth log demonstrate?"
+    back: "That automated bots constantly scan and attack every server connected to the internet, regardless of how small or unimportant it seems. Security is not optional — attacks are automated, persistent, and relentless."
+    tags: ["security"]
+    difficulty: "basic"
+
+  - id: "ch11-05-locking-the-door-011"
+    front: "After creating agentuser and locking down permissions, what change must be made to the systemd unit file?"
+    back: "Change 'User=ali' to 'User=agentuser' so the service runs as the dedicated limited user instead of a human account. Then run 'systemctl daemon-reload' and 'systemctl restart' for the change to take effect."
+    tags: ["security", "least-privilege"]
+    difficulty: "basic"
+
+  - id: "ch11-05-locking-the-door-012"
+    front: "What does 'chown -R agentuser:agentuser /opt/agents/competitor-tracker' do?"
+    back: "It changes the ownership of the directory AND everything inside it (-R = recursive) to agentuser. This means only agentuser can modify the agent's files, and the agent process running as agentuser has the access it needs."
+    tags: ["permissions"]
+    difficulty: "advanced"
+    why: "Why is recursive ownership transfer important? What would happen if subdirectories were still owned by the previous user?"

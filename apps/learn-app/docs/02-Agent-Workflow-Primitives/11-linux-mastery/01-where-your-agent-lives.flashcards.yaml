@@ -1,0 +1,84 @@
+deck:
+  id: "ch11-01-where-your-agent-lives"
+  title: "Where Your Agent Lives"
+  description: "Flashcards covering SSH, the Linux filesystem, terminal vs shell, and why agents need servers."
+  tags: ["linux", "ssh", "filesystem", "server"]
+  version: 1
+
+cards:
+  - id: "ch11-01-where-your-agent-lives-001"
+    front: "Why does an AI agent need to run on a server instead of your laptop?"
+    back: "A server never sleeps. It stays connected to the internet 24/7 with backup power. When you close your laptop, the agent stops. A server keeps running through weekends, vacations, and power outages at your home."
+    tags: ["server"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-002"
+    front: "What is the difference between a terminal and a shell?"
+    back: "The terminal is the window you see — the visual interface. The shell is the program behind it that listens for instructions, runs them, and returns results. Terminal is the glass window; shell is the voice on the other end."
+    tags: ["terminal", "shell"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-003"
+    front: "What does SSH do, and what do the parts of 'ssh dev@192.168.1.100' mean?"
+    back: "SSH (Secure Shell) creates an encrypted tunnel between your computer and a remote server. 'ssh' opens the tunnel, 'dev' is the username to log in as, '@' means 'at', and '192.168.1.100' is the server address."
+    tags: ["ssh"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-004"
+    front: "What is the root of the Linux filesystem, and what does it represent?"
+    back: "The root is '/' — it is the starting point of the entire directory tree. Every file, program, log, and configuration on the server lives somewhere under /. Think of it as the front door of a building."
+    tags: ["filesystem"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-005"
+    front: "What lives in /home on a Linux server?"
+    back: "User files — each user gets their own subdirectory (e.g., /home/ali, /home/dev). This is where users store their code, configurations, and personal data. Think of it as the apartments in a building."
+    tags: ["filesystem"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-006"
+    front: "What is /var used for, and why is it separate from /home?"
+    back: "/var stores things that change over time — logs, databases, mail queues. It is separate because log files and database records grow continuously and need their own managed space, away from user files."
+    tags: ["filesystem"]
+    difficulty: "intermediate"
+    why: "What could happen if logs and user files shared the same space with no separation?"
+
+  - id: "ch11-01-where-your-agent-lives-007"
+    front: "What kind of files live in /etc on a Linux server?"
+    back: "Configuration files for the entire system — settings for services, network configuration, user account databases, and security policies. Think of it as the building manager's office where all the rules and settings are kept."
+    tags: ["filesystem"]
+    difficulty: "intermediate"
+    why: "Why would you want system configuration files separated from user files and application code?"
+
+  - id: "ch11-01-where-your-agent-lives-008"
+    front: "What is /tmp used for, and what happens to its contents?"
+    back: "/tmp stores temporary files that are deleted on reboot. Programs use it for scratch space — data they need briefly but do not need to keep. Like a lobby whiteboard that gets erased every night."
+    tags: ["filesystem"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-009"
+    front: "What does the ~ symbol mean in a Linux prompt like 'dev@server:~$'?"
+    back: "The ~ (tilde) is a shortcut for the current user's home directory. If logged in as 'dev', ~ means /home/dev. Seeing ~ in the prompt means you are currently in your home directory."
+    tags: ["filesystem", "terminal"]
+    difficulty: "intermediate"
+    why: "Why is it useful to see your current directory in the prompt at all times?"
+
+  - id: "ch11-01-where-your-agent-lives-010"
+    front: "Why is everything you send through SSH encrypted?"
+    back: "Encryption prevents anyone monitoring the network from reading your commands or the server's responses. Without encryption, passwords, code, and data would be visible to anyone between your computer and the server."
+    tags: ["ssh"]
+    difficulty: "intermediate"
+    why: "What could an attacker do if they could read unencrypted SSH traffic?"
+
+  - id: "ch11-01-where-your-agent-lives-011"
+    front: "A Linux server has no desktop, no mouse, and no graphical interface. How do you interact with it?"
+    back: "Through a terminal connected via SSH. You (or Claude Code) type text commands, the shell executes them, and the results appear as text. All interaction is command-line based."
+    tags: ["server", "terminal"]
+    difficulty: "basic"
+
+  - id: "ch11-01-where-your-agent-lives-012"
+    front: "What is the purpose of /opt on a Linux server?"
+    back: "/opt holds optional software installed by hand — applications that did not come with the operating system. Think of it as storage units in a building where tenants bring in their own equipment."
+    tags: ["filesystem"]
+    difficulty: "intermediate"
+    why: "Why would you install an agent under /opt rather than in a user's home directory?"

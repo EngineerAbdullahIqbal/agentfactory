@@ -1,0 +1,87 @@
+deck:
+  id: "ch11-07-capstone-zero-to-production"
+  title: "Capstone: Zero to Production"
+  description: "Flashcards on deployment specs, the six-section structure, verification checklists, and integrating all Chapter 11 skills."
+  tags: ["deployment", "spec", "capstone", "production", "verification"]
+  version: 1
+
+cards:
+  - id: "ch11-07-capstone-zero-to-production-001"
+    front: "What is a deployment spec, and how is it different from documentation?"
+    back: "A deployment spec is an execution guide — a structured checklist you feed to Claude Code section by section to deploy an agent. Documentation describes what exists. A deployment spec prescribes what to DO, in what order, and how to verify it."
+    tags: ["deployment", "spec"]
+    difficulty: "basic"
+
+  - id: "ch11-07-capstone-zero-to-production-002"
+    front: "What are the six sections of a deployment spec?"
+    back: "(1) Server Access — how to connect. (2) Directory Structure — where files go. (3) Application Setup — install and test. (4) Service Configuration — systemd unit file. (5) Security Checklist — permissions and access. (6) Verification — prove it works."
+    tags: ["spec"]
+    difficulty: "basic"
+
+  - id: "ch11-07-capstone-zero-to-production-003"
+    front: "Each deployment spec section maps to a Chapter 11 lesson. What does this connection demonstrate?"
+    back: "That the chapter's six lessons form a complete deployment workflow. L1 maps to Server Access, L3 to Directory Structure, L2/L3 to Application Setup, L4 to Service Configuration, L5 to Security, and L6 to Verification. The spec turns scattered knowledge into sequential execution."
+    tags: ["spec", "deployment"]
+    difficulty: "intermediate"
+    why: "Why does having a structured spec reduce a three-day deployment to fifteen minutes?"
+
+  - id: "ch11-07-capstone-zero-to-production-004"
+    front: "Why is the Verification section the most important part of a deployment spec?"
+    back: "Deployed services that are not verified are time bombs. They appear to work until they fail at the worst moment — when a client checks, a meeting starts, or you are asleep. No deployment is done until every verification check passes."
+    tags: ["verification"]
+    difficulty: "intermediate"
+    why: "What is the difference between 'the service started' and 'the deployment is production-ready'?"
+
+  - id: "ch11-07-capstone-zero-to-production-005"
+    front: "What checks belong in a deployment verification checklist?"
+    back: "Service status is active (running), survives terminal closure, survives server reboot, logs are being written, output is correct (not empty), resource usage is within limits, and security checklist has passed."
+    tags: ["verification"]
+    difficulty: "basic"
+
+  - id: "ch11-07-capstone-zero-to-production-006"
+    front: "Why did Ali's first agent take three days but his second took only fifteen minutes?"
+    back: "The first deployment was discovery — learning through trial, error, and crisis. The second used a deployment spec that captured everything he learned in a structured, repeatable format. The difference was not skill level — it was structure."
+    tags: ["deployment"]
+    difficulty: "basic"
+
+  - id: "ch11-07-capstone-zero-to-production-007"
+    front: "What four items should a Security Checklist section verify?"
+    back: "(1) Service runs as a dedicated user, NOT root. (2) .env file permissions are 600 (owner-only). (3) SSH password authentication is disabled. (4) No secrets are hardcoded in source code (grep for API_KEY, PASSWORD, SECRET)."
+    tags: ["spec", "security"]
+    difficulty: "intermediate"
+    why: "Why include a 'grep for secrets' step even if you believe you extracted them all?"
+
+  - id: "ch11-07-capstone-zero-to-production-008"
+    front: "What happens if you skip the 'survives reboot' verification step?"
+    back: "You might discover the service was started but never enabled (systemctl start vs systemctl enable). On the next server reboot — which could happen at any time for security updates — the agent will not come back, and you may not notice for hours or days."
+    tags: ["verification"]
+    difficulty: "intermediate"
+    why: "How is this the same mistake that caused Ali's empty report in Lesson 6?"
+
+  - id: "ch11-07-capstone-zero-to-production-009"
+    front: "Why does the deployment spec include 'MemoryMax' as a Service Configuration item?"
+    back: "Without memory limits, a buggy agent with a memory leak can consume all server RAM, causing other services (databases, monitoring, SSH) to crash. MemoryMax acts as a safety net that kills the agent before it takes down the whole server."
+    tags: ["deployment"]
+    difficulty: "intermediate"
+    why: "How do you decide what value to set for MemoryMax?"
+
+  - id: "ch11-07-capstone-zero-to-production-010"
+    front: "What is the relationship between a deployment spec and a systemd unit file?"
+    back: "The deployment spec is the full plan covering all aspects of deployment (access, structure, security, verification). The systemd unit file is one artifact produced by Section 4 of that plan. The spec is the blueprint; the unit file is one component built from it."
+    tags: ["spec"]
+    difficulty: "advanced"
+    why: "Could you have a complete deployment with just a unit file and no spec? What would you miss?"
+
+  - id: "ch11-07-capstone-zero-to-production-011"
+    front: "How would you adapt a deployment spec for a different agent (e.g., web scraper vs sentiment tracker)?"
+    back: "The six-section structure stays the same. What changes: the directory paths, the environment variables in .env, the ExecStart command in the unit file, the MemoryMax value, and the verification criteria for correct output. The pattern is universal; the details are specific."
+    tags: ["deployment", "spec"]
+    difficulty: "advanced"
+    why: "Why is a reusable structure more valuable than a one-time deployment script?"
+
+  - id: "ch11-07-capstone-zero-to-production-012"
+    front: "What does the capstone lesson reveal about the real value of Lessons 1 through 6?"
+    back: "Each lesson solves one specific problem in isolation. The capstone shows they form a complete, repeatable deployment workflow when combined into a spec. The lessons are not just individual skills — they are components of a system that turns any agent into a production service."
+    tags: ["capstone"]
+    difficulty: "advanced"
+    why: "How does this 'learn individually, combine systematically' pattern apply to learning other technical skills?"

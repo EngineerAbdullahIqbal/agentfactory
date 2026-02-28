@@ -1,0 +1,86 @@
+deck:
+  id: "ch11-06-when-things-go-wrong"
+  title: "When Things Go Wrong"
+  description: "Flashcards on the LNPS triage method for diagnosing agent failures: Logs, Network, Process, System."
+  tags: ["debugging", "troubleshooting", "LNPS", "logs", "diagnostics"]
+  version: 1
+
+cards:
+  - id: "ch11-06-when-things-go-wrong-001"
+    front: "What are the four steps of the LNPS triage method, and why are they in that order?"
+    back: "Logs, Network, Process, System. Logs are checked first because the agent often tells you what went wrong. Network is next because connectivity failures are common and non-obvious. Process catches stuck or zombie services. System catches resource exhaustion. Each step either finds the cause or eliminates a category."
+    tags: ["LNPS"]
+    difficulty: "basic"
+
+  - id: "ch11-06-when-things-go-wrong-002"
+    front: "Why is restarting a failing service without diagnosis dangerous?"
+    back: "Restarting may mask the symptom temporarily while the root cause persists. The problem will return — usually at the worst time (3 AM, before a board meeting). For data-processing agents, a restart might also cause duplicate processing or data loss."
+    tags: ["debugging"]
+    difficulty: "intermediate"
+    why: "Can you think of a scenario where blind restarting actually makes the problem worse?"
+
+  - id: "ch11-06-when-things-go-wrong-003"
+    front: "What would you tell Claude Code to check the logs for a failing service?"
+    back: "Ask it to show the service logs from a recent time window, focusing on errors and warnings. Claude Code would use something like 'journalctl -u <service> --since \"6 hours ago\" --priority=warning' to filter relevant entries."
+    tags: ["logs"]
+    difficulty: "basic"
+
+  - id: "ch11-06-when-things-go-wrong-004"
+    front: "Your agent runs successfully but produces an empty report. The logs show no errors. What is likely happening?"
+    back: "The agent is working correctly but receiving no data from upstream. A dependency (like a database or external API) may be down or returning empty results. The agent faithfully processes what it gets — which is nothing. Check the upstream service."
+    tags: ["LNPS", "debugging"]
+    difficulty: "intermediate"
+    why: "Why does this scenario demonstrate that 'no errors in logs' does not mean 'nothing is wrong'?"
+
+  - id: "ch11-06-when-things-go-wrong-005"
+    front: "What is the difference between 'Connection refused' and 'Connection timed out' in curl output?"
+    back: "Connection refused means the packets reached the server but no service is listening on that port. Connection timed out means the packets never reached the destination at all — possibly a firewall issue or the server is unreachable."
+    tags: ["network"]
+    difficulty: "intermediate"
+    why: "How does knowing the difference guide your next diagnostic step?"
+
+  - id: "ch11-06-when-things-go-wrong-006"
+    front: "If ping to 8.8.8.8 works but curl to an API endpoint fails, what does that tell you?"
+    back: "The server has internet connectivity (ping works), so the problem is specific to that particular service or port. The API server might be down, a firewall might be blocking that specific port, or DNS might not be resolving the hostname."
+    tags: ["network"]
+    difficulty: "intermediate"
+    why: "Why test with ping to a known IP before testing the specific endpoint?"
+
+  - id: "ch11-06-when-things-go-wrong-007"
+    front: "A systemd service shows 'activating (auto-restart)' in its status. What does this mean?"
+    back: "The service is in a crash loop — it keeps crashing and systemd keeps restarting it. The RestartSec delay prevents it from overwhelming the system, but the root cause (likely a startup bug) needs to be fixed. Check the logs for the crash reason."
+    tags: ["LNPS", "debugging"]
+    difficulty: "intermediate"
+    why: "How does RestartSec protect the server during a crash loop?"
+
+  - id: "ch11-06-when-things-go-wrong-008"
+    front: "What three system resources should you check in the 'S' step of LNPS?"
+    back: "Disk space (df -h — is the disk full?), memory (free -h — is RAM exhausted?), and CPU load (uptime — is the server overloaded?). Any of these being at capacity can cause agents to fail or behave erratically."
+    tags: ["LNPS"]
+    difficulty: "basic"
+
+  - id: "ch11-06-when-things-go-wrong-009"
+    front: "Your server shows 96% disk usage. What impact could this have on your agent?"
+    back: "The agent may be unable to write log files, save reports, or update databases. Services that cannot write to disk often fail silently or crash. The /var/log directory filling up can also prevent the system from recording what went wrong."
+    tags: ["diagnostics"]
+    difficulty: "basic"
+
+  - id: "ch11-06-when-things-go-wrong-010"
+    front: "In Ali's mystery scenario, what was the actual root cause of the empty report?"
+    back: "The PostgreSQL database was not enabled to start on boot. When the server rebooted for security updates, the database stopped and never came back. The agent connected and got zero rows, producing an empty report. The fix was 'systemctl enable postgresql'."
+    tags: ["LNPS", "debugging"]
+    difficulty: "advanced"
+    why: "What lesson does this teach about the relationship between 'systemctl start' and 'systemctl enable'?"
+
+  - id: "ch11-06-when-things-go-wrong-011"
+    front: "A process shows 'active (running)' but CPU usage is stuck at 100%. What might be wrong?"
+    back: "The agent is likely stuck in an infinite loop — it appears to be running but is not producing useful work. It will consume resources without generating output. You need to check the logs for the last successful operation and investigate the code path."
+    tags: ["diagnostics"]
+    difficulty: "advanced"
+    why: "Why does checking the LAST successful log entry help locate where the agent got stuck?"
+
+  - id: "ch11-06-when-things-go-wrong-012"
+    front: "What is the journalctl command to follow a service's logs in real time?"
+    back: "'journalctl -u <service-name> -f'. The -u flag filters to the specific service. The -f flag follows new log entries as they appear, like a live feed. This is essential for watching an agent's behavior during active troubleshooting."
+    tags: ["logs"]
+    difficulty: "basic"

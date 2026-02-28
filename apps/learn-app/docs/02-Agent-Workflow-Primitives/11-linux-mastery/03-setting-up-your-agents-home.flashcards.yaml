@@ -1,0 +1,85 @@
+deck:
+  id: "ch11-03-setting-up-your-agents-home"
+  title: "Setting Up Your Agent's Home"
+  description: "Flashcards on directory structure, .env files, secret management, and persistent logging for agent deployments."
+  tags: ["linux", "directory-structure", "env-files", "logging", "secrets"]
+  version: 1
+
+cards:
+  - id: "ch11-03-setting-up-your-agents-home-001"
+    front: "What is the standard directory structure for deploying an agent on a Linux server?"
+    back: "/opt/agents/<agent-name>/ with subdirectories: src/ (code), config/ (configuration files), logs/ (persistent log output), data/ (database files, cache, downloads), and a .env file for secrets."
+    tags: ["directory-structure"]
+    difficulty: "basic"
+
+  - id: "ch11-03-setting-up-your-agents-home-002"
+    front: "Why should agent code live in /opt/agents/ instead of a user's home directory like /home/ali/?"
+    back: "/opt is the Linux convention for optional software. It is not buried in a personal folder. Other team members can find it. Multiple agents can be organized side-by-side: /opt/agents/agent-a/, /opt/agents/agent-b/."
+    tags: ["directory-structure"]
+    difficulty: "intermediate"
+    why: "What problems arise when multiple agents are scattered across different users' home directories?"
+
+  - id: "ch11-03-setting-up-your-agents-home-003"
+    front: "Why should secrets like API keys and database passwords never be hardcoded in source code?"
+    back: "Three reasons: (1) If pushed to GitHub, bots find and exploit exposed keys within minutes. (2) Anyone who reads the code sees the credentials. (3) Different environments (test, production) need different credentials — hardcoding means changing code every time."
+    tags: ["secrets"]
+    difficulty: "basic"
+
+  - id: "ch11-03-setting-up-your-agents-home-004"
+    front: "What is a .env file and how does it solve the hardcoded secrets problem?"
+    back: "A .env file is a plain text file containing key=value pairs (e.g., DB_PASSWORD=mySecret). The application reads these as environment variables at runtime. The .env file is excluded from Git and protected with restrictive permissions (chmod 600)."
+    tags: ["secrets", "env-files"]
+    difficulty: "basic"
+
+  - id: "ch11-03-setting-up-your-agents-home-005"
+    front: "What does 'chmod 600' do to a .env file?"
+    back: "It sets permissions so only the file owner can read and write it. No one else on the server — not group members, not other users — can access it at all. The permission string becomes '-rw-------'."
+    tags: ["secrets", "permissions"]
+    difficulty: "basic"
+
+  - id: "ch11-03-setting-up-your-agents-home-006"
+    front: "What is the difference between a .env file and environment variables?"
+    back: "A .env file is the FILE on disk that stores key=value pairs. Environment variables are what the OPERATING SYSTEM loads into memory for a running process. The .env file is the source; environment variables are what the code actually reads."
+    tags: ["env-files"]
+    difficulty: "intermediate"
+    why: "Why is this distinction important when debugging an agent that cannot read its configuration?"
+
+  - id: "ch11-03-setting-up-your-agents-home-007"
+    front: "What happens to terminal output when you close an SSH session, and why is that a problem?"
+    back: "All output printed to the terminal is lost permanently. There is no record of what the agent did, whether it succeeded, or when it last ran. For an agent that needs to run 24/7, this means losing all evidence of overnight activity."
+    tags: ["logging"]
+    difficulty: "basic"
+
+  - id: "ch11-03-setting-up-your-agents-home-008"
+    front: "What does 'python script.py 2>&1 | tee -a logs/agent.log' do?"
+    back: "It runs the script, combines normal output with error messages (2>&1), then pipes everything to tee, which writes to BOTH the screen AND the log file. The -a flag appends to the file instead of overwriting it."
+    tags: ["logging"]
+    difficulty: "intermediate"
+    why: "Why is it important to capture both standard output AND error messages in the same log?"
+
+  - id: "ch11-03-setting-up-your-agents-home-009"
+    front: "What is the difference between output redirection (>) and tee?"
+    back: "Redirection (>) sends output ONLY to a file — nothing appears on screen. tee duplicates output to BOTH the screen AND a file simultaneously. Use tee when you want to watch output live AND save it."
+    tags: ["logging"]
+    difficulty: "intermediate"
+    why: "When would you prefer redirection over tee?"
+
+  - id: "ch11-03-setting-up-your-agents-home-010"
+    front: "How would you check what your agent did overnight without having been connected?"
+    back: "Use 'tail -20 /opt/agents/<agent-name>/logs/agent.log' to see the last 20 lines of the persistent log file. The logs survived because output was redirected to a file, not just printed to a terminal."
+    tags: ["logging"]
+    difficulty: "basic"
+
+  - id: "ch11-03-setting-up-your-agents-home-011"
+    front: "Why should .env files never be committed to Git?"
+    back: "A .env file pushed to a public repository exposes all secrets (API keys, database passwords) to anyone. Automated bots scan GitHub for exposed credentials and can compromise accounts within minutes. Always add .env to .gitignore."
+    tags: ["secrets"]
+    difficulty: "intermediate"
+    why: "What is the first thing you should do if you accidentally push a .env file to a public repo?"
+
+  - id: "ch11-03-setting-up-your-agents-home-012"
+    front: "What is the cost of bad file organization for an agent deployment?"
+    back: "Code mixed with personal files risks accidental deletion. Hardcoded secrets get shared unintentionally. Logs vanish when the terminal closes. A colleague taking over cannot find anything. One wrong command can break the whole setup."
+    tags: ["directory-structure"]
+    difficulty: "advanced"
+    why: "How does the directory structure you choose affect the long-term maintainability of a fleet of agents?"
