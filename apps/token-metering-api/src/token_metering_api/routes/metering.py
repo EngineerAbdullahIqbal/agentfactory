@@ -10,7 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..core.auth import CurrentUser, get_current_user
 from ..core.database import get_session
 from ..core.exceptions import MeteringAPIException
-from ..core.rate_limit import limiter
+from ..core.rate_limit import limiter, standard_rate_limit
 from ..services.metering import MeteringService
 from .schemas import (
     BlockedResponse,
@@ -28,7 +28,7 @@ router = APIRouter()
 
 
 @router.post("/check", response_model=CheckResponse)
-@limiter.limit("100/minute")
+@standard_rate_limit()
 async def check_balance(
     request: Request,
     check_request: CheckRequest,
@@ -112,7 +112,7 @@ async def check_balance(
 
 
 @router.post("/deduct", response_model=DeductResponse)
-@limiter.limit("100/minute")
+@standard_rate_limit()
 async def deduct_tokens(
     request: Request,
     deduct_request: DeductRequest,
@@ -179,7 +179,7 @@ async def deduct_tokens(
 
 
 @router.post("/release", response_model=ReleaseResponse)
-@limiter.limit("100/minute")
+@standard_rate_limit()
 async def release_reservation(
     request: Request,
     release_request: ReleaseRequest,

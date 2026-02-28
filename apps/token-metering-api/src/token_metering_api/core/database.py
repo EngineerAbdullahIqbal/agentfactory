@@ -90,7 +90,7 @@ async def init_db() -> None:
     Tests set AUTO_CREATE_SCHEMA=true via conftest.
     """
     if not settings.auto_create_schema:
-        logger.info("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
+        logger.debug("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
         return
 
     from ..models import SQLModel

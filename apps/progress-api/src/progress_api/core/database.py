@@ -82,7 +82,7 @@ async def init_db() -> None:
     In production, tables already exist — skipping avoids introspection queries on every cold start.
     """
     if not settings.auto_create_schema:
-        logger.info("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
+        logger.debug("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
         return
 
     from ..models import SQLModel
