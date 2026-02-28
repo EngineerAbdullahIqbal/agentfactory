@@ -131,7 +131,7 @@ export function ExpertiseLevelSelect({
       <Select value={value} onValueChange={onChange as (value: string) => void}>
         <SelectTrigger
           id={selectId}
-          className="h-14 text-lg rounded-xl border-2 border-border/50 bg-background/50 px-4 transition-colors focus:ring-primary/20"
+          className="h-14 text-lg text-left rounded-xl border-2 border-border/50 bg-background/50 px-4 transition-colors focus:ring-primary/20"
         >
           <SelectValue placeholder="Select level…" />
         </SelectTrigger>

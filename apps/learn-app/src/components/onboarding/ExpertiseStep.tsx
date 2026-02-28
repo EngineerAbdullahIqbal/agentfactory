@@ -25,8 +25,7 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
           Where are you starting from?
         </h2>
         <p className="text-lg text-muted-foreground font-medium max-w-xl">
-          This controls the vocabulary, code depth, and concept explanations in
-          every lesson.
+          This calibrates your lessons — from code depth to how we explain specs, agents, and the factory stack.
         </p>
       </motion.div>
 

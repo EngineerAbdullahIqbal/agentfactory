@@ -75,7 +75,7 @@ export function ProjectStep({
           Add a project (Optional)
         </h2>
         <p className="text-lg text-muted-foreground font-medium max-w-xl">
-          Tell us about something real you want to build or achieve.
+          Tell us about the AI employee or system you want to build.
         </p>
       </motion.div>
 
@@ -95,7 +95,7 @@ export function ProjectStep({
             type="text"
             value={project.project_name}
             onChange={(e) => handleProjectChange("project_name", e.target.value)}
-            placeholder="e.g., Internal Support Chatbot"
+            placeholder="e.g., AI Employee for Customer Onboarding"
             className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
             maxLength={100}
             autoFocus

@@ -62,7 +62,7 @@ export function FinishStep() {
         You're set.
       </h1>
       <p className="text-lg text-muted-foreground mb-12">
-        Your Learner Profile is ready. We'll tailor depth, examples, and pacing.
+        Your Learner Profile is ready. Every lesson will adapt to you.
       </p>
 
       {/* Meters */}

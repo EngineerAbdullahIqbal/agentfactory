@@ -23,7 +23,7 @@ export function WelcomeStep({ onAgree, onDecline, isSaving }: WelcomeStepProps) 
                 Set up your Learner Profile
             </h1>
             <p className="text-muted-foreground text-base md:text-lg mb-10 max-w-xl">
-                Personalize your learning experience in ~90 seconds. You can skip anything and adjust later.
+                Personalize your Agent Factory experience in ~90 seconds. Skip anything, adjust later.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 w-full mb-12">
