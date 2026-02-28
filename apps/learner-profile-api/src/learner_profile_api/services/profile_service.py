@@ -290,14 +290,6 @@ async def get_profile(
     return profile
 
 
-async def get_profile_by_learner_id(
-    session: AsyncSession,
-    learner_id: str,
-) -> LearnerProfile:
-    """Get active profile by explicit learner_id (admin use)."""
-    return await get_profile(session, learner_id)
-
-
 async def update_profile(
     session: AsyncSession,
     learner_id: str,

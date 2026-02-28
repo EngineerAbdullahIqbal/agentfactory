@@ -8,13 +8,12 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-import { useLearnerProfileApiUrl } from "@/lib/api-utils";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import { useHistory } from "@docusaurus/router";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLearnerProfile } from "@/contexts/LearnerProfileContext";
-import { getOnboardingStatus } from "@/lib/learner-profile-api";
 import { useProgress } from "@/contexts/ProgressContext";
+import { ONBOARDING_PHASES } from "@/lib/learner-profile-types";
 import { toast } from "sonner";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { WelcomeStep } from "./WelcomeStep";
@@ -108,8 +107,6 @@ const DEFAULT_ACCESSIBILITY: AccessibilitySection = {
 
 export default function OnboardingWizard() {
   const history = useHistory();
-  const apiUrl = useLearnerProfileApiUrl();
-
   const homeHref = useBaseUrl("/");
 
   const { session, isLoading: authLoading } = useAuth();
@@ -267,43 +264,28 @@ export default function OnboardingWizard() {
         return;
       }
 
-      getOnboardingStatus(apiUrl)
-        .then((status) => {
-          const nextPhase = status.next_section;
-          let stepIdx = STEPS.length - 1;
-          if (nextPhase) {
-            const found = STEPS.findIndex((s) => s.phase === nextPhase);
-            if (found !== -1) stepIdx = found;
-          }
-          setCurrentStep(stepIdx);
+      // Derive onboarding state directly from profile (no separate API call needed)
+      const sectionsCompleted = profile.onboarding_sections_completed || {};
 
-          const completed = new Set<number>();
-          STEPS.forEach((s, idx) => {
-            if (status.sections_completed[s.phase]) {
-              completed.add(idx);
-            }
-          });
-          setCompletedSteps(completed);
-        })
-        .catch((err) => {
-          console.error("[OnboardingWizard] Failed to get progress:", err);
-          // Fallback: derive from onboarding_progress (server computed)
-          const completedCount = Math.round(
-            Math.max(0, Math.min(1, profile.onboarding_progress)) *
-              STEPS.length,
-          );
-          const resumeStep = Math.max(
-            0,
-            Math.min(STEPS.length - 1, completedCount),
-          );
-          setCurrentStep(resumeStep);
-          const completed = new Set<number>();
-          for (let i = 0; i < resumeStep; i++) completed.add(i);
-          setCompletedSteps(completed);
-        })
-        .finally(() => {
-          setIsInitializing(false);
-        });
+      // Find the next incomplete phase
+      const nextPhase = ONBOARDING_PHASES.find(
+        (phase) => !sectionsCompleted[phase],
+      );
+      let stepIdx = STEPS.length - 1;
+      if (nextPhase) {
+        const found = STEPS.findIndex((s) => s.phase === nextPhase);
+        if (found !== -1) stepIdx = found;
+      }
+      setCurrentStep(stepIdx);
+
+      const completed = new Set<number>();
+      STEPS.forEach((s, idx) => {
+        if (sectionsCompleted[s.phase]) {
+          completed.add(idx);
+        }
+      });
+      setCompletedSteps(completed);
+      setIsInitializing(false);
     } else if (needsOnboarding) {
       initDoneRef.current = true;
       setCurrentStep(-1);
@@ -365,77 +347,68 @@ export default function OnboardingWizard() {
     history.replace(homeHref);
   }, [history, homeHref, session?.user?.id]);
 
-  const handleNext = useCallback(async () => {
-    if (savingRef.current) return;
-    savingRef.current = true;
-    setIsSaving(true);
-    setError(null);
-    try {
-      const step = STEPS[currentStep];
-      const phaseDataMap: Record<string, unknown> = {
-        goals: goalsData,
-        expertise: expertiseData,
-        professional: professionalData,
-        accessibility: accessibilityData,
-        preferences: {
-          communication: communicationData,
-          delivery: deliveryData,
-        },
-      };
-      const data = phaseDataMap[step.key];
-      const updated = await completeOnboardingPhase(step.phase, data);
-      syncFromProfile(updated);
+  const advanceStep = useCallback(
+    async (skip: boolean) => {
+      if (savingRef.current) return;
+      savingRef.current = true;
+      setIsSaving(true);
+      setError(null);
+      try {
+        const step = STEPS[currentStep];
+        let data: unknown;
+        if (!skip) {
+          const phaseDataMap: Record<string, unknown> = {
+            goals: goalsData,
+            expertise: expertiseData,
+            professional: professionalData,
+            accessibility: accessibilityData,
+            preferences: {
+              communication: communicationData,
+              delivery: deliveryData,
+            },
+          };
+          data = phaseDataMap[step.key];
+        }
+        const updated = await completeOnboardingPhase(step.phase, data);
+        syncFromProfile(updated);
 
-      setCompletedSteps((prev) => new Set(prev).add(currentStep));
+        setCompletedSteps((prev) => new Set(prev).add(currentStep));
 
-      // Simulate XP award locally until API natively issues XP for profile events
-      toast.success("+20 XP Earned!", {
-        description: `You completed the ${step.label} section.`,
-        className: "bg-green-500/10 border-green-500/20 text-green-500",
-      });
-      void refreshProgress();
+        if (!skip) {
+          // Simulate XP award locally until API natively issues XP for profile events
+          toast.success("+20 XP Earned!", {
+            description: `You completed the ${step.label} section.`,
+            className: "bg-green-500/10 border-green-500/20 text-green-500",
+          });
+          void refreshProgress();
+        }
 
-      setCurrentStep((prev) => prev + 1);
-    } catch (err) {
-      console.error("[OnboardingWizard] Failed to save step:", err);
-      setError("Failed to save. Please try again.");
-    } finally {
-      setIsSaving(false);
-      savingRef.current = false;
-    }
-  }, [
-    currentStep,
-    goalsData,
-    expertiseData,
-    professionalData,
-    accessibilityData,
-    communicationData,
-    deliveryData,
-    completeOnboardingPhase,
-    refreshProgress,
-    syncFromProfile,
-  ]);
+        setCurrentStep((prev) => prev + 1);
+      } catch (err) {
+        const action = skip ? "skip" : "save";
+        console.error(`[OnboardingWizard] Failed to ${action} step:`, err);
+        setError(`Failed to ${action}. Please try again.`);
+      } finally {
+        setIsSaving(false);
+        savingRef.current = false;
+      }
+    },
+    [
+      currentStep,
+      goalsData,
+      expertiseData,
+      professionalData,
+      accessibilityData,
+      communicationData,
+      deliveryData,
+      completeOnboardingPhase,
+      refreshProgress,
+      syncFromProfile,
+    ],
+  );
 
-  const handleSkip = useCallback(async () => {
-    if (savingRef.current) return;
-    savingRef.current = true;
-    setIsSaving(true);
-    setError(null);
-    try {
-      const step = STEPS[currentStep];
-      const updated = await completeOnboardingPhase(step.phase);
-      syncFromProfile(updated);
-
-      setCompletedSteps((prev) => new Set(prev).add(currentStep));
-      setCurrentStep((prev) => prev + 1);
-    } catch (err) {
-      console.error("[OnboardingWizard] Failed to skip step:", err);
-      setError("Failed to skip. Please try again.");
-    } finally {
-      setIsSaving(false);
-      savingRef.current = false;
-    }
-  }, [currentStep, completeOnboardingPhase, syncFromProfile]);
+  const handleNext = useCallback(() => advanceStep(false), [advanceStep]);
+  const handleSkip = useCallback(() => advanceStep(true), [advanceStep]);
 
   const handleBack = useCallback(() => {
     if (currentStep > 0) {

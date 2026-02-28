@@ -206,6 +206,7 @@ class ProfileResponse(BaseModel):
     # The DB schema comment saying "internal only" is superseded by the API spec decision.
     field_sources: dict[str, FieldSource] = Field(default_factory=dict)
     onboarding_completed: bool
+    onboarding_sections_completed: dict[str, bool] = Field(default_factory=dict)
     onboarding_progress: Annotated[float, Field(ge=0, le=1)] = 0.0
     profile_completeness: Annotated[float, Field(ge=0, le=1)] = 0.0
     created_at: datetime

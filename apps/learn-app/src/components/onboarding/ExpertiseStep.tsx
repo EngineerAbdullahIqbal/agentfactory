@@ -4,6 +4,7 @@ import type { ExpertiseSection } from "@/lib/learner-profile-types";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { itemVariants, staggerContainerVariants } from "./variants";
 
 const PROGRAMMING_LANGUAGES = [
   { value: "Python", label: "Python" },
@@ -25,24 +26,13 @@ interface ExpertiseStepProps {
   onChange: (data: ExpertiseSection) => void;
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
-  },
-};
-
 export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
   return (
     <motion.div
       className="space-y-12 max-w-2xl mx-auto"
       initial="hidden"
       animate="visible"
-      variants={{
-        visible: { transition: { staggerChildren: 0.1 } },
-      }}
+      variants={staggerContainerVariants}
     >
       <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
@@ -63,7 +53,7 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               onChange={(level) =>
                 onChange({
                   ...data,
-                  programming: { ...data.programming, level: level as any },
+                  programming: { ...data.programming, level },
                 })
               }
             />
@@ -102,7 +92,7 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               onChange={(level) =>
                 onChange({
                   ...data,
-                  ai_fluency: { ...data.ai_fluency, level: level as any },
+                  ai_fluency: { ...data.ai_fluency, level },
                 })
               }
             />
@@ -119,7 +109,7 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               onChange={(level) =>
                 onChange({
                   ...data,
-                  business: { ...data.business, level: level as any },
+                  business: { ...data.business, level },
                 })
               }
             />
@@ -140,13 +130,13 @@ export function ExpertiseStep({ data, onChange }: ExpertiseStepProps) {
               const domain = [...data.domain];
               if (domain.length === 0) {
                 domain.push({
-                  level: level as any,
+                  level,
                   domain_name: null,
                   is_primary: true,
                   notes: null,
                 });
               } else {
-                domain[0] = { ...domain[0], level: level as any };
+                domain[0] = { ...domain[0], level };
                 if (level === "none" || !level) {
                   domain[0].domain_name = null;
                 }

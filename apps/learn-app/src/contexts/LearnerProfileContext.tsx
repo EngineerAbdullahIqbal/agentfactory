@@ -3,6 +3,7 @@ import React, {
   useContext,
   useState,
   useCallback,
+  useMemo,
   useRef,
   useEffect,
   ReactNode,
@@ -342,20 +343,33 @@ export function LearnerProfileProvider({ children }: { children: ReactNode }) {
     [apiUrl, setProfileWithCache],
   );
 
+  const contextValue = useMemo(
+    () => ({
+      profile,
+      isLoading,
+      needsOnboarding,
+      refreshProfile,
+      updateProfile,
+      updateSection: updateSectionFn,
+      completeOnboardingPhase: completeOnboardingPhaseFn,
+      createNewProfile,
+      ensureProfileLoaded,
+    }),
+    [
+      profile,
+      isLoading,
+      needsOnboarding,
+      refreshProfile,
+      updateProfile,
+      updateSectionFn,
+      completeOnboardingPhaseFn,
+      createNewProfile,
+      ensureProfileLoaded,
+    ],
+  );
+
   return (
-    <LearnerProfileContext.Provider
-      value={{
-        profile,
-        isLoading,
-        needsOnboarding,
-        refreshProfile,
-        updateProfile,
-        updateSection: updateSectionFn,
-        completeOnboardingPhase: completeOnboardingPhaseFn,
-        createNewProfile,
-        ensureProfileLoaded,
-      }}
-    >
+    <LearnerProfileContext.Provider value={contextValue}>
       {children}
     </LearnerProfileContext.Provider>
   );

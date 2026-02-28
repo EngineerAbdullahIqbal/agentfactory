@@ -8,20 +8,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
+import { itemVariants, staggerContainerVariants } from "./variants";
 
 interface GoalsStepProps {
   data: GoalsSection;
   onChange: (data: GoalsSection) => void;
 }
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
-  },
-};
 
 const GOAL_EXAMPLES = [
   "Build an AI agent I can sell as a SaaS product",
@@ -57,9 +49,7 @@ export function GoalsStep({ data, onChange }: GoalsStepProps) {
       className="space-y-12 max-w-2xl mx-auto"
       initial="hidden"
       animate="visible"
-      variants={{
-        visible: { transition: { staggerChildren: 0.1 } },
-      }}
+      variants={staggerContainerVariants}
     >
       <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
@@ -200,9 +190,7 @@ export function GoalsStep({ data, onChange }: GoalsStepProps) {
             </div>
 
             <div className="space-y-4">
-              <Label className="font-semibold text-lg">
-                Any other goals?
-              </Label>
+              <Label className="font-semibold text-lg">Any other goals?</Label>
               <div className="flex gap-2">
                 <Input
                   type="text"

@@ -35,11 +35,14 @@ async def recompute_all(dry_run: bool = False) -> int:
     updated_count = 0
 
     async with async_session() as session:
-        stmt = select(LearnerProfile).where(LearnerProfile.deleted_at.is_(None))
-        result = await session.execute(stmt)
-        profiles = result.scalars().all()
+        stmt = (
+            select(LearnerProfile)
+            .where(LearnerProfile.deleted_at.is_(None))
+            .execution_options(yield_per=100)
+        )
+        result = await session.stream_scalars(stmt)
 
-        for profile in profiles:
+        async for profile in result:
             field_sources = dict(profile.field_sources) if profile.field_sources else {}
 
             # Only process profiles that have any inferred values

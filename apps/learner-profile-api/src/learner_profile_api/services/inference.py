@@ -8,18 +8,9 @@ Inference only runs when at least one expertise field has user or phm source.
 import logging
 
 from ..schemas.profile import ExpertiseSection
+from .provenance import EXPERTISE_LEVEL_ORDER, can_override
 
 logger = logging.getLogger(__name__)
-
-# Source priority (higher number = higher priority)
-SOURCE_PRIORITY: dict[str, int] = {
-    "default": 1,
-    "inferred": 2,
-    "phm": 3,
-    "user": 4,
-}
-
-EXPERTISE_LEVEL_ORDER = ["none", "beginner", "intermediate", "advanced", "expert"]
 
 
 def _get_technical_level(expertise: ExpertiseSection) -> str:
@@ -77,7 +68,7 @@ def _infer_comms(tech: str, prof: str) -> dict[str, str]:
 
 def _can_override(current_source: str, new_source: str) -> bool:
     """Check if new_source can override current_source."""
-    return SOURCE_PRIORITY.get(new_source, 0) >= SOURCE_PRIORITY.get(current_source, 0)
+    return can_override(current_source, new_source)
 
 
 def should_run_inference(field_sources: dict[str, str]) -> bool:

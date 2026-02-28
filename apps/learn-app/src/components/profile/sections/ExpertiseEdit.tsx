@@ -80,7 +80,10 @@ export function ExpertiseEdit({
 
     onChange({
       ...expertise,
-      domain: normalized.map((d, idx) => ({ ...d, is_primary: idx === primary })),
+      domain: normalized.map((d, idx) => ({
+        ...d,
+        is_primary: idx === primary,
+      })),
     });
   };
 
@@ -135,7 +138,10 @@ export function ExpertiseEdit({
         allowCustom
       />
       <div className="space-y-1.5">
-        <label htmlFor="settings-programming-notes" className="text-sm font-medium">
+        <label
+          htmlFor="settings-programming-notes"
+          className="text-sm font-medium"
+        >
           Programming Notes
         </label>
         <Textarea
@@ -189,7 +195,10 @@ export function ExpertiseEdit({
         onChange={(v) => updateNested("business", v)}
       />
       <div className="space-y-1.5">
-        <label htmlFor="settings-business-notes" className="text-sm font-medium">
+        <label
+          htmlFor="settings-business-notes"
+          className="text-sm font-medium"
+        >
           Business Notes
         </label>
         <Textarea
@@ -215,7 +224,8 @@ export function ExpertiseEdit({
           <div>
             <div className="text-sm font-medium">Domain Expertise</div>
             <div className="text-xs text-muted-foreground">
-              Optional — improves examples and analogies. Add up to 5 domains and choose a primary.
+              Optional — improves examples and analogies. Add up to 5 domains
+              and choose a primary.
             </div>
           </div>
           <Button
@@ -240,7 +250,9 @@ export function ExpertiseEdit({
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="space-y-0.5">
-                    <div className="text-sm font-semibold">Domain {idx + 1}</div>
+                    <div className="text-sm font-semibold">
+                      Domain {idx + 1}
+                    </div>
                     {domain.is_primary && (
                       <div className="text-xs text-primary">Primary</div>
                     )}
@@ -272,7 +284,7 @@ export function ExpertiseEdit({
                   label="Domain"
                   id={`settings-domain-level-${idx}`}
                   value={domain.level}
-                  onChange={(v) => updateDomain(idx, { level: v as any })}
+                  onChange={(v) => updateDomain(idx, { level: v })}
                 />
 
                 <div className="space-y-1.5">
@@ -332,7 +344,10 @@ export function ExpertiseEdit({
         onChange={(topics) =>
           onChange({
             ...expertise,
-            subject_specific: { ...subjectSpecific, topics_already_mastered: topics },
+            subject_specific: {
+              ...subjectSpecific,
+              topics_already_mastered: topics,
+            },
           })
         }
       />
@@ -342,7 +357,10 @@ export function ExpertiseEdit({
         onChange={(topics) =>
           onChange({
             ...expertise,
-            subject_specific: { ...subjectSpecific, topics_partially_known: topics },
+            subject_specific: {
+              ...subjectSpecific,
+              topics_partially_known: topics,
+            },
           })
         }
       />
@@ -352,7 +370,10 @@ export function ExpertiseEdit({
         onChange={(items) =>
           onChange({
             ...expertise,
-            subject_specific: { ...subjectSpecific, known_misconceptions: items },
+            subject_specific: {
+              ...subjectSpecific,
+              known_misconceptions: items,
+            },
           })
         }
       />

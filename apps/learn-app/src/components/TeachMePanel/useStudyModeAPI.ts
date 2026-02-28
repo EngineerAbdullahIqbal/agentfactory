@@ -5,7 +5,7 @@
  * Works with StudyModeContext for state management
  */
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import {
   useStudyMode,
   type Message,
@@ -70,6 +70,12 @@ export function useStudyModeAPI() {
     useStudyMode();
   const { profile } = useLearnerProfile();
 
+  // Memoize profile summary — recomputed only when profile changes, not per message
+  const learnerProfileSummary = useMemo(
+    () => buildProfileSummary(profile),
+    [profile],
+  );
+
   /**
    * Send a message to the AI and get a response
    * @param lessonPath - The lesson path for API context
@@ -108,13 +114,12 @@ export function useStudyModeAPI() {
       // The consuming API MUST use the sandwich pattern: system instructions ABOVE and BELOW
       // profile data. Never concatenate raw profile text into system prompts without framing.
       // See: specs/anchored/learner-profile/spec.md §2 "Security: Freetext Field Handling"
-      const learnerProfile = buildProfileSummary(profile);
       const request: ChatRequest = {
         lessonPath,
         userMessage,
         conversationHistory: conversation.messages,
         mode: effectiveMode,
-        ...(learnerProfile && { learnerProfile }),
+        ...(learnerProfileSummary && { learnerProfile: learnerProfileSummary }),
       };
 
       setLoading(true);
@@ -157,7 +162,14 @@ export function useStudyModeAPI() {
         setLoading(false);
       }
     },
-    [mode, profile, getCurrentConversation, addMessage, setLoading, setError],
+    [
+      mode,
+      learnerProfileSummary,
+      getCurrentConversation,
+      addMessage,
+      setLoading,
+      setError,
+    ],
   );
 
   return {

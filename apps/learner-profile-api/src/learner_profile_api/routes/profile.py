@@ -39,7 +39,6 @@ from ..services.profile_service import (
     create_profile,
     gdpr_erase_profile,
     get_profile,
-    get_profile_by_learner_id,
     soft_delete_profile,
     sync_from_phm,
     update_onboarding_section,
@@ -100,6 +99,9 @@ def _profile_to_response(profile) -> ProfileResponse:
         delivery = DeliverySection()
         accessibility = AccessibilitySection()
 
+    # Build full sections_completed with all phases represented
+    all_sections = {phase: sections_completed.get(phase, False) for phase in ONBOARDING_PHASES}
+
     return ProfileResponse(
         learner_id=profile.learner_id,
         name=profile.name,
@@ -114,6 +116,7 @@ def _profile_to_response(profile) -> ProfileResponse:
         accessibility=accessibility,
         field_sources=field_sources,
         onboarding_completed=profile.onboarding_completed,
+        onboarding_sections_completed=all_sections,
         onboarding_progress=round(onboarding_progress, 2),
         profile_completeness=round(completeness, 2),
         created_at=profile.created_at,
@@ -223,7 +226,7 @@ async def get_profile_by_learner(
         )
 
     try:
-        profile = await get_profile_by_learner_id(session, learner_id)
+        profile = await get_profile(session, learner_id)
         return _profile_to_response(profile)
     except ProfileNotFound:
         raise HTTPException(

@@ -9,7 +9,6 @@ Invalidated on any profile mutation (update, section update, onboarding, PHM syn
 
 import json
 import logging
-import threading
 
 from api_infra.core.redis_cache import get_redis
 
@@ -18,16 +17,15 @@ from ..config import settings
 logger = logging.getLogger(__name__)
 
 # --- Cache failure monitoring (I7) ---
+# GIL-safe: simple int increment/reset is atomic enough for a logging counter.
 _cache_failure_count = 0
-_cache_failure_lock = threading.Lock()
 _CACHE_FAILURE_THRESHOLD = 5
 
 
 def _log_cache_failure(operation: str, error: Exception) -> None:
     global _cache_failure_count
-    with _cache_failure_lock:
-        _cache_failure_count += 1
-        count = _cache_failure_count
+    _cache_failure_count += 1
+    count = _cache_failure_count
 
     if count >= _CACHE_FAILURE_THRESHOLD:
         logger.error("[Cache] %d consecutive failures (operation: %s): %s", count, operation, error)
@@ -37,8 +35,7 @@ def _log_cache_failure(operation: str, error: Exception) -> None:
 
 def _reset_cache_failure_count() -> None:
     global _cache_failure_count
-    with _cache_failure_lock:
-        _cache_failure_count = 0
+    _cache_failure_count = 0
 
 
 def _profile_key(learner_id: str) -> str:
@@ -117,8 +114,7 @@ async def invalidate_profile_cache(learner_id: str) -> None:
     if not redis:
         return
     try:
-        await redis.delete(_profile_key(learner_id))
-        await redis.delete(_onboarding_key(learner_id))
+        await redis.delete(_profile_key(learner_id), _onboarding_key(learner_id))
         _reset_cache_failure_count()
     except Exception as e:
         _log_cache_failure("invalidate", e)
@@ -134,5 +130,4 @@ async def gdpr_invalidate_profile_cache(learner_id: str) -> None:
     if not redis:
         raise RuntimeError("Redis unavailable — cannot guarantee GDPR cache invalidation")
     # No try/except — let Redis errors propagate
-    await redis.delete(_profile_key(learner_id))
-    await redis.delete(_onboarding_key(learner_id))
+    await redis.delete(_profile_key(learner_id), _onboarding_key(learner_id))

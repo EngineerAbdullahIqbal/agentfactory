@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { itemVariants, staggerContainerVariants } from "./variants";
 
 const TOOLS_OPTIONS = [
   { value: "VS Code", label: "VS Code" },
@@ -33,24 +34,13 @@ interface ProfessionalStepProps {
   onChange: (data: ProfessionalContextSection) => void;
 }
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
-  },
-};
-
 export function ProfessionalStep({ data, onChange }: ProfessionalStepProps) {
   return (
     <motion.div
       className="space-y-12 max-w-2xl mx-auto"
       initial="hidden"
       animate="visible"
-      variants={{
-        visible: { transition: { staggerChildren: 0.1 } },
-      }}
+      variants={staggerContainerVariants}
     >
       <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
@@ -239,7 +229,8 @@ export function ProfessionalStep({ data, onChange }: ProfessionalStepProps) {
                 maxLength={300}
               />
               <p className="text-xs text-muted-foreground/70 pl-1">
-                Helps the tutor choose realistic tools, architectures, and examples.
+                Helps the tutor choose realistic tools, architectures, and
+                examples.
               </p>
             </div>
           </details>

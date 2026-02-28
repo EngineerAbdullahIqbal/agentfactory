@@ -114,6 +114,7 @@ function makeProfile(
       notes: null,
     },
     onboarding_completed: false,
+    onboarding_sections_completed: {},
     onboarding_progress: 0,
     profile_completeness: 0.0,
     created_at: "2026-01-01T00:00:00Z",
@@ -241,23 +242,18 @@ describe("OnboardingWizard", () => {
   });
 
   it("resumes at correct step when profile has partial onboarding", async () => {
-    const existing = makeProfile();
-    mockGetMyProfileOrNull.mockResolvedValue(existing);
     // Goals and expertise completed, next is professional_context
-    mockGetOnboardingStatus.mockResolvedValue(
-      makeStatus({
-        sections_completed: {
-          goals: true,
-          expertise: true,
-          professional_context: false,
-          accessibility: false,
-          communication_preferences: false,
-          ai_enrichment: false,
-        },
-        next_section: "professional_context",
-        onboarding_progress: 0.33,
-      }),
-    );
+    const existing = makeProfile({
+      onboarding_sections_completed: {
+        goals: true,
+        expertise: true,
+        professional_context: false,
+        accessibility: false,
+        communication_preferences: false,
+        ai_enrichment: false,
+      },
+    });
+    mockGetMyProfileOrNull.mockResolvedValue(existing);
 
     renderWizard();
 

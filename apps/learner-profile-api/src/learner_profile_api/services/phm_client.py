@@ -9,6 +9,7 @@ import logging
 import httpx
 
 from ..config import settings
+from .provenance import can_override, expertise_level_idx
 
 logger = logging.getLogger(__name__)
 
@@ -21,16 +22,6 @@ class PHMSyncError(Exception):
         super().__init__(f"PHM sync failed with status {status_code}: {detail}")
 
 _client: httpx.AsyncClient | None = None
-
-# Source priority for provenance checks
-SOURCE_PRIORITY: dict[str, int] = {
-    "default": 1,
-    "inferred": 2,
-    "phm": 3,
-    "user": 4,
-}
-
-EXPERTISE_LEVEL_ORDER = ["none", "beginner", "intermediate", "advanced", "expert"]
 
 
 def _get_client() -> httpx.AsyncClient:
@@ -84,14 +75,11 @@ async def fetch_phm_data(learner_id: str, token: str) -> dict | None:
 
 def _can_override(current_source: str, new_source: str = "phm") -> bool:
     """Check if PHM can override a field based on provenance."""
-    return SOURCE_PRIORITY.get(new_source, 0) >= SOURCE_PRIORITY.get(current_source, 0)
+    return can_override(current_source, new_source)
 
 
 def _expertise_level_idx(level: str) -> int:
-    try:
-        return EXPERTISE_LEVEL_ORDER.index(level)
-    except ValueError:
-        return 0
+    return expertise_level_idx(level)
 
 
 def apply_phm_data(

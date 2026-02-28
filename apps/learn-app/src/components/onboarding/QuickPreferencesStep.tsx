@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { itemVariants, staggerContainerVariants } from "./variants";
 
 interface QuickPreferencesStepProps {
   communication: Partial<CommunicationSection>;
@@ -15,15 +16,6 @@ interface QuickPreferencesStepProps {
   onChangeCommunication: (data: Partial<CommunicationSection>) => void;
   onChangeDelivery: (data: Partial<DeliverySection>) => void;
 }
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
-  },
-};
 
 const RADIO_GROUPS = [
   {
@@ -139,9 +131,7 @@ export function QuickPreferencesStep({
       className="space-y-12 max-w-2xl mx-auto"
       initial="hidden"
       animate="visible"
-      variants={{
-        visible: { transition: { staggerChildren: 0.1 } },
-      }}
+      variants={staggerContainerVariants}
     >
       <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
@@ -251,7 +241,8 @@ export function QuickPreferencesStep({
                 Check-in questions
               </Label>
               <p className="text-sm text-muted-foreground pt-1">
-                Ask quick “Does this make sense?” questions to confirm understanding.
+                Ask quick “Does this make sense?” questions to confirm
+                understanding.
               </p>
             </div>
             <Switch
