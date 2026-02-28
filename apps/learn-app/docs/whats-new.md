@@ -18,6 +18,9 @@ Track meaningful updates to the book. This page is automatically updated when do
 <!-- CHANGELOG_START - Do not remove this marker -->
 
 ### 2026-02-28
+- Part2/update exercises ([#792](https://github.com/panaversity/agentfactory/pull/792))
+
+### 2026-02-28
 - docs: restructure Part 4 plan to 26 chapters / 9 phases (v2.8) ([#785](https://github.com/panaversity/agentfactory/pull/785))
 
 ### 2026-02-28
