@@ -77,7 +77,7 @@ cards:
 
   - id: "ch14-06-maturity-012"
     front: "Is maturity purely a technology question? What else is required to advance levels?"
-    back: "No. Advancing levels also requires governance (policies, oversight), leadership (executive sponsorship, designated AI owner), and organisational design (roles, processes, budget allocation). Technology alone does not move an organisation up the maturity scale."
+    back: "Maturity is not purely a technology question. Advancing levels also requires governance (policies, oversight), leadership (executive sponsorship, designated AI owner), and organisational design (roles, processes, budget allocation). Technology alone does not move an organisation up the maturity scale."
     tags: ["maturity", "governance", "leadership"]
     difficulty: "advanced"
     why: "Challenges the common misconception that maturity equals technical capability"

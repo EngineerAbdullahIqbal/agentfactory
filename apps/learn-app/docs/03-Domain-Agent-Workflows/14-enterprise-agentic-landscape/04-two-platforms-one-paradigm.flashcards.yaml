@@ -77,7 +77,7 @@ cards:
 
   - id: "ch14-04-two-platforms-012"
     front: "Can an organisation use both Cowork and Frontier? Under what circumstances would this make sense?"
-    back: "Yes. An organisation might use Cowork for team-level agents where knowledge is concentrated (e.g., a compliance team's regulatory review) while using Frontier for cross-departmental intelligence (e.g., connecting sales, finance, and operations data). The platforms serve different organisational scopes."
+    back: "An organisation can use both. Cowork suits team-level agents where knowledge is concentrated (e.g., a compliance team's regulatory review) while Frontier handles cross-departmental intelligence (e.g., connecting sales, finance, and operations data). The platforms serve different organisational scopes."
     tags: ["decision-framework", "hybrid"]
     difficulty: "advanced"
     why: "Tests whether the student sees the platforms as complementary rather than mutually exclusive"

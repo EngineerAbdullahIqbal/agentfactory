@@ -64,7 +64,7 @@ cards:
 
   - id: "ch14-03-not-tech-010"
     front: "Is encoding domain expertise into a SKILL.md file a technical exercise for developers?"
-    back: "No. It is a professional exercise for domain experts. The 2026 platforms made it possible for knowledge workers to encode their expertise without needing engineering skills."
+    back: "Encoding domain expertise into a SKILL.md file is a professional exercise for domain experts, not a technical one. The 2026 platforms made it possible for knowledge workers to encode their expertise without needing engineering skills."
     tags: ["skill-md", "audience"]
     difficulty: "basic"
 
