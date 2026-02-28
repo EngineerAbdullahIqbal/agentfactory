@@ -8,6 +8,10 @@ part_number: 2
 created_date: 2026-02-06
 version: 4.1
 status: published
+slides:
+  source: "https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-2/chapter-10/structured-data-persistent-storage.pdf"
+  title: "Structured Data & Persistent Storage"
+  height: 700
 ---
 
 # Chapter 10: Structured Data & Persistent Storage
@@ -42,7 +46,9 @@ Total: $14,892.37
 
 That script is correct. It is also a dead end. Every new question means new code, new bugs, and new testing -- for a problem that databases solved decades ago.
 
-## The Arc of This Chapter
+## Teaching Aid
+
+## What You Will Learn
 
 Working script. Broken requirements. Structural solution. Production confidence.
 
