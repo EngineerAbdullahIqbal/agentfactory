@@ -126,13 +126,11 @@ Phase 7 takes you from working code to real tools. You build command-line applic
 
 > Your role: **Shipping Engineer** -- "I can ship secure, tested, production-grade software"
 
-Phase 8 transforms working software into production software. You automate verification, review your code for security vulnerabilities, and name the principles you have been practicing all along.
+Phase 8 transforms working software into production software. You automate verification and review your code for security vulnerabilities.
 
 **CI/CD, Git Workflows, and Observability** automates verification and monitoring. Git branching and workflow, GitHub Actions CI pipeline, the verification pyramid (format, lint, type check, test, security), structured logging, health checks, and error tracking. The complete professional workflow: branch, code, test, CI, review, merge.
 
 **Security Review for AI-Generated Code** teaches you to systematically audit AI-generated code for vulnerabilities. AI optimizes for functionality, not security. You learn the OWASP Top 10 for Python (SQL injection, command injection, path traversal, insecure deserialization, hardcoded secrets), build a security review checklist, use tools like `bandit` and `pip audit`, and add security tests to your TDG cycle. This chapter makes you the human firewall that catches what AI misses.
-
-**The Ten Axioms** arrives as reflection, not introduction. You have been living these ten engineering principles for the entire course -- reproducible environments (uv), explicit configuration (pyproject.toml), continuous formatting (ruff format), code quality analysis (ruff check), type safety (pyright), persistent data (PostgreSQL), tests as specification (pytest), version control as memory (Git), dependency locking (uv.lock), and automated pipelines (CI/CD). Now you name them, connect each to the chapter where you first practiced it, and understand why they matter beyond Python.
 
 ### Phase 9: Capstone (Prove)
 
@@ -159,7 +157,7 @@ You do not build nine throwaway projects. You build **one real application** -- 
 | 5 | v0.4: Architect | Full object model with behavior, inheritance, protocols, decorators |
 | 6 | v0.5: Store It | PostgreSQL persistence, file import/export, proper package structure |
 | 7 | v0.6: Tool It | CLI tool + FastAPI async API with AI integration |
-| 8 | v0.8: Harden It | CI pipeline + security audit + axiom compliance report |
+| 8 | v0.8: Harden It | CI pipeline + security audit report |
 | 9 | v1.0: Complete | AI-powered semantic search, auto-tagging, summarization -- production-grade |
 
 Every exercise adds to the same project. Each phase produces a working, shippable version. By the end, you have one polished portfolio project that demonstrates typed Python, testing, OOP design, async APIs, security review, and AI integration -- not nine toy exercises.

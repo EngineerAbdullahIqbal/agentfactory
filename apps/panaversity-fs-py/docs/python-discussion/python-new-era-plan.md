@@ -85,8 +85,8 @@ Phase 4 (Ch 12-13):  Debug + master TDG          ← "I can debug AI output and 
 Phase 5 (Ch 14-17):  Design object models        ← "I can design systems for AI to implement"
 Phase 6 (Ch 18-20):  Architect components        ← "I can spec real-world features via TDG"
 Phase 7 (Ch 21-22):  Build CLI + async tools     ← "I can build production tools via TDG"
-Phase 8 (Ch 23-25):  Ship production systems     ← "I can ship secure, tested software via TDG"
-Phase 9 (Ch 26-27):  Full system architecture    ← "I can architect and deliver via TDG"
+Phase 8 (Ch 23-24):  Ship production systems     ← "I can ship secure, tested software via TDG"
+Phase 9 (Ch 25-26):  Full system architecture    ← "I can architect and deliver via TDG"
 ```
 
 By Phase 6, students have seen every Python feature 50+ times in AI output. Specifying it precisely for AI feels natural, not forced.
@@ -135,7 +135,7 @@ All traditional Python features are taught. The **framing changes**, not the con
 | Ch 9: Classes | OOP fundamentals | Domain models → Full OOP arc | Ch 6, 14-17 |
 | Ch 10: Files & Exceptions | File I/O | Files and data processing: JSON, CSV, PostgreSQL intro | Ch 18 |
 | Ch 11: Testing | pytest basics | pytest as specification language (foundational) | Ch 3, 9 |
-| Chs 12-14: Projects | Alien game, data viz, web | CLI tools, async services, AI-powered capstone | Ch 21-27 |
+| Chs 12-14: Projects | Alien game, data viz, web | CLI tools, async services, AI-powered capstone | Ch 21-26 |
 
 ### From Learning Python (Lutz) — OOP Chapters
 
@@ -191,7 +191,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-## 7. Chapter Plan (27 Chapters, 9 Phases)
+## 7. Chapter Plan (26 Chapters, 9 Phases)
 
 ---
 
@@ -871,37 +871,11 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 25: The Ten Axioms — Principles Behind the Practice
-
-**Goal**: Student can articulate WHY the practices they've been following work, connecting every tool and method to a foundational principle.
-
-- **Why axioms come last, not first**: You've been living these principles for 24 chapters — now you name them
-- **The Ten Axioms of Agentic Development** (from Chapter 14 of the broader book):
-  - Axiom I: Reproducible Environments (you've been using `uv` since Ch 1)
-  - Axiom II: Explicit Configuration (pyproject.toml, from Ch 1)
-  - Axiom III: Continuous Formatting (ruff format, from Ch 1)
-  - Axiom IV: Code Quality Analysis (ruff check, from Ch 1)
-  - Axiom V: Type Safety (pyright, from Ch 2)
-  - Axiom VI: Persistent Data (PostgreSQL, from Ch 18)
-  - Axiom VII: Tests as Specification (pytest, from Ch 3)
-  - Axiom VIII: Version Control as Memory (Git, from Ch 1)
-  - Axiom IX: Dependency Locking (uv.lock, from Ch 1)
-  - Axiom X: Automated Pipelines (CI/CD, from Ch 23)
-- **Mapping your journey**: each axiom connected to the chapter where you first practiced it
-- **The bigger picture**: how these axioms apply beyond Python — to any language, any framework, any AI tool
-- **Looking forward**: how these principles scale to agent development (Part 5)
-- Reflection exercise: student maps their own SmartNotes project to all 10 axioms
-
-**Student does**: Maps their entire learning journey to the axioms → identifies which axioms they apply automatically vs which need more practice
-**AI role**: Generates a personalized axiom compliance report for the student's SmartNotes project
-
----
-
 ### Phase 9: Capstone (Prove)
 
 > Student role: **Architect** — "I can design and build complete systems"
 
-#### Chapter 26: When Not to Use AI
+#### Chapter 25: When Not to Use AI
 
 **Goal**: Student develops judgment about when AI-assisted coding helps and when it hurts.
 
@@ -930,7 +904,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 27: SmartNotes Capstone — AI-Powered Application
+#### Chapter 26: SmartNotes Capstone — AI-Powered Application
 
 **Goal**: Student builds a complete, production-grade application using everything learned.
 
@@ -974,8 +948,8 @@ Ch 12-13:  DEBUGGER       → "I can debug AI output and drive TDG independently
 Ch 14-17:  MODELER        → "I can design object models for AI to implement"
 Ch 18-20:  PRACTITIONER   → "I can spec real-world features via TDG"
 Ch 21-22:  TOOL BUILDER   → "I can build production CLI tools and async programs"
-Ch 23-25:  SHIP ENGINEER  → "I can ship secure, tested, production-grade software"
-Ch 26-27:  ARCHITECT      → "I can architect and deliver complete systems via TDG"
+Ch 23-24:  SHIP ENGINEER  → "I can ship secure, tested, production-grade software"
+Ch 25-26:  ARCHITECT      → "I can architect and deliver complete systems via TDG"
 ```
 
 ---
@@ -1064,7 +1038,7 @@ Ch 22 (Phase 7): FastAPI dependency injection → OOP applied to async services 
 | *Python Crash Course* (Matthes, 2023) | Reference for traditional Python feature coverage (beginner-friendly) |
 | *Learning Python* (Lutz, 2025) | Reference for deep OOP, object model, advanced patterns (1,270 pages) |
 | *The Lindy-AI Software Manifesto* v2.0 | Philosophical foundation and axioms |
-| Chapter 14 (broader book): Ten Axioms of Agentic Development | Axiom source; mapped in our Ch 25 |
+| Chapter 14: Ten Axioms of Agentic Development | Bridge chapter connecting principles to practice (start of Part 4) |
 | Python 3.12+ documentation | Language reference |
 | Pyright documentation | Type checking rules |
 | pytest documentation | Testing patterns |
@@ -1165,8 +1139,8 @@ END-OF-CHAPTER EXERCISES (after lesson content)
 | Phase 5 (Ch 14-17) | 3 | 2 | 1 | 1-2 | ~8 |
 | Phase 6 (Ch 18-20) | 2 | 2 | 1 | 2 | ~7 |
 | Phase 7 (Ch 21-22) | 2 | 2 | 1-2 | 1 | ~7 |
-| Phase 8 (Ch 23-25) | 2 | 2 | 1 | 1-2 | ~7 |
-| Phase 9 (Ch 26-27) | — | — | Full project | Full project | 1 large |
+| Phase 8 (Ch 23-24) | 2 | 2 | 1 | 1-2 | ~7 |
+| Phase 9 (Ch 25-26) | — | — | Full project | Full project | 1 large |
 
 **Total across course**: ~200-210 exercises
 
@@ -1229,7 +1203,7 @@ Ch 16: Add __repr__, __eq__, __iter__       → BUILD IT (TDG): make notes Pytho
 Ch 18: Store Notes in PostgreSQL             → TDG: file processing + database persistence
 Ch 22: Expose Notes via async FastAPI       → TDG: async service with API endpoint
 Ch 24: Security review of SmartNotes        → Review: audit for vulnerabilities
-Ch 27: Full SmartNotes Knowledge Base       → CAPSTONE (full TDG orchestration)
+Ch 26: Full SmartNotes Knowledge Base       → CAPSTONE (full TDG orchestration)
 ```
 
 This creates a **running project thread** that students evolve across the course.
@@ -1335,7 +1309,7 @@ class Counter:
 
 ### The Combined PDF
 
-All 27 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~15 pages). This is generated from the book content — no separate authoring needed.
+All 26 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~14 pages). This is generated from the book content — no separate authoring needed.
 
 Students get:
 - **In the book**: Per-chapter cards right where they need them
@@ -1470,7 +1444,7 @@ Students don't build nine throwaway projects. They build **one real application*
 
 ---
 
-#### Phase 8: Ship & Secure (Ch 23-25) — "SmartNotes v0.8: Harden It"
+#### Phase 8: Ship & Secure (Ch 23-24) — "SmartNotes v0.8: Harden It"
 
 **Student role**: Shipping Engineer — ship secure, tested, production-grade software
 
@@ -1478,16 +1452,15 @@ Students don't build nine throwaway projects. They build **one real application*
 - CI pipeline: GitHub Actions running format → lint → type check → test on every push
 - Structured logging and health check endpoint
 - Security audit: review SmartNotes for OWASP vulnerabilities, run `bandit`
-- Axiom compliance report: map SmartNotes to all 10 axioms
 - Security-focused tests: SQL injection prevention, input validation, auth checks
 
-**Key learning**: Shipping means CI + security + observability. The axioms you've been practicing have names and a philosophy.
+**Key learning**: Shipping means CI + security + observability. Production software is verified, monitored, and secure.
 
-**Deliverable**: SmartNotes with CI pipeline, security audit report, and axiom compliance — all green
+**Deliverable**: SmartNotes with CI pipeline, security audit report — all green
 
 ---
 
-#### Phase 9: Integrate & Polish (Ch 26-27) — "SmartNotes v1.0: Complete"
+#### Phase 9: Integrate & Polish (Ch 25-26) — "SmartNotes v1.0: Complete"
 
 **Student role**: Architect — design and build complete systems
 
@@ -1536,7 +1509,7 @@ smartnotes/
 ## 16. Open Questions
 
 - [x] ~~Python Crash Course Bridge chapter?~~ → Resolved: No. Dual-track callouts within chapters are sufficient. No extra chapter needed.
-- [x] ~~Integration with the broader Agent Factory curriculum (Parts 1-6)?~~ → Resolved: Ch 14 of the broader book (Ten Axioms) bridges Part 3 into this Python course; our Ch 25 maps those axioms to the student's journey. Course output (typed Python + testing + OOP) feeds directly into Part 5 (building agents). No extra integration chapter needed.
+- [x] ~~Integration with the broader Agent Factory curriculum (Parts 1-6)?~~ → Resolved: Ch 14 (Ten Axioms) bridges Part 3 into this Python course; course output (typed Python + testing + OOP) feeds directly into Part 5 (building agents). No extra integration chapter needed.
 - [x] ~~Should metaclasses get a dedicated advanced appendix?~~ → Resolved: No. Reference-only coverage in Ch 17 is sufficient. Metaclasses are for framework authors, not our audience.
 - [x] ~~Specific project designs for each phase (Section 15)?~~ → Resolved: "SmartNotes" Personal AI Knowledge Base — one running project across all 9 phases
 - [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 22 (async/await + threading + FastAPI intro)
@@ -1544,10 +1517,10 @@ smartnotes/
 - [x] ~~Python Quick Reference appendix?~~ → Resolved: per-chapter Syntax Cards + combined PDF (Section 14)
 - [x] ~~Capstone for beginners vs experienced?~~ → Resolved: no beginners by capstone; per-phase projects instead (Section 15)
 - [x] ~~Debugging checkpoint between testing and OOP?~~ → Resolved: Yes, Phase 4 (Ch 12-13) — Debugging + TDG Mastery
-- [x] ~~Axioms at start vs end?~~ → Resolved: End (Ch 25). Students practice axioms for 24 chapters, then name them. Experience before theory.
 - [x] ~~Security chapter for AI-generated code?~~ → Resolved: Yes, Ch 24. OWASP-focused review of AI output, security testing, `bandit` tooling.
-- [x] ~~"When Not to Use AI" chapter?~~ → Resolved: Yes, Ch 26. Judgment about AI assistance spectrum, preventing AI dependency.
-- [x] ~~Split Production Systems phase?~~ → Resolved: Yes. Phase 7 (CLI + Concurrency) and Phase 8 (CI/CD + Security + Axioms) — separate building from shipping.
+- [x] ~~"When Not to Use AI" chapter?~~ → Resolved: Yes, Ch 25. Judgment about AI assistance spectrum, preventing AI dependency.
+- [x] ~~Split Production Systems phase?~~ → Resolved: Yes. Phase 7 (CLI + Concurrency) and Phase 8 (CI/CD + Security) — separate building from shipping.
+- [x] ~~Axioms at start vs end?~~ → Resolved: Keep at start. Chapter 14 (Ten Axioms) already exists and serves as the bridge from Part 3 into Part 4. No duplicate needed.
 
 ---
 
@@ -1564,4 +1537,4 @@ smartnotes/
 | 2.5 | 2026-02-17 | Designed "SmartNotes" Personal AI Knowledge Base as the running project across all 7 phases. Updated Section 15 with phase-by-phase deliverables. Updated exercise thread from Order domain to Note/SmartNotes domain. Updated capstone to reference SmartNotes. |
 | 2.6 | 2026-02-17 | AI-first philosophy applied throughout entire plan. Steps 4-5 of learning progression now explicitly done WITH AI. Renamed "Writing Gradient" to "Specification Sophistication Gradient". All chapter "Student writes/reads" lines replaced with "Student does/AI role" format reflecting TDG workflow. Phase 5 role renamed from "Writer" to "Practitioner". Exercise Type 5 "Build It" reframed from "no AI" to "full TDG ownership". "Build It Rule" rewritten. Student Journey Summary updated. |
 | 2.7 | 2026-02-20 | Folded SQL and FastAPI from standalone chapters into existing chapters per teacher directive. Ch 16 now includes PostgreSQL introduction (was separate Ch 18). Ch 20 (Concurrency) now includes FastAPI introduction (was separate Ch 22). Reduced from 25 to 23 chapters. Renumbered all cross-references: old Ch 19→18, 20→19, 21→20, 23→21, 24-25→22-23. Updated SmartNotes project phases, stack references, Syntax Cards count, exercise thread, and all section cross-references. Full SQL and FastAPI coverage deferred to later parts of the book. |
-| 2.8 | 2026-02-24 | Major restructuring from 23 chapters/7 phases to 27 chapters/9 phases. Added Phase 4: Debugging + TDG Mastery (Ch 12-13) — debugging checkpoint between testing and OOP to prevent students hitting a wall. Moved axioms to capstone position (Ch 25) — experience before theory. Split old Phase 6 into Phase 7 (CLI + Concurrency) and Phase 8 (CI/CD + Security + Axioms). Added Ch 24: Security Review for AI-Generated Code (OWASP, bandit, security-focused TDG). Added Ch 25: Ten Axioms as reflective capstone. Added Ch 26: When Not to Use AI (judgment, AI dependency prevention). Old Ch 10 (TDG Mastery) replaced with Ch 10 (Iterating on AI Output) and moved full TDG mastery to new Ch 13 in Phase 4. Renumbered all OOP chapters (12-15 → 14-17), real-world chapters (16-18 → 18-20), production chapters (19-21 → 21-23). Updated all cross-references: feature maps, Lutz coverage, OOP progression, exercise strategy, SmartNotes phases, stack diagram. |
+| 2.8 | 2026-02-24 | Major restructuring from 23 chapters/7 phases to 26 chapters/9 phases. Added Phase 4: Debugging + TDG Mastery (Ch 12-13) — debugging checkpoint between testing and OOP. Split old Phase 6 into Phase 7 (CLI + Concurrency) and Phase 8 (CI/CD + Security). Added Ch 24: Security Review for AI-Generated Code (OWASP, bandit, security-focused TDG). Added Ch 25: When Not to Use AI (judgment, AI dependency prevention). Old Ch 10 (TDG Mastery) replaced with Ch 10 (Iterating on AI Output) and moved full TDG mastery to new Ch 13 in Phase 4. Renumbered OOP chapters (12-15 → 14-17), real-world chapters (16-18 → 18-20), production chapters (19-21 → 21-23). Kept axioms at start (Ch 14 already exists) — no duplicate axioms chapter. Updated all cross-references. |
