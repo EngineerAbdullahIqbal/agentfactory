@@ -6,7 +6,6 @@ import {
   getMyProfileOrNull,
   updateMyProfile,
   updateSection,
-  getOnboardingStatus,
   completeOnboardingPhase,
   getCompleteness,
   deleteMyProfile,
@@ -241,30 +240,6 @@ describe("learner-profile-api", () => {
     });
   });
 
-  describe("getOnboardingStatus", () => {
-    it("returns onboarding status", async () => {
-      const status = {
-        learner_id: "user-1",
-        sections_completed: { goals: true, expertise: false },
-        overall_completed: false,
-        next_section: "expertise",
-        onboarding_progress: 0.2,
-        profile_completeness: 0.15,
-      };
-      globalThis.fetch = mockFetchResponse(status);
-      const result = await getOnboardingStatus(BASE_URL);
-      expect(result).toEqual(status);
-      expect(globalThis.fetch).toHaveBeenCalledWith(
-        `${BASE_URL}/api/v1/profiles/me/onboarding-status`,
-        expect.objectContaining({
-          headers: expect.objectContaining({
-            Authorization: "Bearer test-token",
-          }),
-        }),
-      );
-    });
-  });
-
   describe("completeOnboardingPhase", () => {
     it("sends PATCH to onboarding phase endpoint with data", async () => {
       globalThis.fetch = mockFetchResponse(mockProfile);
@@ -413,7 +388,9 @@ describe("learner-profile-api", () => {
     });
 
     it("propagates network errors (fetch throws TypeError) as-is", async () => {
-      globalThis.fetch = vi.fn().mockRejectedValue(new TypeError("Failed to fetch"));
+      globalThis.fetch = vi
+        .fn()
+        .mockRejectedValue(new TypeError("Failed to fetch"));
       await expect(getMyProfile(BASE_URL)).rejects.toThrow(TypeError);
     });
   });

@@ -7,15 +7,14 @@ import { getCompleteness } from "@/lib/learner-profile-api";
 import type { CompletenessResponse } from "@/lib/learner-profile-types";
 import { ONBOARDING_PHASES } from "@/lib/learner-profile-types";
 import { useLearnerProfileApiUrl } from "@/lib/api-utils";
-import useBaseUrl from "@docusaurus/useBaseUrl";
 import { useHistory } from "@docusaurus/router";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export function FinishStep() {
   const history = useHistory();
   const apiUrl = useLearnerProfileApiUrl();
   const profileHref = useBaseUrl("/profile");
   const homeHref = useBaseUrl("/");
-  const logoSrc = useBaseUrl("/img/logo.svg");
 
   const [completeness, setCompleteness] = useState<CompletenessResponse | null>(
     null,
@@ -55,12 +54,8 @@ export function FinishStep() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4, type: "spring" }}
     >
-      <div className="w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center mb-8 shadow-inner shadow-primary/20">
-        <img
-          src={logoSrc}
-          alt="Agent Factory"
-          className="w-10 h-10 object-contain"
-        />
+      <div className="w-20 h-20 bg-green-500/10 rounded-3xl flex items-center justify-center mb-8 shadow-inner shadow-green-500/20">
+        <CheckCircle2 className="w-10 h-10 text-green-500" />
       </div>
 
       <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">

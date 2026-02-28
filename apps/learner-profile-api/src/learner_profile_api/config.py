@@ -31,7 +31,6 @@ class Settings(BaseSettings):
 
     # Cache TTLs (seconds)
     cache_ttl_profile: int = 1800  # 30 minutes
-    cache_ttl_onboarding: int = 600  # 10 minutes
 
     # Content cache TTL (required by api_infra)
     content_cache_ttl: int = 2592000

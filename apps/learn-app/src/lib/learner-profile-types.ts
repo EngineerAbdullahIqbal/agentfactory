@@ -191,15 +191,6 @@ export interface ProfileResponse {
   updated_at: string;
 }
 
-export interface OnboardingStatus {
-  learner_id: string;
-  sections_completed: Record<string, boolean>;
-  overall_completed: boolean;
-  next_section: string | null;
-  onboarding_progress: number;
-  profile_completeness: number;
-}
-
 export interface CompletenessResponse {
   learner_id: string;
   profile_completeness: number;

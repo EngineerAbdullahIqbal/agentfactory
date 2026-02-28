@@ -22,7 +22,6 @@ from ..schemas.profile import (
     ErrorResponse,
     ExpertiseSection,
     GoalsSection,
-    OnboardingStatus,
     ProfessionalContextSection,
     ProfileCreate,
     ProfileResponse,
@@ -30,10 +29,8 @@ from ..schemas.profile import (
 )
 from ..services.cache import (
     gdpr_invalidate_profile_cache,
-    get_cached_onboarding,
     get_cached_profile,
     invalidate_profile_cache,
-    set_cached_onboarding,
     set_cached_profile,
 )
 from ..services.completeness import (
@@ -363,65 +360,6 @@ async def gdpr_erase_my_profile(
         await gdpr_invalidate_profile_cache(learner_id)
     except Exception:
         logger.warning("[GDPR] Post-erase cache invalidation failed — pre-erase already cleared")
-
-
-@profile_router.get(
-    "/me/onboarding-status",
-    response_model=OnboardingStatus,
-    responses={404: {"model": ErrorResponse}},
-)
-@rate_limit("onboarding_status", max_requests=120, period_minutes=1)
-async def get_onboarding_status(
-    request: Request,
-    response: Response,
-    user=Depends(get_current_user),
-    session: AsyncSession = Depends(get_session),
-):
-    """Get onboarding completion state."""
-    learner_id = user["sub"]
-
-    # Check cache first
-    cached = await get_cached_onboarding(learner_id)
-    if cached:
-        return OnboardingStatus(**cached)
-
-    try:
-        profile = await get_profile(session, learner_id)
-    except ProfileNotFound:
-        raise HTTPException(
-            status_code=404,
-            detail={"error": "not_found", "message": "No profile found"},
-        )
-
-    field_sources = profile.field_sources or {}
-    sections_completed = _backfill_sections_completed(profile)
-
-    # Build sections_completed with all phases
-    all_sections = {phase: sections_completed.get(phase, False) for phase in ONBOARDING_PHASES}
-
-    # Find next incomplete section
-    next_section = None
-    for phase in ONBOARDING_PHASES:
-        if not all_sections.get(phase, False):
-            next_section = phase
-            break
-
-    onboarding_progress = compute_onboarding_progress(sections_completed)
-    completeness, _ = compute_profile_completeness(field_sources)
-
-    status = OnboardingStatus(
-        learner_id=profile.learner_id,
-        sections_completed=all_sections,
-        overall_completed=profile.onboarding_completed,
-        next_section=next_section,
-        onboarding_progress=round(onboarding_progress, 2),
-        profile_completeness=round(completeness, 2),
-    )
-
-    # Cache for 10 minutes
-    await set_cached_onboarding(learner_id, status.model_dump())
-
-    return status
 
 
 @profile_router.patch(

@@ -51,12 +51,12 @@ class TestNoTokenReturns401:
         finally:
             api_infra._settings.dev_mode = original
 
-    async def test_onboarding_no_token(self, client):
-        """GET /me/onboarding-status without token (dev_mode=false) -> 401."""
+    async def test_completeness_no_token(self, client):
+        """GET /me/completeness without token (dev_mode=false) -> 401."""
         original = api_infra._settings.dev_mode
         api_infra._settings.dev_mode = False
         try:
-            resp = await client.get(BASE + "/me/onboarding-status")
+            resp = await client.get(BASE + "/me/completeness")
             assert resp.status_code == 401
         finally:
             api_infra._settings.dev_mode = original

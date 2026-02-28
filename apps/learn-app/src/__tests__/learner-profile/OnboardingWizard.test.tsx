@@ -4,10 +4,7 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import OnboardingWizard from "@/components/onboarding/OnboardingWizard";
 import { LearnerProfileProvider } from "@/contexts/LearnerProfileContext";
-import type {
-  OnboardingStatus,
-  ProfileResponse,
-} from "@/lib/learner-profile-types";
+import type { ProfileResponse } from "@/lib/learner-profile-types";
 
 const mockSession = { user: { id: "test-user" } };
 let currentSession: typeof mockSession | null = mockSession;
@@ -32,7 +29,6 @@ vi.mock("sonner", () => ({
 }));
 
 const mockGetMyProfileOrNull = vi.fn();
-const mockGetOnboardingStatus = vi.fn();
 const mockCreateProfile = vi.fn();
 const mockUpdateMyProfile = vi.fn();
 const mockUpdateSection = vi.fn();
@@ -41,7 +37,6 @@ const mockGetCompleteness = vi.fn();
 
 vi.mock("@/lib/learner-profile-api", () => ({
   getMyProfileOrNull: (...args: unknown[]) => mockGetMyProfileOrNull(...args),
-  getOnboardingStatus: (...args: unknown[]) => mockGetOnboardingStatus(...args),
   createProfile: (...args: unknown[]) => mockCreateProfile(...args),
   updateMyProfile: (...args: unknown[]) => mockUpdateMyProfile(...args),
   updateSection: (...args: unknown[]) => mockUpdateSection(...args),
@@ -123,27 +118,6 @@ function makeProfile(
   };
 }
 
-function makeStatus(
-  overrides: Partial<OnboardingStatus> = {},
-): OnboardingStatus {
-  return {
-    learner_id: "test-user",
-    sections_completed: {
-      goals: false,
-      expertise: false,
-      professional_context: false,
-      accessibility: false,
-      communication_preferences: false,
-      ai_enrichment: false,
-    },
-    overall_completed: false,
-    next_section: "goals",
-    onboarding_progress: 0,
-    profile_completeness: 0,
-    ...overrides,
-  };
-}
-
 function renderWizard() {
   return render(
     <LearnerProfileProvider>
@@ -213,9 +187,6 @@ describe("OnboardingWizard", () => {
     const user = userEvent.setup();
     const existing = makeProfile();
     mockGetMyProfileOrNull.mockResolvedValue(existing);
-    mockGetOnboardingStatus.mockResolvedValue(
-      makeStatus({ next_section: "goals" }),
-    );
     mockCompleteOnboardingPhase.mockResolvedValue(existing);
 
     renderWizard();
@@ -267,9 +238,6 @@ describe("OnboardingWizard", () => {
     const user = userEvent.setup();
     const existing = makeProfile();
     mockGetMyProfileOrNull.mockResolvedValue(existing);
-    mockGetOnboardingStatus.mockResolvedValue(
-      makeStatus({ next_section: "goals" }),
-    );
     mockCompleteOnboardingPhase.mockResolvedValue(existing);
 
     renderWizard();

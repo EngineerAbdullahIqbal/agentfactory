@@ -1,7 +1,7 @@
 """E2E: Onboarding journey flow.
 
 Tests the progressive onboarding experience:
-create → check initial status → complete phases → verify progress → verify completion.
+create → complete phases → verify progress via profile response → verify completion.
 """
 
 BASE = "/api/v1/profiles"
@@ -18,57 +18,48 @@ class TestOnboardingJourney:
             BASE + "/", json={"consent_given": True, "name": "Onboarding User"}
         )
         assert create_resp.status_code == 201
+        profile = create_resp.json()
 
-        # 2. Check initial onboarding status — all phases incomplete
-        status_resp = await client.get(BASE + "/me/onboarding-status")
-        assert status_resp.status_code == 200
-        status = status_resp.json()
-
-        assert status["overall_completed"] is False
-        assert status["onboarding_progress"] == 0.0
+        # 2. Check initial state — all phases incomplete
+        assert profile["onboarding_completed"] is False
+        assert profile["onboarding_progress"] == 0.0
         all_phases = [
             "goals", "expertise", "professional_context",
             "accessibility", "communication_preferences", "ai_enrichment",
         ]
         for phase in all_phases:
-            assert status["sections_completed"][phase] is False
-        assert status["next_section"] == "goals"  # First phase
+            assert profile["onboarding_sections_completed"][phase] is False
 
-        # 3. Complete goals phase — with data
+        # 3. Complete goals phase
         goals_resp = await client.patch(BASE + "/me/onboarding/goals")
         assert goals_resp.status_code == 200
+        profile = goals_resp.json()
 
         # 4. Check progress — 1/6 complete
-        status_resp = await client.get(BASE + "/me/onboarding-status")
-        status = status_resp.json()
-        assert status["sections_completed"]["goals"] is True
-        assert status["onboarding_progress"] == round(1 / 6, 2)
-        assert status["next_section"] == "expertise"
-        assert status["overall_completed"] is False
+        assert profile["onboarding_sections_completed"]["goals"] is True
+        assert profile["onboarding_progress"] == round(1 / 6, 2)
+        assert profile["onboarding_completed"] is False
 
         # 5. Complete expertise phase
         expertise_resp = await client.patch(BASE + "/me/onboarding/expertise")
         assert expertise_resp.status_code == 200
+        profile = expertise_resp.json()
 
         # 6. Check progress — 2/6 complete
-        status_resp = await client.get(BASE + "/me/onboarding-status")
-        status = status_resp.json()
-        assert status["onboarding_progress"] == round(2 / 6, 2)
-        assert status["next_section"] == "professional_context"
+        assert profile["onboarding_progress"] == round(2 / 6, 2)
 
         # 7. Complete remaining phases
         for phase in ["professional_context", "accessibility", "communication_preferences", "ai_enrichment"]:
             resp = await client.patch(BASE + f"/me/onboarding/{phase}")
             assert resp.status_code == 200
 
-        # 8. Verify fully complete
-        final_status = await client.get(BASE + "/me/onboarding-status")
-        final = final_status.json()
-        assert final["overall_completed"] is True
+        # 8. Verify fully complete via GET /me
+        final_resp = await client.get(BASE + "/me")
+        final = final_resp.json()
+        assert final["onboarding_completed"] is True
         assert final["onboarding_progress"] == 1.0
-        assert final["next_section"] is None
         for phase in all_phases:
-            assert final["sections_completed"][phase] is True
+            assert final["onboarding_sections_completed"][phase] is True
 
     async def test_onboarding_with_section_data(self, client):
         """Onboarding phases can carry section data that gets stored."""
@@ -166,9 +157,8 @@ class TestOnboardingJourney:
         assert second.status_code == 200
 
         # Still only 1/6 progress
-        status = await client.get(BASE + "/me/onboarding-status")
-        data = status.json()
-        assert data["onboarding_progress"] == round(1 / 6, 2)
+        profile = (await client.get(BASE + "/me")).json()
+        assert profile["onboarding_progress"] == round(1 / 6, 2)
 
     async def test_communication_preferences_phase(self, client):
         """communication_preferences phase stores communication + delivery data."""
@@ -202,10 +192,10 @@ class TestOnboardingJourney:
         assert profile["field_sources"]["communication.language_complexity"] == "user"
         assert profile["field_sources"]["delivery.include_code_samples"] == "user"
 
-        # Verify onboarding status shows communication_preferences complete
-        status_resp = await client.get(BASE + "/me/onboarding-status")
-        status = status_resp.json()
-        assert status["sections_completed"]["communication_preferences"] is True
+        # Verify profile shows communication_preferences complete
+        profile_resp = await client.get(BASE + "/me")
+        profile_data = profile_resp.json()
+        assert profile_data["onboarding_sections_completed"]["communication_preferences"] is True
 
     async def test_communication_preferences_without_data(self, client):
         """communication_preferences phase can be marked complete without data."""
@@ -214,9 +204,9 @@ class TestOnboardingJourney:
         resp = await client.patch(BASE + "/me/onboarding/communication_preferences")
         assert resp.status_code == 200
 
-        status_resp = await client.get(BASE + "/me/onboarding-status")
-        status = status_resp.json()
-        assert status["sections_completed"]["communication_preferences"] is True
+        profile_resp = await client.get(BASE + "/me")
+        profile_data = profile_resp.json()
+        assert profile_data["onboarding_sections_completed"]["communication_preferences"] is True
 
     async def test_field_sources_in_profile_response(self, client):
         """ProfileResponse includes field_sources dict."""

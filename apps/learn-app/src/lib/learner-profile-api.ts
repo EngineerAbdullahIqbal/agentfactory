@@ -3,7 +3,6 @@ import type {
   ProfileCreateRequest,
   ProfileUpdateRequest,
   ProfileResponse,
-  OnboardingStatus,
   CompletenessResponse,
   OnboardingPhase,
   ErrorResponse,
@@ -51,9 +50,7 @@ export async function createProfile(
   return handleResponse<ProfileResponse>(response);
 }
 
-export async function getMyProfile(
-  baseUrl: string,
-): Promise<ProfileResponse> {
+export async function getMyProfile(baseUrl: string): Promise<ProfileResponse> {
   const response = await fetch(`${baseUrl}/api/v1/profiles/me`, {
     headers: getAuthHeaders(),
   });
@@ -104,18 +101,6 @@ export async function updateSection(
   return handleResponse<ProfileResponse>(response);
 }
 
-export async function getOnboardingStatus(
-  baseUrl: string,
-): Promise<OnboardingStatus> {
-  const response = await fetch(
-    `${baseUrl}/api/v1/profiles/me/onboarding-status`,
-    {
-      headers: getAuthHeaders(),
-    },
-  );
-  return handleResponse<OnboardingStatus>(response);
-}
-
 export async function completeOnboardingPhase(
   baseUrl: string,
   phase: OnboardingPhase,
@@ -138,18 +123,13 @@ export async function completeOnboardingPhase(
 export async function getCompleteness(
   baseUrl: string,
 ): Promise<CompletenessResponse> {
-  const response = await fetch(
-    `${baseUrl}/api/v1/profiles/me/completeness`,
-    {
-      headers: getAuthHeaders(),
-    },
-  );
+  const response = await fetch(`${baseUrl}/api/v1/profiles/me/completeness`, {
+    headers: getAuthHeaders(),
+  });
   return handleResponse<CompletenessResponse>(response);
 }
 
-export async function deleteMyProfile(
-  baseUrl: string,
-): Promise<void> {
+export async function deleteMyProfile(baseUrl: string): Promise<void> {
   const response = await fetch(`${baseUrl}/api/v1/profiles/me`, {
     method: "DELETE",
     headers: getAuthHeaders(),
@@ -157,28 +137,18 @@ export async function deleteMyProfile(
   return handleResponse<void>(response);
 }
 
-export async function gdprEraseMyProfile(
-  baseUrl: string,
-): Promise<void> {
-  const response = await fetch(
-    `${baseUrl}/api/v1/profiles/me/gdpr-erase`,
-    {
-      method: "DELETE",
-      headers: getAuthHeaders(),
-    },
-  );
+export async function gdprEraseMyProfile(baseUrl: string): Promise<void> {
+  const response = await fetch(`${baseUrl}/api/v1/profiles/me/gdpr-erase`, {
+    method: "DELETE",
+    headers: getAuthHeaders(),
+  });
   return handleResponse<void>(response);
 }
 
-export async function syncFromPhm(
-  baseUrl: string,
-): Promise<ProfileResponse> {
-  const response = await fetch(
-    `${baseUrl}/api/v1/profiles/me/sync-from-phm`,
-    {
-      method: "POST",
-      headers: getAuthHeaders(),
-    },
-  );
+export async function syncFromPhm(baseUrl: string): Promise<ProfileResponse> {
+  const response = await fetch(`${baseUrl}/api/v1/profiles/me/sync-from-phm`, {
+    method: "POST",
+    headers: getAuthHeaders(),
+  });
   return handleResponse<ProfileResponse>(response);
 }

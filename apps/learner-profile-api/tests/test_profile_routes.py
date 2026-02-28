@@ -177,24 +177,19 @@ class TestProfileRoutes:
         assert detail["error"] == "not_found"
 
     # ------------------------------------------------------------------
-    # 10. New profile -> onboarding status all phases false
+    # 10. New profile -> onboarding sections all false in profile response
     # ------------------------------------------------------------------
-    async def test_onboarding_status_initially_incomplete(self, client):
-        await client.post(BASE + "/", json={"consent_given": True})
-
-        resp = await client.get(BASE + "/me/onboarding-status")
-        assert resp.status_code == 200
+    async def test_onboarding_initially_incomplete(self, client):
+        resp = await client.post(BASE + "/", json={"consent_given": True})
+        assert resp.status_code == 201
         data = resp.json()
 
-        assert data["overall_completed"] is False
-        # All five phases should be present and false
+        assert data["onboarding_completed"] is False
         phases = ["goals", "expertise", "professional_context", "accessibility", "ai_enrichment"]
         for phase in phases:
-            assert data["sections_completed"][phase] is False, (
+            assert data["onboarding_sections_completed"][phase] is False, (
                 f"Phase {phase} should initially be False"
             )
-        # next_section should be the first incomplete phase
-        assert data["next_section"] is not None
 
     # ------------------------------------------------------------------
     # 11. Mark all 6 onboarding phases -> overall_completed true
@@ -210,14 +205,14 @@ class TestProfileRoutes:
             resp = await client.patch(BASE + f"/me/onboarding/{phase}")
             assert resp.status_code == 200
 
-        # Verify via onboarding-status endpoint
-        status_resp = await client.get(BASE + "/me/onboarding-status")
-        assert status_resp.status_code == 200
-        status_data = status_resp.json()
+        # Verify via profile response
+        profile_resp = await client.get(BASE + "/me")
+        assert profile_resp.status_code == 200
+        profile_data = profile_resp.json()
 
-        assert status_data["overall_completed"] is True
+        assert profile_data["onboarding_completed"] is True
         for phase in phases:
-            assert status_data["sections_completed"][phase] is True
+            assert profile_data["onboarding_sections_completed"][phase] is True
 
     # ------------------------------------------------------------------
     # 12. GET /me/completeness -> has per_section and highest_impact_missing

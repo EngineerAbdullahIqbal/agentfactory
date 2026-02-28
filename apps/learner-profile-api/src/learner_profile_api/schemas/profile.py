@@ -215,15 +215,6 @@ class ProfileResponse(BaseModel):
     updated_at: datetime
 
 
-class OnboardingStatus(BaseModel):
-    learner_id: str
-    sections_completed: dict[str, bool]
-    overall_completed: bool
-    next_section: str | None
-    onboarding_progress: Annotated[float, Field(ge=0, le=1)] = 0.0
-    profile_completeness: Annotated[float, Field(ge=0, le=1)] = 0.0
-
-
 class CompletenessResponse(BaseModel):
     learner_id: str
     profile_completeness: float
