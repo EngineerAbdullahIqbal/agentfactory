@@ -49,7 +49,7 @@ cards:
     difficulty: "advanced"
     why: "Tests ability to apply timeline expectations to a concrete scenario and recognise critical path implications"
 
-  - id: "ch15-06-bioResearch-008"
+  - id: "ch15-06-bio-research-008"
     front: "What bio-research connectors are available in the Cowork marketplace, and what kinds of data do they provide?"
     back: "Bio-research connectors include PubMed (biomedical literature), ClinicalTrials.gov (clinical study data), ChEMBL (bioactivity and compound data), Benchling (lab notebook and experiment records), and BioRender (scientific figure and diagram libraries). These connectors give agents access to structured research data without requiring the knowledge worker to build custom integrations."
     tags: ["bio-research", "PubMed", "ClinicalTrials", "ChEMBL", "Benchling", "BioRender"]
