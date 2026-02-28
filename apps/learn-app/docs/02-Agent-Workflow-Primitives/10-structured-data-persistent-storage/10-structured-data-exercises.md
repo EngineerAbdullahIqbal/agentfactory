@@ -1,367 +1,615 @@
 ---
-title: "Structured Data Practice Exercises"
+title: "Practice: Structured Data Exercises"
 practice_exercise: ch10-structured-data
 sidebar_position: 10
 chapter: 10
-lesson: 9
-duration_minutes: 120
+lesson: 10
+duration_minutes: 180
+
+primary_layer: "Layer 1"
+layer_progression: "L1 (Manual Foundation)"
+layer_1_foundation: "Hands-on practice applying Lessons 1-8 database workflows through 12 guided exercises and 3 capstone projects"
+layer_2_collaboration: "N/A"
+layer_3_intelligence: "N/A"
+layer_4_capstone: "N/A"
+
 skills:
-  - name: "Director-Role Verification Discipline"
+  - name: "Database Workflow Execution"
     proficiency_level: "A2"
     category: "Applied"
     bloom_level: "Apply"
     digcomp_area: "Problem Solving"
-    measurable_at_this_level: "Student can direct an agent through a database build and collect verification output as evidence"
-  - name: "Operational Verification"
+    measurable_at_this_level: "Student applies data modeling, CRUD operations, relationship design, transaction safety, cloud deployment, and hybrid verification workflows to realistic database scenarios"
+
+  - name: "Database Operation Debugging"
+    proficiency_level: "A2"
+    category: "Technical"
+    bloom_level: "Analyze"
+    digcomp_area: "Problem Solving"
+    measurable_at_this_level: "Student diagnoses errors in model definitions, CRUD functions, relationship configurations, transaction logic, and connection settings by comparing expected vs actual behavior"
+
+  - name: "Database System Design"
     proficiency_level: "B1"
     category: "Applied"
-    bloom_level: "Evaluate"
-    digcomp_area: "Quality Assurance"
-    measurable_at_this_level: "Student can prove correctness with agent-generated evidence instead of assumptions"
+    bloom_level: "Create"
+    digcomp_area: "Digital Content Creation"
+    measurable_at_this_level: "Student designs and executes a complete database application from schema design through cloud deployment and verification"
+
 learning_objectives:
-  - objective: "Direct an agent through schema, CRUD, and relationship builds and verify each with output evidence"
+  - objective: "Apply all six database development workflows to realistic scenarios with proper verification"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student collects evidence artifacts from agent-generated outputs, not from code they wrote"
-  - objective: "Produce evidence-based proof of correctness"
+    assessment_method: "Successful completion of Build exercises across 6 modules"
+  - objective: "Diagnose errors in model definitions, CRUD operations, relationship configurations, and transaction logic"
+    proficiency_level: "A2"
+    bloom_level: "Analyze"
+    assessment_method: "Accurate identification of all planted bugs in Debug exercises"
+  - objective: "Design and execute a complete database application combining all chapter workflows from schema to deployment"
     proficiency_level: "B1"
-    bloom_level: "Evaluate"
-    assessment_method: "Student submits EVIDENCE.md with pass/fail results, each backed by output the agent generated"
+    bloom_level: "Create"
+    assessment_method: "Capstone project completion with working application and verified results"
+
 cognitive_load:
-  new_concepts: 0
-  assessment: "No new concepts — exercises apply and integrate previously learned material"
+  new_concepts: 3
+  assessment: "3 concepts (workflow application, systematic debugging, full-stack database design) — within A2 limit. Exercises reinforce existing L01-L08 knowledge."
+
 differentiation:
-  extension_for_advanced: "Complete all Challenge track exercises. Design a new Challenge D exercise and share with classmates."
-  remedial_for_struggling: "Complete Core 1 and Core 2 only. Focus on producing clear evidence artifacts rather than rushing through all four exercises."
+  extension_for_advanced: "Complete all 3 capstone projects; attempt exercises with minimal prompts; optimize query performance"
+  remedial_for_struggling: "Start with Module 1 only; use the starter prompts provided; focus on Build exercises before Debug"
+
 teaching_guide:
   lesson_type: "hands-on"
-  session_group: 3
-  session_title: "Cloud Deployment and Verification"
+  session_group: 4
+  session_title: "Practice Exercises"
   key_points:
-    - "The mantra is 'claim nothing, prove everything' — evidence artifacts (DECISIONS.md, EVIDENCE.md) replace verbal claims"
-    - "Core exercises map 1:1 to chapter lessons: model integrity (L3), CRUD reliability (L4), relationship debug (L5), transaction+Neon (L6+L7)"
-    - "Getting stuck for 10+ minutes is the signal to move on and return later — later exercises often illuminate earlier blockers"
-    - "Incomplete evidence for a finished exercise teaches nothing; complete evidence for half the exercises teaches the discipline that matters"
+    - "Build + Debug pairing develops two distinct skills: applying database workflows correctly (Build) vs diagnosing what went wrong in someone else's code (Debug)"
+    - "The six-step Database Development Framework (Model, Connect, Operate, Protect, Verify, Deploy) is the transferable takeaway that applies to any data-driven application"
+    - "Scaffolding is deliberately removed across modules: Modules 1-3 have starter prompts, Modules 4-6 remove them, Capstones remove all guidance"
+    - "Capstone C (Disaster Recovery) combines debugging across all layers — model, CRUD, relationships, and transactions — making it the most demanding exercise"
   misconceptions:
-    - "Students think exercises are optional review — they are where the director role becomes instinct, not just understanding"
-    - "Students rush through all exercises with minimal evidence rather than producing thorough evidence for fewer exercises"
-    - "Students think 'it runs without errors' is sufficient evidence — quality gates require failure-path proof and explicit output artifacts"
-    - "Students write the code themselves instead of directing the agent — if a student is editing Python, they have left the director role"
+    - "Students think Debug exercises are easier than Build — diagnosing someone else's bugs requires deeper understanding than writing fresh code yourself"
+    - "Students may skip running tests after each fix because it 'looks correct' — the starter files deliberately include cascading bugs where fixing one reveals another"
+    - "Students underestimate Capstone B (CSV Migration) because 'it is just importing data' — normalization decisions and data quality issues make it genuinely challenging"
   discussion_prompts:
-    - "Which of the four Core exercises felt hardest? What does that tell you about which chapter concept needs another pass?"
-    - "Could someone who was not in the room verify your work from EVIDENCE.md alone? What would they need that is missing?"
+    - "In Module 1, how did the Debug exercise (fixing broken models) teach you something different from the Build exercise (designing models from scratch)?"
+    - "The assessment rubric goes from Beginner to Advanced. Where do you honestly place yourself after completing the exercises? What would move you up one level?"
+    - "Which module's Debug exercise had the hardest bug to find? What made it difficult — the error message, the cascading effects, or something else?"
   teaching_tips:
-    - "Set a visible timer for each exercise — timeboxing prevents students from spending 90 minutes on Core 1 and rushing the rest"
-    - "Have students swap EVIDENCE.md files and review each other's proof — peer review builds the 'would another engineer accept this?' instinct"
-    - "Core 3 (relationship debug) is the hardest for most students — consider pairing struggling students for this exercise"
-    - "The self-assessment scoring (0-2 per criterion) is a powerful self-reflection tool — have students score honestly and identify their weakest area"
+    - "Assign Module 1 as homework before the exercises workshop — students arrive ready to work on Modules 2-6 with debugging skills already practiced"
+    - "For classroom settings, pair students on Debug exercises: one reads the error message, the other proposes the fix. This builds diagnostic communication skills"
+    - "The assessment rubric works well as a self-evaluation tool — have students rate themselves before and after completing the exercises to see growth"
+    - "Do not skip Module 4 (Transactions) — students who skip atomicity exercises consistently struggle with data integrity in later chapters"
   assessment_quick_check:
-    - "What three artifacts must every exercise submission include?"
-    - "What does the quality gate in Core 1 reject and why?"
-    - "What is the difference between completing all exercises poorly and completing two exercises with thorough evidence?"
+    - "Ask students to recite the six-step Database Development Framework from memory — it is the chapter's core deliverable"
+    - "Present a new scenario (e.g., 'build an inventory tracker for a bookstore') and ask students which modules' skills they would apply and in what order"
+    - "Ask: 'What is the difference between a Build exercise and a Debug exercise? Which one was harder for you, and why?'"
 ---
 
-# Structured Data Practice Exercises
+import ExerciseCard from '@site/src/components/ExerciseCard';
 
-In the capstone you directed an agent through a complete budget tracker build. Now you apply those director skills under pressure, independently and with a timer running. The agent still writes the code. You still direct, describe, and verify.
+# Practice: Structured Data Exercises
 
-Getting stuck is not failure. Quitting is. These exercises are **meant** to be challenging. If everything felt easy, you would not be learning anything new. The moments where you stare at an error message and think "I have no idea what went wrong" are the moments where real understanding forms.
+You've built a complete database skill from the ground up. You can design SQLAlchemy models, run CRUD operations, navigate relationships with joins, protect data with transactions, connect to cloud PostgreSQL on Neon, and verify results with hybrid bash-plus-SQL patterns. That's real capability — but knowing the workflows and executing them under pressure are different things. The gap between understanding a database concept and applying it to a broken model with cascading bugs, missing constraints, and silent data corruption is where most people stall.
 
-If you are stuck for more than 10 minutes on one part, move on and come back. Sometimes the later exercises give you a new perspective on the earlier ones.
+These 15 exercises close the gap between understanding and fluency. Each module gives you two exercises: a **Build** exercise where you create something from scratch, and a **Debug** exercise where you diagnose what went wrong in someone else's code. Three skills run through every exercise: **database workflow execution** (applying modeling, CRUD, relationship, transaction, deployment, and verification workflows), **systematic debugging** (diagnosing errors by running tests, reading tracebacks, and comparing expected vs actual behavior), and **database system design** (combining workflows into complete applications).
 
-You might be thinking: "I don't know where to start." That is fine. The hints are there. Use them.
+Every exercise uses real starter files — actual Python models, broken code with planted bugs, CSV datasets, and test suites you'll run to verify your fixes. This isn't hypothetical. By the end, you'll have practiced every database workflow on realistic, messy scenarios.
 
-One rule above all others:
+:::info Download Exercise Files
+**[Download Structured Data Exercises (ZIP)](https://github.com/panaversity/claude-code-structured-data-exercises/releases/latest/download/structured-data-exercises.zip)**
 
-- **Claim nothing. Prove everything.**
+After downloading, unzip the file. Each exercise has its own folder with an `INSTRUCTIONS.md` and any starter files you need.
 
-## How to Use
+If the download link doesn't work, visit the [repository releases page](https://github.com/panaversity/claude-code-structured-data-exercises/releases) directly.
+:::
 
-1. Read the exercise brief.
-2. Describe the requirement to your agent and direct it to build or fix.
-3. Collect evidence artifacts from the agent's output.
-4. Write a short postmortem.
+---
 
-## Evidence Format (Use Across All Exercises)
+## How to Use These Exercises
 
-For each exercise, submit:
+The workflow for every exercise is the same:
 
-- `DECISIONS.md`: what you changed and why
-- `EVIDENCE.md`: commands run, outputs, and pass/fail summary
-- one explicit "known risk" note after completion
+1. **Open the exercise folder** from the `claude-code-structured-data-exercises/` directory
+2. **Read the INSTRUCTIONS.md** inside the folder — it describes the scenario and starter files
+3. **Read the walkthrough below** for context on what you're practicing and why
+4. **Start Claude Code** and point it at the exercise folder
+5. **Work through the exercise** — write your own prompts (use starters only if stuck)
+6. **Reflect** using the questions provided — this is where the real learning happens
 
-This keeps your practice aligned with capstone release discipline.
+You don't need to complete all 15 in one sitting. Work through one session at a time. Each session builds on the workflows from specific chapter lessons.
 
-Timebox suggestion:
+---
 
-- Core 1: 25 minutes
-- Core 2: 30 minutes
-- Core 3: 30 minutes
-- Core 4: 35 minutes
+## Tool Guide
 
-If you run out of time, finish evidence for completed work instead of starting a new unfinished exercise. Incomplete evidence for a finished exercise teaches you nothing. Complete evidence for half the exercises teaches you the discipline that matters in production.
+- **Claude Code** — Required for all exercises. Database work involves running Python scripts, executing SQL queries, reading test output, and diagnosing tracebacks. Claude Code handles all of this directly in the terminal.
+- **Cowork** — Can be used for Exercise 6.2 (analyzing tool-choice scenarios) and capstone planning where you're designing systems on paper before executing. But Claude Code is strongly preferred since every exercise involves running real code and tests.
 
-## Core Track (Mandatory)
+---
 
-Complete all four exercises below.
+## Key Differences from Chapter Lessons
 
-> **Glossary for Core Track**
->
-> | Term                | Meaning                                                                                            |
-> | ------------------- | -------------------------------------------------------------------------------------------------- |
-> | **Schema contract** | The rules you described to your agent: required fields, unique fields, references, exact decimals  |
-> | **CRUD**            | Create, Read, Update, Delete: the four basic operations every database application needs           |
-> | **Rollback proof**  | Evidence that a failed operation left zero partial writes — proven by reading the row count output |
-> | **N+1 query**       | A performance problem where the agent's code makes one database call per row instead of one total  |
+In Lessons 1-8, you learned each database workflow in isolation with guided walkthroughs. These exercises are different in three ways:
 
-<ExerciseCard id="C1" title="Model Integrity Build" />
+- **No step-by-step instructions.** The exercises describe the scenario and the goal. You decide the approach, choose the queries, and handle edge cases yourself.
+- **Build + Debug pairing.** Every module has a Build exercise (create something from scratch) and a Debug exercise (diagnose someone else's broken code). Debugging someone else's work develops different skills than building your own — you learn to read tracebacks, run tests strategically, and trace root causes through model definitions, session management, and relationship configurations.
+- **Increasing independence.** Modules 1-3 provide starter prompts to scaffold your learning. Modules 4-6 remove the scaffolding. Capstones remove everything — you design the entire approach.
 
-### Core 1 - Model Integrity Build
+By Module 6, you should be able to face a new database problem and instinctively reach for the right workflow without needing to review the chapter lessons.
 
-**Goal:** Describe a domain schema to your agent and verify the agent-built schema matches your requirements.
+---
 
-Pick a domain you find interesting: a recipe tracker, a reading list, a workout log, a pet adoption registry. The specific domain does not matter. What matters is that you describe real relationships between real entities with real constraints clearly enough that your agent builds exactly what you intended.
+## The Database Development Framework
 
-Deliverables:
+Use this for every exercise:
 
-- your plain-English description of the schema (what you told the agent)
-- `MODEL-VERIFICATION.md` with 3 verification checks and their outputs
+1. **Model** — Design your schema: tables, columns, types, constraints, relationships
+2. **Connect** — Establish a database connection (SQLite for dev, PostgreSQL for production)
+3. **Operate** — Implement CRUD operations with proper session management
+4. **Protect** — Wrap multi-step operations in transactions with rollback on failure
+5. **Verify** — Run tests, check outputs, compare expected vs actual results
+6. **Deploy** — Move from local SQLite to cloud PostgreSQL with environment-based configuration
 
-Minimum evidence:
+This framework applies to every data-driven application, not just these exercises. Whether you're building a budget tracker, migrating legacy CSV data, or deploying a student portal to the cloud, these six steps prevent the mistakes that turn a working prototype into a corrupted database. Notice that steps 1-2 happen before any data changes. That's intentional — most database disasters come from skipping schema design and jumping straight to writing queries.
 
-- schema verification output showing all tables and constraints created
-- one invalid insert attempt output proving the constraint was enforced
-- one explanation of why the agent chose exact decimal storage for money
+---
 
-Quality gate:
+## Assessment Rubric
 
-- reject any schema that stores money amounts as approximate values
-- reject any schema that represents links between entities through free-text names instead of enforced references
+For each exercise, evaluate yourself on:
 
-<details>
-<summary>Hint: Where to start</summary>
+| Criteria | Beginner (1) | Developing (2) | Proficient (3) | Advanced (4) |
+| --- | :-: | :-: | :-: | :-: |
+| **Schema Quality** | Missing constraints | Basic types, some constraints | Full constraints with foreign keys | Indexes, validation, edge-case handling |
+| **Operation Safety** | No error handling | Basic try/except | Proper session lifecycle and rollback | Atomic transactions with savepoints |
+| **Query Correctness** | Raw SQL strings | Basic ORM queries | Joins and relationship navigation | Optimized queries, N+1 prevention |
+| **Problem Diagnosis** | Guesses at bugs | Identifies obvious errors | Traces root cause systematically | Identifies root cause AND prevents recurrence |
+| **Verification Discipline** | No testing | Runs tests once | Tests after each change | Tests + edge cases + failure paths |
 
-Start by listing the entities in your chosen domain in plain English. What are the "things"? What connects them? For a recipe tracker: "A Recipe has a name and serves a number of people. An Ingredient has a name and unit. A RecipeIngredient links a Recipe to an Ingredient with a quantity — a recipe can have many ingredients, and an ingredient can appear in many recipes." Once you have this written out, tell the agent: "Build a database schema from this description. Every ingredient reference must point to a real ingredient. Tell me what constraints you applied and why."
+---
 
-</details>
+:::note[Session 1: Data Foundations]
 
-<ExerciseCard id="C2" title="CRUD Reliability Build" />
+Modules 1-2 cover the skills from the Models as Code and Creating & Reading Data lessons. You'll design schemas from business requirements, fix broken model definitions, implement CRUD operations, and debug session management issues. Starter prompts are provided for both modules.
 
-### Core 2 - CRUD Reliability Build
+:::
 
-**Goal:** Direct your agent to build create/read/update/delete for your domain and verify rollback works on failure.
+## Module 1: Data Modeling
 
-This is the exercise where the director discipline becomes real. You describe what you need. The agent builds it. You run the verification commands and collect the output as evidence. When the rollback test output shows zero partial rows after a failure, you will feel it click.
+> **Core Skill:** Translating business requirements into SQLAlchemy models with proper types, constraints, and relationships (Lesson 2: Models as Code)
 
-Deliverables:
+<ExerciseCard id="1.1" title="Exercise 1.1 — Library Catalog" />
 
-- your plain-English directions to the agent (what you asked it to build)
-- `CRUD-EVIDENCE.md` with before/after row-count snapshots
+### Exercise 1.1 — Library Catalog (Build)
 
-Minimum evidence:
+**The Problem:**
+Open the `module-1-data-modeling/exercise-1.1-library-catalog/` folder. You'll find `requirements.md` — a business requirements document describing a library's catalog system. The library tracks books, authors, and genres. Books have ISBNs, titles, publication years, and page counts. Authors have names and birth years. A book can belong to multiple genres, and an author can write multiple books. The requirements include sample data and specific constraints: ISBNs must be unique, titles cannot be null, and page counts must be positive.
 
-- one successful write output (row stored and read back)
-- one failed write output with rollback proof (row count unchanged)
-- one query output proving no accidental duplicate rows
+**Your Task:**
+Read `requirements.md` and create a `models.py` file with SQLAlchemy ORM models for Book, Author, and Genre. Choose appropriate column types, add constraints, define foreign keys, and handle the many-to-many relationship between books and genres. Test with an in-memory SQLite database. Verify edge cases: What happens with a duplicate ISBN? A null title? A negative page count?
 
-Quality gate:
+**What You'll Learn:**
 
-- reject any evidence that only shows the happy path
-- reject any evidence that relies on the return message instead of querying the database state
+- How to translate business requirements into database schema decisions (which columns, which types, which constraints)
+- That choosing the right column type matters: storing ISBNs as integers loses leading zeros, storing page counts without a check constraint allows negative values
+- The difference between designing models on paper and testing them against real data — edge cases reveal gaps in your schema
 
-<details>
-<summary>Hint: Where to start</summary>
+**Starter Prompt (Intentionally Vague):**
 
-Tell the agent: "For my [domain] database, build four operations: store a new [entity], read all [entities], update a [entity]'s [field], and delete a [entity]. After each operation, show me the current row count. Then try to store a [entity] with an invalid [field] and prove zero rows were added." The agent builds all of this. Your job is to run the commands it gives you, read the output, and capture the results in your evidence file.
+> "Build a database for a library catalog."
 
-</details>
+**Better Prompt (Build Toward This):**
 
-<ExerciseCard id="C3" title="Relationship Query Debug" />
+After reading `requirements.md`: "Create SQLAlchemy models for a library catalog with Book, Author, and Genre. Requirements: (1) ISBN must be unique and non-null, (2) book titles cannot be null, (3) page counts must be positive integers, (4) books and genres have a many-to-many relationship through an association table, (5) authors can write multiple books. Test with in-memory SQLite. Try inserting a duplicate ISBN and a null title to verify constraints work."
 
-### Core 3 - Relationship Query Debug
+**Reflection Questions:**
 
-**Goal:** Describe broken relationship symptoms to your agent, direct it to diagnose and fix, then verify the corrected query output.
+1. Which constraint was hardest to implement correctly? Did you discover it during design or during testing?
+2. How did you handle the many-to-many relationship between books and genres? What would break if you used a simple foreign key instead?
+3. If the library adds a "co-author" requirement tomorrow (two authors per book), which parts of your schema would need to change?
 
-This exercise is different from the others. You are not starting fresh. The agent built a relationship query that is not working correctly. Your job is to describe what is failing, direct the agent to find the cause, review the fix, and prove it works. Diagnosing relationship problems by reading error output and directing a fix is one of the most common real-world tasks.
+---
 
-Deliverables:
+<ExerciseCard id="1.2" title="Exercise 1.2 — Broken Pet Store" />
 
-- your symptom description (what you told the agent was wrong)
-- `RELATIONSHIP-TRACE.md` with the before-state error, the fix direction, and the after-state proof
+### Exercise 1.2 — Broken Pet Store (Debug)
 
-Minimum evidence:
+**The Problem:**
+Open the `module-1-data-modeling/exercise-1.2-broken-pet-store/` folder. You'll find `broken_models.py` — model definitions for a pet store system with Owner, Pet, and Vet models — and `test_models.py` — a test suite that currently fails. The models have 6 bugs: an import error, a wrong attribute name, a wrong column type, a missing foreign key reference, a missing unique constraint, and a missing nullability setting.
 
-- output showing navigation works in both directions (parent to child AND child to parent)
-- one joined query output returning expected rows
-- one output showing the agent identified and resolved an N+1 risk
+**Your Task:**
+Run the tests. Read the failure messages. Fix the bugs one at a time, re-running tests after each fix. Document each bug: what the test expected, what the model had wrong, and what you changed. The goal isn't just passing tests — it's understanding WHY each bug caused the specific failure it did.
 
-Quality gate:
+**What You'll Learn:**
 
-- reject evidence that only tests one direction of the relationship
-- reject evidence that does not show both the broken state and the fixed state
+- How to read SQLAlchemy error messages and map them back to specific model definition problems
+- That model bugs cascade: a wrong column type causes one test failure, but a missing foreign key reference can cause multiple tests to fail for different reasons
+- The discipline of fixing one bug at a time and re-testing — fixing multiple bugs at once makes it impossible to know which fix resolved which failure
 
-<details>
-<summary>Hint: Where to start</summary>
+**Starter Prompt (Intentionally Vague):**
 
-Start by running the existing query and reading the error output. Then tell the agent: "This relationship query is failing. Here is the error: [paste output]. The expected behavior is: when I ask for a [parent]'s [children], I should get [expected result]. Diagnose what is wrong and fix it." Then verify both directions: ask the agent to show [parent]'s [children] AND [child]'s [parent] in the output. If the numbers look right but the query makes many database calls instead of one, tell the agent: "This is an N+1 problem — rewrite it to use a single joined query."
+> "Fix the models so the tests pass."
 
-</details>
+**Better Prompt (Build Toward This):**
 
-<ExerciseCard id="C4" title="Transaction + Neon Ops Drill" />
+After running the tests and seeing failures: "Run `test_models.py` and show me all failures. For the first failure, trace the error to the specific line in `broken_models.py`. Fix only that one bug, then re-run the tests. Repeat for each remaining failure. After all tests pass, list every bug you fixed with: (1) the test that caught it, (2) the broken code, (3) the fix, (4) why the original code was wrong."
 
-### Core 4 - Transaction + Neon Ops Drill
+**Reflection Questions:**
 
-**Goal:** Direct your agent to build an atomic multi-step operation and a Neon cloud connection, then verify both with output evidence.
+1. Which bug was hardest to find from the error message alone? Did the traceback point directly to the problem, or did you have to reason about it?
+2. Did fixing one bug reveal another that was previously hidden? Why does this happen with model definitions?
+3. If you had written these models yourself, which of the 6 bugs would you be most likely to make? How would you catch it?
 
-This is the closest exercise to production work. You are combining two verification requirements: the agent's transfer operation must leave zero partial writes on failure, AND the agent's Neon connection must pass a health check. When both outputs are in your evidence file, you have completed the full Chapter 10 skill chain.
+---
 
-Deliverables:
+## Module 2: CRUD Operations
 
-- your plain-English directions for the atomic operation and cloud connection
-- `OPS-EVIDENCE.md` with three verified outputs
+> **Core Skill:** Implementing create, search, import, and aggregate operations with proper session management (Lesson 3: Creating & Reading Data)
 
-Minimum evidence:
+<ExerciseCard id="2.1" title="Exercise 2.1 — Recipe Book" />
 
-- forced failure output showing zero partial writes (row count unchanged before and after)
-- Neon health check output (`SELECT 1` confirmed)
-- pool configuration captured and justified (why those settings for your tier)
+### Exercise 2.1 — Recipe Book (Build)
 
-Quality gate:
+**The Problem:**
+Open the `module-2-crud-operations/exercise-2.1-recipe-book/` folder. You'll find `models.py` — a correct Recipe model already defined — and `recipes.csv` — a dataset of 55 recipes with names, cuisines, prep times, difficulty levels, and ingredient counts. You need to build four CRUD functions: create a recipe, search with dynamic filters (by cuisine, difficulty, max prep time), import all 55 recipes from CSV, and compute aggregate statistics (average prep time per cuisine, most common difficulty level).
 
-- reject evidence without the rollback drill output showing pre/post row counts
-- reject any configuration that puts credentials inside the code instead of a `.env` file
+**Your Task:**
+Implement all four functions using the provided model. The search function must handle any combination of filters — cuisine only, difficulty only, cuisine plus max prep time, or all three together. The CSV import must handle the full 55-row file without duplicates. The stats function must return meaningful aggregations. Test each function and verify the outputs.
 
-<details>
-<summary>Hint: Where to start</summary>
+**What You'll Learn:**
 
-Start with the cloud connection. Tell the agent: "Connect to my Neon database using the DATABASE_URL from my .env file. Run a SELECT 1 health check and show me the output." Once that passes, tell the agent: "Now build an atomic transfer between two [entities] in my domain. Show me a successful transfer output, then force a failure and prove zero partial rows were written." Small steps, each verified before moving to the next. The connection health check first. Then rollback proof. Then collect both outputs in your evidence file.
+- How to build dynamic query filters that compose — adding `.filter()` calls conditionally based on which parameters are provided
+- That CSV import is never as simple as "read and insert" — you need to handle type conversions, missing values, and duplicate detection
+- The difference between returning a Query object and returning actual results — a subtle bug that causes "no results" when there should be data
 
-</details>
+**Starter Prompt (Intentionally Vague):**
 
-## Challenge Track (Optional)
+> "Build CRUD operations for the recipe database."
 
-These exercises go beyond the chapter baseline. They simulate real production scenarios where the answer is not obvious and the stakes are higher.
+**Better Prompt (Build Toward This):**
 
-Choose one or more.
+After reviewing `models.py` and `recipes.csv`: "Implement four functions for the recipe database: (1) `create_recipe(session, name, cuisine, prep_time, difficulty, ingredients)` that adds a recipe and returns it, (2) `search_recipes(session, cuisine=None, difficulty=None, max_prep_time=None)` that filters dynamically based on which parameters are provided, (3) `import_csv(session, filepath)` that loads all 55 recipes from CSV with duplicate prevention, (4) `get_stats(session)` that returns average prep time per cuisine and the most common difficulty. Test each function and show outputs."
 
-> **Glossary for Challenge Track**
->
-> | Term                         | Meaning                                                                                   |
-> | ---------------------------- | ----------------------------------------------------------------------------------------- |
-> | **Verification gate**        | A check that must pass before code ships: if the numbers disagree, the release is blocked |
-> | **CSV migration**            | Moving data from flat CSV files into a normalized relational schema without losing rows   |
-> | **Incident recovery**        | Diagnosing a broken production state, fixing it safely, and proving nothing else broke    |
-> | **Row-count reconciliation** | Confirming that every row in the source data appears in the destination after migration   |
-> | **Regression proof**         | Evidence that your fix did not break something that was previously working                |
+**Reflection Questions:**
 
-<ExerciseCard id="A" title="High-Stakes Verification Gate" />
+1. How did you handle the dynamic filter composition in the search function? What happens if no filters are provided — should it return all recipes or none?
+2. What edge cases did you encounter during CSV import? Were there any rows that needed special handling?
+3. How did you compute the aggregate statistics? Did you use Python-side grouping or SQL GROUP BY? What's the tradeoff?
 
-### Challenge A - High-Stakes Verification Gate
+---
 
-Build SQL summary + independent raw-ledger verification.
+<ExerciseCard id="2.2" title="Exercise 2.2 — Broken Task Manager" />
 
-Evidence:
+### Exercise 2.2 — Broken Task Manager (Debug)
 
-- `mismatch-policy-result.json`
-- clear release block decision when mismatch exceeds tolerance
-- mismatch triage notes
+**The Problem:**
+Open the `module-2-crud-operations/exercise-2.2-broken-task-manager/` folder. You'll find `broken_crud.py` — CRUD functions for a task manager with 5 bugs — `models.py` — correct model definitions — and `test_crud.py` — a test suite that catches all 5 bugs. The bugs are: a missing commit after insert, a wrong filter operator (`=` instead of `==`), a session lifecycle issue, missing error handling on invalid input, and a function that returns a Query object instead of results.
 
-Use this challenge if your target role includes finance, compliance, or audit-sensitive workflows.
+**Your Task:**
+Run the tests. Read each failure carefully. Fix bugs one at a time, re-testing after each fix. The bugs are in the CRUD functions, not the models — the models are correct. Pay attention to session management: when sessions are opened, committed, and closed matters.
 
-<ExerciseCard id="B" title="Legacy CSV Migration" />
+**What You'll Learn:**
 
-### Challenge B - Legacy CSV Migration
+- That the five most common CRUD bugs (missing commit, wrong operator, session leak, no error handling, Query vs results) appear in nearly every beginner's database code
+- How to distinguish a model bug from a CRUD bug — both can cause "no data returned," but the fix is completely different
+- That returning a Query object instead of `.all()` results is a silent failure: it looks like it works but returns nothing useful
 
-Normalize a messy multi-file dataset into relational schema.
+**Starter Prompt (Intentionally Vague):**
 
-Evidence:
+> "The task manager CRUD functions are broken. Fix them."
 
-- row-count reconciliation
-- key-field parity checks
-- explicit list of non-lossy transformations
+**Better Prompt (Build Toward This):**
 
-<ExerciseCard id="C" title="Recovery Under Incident" />
+After running the tests: "Run `test_crud.py` against `broken_crud.py` (models from `models.py` are correct — don't modify them). Show me all test failures. For each failure: (1) which test failed, (2) what the test expected, (3) what actually happened, (4) the root cause in `broken_crud.py`, (5) the fix. Fix one bug at a time and re-run tests after each fix. Pay special attention to session commits, filter operators, and return types."
 
-### Challenge C - Recovery Under Incident
+**Reflection Questions:**
 
-Given a broken budget app state, prioritize fixes and recover safely.
+1. Which bug caused the most confusing error message? Did the traceback point to the CRUD function or to the test that called it?
+2. The "Query object instead of results" bug is especially tricky because the code runs without errors. How would you catch this bug if there were no tests?
+3. After seeing these 5 common bugs, which ones do you think you'd make most often in your own code? What habit would prevent each one?
 
-Evidence:
+---
 
-- prioritized fix log
-- regression proof after recovery
-- short incident postmortem with prevention actions
+:::note[Session 2: Data Architecture]
 
-Use this challenge if your target role includes operations ownership or on-call responsibilities.
+Modules 3-4 cover the skills from the Relationships & Joins and Transactions & Atomicity lessons. You'll add relationships to existing models, debug cascade and back-reference issues, implement atomic transactions, and fix race conditions in banking operations. Starter prompts are provided for Module 3 only.
 
-## Outcome Mapping
+:::
 
-| Outcome                  | Core track coverage | Challenge extension |
-| ------------------------ | ------------------- | ------------------- |
-| Model correctness        | Core 1              | Challenge B         |
-| Safe CRUD                | Core 2              | Challenge C         |
-| Relationship correctness | Core 3              | Challenge B         |
-| Transaction safety       | Core 4              | Challenge C         |
-| Neon reliability         | Core 4              | Challenge C         |
-| Hybrid judgment          | —                   | Challenge A         |
+## Module 3: Relationships
 
-If you complete all Core exercises with clear evidence, you meet Chapter 10 baseline mastery. Challenge track pushes you toward production-level judgment.
+> **Core Skill:** Defining bidirectional relationships with proper cascades and navigation (Lesson 4: Relationships & Joins)
 
-## Suggested Scoring for Self-Assessment
+<ExerciseCard id="3.1" title="Exercise 3.1 — Music Library" />
 
-Use a 0-2 scale for each criterion per exercise:
+### Exercise 3.1 — Music Library (Build)
 
-- `Model correctness`
-- `Write safety`
-- `Query correctness`
-- `Failure-path evidence`
-- `Operational clarity`
+**The Problem:**
+Open the `module-3-relationships/exercise-3.1-music-library/` folder. You'll find `models_no_relationships.py` — Artist, Album, and Track models that have foreign keys defined but NO relationship() definitions — and `sample_data.csv` with 10 artists, 30 albums, and 100+ tracks. The foreign keys exist (Album has `artist_id`, Track has `album_id`), but without `relationship()` definitions you can't navigate from an artist to their albums or from an album to its tracks using Python attributes.
 
-Interpretation:
+**Your Task:**
+Add `relationship()` definitions to all three models with proper `back_populates` for bidirectional navigation. Configure cascade delete so removing an artist also removes their albums and tracks. Load the sample data, then write queries that navigate the relationships: all albums by a specific artist, all tracks on a specific album, which artist a track belongs to (navigating child-to-parent). Test cascade delete by removing one artist and verifying their albums and tracks are also gone.
 
-- `8-10`: ready for capstone-level work
-- `6-7`: repeat one core exercise with stricter evidence
-- `<6`: revisit lesson material before continuing
+**What You'll Learn:**
 
-A score below 6 is not a verdict on you. It means the material needs another pass. Go back to the lesson that covers your weakest criterion, re-read the key section, then try the exercise again with that specific gap in mind.
+- The difference between having foreign keys (database-level links) and having relationships (Python-level navigation) — foreign keys alone won't let you write `artist.albums`
+- How `back_populates` creates bidirectional navigation and why mismatched names cause silent failures
+- That cascade delete is powerful but dangerous: deleting an artist removes all their albums and every track on those albums — you must understand the cascade chain before enabling it
 
-## Try With AI
+**Starter Prompt (Intentionally Vague):**
 
-**Setup:** Open Claude Code, Cursor, or Windsurf in a project directory with your exercise files.
+> "Add relationships to these music library models."
 
-**Prompt 1: Evidence Review**
+**Better Prompt (Build Toward This):**
 
-```
-Here is my EVIDENCE.md for the CRUD exercise:
+After reading `models_no_relationships.py` and the sample CSV: "Add `relationship()` definitions to Artist, Album, and Track models. Requirements: (1) Artist.albums and Album.artist for bidirectional navigation, (2) Album.tracks and Track.album for bidirectional navigation, (3) cascade='all, delete-orphan' on parent-to-child relationships, (4) back_populates on both sides. Load sample_data.csv, then demonstrate: all albums by artist 'X', all tracks on album 'Y', navigating from a track back to its artist. Finally, delete one artist and verify cascade removed their albums and tracks."
 
-[paste your EVIDENCE.md]
+**Reflection Questions:**
 
-Review this evidence file. For each claim I make:
-1. Is the evidence sufficient to prove the claim?
-2. What additional evidence would make the proof stronger?
-3. Are there any claims I made without supporting output?
+1. What happens if you set `back_populates` on one side but not the other? Did you discover this through an error or through testing?
+2. How many total records were deleted when you cascaded a single artist deletion? Was this more or fewer than you expected?
+3. If the music library later needs a "featured_tracks" relationship (tracks can be featured on multiple albums), how would you modify the schema?
 
-Be strict. In production, reviewers will be stricter than you.
-```
+---
 
-**What you're learning:** You are building the skill of self-auditing. Production teams reject pull requests with claims like "this works" and no proof. By having AI critique your evidence, you learn what "sufficient proof" actually looks like, and you carry that standard into every future exercise.
+<ExerciseCard id="3.2" title="Exercise 3.2 — Broken Blog" />
 
-**Prompt 2: Failure Scenario Generation**
+### Exercise 3.2 — Broken Blog (Debug)
 
-```
-My agent built a database system for [your domain]. Here is the
-schema verification output it produced:
+**The Problem:**
+Open the `module-3-relationships/exercise-3.2-broken-blog/` folder. You'll find `broken_blog.py` — a blogging platform with User, Post, and Comment models that has 5 relationship bugs — and `test_relationships.py` — tests that verify navigation and cascade behavior. The bugs are: a `back_populates` mismatch, a missing `delete-orphan` cascade, a wrong model name in a relationship, a wrong table name in a foreign key, and a missing `__tablename__` attribute.
 
-[paste your schema verification output]
+**Your Task:**
+Run the tests. The failures will range from clear (`NoReferencedTableError`) to subtle (navigation returning empty lists). Fix each bug, re-test, and document what was wrong and why it caused that specific failure. The `__tablename__` bug is particularly tricky — missing it causes SQLAlchemy to generate a table name that doesn't match the foreign key reference.
 
-Generate 5 failure scenarios I should direct the agent to test:
-- 2 involving constraint violations
-- 2 involving transaction rollback
-- 1 involving a relationship navigation problem
+**What You'll Learn:**
 
-For each scenario, tell me what to ask the agent to try AND
-what the correct output should look like. I want to verify
-these myself by reading the agent's output — not fix them in code.
-```
+- How relationship misconfigurations produce different failure modes: some crash immediately, some silently return empty results, some only fail during cascade operations
+- That `__tablename__` is not optional decoration — it determines the actual table name in the database and must match foreign key references exactly
+- The debugging skill of tracing a "no results" problem backward: Does the relationship exist? Is `back_populates` correct? Does the foreign key point to the right table?
 
-**What you're learning:** You are practicing defensive thinking. Production bugs do not come from the happy path. They come from the cases you did not consider. By asking AI to generate failure scenarios from your schema output, you learn to think about what could go wrong before it goes wrong, which is the core skill behind "claim nothing, prove everything."
+**Starter Prompt (Intentionally Vague):**
+
+> "Fix the blog models so all the relationship tests pass."
+
+**Better Prompt (Build Toward This):**
+
+After running the tests: "Run `test_relationships.py` against `broken_blog.py`. Show me all failures. I expect 5 relationship bugs: (1) a back_populates mismatch, (2) a missing cascade setting, (3) a wrong model name, (4) a wrong table name in a FK, (5) a missing __tablename__. For each: show the failing test, trace to the exact line in `broken_blog.py`, explain why it's wrong, and fix it. Re-run tests after each fix."
+
+**Reflection Questions:**
+
+1. Which bug produced the most misleading error message? Did the error point to the relationship definition or somewhere else entirely?
+2. The `__tablename__` bug is easy to miss because SQLAlchemy auto-generates table names. When would you explicitly set `__tablename__` vs letting SQLAlchemy generate it?
+3. If you were reviewing someone's pull request and they added a new relationship, what three things would you check before approving?
+
+---
+
+## Module 4: Transactions
+
+> **Core Skill:** Wrapping multi-step operations in atomic transactions that succeed completely or fail completely (Lesson 5: Transactions & Atomicity)
+
+<ExerciseCard id="4.1" title="Exercise 4.1 — Game Inventory Trading" />
+
+### Exercise 4.1 — Game Inventory Trading (Build)
+
+**The Problem:**
+Open the `module-4-transactions/exercise-4.1-game-inventory/` folder. You'll find `models.py` — Player and Item models for a game inventory system. Players have gold balances and own items. You need to implement three functions: `trade_items()` for swapping items and gold between two players, `buy_from_shop()` for purchasing items with gold, and `batch_trade()` for executing multiple trades as a single atomic operation using savepoints.
+
+**Your Task:**
+Every trade must be fully atomic: the item transfers AND the gold exchange must both succeed, or neither changes. If a player doesn't have enough gold, the entire trade rolls back. The `batch_trade()` function must use savepoints so a single failed trade in the batch doesn't undo the successful ones. Test with scenarios: successful trade, insufficient gold, item not owned, and a batch where the third of five trades fails.
+
+**What You'll Learn:**
+
+- That atomicity isn't just about try/except — you need to ensure the database state is consistent even when operations partially complete
+- How savepoints create nested transaction boundaries that let you roll back one operation without losing others
+- The difference between "the code didn't crash" and "the data is correct" — a trade can complete without errors but still leave inconsistent balances
+
+**Reflection Questions:**
+
+1. What happens if you commit after transferring the item but before transferring the gold, and then the gold transfer fails? How does your atomic wrapper prevent this?
+2. In `batch_trade()`, how many savepoints did you use? What would happen without savepoints when the third trade fails?
+3. How would you test that your atomic trade actually rolls back? What evidence proves the rollback worked?
+
+---
+
+<ExerciseCard id="4.2" title="Exercise 4.2 — Broken Bank" />
+
+### Exercise 4.2 — Broken Bank (Debug)
+
+**The Problem:**
+Open the `module-4-transactions/exercise-4.2-broken-bank/` folder. You'll find `broken_bank.py` — banking operations with 5 transaction safety holes — and `test_bank.py` — tests that expose each vulnerability. The bugs are: a partial commit that causes money to vanish, a missing balance check that allows negative balances, a missing rollback that leaves the database in an inconsistent state, a delete operation that removes an account without transferring its balance, and an operation that should be wrapped in a transaction but isn't.
+
+**Your Task:**
+Run the tests. Each failure represents a real-world data integrity vulnerability — the kind of bug that causes actual financial discrepancies in production. Fix each bug and verify the fix. For the "money vanishes" bug, trace exactly where the commit happens and why it leaves the database inconsistent.
+
+**What You'll Learn:**
+
+- That transaction bugs are the most dangerous database bugs because they corrupt data silently — the application reports success while money disappears
+- How to trace the "commit point" through code to find where partial writes become permanent
+- That every multi-step operation involving money, inventory, or any countable resource must be wrapped in a single transaction — there are no exceptions
+
+**Reflection Questions:**
+
+1. The "money vanishes" bug is the most dangerous. How much money would be lost if 1,000 users triggered this bug? What makes it hard to detect in production?
+2. Which fix required the most thought: the missing rollback, the missing balance check, or the unwrapped operation? Why?
+3. If you were building a real banking application, what additional safety measures would you add beyond transactions?
+
+---
+
+:::note[Session 3: Production & Verification]
+
+Modules 5-6 cover the skills from the Connecting to Neon and Hybrid Patterns lessons. You'll deploy a local app to cloud PostgreSQL, diagnose connection failures, build hybrid verification pipelines, and analyze tool-choice decisions. No starter prompts are provided — you design your own approach.
+
+:::
+
+## Module 5: Cloud Deployment
+
+> **Core Skill:** Migrating local SQLite applications to cloud PostgreSQL with proper configuration (Lesson 6: Connecting to Neon)
+
+<ExerciseCard id="5.1" title="Exercise 5.1 — Contact Book Deploy" />
+
+### Exercise 5.1 — Contact Book Deploy (Build)
+
+**The Problem:**
+Open the `module-5-cloud-deployment/exercise-5.1-contact-book-deploy/` folder. You'll find `contact_book.py` — a working contact management app using SQLite — and `deployment_checklist.md` — a step-by-step checklist for cloud migration. The app works perfectly with local SQLite. Your job is to configure it for Neon PostgreSQL: add environment variable management for the database URL, configure connection pooling, add a health check endpoint, and verify the deployment.
+
+**Your Task:**
+Follow the deployment checklist. Modify the app to read `DATABASE_URL` from environment variables instead of using a hardcoded SQLite path. Add connection pooling configuration appropriate for Neon's free tier. Add a health check that runs `SELECT 1` and returns the connection status. Deploy to your Neon database and verify all existing CRUD operations still work. Document any differences between SQLite and PostgreSQL behavior you encounter.
+
+**What You'll Learn:**
+
+- That switching from SQLite to PostgreSQL isn't just changing the connection string — data types, auto-increment behavior, and connection management all differ
+- How environment variable management prevents credentials from leaking into source code
+- Why connection pooling matters for cloud databases: without it, each operation opens a new connection, which exhausts Neon's connection limit quickly
+
+**Reflection Questions:**
+
+1. What differences between SQLite and PostgreSQL did you encounter during migration? Which one surprised you most?
+2. Why is connection pooling critical for Neon specifically? What happens if you skip it?
+3. If your `DATABASE_URL` environment variable is missing, what should your app do — crash immediately or fall back to SQLite? What are the tradeoffs?
+
+---
+
+<ExerciseCard id="5.2" title="Exercise 5.2 — Connection Doctor" />
+
+### Exercise 5.2 — Connection Doctor (Debug)
+
+**The Problem:**
+Open the `module-5-cloud-deployment/exercise-5.2-connection-doctor/` folder. You'll find `error_scenarios.md` — five Neon connection failure scenarios, each with the exact error message a developer would see. The scenarios include: a wrong password, an expired connection, an SSL certificate error, a connection pool exhaustion, and a DNS resolution failure.
+
+**Your Task:**
+For each of the 5 scenarios: identify the root cause from the error message, write the exact fix, and describe a prevention strategy that stops the error from recurring. You're not running code — you're practicing diagnostic reasoning. The skill is reading a database error message and knowing immediately what's wrong and how to fix it.
+
+**What You'll Learn:**
+
+- How to read PostgreSQL connection error messages and map them to specific configuration problems
+- That the five most common connection failures (auth, timeout, SSL, pool exhaustion, DNS) have distinct error signatures you can learn to recognize
+- Prevention strategies that stop connection errors before they happen: connection pool sizing, keep-alive settings, SSL configuration, and credential rotation
+
+**Reflection Questions:**
+
+1. Which error message was most misleading? Did it point to the actual problem or to a symptom of a deeper issue?
+2. Which prevention strategy would have the highest impact across all five scenarios?
+3. If you saw a new error message you've never seen before, what diagnostic steps would you follow?
+
+---
+
+## Module 6: Hybrid Verification
+
+> **Core Skill:** Using multiple tools (SQL + bash + Python) to verify data integrity through independent cross-checks (Lesson 7: Hybrid Patterns)
+
+<ExerciseCard id="6.1" title="Exercise 6.1 — Expense Audit" />
+
+### Exercise 6.1 — Expense Audit (Build)
+
+**The Problem:**
+Open the `module-6-hybrid-verification/exercise-6.1-expense-audit/` folder. You'll find `models.py` — an Expense model with categories, amounts, and dates — and `seed_data.py` — a script that populates the database with 200+ expense records across multiple categories and date ranges. Your job is to build a hybrid verification pipeline: compute expense totals two different ways and compare the results.
+
+**Your Task:**
+Compute total expenses per category using two independent methods: (1) SQLAlchemy `GROUP BY` query, and (2) export to CSV and compute totals with bash (`awk`). Compare the results. If they match, the data is verified. If they don't, trace the discrepancy. Then add a date-range filter and verify again. The power of hybrid verification is that bugs in one tool get caught by the other.
+
+**What You'll Learn:**
+
+- That verifying data with the same tool that produced it proves nothing — independent cross-checks using different tools catch bugs that single-tool verification misses
+- How to export database results to CSV and process them with bash tools for independent verification
+- The pattern of hybrid verification: compute with Tool A, compute with Tool B, compare results — this pattern applies to any data integrity check
+
+**Reflection Questions:**
+
+1. Did your SQL totals and bash totals match on the first try? If not, what caused the discrepancy?
+2. Why is it important to use a DIFFERENT tool for verification rather than running the same SQL query twice?
+3. Where else could you apply hybrid verification? Think of a scenario outside databases where computing the same result two different ways would catch bugs.
+
+---
+
+<ExerciseCard id="6.2" title="Exercise 6.2 — Wrong Tool" />
+
+### Exercise 6.2 — Wrong Tool (Debug/Analysis)
+
+**The Problem:**
+Open the `module-6-hybrid-verification/exercise-6.2-wrong-tool/` folder. You'll find `scenarios.md` — five scenarios where a developer chose the wrong tool for a data task. Each scenario describes what they tried, what went wrong, and asks you to determine: why the tool was wrong, what tool should have been used, and what decision framework would have prevented the mistake.
+
+**Your Task:**
+Analyze all 5 scenarios. For each: identify why the chosen tool failed, recommend the right tool (bash, Python, SQL, or a hybrid approach), and explain the reasoning. After analyzing all 5, build a decision tree that someone could use to choose the right tool for any data task. The decision tree should consider: data size, operation type (filter, transform, aggregate, join), need for persistence, and need for verification.
+
+**What You'll Learn:**
+
+- That choosing the wrong tool isn't just inefficient — it can produce wrong results (bash arithmetic on floating-point currency) or miss edge cases (Python loops on million-row datasets)
+- How to build a decision framework for tool selection based on data characteristics and operation requirements
+- The principle that simple data tasks should use simple tools (bash for counting, SQL for aggregation) while complex tasks need purpose-built tools (Python for transformation logic, SQL for joins)
+
+**Reflection Questions:**
+
+1. Which scenario had the most surprising "right answer"? Did any scenario's best tool choice contradict your initial instinct?
+2. Look at your decision tree. Does it cover all five scenarios correctly? Can you think of a sixth scenario that would break it?
+3. In the Structured Data & Persistent Storage chapter, when did you use hybrid approaches vs single-tool approaches? Looking back, were all those choices correct?
+
+---
+
+:::note[Session 4: Capstone Projects]
+
+Module 7 synthesizes all six modules into complete projects. Choose one or more. These are substantially larger than the module exercises — plan for 2-4 hours each. No prompts are provided.
+
+:::
+
+## Module 7: Capstone Projects
+
+> **Choose one (or more). This is where everything comes together — no starter prompts provided.**
+
+Capstones are different from the exercises above. There are no guided prompts — you design the entire approach yourself. Each project requires applying all six database workflows together to solve a realistic problem. Where module exercises test individual skills, capstones test your ability to orchestrate those skills into a coherent application. The quality of your code and verification matters as much as getting it to work — someone should be able to review your project and understand your design decisions.
+
+<ExerciseCard id="capstone-A" title="Capstone A — Student Grade Portal" />
+
+### Capstone A — Student Grade Portal
+
+Open the `module-7-capstone/capstone-A-student-portal/` folder. You'll find `requirements.md` — specifications for a student grade management system. Build a complete application: design models (Student, Course, Enrollment with grades), implement CRUD operations, configure relationships with proper cascades, protect grade updates with transactions, compute GPA calculations atomically, and deploy to Neon.
+
+This capstone uses every skill from the chapter: modeling (Module 1), CRUD (Module 2), relationships (Module 3), transactions (Module 4), cloud deployment (Module 5), and verification (Module 6). The requirements specify 20+ students and 10+ courses, so your queries must handle real data volumes, not toy examples.
+
+**What You'll Learn:**
+
+- How all six database workflows connect into a single application — each skill's output feeds the next skill's input
+- That GPA calculation requires atomic transactions: updating a grade must recalculate the GPA in the same transaction, or a failure leaves the GPA inconsistent
+- The discipline of building from schema to deployment: model first, then CRUD, then relationships, then transactions, then deploy — skipping steps creates cascading problems
+
+---
+
+<ExerciseCard id="capstone-B" title="Capstone B — CSV Migration" />
+
+### Capstone B — CSV Migration
+
+Open the `module-7-capstone/capstone-B-csv-migration/` folder. You'll find `sales_data.csv` — 500 rows of flat sales data with customer names, product names, sales rep names, quantities, prices, and dates, all in a single denormalized table. Normalize this data into a proper relational schema: Customer, Product, SalesRep, and Sale tables with proper foreign keys. Then write 5 analytical queries that the flat CSV couldn't answer: top customers by total spend, sales trends by month, product performance comparisons, sales rep rankings, and customer retention patterns.
+
+The normalization decisions are the hard part. The CSV has "John Smith" appearing 15 times — is that one customer or multiple people with the same name? Product names have slight variations ("Widget Pro" vs "Widget PRO") — are those the same product? You'll need data-cleaning rules before you can normalize.
+
+**What You'll Learn:**
+
+- That data normalization is a judgment call, not a formula — real data has ambiguities that require human decisions about identity, deduplication, and edge cases
+- How relational databases unlock analytical queries that flat files can't support: joins, aggregations across tables, and filtered groupings
+- The workflow of legacy migration: assess data quality, design target schema, write cleaning rules, transform and load, verify row counts, run analytical queries
+
+---
+
+<ExerciseCard id="capstone-C" title="Capstone C — Disaster Recovery" />
+
+### Capstone C — Disaster Recovery
+
+Open the `module-7-capstone/capstone-C-disaster-recovery/` folder. You'll find `broken_budget_tracker.py` — a budget tracking application with 8+ bugs across all database layers — and `test_budget_tracker.py` — a comprehensive test suite. The bugs span models (wrong types, missing constraints), CRUD (session management errors), relationships (cascade misconfigurations), and transactions (missing atomicity).
+
+This is the most demanding exercise. You must triage all bugs, determine the fix order (some fixes depend on others), repair each one, and write a postmortem documenting: what was broken, the root cause, the fix, and how to prevent each class of bug in the future. The test suite verifies your fixes, but passing all tests isn't enough — your postmortem must demonstrate understanding.
+
+**What You'll Learn:**
+
+- How to triage multiple bugs across different layers and determine the optimal fix order — model bugs must be fixed before CRUD bugs that depend on the models
+- That disaster recovery under pressure requires methodical discipline: triaging before fixing, fixing one thing at a time, and testing after every change
+- The value of a postmortem: documenting root causes and prevention strategies turns a disaster into an organizational learning opportunity
+
+---
+
+## What's Next
+
+You've practiced all six database development workflows across 15 exercises — modeling, CRUD operations, relationships, transactions, cloud deployment, and hybrid verification. More importantly, you've practiced them on realistic scenarios where bugs cascade, edge cases matter, and getting the code to run is only half the job.
+
+The Database Development Framework you've internalized (Model, Connect, Operate, Protect, Verify, Deploy) transfers to any data-driven application you build with General Agents. Whether you're creating a budget tracker, migrating legacy data, or deploying a student portal, the same six steps prevent the same classes of mistakes.
+
+These patterns become the foundation for the more complex agent workflows in later chapters, where the database skills you practiced here combine with file processing, computation, and API integration to build complete AI-powered applications.
