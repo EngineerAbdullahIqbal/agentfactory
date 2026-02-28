@@ -15,11 +15,11 @@ import {
 import { itemVariants, staggerContainerVariants } from "./variants";
 
 const TOOLS_OPTIONS = [
-  { value: "VS Code", label: "VS Code" },
-  { value: "Cursor", label: "Cursor" },
-  { value: "GitHub Copilot", label: "GitHub Copilot" },
   { value: "Claude", label: "Claude" },
   { value: "ChatGPT", label: "ChatGPT" },
+  { value: "Claude Code", label: "Claude Code" },
+  { value: "VS Code", label: "VS Code" },
+  { value: "Cursor", label: "Cursor" },
   { value: "Docker", label: "Docker" },
   { value: "AWS", label: "AWS" },
   { value: "Jira", label: "Jira" },
