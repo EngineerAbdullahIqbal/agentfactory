@@ -1,0 +1,70 @@
+deck:
+  id: "ch16-01-the-problem-that-no-platform-solves"
+  title: "The Problem That No Platform Solves"
+  description: "Tacit vs explicit knowledge, the articulation gap, and why structured extraction is necessary for production-quality SKILL.md files."
+  tags: ["tacit-knowledge", "explicit-knowledge", "articulation-gap", "knowledge-extraction", "SKILL.md"]
+  version: 1
+
+cards:
+  - id: "ch16-01-tacit-definition-001"
+    front: "What is tacit knowledge?"
+    back: "Knowledge that operates below conscious awareness — pattern recognition, calibrated judgement, and exception handling that experts apply automatically but cannot easily express in written instructions. It is learned through experience and resists unstructured articulation."
+    tags: ["tacit-knowledge", "definition"]
+    difficulty: "basic"
+
+  - id: "ch16-01-explicit-definition-002"
+    front: "What is explicit knowledge?"
+    back: "Knowledge that can be written down directly — frameworks, ratios, definitions, procedures, and checklists. It is the part of expertise that is already articulated and documented."
+    tags: ["explicit-knowledge", "definition"]
+    difficulty: "basic"
+
+  - id: "ch16-01-which-matters-003"
+    front: "Which type of knowledge — tacit or explicit — determines whether a domain agent is genuinely useful rather than merely generic?"
+    back: "Tacit knowledge. The explicit part (frameworks, procedures) produces a generic agent that handles obvious cases. The tacit part (pattern recognition, calibrated judgement) produces an agent that handles the cases that actually matter — the ones where professional expertise makes the difference."
+    tags: ["tacit-knowledge", "value-differential"]
+    difficulty: "basic"
+
+  - id: "ch16-01-articulation-gap-004"
+    front: "What is the articulation gap?"
+    back: "The structural barrier between what an expert knows and what they can express in explicit written instructions. It exists because the most valuable professional knowledge is not stored as articulable rules — it is embedded in pattern recognition developed through years of practice."
+    tags: ["articulation-gap", "definition"]
+    difficulty: "basic"
+
+  - id: "ch16-01-write-down-005"
+    front: "Why does asking an expert to 'just write down what you know' produce an inadequate SKILL.md?"
+    back: "BECAUSE the expert can only articulate the explicit half of their expertise (frameworks, procedures, definitions). THEREFORE the tacit half (when to question a number, how to read evasive management, when to escalate) is omitted — producing a SKILL.md that works for obvious cases and fails for the ones that matter."
+    tags: ["articulation-gap", "common-mistake"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why structured extraction exists"
+
+  - id: "ch16-01-platform-limits-006"
+    front: "Why can't platform improvements or more capable models solve the articulation gap?"
+    back: "Platform improvements make agents more capable at following instructions but do not solve the problem of what those instructions should contain. A more capable model following vague SKILL.md instructions produces more confident-sounding but equally unreliable output."
+    tags: ["platform-limitations", "model-capability"]
+    difficulty: "intermediate"
+    why: "Tests whether student distinguishes model capability from extraction quality"
+
+  - id: "ch16-01-credit-analyst-007"
+    front: "In the credit analyst running example, what is the tacit knowledge that makes the analyst valuable?"
+    back: "The ability to read the gap between what financials say and what they imply — spotting the CEO who cannot answer working capital questions, the sector being repriced by a supply chain shift, the covenant structured to matter only in stress scenarios. This pattern recognition is tacit and resists articulation."
+    tags: ["credit-analyst", "running-example", "tacit-knowledge"]
+    difficulty: "intermediate"
+
+  - id: "ch16-01-two-modes-008"
+    front: "What are the two modes of the Knowledge Extraction Method?"
+    back: "Method A extracts tacit knowledge from expert heads through a structured five-question interview. Method B extracts knowledge from institutional documents through a three-pass framework. Most professional domains require both."
+    tags: ["method-a", "method-b", "knowledge-extraction"]
+    difficulty: "basic"
+
+  - id: "ch16-01-generic-agent-009"
+    front: "What does a SKILL.md written without structured extraction typically produce?"
+    back: "An agent that is roughly useful in obvious situations and unreliable in the ones that matter — because it encodes only the explicit knowledge the expert could easily articulate and omits the tacit professional judgement that makes the difference."
+    tags: ["without-extraction", "failure-mode"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the core problem the methodology solves"
+
+  - id: "ch16-01-methodology-purpose-010"
+    front: "What problem does the Knowledge Extraction Method exist to solve?"
+    back: "The articulation gap — bridging the structural barrier between what domain experts know (including tacit knowledge) and what can be encoded as explicit SKILL.md instructions that produce reliable agent behaviour across the full range of production scenarios."
+    tags: ["knowledge-extraction", "purpose"]
+    difficulty: "basic"

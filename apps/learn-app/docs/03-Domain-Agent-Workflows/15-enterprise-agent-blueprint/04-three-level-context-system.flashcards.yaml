@@ -1,0 +1,69 @@
+deck:
+  id: "ch15-04-three-level-context-system"
+  title: "The Three-Level Context System"
+  description: "Cowork's three-level context hierarchy (platform, organisation, plugin), silent override behaviour, and the diagnostic sequence for unexpected agent behaviour."
+  tags: ["context-hierarchy", "platform-context", "organisation-context", "plugin-context", "silent-override", "diagnostic"]
+  version: 1
+
+cards:
+  - id: "ch15-04-three-levels-001"
+    front: "What are the three levels of Cowork's context hierarchy?"
+    back: "1. Platform context — set by Anthropic, applies to all Claude deployments everywhere\n2. Organisation context — set by the Cowork administrator, applies to all plugins within the organisation\n3. Plugin context — the SKILL.md itself, set by the knowledge worker, operates within higher constraints"
+    tags: ["three-levels", "context-hierarchy"]
+    difficulty: "basic"
+
+  - id: "ch15-04-override-direction-002"
+    front: "In which direction does the context hierarchy override?"
+    back: "Higher levels silently override lower levels, unconditionally and without announcement. Platform overrides organisation, organisation overrides plugin. Lower levels cannot override higher levels under any circumstances."
+    tags: ["override-direction", "hierarchy"]
+    difficulty: "basic"
+
+  - id: "ch15-04-silent-override-003"
+    front: "What is silent override, and why is it architectural rather than a design oversight?"
+    back: "Silent override means that when a SKILL.md instruction conflicts with an organisation-level policy, the agent does not announce it — it simply behaves as the higher level requires. It is architectural because surfacing internal governance policies through agent responses would disclose the structure of compliance constraints and audit requirements to every user who encountered a restricted behaviour."
+    tags: ["silent-override", "architectural-property"]
+    difficulty: "intermediate"
+
+  - id: "ch15-04-diagnostic-004"
+    front: "What is the correct diagnostic sequence when a SKILL.md instruction is not being followed?"
+    back: "1. Platform level — is this a behaviour that no Cowork deployment can produce? (If yes: constraint is immutable, find alternative)\n2. Organisation level — has the administrator set a policy restricting this? (If yes: speak with administrator)\n3. Plugin level — is there an error or ambiguity in the SKILL.md instruction? (If yes: revise the instruction)"
+    tags: ["diagnostic-sequence", "troubleshooting"]
+    difficulty: "intermediate"
+
+  - id: "ch15-04-wrong-start-005"
+    front: "Why is starting the diagnostic at the SKILL.md level almost always the wrong place to begin?"
+    back: "BECAUSE when an agent ignores an instruction, the cause is often at a higher level — an organisation policy or platform constraint. THEREFORE a knowledge worker who starts at the SKILL.md level wastes time revising an instruction that is not the source of the problem. Starting at platform and organisation levels first identifies the actual cause quickly."
+    tags: ["diagnostic-sequence", "SKILL.md", "efficiency"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why the diagnostic sequence runs top-down, not bottom-up"
+
+  - id: "ch15-04-platform-context-006"
+    front: "What is platform context, and is it a technical limitation or a policy decision?"
+    back: "Platform context is set by Anthropic and applies to every Claude deployment. It is a policy decision, not a technical limitation of the model. The model is capable of many things that Anthropic has chosen not to allow in production deployments. Knowing this distinction is sufficient for the knowledge worker's diagnostic purposes."
+    tags: ["platform-context", "policy", "Anthropic"]
+    difficulty: "intermediate"
+
+  - id: "ch15-04-org-context-007"
+    front: "What types of constraints does organisation context typically set?"
+    back: "Organisation context governs the operational environment: approved data sources, governance policies, audit requirements, user permission models, and IAM integration. In regulated industries, it reflects the firm's regulatory obligations — for example, requiring all compliance outputs to route through an internal review queue before reaching external systems."
+    tags: ["organisation-context", "administrator", "regulated-industries"]
+    difficulty: "basic"
+
+  - id: "ch15-04-additive-008"
+    front: "Can a SKILL.md add more restrictive constraints than the organisation context requires?"
+    back: "Yes — the SKILL.md can always add more restrictive constraints (escalate at a lower threshold, query a subset of approved sources, apply more conservative uncertainty thresholds). What the SKILL.md cannot do is remove or override restrictions established at higher levels. The plugin level can only narrow, never expand, the agent's behaviour."
+    tags: ["plugin-context", "SKILL.md", "additive"]
+    difficulty: "intermediate"
+
+  - id: "ch15-04-scenario-009"
+    front: "A knowledge worker has rewritten a SKILL.md instruction three times, but the agent still will not route compliance reports directly to an external system. What is the most likely explanation?"
+    back: "BECAUSE compliance output routing is almost certainly constrained at the organisation level — the administrator has set a policy requiring all compliance outputs to be reviewed before external transmission. THEREFORE rewriting the SKILL.md cannot resolve this. The knowledge worker should speak to their administrator to understand whether the constraint is mandatory or configurable."
+    tags: ["silent-override", "organisation-context", "applied"]
+    difficulty: "advanced"
+    why: "Tests ability to diagnose a silent override scenario correctly by applying the diagnostic sequence"
+
+  - id: "ch15-04-new-employee-010"
+    front: "What analogy does the three-level context system resemble in professional life?"
+    back: "A new employee at a professional firm: they must follow their profession's code of conduct (platform level), their firm's internal policies (organisation level), and can then apply their individual style within those constraints (plugin level). Some things are firm-wide and cannot be overridden by any individual role. Within those constraints, there is still genuine discretion."
+    tags: ["context-hierarchy", "analogy"]
+    difficulty: "basic"

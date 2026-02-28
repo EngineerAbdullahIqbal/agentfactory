@@ -1,0 +1,56 @@
+deck:
+  id: "ch16-10-chapter-summary"
+  title: "Chapter Summary"
+  description: "Synthesis of the complete Knowledge Extraction Method — from the articulation gap through dual extraction, SKILL.md translation, validation, and shadow mode deployment."
+  tags: ["chapter-summary", "synthesis", "methodology-chain", "domain-chapters"]
+  version: 1
+
+cards:
+  - id: "ch16-10-methodology-chain-001"
+    front: "Describe the Knowledge Extraction Method as a chain of stages."
+    back: "Articulation gap (problem) → Method A interview (tacit extraction) → Method B document extraction (explicit extraction) → Method selection and reconciliation → SKILL.md translation (Persona, Questions, Principles) → Validation scenario set → Validation loop → Shadow mode → Graduated autonomy."
+    tags: ["methodology-chain", "stages"]
+    difficulty: "basic"
+
+  - id: "ch16-10-extraction-without-validation-002"
+    front: "What happens when you extract without validating?"
+    back: "You produce a SKILL.md that encodes the expert's knowledge but has unknown coverage gaps — it handles the cases the expert thought to mention and fails on the ones they did not. Extraction without validation is like writing software without testing it."
+    tags: ["extraction-without-validation", "failure-mode"]
+    difficulty: "intermediate"
+
+  - id: "ch16-10-validation-without-extraction-003"
+    front: "What happens when you validate without proper extraction?"
+    back: "You test instructions that do not contain the expert's actual decision-making logic. Scenarios may pass, but the agent is not doing what the expert would do — it is following generic instructions that happen to produce acceptable output on constructed tests."
+    tags: ["validation-without-extraction", "failure-mode"]
+    difficulty: "intermediate"
+
+  - id: "ch16-10-domain-agnostic-004"
+    front: "In what sense is the Knowledge Extraction Method domain-agnostic, and in what sense is it domain-specific?"
+    back: "The framework is domain-agnostic: the five questions, three passes, four validation categories, and reconciliation principle work for any domain. The application is domain-specific: the specific knowledge surfaced, method priority, reconciliation decisions, and validation scenarios differ based on professional context."
+    tags: ["domain-agnostic", "domain-specific"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why domain chapters are necessary despite having a universal methodology"
+
+  - id: "ch16-10-credit-analyst-proof-005"
+    front: "Why was the credit analyst running example described as a proof of concept rather than an illustration?"
+    back: "Every lesson applied the same methodology to the same domain, and by Lesson 9, the cumulative result was a testable SKILL.md draft. The example demonstrated that the methodology produces a concrete artifact when applied end-to-end — not just a theoretical framework."
+    tags: ["credit-analyst", "proof-of-concept"]
+    difficulty: "basic"
+
+  - id: "ch16-10-two-95-gates-006"
+    front: "What are the two 95% gates in the full deployment pipeline?"
+    back: "Gate 1: Scenario testing at 95% earns entry into shadow mode (validates against constructed inputs). Gate 2: Production accuracy at 95% over 30 days earns exit from shadow mode into autonomous operation (validates against real production inputs). Same number, different stages, different purposes."
+    tags: ["95-percent", "two-gates", "deployment-pipeline"]
+    difficulty: "intermediate"
+
+  - id: "ch16-10-what-changes-007"
+    front: "What changes in the domain chapters (Finance, Legal, HR, etc.) and what stays the same?"
+    back: "The methodology stays the same: five questions, three passes, four validation categories, reconciliation principle. What changes is the professional context: the specific knowledge extracted, the method priority, the reconciliation decisions, and the validation scenarios are all domain-specific."
+    tags: ["domain-chapters", "what-changes"]
+    difficulty: "basic"
+
+  - id: "ch16-10-chapter-16-to-17-008"
+    front: "How does Chapter 16 connect to Chapter 17 (Finance Domain Agents)?"
+    back: "Chapter 16 taught the methodology using the credit analyst as an example. Chapter 17 applies the methodology to build a production-grade financial analysis agent — the extraction targets shift to specific financial workflows, validation scenarios are grounded in real instruments and regulations, and shadow mode criteria reflect what a compliance function would accept."
+    tags: ["chapter-bridge", "finance"]
+    difficulty: "basic"

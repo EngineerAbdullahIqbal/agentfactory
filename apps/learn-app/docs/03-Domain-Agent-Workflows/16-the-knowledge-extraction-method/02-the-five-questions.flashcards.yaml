@@ -1,0 +1,69 @@
+deck:
+  id: "ch16-02-the-five-questions"
+  title: "The Five Questions — Expert Interview Framework"
+  description: "The five Method A interview questions, episodic vs semantic memory, and how each question maps to SKILL.md sections."
+  tags: ["method-a", "interview-framework", "five-questions", "episodic-memory", "SKILL.md"]
+  version: 1
+
+cards:
+  - id: "ch16-02-episodic-semantic-001"
+    front: "Why does Question 1 ask for a specific case rather than a general description of decision-making?"
+    back: "Specific cases activate episodic memory, which contains contextual details and decision logic. General descriptions activate semantic memory, which produces textbook-like answers stripped of the nuances, exceptions, and contextual judgements that make the expert's knowledge valuable."
+    tags: ["episodic-memory", "semantic-memory", "question-1"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the memory-type distinction that underpins the framework"
+
+  - id: "ch16-02-question-1-002"
+    front: "What is Question 1 in the Method A interview, and what does it surface?"
+    back: "Question 1: 'Walk me through a specific recent case where you had to make a difficult professional judgement.' It surfaces the expert's actual decision-making logic in context — the specific reasoning, trade-offs, and uncertainty they navigated."
+    tags: ["question-1", "decision-logic"]
+    difficulty: "basic"
+
+  - id: "ch16-02-question-2-003"
+    front: "What is Question 2 in the Method A interview, and what does it surface?"
+    back: "Question 2: 'What makes the difference between someone who is adequate in this role and someone who is genuinely good?' It surfaces the quality differential — the specific capabilities that separate experienced professionals from competent ones."
+    tags: ["question-2", "quality-differential"]
+    difficulty: "basic"
+
+  - id: "ch16-02-question-3-004"
+    front: "What is Question 3 in the Method A interview, and what does it surface?"
+    back: "Question 3: 'When you look at a new [case/project/file], what do you check first and why in that order?' It surfaces the expert's default process and, through follow-ups about when the order changes, the exceptions to that process."
+    tags: ["question-3", "process-exceptions"]
+    difficulty: "basic"
+
+  - id: "ch16-02-question-4-005"
+    front: "What is Question 4 in the Method A interview, and what does it surface?"
+    back: "Question 4: 'When do you call for help? What situations make you escalate rather than handle it yourself?' It surfaces the escalation conditions — the thresholds and situations where the expert routes to someone else, which become the SKILL.md's escalation Principles."
+    tags: ["question-4", "escalation-conditions"]
+    difficulty: "basic"
+
+  - id: "ch16-02-question-5-006"
+    front: "What is Question 5 in the Method A interview, and what does it surface?"
+    back: "Question 5: 'What would you tell a talented new hire on their first day — the things they will not find in any manual?' It surfaces mentorship knowledge — the unwritten rules, professional instincts, and context-dependent judgements transmitted through experience."
+    tags: ["question-5", "mentorship-knowledge"]
+    difficulty: "basic"
+
+  - id: "ch16-02-mapping-007"
+    front: "How do the five questions map to SKILL.md sections?"
+    back: "Questions 1-2 → Persona section (professional identity and quality standard). Question 3 → Questions section (process, capabilities, scope). Questions 4-5 → Principles section (escalation conditions, operating rules, unwritten professional standards)."
+    tags: ["question-mapping", "SKILL.md-sections"]
+    difficulty: "intermediate"
+
+  - id: "ch16-02-follow-ups-008"
+    front: "Why are follow-up questions as important as the primary five questions?"
+    back: "Follow-ups surface the exceptions to standard processes — the conditions under which the expert deviates from routine. These exceptions are often the most valuable SKILL.md material because they encode the calibrated judgement that distinguishes experienced professionals from those following checklists."
+    tags: ["follow-ups", "exceptions"]
+    difficulty: "intermediate"
+    why: "Tests understanding that the primary questions open the topic but follow-ups surface the depth"
+
+  - id: "ch16-02-order-matters-009"
+    front: "Why does the order of the five questions matter?"
+    back: "The order moves from specific (episodic memory) to general (mentorship knowledge). Starting with a specific case establishes the collaborative, detail-oriented mode. Moving to quality differential, process, escalation, and mentorship progressively broadens the extraction while maintaining the specific, grounded quality established by Question 1."
+    tags: ["question-order", "interview-structure"]
+    difficulty: "intermediate"
+
+  - id: "ch16-02-three-types-010"
+    front: "What three types of tacit knowledge do the five questions collectively surface?"
+    back: "1. Decision-making logic (how the expert reasons through complex situations)\n2. Exceptions and edge cases (when the expert deviates from standard process)\n3. Escalation conditions (when the expert routes to a human or seeks help)"
+    tags: ["tacit-knowledge-types", "five-questions"]
+    difficulty: "basic"

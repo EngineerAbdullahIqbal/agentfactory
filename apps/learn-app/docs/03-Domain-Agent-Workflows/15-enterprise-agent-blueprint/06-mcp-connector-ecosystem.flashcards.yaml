@@ -1,0 +1,68 @@
+deck:
+  id: "ch15-06-mcp-connector-ecosystem"
+  title: "The MCP Connector Ecosystem"
+  description: "The production connector landscape across enterprise domains, connector scoping and access controls, custom connector commissioning, and deployment timeline expectations."
+  tags: ["MCP-connectors", "connector-ecosystem", "custom-connectors", "enterprise-integration", "deployment-timeline"]
+  version: 1
+
+cards:
+  - id: "ch15-06-marketplace-vs-custom-001"
+    front: "What is the difference between a marketplace connector and a custom connector?"
+    back: "A marketplace connector is a pre-built, maintained MCP connector available for standard enterprise systems (Salesforce, Jira, Snowflake, etc.). A custom connector is built specifically for a system not available in the marketplace — the knowledge worker specifies data access requirements in plain language and IT builds it."
+    tags: ["marketplace-connector", "custom-connector", "distinction"]
+    difficulty: "basic"
+
+  - id: "ch15-06-licensing-002"
+    front: "Why do Bloomberg and LexisNexis connectors require licensing?"
+    back: "Bloomberg and LexisNexis are licensed data services. The MCP connector provides the integration layer — it does not grant access to data the organisation has not licensed. The connector cannot be activated without a valid subscription already held by the organisation."
+    tags: ["licensing", "Bloomberg", "LexisNexis", "financial-data"]
+    difficulty: "basic"
+
+  - id: "ch15-06-revit-003"
+    front: "Why is the Revit connector a custom connector rather than a marketplace connector?"
+    back: "Revit is a domain-specific engineering design tool and each organisation's Revit environment is configured differently — different project hierarchies, custom parameters, and data schemas. There is no generalised Revit connector viable for the marketplace; a developer builds a custom connector tailored to the specific organisation's installation."
+    tags: ["Revit", "custom-connector", "BIM"]
+    difficulty: "basic"
+
+  - id: "ch15-06-scoping-004"
+    front: "What is connector scoping, and why is it a security feature rather than a limitation?"
+    back: "Connector scoping restricts what data the agent can see within a connector — for example, a SharePoint connector scoped to the legal team's site cannot access the engineering wiki. It is a security feature because it enforces the principle of least privilege: a correctly configured connector accesses only what was explicitly opened. A scoped connector is not less capable — it is correctly configured."
+    tags: ["connector-scoping", "security", "least-privilege"]
+    difficulty: "intermediate"
+
+  - id: "ch15-06-custom-spec-005"
+    front: "What four elements must a plain-language custom connector specification address?"
+    back: "1. Which system? (name precisely, including version if relevant)\n2. What data? (specific data objects or entities the agent needs access to)\n3. What queries? (the types of questions the agent will need to ask)\n4. What permissions? (read-only or read-write, any row-level or scope restrictions)"
+    tags: ["custom-connector", "specification", "four-elements"]
+    difficulty: "intermediate"
+
+  - id: "ch15-06-timeline-006"
+    front: "What are the two custom connector development timeline categories and when does each apply?"
+    back: "1. 2-4 weeks: Modern API (REST, documented, actively maintained) — recent SaaS systems and rebuilt enterprise applications\n2. 4-8 weeks: Complex or legacy system — older protocols, sparse documentation, custom schemas, authentication flows predating modern standards\nThese are planning facts, not estimates. Connector commissioning must start first because it is on the critical path."
+    tags: ["custom-connector", "timeline", "planning"]
+    difficulty: "intermediate"
+
+  - id: "ch15-06-erp-007"
+    front: "A knowledge worker wants to connect their agent to an on-premises ERP system from 2009. What timeline should they budget for the connector, and why?"
+    back: "4-8 weeks. BECAUSE legacy systems typically lack modern REST APIs and require custom integration work — sparse documentation, older protocols, custom schemas that may require reverse-engineering. THEREFORE this timeline must be in the project plan from the start. The SKILL.md development can run in parallel, but connector commissioning is on the critical path."
+    tags: ["custom-connector", "legacy-system", "timeline", "applied"]
+    difficulty: "advanced"
+    why: "Tests ability to apply timeline expectations to a concrete scenario and recognise critical path implications"
+
+  - id: "ch15-06-clinical-hipaa-008"
+    front: "What prerequisite applies to Epic and Cerner connectors that does not apply to most other marketplace connectors?"
+    back: "HIPAA-compliant configuration is required before any clinical connector goes into production. This is a prerequisite, not an afterthought — healthcare organisations must establish the HIPAA configuration requirement before activating these connectors."
+    tags: ["Epic", "Cerner", "HIPAA", "clinical-systems"]
+    difficulty: "basic"
+
+  - id: "ch15-06-snowflake-009"
+    front: "What security feature does the Snowflake connector support that other data connectors do not?"
+    back: "Row-level security — data access can be governed at the row level according to existing security policies, rather than requiring a separate access control layer. This means the agent can access a data warehouse without requiring raw database access to be extended to the agent."
+    tags: ["Snowflake", "row-level-security", "data-connector"]
+    difficulty: "intermediate"
+
+  - id: "ch15-06-parallel-010"
+    front: "During a custom connector commissioning project, what can run in parallel and what must run sequentially?"
+    back: "SKILL.md development and governance setup can run in parallel with connector commissioning. However, connector commissioning must start first and be treated as on the critical path — the plugin cannot deploy until the connector is operational, regardless of how quickly the SKILL.md is written."
+    tags: ["custom-connector", "project-planning", "critical-path"]
+    difficulty: "intermediate"

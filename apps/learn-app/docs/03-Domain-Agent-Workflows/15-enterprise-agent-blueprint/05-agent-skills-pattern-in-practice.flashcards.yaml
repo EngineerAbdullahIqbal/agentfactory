@@ -1,0 +1,69 @@
+deck:
+  id: "ch15-05-agent-skills-pattern-in-practice"
+  title: "The Agent Skills Pattern in Practice"
+  description: "Annotated walkthrough of a production financial research SKILL.md — identity constraints, positive out-of-scope redirection, source integrity, and uncertainty calibration."
+  tags: ["SKILL.md", "financial-research-agent", "source-integrity", "uncertainty-calibration", "identity-constraints", "production-quality"]
+  version: 1
+
+cards:
+  - id: "ch15-05-identity-constraint-001"
+    front: "In the financial research SKILL.md, the most important constraint is 'You are not an investment adviser.' Why is this stated as identity rather than as a rule?"
+    back: "An identity constraint ('You are not an investment adviser') cannot be argued around — it governs behaviour across all contexts including unanticipated ones. A rule ('Do not give investment recommendations') can be circumvented by a user who frames a request cleverly. Identity shapes what the agent is; a rule shapes what it does in anticipated situations only."
+    tags: ["identity-constraint", "persona", "rule-vs-identity"]
+    difficulty: "intermediate"
+
+  - id: "ch15-05-out-of-scope-002"
+    front: "Why does the financial research SKILL.md's out-of-scope section tell users what to do instead of just refusing?"
+    back: "Positive redirection is more useful than refusal. A user who receives 'I cannot help with that' is stuck. A user who receives 'that falls outside my scope — for tax advice, contact the finance team' knows what to do next. The agent remains useful at its boundary rather than becoming a dead end."
+    tags: ["out-of-scope", "positive-redirection", "questions"]
+    difficulty: "basic"
+
+  - id: "ch15-05-source-integrity-003"
+    front: "What is the Source Integrity principle, and what failure mode does it prevent?"
+    back: "Source Integrity requires the agent to use only data from configured connectors or user-provided documents — never general training knowledge for specific financial figures. If a figure cannot be grounded in a connected source, the agent says 'I don't have a grounded source for this figure.' It prevents the most dangerous financial agent failure: producing plausible-looking numbers from training memory as though they were current data."
+    tags: ["source-integrity", "principles", "failure-mode"]
+    difficulty: "intermediate"
+
+  - id: "ch15-05-uncertainty-vocab-004"
+    front: "Name the four levels of the uncertainty calibration vocabulary in the financial research SKILL.md."
+    back: "1. 'The data indicates...' — directly supported by available data\n2. 'Based on available data, it appears that...' — reasonable inference one step beyond direct data\n3. 'It is worth considering whether...' — hypothesis data raises but does not resolve\n4. Never use confident declarative statements for inferential conclusions"
+    tags: ["uncertainty-calibration", "principles", "vocabulary"]
+    difficulty: "intermediate"
+
+  - id: "ch15-05-uncertainty-purpose-005"
+    front: "What is the purpose of the four-level uncertainty calibration vocabulary?"
+    back: "It creates infrastructure for trust. Financial professionals learn what each phrase means: 'The data indicates' means they can act on it with confidence; 'it is worth considering whether' means they should seek additional evidence first. The vocabulary makes outputs auditable — users can read the agent's language and know immediately what degree of reliance is appropriate."
+    tags: ["uncertainty-calibration", "trust", "auditability"]
+    difficulty: "intermediate"
+
+  - id: "ch15-05-production-length-006"
+    front: "Is the annotated financial research SKILL.md a complete production example or a simplified one?"
+    back: "Simplified — a production SKILL.md would be two to four times longer, with more detailed data source specifications, organisation-specific output templates, jurisdiction references, and a fuller escalation taxonomy. But the structure is complete: every section is present and every quality signal is visible. It teaches the architecture, not the full content."
+    tags: ["SKILL.md", "production-quality", "structure"]
+    difficulty: "basic"
+
+  - id: "ch15-05-escalation-007"
+    front: "What makes the escalation threshold in the financial research SKILL.md a quality principle rather than a generic instruction?"
+    back: "BECAUSE it is specific: 'board/executive presentations, transactions above £50M, regulatory compliance claims, user uncertainty about approved use cases.' These are specific enough that the agent can recognise them and a professional can verify whether the threshold was applied correctly. THEREFORE 'escalate complex matters' fails as a principle — it gives neither agent nor reviewer any concrete guidance."
+    tags: ["escalation", "principles", "specificity"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why escalation thresholds must be domain-specific to be functional"
+
+  - id: "ch15-05-questions-actionable-008"
+    front: "What makes the in-scope items in the financial research Questions section actionable rather than vague?"
+    back: "Each category is specific enough to govern actual behaviour: 'Aggregate and summarise publicly available market data from your configured data sources' tells the agent what to pull and where. Compare to 'Be helpful with market research' — which gives no guidance on data sources, output format, or conflicting source handling."
+    tags: ["questions", "in-scope", "specificity"]
+    difficulty: "basic"
+
+  - id: "ch15-05-coherent-spec-009"
+    front: "What does reading the three SKILL.md sections together reveal that reading them separately does not?"
+    back: "That the SKILL.md is a coherent professional specification, not a list of settings. Every design choice connects to a failure mode it prevents: the Persona prevents general-purpose helpfulness in a context where it is harmful; the Questions prevents scope creep in both directions; the Principles prevents fabricated numbers, outdated analysis, overconfident inferences, and autonomous action in human-accountability territory."
+    tags: ["SKILL.md", "coherent-specification", "failure-modes"]
+    difficulty: "advanced"
+
+  - id: "ch15-05-domain-apply-010"
+    front: "Apply the source integrity principle to a clinical pharmacology agent. What equivalent principle would it require?"
+    back: "BECAUSE the dangerous failure mode for a clinical agent is the same structure — confident-sounding output from training memory rather than grounded data: 'For any drug interaction flag, reference only the approved formulary. Do not draw on general pharmacological training knowledge. If an interaction cannot be found in the configured formulary, state that explicitly rather than providing an assessment from memory.' THEREFORE the principle structure is identical; only the domain-specific data source changes."
+    tags: ["source-integrity", "applied", "clinical"]
+    difficulty: "advanced"
+    why: "Tests ability to transfer the source integrity concept to a different professional domain"

@@ -1,0 +1,70 @@
+deck:
+  id: "ch15-09-cowork-plugin-marketplace"
+  title: "The Cowork Plugin Marketplace"
+  description: "The marketplace as a distribution mechanism for domain expertise, vertical skill packs, connector packages, and the transferability test for publishability."
+  tags: ["cowork-marketplace", "vertical-skill-packs", "connector-packages", "transferability", "domain-expertise", "monetisation"]
+  version: 1
+
+cards:
+  - id: "ch15-09-marketplace-001"
+    front: "What is the Cowork Plugin Marketplace and what problem does it solve?"
+    back: "The marketplace is a distribution mechanism for generalisable domain expertise. It solves the discovery and deployment problem: without it, a well-designed SKILL.md stops at the organisation that built it. With it, a knowledge worker can publish domain expertise once and let many organisations benefit from it — without requiring the original author's involvement in each deployment."
+    tags: ["marketplace", "distribution", "domain-expertise"]
+    difficulty: "basic"
+
+  - id: "ch15-09-subscription-002"
+    front: "What happens when an organisation subscribes to a marketplace plugin?"
+    back: "The plugin's components are provisioned to the subscriber's Cowork environment. The subscriber gains access to the SKILL.md and connector infrastructure — but as a starting point requiring customisation, not a finished deployment. The marketplace distributes architectural knowledge and general best practice; the subscribing organisation provides institutional knowledge specific to their context."
+    tags: ["subscription", "customisation", "marketplace"]
+    difficulty: "basic"
+
+  - id: "ch15-09-skill-pack-003"
+    front: "What is a vertical skill pack?"
+    back: "A domain-specific SKILL.md template that encodes general best practice for a professional function — contract triage, financial research, BIM coordination — without any organisation-specific customisation. It is a starting point: the Persona establishes appropriate professional identity, the Questions defines the function's scope, and the Principles captures operating logic any competent practitioner would recognise as sound."
+    tags: ["vertical-skill-pack", "SKILL.md-template", "best-practice"]
+    difficulty: "basic"
+
+  - id: "ch15-09-connector-package-004"
+    front: "What does a connector package contain that a vertical skill pack does not?"
+    back: "A connector package bundles MCP connectors alongside a SKILL.md template, enabling more complete deployment from a single subscription. The connectors are pre-configured for standard API patterns. The subscriber still configures their own API credentials and permission scopes — but the connector infrastructure itself arrives pre-built rather than requiring commissioning."
+    tags: ["connector-package", "MCP-connectors", "SKILL.md-template"]
+    difficulty: "basic"
+
+  - id: "ch15-09-customisation-005"
+    front: "Both skill packs and connector packages require subscriber customisation. What must the subscriber customise in each case?"
+    back: "Skill pack: a knowledge worker inside the subscribing organisation must add institutional knowledge (jurisdiction settings, clause standards, escalation routing) and configure connectors separately.\nConnector package: the knowledge worker customises the SKILL.md; IT configures connector credentials and permission scopes. The difference is that connector infrastructure is pre-built in the package."
+    tags: ["customisation", "skill-pack", "connector-package"]
+    difficulty: "intermediate"
+
+  - id: "ch15-09-transferability-006"
+    front: "What is the transferability test for marketplace publication?"
+    back: "Is this knowledge valuable to practitioners at other organisations without requiring access to your proprietary systems, client lists, or internal documents? General domain best practice passes — it is the same knowledge a competent practitioner at a competitor would arrive at independently. Organisation-specific institutional knowledge does not pass — it depends on your specific context to make sense."
+    tags: ["transferability-test", "publishability", "IP"]
+    difficulty: "intermediate"
+
+  - id: "ch15-09-not-competitive-007"
+    front: "Why does publishing a SKILL.md to the marketplace not sell the organisation's competitive advantage?"
+    back: "BECAUSE publishable knowledge is general domain best practice that any competent practitioner in the field would recognise — not proprietary institutional knowledge. The expertise that constitutes a competitive advantage (your firm's specific risk thresholds calibrated over twenty years, your client relationship conventions) stays internal. Publishing what your competitors already know is the model."
+    tags: ["competitive-advantage", "publishability", "IP"]
+    difficulty: "intermediate"
+    why: "Tests understanding that the transferability test separates general practice from proprietary knowledge"
+
+  - id: "ch15-09-starting-point-008"
+    front: "A knowledge worker subscribes to a contract triage skill pack expecting to deploy it immediately. What should they expect instead?"
+    back: "BECAUSE the marketplace distributes architecture and general best practice, the skill pack requires significant customisation before deployment. The subscriber must add jurisdiction-specific risk thresholds, their firm's clause standards, their internal escalation routing, and their specific hierarchy. THEREFORE the correct expectation is a well-structured starting point, not a finished product — the customisation is the feature, not a defect."
+    tags: ["skill-pack", "starting-point", "customisation", "applied"]
+    difficulty: "intermediate"
+    why: "Tests the critical expectation-setting about what marketplace plugins provide"
+
+  - id: "ch15-09-economics-009"
+    front: "What makes the marketplace model economically attractive for domain experts?"
+    back: "A SKILL.md that took months to refine generates ongoing subscription revenue from every organisation that benefits from the same logic. The marginal cost of each additional subscriber is effectively zero. Revenue per subscriber runs in the range of hundreds of pounds per month. The economic case is strong specifically because the knowledge is genuinely transferable — the same expertise serves many organisations without additional authorship effort."
+    tags: ["economics", "marketplace", "subscription-revenue"]
+    difficulty: "intermediate"
+
+  - id: "ch15-09-borderline-010"
+    front: "A compliance lawyer has developed a deep understanding of how courts have interpreted indemnity clauses in technology contracts over the past 15 years of their practice. Is this publishable as a skill pack?"
+    back: "BECAUSE the 15 years of case interpretation based on publicly available case law and general professional training is knowledge any competent practitioner in the field could independently develop, the general framework and patterns are transferable. HOWEVER, if the knowledge depends on specific cases their firm handled with confidential facts or their clients' risk tolerances, that portion is not publishable. The answer is: the general framework passes; the firm-specific calibration does not."
+    tags: ["transferability-test", "applied", "borderline"]
+    difficulty: "advanced"
+    why: "Tests ability to apply the transferability test to a nuanced borderline case"

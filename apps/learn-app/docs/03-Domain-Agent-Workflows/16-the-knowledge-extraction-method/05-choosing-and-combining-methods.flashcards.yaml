@@ -1,0 +1,68 @@
+deck:
+  id: "ch16-05-choosing-and-combining-methods"
+  title: "Choosing and Combining Methods"
+  description: "Domain-method mapping, extraction sequences, and the reconciliation principle for A+B domains."
+  tags: ["method-selection", "domain-mapping", "reconciliation-principle", "A-primary", "B-primary"]
+  version: 1
+
+cards:
+  - id: "ch16-05-default-rule-001"
+    front: "What is the default rule for choosing between Method A and Method B?"
+    back: "Method A when the critical knowledge lives in people's heads. Method B when it lives in documents. Both when it lives in both. The choice follows from where the domain's critical knowledge resides."
+    tags: ["method-selection", "default-rule"]
+    difficulty: "basic"
+
+  - id: "ch16-05-a-primary-002"
+    front: "Which domains are classified as Method A-primary, and why?"
+    back: "Finance and sales. The documented methodology (valuation frameworks, qualification criteria) is the scaffolding, but the critical knowledge is the experienced professional's calibration of when the scaffolding applies cleanly and when it does not. The substance is tacit."
+    tags: ["A-primary", "finance", "sales"]
+    difficulty: "basic"
+
+  - id: "ch16-05-b-primary-003"
+    front: "Which domains are classified as Method B-primary, and why?"
+    back: "HR and operations. The critical knowledge genuinely lives in handbooks, policy archives, compliance guides, and standard operating procedures. Expert judgement resolves contradictions and fills gaps, but the foundational knowledge is documented."
+    tags: ["B-primary", "HR", "operations"]
+    difficulty: "basic"
+
+  - id: "ch16-05-both-004"
+    front: "Which domains require both methods (A+B), and why?"
+    back: "Legal, healthcare, and architecture. These have both a substantial tacit component (the lawyer's risk instinct, the clinician's judgement, the architect's spatial reasoning) and a substantial documented component (jurisdiction law, clinical protocols, building codes)."
+    tags: ["A-plus-B", "legal", "healthcare", "architecture"]
+    difficulty: "basic"
+
+  - id: "ch16-05-a-primary-sequence-005"
+    front: "What is the extraction sequence for A-primary domains?"
+    back: "Start with the Method A interview — the resulting SKILL.md draft is the foundation. Then run a targeted Pass One against relevant documented standards — a verification sweep to ensure the SKILL.md does not contradict a documented standard the expert may have forgotten or taken for granted."
+    tags: ["extraction-sequence", "A-primary"]
+    difficulty: "intermediate"
+
+  - id: "ch16-05-b-primary-sequence-006"
+    front: "What is the extraction sequence for B-primary domains?"
+    back: "Start with the full three-pass document extraction. Then conduct a focused Method A interview organised around the contradiction map and gap list from Passes Two and Three. The expert resolves ambiguities the documents create rather than providing the foundational knowledge."
+    tags: ["extraction-sequence", "B-primary"]
+    difficulty: "intermediate"
+
+  - id: "ch16-05-reconciliation-007"
+    front: "State the reconciliation principle for A+B domains."
+    back: "Documented standards take precedence over expert judgement for matters of regulatory compliance and professional liability. Expert judgement takes precedence over documented standards for operational decisions within the scope of the professional's competence. The documented standard sets the boundaries; expert judgement operates within them."
+    tags: ["reconciliation-principle", "A-plus-B"]
+    difficulty: "intermediate"
+
+  - id: "ch16-05-credit-analyst-reconciliation-008"
+    front: "How does the reconciliation principle apply to the credit analyst example?"
+    back: "The bank's credit policy (documented standard) specifies a minimum DSCR of 1.25x — this is a hard constraint for regulatory compliance. The analyst's judgement that a 1.15x DSCR with strong covenants may be worth committee review is operational guidance within the constraint. The SKILL.md encodes both: the minimum as non-negotiable, the analyst's assessment framework as contextual guidance."
+    tags: ["reconciliation-principle", "credit-analyst"]
+    difficulty: "intermediate"
+    why: "Tests ability to apply the reconciliation principle to a concrete case"
+
+  - id: "ch16-05-not-rigid-009"
+    front: "Why is the domain-method mapping described as a starting point rather than a rigid classification?"
+    back: "Specific organisations within a domain may differ based on how mature their documentation is, how much institutional knowledge has been codified, and how much remains in expert heads. A highly documented sales organisation might be closer to B-primary than the domain default suggests."
+    tags: ["domain-mapping", "flexibility"]
+    difficulty: "intermediate"
+
+  - id: "ch16-05-three-diagnostic-010"
+    front: "What are the three diagnostic questions for classifying your own domain?"
+    back: "1. If the most experienced person left and a competent new hire had all documents, what would they struggle with? (Points to tacit knowledge — Method A)\n2. If the experienced person lost all documents, what would they need to reconstruct? (Points to explicit knowledge — Method B)\n3. If both answers are substantial, your domain requires both methods."
+    tags: ["domain-classification", "diagnostic-questions"]
+    difficulty: "intermediate"

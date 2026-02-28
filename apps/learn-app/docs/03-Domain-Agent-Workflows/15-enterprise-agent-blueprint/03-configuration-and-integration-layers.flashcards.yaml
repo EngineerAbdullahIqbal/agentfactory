@@ -1,0 +1,68 @@
+deck:
+  id: "ch15-03-configuration-and-integration-layers"
+  title: "The Configuration and Integration Layers"
+  description: "The config.yaml structure, MCP connector function and lifecycle, connector failure modes, and the infrastructure literacy requirement for knowledge workers."
+  tags: ["config.yaml", "MCP-connectors", "permission-scope", "connector-failure", "infrastructure-literacy"]
+  version: 1
+
+cards:
+  - id: "ch15-03-configyaml-001"
+    front: "Who authors the config.yaml, and what is the knowledge worker's role with respect to it?"
+    back: "IT authors the config.yaml. The knowledge worker's role is to understand it well enough to verify that connectors and permission scopes match their intentions, and to flag discrepancies to IT. Knowledge workers read and verify; they do not author it."
+    tags: ["config.yaml", "ownership", "knowledge-worker"]
+    difficulty: "basic"
+
+  - id: "ch15-03-sections-002"
+    front: "What are the four main sections of a config.yaml, and what does each configure?"
+    back: "1. Metadata — name, version, description, model (the plugin's identity card)\n2. Interface — input types and output format (how users interact)\n3. Connectors — which external systems the agent can access and with what permission\n4. Governance — audit logging, output review, escalation routing, shadow mode"
+    tags: ["config.yaml", "sections"]
+    difficulty: "basic"
+
+  - id: "ch15-03-permission-003"
+    front: "What does the permission field in a connector entry mean? What is the difference between read and write?"
+    back: "The permission field defines what authority the agent has with that connector. Read permission means the agent can query data but cannot create, update, or delete anything. Write permission allows the agent to modify data in the external system — requiring considerably more scrutiny during configuration."
+    tags: ["permission-scope", "read-write", "connector"]
+    difficulty: "basic"
+
+  - id: "ch15-03-scope-004"
+    front: "What does the scope field in a connector entry do, and why is it important?"
+    back: "Scope narrows what the agent can see within a connector — for example, allowing access to 'market_data' and 'company_financials' within Bloomberg but not other data categories. This enforces the principle of least privilege: the agent only accesses the data its workflow actually requires."
+    tags: ["permission-scope", "connector", "security"]
+    difficulty: "basic"
+
+  - id: "ch15-03-enforcement-005"
+    front: "Who enforces permission boundaries — the SKILL.md or the config.yaml?"
+    back: "The config.yaml, enforced by the Cowork runtime. If the SKILL.md were to instruct the agent to access data outside its configured scope, the attempt would fail silently. The config.yaml is the authority; the SKILL.md is subordinate to it."
+    tags: ["permission-scope", "config.yaml", "SKILL.md", "enforcement"]
+    difficulty: "intermediate"
+
+  - id: "ch15-03-connector-function-006"
+    front: "What does an MCP connector do?"
+    back: "An MCP connector is a continuously running service that listens for queries from the agent, retrieves the requested data from an external system, and returns it in a format the agent can use. It handles authentication, executes the API call, normalises data formats, and returns results — the agent does not connect to external systems directly."
+    tags: ["MCP-connector", "function"]
+    difficulty: "basic"
+
+  - id: "ch15-03-three-states-007"
+    front: "What are the three states a connector can be in? Which one is dangerous and why?"
+    back: "1. Working — connector is running, authenticating, and returning live data\n2. Explicitly unavailable — connector is down; the agent reports it cannot access that data source (correct failure mode)\n3. Fabricating data — the dangerous state: connector is unavailable but the agent invents plausible-looking data rather than reporting the gap. Dangerous because the fabrication is undetectable without external verification."
+    tags: ["connector-failure", "fabrication", "states"]
+    difficulty: "intermediate"
+
+  - id: "ch15-03-fabrication-008"
+    front: "Why is fabricated connector data categorically more dangerous than explicit unavailability?"
+    back: "BECAUSE when a connector reports unavailability, the user knows the limitation and can seek data elsewhere. When data is fabricated, the output looks like real market data — numbers are plausible, format is correct — but the information is invented. THEREFORE acting on fabricated data in a financial or professional context can have serious consequences, with no visible signal that the data is unreliable."
+    tags: ["fabrication", "connector-failure", "risk"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why the third failure mode is qualitatively different from the second"
+
+  - id: "ch15-03-infrastructure-literacy-009"
+    front: "What is infrastructure literacy, and what does it require of a knowledge worker?"
+    back: "Infrastructure literacy means knowing enough about the systems you depend on to detect problems accurately, describe them precisely, and have productive conversations with the people who fix them. It does not require becoming a systems engineer — it requires: verifying connectors match workflow needs, recognising stale or unavailable data, and describing connector problems accurately when reporting to IT."
+    tags: ["infrastructure-literacy", "knowledge-worker"]
+    difficulty: "intermediate"
+
+  - id: "ch15-03-shadow-mode-010"
+    front: "What does shadow_mode: false mean in a config.yaml governance section?"
+    back: "Shadow mode false means the agent is operating autonomously — its outputs go directly to users without parallel human comparison. Shadow mode true means the agent operates in parallel with human reviewers during a validation period. Once an agent passes its shadow mode evaluation, this setting is turned off."
+    tags: ["shadow-mode", "governance", "config.yaml"]
+    difficulty: "intermediate"

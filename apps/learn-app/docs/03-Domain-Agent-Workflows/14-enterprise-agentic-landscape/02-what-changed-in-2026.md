@@ -135,6 +135,8 @@ These were not staged demonstrations with curated data. They ran against live sy
 
 The financial markets registered the implications. The enterprise software sector saw significant valuation adjustments as analysts repriced the probability that organisations would renew seat licences for tools that an agent could now operate on their behalf.
 
+The repricing was not speculative. Analysts built models around a concrete question: if an agent can query a CRM, generate a pipeline report, and draft a forecast summary, how many seat licences does a sales operations team actually need? Multiply that logic across every function that relies on per-seat enterprise software -- financial planning, procurement, HR administration, project management -- and the aggregate effect on renewal rates becomes material. Software companies whose revenue depended on high seat counts saw their forward multiples compress. The market was not reacting to a product announcement. It was repricing a structural shift in how enterprise software would be consumed.
+
 ## What the Platforms Made Possible
 
 Both Cowork and Frontier, despite their architectural differences (which you will examine in Lesson 4), share three capabilities that the 2024 generation lacked:
@@ -146,6 +148,14 @@ Both Cowork and Frontier, despite their architectural differences (which you wil
 | **Production deployment** | Agents can be deployed into live enterprise workflows with appropriate security and governance | Moves organisations past the Pilot Trap into actual deployment |
 
 None of these capabilities required a breakthrough in AI model performance. The models of mid-2025 were capable enough. What was missing was the platform layer that made those models accessible to the people who hold the knowledge.
+
+## What Deployment Looks Like Now
+
+Consider what these capabilities mean in practice. A CFO at a mid-market industrial firm deploys a financial research agent that reflects how her organisation actually analyses credit risk -- not a generic model, but one that carries her team's specific weighting of covenant triggers, her sector's exposure thresholds, and the escalation logic her analysts have refined over a decade of credit committee reviews. She configured it in professional language. No developer touched it. It is in production, processing counterparty assessments against live data feeds, and her team reviews the outputs the same way they would review an analyst's first draft.
+
+A lead architect at a multidisciplinary design firm deploys a BIM coordination assistant that knows his firm's BIM execution plan, its spatial reasoning conventions, and the escalation logic it uses when a coordination issue crosses discipline boundaries. When the structural model conflicts with the mechanical routing, the agent does not just flag the clash -- it applies the firm's own resolution hierarchy, routes the issue to the correct discipline lead, and attaches the relevant sections of the project's coordination protocol. The architect wrote those instructions in the same language he uses in design team meetings. The agent operationalises twenty years of coordination practice that previously lived in his head and in scattered PDF standards documents.
+
+A compliance officer at a regional insurance carrier configures a contract triage tool that applies the specific jurisdiction constraints and clause standards her legal department has developed over twenty years of practice. The agent reads incoming contracts, identifies non-standard clauses, maps them against her department's risk taxonomy, and routes flagged items to the appropriate reviewer with context. She did not write code. She described her department's review criteria, its risk categories, and its escalation rules -- the same knowledge she would explain to a new hire, now encoded in an agent that processes contracts at a pace her team never could. None of these deployments required a developer. All of them are running in production environments today.
 
 ## The Structural Implication
 

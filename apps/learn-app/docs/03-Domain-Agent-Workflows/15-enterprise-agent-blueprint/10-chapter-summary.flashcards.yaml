@@ -1,0 +1,69 @@
+deck:
+  id: "ch15-10-chapter-summary"
+  title: "Chapter Summary — The Enterprise Agent Blueprint"
+  description: "Synthesis of the complete chapter architecture: three-component model, Agent Skills Pattern, context hierarchy, governance layer, ownership model, and marketplace — connected as a coherent deployment system."
+  tags: ["chapter-summary", "enterprise-agent-blueprint", "SKILL.md", "three-component-model", "governance", "ownership-model", "synthesis"]
+  version: 1
+
+cards:
+  - id: "ch15-10-architecture-chain-001"
+    front: "Summarise the logical chain connecting the nine lessons of Chapter 15."
+    back: "Definition → SKILL.md (what the intelligence layer looks like) → config.yaml and connectors (deployment environment and data infrastructure) → context hierarchy (why SKILL.md instructions sometimes fail) → production SKILL.md example → connector ecosystem (what systems can be accessed) → governance (how trust accumulates) → ownership model (who maintains what) → marketplace (what happens when expertise is generalisable)"
+    tags: ["chapter-chain", "synthesis", "architecture"]
+    difficulty: "advanced"
+
+  - id: "ch15-10-skillmd-central-002"
+    front: "Which component is not one component among three but the component everything else serves?"
+    back: "The SKILL.md. The config.yaml configures the environment in which the SKILL.md operates. The connectors supply the data the SKILL.md instructs the agent to use. The governance layer enforces the boundaries the SKILL.md defines. Remove the SKILL.md and you have deployment infrastructure without intelligence."
+    tags: ["SKILL.md", "central-component", "synthesis"]
+    difficulty: "intermediate"
+
+  - id: "ch15-10-authorial-role-003"
+    front: "Why is the knowledge worker's role described as authorial rather than technical?"
+    back: "Writing the SKILL.md requires domain expertise, not programming ability. Reading the config.yaml requires infrastructure literacy, not systems engineering. Designing the shadow mode rubric requires knowing what accuracy means in the domain, not statistical training. Identifying HITL gates requires understanding professional accountability, not governance theory. The architecture was designed so that the person holding domain expertise can deploy without technical intermediaries for the core intelligence layer."
+    tags: ["knowledge-worker", "authorial-role", "domain-expertise"]
+    difficulty: "intermediate"
+
+  - id: "ch15-10-governance-trust-004"
+    front: "Why is governance described as the beginning of the trust story rather than the end of the deployment story?"
+    back: "BECAUSE shadow mode, audit trails, and HITL gates produce the evidence that converts a promising demonstration into a deployable system — 30 days of reviewed outputs justify autonomous operation, an immutable audit trail turns potential incidents into defensible processes, and HITL gates ensure human accountability where it genuinely matters. THEREFORE governance is not what limits an agent; it is what convinces a sceptical compliance function or regulated industry oversight body to permit the agent to do more."
+    tags: ["governance", "trust", "regulated-industries"]
+    difficulty: "intermediate"
+    why: "Tests the reframe that governance enables deployment rather than constraining it"
+
+  - id: "ch15-10-three-components-owners-005"
+    front: "Name the three components of a Cowork plugin and their owners."
+    back: "1. SKILL.md — knowledge worker (also owns validation during shadow mode)\n2. config.yaml — IT (with knowledge worker specification of requirements)\n3. Connector scripts — IT / Developer\nThe administrator owns governance configuration, which sits above these components."
+    tags: ["three-components", "owners", "review"]
+    difficulty: "basic"
+
+  - id: "ch15-10-silent-override-review-006"
+    front: "Why does a SKILL.md instruction sometimes fail to produce the expected behaviour?"
+    back: "Because the three-level context system means higher levels silently override lower levels. Platform context (Anthropic) overrides organisation context (administrator) overrides plugin context (SKILL.md). When a SKILL.md instruction conflicts with an organisation-level policy, the agent simply behaves as the higher level requires, with no announcement."
+    tags: ["silent-override", "context-hierarchy", "review"]
+    difficulty: "basic"
+
+  - id: "ch15-10-shadow-criteria-review-007"
+    front: "What are the two criteria for transitioning a plugin out of shadow mode?"
+    back: "1. A minimum of 30 days in shadow mode\n2. 95% accuracy across a representative sample with no critical errors in the preceding 10 days"
+    tags: ["shadow-mode", "transition-criteria", "review"]
+    difficulty: "basic"
+
+  - id: "ch15-10-what-chapter-16-008"
+    front: "What gap does Chapter 16 address that Chapter 15 deliberately left open?"
+    back: "How to extract and encode domain expertise into the SKILL.md. Chapter 15 taught the architecture — what a production-quality SKILL.md looks like and what it must contain. Chapter 16 teaches the methodology: how to make tacit expertise explicit, translating the professional judgement in a domain expert's head into the Persona, Questions, and Principles that determine what a deployed agent does."
+    tags: ["chapter-16", "knowledge-extraction", "SKILL.md"]
+    difficulty: "intermediate"
+
+  - id: "ch15-10-ownership-diagnose-009"
+    front: "Using the ownership model, who resolves each of these problems: (1) agent cites outdated regulatory standard, (2) users cannot access the plugin, (3) agent draws on unauthorised client data?"
+    back: "1. Knowledge worker — the SKILL.md Principles encode the old standard; the knowledge worker must update it\n2. IT or Administrator — connector permission change (IT) or access control misconfiguration (admin); the SKILL.md has not changed\n3. IT — connector scope is configured in config.yaml and connector scripts, both owned by IT; a scope misconfiguration lives in the integration layer"
+    tags: ["ownership-model", "diagnosis", "applied", "review"]
+    difficulty: "advanced"
+    why: "Tests ability to apply the ownership model to three distinct failure types as a synthesis exercise"
+
+  - id: "ch15-10-marketplace-transferability-010"
+    front: "What is the single question that determines whether domain expertise belongs in the Cowork marketplace?"
+    back: "Could a practitioner at a different organisation, using only publicly available information and general professional training, arrive at the same knowledge independently? If yes, it is transferable and potentially publishable. If the knowledge depends on access to your clients, your cases, your systems, or your internal documents to make sense, it is not transferable."
+    tags: ["marketplace", "transferability-test", "review"]
+    difficulty: "intermediate"

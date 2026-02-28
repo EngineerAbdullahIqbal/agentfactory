@@ -1,0 +1,70 @@
+deck:
+  id: "ch15-02-the-intelligence-layer-skill-md"
+  title: "The Intelligence Layer — SKILL.md"
+  description: "The SKILL.md as plain-English intelligence layer, the Agent Skills Pattern (Persona, Questions, Principles), and why identity governs ambiguous situations more reliably than rules."
+  tags: ["SKILL.md", "agent-skills-pattern", "persona", "questions", "principles", "intelligence-layer"]
+  version: 1
+
+cards:
+  - id: "ch15-02-what-skillmd-001"
+    front: "What is a SKILL.md file?"
+    back: "A plain-text document, written in English with no programming language, that tells an agent who it is, what it knows, how to behave, and what it must never do. It is written by a domain expert — not a developer — and is the intelligence layer of a Cowork plugin."
+    tags: ["SKILL.md", "definition"]
+    difficulty: "basic"
+
+  - id: "ch15-02-who-writes-002"
+    front: "Who writes a SKILL.md, and why does this matter?"
+    back: "A domain expert — a lawyer, analyst, architect, or clinician — not a developer. This matters because it closes the knowledge transfer gap: domain expertise can reach a deployed system without requiring the expert to learn to code. A compliance officer can write it. A project manager can write it."
+    tags: ["SKILL.md", "knowledge-transfer", "domain-expert"]
+    difficulty: "basic"
+
+  - id: "ch15-02-three-sections-003"
+    front: "Name the three sections of the Agent Skills Pattern."
+    back: "1. Persona — defines the agent's professional identity, authority, and tone\n2. Questions — defines scope (what the agent handles and what it redirects)\n3. Principles — defines operating logic, constraints, escalation thresholds, and quality standards"
+    tags: ["agent-skills-pattern", "three-sections"]
+    difficulty: "basic"
+
+  - id: "ch15-02-persona-function-004"
+    front: "What is the function of the Persona section, and why is it described as a functional specification rather than a marketing exercise?"
+    back: "Persona defines the agent's professional identity. It is a functional specification because it governs how the agent behaves in situations no individual rule anticipated — identity provides a stable reference point ('what would a professional of this standing do here?') that is more robust than any finite rule list."
+    tags: ["persona", "functional-specification"]
+    difficulty: "intermediate"
+
+  - id: "ch15-02-identity-rules-005"
+    front: "Why does identity govern ambiguous situations more reliably than rules?"
+    back: "Rules govern situations that were anticipated when the rules were written. Professional identity governs situations that were not anticipated. An agent with a well-specified Persona has a stable reference point — who it is — that shapes responses to queries no individual rule covers. A vague Persona produces inconsistent agents; a precise Persona produces predictable, trustworthy ones."
+    tags: ["persona", "identity", "rules"]
+    difficulty: "intermediate"
+    why: "Core insight of the Persona section — distinguishing rule-based and identity-based governance"
+
+  - id: "ch15-02-questions-scope-006"
+    front: "Why is the out-of-scope boundary in the Questions section as important as the in-scope list?"
+    back: "An agent without a defined out-of-scope boundary will attempt queries it cannot handle well, producing confident-sounding outputs in areas where it has no grounded expertise — the professional context version of hallucination. The out-of-scope boundary defines where the agent redirects rather than responds, which is critical for trust in high-stakes professional domains."
+    tags: ["questions", "scope", "out-of-scope"]
+    difficulty: "intermediate"
+
+  - id: "ch15-02-principles-generic-007"
+    front: "What is the difference between a generic principle and a domain-specific principle? Give an example of each."
+    back: "Generic: 'Be accurate.' — aspirational, gives the agent no concrete guidance.\nDomain-specific: 'Flag any clause referencing a jurisdiction outside England and Wales.' — actionable, tells the agent exactly what to look for and what to do.\nDomain-specific principles produce consistent, reviewable results; generic ones produce unpredictable outputs."
+    tags: ["principles", "domain-specific", "generic"]
+    difficulty: "intermediate"
+
+  - id: "ch15-02-missing-section-008"
+    front: "What happens to an agent when the Questions section has no out-of-scope boundary?"
+    back: "BECAUSE the agent has no defined boundary, it will attempt to answer queries it cannot handle reliably. THEREFORE it produces confident-sounding outputs in areas where it has no grounded expertise — creating a hallucination risk in professional contexts where the output looks authoritative but is functionally unreliable."
+    tags: ["questions", "out-of-scope", "risk"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the operational consequence of missing out-of-scope specification"
+
+  - id: "ch15-02-intelligence-009"
+    front: "Why is the SKILL.md called the intelligence layer rather than a configuration file?"
+    back: "BECAUSE a configuration file sets deployment parameters (model version, token limits, permissions). The SKILL.md determines what the agent knows, who it is, how it decides, and what it will not do. THEREFORE two agents with identical configuration files but different SKILL.md files are fundamentally different agents — the intelligence is in the SKILL.md, not the configuration."
+    tags: ["SKILL.md", "intelligence-layer", "configuration"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why SKILL.md is categorically different from config.yaml"
+
+  - id: "ch15-02-extraction-010"
+    front: "Why is writing a production-quality SKILL.md described as a knowledge extraction exercise rather than a formatting exercise?"
+    back: "Because the domain expert must articulate, often for the first time in explicit form, the professional standards, decision-making logic, and escalation thresholds that ordinarily exist as institutional memory and professional judgement. The difficulty is making tacit expertise explicit — not learning technical syntax."
+    tags: ["SKILL.md", "knowledge-extraction", "tacit-knowledge"]
+    difficulty: "advanced"

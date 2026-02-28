@@ -1,0 +1,70 @@
+deck:
+  id: "ch15-01-what-a-plugin-actually-is"
+  title: "What a Plugin Actually Is"
+  description: "Cowork plugin definition, the five structural properties, the three-component model, and transparency as an architectural property."
+  tags: ["cowork-plugin", "plugin-architecture", "three-component-model", "transparency", "enterprise-ai"]
+  version: 1
+
+cards:
+  - id: "ch15-01-definition-001"
+    front: "What is a Cowork plugin?"
+    back: "A domain-specific agent deployed inside the Cowork environment — one that acts (not just responds), is connected to real systems operating against real data, and operates within infrastructure that handles authentication, governance, and audit."
+    tags: ["definition", "cowork-plugin"]
+    difficulty: "basic"
+
+  - id: "ch15-01-properties-002"
+    front: "Name the five structural properties every Cowork plugin must have."
+    back: "1. Identity — a defined name, persona, and declared capabilities\n2. Instructions — explicit guidance governing the agent's behaviour\n3. Connections — links to external systems via MCP\n4. Governance — rules defining who can use it and what it can do\n5. Performance record — an automatic log of every interaction and output"
+    tags: ["five-properties", "definition"]
+    difficulty: "basic"
+
+  - id: "ch15-01-components-003"
+    front: "Name the three components of a Cowork plugin and who owns each."
+    back: "1. SKILL.md (intelligence layer) — owned by the knowledge worker\n2. config.yaml (metadata and configuration layer) — owned by IT administrator\n3. Connector scripts (MCP integration layer) — owned by IT / Developer"
+    tags: ["three-components", "ownership"]
+    difficulty: "basic"
+
+  - id: "ch15-01-skillmd-004"
+    front: "What does the SKILL.md component deliver?"
+    back: "The agent's persona, operating principles, domain constraints, and response behaviours — written in plain English by the knowledge worker who owns the domain."
+    tags: ["SKILL.md", "intelligence-layer"]
+    difficulty: "basic"
+
+  - id: "ch15-01-configyaml-005"
+    front: "What does the config.yaml component deliver?"
+    back: "Deployment settings configured by the IT administrator: model version, token limits, access permissions, and compliance flags."
+    tags: ["config.yaml", "configuration-layer"]
+    difficulty: "basic"
+
+  - id: "ch15-01-connector-006"
+    front: "What do connector scripts deliver, and who builds them?"
+    back: "Authenticated connections to enterprise systems — built and maintained by IT and developers. They handle authentication, data retrieval, and format translation so the agent can access live enterprise data."
+    tags: ["connector-scripts", "MCP", "integration-layer"]
+    difficulty: "basic"
+
+  - id: "ch15-01-transparency-007"
+    front: "Why is transparency described as an architectural property of Cowork plugins rather than an incidental feature?"
+    back: "BECAUSE every aspect of the plugin is inspectable by design — the SKILL.md is readable by the knowledge worker, config.yaml by IT, audit logs by compliance. THEREFORE no property is a black box. This is not transparency by aspiration but by structural requirement."
+    tags: ["transparency", "architectural-property"]
+    difficulty: "intermediate"
+    why: "Tests whether student understands the distinction between structural transparency and optional transparency features"
+
+  - id: "ch15-01-regulated-008"
+    front: "Why does transparency as an architectural property matter specifically for regulated industries?"
+    back: "Regulated environments (financial services, healthcare, legal) cannot deploy systems they cannot audit. Historic enterprise AI failed because organisations could not inspect what their AI was doing. A Cowork plugin closes that gap by design — every property is inspectable by the right role, removing the need to trust the agent and replacing it with the ability to verify it."
+    tags: ["transparency", "regulated-industries", "governance"]
+    difficulty: "intermediate"
+
+  - id: "ch15-01-noprototype-009"
+    front: "An agent has all three SKILL.md components configured but no governance framework. Is it a plugin? Why or why not?"
+    back: "No — it is a prototype. The five structural properties are not optional features configured later; they are the structural requirements for anything that qualifies as a plugin. An agent without a governance framework has not met the minimum definition."
+    tags: ["five-properties", "definition", "applied"]
+    difficulty: "advanced"
+    why: "Tests understanding that the five structural properties are threshold requirements, not optional enhancements"
+
+  - id: "ch15-01-separation-010"
+    front: "Why does the three-component model assign each component to a single owner?"
+    back: "BECAUSE ownership clarity is a governance feature — when something goes wrong, the ownership model identifies which layer is responsible and who can fix it. THEREFORE mixing ownership across roles creates accountability ambiguity and makes failures harder to diagnose and resolve."
+    tags: ["ownership", "three-components", "governance"]
+    difficulty: "intermediate"
+    why: "Tests whether student understands the governance rationale for separation of ownership, not just the division itself"

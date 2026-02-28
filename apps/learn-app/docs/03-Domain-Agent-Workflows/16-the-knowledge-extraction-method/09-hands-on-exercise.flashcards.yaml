@@ -1,0 +1,56 @@
+deck:
+  id: "ch16-09-hands-on-exercise"
+  title: "Hands-On Exercise — First Extraction and SKILL.md Draft"
+  description: "The complete extraction-to-validation cycle applied to a real domain, including interview, SKILL.md drafting, scenario design, and targeted revision."
+  tags: ["hands-on", "exercise", "extraction-cycle", "first-draft", "revision"]
+  version: 1
+
+cards:
+  - id: "ch16-09-five-steps-001"
+    front: "What are the five steps of the hands-on exercise?"
+    back: "1. Conduct a Method A interview (partner or self-interview)\n2. Write a SKILL.md draft from extraction material\n3. Design a validation scenario set (20 scenarios, four categories)\n4. Score the draft against scenarios and identify weaknesses\n5. Execute targeted rewrite based on failure patterns"
+    tags: ["five-steps", "exercise-structure"]
+    difficulty: "basic"
+
+  - id: "ch16-09-draft-gap-002"
+    front: "What does the gap between the first draft and the revised draft demonstrate?"
+    back: "It is a direct measure of how much tacit knowledge the first draft was relying on without encoding. The first draft captures what the expert could articulate directly; the revision adds the knowledge surfaced by validation failures — the assumptions that were never made explicit."
+    tags: ["draft-gap", "tacit-knowledge", "articulation-gap"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the exercise's central insight"
+
+  - id: "ch16-09-partner-vs-self-003"
+    front: "Why do partner interviews produce richer material than self-interviews?"
+    back: "A partner can follow up on pauses and qualifications, probe answers that seem too general, and push for specificity where the expert might accept their own vague formulations. Self-interviews require extra discipline to avoid the semantic memory trap of answering with general descriptions rather than specific episodes."
+    tags: ["partner-interview", "self-interview"]
+    difficulty: "intermediate"
+
+  - id: "ch16-09-methodology-proof-004"
+    front: "Why is the hands-on exercise described as a proof of concept for the methodology?"
+    back: "It demonstrates that the Knowledge Extraction Method produces a concrete, testable artifact when applied to a real domain — not a theoretical exercise. The student ends with a validated SKILL.md draft that has been through at least one round of the Validation Loop."
+    tags: ["proof-of-concept", "methodology"]
+    difficulty: "basic"
+
+  - id: "ch16-09-scenario-design-skill-005"
+    front: "What does designing validation scenarios force the student to do?"
+    back: "Think about their domain from four angles simultaneously: what the agent should handle routinely (standard), where its scope ends (edge), what could expose gaps in instructions (adversarial), and what carries consequences serious enough to require escalation (high-stakes)."
+    tags: ["scenario-design", "four-angles"]
+    difficulty: "intermediate"
+
+  - id: "ch16-09-common-first-draft-006"
+    front: "What is the most common problem with first-draft SKILL.md files in the exercise?"
+    back: "Vague Principles. Students write aspirational instructions ('be accurate', 'prioritise quality') rather than testable ones that describe specific behaviour in specific situations. The validation step reveals this because vague principles produce inconsistent results across scenarios."
+    tags: ["first-draft", "vague-principles", "common-mistake"]
+    difficulty: "intermediate"
+
+  - id: "ch16-09-not-writing-exercise-007"
+    front: "Why is the exercise described as a knowledge extraction exercise rather than a writing exercise?"
+    back: "The quality of the SKILL.md depends on the quality of the extraction, not the quality of the prose. A well-extracted interview with specific notes produces a strong SKILL.md even with plain language. A poorly extracted interview with generic notes produces a weak SKILL.md regardless of writing skill."
+    tags: ["extraction-vs-writing", "exercise-purpose"]
+    difficulty: "intermediate"
+
+  - id: "ch16-09-credit-analyst-template-008"
+    front: "How does the credit analyst worked example function in the exercise?"
+    back: "It provides a template for each step — showing what a completed interview note, SKILL.md draft, scenario set, scoring result, and targeted rewrite look like in practice. Students can follow the template structure while adapting the content to their own domain."
+    tags: ["credit-analyst", "template", "worked-example"]
+    difficulty: "basic"

@@ -65,13 +65,13 @@ cards:
 
   - id: "ch14-04-two-platforms-010"
     front: "Name three enterprise systems that have production-ready Cowork connectors."
-    back: "Any three from: Salesforce, HubSpot, Gmail, Outlook, Confluence, Notion, SharePoint, Snowflake, BigQuery, DocuSign, Jira, Bloomberg, Revit APIs, clinical docs, legal research platforms."
+    back: "Any three from: Salesforce, HubSpot, Gmail, Outlook, Notion, Snowflake, BigQuery, DocuSign, Jira. Industry-specific connectors also exist for financial data terminals, Revit APIs, clinical documentation, and legal research platforms."
     tags: ["cowork", "connectors"]
     difficulty: "basic"
 
   - id: "ch14-04-two-platforms-011"
     front: "What consulting firms partner with OpenAI for Frontier deployments?"
-    back: "Deloitte, McKinsey, Accenture, and Capgemini, along with OpenAI's own Forward Deployed Engineers."
+    back: "McKinsey, BCG (Boston Consulting Group), Accenture, and Capgemini, along with OpenAI's own Forward Deployed Engineers."
     tags: ["frontier", "deployment"]
     difficulty: "basic"
 

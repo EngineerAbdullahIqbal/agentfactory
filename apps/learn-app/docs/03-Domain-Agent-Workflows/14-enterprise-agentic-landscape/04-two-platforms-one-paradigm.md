@@ -114,9 +114,9 @@ The division of labour is deliberate. You write the intelligence (SKILL.md). IT 
 
 ### Production Connectors
 
-Cowork ships with production-ready connectors for the systems knowledge workers already use: Salesforce, HubSpot, Gmail, Outlook, Confluence, Notion, SharePoint, Snowflake, BigQuery, DocuSign, Jira, Bloomberg, Revit APIs, clinical documentation systems, and legal research platforms. When you write a SKILL.md that says "pull the latest pipeline data from Salesforce," the connector handles authentication, API calls, and data formatting. You never see it.
+Cowork ships with production-ready connectors for the systems knowledge workers already use: Salesforce, HubSpot, Gmail, Outlook, Notion, Snowflake, BigQuery, DocuSign, and Jira. Industry-specific connectors are in development or early production for financial data terminals, Revit model APIs, clinical documentation systems, and legal research platforms. When you write a SKILL.md that says "pull the latest pipeline data from Salesforce," the connector handles authentication, API calls, and data formatting. You never see it.
 
-The connector ecosystem is Anthropic's primary infrastructure investment. Connector builders receive a share of the subscription revenue from deployments that use their connectors, creating the same kind of developer community dynamics that have driven the expansion of other platform ecosystems. The marketplace through which connectors are published and distributed is growing rapidly, and this revenue-sharing model is its engine.
+The connector ecosystem is Anthropic's primary infrastructure investment. The open-source MCP standard means third-party developers can build connectors for any system, and the growing marketplace through which connectors are published and distributed is creating the same kind of developer community dynamics that have driven the expansion of other platform ecosystems.
 
 ### Deployment Model
 
@@ -134,11 +134,13 @@ Frontier takes a fundamentally different approach. Where Cowork gives individual
 
 Think of a semantic layer as a translation service that understands the meaning of data across every system in the organisation. When the finance team says "revenue," the sales team says "bookings," and the operations team says "throughput," a semantic layer knows these are related concepts and can reason across them.
 
+In practice, this means an agent can move from a customer complaint logged in the CRM to a refund authorisation in the ERP to a follow-up communication drafted in the email system -- without a human touching the handoffs between departments. The agent carries context across each boundary: it knows why the refund was triggered, what the customer's history looks like, and what the finance team's approval threshold is. That cross-departmental continuity is what a single-team agent cannot replicate, and it is the capability that justifies Frontier's enterprise-wide deployment model.
+
 Frontier manages agent identity, permissions, and cross-department context centrally. An agent deployed through Frontier does not belong to one team. It belongs to the organisation and can access data and workflows across departments -- subject to governance rules defined at the enterprise level.
 
 ### Deployment Model
 
-Frontier is sold **top-down** through Forward Deployed Engineers and consulting firm partnerships (Deloitte, McKinsey, Accenture, Capgemini). Early adopters include HP, Intuit, Oracle, State Farm, Thermo Fisher, and Uber.
+Frontier is sold **top-down** through Forward Deployed Engineers and consulting firm partnerships (McKinsey, BCG, Accenture, Capgemini). Early adopters include HP, Intuit, Oracle, State Farm, Thermo Fisher, and Uber.
 
 Procurement is enterprise-wide: capital expenditure, legal review, security assessment, executive sponsorship. The deployment timeline is measured in quarters, not weeks. But the payoff is proportional: Frontier deployments touch every department, not just one team.
 

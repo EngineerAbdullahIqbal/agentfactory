@@ -1,0 +1,69 @@
+deck:
+  id: "ch16-08-the-validation-loop"
+  title: "The Validation Loop — From Draft to Production"
+  description: "Failure pattern interpretation, targeted rewriting, shadow mode protocol, and graduated autonomy."
+  tags: ["validation-loop", "failure-patterns", "targeted-rewriting", "shadow-mode", "graduated-autonomy"]
+  version: 1
+
+cards:
+  - id: "ch16-08-failure-patterns-001"
+    front: "How do failure patterns in validation map to SKILL.md sections?"
+    back: "Standard case failures → Persona or Questions section problems. Edge case failures → Out of Scope gaps in Questions. Adversarial failures → Principles section gaps. High-stakes failures → escalation condition gaps in Principles. The pattern determines which section to rewrite."
+    tags: ["failure-patterns", "section-mapping"]
+    difficulty: "intermediate"
+
+  - id: "ch16-08-targeted-rewriting-002"
+    front: "What is targeted rewriting, and why is the full re-run essential?"
+    back: "Targeted rewriting modifies only the specific SKILL.md sections identified by the failure pattern. The full scenario set must be re-run afterward — not just the previously failing scenarios — because a change to one section might cause regressions in scenarios that previously passed."
+    tags: ["targeted-rewriting", "regression-testing"]
+    difficulty: "intermediate"
+
+  - id: "ch16-08-persistent-failure-003"
+    front: "What does a persistent failure across multiple iterations despite targeted rewrites suggest?"
+    back: "A deeper structural problem — possibly a conflict between different SKILL.md sections where fixing the instruction for one scenario breaks an assumption that another instruction depends on. The team should investigate the relationship between sections rather than continuing to rewrite the same one."
+    tags: ["persistent-failure", "structural-conflict"]
+    difficulty: "intermediate"
+    why: "Tests understanding that not all failures are simple gaps"
+
+  - id: "ch16-08-shadow-mode-definition-004"
+    front: "What is shadow mode?"
+    back: "Production deployment with human review of every output. The agent operates on real production inputs, but no output reaches the end user or downstream system without human review. It validates the SKILL.md against real inputs that the scenario set could not fully anticipate."
+    tags: ["shadow-mode", "definition"]
+    difficulty: "basic"
+
+  - id: "ch16-08-shadow-mode-duration-005"
+    front: "What is the minimum shadow mode duration, and why is it not negotiable?"
+    back: "Thirty days minimum. This duration exists because production inputs follow patterns (month-end reporting, quarterly events, seasonal variations) that do not fully surface in shorter periods. Excellent performance over twenty days does not demonstrate reliability across the full production cycle."
+    tags: ["shadow-mode", "thirty-days", "minimum-duration"]
+    difficulty: "intermediate"
+
+  - id: "ch16-08-two-validation-purposes-006"
+    front: "What different validation purposes do scenario testing and shadow mode serve?"
+    back: "Scenario testing validates the SKILL.md against constructed inputs covering known categories (standard, edge, adversarial, high-stakes). Shadow mode validates against real production inputs that no constructed scenario set can fully anticipate. Both are necessary — scenario testing for known gaps, shadow mode for unknown ones."
+    tags: ["scenario-testing", "shadow-mode", "complementary-validation"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why both validation stages are necessary"
+
+  - id: "ch16-08-shadow-mode-exit-007"
+    front: "What are the criteria for exiting shadow mode into autonomous operation?"
+    back: "95% accuracy across the shadow mode period with zero critical errors in the preceding ten days. This is the second 95% gate — separate from the scenario testing gate that earned entry into shadow mode."
+    tags: ["shadow-mode-exit", "95-percent", "criteria"]
+    difficulty: "basic"
+
+  - id: "ch16-08-graduated-autonomy-008"
+    front: "What is graduated autonomy, and why is it preferred over a binary switch?"
+    back: "Graduated autonomy starts with partial autonomy — low-stakes, routine outputs bypass human review while high-stakes or unusual outputs continue to be reviewed. The scope expands as evidence accumulates. A binary switch from full review to no review introduces unnecessary risk."
+    tags: ["graduated-autonomy", "partial-autonomy"]
+    difficulty: "intermediate"
+
+  - id: "ch16-08-shadow-mode-discovery-009"
+    front: "Give an example of something shadow mode might catch that scenario testing could not."
+    back: "A query type not represented in the scenario set — e.g., a request to analyse financials denominated in a currency the agent has not been instructed to handle. The agent might silently convert currencies using approximated rates. Shadow mode catches this under human review before the output causes harm."
+    tags: ["shadow-mode", "discovery", "unknown-gaps"]
+    difficulty: "intermediate"
+
+  - id: "ch16-08-loop-process-010"
+    front: "Describe the complete Validation Loop cycle."
+    back: "1. Run full scenario set → 2. Score each output on accuracy, calibration, boundary compliance → 3. Identify failure patterns by category → 4. Diagnose which SKILL.md section to revise → 5. Execute targeted rewrite → 6. Re-run full scenario set → 7. Repeat until 95% threshold met → 8. Enter shadow mode."
+    tags: ["validation-loop", "complete-cycle"]
+    difficulty: "basic"

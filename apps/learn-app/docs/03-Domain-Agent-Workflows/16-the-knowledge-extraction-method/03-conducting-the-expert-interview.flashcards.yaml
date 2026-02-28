@@ -1,0 +1,69 @@
+deck:
+  id: "ch16-03-conducting-the-expert-interview"
+  title: "Conducting the Expert Interview"
+  description: "Briefing protocol, performance vs collaborative mode, specific note-taking, and the north star summary."
+  tags: ["interview-technique", "briefing-protocol", "collaborative-mode", "north-star-summary", "note-taking"]
+  version: 1
+
+cards:
+  - id: "ch16-03-two-modes-001"
+    front: "What is the difference between performance mode and collaborative mode in an expert interview?"
+    back: "In performance mode, the expert presents polished, simplified accounts — cleaned-up descriptions omitting uncertainty and exceptions. In collaborative mode, the expert thinks aloud about the messy, uncertain aspects — the pauses, qualifications, and self-corrections that contain the most valuable tacit knowledge."
+    tags: ["performance-mode", "collaborative-mode"]
+    difficulty: "basic"
+
+  - id: "ch16-03-briefing-purpose-002"
+    front: "What is the purpose of the briefing protocol before a Method A interview?"
+    back: "To establish collaborative mode — framing the interview as a conversation about how the expert thinks, not as a test of their expertise or a dictation session. The framing determines whether the expert shares polished summaries or raw professional reasoning."
+    tags: ["briefing-protocol", "collaborative-mode"]
+    difficulty: "basic"
+
+  - id: "ch16-03-briefing-framing-003"
+    front: "Which interview framing establishes collaborative mode: (a) 'I am testing your expertise' (b) 'Help us build an agent that works the way you would' (c) 'Dictate your instructions'?"
+    back: "Option (b). This framing positions the expert as the source of valuable expertise, focuses on how they think and make judgements, and establishes the output as collaborative — an agent that captures their professional reasoning rather than a checklist of their procedures."
+    tags: ["briefing-protocol", "framing"]
+    difficulty: "basic"
+
+  - id: "ch16-03-generic-vs-specific-004"
+    front: "What is the difference between a generic note and a specific note, and why does it matter for the SKILL.md?"
+    back: "Generic: 'Checks DSCR' — tells the SKILL.md nothing actionable. Specific: 'Checks DSCR first for term lending; below 1.25x flags for committee review; 1.25-1.5x requires covenant analysis; above 1.5x proceeds to sector exposure' — directly translatable into SKILL.md instructions."
+    tags: ["note-taking", "generic-vs-specific"]
+    difficulty: "intermediate"
+    why: "Tests understanding that note quality determines SKILL.md quality"
+
+  - id: "ch16-03-pauses-005"
+    front: "Why are pauses and self-corrections during an interview valuable for extraction?"
+    back: "They signal the expert accessing tacit knowledge that resists easy articulation. When an expert pauses or corrects themselves, they are often navigating the boundary between what they do automatically and what they can express — exactly the knowledge the extraction is designed to surface."
+    tags: ["interview-signals", "tacit-knowledge"]
+    difficulty: "intermediate"
+
+  - id: "ch16-03-north-star-definition-006"
+    front: "What is a north star summary?"
+    back: "A one-paragraph distillation of the expert's core professional judgement — the single most important thing the agent must get right. It is written immediately after the interview and serves as the anchor for the first SKILL.md draft."
+    tags: ["north-star-summary", "definition"]
+    difficulty: "basic"
+
+  - id: "ch16-03-north-star-timing-007"
+    front: "Why must the north star summary be written immediately after the interview?"
+    back: "Because the interviewer's sense of what mattered most — which answer carried the most weight, which qualification revealed the deepest knowledge — fades quickly as the conversational context recedes from memory. A summary written the next day is a reconstruction; one written immediately is a capture."
+    tags: ["north-star-summary", "timing"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why immediacy matters for synthesis quality"
+
+  - id: "ch16-03-north-star-bad-008"
+    front: "Why does 'The credit analyst assesses financial health' fail as a north star summary?"
+    back: "It describes the role, not the core professional judgement. A north star summary should capture what makes this specific expert's judgement valuable — e.g., 'reads the gap between what financials say and what they imply, spotting the CEO who cannot answer working capital questions and the covenant structured to matter only in stress scenarios.'"
+    tags: ["north-star-summary", "common-mistake"]
+    difficulty: "intermediate"
+
+  - id: "ch16-03-interview-not-form-009"
+    front: "Why is a Method A interview described as 'a structured conversation, not a form'?"
+    back: "Because the five questions provide structure, but the interviewer must follow up on pauses, qualifications, and unexpected answers. A form-filling approach captures the surface answers; a conversational approach follows the threads that reveal deeper tacit knowledge."
+    tags: ["interview-technique", "conversation"]
+    difficulty: "intermediate"
+
+  - id: "ch16-03-primary-source-010"
+    front: "What is the primary source for writing the SKILL.md Persona section?"
+    back: "The north star summary from the Method A interview. The expert's quality standards, communication style, and non-negotiable constraints captured in the north star translate directly into Persona language."
+    tags: ["north-star-summary", "persona-section"]
+    difficulty: "basic"

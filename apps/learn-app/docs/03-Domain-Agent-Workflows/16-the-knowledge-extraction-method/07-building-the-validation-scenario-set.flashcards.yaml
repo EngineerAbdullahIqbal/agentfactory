@@ -1,0 +1,68 @@
+deck:
+  id: "ch16-07-building-the-validation-scenario-set"
+  title: "Building the Validation Scenario Set"
+  description: "Four scenario categories with proportions, three scoring components, 95% threshold, and shadow mode entry criteria."
+  tags: ["validation", "scenario-set", "scoring", "threshold", "shadow-mode"]
+  version: 1
+
+cards:
+  - id: "ch16-07-four-categories-001"
+    front: "What are the four validation scenario categories and their proportions?"
+    back: "Standard cases (50%) — test core function. Edge cases (25%) — test boundary awareness. Adversarial cases (15%) — test principle robustness under pressure. High-stakes cases (10%) — test escalation mechanisms."
+    tags: ["four-categories", "proportions"]
+    difficulty: "basic"
+
+  - id: "ch16-07-standard-cases-002"
+    front: "What do standard cases test, and what does failure indicate?"
+    back: "Standard cases test whether the agent performs its core analytical function correctly. Failures indicate structural problems in the Persona or Questions sections — the agent does not know what it is for clearly enough to perform its primary function."
+    tags: ["standard-cases", "failure-interpretation"]
+    difficulty: "basic"
+
+  - id: "ch16-07-edge-cases-003"
+    front: "What do edge cases test, and what does failure indicate?"
+    back: "Edge cases test whether the agent knows the boundaries of its defined scope. Failures indicate gaps in the Out of Scope definition or ambiguous scope boundaries — the agent does not know where its authority ends."
+    tags: ["edge-cases", "failure-interpretation"]
+    difficulty: "basic"
+
+  - id: "ch16-07-adversarial-cases-004"
+    front: "What do adversarial cases test, and what does failure indicate?"
+    back: "Adversarial cases test whether the SKILL.md's principles hold under pressure — queries designed to expose gaps in coverage. Failures indicate missing or insufficiently specific Principles. These are not trick questions; they are honest probes of the SKILL.md's coverage."
+    tags: ["adversarial-cases", "failure-interpretation"]
+    difficulty: "intermediate"
+
+  - id: "ch16-07-high-stakes-cases-005"
+    front: "What do high-stakes cases test, and why do they carry an additional constraint?"
+    back: "High-stakes cases test whether escalation mechanisms trigger when the consequences of error are serious. Any failure in this category blocks shadow mode entry — because an agent that does not escalate when stakes are high is more dangerous than one that gets a routine calculation wrong."
+    tags: ["high-stakes-cases", "zero-tolerance"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why high-stakes failures are categorically different"
+
+  - id: "ch16-07-three-scoring-006"
+    front: "What are the three scoring components for validation outputs?"
+    back: "Accuracy: Does the output correctly reflect the SKILL.md's instructions? Calibration: Does the output use appropriate confidence language? Boundary compliance: Does the output stay within scope and escalate when required? All three must pass for a scenario to pass."
+    tags: ["scoring-components", "accuracy", "calibration", "boundary-compliance"]
+    difficulty: "basic"
+
+  - id: "ch16-07-calibration-failure-007"
+    front: "An output contains correct financial figures but presents an inference as a confirmed finding. Which scoring component fails?"
+    back: "Calibration fails. The output is accurate (correct figures) and within scope (boundary compliance passes), but the confidence language does not match the evidence — an inference stated as fact. This is dangerous because it leads decision-makers to act on uncertain information as if verified."
+    tags: ["calibration", "failure-example"]
+    difficulty: "intermediate"
+
+  - id: "ch16-07-threshold-008"
+    front: "What is the threshold for shadow mode entry, and what are the constraints?"
+    back: "95% pass rate across all scenarios, with zero failures in the high-stakes category. Minimum 20 scenarios for initial validation. This is the first of two 95% gates — it earns entry into shadow mode. The second 95% gate (from Ch15) earns exit from shadow mode into autonomous operation."
+    tags: ["threshold", "95-percent", "shadow-mode-entry"]
+    difficulty: "basic"
+
+  - id: "ch16-07-minimum-scenarios-009"
+    front: "What is the minimum number of scenarios for initial validation, and how does this scale?"
+    back: "A minimum of 20 scenarios for initial validation. For complex domains — legal, healthcare, architecture — 40 or more scenarios are appropriate before shadow mode begins. The distribution follows the standard proportions regardless of total count."
+    tags: ["minimum-scenarios", "scaling"]
+    difficulty: "basic"
+
+  - id: "ch16-07-who-scores-010"
+    front: "Who should score validation outputs, and why?"
+    back: "The domain expert who was interviewed, or a qualified reviewer in the domain — not the SKILL.md author alone. The author's familiarity with the intended output makes them a poor blind judge of whether the agent has actually produced it versus producing something that looks similar but has subtle errors."
+    tags: ["scoring", "domain-expert", "blind-review"]
+    difficulty: "intermediate"

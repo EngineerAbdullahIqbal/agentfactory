@@ -1,0 +1,70 @@
+deck:
+  id: "ch15-07-governance-layer"
+  title: "The Governance Layer"
+  description: "The four governance mechanisms: IAM-integrated permissions, immutable audit trails, shadow mode with the 30-day/95% threshold, and human-in-the-loop gates."
+  tags: ["governance", "IAM", "audit-trails", "shadow-mode", "human-in-the-loop", "HITL", "enterprise-compliance"]
+  version: 1
+
+cards:
+  - id: "ch15-07-four-mechanisms-001"
+    front: "Name the four governance mechanisms in Cowork."
+    back: "1. Permissions and access control — IAM-inherited, role-based scoping\n2. Audit trails — immutable log of every interaction\n3. Shadow mode — parallel operation with human review during trust-building period\n4. Human-in-the-loop gates — structural stops for decisions requiring human accountability"
+    tags: ["four-mechanisms", "governance"]
+    difficulty: "basic"
+
+  - id: "ch15-07-iam-002"
+    front: "How does Cowork determine which users can access a plugin?"
+    back: "Permissions are inherited from the organisation's IAM system (Azure AD, Okta, or equivalent). Users who have access in the IAM system see the plugin; those without access cannot see it at all. The plugin does not appear to them — there is no restricted access message to click past."
+    tags: ["IAM", "permissions", "access-control"]
+    difficulty: "basic"
+
+  - id: "ch15-07-audit-trail-003"
+    front: "What does the audit trail record for each agent interaction?"
+    back: "The audit trail logs: the user's query, which data sources the agent accessed, the output generated, a timestamp, and the user's identity. The log is immutable — it cannot be modified by the knowledge worker, plugin operator, or user."
+    tags: ["audit-trail", "immutable", "compliance"]
+    difficulty: "basic"
+
+  - id: "ch15-07-audit-asset-004"
+    front: "Why are immutable audit trails described as a compliance asset rather than a constraint in regulated industries?"
+    back: "BECAUSE without an audit trail, there is no record of what the agent queried, what sources it consulted, or what output it produced — a potential compliance incident. With an audit trail, the organisation can produce an exact account of what happened, when, for whom, on what basis. THEREFORE the audit trail turns potential incidents into documented, defensible processes. The organisation without the record is the one with the compliance problem."
+    tags: ["audit-trail", "compliance-asset", "regulated-industries"]
+    difficulty: "intermediate"
+    why: "Tests the reframe that audit trails enable deployment rather than limiting it"
+
+  - id: "ch15-07-shadow-mode-005"
+    front: "What is shadow mode, and what two purposes does it serve?"
+    back: "Shadow mode is when an agent operates at full capability but outputs are held for human review rather than delivered directly to users. It serves two purposes:\n1. Quality validation — surfaces systematic errors, SKILL.md gaps, and connector issues before they affect anyone\n2. Organisational confidence-building — produces a reviewed corpus of outputs that stakeholders can inspect as evidence of reliability"
+    tags: ["shadow-mode", "quality-validation", "confidence-building"]
+    difficulty: "intermediate"
+
+  - id: "ch15-07-shadow-criteria-006"
+    front: "What are the two criteria for transitioning a plugin out of shadow mode?"
+    back: "1. A minimum of 30 days in shadow mode (non-negotiable — ensures variety of inputs across normal operating conditions)\n2. 95% accuracy across a representative sample with no critical errors in the preceding 10 days"
+    tags: ["shadow-mode", "transition-criteria", "30-days", "95-percent"]
+    difficulty: "basic"
+
+  - id: "ch15-07-why-30-days-007"
+    front: "Why is the 30-day shadow mode minimum not negotiable?"
+    back: "BECAUSE a representative sample of outputs requires sufficient variety in inputs — different users, different query types, different data conditions — to surface the failure modes that only appear in edge cases. THEREFORE a week of shadow mode in a quiet period does not produce the same evidence as a month across normal operating conditions. The 30-day minimum is designed to prevent false confidence from an unrepresentative sample."
+    tags: ["shadow-mode", "30-days", "representative-sample"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the statistical rationale for the 30-day minimum"
+
+  - id: "ch15-07-hitl-principle-008"
+    front: "What is the governing principle for human-in-the-loop gates?"
+    back: "Autonomous for everything safe, human for everything that genuinely needs it. HITL gates are not temporary safeguards to be removed as trust builds — for certain action types, human judgment is non-negotiable regardless of how accurately the agent performs. The requirement is about accountability, not capability."
+    tags: ["HITL", "governing-principle", "accountability"]
+    difficulty: "intermediate"
+
+  - id: "ch15-07-attention-vs-judgment-009"
+    front: "What is the distinction between human attention and human judgment in the context of HITL gates?"
+    back: "Human attention means a person reads or checks something before it is acted upon. Human judgment means a person makes a decision integrating contextual factors — relationships, institutional history, implicit constraints, professional accountability — that cannot be fully encoded in a SKILL.md. HITL gates govern the second category; the first can be satisfied by review processes without full human judgment."
+    tags: ["HITL", "human-attention", "human-judgment"]
+    difficulty: "advanced"
+
+  - id: "ch15-07-governance-enables-010"
+    front: "A knowledge worker believes governance slows agents down. What is the correct reframe?"
+    back: "BECAUSE without governance, an agent cannot be deployed in a regulated environment at all — no permission structure means no team access, no audit trail means no regulated use, no shadow mode means no credible path to autonomous operation, no HITL gates means eventual unsupervised action in high-stakes territory. THEREFORE governance is what makes deployment possible, not what restricts it."
+    tags: ["governance", "deployment-enabler", "reframe"]
+    difficulty: "intermediate"
+    why: "Tests the chapter's central governance reframe: governance as enabler, not constraint"

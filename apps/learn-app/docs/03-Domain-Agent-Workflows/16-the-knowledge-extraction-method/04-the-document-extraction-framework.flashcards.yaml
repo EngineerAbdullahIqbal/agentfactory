@@ -1,0 +1,69 @@
+deck:
+  id: "ch16-04-the-document-extraction-framework"
+  title: "The Document Extraction Framework"
+  description: "Method B three-pass framework: explicit rule extraction, contradiction mapping, and gap identification."
+  tags: ["method-b", "document-extraction", "three-pass", "contradictions", "gaps"]
+  version: 1
+
+cards:
+  - id: "ch16-04-three-passes-001"
+    front: "What are the three passes of Method B document extraction?"
+    back: "Pass One: Extract explicit rules (unambiguous statements directly convertible to SKILL.md instructions). Pass Two: Map contradictions between documents. Pass Three: Identify gaps (topics the documents do not cover). Each pass has a distinct purpose."
+    tags: ["three-pass", "overview"]
+    difficulty: "basic"
+
+  - id: "ch16-04-pass-one-002"
+    front: "What does Pass One extract, and what does it deliberately not attempt?"
+    back: "Pass One extracts explicit, unambiguous rules that can be directly converted into SKILL.md instructions without interpretation. It deliberately does not attempt to resolve contradictions (Pass Two), fill gaps (Pass Three), or interpret ambiguous language."
+    tags: ["pass-one", "explicit-rules"]
+    difficulty: "basic"
+
+  - id: "ch16-04-why-separate-003"
+    front: "Why must the three passes be kept separate rather than combined into a single extraction pass?"
+    back: "Mixing extraction with interpretation in a single pass produces confused output where it is unclear whether an instruction came from the document or from the extractor's interpretation. Separate passes maintain clarity about the source and nature of each instruction."
+    tags: ["three-pass", "discipline"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why the three-pass discipline prevents extraction errors"
+
+  - id: "ch16-04-temporal-004"
+    front: "What is a temporal contradiction in document extraction?"
+    back: "The same metric or rule has different values from different time periods — e.g., a 2019 policy specifies a minimum DSCR of 1.25x while a 2023 amendment specifies 1.15x. Resolution requires determining which version is current and whether the earlier version has been formally superseded."
+    tags: ["temporal-contradiction", "pass-two"]
+    difficulty: "basic"
+
+  - id: "ch16-04-jurisdictional-005"
+    front: "What is a jurisdictional contradiction in document extraction?"
+    back: "The same metric or rule has different values for different regions, contexts, or business units — e.g., the EMEA compliance handbook requires one threshold while the APAC handbook requires another. Resolution requires determining which jurisdiction applies to the specific SKILL.md scope."
+    tags: ["jurisdictional-contradiction", "pass-two"]
+    difficulty: "basic"
+
+  - id: "ch16-04-interpretive-006"
+    front: "What is an interpretive contradiction in document extraction?"
+    back: "The same concept is framed differently in ways that could imply different actions, even when the underlying fact is identical — e.g., three documents use different language to describe the same capital requirement. Resolution requires choosing a single consistent formulation for the SKILL.md."
+    tags: ["interpretive-contradiction", "pass-two"]
+    difficulty: "intermediate"
+
+  - id: "ch16-04-scope-gap-007"
+    front: "What is a scope gap in Pass Three?"
+    back: "A topic not covered because it did not exist or was not relevant when the document was written — e.g., a risk framework written before data privacy became a major practice area says nothing about it. The SKILL.md instruction must come from another source."
+    tags: ["scope-gap", "pass-three"]
+    difficulty: "basic"
+
+  - id: "ch16-04-assumed-gap-008"
+    front: "What is an assumed-knowledge gap in Pass Three, and why does it matter?"
+    back: "A topic not documented because the authors considered it too obvious — e.g., how to handle borderline inspection results. This institutional knowledge needs to be surfaced through a Method A interview. The distinction from scope gaps matters because assumed-knowledge gaps indicate where tacit expertise exists but was never articulated."
+    tags: ["assumed-knowledge-gap", "pass-three"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why gap classification determines the source of the SKILL.md instruction"
+
+  - id: "ch16-04-contradictions-diagnostic-009"
+    front: "Why are contradictions described as diagnostic signals rather than errors to eliminate?"
+    back: "Contradictions reveal where documents disagree and where the SKILL.md needs a specific resolution instruction. Each contradiction type (temporal, jurisdictional, interpretive) requires a different resolution approach and produces a different kind of SKILL.md instruction."
+    tags: ["contradictions", "diagnostic"]
+    difficulty: "intermediate"
+
+  - id: "ch16-04-gap-list-purpose-010"
+    front: "How does the gap list from Pass Three inform the rest of the extraction process?"
+    back: "In B-primary domains, the gap list directly organises the focused Method A interview. Instead of running the full five-question sequence, the interviewer targets the specific gaps identified in the documents — resolving ambiguities and surfacing the assumed knowledge the documents omitted."
+    tags: ["gap-list", "method-integration"]
+    difficulty: "intermediate"
