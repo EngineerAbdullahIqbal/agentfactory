@@ -1,22 +1,22 @@
 ### Core Concept
 
-A Cowork plugin is a domain-specific agent deployed inside the Cowork environment with five enterprise readiness properties: identity, instructions, connections, governance, and a performance record. These properties are not optional features — they are the structural requirements that distinguish a plugin from a prototype. The plugin package components (SKILL.md files, connectors (.mcp.json), commands, hooks, agents, and manifest (plugin.json)) deliver these properties through distinct owners with clear scopes.
+A Cowork plugin has three layers. Layer 1: the format — a self-contained directory of components that extends Claude Code with custom functionality. Layer 2: knowledge-work specialisation — Anthropic's official plugins use this format to turn a general-purpose agent into a domain specialist through SKILL.md files and MCP connectors. Layer 3: enterprise readiness — Panaversity's evaluation model assesses production readiness across five properties (identity, instructions, connections, governance, performance record). The plugin package components (SKILL.md files, connectors (.mcp.json), commands, hooks, agents, and manifest (plugin.json)) are owned by distinct roles with clear scopes.
 
 ### Key Mental Models
 
-- **Enterprise Readiness Properties**: Identity (name, persona, declared capabilities), Instructions (explicit behaviour governance), Connections (MCP links to external systems), Governance (rules for use and outputs), Performance record (immutable log of all interactions)
+- **Enterprise Readiness Properties** (Panaversity's evaluation model): Identity (name, persona, declared capabilities), Instructions (explicit behaviour governance), Connections (MCP links to external systems), Governance (rules for use and outputs), Performance record (audit log of interactions)
 - **Plugin Package Components**: SKILL.md files (intelligence, owned by knowledge worker), connectors (.mcp.json) (integration, owned by IT/developer), commands, hooks, agents, and manifest (plugin.json) (orchestration and deployment, owned by IT/plugin developer)
 - **Transparency as Architectural Property**: Every aspect of a plugin is inspectable by the right role — not incidentally, but by design. This verifiability is what makes plugins deployable in regulated industries.
 
 ### Critical Patterns
 
-- A plugin is architecturally different from a "browser plugin" add-on — it is a managed component with complete governance and performance infrastructure
+- A knowledge-work plugin is architecturally different from a "browser plugin" add-on — it encodes domain expertise and connects to enterprise systems within a platform that provides governance infrastructure
 - The plugin package ownership separation is a governance feature: one owner per component means failures are immediately diagnosable
 - Transparency replaces trust as the basis for deployment in regulated industries — compliance officers can inspect SKILL.md, connectors, manifest, and audit logs rather than relying on blind trust
 
 ### Common Mistakes
 
-- Confusing a plugin with a prototype: an agent without a governance framework or performance record is not a plugin
+- Conflating the three layers: the generic format, the knowledge-work specialisation, and the enterprise readiness evaluation are distinct — presenting them as a single definition misattributes Panaversity's framework to Anthropic
 - Assuming transparency means "visible to everyone" — it means every property is inspectable by the _right_ role
 - Treating the plugin package components as interchangeable or allowing ownership overlap, which destroys diagnosability
 

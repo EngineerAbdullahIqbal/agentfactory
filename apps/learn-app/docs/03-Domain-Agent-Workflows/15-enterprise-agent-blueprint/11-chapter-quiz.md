@@ -268,7 +268,7 @@ options: [
 "S&P Global and FactSet require HIPAA-compliant configuration before activation in any financial setting",
 "Both S&P Global and FactSet are licensed subscription services — the marketplace connector provides the integration layer, but the organisation must hold a valid subscription to each service before activation",
 "The connectors are in beta and require special approval from the Cowork integration team",
-"Financial data connectors require a minimum of 4-8 weeks of custom development even when listed in the marketplace"
+"Financial data connectors require custom development even when listed in the marketplace"
 ],
 correctOption: 1,
 explanation: "Lesson 6 makes clear that licensed data services like S&P Global and FactSet require valid subscriptions: the connector provides the technical integration but does not grant access to data the organisation has not licensed. The same dependency applies as with other financial data connectors: the connector cannot be activated without a valid subscription. Option A incorrectly applies HIPAA compliance, which is a clinical systems requirement, not a financial data connector requirement. Option B is the correct answer as described. Option C is incorrect; no beta or approval process is described. Option D confuses custom connector timelines with marketplace connector licensing requirements.",
@@ -289,13 +289,13 @@ source: "Lesson 6: The MCP Connector Ecosystem"
 {
 question: "A knowledge worker needs to commission a custom connector for her company's on-premises SAP S/4HANA instance from 2018. She asks IT how long the connector will take. IT responds with a range. What is the correct planning timeline, and why?",
 options: [
-"2-4 weeks — SAP is a well-known enterprise system with a modern REST API",
-"4-8 weeks — the system predates modern REST APIs and may require significant investigation, custom integration work, and reverse-engineering of authentication flows",
+"A few weeks — SAP is a well-known enterprise system with a modern REST API",
+"Significantly longer than a modern-API integration — the system predates modern REST APIs and may require significant investigation, custom integration work, and reverse-engineering of authentication flows",
 "6-12 months — legacy ERP systems require full API modernisation before an MCP connector can be built",
 "1-2 weeks — SAP connectors are pre-built by the Cowork marketplace and only require credential configuration"
 ],
 correctOption: 1,
-explanation: "Lesson 6 provides the timeline table: 'Complex or legacy system (older protocols, sparse documentation, custom schemas): 4-8 weeks.' An on-premises SAP instance from 2018 predates the widespread adoption of modern REST APIs and is likely to require significant investigation. Lesson 6 also emphasises: 'These timelines are not estimates to be adjusted later — they are planning facts.' Option A is too short; this system does not qualify for the modern API category. Option C invents a 6-12 month timeline not in the lesson. Option D is wrong; SAP is not a marketplace connector — the Cowork connector ecosystem does not list SAP as a standard marketplace connector.",
+explanation: "Lesson 6 explains that custom connector timelines depend on the underlying system's API maturity. Systems with older protocols, sparse documentation, or custom schemas take significantly longer to integrate than those with modern REST APIs. An on-premises SAP instance from 2018 predates modern API standards and is likely to require significant investigation. The knowledge worker should work with IT to estimate a realistic timeline based on the specific system's characteristics. Option A is too optimistic; this system does not qualify as a modern-API integration. Option C invents an unrealistic timeline. Option D is wrong; SAP is not a marketplace connector.",
 source: "Lesson 6: The MCP Connector Ecosystem"
 },
 {

@@ -98,8 +98,8 @@ teaching_guide:
       expected_response: "A marketplace connector is a pre-built, maintained MCP connector available for standard enterprise systems (HubSpot, Jira, Snowflake, etc.). A custom connector is built specifically for a system not available in the marketplace — the knowledge worker specifies what data access is needed and IT builds it."
     - question: "Why is the Revit connector a custom connector rather than a marketplace connector?"
       expected_response: "Revit is a domain-specific engineering design tool and each organisation's Revit environment is configured differently. There is no generalised Revit connector in the marketplace — a developer builds a custom connector tailored to the specific organisation's Revit setup and data structures."
-    - question: "A knowledge worker wants to connect their agent to their company's on-premises ERP system from 2009. What timeline should they budget for the connector?"
-      expected_response: "4-8 weeks. Legacy systems typically lack modern REST APIs and require custom integration work. This timeline must be included in the project plan from the start."
+    - question: "A knowledge worker wants to connect their agent to their company's on-premises ERP system from 2009. How should they plan the connector timeline?"
+      expected_response: "Legacy systems with sparse documentation, older protocols, or custom schemas take significantly longer to integrate than systems with modern REST APIs. The knowledge worker should work with IT to estimate a realistic timeline based on the specific system's characteristics, and ensure connector commissioning is on the critical path — starting before SKILL.md development because it typically takes longer."
 ---
 
 # The MCP Connector Ecosystem

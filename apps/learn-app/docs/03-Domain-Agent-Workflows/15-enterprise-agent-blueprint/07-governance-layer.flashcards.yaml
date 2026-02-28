@@ -1,31 +1,31 @@
 deck:
   id: "ch15-07-governance-layer"
   title: "The Governance Layer"
-  description: "The four governance mechanisms: IAM-integrated permissions, immutable audit trails, shadow mode with the 30-day/95% threshold, and human-in-the-loop gates."
+  description: "The four governance mechanisms: IAM-integrated permissions, audit logging, shadow mode with the 30-day/95% threshold, and human-in-the-loop gates."
   tags: ["governance", "IAM", "audit-trails", "shadow-mode", "human-in-the-loop", "HITL", "enterprise-compliance"]
   version: 1
 
 cards:
   - id: "ch15-07-four-mechanisms-001"
     front: "Name the four governance mechanisms in Cowork."
-    back: "1. Permissions and access control — IAM-inherited, role-based scoping\n2. Audit trails — immutable log of every interaction\n3. Shadow mode — parallel operation with human review during trust-building period\n4. Human-in-the-loop gates — structural stops for decisions requiring human accountability"
+    back: "1. Permissions and access control — IAM-inherited, role-based scoping\n2. Audit trails — log of every interaction maintained through enterprise admin controls\n3. Shadow mode — parallel operation with human review during trust-building period\n4. Human-in-the-loop gates — structural stops for decisions requiring human accountability"
     tags: ["four-mechanisms", "governance"]
     difficulty: "basic"
 
   - id: "ch15-07-iam-002"
     front: "How does Cowork determine which users can access a plugin?"
-    back: "Permissions are inherited from the organisation's IAM system (Azure AD, Okta, or equivalent). Users who have access in the IAM system see the plugin; those without access cannot see it at all. The plugin does not appear to them — there is no restricted access message to click past."
+    back: "Permissions are inherited from the organisation's existing identity management system. Users who have access in the IAM system see the plugin; those without access cannot see it at all. The plugin does not appear to them — there is no restricted access message to click past."
     tags: ["IAM", "permissions", "access-control"]
     difficulty: "basic"
 
   - id: "ch15-07-audit-trail-003"
     front: "What does the audit trail record for each agent interaction?"
-    back: "The audit trail logs: the user's query, which data sources the agent accessed, the output generated, a timestamp, and the user's identity. The log is immutable — it cannot be modified by the knowledge worker, plugin operator, or user."
-    tags: ["audit-trail", "immutable", "compliance"]
+    back: "The audit trail logs: the user's query, which data sources the agent accessed, the output generated, a timestamp, and the user's identity. The log is maintained through Anthropic's enterprise admin controls and is available for compliance review."
+    tags: ["audit-trail", "compliance"]
     difficulty: "basic"
 
   - id: "ch15-07-audit-asset-004"
-    front: "Why are immutable audit trails described as a compliance asset rather than a constraint in regulated industries?"
+    front: "Why are audit logging described as a compliance asset rather than a constraint in regulated industries?"
     back: "BECAUSE without an audit trail, there is no record of what the agent queried, what sources it consulted, or what output it produced — a potential compliance incident. With an audit trail, the organisation can produce an exact account of what happened, when, for whom, on what basis. THEREFORE the audit trail turns potential incidents into documented, defensible processes. The organisation without the record is the one with the compliance problem."
     tags: ["audit-trail", "compliance-asset", "regulated-industries"]
     difficulty: "intermediate"

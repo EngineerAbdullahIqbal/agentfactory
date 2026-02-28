@@ -8,7 +8,7 @@ deck:
 cards:
   - id: "ch15-01-definition-001"
     front: "What is a Cowork plugin?"
-    back: "A domain-specific agent deployed inside the Cowork environment — one that acts (not just responds), is connected to real systems operating against real data, and operates within infrastructure that handles authentication, governance, and audit."
+    back: "Three layers: (1) A self-contained directory of components that extends Claude Code — the generic plugin format. (2) Knowledge-work plugins use this format to turn a general-purpose agent into a domain specialist by encoding expertise in SKILL.md files and wiring to enterprise systems via MCP connectors. (3) Panaversity's enterprise readiness evaluation model assesses production readiness across five properties: identity, instructions, connections, governance, and performance record."
     tags: ["definition", "cowork-plugin"]
     difficulty: "basic"
 
