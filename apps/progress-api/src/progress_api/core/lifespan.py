@@ -53,6 +53,14 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.warning(f"[INIT] Materialized view creation failed (may already exist): {e}")
 
+        # Debounced refresh: at most once per 10 min across all replicas (Redis-coordinated)
+        try:
+            from ..services.leaderboard import debounced_refresh_leaderboard
+
+            await debounced_refresh_leaderboard()
+        except Exception as e:
+            logger.warning(f"[INIT] Leaderboard debounced refresh failed: {e}")
+
         logger.info("=" * 60)
         logger.info("STARTUP COMPLETE")
         logger.info("=" * 60)

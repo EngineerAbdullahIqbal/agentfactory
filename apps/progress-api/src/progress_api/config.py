@@ -39,6 +39,9 @@ class Settings(BaseSettings):
     dev_mode: bool = False
     dev_user_id: str = "dev-user-123"
 
+    # Schema management
+    auto_create_schema: bool = False
+
     # Server
     port: int = 8002
 

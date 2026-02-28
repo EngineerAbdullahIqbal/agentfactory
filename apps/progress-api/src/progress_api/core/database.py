@@ -76,7 +76,15 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def init_db() -> None:
-    """Initialize database schema using create_all."""
+    """Initialize database schema using create_all.
+
+    Guarded by AUTO_CREATE_SCHEMA env var (default: False).
+    In production, tables already exist — skipping avoids introspection queries on every cold start.
+    """
+    if not settings.auto_create_schema:
+        logger.info("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
+        return
+
     from ..models import SQLModel
 
     async with engine.begin() as conn:
