@@ -1,6 +1,11 @@
 ---
 sidebar_position: 9
 title: "Chapter 11: Linux Operations for Agent Deployment Quiz"
+proficiency_level: B1
+layer: 2
+estimated_time: "20 mins"
+chapter_type: Applied
+running_example_id: linux-operations-quiz
 ---
 
 # Chapter 11: Linux Operations for Agent Deployment Quiz
@@ -9,6 +14,7 @@ Test your understanding of Linux operations for deploying and managing AI agents
 
 <Quiz
 title="Chapter 11: Linux Operations for Agent Deployment Assessment"
+questionsPerBatch={18}
 questions={[
 {
 question: "Ali's competitor-analysis agent worked perfectly on his laptop for a week. Then he closed his laptop on Friday night and went home. When he returned Monday morning, three days of data were missing. What is the fundamental reason this happened?",
