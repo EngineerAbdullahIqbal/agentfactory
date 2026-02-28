@@ -16,10 +16,9 @@ interface GoalsStepProps {
 }
 
 const GOAL_EXAMPLES = [
-  "Build an AI agent I can sell as a SaaS product",
-  "Automate repetitive tasks at work using AI agents",
-  "Understand AI agents well enough to lead a team building them",
-  "Transition my career into AI product development",
+  "Build AI employees for my domain",
+  "Deploy AI employees that deliver outcomes, not just features",
+  "Design spec-driven agent workflows with MCP and reusable skills",
 ];
 
 export function GoalsStep({ data, onChange }: GoalsStepProps) {
@@ -53,7 +52,7 @@ export function GoalsStep({ data, onChange }: GoalsStepProps) {
     >
       <motion.div variants={itemVariants} className="space-y-3">
         <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
-          What brings you here?
+          What brings you to the Factory?
         </h2>
         <p className="text-lg text-muted-foreground font-medium max-w-xl">
           Your goal shapes every lesson — we'll emphasize what matters to you
@@ -83,7 +82,7 @@ export function GoalsStep({ data, onChange }: GoalsStepProps) {
                 primary_learning_goal: e.target.value.substring(0, 500) || null,
               })
             }
-            placeholder="Be specific — the more detail, the better we can personalize. e.g., 'Build a customer support AI agent for my e-commerce store that handles returns and order tracking'"
+            placeholder="Be specific — the more detail, the better we can personalize. e.g., 'Build an AI employee that handles end-to-end customer onboarding for my fintech startup'"
             className="w-full text-base min-h-[120px] rounded-xl border-2 border-border/50 bg-background/50 px-4 py-4 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium resize-y"
             maxLength={500}
             autoFocus
@@ -118,8 +117,7 @@ export function GoalsStep({ data, onChange }: GoalsStepProps) {
           How urgent is this?
         </label>
         <p className="text-sm text-muted-foreground -mt-2">
-          High urgency = practical shortcuts first. Low urgency = deeper
-          conceptual foundations.
+          High urgency = build-first, learn-why-later. Low urgency = deeper conceptual foundations.
         </p>
         <div className="bg-transparent border-0 rounded-2xl p-0 shadow-none">
           <UrgencyRadio
@@ -170,7 +168,7 @@ export function GoalsStep({ data, onChange }: GoalsStepProps) {
                 htmlFor="onboarding-immediate-application"
                 className="font-semibold text-lg"
               >
-                What's the first thing you want to build?
+                What's the first AI employee you want to build?
               </Label>
               <Input
                 id="onboarding-immediate-application"

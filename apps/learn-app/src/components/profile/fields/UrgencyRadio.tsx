@@ -3,9 +3,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 const URGENCY_OPTIONS = [
-  { value: "low", label: "Low", description: "Learning at my own pace" },
-  { value: "medium", label: "Medium", description: "Want to make steady progress" },
-  { value: "high", label: "High", description: "Need to learn quickly" },
+  { value: "low", label: "Low", description: "Building my skill portfolio at my own pace" },
+  { value: "medium", label: "Medium", description: "Steady progress — shipping something real" },
+  { value: "high", label: "High", description: "Need to deploy an AI employee fast" },
 ] as const;
 
 interface UrgencyRadioProps {

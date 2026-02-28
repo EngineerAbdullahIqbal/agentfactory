@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import {
   User,
   LogOut,
+  Settings,
   RefreshCw,
   Trophy,
   Zap,
@@ -232,6 +233,15 @@ export function NavbarAuth() {
             >
               <User className="mr-2 h-4 w-4" />
               <span>Learner Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => {
+                window.location.href = `${authUrl}/account/profile`;
+              }}
+              className="cursor-pointer"
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Account Settings</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => signOut()}
