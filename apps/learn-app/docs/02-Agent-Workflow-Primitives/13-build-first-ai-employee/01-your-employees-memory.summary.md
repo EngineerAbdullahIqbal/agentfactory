@@ -1,8 +1,3 @@
----
-title: "Summary: Your Employee's Memory"
-sidebar_position: 1.5
----
-
 # Lesson 1 Summary: Your Employee's Memory
 
 ## Key Concepts

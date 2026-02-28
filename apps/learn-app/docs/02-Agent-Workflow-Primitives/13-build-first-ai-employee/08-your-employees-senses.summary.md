@@ -1,8 +1,3 @@
----
-title: "Summary: Your Employee's Senses"
-sidebar_position: 8.5
----
-
 # Lesson 8 Summary: Your Employee's Senses
 
 ## Key Concepts

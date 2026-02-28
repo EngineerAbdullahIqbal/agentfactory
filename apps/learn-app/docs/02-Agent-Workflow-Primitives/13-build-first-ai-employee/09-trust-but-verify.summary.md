@@ -1,8 +1,3 @@
----
-title: "Summary: Trust But Verify"
-sidebar_position: 9.5
----
-
 # Lesson 9 Summary: Trust But Verify
 
 ## Key Concepts
@@ -30,11 +25,9 @@ sidebar_position: 9.5
 ### Approval Request Template
 
 ```markdown
----
 action: send-email
 urgency: normal
 created: 2025-01-15
----
 
 ## Proposed Action
 

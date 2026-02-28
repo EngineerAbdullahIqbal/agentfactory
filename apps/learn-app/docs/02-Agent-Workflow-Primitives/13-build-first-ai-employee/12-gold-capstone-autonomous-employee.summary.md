@@ -1,8 +1,3 @@
----
-title: "Summary: Gold Capstone - Full Autonomous Employee"
-sidebar_position: 12.5
----
-
 # Lesson 12 Summary: Gold Capstone - Full Autonomous Employee
 
 ## Key Concepts

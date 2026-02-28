@@ -1,8 +1,3 @@
----
-title: "Summary: Chapter Assessment"
-sidebar_position: 13.5
----
-
 # Lesson 13 Summary: Chapter Assessment
 
 ## Key Concepts

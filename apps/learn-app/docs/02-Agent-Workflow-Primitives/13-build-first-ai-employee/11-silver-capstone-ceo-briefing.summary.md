@@ -1,8 +1,3 @@
----
-title: "Summary: Silver Capstone - CEO Briefing"
-sidebar_position: 11.5
----
-
 # Lesson 11 Summary: Silver Capstone - CEO Briefing
 
 ## Key Concepts

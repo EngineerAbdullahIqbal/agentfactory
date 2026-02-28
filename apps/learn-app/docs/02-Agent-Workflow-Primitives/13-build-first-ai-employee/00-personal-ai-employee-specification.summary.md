@@ -1,8 +1,3 @@
----
-title: "Summary: Personal AI Employee Specification"
-sidebar_position: 0.5
----
-
 # Lesson 0 Summary: Personal AI Employee Specification
 
 ## Key Concepts
