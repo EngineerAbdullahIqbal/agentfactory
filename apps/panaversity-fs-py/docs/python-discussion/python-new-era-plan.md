@@ -1,8 +1,8 @@
 # Python for the New AI Era: Course Architecture Plan
 
-**Version:** 2.7
+**Version:** 2.8
 **Status:** Draft
-**Date:** 2026-02-20
+**Date:** 2026-02-24
 **Branch:** `learn-python`
 
 ---
@@ -81,13 +81,15 @@ Student specification ability increases across phases:
 Phase 1 (Ch 1-3):    Read + Understand          ← "I can read AI output"
 Phase 2 (Ch 4-7):    Specify with types          ← "I can tell AI what shape data has"
 Phase 3 (Ch 8-11):   Specify with tests          ← "I can define what correct means"
-Phase 4 (Ch 12-15):  Design object models        ← "I can design systems for AI to implement"
-Phase 5 (Ch 16-18):  Architect components        ← "I can spec real-world features via TDG"
-Phase 6 (Ch 19-21):  Ship production systems     ← "I can spec + ship complete software via TDG"
-Phase 7 (Ch 22-23):  Full system architecture    ← "I can architect and deliver via TDG"
+Phase 4 (Ch 12-13):  Debug + master TDG          ← "I can debug AI output and drive TDG independently"
+Phase 5 (Ch 14-17):  Design object models        ← "I can design systems for AI to implement"
+Phase 6 (Ch 18-20):  Architect components        ← "I can spec real-world features via TDG"
+Phase 7 (Ch 21-22):  Build CLI + async tools     ← "I can build production tools via TDG"
+Phase 8 (Ch 23-25):  Ship production systems     ← "I can ship secure, tested software via TDG"
+Phase 9 (Ch 26-27):  Full system architecture    ← "I can architect and deliver via TDG"
 ```
 
-By Phase 5, students have seen every Python feature 50+ times in AI output. Specifying it precisely for AI feels natural, not forced.
+By Phase 6, students have seen every Python feature 50+ times in AI output. Specifying it precisely for AI feels natural, not forced.
 
 ---
 
@@ -130,26 +132,26 @@ All traditional Python features are taught. The **framing changes**, not the con
 | Ch 6: Dictionaries | Key-value pairs | Key-value data: why AI uses `dict[str, int]` for lookups | Ch 5 |
 | Ch 7: User Input & While | Input and while loops | Control flow through testing: loops that terminate | Ch 8 |
 | Ch 8: Functions | Defining functions | Contracts: what a function signature promises | Ch 7 |
-| Ch 9: Classes | OOP fundamentals | Domain models → Full OOP arc | Ch 6, 12-15 |
-| Ch 10: Files & Exceptions | File I/O | Files and data processing: JSON, CSV, PostgreSQL intro | Ch 16 |
+| Ch 9: Classes | OOP fundamentals | Domain models → Full OOP arc | Ch 6, 14-17 |
+| Ch 10: Files & Exceptions | File I/O | Files and data processing: JSON, CSV, PostgreSQL intro | Ch 18 |
 | Ch 11: Testing | pytest basics | pytest as specification language (foundational) | Ch 3, 9 |
-| Chs 12-14: Projects | Alien game, data viz, web | CLI tools, async services, AI-powered capstone | Ch 19-23 |
+| Chs 12-14: Projects | Alien game, data viz, web | CLI tools, async services, AI-powered capstone | Ch 21-27 |
 
 ### From Learning Python (Lutz) — OOP Chapters
 
 | Lutz Chapter | Traditional Coverage | Our Framing | Our Chapter |
 |---|---|---|---|
-| Ch 26: OOP Big Picture | Why classes, inheritance tree | Objects in the AI era: why structure matters for AI-generated code | Ch 12 |
-| Ch 27: Class Coding Basics | `class`, `__init__`, `self`, instances | Classes and instances: building typed objects | Ch 12 |
-| Ch 28: A More Realistic Example | Step-by-step class hierarchy | Building a real system: from dataclass to full class | Ch 13 |
-| Ch 29: Class Coding Details | Inheritance, abstract classes, namespaces | Inheritance and composition: is-a vs has-a design decisions | Ch 13 |
-| Ch 30: Operator Overloading | `__iter__`, `__next__`, `__getattr__`, `__repr__` | Special methods: how Python objects really work | Ch 14 |
-| Ch 31: Designing with Classes | Composition, delegation, MRO, multiple inheritance | OOP design: composition-first, inheritance-when-justified | Ch 13 |
-| Ch 32: Class Odds and Ends | Static/class methods, decorators, metaclasses intro | Decorators and class patterns: real-world Python | Ch 15 |
+| Ch 26: OOP Big Picture | Why classes, inheritance tree | Objects in the AI era: why structure matters for AI-generated code | Ch 14 |
+| Ch 27: Class Coding Basics | `class`, `__init__`, `self`, instances | Classes and instances: building typed objects | Ch 14 |
+| Ch 28: A More Realistic Example | Step-by-step class hierarchy | Building a real system: from dataclass to full class | Ch 15 |
+| Ch 29: Class Coding Details | Inheritance, abstract classes, namespaces | Inheritance and composition: is-a vs has-a design decisions | Ch 15 |
+| Ch 30: Operator Overloading | `__iter__`, `__next__`, `__getattr__`, `__repr__` | Special methods: how Python objects really work | Ch 16 |
+| Ch 31: Designing with Classes | Composition, delegation, MRO, multiple inheritance | OOP design: composition-first, inheritance-when-justified | Ch 15 |
+| Ch 32: Class Odds and Ends | Static/class methods, decorators, metaclasses intro | Decorators and class patterns: real-world Python | Ch 17 |
 | Ch 33-36: Exceptions | Exception classes, hierarchies, context managers | Error handling: exception design for typed systems | Ch 11 |
-| Ch 38: Managed Attributes | Properties, descriptors, `__getattr__` | Managed attributes: controlling access patterns | Ch 15 |
-| Ch 39: Decorators | Function and class decorators, arguments, nesting | Decorators deep dive: from `@pytest.fixture` to custom decorators | Ch 15 |
-| Ch 40: Metaclasses | Metaclass protocol, `type`, class creation | Advanced: metaclasses (reference, not core) | Ch 15 (appendix) |
+| Ch 38: Managed Attributes | Properties, descriptors, `__getattr__` | Managed attributes: controlling access patterns | Ch 17 |
+| Ch 39: Decorators | Function and class decorators, arguments, nesting | Decorators deep dive: from `@pytest.fixture` to custom decorators | Ch 17 |
+| Ch 40: Metaclasses | Metaclass protocol, `type`, class creation | Advanced: metaclasses (reference, not core) | Ch 17 (appendix) |
 
 ---
 
@@ -189,7 +191,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-## 7. Chapter Plan (23 Chapters, 7 Phases)
+## 7. Chapter Plan (27 Chapters, 9 Phases)
 
 ---
 
@@ -387,22 +389,21 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 10: TDG Mastery — The Complete Cycle
+#### Chapter 10: Iterating on AI Output — The Feedback Loop
 
-**Goal**: Student can run the full spec → type → test → generate → verify cycle independently.
+**Goal**: Student can evaluate AI output critically and iterate effectively through prompt refinement.
 
-- The complete TDG workflow, step by step
-- Starting from a problem statement (Markdown spec)
-- Defining types (dataclasses/Pydantic)
-- Writing comprehensive tests (happy path + edge cases)
-- Prompting AI effectively (focused context, not entire codebase)
-- Reviewing AI output (what to check, what to question)
-- Iterating: when tests fail, tighten the spec
-- Running the full verification stack: `ruff` → `pyright` → `pytest`
-- Capstone exercise: complete TDG cycle for a real problem
+- Evaluating AI output: does it match the specification?
+- The iteration loop: run tests → identify failures → refine prompt → re-generate
+- Common AI misinterpretations and how to catch them
+- Prompt refinement: being more specific, providing examples, constraining output
+- When to accept, when to reject, when to modify AI-generated code
+- Reading and understanding diffs: what changed between iterations
+- Building the "verify before trust" habit
+- Capstone exercise: iterative TDG cycle with intentionally vague initial prompt
 
-**Student does**: Full TDG cycle — specs + types + tests → prompts AI → reviews output → iterates until green
-**AI role**: Generates complete implementations; student drives the specify-verify loop
+**Student does**: Starts with imprecise prompts → evaluates AI output against tests → iterates with progressively better prompts → achieves green
+**AI role**: Generates implementations that evolve with student's improving specifications
 
 ---
 
@@ -431,15 +432,66 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-### Phase 4: OOP — The Python Object Model (Model)
+### Phase 4: Debugging and TDG Independence (Debug + Master)
+
+> Student role: **Debugger** — "I can debug AI output and drive TDG independently"
+
+**Why a debugging checkpoint?**: By Phase 3, students can write tests and verify code. But when AI output fails, they need to diagnose WHY. This phase teaches debugging as a systematic skill and consolidates TDG into an independent practice. Without this checkpoint, students hit a wall in Phase 5 (OOP) where AI errors are harder to trace.
+
+#### Chapter 12: Debugging AI-Generated Code
+
+**Goal**: Student can systematically diagnose and fix errors in AI-generated Python.
+
+- **The debugging mindset**: AI code that passes pyright can still be wrong
+- Reading error messages: tracebacks, line numbers, exception types
+- `print()` debugging: strategic placement to trace values
+- Using the Python debugger (`pdb`/`breakpoint()`)
+- Common AI code failures:
+  - Off-by-one errors in loops
+  - Wrong variable scope
+  - Incorrect type narrowing
+  - Edge cases AI misses (empty inputs, None, boundary values)
+- The debugging loop: reproduce → isolate → identify → fix → verify
+- Reading `pytest` failure output: expected vs actual, assertion introspection
+- Debugging type errors: reading Pyright diagnostics
+- When to re-prompt AI vs fix manually (the judgment call)
+- Building a personal "bug pattern" checklist
+
+**Student does**: Given AI-generated code with planted bugs → systematically diagnoses using tracebacks, print debugging, and test output → fixes and verifies
+**AI role**: Generates code with realistic bugs; student debugs rather than re-prompting
+
+---
+
+#### Chapter 13: TDG Mastery — The Complete Cycle
+
+**Goal**: Student can run the full spec → type → test → generate → verify cycle independently.
+
+- The complete TDG workflow, step by step
+- Starting from a problem statement (Markdown spec)
+- Defining types (dataclasses/Pydantic)
+- Writing comprehensive tests (happy path + edge cases)
+- Prompting AI effectively (focused context, not entire codebase)
+- Reviewing AI output (what to check, what to question)
+- Iterating: when tests fail, tighten the spec
+- When NOT to use AI: recognizing when manual implementation is faster
+- Running the full verification stack: `ruff` → `pyright` → `pytest`
+- Prompt engineering for code: context windows, specificity, iteration patterns
+- Capstone exercise: complete TDG cycle for a real problem (no hand-holding)
+
+**Student does**: Full TDG cycle — specs + types + tests → prompts AI → reviews output → debugs failures → iterates until green
+**AI role**: Generates complete implementations; student drives the specify-verify-debug loop
+
+---
+
+### Phase 5: OOP — The Python Object Model (Model)
 
 > Student role: **Modeler** — "I can design objects that model real domains"
 
-**Why OOP gets its own phase**: Python is fundamentally object-oriented — everything is an object. Understanding the object model unlocks the language. But we teach it AFTER testing mastery, so students can verify every OOP concept they learn.
+**Why OOP gets its own phase**: Python is fundamentally object-oriented — everything is an object. Understanding the object model unlocks the language. But we teach it AFTER testing AND debugging mastery, so students can verify and debug every OOP concept they learn.
 
 **Our OOP philosophy**: Composition first, inheritance when justified. Protocols over abstract base classes. Dataclasses for data, classes for behavior. Test every design decision.
 
-#### Chapter 12: Classes and Instances
+#### Chapter 14: Classes and Instances
 
 **Goal**: Student understands how classes create objects with typed state and behavior.
 
@@ -475,7 +527,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 13: Inheritance, Composition, and Design
+#### Chapter 15: Inheritance, Composition, and Design
 
 **Goal**: Student can choose the right relationship between objects.
 
@@ -510,7 +562,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 14: Special Methods and the Python Object Model
+#### Chapter 16: Special Methods and the Python Object Model
 
 **Goal**: Student understands how Python objects really work under the hood.
 
@@ -546,7 +598,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 15: Decorators, Properties, and Advanced Patterns
+#### Chapter 17: Decorators, Properties, and Advanced Patterns
 
 **Goal**: Student can use and understand advanced OOP patterns in real Python code.
 
@@ -606,11 +658,11 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-### Phase 5: Real-World Python (Architect + TDG)
+### Phase 6: Real-World Python (Architect + TDG)
 
 > Student role: **Practitioner** — "I can spec real-world features via TDG"
 
-#### Chapter 16: Files, Data Processing, and PostgreSQL Introduction
+#### Chapter 18: Files, Data Processing, and PostgreSQL Introduction
 
 **Goal**: Student can read, process, and persist real-world data — from flat files to relational databases.
 
@@ -641,7 +693,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 17: Modules and Packages
+#### Chapter 19: Modules and Packages
 
 **Goal**: Student can organize code into reusable, importable modules.
 
@@ -675,7 +727,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 18: Comprehensions, Generators, and Functional Patterns
+#### Chapter 20: Comprehensions, Generators, and Functional Patterns
 
 **Goal**: Student masters Python's expressive power for data transformation.
 
@@ -700,11 +752,11 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-### Phase 6: Production Systems (Ship)
+### Phase 7: CLI and Concurrency (Build)
 
-> Student role: **Builder** — "I can ship production software"
+> Student role: **Tool Builder** — "I can build production CLI tools and async programs"
 
-#### Chapter 19: Unix-Style CLI Tools
+#### Chapter 21: Unix-Style CLI Tools
 
 **Goal**: Student can build professional command-line applications.
 
@@ -722,7 +774,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 20: Concurrency, async/await, and FastAPI Introduction
+#### Chapter 22: Concurrency, async/await, and FastAPI Introduction
 
 **Goal**: Student understands concurrent execution, can write async Python, and sees how it powers web services.
 
@@ -767,14 +819,18 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-#### Chapter 21: CI/CD, Git Workflows, and Observability
+### Phase 8: Production Systems (Ship + Secure)
+
+> Student role: **Shipping Engineer** — "I can ship secure, tested, production-grade software"
+
+#### Chapter 23: CI/CD, Git Workflows, and Observability
 
 **Goal**: Student can automate verification and monitor systems.
 
 - Git as persistent memory (branching, committing, reverting)
 - GitHub Actions: automated CI pipeline
 - The verification pyramid: format → lint → type check → test → security
-- Structured logging (JSON format) using classes from Phase 4
+- Structured logging (JSON format) using classes from Phase 5
 - Health check endpoints
 - Error tracking basics
 - The complete professional workflow: branch → code → test → CI → review → merge
@@ -784,11 +840,97 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 ---
 
-### Phase 7: Capstone (Prove)
+#### Chapter 24: Security Review for AI-Generated Code
+
+**Goal**: Student can systematically review AI-generated code for security vulnerabilities.
+
+- **Why AI code needs security review**: AI optimizes for functionality, not security
+- **The OWASP Top 10 for AI-generated Python**:
+  - SQL injection (parameterized queries vs string formatting)
+  - Command injection (`subprocess` with `shell=True`)
+  - Path traversal (unsanitized file paths)
+  - Insecure deserialization (`pickle` from untrusted sources)
+  - Hardcoded secrets (API keys, passwords in source)
+- **Security review checklist for AI output**:
+  - Input validation at every boundary
+  - Output sanitization
+  - Authentication and authorization checks
+  - Dependency audit (`pip audit`, known CVEs)
+  - Environment variable management (`.env`, secrets)
+- **Common AI security mistakes**:
+  - Using `eval()` or `exec()` on user input
+  - Overly permissive CORS settings
+  - Missing rate limiting
+  - Logging sensitive data
+- **The security-first TDG addition**: adding security tests to the TDG cycle
+- **Tools**: `bandit` (Python security linter), `pip audit`, `safety`
+- Practical exercise: review an AI-generated FastAPI endpoint for security issues
+
+**Student does**: Reviews AI-generated code against security checklist → writes security-focused tests → identifies and fixes vulnerabilities
+**AI role**: Generates code with realistic security issues; student acts as security reviewer
+
+---
+
+#### Chapter 25: The Ten Axioms — Principles Behind the Practice
+
+**Goal**: Student can articulate WHY the practices they've been following work, connecting every tool and method to a foundational principle.
+
+- **Why axioms come last, not first**: You've been living these principles for 24 chapters — now you name them
+- **The Ten Axioms of Agentic Development** (from Chapter 14 of the broader book):
+  - Axiom I: Reproducible Environments (you've been using `uv` since Ch 1)
+  - Axiom II: Explicit Configuration (pyproject.toml, from Ch 1)
+  - Axiom III: Continuous Formatting (ruff format, from Ch 1)
+  - Axiom IV: Code Quality Analysis (ruff check, from Ch 1)
+  - Axiom V: Type Safety (pyright, from Ch 2)
+  - Axiom VI: Persistent Data (PostgreSQL, from Ch 18)
+  - Axiom VII: Tests as Specification (pytest, from Ch 3)
+  - Axiom VIII: Version Control as Memory (Git, from Ch 1)
+  - Axiom IX: Dependency Locking (uv.lock, from Ch 1)
+  - Axiom X: Automated Pipelines (CI/CD, from Ch 23)
+- **Mapping your journey**: each axiom connected to the chapter where you first practiced it
+- **The bigger picture**: how these axioms apply beyond Python — to any language, any framework, any AI tool
+- **Looking forward**: how these principles scale to agent development (Part 5)
+- Reflection exercise: student maps their own SmartNotes project to all 10 axioms
+
+**Student does**: Maps their entire learning journey to the axioms → identifies which axioms they apply automatically vs which need more practice
+**AI role**: Generates a personalized axiom compliance report for the student's SmartNotes project
+
+---
+
+### Phase 9: Capstone (Prove)
 
 > Student role: **Architect** — "I can design and build complete systems"
 
-#### Chapters 22-23: AI-Powered Application (Capstone)
+#### Chapter 26: When Not to Use AI
+
+**Goal**: Student develops judgment about when AI-assisted coding helps and when it hurts.
+
+- **The AI assistance spectrum**: fully manual → AI-assisted → AI-generated
+- **When manual is better**:
+  - Trivial changes (renaming, one-line fixes)
+  - Security-critical code (crypto, auth)
+  - Performance-critical hot paths
+  - Code you need to deeply understand (learning new concepts)
+- **When AI excels**:
+  - Boilerplate generation (CRUD, serialization)
+  - Test case generation from specifications
+  - Refactoring with clear patterns
+  - Exploring unfamiliar APIs
+- **The judgment framework**: effort to specify + verify vs effort to write manually
+- **AI dependency warning signs**:
+  - Can't code without AI assistance
+  - Accepting AI output without understanding it
+  - Prompting is slower than typing
+  - Using AI for 5-line functions
+- **Building AI-independent strength**: the "no AI day" practice
+- **The professional balance**: when to prompt, when to type, when to read docs
+
+**Student does**: Evaluates a set of coding tasks and decides which benefit from AI and which don't → explains reasoning → practices manual implementation for selected tasks
+**AI role**: Presents scenarios; student exercises judgment about when to use AI
+
+---
+
+#### Chapter 27: SmartNotes Capstone — AI-Powered Application
 
 **Goal**: Student builds a complete, production-grade application using everything learned.
 
@@ -796,18 +938,19 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 
 | Component | Technologies | Chapters Applied |
 |---|---|---|
-| Problem Specification | Markdown, requirements | Ch 2, 3, 10 |
-| Data Models | Dataclasses, Pydantic, Classes | Ch 6, 12-13 |
-| Object Design | Inheritance, composition, protocols | Ch 13-15 |
-| Data Layer | PostgreSQL, repository pattern | Ch 16 |
-| Business Logic | Typed functions, composition | Ch 7, 18 |
-| Concurrency | async/await for API + SDK calls | Ch 20 |
-| CLI Interface | `smartnotes` CLI tool | Ch 19 |
-| API Service | FastAPI (async) | Ch 20 |
-| AI Integration | Anthropic SDK (async) — semantic search, summaries | Ch 10, 20 |
-| Test Suite | pytest (80%+ coverage) | Ch 9, 10 |
-| CI Pipeline | GitHub Actions | Ch 21 |
-| Observability | Structured logging | Ch 21 |
+| Problem Specification | Markdown, requirements | Ch 2, 3, 13 |
+| Data Models | Dataclasses, Pydantic, Classes | Ch 6, 14-15 |
+| Object Design | Inheritance, composition, protocols | Ch 15-17 |
+| Data Layer | PostgreSQL, repository pattern | Ch 18 |
+| Business Logic | Typed functions, composition | Ch 7, 20 |
+| Concurrency | async/await for API + SDK calls | Ch 22 |
+| CLI Interface | `smartnotes` CLI tool | Ch 21 |
+| API Service | FastAPI (async) | Ch 22 |
+| AI Integration | Anthropic SDK (async) — semantic search, summaries | Ch 13, 22 |
+| Test Suite | pytest (80%+ coverage) | Ch 9, 13 |
+| CI Pipeline | GitHub Actions | Ch 23 |
+| Security Review | OWASP checklist, `bandit` | Ch 24 |
+| Observability | Structured logging | Ch 23 |
 
 **Deliverables**:
 - Specification documents (Markdown)
@@ -815,6 +958,7 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 - Object model diagram (class relationships)
 - Test suites (passing, 80%+ coverage)
 - Implementation (AI-generated, student-reviewed)
+- Security audit report (student-conducted)
 - CI pipeline (green)
 - Deployed SmartNotes application with CLI + API + AI features
 
@@ -823,57 +967,60 @@ def calculate_total(items, tax_rate=0.0):  # No types = not allowed
 ## 8. The Student Journey Summary
 
 ```
-Ch 1-3:    READER       → "I can read and understand AI-generated typed Python"
-Ch 4-7:    SPECIFIER    → "I can tell AI precisely what to build using types"
-Ch 8-11:   VERIFIER     → "I can prove code is correct with tests"
-Ch 12-15:  MODELER      → "I can design object models for AI to implement"
-Ch 16-18:  PRACTITIONER → "I can spec real-world features via TDG"
-Ch 19-21:  BUILDER      → "I can spec + ship production software via TDG"
-Ch 22-23:  ARCHITECT    → "I can architect and deliver complete systems via TDG"
+Ch 1-3:    READER         → "I can read and understand AI-generated typed Python"
+Ch 4-7:    SPECIFIER      → "I can tell AI precisely what to build using types"
+Ch 8-11:   VERIFIER       → "I can prove code is correct with tests"
+Ch 12-13:  DEBUGGER       → "I can debug AI output and drive TDG independently"
+Ch 14-17:  MODELER        → "I can design object models for AI to implement"
+Ch 18-20:  PRACTITIONER   → "I can spec real-world features via TDG"
+Ch 21-22:  TOOL BUILDER   → "I can build production CLI tools and async programs"
+Ch 23-25:  SHIP ENGINEER  → "I can ship secure, tested, production-grade software"
+Ch 26-27:  ARCHITECT      → "I can architect and deliver complete systems via TDG"
 ```
 
 ---
 
 ## 9. OOP Integration Strategy
 
-### Why OOP Comes After Testing (Phase 4, Not Phase 2)
+### Why OOP Comes After Testing AND Debugging (Phase 5, Not Phase 2)
 
 Traditional books teach OOP early because it's "fundamental." We delay it because:
 
 1. **Students can't verify OOP designs without testing skills** — testing classes is harder than testing functions
-2. **Dataclasses provide 80% of the value** — students model domains effectively in Phase 2 without full OOP
-3. **OOP design decisions require judgment** — inheritance vs composition choices need experience
-4. **AI generates OOP code constantly** — by Phase 4, students have read enough AI output to recognize patterns
+2. **Students can't debug OOP errors without debugging skills** — class-related bugs are harder to trace
+3. **Dataclasses provide 80% of the value** — students model domains effectively in Phase 2 without full OOP
+4. **OOP design decisions require judgment** — inheritance vs composition choices need experience
+5. **AI generates OOP code constantly** — by Phase 5, students have read enough AI output to recognize patterns
 
 ### The OOP Progression
 
 ```
 Ch 6  (Phase 2): Dataclasses + Pydantic     → Data modeling (simple objects)
 Ch 11 (Phase 3): Exception hierarchies       → First taste of class inheritance
-Ch 12 (Phase 4): Classes and instances       → Full class syntax, behavior
-Ch 13 (Phase 4): Inheritance & composition   → Design relationships
-Ch 14 (Phase 4): Special methods             → Python object model depth
-Ch 15 (Phase 4): Decorators & patterns       → Advanced OOP in practice
-Ch 16 (Phase 5): Repository pattern          → OOP applied to data access (PostgreSQL intro)
-Ch 20 (Phase 6): FastAPI dependency injection → OOP applied to async services (FastAPI intro)
+Ch 14 (Phase 5): Classes and instances       → Full class syntax, behavior
+Ch 15 (Phase 5): Inheritance & composition   → Design relationships
+Ch 16 (Phase 5): Special methods             → Python object model depth
+Ch 17 (Phase 5): Decorators & patterns       → Advanced OOP in practice
+Ch 18 (Phase 6): Repository pattern          → OOP applied to data access (PostgreSQL intro)
+Ch 22 (Phase 7): FastAPI dependency injection → OOP applied to async services (FastAPI intro)
 ```
 
 ### What We Keep from Lutz (Deep Python Knowledge)
 
 | Lutz Topic | Our Treatment | Why |
 |---|---|---|
-| Classes and instances | Full coverage (Ch 12) | Core to Python |
-| `__init__`, `self` | Full coverage (Ch 12) | Can't use classes without it |
-| Inheritance | Full coverage with design guidance (Ch 13) | Important but needs guard rails |
-| Composition | Emphasized as preferred default (Ch 13) | Better design in AI era |
-| Operator overloading | Full coverage (Ch 14) | Makes objects Pythonic |
-| Iteration protocol | Full coverage (Ch 14) | Essential for Python fluency |
-| Decorators | Full coverage (Ch 15) | Used everywhere in modern Python |
-| Properties | Full coverage (Ch 15) | Clean attribute management |
-| Protocols | Full coverage (Ch 15) | Modern alternative to ABC |
-| MRO | Awareness (Ch 13) | Understand, rarely need to design with |
-| Metaclasses | Reference only (Ch 15) | Framework-level, not application-level |
-| Descriptors | Awareness (Ch 15) | Properties cover 95% of use cases |
+| Classes and instances | Full coverage (Ch 14) | Core to Python |
+| `__init__`, `self` | Full coverage (Ch 14) | Can't use classes without it |
+| Inheritance | Full coverage with design guidance (Ch 15) | Important but needs guard rails |
+| Composition | Emphasized as preferred default (Ch 15) | Better design in AI era |
+| Operator overloading | Full coverage (Ch 16) | Makes objects Pythonic |
+| Iteration protocol | Full coverage (Ch 16) | Essential for Python fluency |
+| Decorators | Full coverage (Ch 17) | Used everywhere in modern Python |
+| Properties | Full coverage (Ch 17) | Clean attribute management |
+| Protocols | Full coverage (Ch 17) | Modern alternative to ABC |
+| MRO | Awareness (Ch 15) | Understand, rarely need to design with |
+| Metaclasses | Reference only (Ch 17) | Framework-level, not application-level |
+| Descriptors | Awareness (Ch 17) | Properties cover 95% of use cases |
 
 ### What We Reframe from Lutz
 
@@ -917,7 +1064,7 @@ Ch 20 (Phase 6): FastAPI dependency injection → OOP applied to async services 
 | *Python Crash Course* (Matthes, 2023) | Reference for traditional Python feature coverage (beginner-friendly) |
 | *Learning Python* (Lutz, 2025) | Reference for deep OOP, object model, advanced patterns (1,270 pages) |
 | *The Lindy-AI Software Manifesto* v2.0 | Philosophical foundation and axioms |
-| Chapter 14: Ten Axioms of Agentic Development | Bridge chapter connecting principles to practice |
+| Chapter 14 (broader book): Ten Axioms of Agentic Development | Axiom source; mapped in our Ch 25 |
 | Python 3.12+ documentation | Language reference |
 | Pyright documentation | Type checking rules |
 | pytest documentation | Testing patterns |
@@ -933,11 +1080,11 @@ For tracking that all essential Learning Python content is covered:
 | **I: Getting Started** | Ch 1-3 | Ch 1-2 | Reframed: workbench + reading |
 | **II: Objects & Operations** | Ch 4-9 | Ch 4-5 | Reframed: typed collections |
 | **III: Statements & Syntax** | Ch 10-15 | Ch 8 | Reframed: through testing |
-| **IV: Functions & Generators** | Ch 16-21 | Ch 7, 18 | Reframed: contracts + generators |
-| **V: Modules & Packages** | Ch 22-25 | Ch 17 | Reframed: project organization |
-| **VI: Classes & OOP** | Ch 26-32 | **Ch 12-15** | Full coverage, reframed |
+| **IV: Functions & Generators** | Ch 16-21 | Ch 7, 20 | Reframed: contracts + generators |
+| **V: Modules & Packages** | Ch 22-25 | Ch 19 | Reframed: project organization |
+| **VI: Classes & OOP** | Ch 26-32 | **Ch 14-17** | Full coverage, reframed |
 | **VII: Exceptions** | Ch 33-36 | Ch 11 | Reframed: typed error handling |
-| **VIII: Advanced** | Ch 37-40 | Ch 15, 16 | Selective: decorators yes, metaclasses reference |
+| **VIII: Advanced** | Ch 37-40 | Ch 17, 18 | Selective: decorators yes, metaclasses reference |
 
 ---
 
@@ -966,10 +1113,12 @@ The proportion of each exercise type shifts across phases, tracking the writing 
 Phase 1 (Reader)         : ████████    ██          ░           ░           ░
 Phase 2 (Specifier)      : ████        ████        ████        ██          ░
 Phase 3 (Verifier)       : ██          ██          ████████    ████        ██
-Phase 4 (Modeler)        : ██          ██          ████        ████        ████
-Phase 5 (Practitioner)   : █           █           ██          ████        ██████
-Phase 6 (Builder)        : █           █           ██          ██████      ████
-Phase 7 (Architect)      : Full capstone project combining all types
+Phase 4 (Debugger)       : ██          ████████    ████        ████        ██
+Phase 5 (Modeler)        : ██          ██          ████        ████        ████
+Phase 6 (Practitioner)   : █           █           ██          ████        ██████
+Phase 7 (Tool Builder)   : █           █           ██          ██████      ████
+Phase 8 (Ship Engineer)  : █           ██          ██          ████        ██████
+Phase 9 (Architect)      : Full capstone project combining all types
 ```
 
 ### Per-Chapter Exercise Structure
@@ -1012,12 +1161,14 @@ END-OF-CHAPTER EXERCISES (after lesson content)
 | Phase 1 (Ch 1-3) | 5 | 1 | 1 | 0 | ~7 |
 | Phase 2 (Ch 4-7) | 4 | 2-3 | 1 | 0 | ~8 |
 | Phase 3 (Ch 8-11) | 3 | 3 | 1 | 1 | ~8 |
-| Phase 4 (Ch 12-15) | 3 | 2 | 1 | 1-2 | ~8 |
-| Phase 5 (Ch 16-18) | 2 | 2 | 1 | 2 | ~7 |
-| Phase 6 (Ch 19-21) | 2 | 2 | 1-2 | 1 | ~7 |
-| Phase 7 (Ch 22-23) | — | — | Full project | Full project | 1 large |
+| Phase 4 (Ch 12-13) | 3 | 3 | 1 | 1 | ~8 |
+| Phase 5 (Ch 14-17) | 3 | 2 | 1 | 1-2 | ~8 |
+| Phase 6 (Ch 18-20) | 2 | 2 | 1 | 2 | ~7 |
+| Phase 7 (Ch 21-22) | 2 | 2 | 1-2 | 1 | ~7 |
+| Phase 8 (Ch 23-25) | 2 | 2 | 1 | 1-2 | ~7 |
+| Phase 9 (Ch 26-27) | — | — | Full project | Full project | 1 large |
 
-**Total across course**: ~170-180 exercises
+**Total across course**: ~200-210 exercises
 
 ### The "Build It" Rule
 
@@ -1026,10 +1177,10 @@ Starting Phase 3, every chapter includes at least one exercise where **the stude
 **Why this matters**: This proves the student can **own delivery** — the real AI-era skill. It's not about typing code manually; it's about understanding what the tests demand, prompting AI precisely, and verifying that the output is correct. If the student can't explain every line AI generated, they iterate until they can.
 
 **The progression**:
-- Phase 3: Drive TDG for a small function (10-20 lines of AI output to review)
-- Phase 4: Drive TDG for a class with methods (30-50 lines, design decisions matter)
-- Phase 5: Drive TDG for a module with multiple components (50-100 lines, architecture matters)
-- Phase 6: Drive TDG for a system component (100+ lines, orchestrating multiple AI prompts)
+- Phase 3-4: Drive TDG for a small function (10-20 lines of AI output to review)
+- Phase 5: Drive TDG for a class with methods (30-50 lines, design decisions matter)
+- Phase 6: Drive TDG for a module with multiple components (50-100 lines, architecture matters)
+- Phase 7-8: Drive TDG for a system component (100+ lines, orchestrating multiple AI prompts)
 
 ### The TDG Challenge Format
 
@@ -1070,12 +1221,15 @@ Exercises build on each other. Later chapters reference and extend earlier work:
 ```
 Ch 6:  Define a Note dataclass              → TDG: build note parser
 Ch 9:  Write comprehensive tests for Note   → TDG: test edge cases
-Ch 12: Convert Note to a full class         → BUILD IT (TDG): add behavior (tags, links)
-Ch 13: Add inheritance (SourceNote, etc.)   → BUILD IT (TDG): design note hierarchy
-Ch 14: Add __repr__, __eq__, __iter__       → BUILD IT (TDG): make notes Pythonic
-Ch 16: Store Notes in PostgreSQL             → TDG: file processing + database persistence
-Ch 20: Expose Notes via async FastAPI       → TDG: async service with API endpoint
-Ch 22: Full SmartNotes Knowledge Base       → CAPSTONE (full TDG orchestration)
+Ch 12: Debug AI-generated Note code         → Debug: find and fix realistic bugs
+Ch 13: Full TDG cycle for Note features     → TDG Mastery: independent specify-verify loop
+Ch 14: Convert Note to a full class         → BUILD IT (TDG): add behavior (tags, links)
+Ch 15: Add inheritance (SourceNote, etc.)   → BUILD IT (TDG): design note hierarchy
+Ch 16: Add __repr__, __eq__, __iter__       → BUILD IT (TDG): make notes Pythonic
+Ch 18: Store Notes in PostgreSQL             → TDG: file processing + database persistence
+Ch 22: Expose Notes via async FastAPI       → TDG: async service with API endpoint
+Ch 24: Security review of SmartNotes        → Review: audit for vulnerabilities
+Ch 27: Full SmartNotes Knowledge Base       → CAPSTONE (full TDG orchestration)
 ```
 
 This creates a **running project thread** that students evolve across the course.
@@ -1181,7 +1335,7 @@ class Counter:
 
 ### The Combined PDF
 
-All 23 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~13 pages). This is generated from the book content — no separate authoring needed.
+All 27 Syntax Cards are automatically compiled into a single **"Python Quick Reference" downloadable PDF** (~15 pages). This is generated from the book content — no separate authoring needed.
 
 Students get:
 - **In the book**: Per-chapter cards right where they need them
@@ -1191,9 +1345,9 @@ Students get:
 
 ## 15. The SmartNotes Project — One Running Project Across All Phases
 
-### Why One Project, Not Seven
+### Why One Project, Not Nine
 
-Students don't build seven throwaway projects. They build **one real application** — **SmartNotes**, a Personal AI Knowledge Base — that grows with them across all 7 phases. Each phase adds a layer that exercises that phase's core skills.
+Students don't build nine throwaway projects. They build **one real application** — **SmartNotes**, a Personal AI Knowledge Base — that grows with them across all 9 phases. Each phase adds a layer that exercises that phase's core skills.
 
 **Why SmartNotes?**:
 1. **Students USE it while learning** — they capture their own notes, code snippets, and learnings as they go through the course
@@ -1250,7 +1404,23 @@ Students don't build seven throwaway projects. They build **one real application
 
 ---
 
-#### Phase 4: Design & Model (Ch 12-15) — "SmartNotes v0.4: Architect"
+#### Phase 4: Debug & Master (Ch 12-13) — "SmartNotes v0.35: Debug It"
+
+**Student role**: Debugger — systematically diagnose and fix AI-generated code
+
+**What students do**:
+- Debug planted bugs in SmartNotes code (realistic AI mistakes)
+- Run the full TDG cycle independently for a new SmartNotes feature
+- Practice the debugging loop: reproduce → isolate → identify → fix → verify
+- Drive a complete TDG cycle from vague spec to working feature with no hand-holding
+
+**Key learning**: When AI output fails, you don't re-prompt blindly — you debug systematically. And you can drive TDG independently without scaffolding.
+
+**Deliverable**: New SmartNotes feature built entirely through independent TDG, with a debugging journal documenting bugs found and fixed
+
+---
+
+#### Phase 5: Design & Model (Ch 14-17) — "SmartNotes v0.4: Architect"
 
 **Student role**: Modeler — design objects that represent real concepts
 
@@ -1267,7 +1437,7 @@ Students don't build seven throwaway projects. They build **one real application
 
 ---
 
-#### Phase 5: Build & Persist (Ch 16-18) — "SmartNotes v0.5: Store It"
+#### Phase 6: Build & Persist (Ch 18-20) — "SmartNotes v0.5: Store It"
 
 **Student role**: Practitioner — spec real-world features via TDG
 
@@ -1284,28 +1454,45 @@ Students don't build seven throwaway projects. They build **one real application
 
 ---
 
-#### Phase 6: Ship & Serve (Ch 19-21) — "SmartNotes v0.6: Ship It"
+#### Phase 7: CLI & Async (Ch 21-22) — "SmartNotes v0.6: Tool It"
 
-**Student role**: Builder — ship production software
+**Student role**: Tool Builder — build production CLI tools and async programs
 
 **What students build**:
 - `smartnotes` CLI tool: `smartnotes add`, `smartnotes search`, `smartnotes export` (using typer)
+- Async foundations: async/await for non-blocking I/O
 - FastAPI async API: `POST /notes`, `GET /notes/search?q=`, `GET /notes/{id}`
 - Async AI integration: semantic search using embeddings, auto-summarization
-- CI pipeline: GitHub Actions running format → lint → type check → test on every push
-- Structured logging and health check endpoint
 
-**Key learning**: Everything connects. Types define API contracts. Tests verify endpoints. Async handles AI calls without blocking.
+**Key learning**: CLI tools follow Unix philosophy. Async enables non-blocking AI calls. FastAPI unifies types + async + testing.
 
-**Deliverable**: Deployed SmartNotes with CLI + REST API + CI pipeline, all green
+**Deliverable**: SmartNotes with CLI + REST API, async AI features working
 
 ---
 
-#### Phase 7: Integrate & Polish (Ch 22-23) — "SmartNotes v1.0: Complete"
+#### Phase 8: Ship & Secure (Ch 23-25) — "SmartNotes v0.8: Harden It"
+
+**Student role**: Shipping Engineer — ship secure, tested, production-grade software
+
+**What students build**:
+- CI pipeline: GitHub Actions running format → lint → type check → test on every push
+- Structured logging and health check endpoint
+- Security audit: review SmartNotes for OWASP vulnerabilities, run `bandit`
+- Axiom compliance report: map SmartNotes to all 10 axioms
+- Security-focused tests: SQL injection prevention, input validation, auth checks
+
+**Key learning**: Shipping means CI + security + observability. The axioms you've been practicing have names and a philosophy.
+
+**Deliverable**: SmartNotes with CI pipeline, security audit report, and axiom compliance — all green
+
+---
+
+#### Phase 9: Integrate & Polish (Ch 26-27) — "SmartNotes v1.0: Complete"
 
 **Student role**: Architect — design and build complete systems
 
 **What students build**:
+- Judgment about when to use AI vs write manually for SmartNotes features
 - Full AI-powered features: semantic search, auto-tagging, note summarization, related notes suggestions
 - Complete specification → implementation → verification cycle for a new feature
 - Performance optimization and refactoring
@@ -1319,14 +1506,15 @@ Students don't build seven throwaway projects. They build **one real application
 smartnotes/
 ├── pyproject.toml          # uv project (Ch 1)
 ├── src/smartnotes/
-│   ├── models/             # Note, NoteCollection, types (Ch 6, 12-14)
-│   ├── storage/            # Repository protocol + PostgreSQL impl (Ch 15, 16)
-│   ├── search/             # AI-powered semantic search (Ch 10, 20)
-│   ├── export/             # Markdown, JSON, CSV (Ch 16)
-│   ├── api/                # FastAPI routes (Ch 20)
-│   └── cli/                # Typer CLI (Ch 19)
-├── tests/                  # pytest suite, 80%+ coverage (Ch 9-10)
-├── .github/workflows/      # CI pipeline (Ch 21)
+│   ├── models/             # Note, NoteCollection, types (Ch 6, 14-16)
+│   ├── storage/            # Repository protocol + PostgreSQL impl (Ch 17, 18)
+│   ├── search/             # AI-powered semantic search (Ch 13, 22)
+│   ├── export/             # Markdown, JSON, CSV (Ch 18)
+│   ├── api/                # FastAPI routes (Ch 22)
+│   └── cli/                # Typer CLI (Ch 21)
+├── tests/                  # pytest suite, 80%+ coverage (Ch 9, 13)
+├── .github/workflows/      # CI pipeline (Ch 23)
+├── security/               # Security audit report (Ch 24)
 └── README.md               # Project documentation
 ```
 
@@ -1336,23 +1524,30 @@ smartnotes/
 |---|---|
 | "Exercises feel disconnected" | Every exercise adds to the same project |
 | "I never finish anything" | Each phase has a working, shippable version |
-| "Portfolio is empty" | One polished project > seven toy exercises |
+| "Portfolio is empty" | One polished project > nine toy exercises |
 | "AI features feel bolted on" | Semantic search and summarization are core features |
 | "OOP feels abstract" | Notes, tags, collections ARE the domain objects |
 | "Testing feels pointless" | Tests protect YOUR knowledge base from regressions |
+| "Security feels theoretical" | Students audit their own code for real vulnerabilities |
+| "I'm too dependent on AI" | Ch 26 explicitly teaches when NOT to use AI |
 
 ---
 
 ## 16. Open Questions
 
 - [x] ~~Python Crash Course Bridge chapter?~~ → Resolved: No. Dual-track callouts within chapters are sufficient. No extra chapter needed.
-- [x] ~~Integration with the broader Agent Factory curriculum (Parts 1-6)?~~ → Resolved: Ch 14 (Ten Axioms) bridges Part 3 into this Python course; course output (typed Python + testing + OOP) feeds directly into Part 5 (building agents). No extra integration chapter needed.
-- [x] ~~Should metaclasses get a dedicated advanced appendix?~~ → Resolved: No. Reference-only coverage in Ch 15 is sufficient. Metaclasses are for framework authors, not our audience.
-- [x] ~~Specific project designs for each phase (Section 15)?~~ → Resolved: "SmartNotes" Personal AI Knowledge Base — one running project across all 7 phases
-- [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 20 (async/await + threading + FastAPI intro)
+- [x] ~~Integration with the broader Agent Factory curriculum (Parts 1-6)?~~ → Resolved: Ch 14 of the broader book (Ten Axioms) bridges Part 3 into this Python course; our Ch 25 maps those axioms to the student's journey. Course output (typed Python + testing + OOP) feeds directly into Part 5 (building agents). No extra integration chapter needed.
+- [x] ~~Should metaclasses get a dedicated advanced appendix?~~ → Resolved: No. Reference-only coverage in Ch 17 is sufficient. Metaclasses are for framework authors, not our audience.
+- [x] ~~Specific project designs for each phase (Section 15)?~~ → Resolved: "SmartNotes" Personal AI Knowledge Base — one running project across all 9 phases
+- [x] ~~Concurrency chapter?~~ → Resolved: Yes, Ch 22 (async/await + threading + FastAPI intro)
 - [x] ~~Exercises format: inline vs separate exercise packs?~~ → Resolved: inline + end-of-chapter (Section 13)
 - [x] ~~Python Quick Reference appendix?~~ → Resolved: per-chapter Syntax Cards + combined PDF (Section 14)
 - [x] ~~Capstone for beginners vs experienced?~~ → Resolved: no beginners by capstone; per-phase projects instead (Section 15)
+- [x] ~~Debugging checkpoint between testing and OOP?~~ → Resolved: Yes, Phase 4 (Ch 12-13) — Debugging + TDG Mastery
+- [x] ~~Axioms at start vs end?~~ → Resolved: End (Ch 25). Students practice axioms for 24 chapters, then name them. Experience before theory.
+- [x] ~~Security chapter for AI-generated code?~~ → Resolved: Yes, Ch 24. OWASP-focused review of AI output, security testing, `bandit` tooling.
+- [x] ~~"When Not to Use AI" chapter?~~ → Resolved: Yes, Ch 26. Judgment about AI assistance spectrum, preventing AI dependency.
+- [x] ~~Split Production Systems phase?~~ → Resolved: Yes. Phase 7 (CLI + Concurrency) and Phase 8 (CI/CD + Security + Axioms) — separate building from shipping.
 
 ---
 
@@ -1369,3 +1564,4 @@ smartnotes/
 | 2.5 | 2026-02-17 | Designed "SmartNotes" Personal AI Knowledge Base as the running project across all 7 phases. Updated Section 15 with phase-by-phase deliverables. Updated exercise thread from Order domain to Note/SmartNotes domain. Updated capstone to reference SmartNotes. |
 | 2.6 | 2026-02-17 | AI-first philosophy applied throughout entire plan. Steps 4-5 of learning progression now explicitly done WITH AI. Renamed "Writing Gradient" to "Specification Sophistication Gradient". All chapter "Student writes/reads" lines replaced with "Student does/AI role" format reflecting TDG workflow. Phase 5 role renamed from "Writer" to "Practitioner". Exercise Type 5 "Build It" reframed from "no AI" to "full TDG ownership". "Build It Rule" rewritten. Student Journey Summary updated. |
 | 2.7 | 2026-02-20 | Folded SQL and FastAPI from standalone chapters into existing chapters per teacher directive. Ch 16 now includes PostgreSQL introduction (was separate Ch 18). Ch 20 (Concurrency) now includes FastAPI introduction (was separate Ch 22). Reduced from 25 to 23 chapters. Renumbered all cross-references: old Ch 19→18, 20→19, 21→20, 23→21, 24-25→22-23. Updated SmartNotes project phases, stack references, Syntax Cards count, exercise thread, and all section cross-references. Full SQL and FastAPI coverage deferred to later parts of the book. |
+| 2.8 | 2026-02-24 | Major restructuring from 23 chapters/7 phases to 27 chapters/9 phases. Added Phase 4: Debugging + TDG Mastery (Ch 12-13) — debugging checkpoint between testing and OOP to prevent students hitting a wall. Moved axioms to capstone position (Ch 25) — experience before theory. Split old Phase 6 into Phase 7 (CLI + Concurrency) and Phase 8 (CI/CD + Security + Axioms). Added Ch 24: Security Review for AI-Generated Code (OWASP, bandit, security-focused TDG). Added Ch 25: Ten Axioms as reflective capstone. Added Ch 26: When Not to Use AI (judgment, AI dependency prevention). Old Ch 10 (TDG Mastery) replaced with Ch 10 (Iterating on AI Output) and moved full TDG mastery to new Ch 13 in Phase 4. Renumbered all OOP chapters (12-15 → 14-17), real-world chapters (16-18 → 18-20), production chapters (19-21 → 21-23). Updated all cross-references: feature maps, Lutz coverage, OOP progression, exercise strategy, SmartNotes phases, stack diagram. |
