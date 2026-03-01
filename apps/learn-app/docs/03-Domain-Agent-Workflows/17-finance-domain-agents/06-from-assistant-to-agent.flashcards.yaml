@@ -14,7 +14,7 @@ cards:
 
   - id: "ch17-06-same-connectors-002"
     front: "Do Claude in Excel and Cowork use different MCP connectors?"
-    back: "No. They share the same MCP connector set. Any connector configured in Claude settings works in both contexts automatically. The difference is what Claude can do with them: single-workbook analysis (Excel) vs multi-app orchestration (Cowork)."
+    back: "They share the same MCP connector set. Any connector configured in Claude settings works in both contexts automatically. The difference is what Claude can do with them: single-workbook analysis (Excel) vs multi-app orchestration (Cowork)."
     tags: ["connectors", "mcp", "common-mistake"]
     difficulty: "basic"
 

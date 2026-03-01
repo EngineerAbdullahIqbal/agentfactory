@@ -38,7 +38,7 @@ cards:
 
   - id: "ch17-01-connectors-shared-006"
     front: "Do Claude in Excel and Cowork use separate MCP connector ecosystems?"
-    back: "No. Any MCP connector configured in your Claude settings works in both environments automatically. The difference is scope: Claude in Excel uses connectors to serve analysis within one workbook, while Cowork uses the same connectors to serve workflows spanning multiple applications."
+    back: "They share a single MCP connector ecosystem. Any connector configured in your Claude settings works in both environments automatically. The difference is scope: Claude in Excel uses connectors to serve analysis within one workbook, while Cowork uses the same connectors to serve workflows spanning multiple applications."
     tags: ["MCP-connectors", "shared-ecosystem"]
     difficulty: "intermediate"
     why: "Tests whether student understands the corrected connector narrative — same connectors, different scope"
