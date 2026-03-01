@@ -46,7 +46,7 @@ class Settings(BaseSettings):
     port: int = 8002
 
     # Cache TTLs (seconds)
-    cache_ttl_progress: int = 300
+    cache_ttl_progress: int = 600
     cache_ttl_leaderboard: int = 600
 
     @property
