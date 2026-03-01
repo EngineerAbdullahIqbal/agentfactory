@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..core.auth import CurrentUser, get_current_user, require_admin
 from ..core.database import get_session
 from ..core.exceptions import MeteringAPIException
-from ..core.rate_limit import limiter
+from ..core.rate_limit import limiter, standard_rate_limit
 from ..core.redis import get_redis
 from ..models.transaction import TransactionType
 from ..services.balance import BalanceService
@@ -27,7 +27,7 @@ router = APIRouter()
 
 
 @router.get("/balance", response_model=BalanceResponse)
-@limiter.limit("100/minute")
+@standard_rate_limit()
 async def get_balance(
     request: Request,
     user: Annotated[CurrentUser, Depends(get_current_user)],
@@ -37,16 +37,10 @@ async def get_balance(
     Get current user's balance and account status (FR-021).
 
     Returns balance, effective_balance, last_activity_at, and is_expired.
+    Auto-provisions account with starter credits if none exists.
     """
     service = BalanceService(session)
-    result = await service.get_balance(user.id, redis=get_redis())
-
-    if not result:
-        raise MeteringAPIException(
-            status_code=404,
-            error_code="NOT_FOUND",
-            message="Account not found",
-        )
+    result = await service.get_balance(user.id, redis=get_redis(), auto_provision=True)
 
     return BalanceResponse(**result)
 
