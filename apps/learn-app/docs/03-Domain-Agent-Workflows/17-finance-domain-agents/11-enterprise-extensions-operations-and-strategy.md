@@ -101,8 +101,6 @@ teaching_guide:
       expected_response: "Operational pain (where the workflow gap causes the most daily friction), knowledge risk (where expertise is concentrated in individuals who could leave), and regulatory exposure (where compliance requirements create urgency that overrides other priorities)."
 ---
 
-import Flashcards from '@site/src/components/Flashcards';
-
 # Enterprise Extensions: Operations and Strategy
 
 In the previous lessons, you built finance agent capabilities that work across organisations — model comprehension, scenario testing, variance analysis, and the financial-services plugin suite. Each of those capabilities applies general financial logic. Now you confront the limitation: general financial logic does not know your treasury policy, your tax provision methodology, your CFO's preferred variance bridge format, or your fund's NAV calculation rules. This lesson covers seven enterprise extension domains where the gap between generic capability and organisation-specific requirement is widest.
