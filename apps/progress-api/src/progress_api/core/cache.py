@@ -34,7 +34,9 @@ async def get_cached_progress(redis: Redis | None, user_id: str) -> dict[str, An
     try:
         cached = await redis.get(f"{PROGRESS_KEY_PREFIX}{user_id}")
         if cached is not None:
+            logger.debug("[Cache] Progress cache HIT for %s", user_id)
             return json.loads(cached)
+        logger.debug("[Cache] Progress cache MISS for %s", user_id)
         return None
     except Exception as e:
         logger.warning(f"[Cache] Failed to get progress for {user_id}: {e}")
