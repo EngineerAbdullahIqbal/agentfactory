@@ -2,11 +2,11 @@
 
 Provides caching for:
 1. User progress data (TTL: configurable, default 300s)
-2. Leaderboard data (TTL: configurable, default 300s)
+2. Leaderboard data (TTL: aligned to mat view refresh, default 600s)
 
 Cache keys:
 - progress:user:{user_id} - User progress (invalidated on mutations)
-- progress:leaderboard - Leaderboard data (invalidated on refresh)
+- progress:leaderboard - Leaderboard data (refreshed by debounced mat view refresh)
 
 Fail-open: if redis is None, all operations skip silently (A3).
 """
@@ -104,12 +104,3 @@ async def set_leaderboard_cache(
         logger.warning(f"[Cache] Failed to cache leaderboard: {e}")
 
 
-async def invalidate_leaderboard_cache(redis: Redis | None) -> None:
-    """Invalidate cached leaderboard data."""
-    if redis is None:
-        return
-
-    try:
-        await redis.delete(LEADERBOARD_KEY)
-    except Exception as e:
-        logger.warning(f"[Cache] Failed to invalidate leaderboard: {e}")
