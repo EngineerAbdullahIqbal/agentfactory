@@ -14,7 +14,7 @@ interface UseCreditsResult {
 
 const LOW_BALANCE_THRESHOLD_USD = 0.01;
 const CREDITS_TO_USD_DIVISOR = 10000;
-const CACHE_KEY = "ainative_balance_cache";
+const CACHE_KEY_PREFIX = "ainative_balance_cache_";
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 interface CachedBalance {
@@ -42,17 +42,20 @@ export function useCredits(): UseCreditsResult {
   const [isExpired, setIsExpired] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const userId = session?.user?.id;
+  const cacheKey = userId ? `${CACHE_KEY_PREFIX}${userId}` : null;
+
   const fetchBalance = useCallback(
     async (bypassCache = false) => {
       if (typeof window === "undefined") return;
 
       const token = localStorage.getItem("ainative_id_token");
-      if (!token) return;
+      if (!token || !cacheKey) return;
 
       // Check localStorage cache (unless bypassing)
       if (!bypassCache) {
         try {
-          const raw = localStorage.getItem(CACHE_KEY);
+          const raw = localStorage.getItem(cacheKey);
           if (raw) {
             const cached: CachedBalance = JSON.parse(raw);
             if (Date.now() - cached.fetchedAt < CACHE_TTL_MS) {
@@ -62,7 +65,7 @@ export function useCredits(): UseCreditsResult {
             }
           }
         } catch {
-          localStorage.removeItem(CACHE_KEY);
+          localStorage.removeItem(cacheKey);
         }
       }
 
@@ -83,24 +86,24 @@ export function useCredits(): UseCreditsResult {
         setBalanceUsd(usd);
         setIsExpired(data.is_expired ?? false);
 
-        // Cache successful response
+        // Cache successful response scoped to this user
         const cached: CachedBalance = {
           balanceUsd: usd,
           isExpired: data.is_expired ?? false,
           fetchedAt: Date.now(),
         };
-        localStorage.setItem(CACHE_KEY, JSON.stringify(cached));
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to fetch balance",
         );
         setBalanceUsd(null);
-        localStorage.removeItem(CACHE_KEY);
+        localStorage.removeItem(cacheKey);
       } finally {
         setIsLoading(false);
       }
     },
-    [meteringApiUrl],
+    [meteringApiUrl, cacheKey],
   );
 
   // Fetch on mount when authenticated
