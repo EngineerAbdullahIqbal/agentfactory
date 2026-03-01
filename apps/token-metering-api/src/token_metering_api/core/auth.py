@@ -1,5 +1,6 @@
 """JWT authentication with JWKS support."""
 
+import asyncio
 import logging
 from dataclasses import dataclass
 from typing import Any
@@ -38,6 +39,7 @@ def _check_dev_mode_safety() -> None:
 # JWKS cache
 _jwks_cache: dict[str, Any] | None = None
 _jwks_cache_time: float = 0
+_jwks_lock = asyncio.Lock()
 
 
 @dataclass
@@ -66,7 +68,10 @@ class CurrentUser:
 
 
 async def get_jwks() -> dict[str, Any]:
-    """Fetch JWKS from SSO service with caching."""
+    """Fetch JWKS from SSO service with caching.
+
+    Uses asyncio.Lock to prevent thundering herd on cache expiry.
+    """
     import time
 
     global _jwks_cache, _jwks_cache_time
@@ -75,23 +80,29 @@ async def get_jwks() -> dict[str, Any]:
     if _jwks_cache and (now - _jwks_cache_time) < settings.jwks_cache_ttl:
         return _jwks_cache
 
-    if not settings.sso_url:
-        raise HTTPException(status_code=500, detail="SSO_URL not configured")
-
-    jwks_url = f"{settings.sso_url}/api/auth/jwks"
-
-    try:
-        async with httpx.AsyncClient() as client:
-            response = await client.get(jwks_url, timeout=5.0)
-            response.raise_for_status()
-            _jwks_cache = response.json()
-            _jwks_cache_time = now
+    async with _jwks_lock:
+        # Re-check after acquiring lock (another coroutine may have refreshed)
+        now = time.time()
+        if _jwks_cache and (now - _jwks_cache_time) < settings.jwks_cache_ttl:
             return _jwks_cache
-    except Exception as e:
-        logger.error(f"[Auth] Failed to fetch JWKS: {e}")
-        if _jwks_cache:
-            return _jwks_cache
-        raise HTTPException(status_code=503, detail="Unable to verify authentication")
+
+        if not settings.sso_url:
+            raise HTTPException(status_code=500, detail="SSO_URL not configured")
+
+        jwks_url = f"{settings.sso_url}/api/auth/jwks"
+
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.get(jwks_url, timeout=5.0)
+                response.raise_for_status()
+                _jwks_cache = response.json()
+                _jwks_cache_time = now
+                return _jwks_cache
+        except Exception as e:
+            logger.error(f"[Auth] Failed to fetch JWKS: {e}")
+            if _jwks_cache:
+                return _jwks_cache
+            raise HTTPException(status_code=503, detail="Unable to verify authentication")
 
 
 async def verify_jwt(token: str) -> dict[str, Any]:
@@ -118,7 +129,8 @@ async def verify_jwt(token: str) -> dict[str, Any]:
             token,
             rsa_key,
             algorithms=["RS256"],
-            options={"verify_aud": False},  # Audience varies by OAuth client (matches api-infra + progress-api)
+            # Audience varies by OAuth client (matches api-infra + progress-api)
+            options={"verify_aud": False},
         )
         return payload
 

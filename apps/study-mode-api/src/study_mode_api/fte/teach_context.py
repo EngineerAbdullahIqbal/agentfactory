@@ -6,7 +6,13 @@ all state needed for the teaching session.
 Per reviewer's architecture: simple dataclass, no nested objects.
 """
 
-from dataclasses import dataclass
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..chatkit_store.context import RequestContext
 
 
 @dataclass
@@ -15,6 +21,9 @@ class TeachContext:
 
     This replaces the complex server-side session state management
     with a simple dataclass that the agent can read and tools can modify.
+
+    The request_context field carries user identity and metadata needed
+    by metering hooks to charge for AI usage.
     """
 
     lesson_title: str
@@ -26,6 +35,7 @@ class TeachContext:
     is_first_message: bool = True
     thread_id: str = ""  # For Redis operations
     user_name: str = ""  # For personalized greeting
+    request_context: RequestContext | None = field(default=None, repr=False)
 
     @property
     def current_chunk(self) -> dict | None:

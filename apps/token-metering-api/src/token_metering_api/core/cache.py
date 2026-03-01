@@ -113,6 +113,7 @@ async def get_cached_pricing(redis: Redis | None, model: str) -> dict[str, Any] 
                 "input": Decimal(data["input"]),
                 "output": Decimal(data["output"]),
                 "version": data["version"],
+                "max_tokens": data.get("max_tokens", 128_000),
             }
         return None
     except Exception as e:
@@ -143,6 +144,7 @@ async def set_pricing_cache(
             "input": str(pricing["input"]),
             "output": str(pricing["output"]),
             "version": pricing.get("version", "v1"),
+            "max_tokens": pricing.get("max_tokens", 128_000),
         }
         await redis.setex(f"{PRICING_KEY_PREFIX}{model}", ttl, json.dumps(data))
         logger.debug(f"[Cache] Cached pricing for {model}")

@@ -4,9 +4,10 @@ import logging
 import os
 from contextlib import asynccontextmanager
 
+from fastapi import FastAPI
+
 import api_infra
 from api_infra.core.redis_cache import get_redis, start_redis, stop_redis
-from fastapi import FastAPI
 
 logger = logging.getLogger(__name__)
 

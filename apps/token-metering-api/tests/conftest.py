@@ -13,8 +13,10 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-# Set environment variable BEFORE importing app modules to ensure rate limiting uses memory storage
-os.environ["PYTEST_CURRENT_TEST"] = "1"
+# Set environment variables BEFORE importing app modules
+os.environ["PYTEST_CURRENT_TEST"] = "1"  # Rate limiting uses memory storage
+os.environ["AUTO_CREATE_SCHEMA"] = "true"  # Tests need schema auto-creation
+os.environ["STARTER_CREDITS"] = "20000"  # Match model constant; local .env may differ
 
 from token_metering_api.config import settings
 from token_metering_api.main import app

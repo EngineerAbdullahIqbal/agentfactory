@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     # Redis (required for token metering)
     redis_url: str = ""
     redis_password: str = ""
-    redis_max_connections: int = 1000  # Production: 1000 connections
+    redis_max_connections: int = 200
 
     # SSO/Auth
     sso_url: str = ""
@@ -45,6 +45,9 @@ class Settings(BaseSettings):
     rate_limit_requests: int = 100  # Requests per window
     rate_limit_window: int = 60  # Window in seconds
     admin_rate_limit_requests: int = 20  # Stricter limit for admin endpoints
+
+    # Schema management
+    auto_create_schema: bool = False
 
     # Server
     port: int = 8000

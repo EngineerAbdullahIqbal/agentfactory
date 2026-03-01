@@ -39,12 +39,15 @@ class Settings(BaseSettings):
     dev_mode: bool = False
     dev_user_id: str = "dev-user-123"
 
+    # Schema management
+    auto_create_schema: bool = False
+
     # Server
     port: int = 8002
 
     # Cache TTLs (seconds)
     cache_ttl_progress: int = 300
-    cache_ttl_leaderboard: int = 300
+    cache_ttl_leaderboard: int = 600
 
     @property
     def allowed_origins_list(self) -> list[str]:

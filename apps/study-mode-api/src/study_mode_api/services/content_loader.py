@@ -16,8 +16,9 @@ import logging
 
 import httpx
 
-from ..config import settings
 from api_infra.core.redis_cache import cache_response, safe_redis_get
+
+from ..config import settings
 
 logger = logging.getLogger(__name__)
 

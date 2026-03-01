@@ -481,6 +481,7 @@ class StudyModeChatKitServer(ChatKitServer[RequestContext]):
             is_first_message=is_first_message,
             thread_id=thread.id,
             user_name=user_name or "",
+            request_context=context,
         )
 
         # 3. Create and run agent — no branching, no script selection

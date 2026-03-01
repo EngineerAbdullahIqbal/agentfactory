@@ -15,7 +15,7 @@ from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..core.auth import CurrentUser
-from ..core.cache import invalidate_leaderboard_cache, invalidate_progress_cache
+from ..core.cache import invalidate_progress_cache
 from ..core.redis import get_redis
 from ..models.activity import ActivityDay
 from ..models.chapter import Chapter, ChapterAlias
@@ -190,4 +190,3 @@ async def invalidate_user_cache(user_id: str) -> None:
     """Invalidate all cached data for a user (A3: skip if redis is None)."""
     redis = get_redis()
     await invalidate_progress_cache(redis, user_id)
-    await invalidate_leaderboard_cache(redis)

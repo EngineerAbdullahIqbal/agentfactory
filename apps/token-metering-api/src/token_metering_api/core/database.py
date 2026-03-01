@@ -53,9 +53,10 @@ _db_url, _connect_args = _prepare_asyncpg_url(settings.database_url)
 engine = create_async_engine(
     _db_url,
     poolclass=AsyncAdaptedQueuePool,
-    pool_size=100,      # Production: 100 base connections
-    max_overflow=50,    # Production: 50 burst connections (150 total max)
+    pool_size=10,
+    max_overflow=20,
     pool_pre_ping=True,
+    pool_recycle=1800,
     echo=settings.debug,
     connect_args=_connect_args,
 )
@@ -82,7 +83,16 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def init_db() -> None:
-    """Initialize database schema."""
+    """Initialize database schema.
+
+    Guarded by AUTO_CREATE_SCHEMA env var (default: False).
+    In production, tables already exist — skipping avoids introspection queries on every cold start.
+    Tests set AUTO_CREATE_SCHEMA=true via conftest.
+    """
+    if not settings.auto_create_schema:
+        logger.debug("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
+        return
+
     from ..models import SQLModel
 
     async with engine.begin() as conn:

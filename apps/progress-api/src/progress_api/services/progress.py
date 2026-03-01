@@ -179,25 +179,25 @@ async def get_progress(
         )
 
     # Include chapters that have lessons but no quizzes
-    for slug, lessons in lesson_map.items():
-        if slug not in seen_slugs:
-            # Try to get the chapter title
-            result = await session.execute(
-                select(Chapter.title)
-                .join(ChapterAlias, Chapter.id == ChapterAlias.chapter_id)
-                .where(ChapterAlias.slug == slug)
-            )
-            title_row = result.first()
-            title = title_row[0] if title_row else slug
+    unknown_slugs = [s for s in lesson_map if s not in seen_slugs]
+    if unknown_slugs:
+        # Batch query: fetch all chapter titles in one round-trip
+        result = await session.execute(
+            select(ChapterAlias.slug, Chapter.title)
+            .join(Chapter, Chapter.id == ChapterAlias.chapter_id)
+            .where(ChapterAlias.slug.in_(unknown_slugs))
+        )
+        title_by_slug = {row.slug: row.title for row in result.all()}
 
+        for slug in unknown_slugs:
             chapters.append(
                 ChapterInfo(
                     slug=slug,
-                    title=title,
+                    title=title_by_slug.get(slug, slug),
                     best_score=None,
                     attempts=0,
                     xp_earned=0,
-                    lessons_completed=lessons,
+                    lessons_completed=lesson_map[slug],
                 )
             )
 
