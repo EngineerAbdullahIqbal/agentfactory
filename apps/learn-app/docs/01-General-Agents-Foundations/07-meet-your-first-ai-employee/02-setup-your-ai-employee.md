@@ -1,7 +1,7 @@
 ---
 sidebar_position: 2
 title: "Setup Your AI Employee (Free)"
-description: "Install OpenClaw, connect a free LLM provider, and chat with your AI Employee through WhatsApp, Telegram, or the Control UI in under 45 minutes"
+description: "Install OpenClaw, connect a free LLM provider, and chat with your AI Employee through Telegram, WhatsApp, or the Control UI in under 45 minutes"
 keywords:
   [
     openclaw setup,
@@ -108,7 +108,7 @@ teaching_guide:
 
 In Lesson 1, you saw why the AI Employee paradigm matters and how OpenClaw validated it at scale. Now you build one yourself. In the next 30-45 minutes, you will have a working AI Employee on your phone -- not a demo, not a simulation, but a real agent that can research, write, analyze, and remember.
 
-Everything in this lesson is free. Google Gemini's free tier gives you enough tokens to complete this entire chapter without spending a dollar. You need a computer with a terminal, a Google account, and a WhatsApp or Telegram account. No API keys to create. No credit cards to enter.
+Everything in this lesson is free. Google Gemini's free tier gives you enough tokens to complete this entire chapter without spending a dollar. You need a computer with a terminal, Node.js 22 or later, a Google account, and a WhatsApp or Telegram account. No paid API keys to create. No credit cards to enter.
 
 **Honest time estimate**: Budget 45 minutes. The happy path takes 15-20 minutes, but Node.js version issues, network hiccups, and shell PATH problems are common first-time obstacles. Troubleshooting is where real learning happens.
 
@@ -155,8 +155,10 @@ OpenClaw 2026.2.15 (3fe22ea)
 **What happens next is important**: the installer transitions directly into the setup wizard. You do not need to run a separate onboarding command. Read what the installer asks you -- do not blindly press Enter.
 
 :::tip npm Alternative
-If the install script fails, install directly via npm: `npm install -g openclaw@latest`, then run `openclaw` to start the wizard.
+If the install script fails, install directly via npm: `npm install -g openclaw@latest`, then run `openclaw` to start the wizard. To restart wizard use `openclaw setup --wizard`
 :::
+
+If you run into any error run the built-in diagnostic before continuing `openclaw doctor`. This checks your Node.js version, network connectivity, configuration paths, and service status. Fix any issues it flags before proceeding -- it catches the most common setup problems (wrong Node version, missing PATH entries, port conflicts) in seconds.
 
 ---
 
@@ -193,7 +195,7 @@ The wizard then asks you to pick a model:
 
 ### Connect Your Messaging Channel
 
-The wizard asks which messaging platform to connect. Select your preferred channel:
+The wizard asks which messaging platform to connect. Both Telegram and WhatsApp are fully supported first-class channels -- pick whichever you use daily:
 
 ::::channel-tabs
 
@@ -251,7 +253,7 @@ Your bot token grants full control over your Telegram bot. Treat it like a passw
 :::
 
 :::tip Telegram Availability
-Telegram is blocked in some regions (including Pakistan). If you cannot access Telegram, use the WhatsApp tab above.
+Telegram is blocked in some regions (including Pakistan). If you cannot access Telegram, use WhatsApp instead.
 :::
 
 ::::
@@ -290,7 +292,13 @@ The wizard offers first contact options. Select **Hatch in TUI (recommended)**.
 
 The terminal opens an interactive session. OpenClaw sends: "Wake up, my friend!" Your AI Employee responds: "Hey there! I just came online. Who am I? Who are you?"
 
-Give it a name. Tell it what you do. Describe the work you want help with. The agent remembers this first conversation and uses it to shape future interactions.
+Give it a name. Tell it what you do. Describe the work you want help with. If you are not sure where to start, try this:
+
+```
+Introduce yourself and tell me what you can help with.
+```
+
+The agent introduces itself and explains its capabilities. From there, personalize: tell it your name, your role, and what kind of work you need help with. The agent remembers this first conversation and uses it to shape future interactions.
 
 **This matters more than it seems.** The difference between a generic chatbot and a personal AI Employee starts with this moment of personalization. You are not configuring a tool. You are onboarding a colleague.
 
@@ -398,7 +406,7 @@ openclaw dashboard
 
 This launches the Control UI in your default browser with authentication handled automatically. Going to `http://127.0.0.1:18789/` directly will fail with "too many bad/missing token attempts" because the URL requires an authentication token. Always use the command.
 
-Three channels, one agent: TUI, your messaging app, and the Control UI all reach the same AI Employee with the same memory. That is the channel adapter pattern from Lesson 1.
+Three channels, one agent: TUI, your messaging app (Telegram or WhatsApp), and the Control UI all reach the same AI Employee with the same memory. That is the channel adapter pattern from Lesson 1.
 
 ---
 

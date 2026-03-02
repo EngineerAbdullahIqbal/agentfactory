@@ -118,6 +118,10 @@ teaching_guide:
 
 # Connecting Google Workspace
 
+:::danger[Use a Dedicated Test Google Account]
+This lesson grants your AI Employee OAuth access to a real Google account -- including email, calendar, and files. **Use a dedicated test Google account**, not your primary one. This removes security anxiety and lets you experiment freely. You can always switch to your real account later once you are comfortable with the access model and security controls.
+:::
+
 In Lesson 6, you connected your AI Employee to a coding agent so it can delegate programming tasks to a specialist. Now you will cross the line that separates a demo from daily use: connecting your agent to your actual productivity tools.
 
 Until now, every task you gave your AI Employee operated on information it generated itself -- competitor research from training data, goal files it created, reports it wrote. Useful, but self-contained. Your agent has been working in a sandbox of its own making.
@@ -197,11 +201,23 @@ cd gogcli && make
 ./bin/gog --version
 ```
 
-**Note:** gog requires a working Go toolchain for building from source. On macOS, Homebrew handles this automatically. On Linux, the Homebrew path also works if you have Linuxbrew installed. Check the [gog documentation](https://gogcli.sh/) for the latest installation options.
+**Windows:**
+
+```powershell
+npm install -g gogcli
+```
+
+Or download the binary from the [gog releases page](https://github.com/steipete/gogcli/releases) and add it to your PATH.
+
+**Note:** gog requires Node.js 18+ for the npm install path, or a working Go toolchain for building from source. Check that your Node.js version is compatible: `node --version`. On macOS, Homebrew handles dependencies automatically. On Linux, the Homebrew path also works if you have Linuxbrew installed. Check the [gog documentation](https://gogcli.sh/) for the latest installation options and verify your gog version matches: `gog --version`.
 
 ### Part 2: Create and Register OAuth Credentials
 
 gog needs a Google Cloud OAuth client to authenticate. This is a one-time setup.
+
+:::note[GCP Console Can Be Intimidating]
+The Google Cloud Console has a dense interface with many options. If you are teaching this in a classroom, consider doing this section as a live walkthrough or providing a pre-recorded screencast. The console UI changes periodically, so a recording from this month is more reliable than static screenshots.
+:::
 
 **Step 1:** Go to [console.cloud.google.com](https://console.cloud.google.com) and sign in with the Google account you want your agent to access.
 
@@ -299,7 +315,13 @@ DRAFT             DRAFT                 system
 ...
 ```
 
-If you see your labels, the connection works. Your agent can now access your Google Workspace.
+If you see your labels, the connection works. You can also confirm gog is working from your messaging channel by asking your AI Employee:
+
+```
+List my Gmail labels
+```
+
+If your employee returns a list of labels (INBOX, SENT, DRAFT, etc.), the full pipeline is working end-to-end -- from your messaging channel through OpenClaw to gog to Google's API and back. Your agent can now access your Google Workspace.
 
 ## Real Employee Tasks
 

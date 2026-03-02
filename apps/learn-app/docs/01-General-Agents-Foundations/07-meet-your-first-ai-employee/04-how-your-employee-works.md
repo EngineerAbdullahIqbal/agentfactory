@@ -102,7 +102,13 @@ teaching_guide:
 
 # How Your Employee Works
 
-In Lesson 03, you gave your AI Employee real tasks and watched it deliver results. You saw messages flow from your phone to a response in seconds. But you were driving a car without knowing what's under the hood. Now you open the hood.
+Try something right now. Open your messaging channel and send your employee this message:
+
+> Describe your own architecture. What components make up your system? How does a message get from my phone to you and back? What files on disk define who you are?
+
+Your employee will answer. It will describe a Gateway that routes messages, a Channel Layer that connects to WhatsApp, workspace files like `SOUL.md` and `USER.md` that define its identity, a Memory Layer that tracks conversations across sessions, and a Tools Layer that gives it the ability to read, write, and execute. It will trace the end-to-end flow: your phone sends a WhatsApp message, the Gateway receives it, attaches metadata, invokes the agent session with your history and context files, generates a response, and sends it back through the same channel.
+
+The employee is not guessing. It is reading its own configuration and describing what it finds. That description is your roadmap for this lesson.
 
 Understanding how your employee works matters for three reasons. First, when something breaks, you need to know where to look. Is the gateway down? Did the model provider reject your request? Is a session stuck? Second, when you want to extend capabilities, you need to know which component to modify. Third, and most important: **these same patterns appear in every agent framework.** Claude Code, CrewAI, LangGraph, AutoGen -- they all solve the same problems with the same architectural patterns, just with different names. Master the patterns once here, recognize them everywhere.
 
@@ -225,6 +231,21 @@ The bootstrap files define your agent's identity and behavior before any convers
 | **BOOT.md**      | Startup instructions executed at the beginning of every new session              |
 
 These files live in your workspace directory (`~/.openclaw/workspace/`). Together, they give your agent a persistent identity that survives session resets. When you customize SOUL.md, you are not tweaking a setting -- you are defining who your employee is.
+
+You can inspect these files yourself at any time:
+
+```bash
+cat ~/.openclaw/workspace/MEMORY.md
+cat ~/.openclaw/workspace/USER.md
+```
+
+To browse raw session transcripts (every message, tool call, and response as JSON):
+
+```bash
+ls ~/.openclaw/agents/*/sessions/
+# Pick a session file and inspect it:
+tail -20 ~/.openclaw/agents/*/sessions/*.jsonl
+```
 
 **Phase 4 -- Model Invocation:** The assembled context goes to your configured LLM, which reasons about your question and generates a response -- potentially requesting tool calls.
 
@@ -362,7 +383,19 @@ In Lesson 05, you will put skills to work and explore the security realities of 
 
 ## Try With AI
 
-### Prompt 1: Race Condition Designer
+### Prompt 1: Self-Architecture Description
+
+**Setup:** Ask your OpenClaw AI Employee directly (via Telegram, WhatsApp, or the Control UI).
+
+```
+Describe your own architecture. What components make up your system?
+How does a message get from my phone to you and back? What files
+on disk define who you are?
+```
+
+**What you're learning:** Your agent has access to its own configuration files and can introspect on its own system. Comparing what it tells you to the architecture in this lesson reveals what the agent understands about itself -- and where its self-knowledge has gaps. This is also a practical way to verify your setup: if it names files that do not exist on your machine, something was misconfigured.
+
+### Prompt 2: Race Condition Designer (Advanced)
 
 **Setup:** Use Claude Code or any AI assistant.
 
@@ -374,7 +407,7 @@ CANNOT prevent -- one that requires a different solution entirely.
 
 **What you're learning:** Concurrency is where most agent projects fail silently. By designing failure scenarios yourself, you build intuition for where race conditions hide. The 4th scenario forces you beyond the textbook answer into genuine architectural thinking -- exactly what you need when building your own agent.
 
-### Prompt 2: Memory Retrieval Trace
+### Prompt 3: Memory Retrieval Trace
 
 **Setup:** Use Claude Code or any AI assistant.
 
@@ -387,7 +420,7 @@ then design a scenario where all 3 fail. What went wrong?
 
 **What you're learning:** Memory retrieval is where theory meets reality. Tracing a concrete query through each layer builds intuition for how externalized memory actually works -- and where it breaks. The failure scenario forces you to think about memory architecture limitations before you encounter them in your own builds.
 
-### Prompt 3: Agent Autopsy
+### Prompt 4: Agent Autopsy
 
 **Setup:** Use Claude Code or any AI assistant.
 
@@ -398,7 +431,6 @@ perform an autopsy: which missing pattern was the likely cause of death?
 ```
 
 **What you're learning:** The 6 patterns are not just a classification scheme. They are a diagnostic tool. Learning to identify which missing pattern killed a project is the fastest way to internalize why each pattern matters. This forensic skill transfers directly to evaluating any agent framework you encounter.
-
 
 ## Flashcards Study Aid
 

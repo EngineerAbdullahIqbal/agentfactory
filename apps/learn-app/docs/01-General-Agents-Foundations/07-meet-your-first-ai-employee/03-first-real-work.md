@@ -158,7 +158,7 @@ Add a column for [something you noticed was missing] and correct
 [something that was wrong]. Save the updated table to competitors.md.
 ```
 
-Open the file. You now have an artifact on your machine -- not a chat message that scrolls away, but a file you can edit, share, and reference tomorrow.
+Open the file. Your agent saves files to its workspace at `~/.openclaw/workspace/` by default -- check there if you are not sure where to look. You now have an artifact on your machine -- not a chat message that scrolls away, but a file you can edit, share, and reference tomorrow.
 
 **Takeaway:** The value is not what the agent produces. It is what YOU produce by editing agent output. First drafts are cheap. Your judgment is the expensive part.
 
@@ -286,6 +286,10 @@ Task 4 added **autonomous invocation** on top of the same loop. The agent does n
 AI Employees are strongest at tasks that are **information-heavy, structure-dependent, and repeatable**. They are weakest at tasks requiring **real-time awareness, subjective judgment, or genuine creativity**. Most professional work falls between, which is exactly why the employee model works -- delegate the mechanical parts, apply your judgment to the parts that matter.
 
 On free tiers (Gemini Flash, Kimi K2.5), this lesson costs nothing. On paid models, expect $0.01-0.10 per task -- less than a dollar for the entire lesson.
+
+:::caution Rate Limits
+If you are using Gemini's free tier simultaneously, you may hit rate limits -- especially during the hands-on tasks above.If you get rate-limited switch to OpenRouter as a fallback provider. OpenRouter offers free models through a separate quota.
+:::
 
 ---
 

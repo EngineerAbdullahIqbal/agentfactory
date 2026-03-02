@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 11
 title: "Chapter 7: Meet Your First AI Employee Quiz"
 proficiency_level: B1
 layer: 2

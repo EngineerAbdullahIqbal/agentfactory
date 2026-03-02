@@ -127,7 +127,11 @@ Each lesson in this chapter gave you one pattern. Here is what happens when you 
 | Scheduling (L03) + Delegation (L06) + Skills (L05) | Orchestrated operations      | Daily pipeline: monitor competitors, analyze changes, generate briefing, deliver before standup                                              |
 | All five combined                                  | Compound AI Employee systems | Full personal productivity system: reads email, manages calendar, searches files, delegates research, remembers everything, runs on schedule |
 
-The compound case is not five times harder than the single case. It is five times more capable -- and five times more dangerous if any component fails. That tension defines everything below.
+The compound case is not five times harder than the single case. It is five times more capable -- and five times more dangerous if any component fails. Here is the math: if each step in a 5-step pipeline is 99% reliable, the whole chain delivers correct results only 0.99^5 ≈ 95% of the time. Add a tenth step and you are down to 90%. Reliability is not additive -- it is multiplicative. That tension defines everything below.
+
+:::tip[Career Reference: Bookmark This Map]
+The Composability Map above is one you will return to throughout this book. Save it, print it, or screenshot it -- whenever you design a compound workflow, start by mapping your use case to these pattern combinations. It is the fastest way to identify which building blocks you need and which lessons to revisit.
+:::
 
 ## Five Use Case Categories
 
@@ -328,6 +332,12 @@ Other implementations exist in Rust and Go, proving the patterns are language-ag
 
 The insight that matters: **the moat is not which Body you choose. It is the Intelligence Layer -- Agent Skills that encode domain knowledge, MCP servers that connect to domain systems.** That layer is portable across every Body in the table above. Your investment in domain expertise survives any platform change.
 
+## From Personal to Business Operations
+
+Everything you have built so far -- morning briefings, scheduled reports, Google Workspace integration, compound workflows -- works for you personally. But the same patterns scale to a team or a business. A morning briefing that checks your inbox becomes a daily client-update digest for your entire firm. A research workflow that generates competitor tables becomes a weekly market intelligence report for your sales team. A scheduled cron job that audits your files becomes an automated compliance check across your organization.
+
+OpenClaw excels at this stage: one person or a small team customizing an AI Employee for daily business operations. Its rich ecosystem, 209,000-star community, and feature completeness make it the fastest path from "I want an AI Employee" to "my business runs on one." But as the data gets more sensitive and the stakes get higher -- client records, financial data, regulated industries -- the architectural tension from Lesson 5 becomes a business risk, not just a technical one. That is where a different architecture earns its complexity. You will see that architecture in Lesson 9.
+
 ## What Transfers
 
 These patterns appear in every agent framework, not just OpenClaw. The names change. The architecture does not.
@@ -341,6 +351,10 @@ These patterns appear in every agent framework, not just OpenClaw. The names cha
 | Integration (L07) | gog + OAuth connectors           | Plugin API calls      | Tool integrations         | Your design      |
 
 The "Your Own" column is intentionally blank. When you build your own AI Employee, you fill it in -- choosing how to implement each pattern based on what you learned here.
+
+:::note[Revisit Your Morning Briefing]
+By now, the morning briefing you configured in Lesson 3 has been running for weeks. Take a moment to review it: is it still useful? Are the checklist items still relevant, or have your priorities shifted? What would you add or remove? The best compound workflows are not set-and-forget -- they evolve as you learn what actually matters to your daily routine.
+:::
 
 ## Try With AI
 

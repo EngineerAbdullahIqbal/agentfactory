@@ -114,7 +114,15 @@ Your employee has been handling tasks on its own: creating files, setting up mor
 
 But what happens when you need actual code written? A Python script, a data processing tool, a file organizer? Your employee is not a coding specialist. It will try -- and it may produce something -- but it is not the right tool for the job.
 
-You already have the right tool. Claude Code is on your machine from Chapter 3. In this lesson, you will teach your employee to delegate coding work to external coding harnesses through the **Agent Client Protocol (ACP)** -- then verify the delegation is real.
+You already have the right tool. Claude Code is on your machine from Chapter 3. Before continuing, confirm it is still working:
+
+```bash
+claude --version
+```
+
+If you get a version number, you are ready. If you get "command not found," revisit the Claude Code installation in Chapter 3 before proceeding.
+
+In this lesson, you will teach your employee to delegate coding work to external coding harnesses through the **Agent Client Protocol (ACP)** -- then verify the delegation is real.
 
 ## Why Delegation Needs to Be Explicit
 
@@ -198,7 +206,11 @@ If your employee does not dispatch automatically, use the explicit command `/acp
 
 A **one-shot** run sends a single task to a coding harness, gets the result, and the session closes automatically. The harness runs in headless, non-interactive mode -- no terminal UI, no human approval prompts. Your employee dispatches the task, Claude Code executes it, and the result comes back to your messaging channel.
 
-The real power is targeting your actual project folders. From your messaging channel:
+:::tip[The Killer Feature: Project Targeting]
+The real power of ACP delegation is the `cwd` (current working directory) parameter. When you specify a project folder, the coding harness runs **inside that folder** -- it can read your existing code, understand your project structure, and write files in the right place. This is the difference between a chatbot guessing about code and a harness that works with your actual codebase.
+:::
+
+From your messaging channel:
 
 ```
 Run a one-shot Claude Code session in ~/Documents/code/my-project:
@@ -230,6 +242,10 @@ Then send your task.
 ---
 
 ## Exercise 2: Persistent Sessions (TUI or Discord)
+
+:::warning[Check Your Channel First]
+**Which channel are you on?** Persistent sessions require thread binding, which only works on **Discord** and the **TUI**. If you are on **WhatsApp or Telegram**, skip to the "On WhatsApp and Telegram" section below -- those channels only support one-shot mode.
+:::
 
 One-shot runs are fire-and-forget. **Persistent sessions** stay alive across multiple turns -- you can send follow-ups, iterate, and steer without re-explaining context. But persistent sessions need a way to route your messages to the right session.
 

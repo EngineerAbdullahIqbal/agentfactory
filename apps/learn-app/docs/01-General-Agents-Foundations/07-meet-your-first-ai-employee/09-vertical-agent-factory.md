@@ -118,6 +118,21 @@ Through all of that, one truth kept reinforcing itself: the patterns work. Gatew
 
 This isn't just our opinion -- it's an empirical finding. In early 2025, researchers at MIT published the [AI Agent Index](https://aiagentindex.mit.edu/), the first public database documenting the technical components, intended uses, and safety features of deployed agentic AI systems. They cataloged 30 prominent AI agents across chat, browser, and enterprise categories, with 24 launched or significantly updated in 2024–2025 alone. The most striking finding wasn't the pace of deployment -- it was what was missing. The researchers found limited information about the risk management practices of most developers, including their safety policies, internal testing, and external testing. In plain language: the industry is shipping autonomous agents at an accelerating rate, and most builders aren't documenting how those agents fail, what boundaries they operate within, or how they've been tested. That is the gap this chapter exists to close. Every security boundary you define, every threat model you build, every chaos test you run -- you're doing the work that MIT found most of the industry is skipping. Spec-driven development isn't overhead. It's the difference between a production system and a demo that hasn't broken yet.
 
+## What Connects
+
+Before diving into NanoClaw, here is how every concept in this lesson grows from something you already learned. Use this as a chapter recap -- if any row feels unfamiliar, revisit that lesson before continuing.
+
+| This Lesson               | Grew From                      | The Connection                                                             |
+| ------------------------- | ------------------------------ | -------------------------------------------------------------------------- |
+| Container isolation       | Lethal trifecta from Lesson 5  | Inverts the security default: nothing accessible unless granted            |
+| Body + Brain separation   | 7 components from Lesson 4     | Separates what OpenClaw combined into one shared process                   |
+| Per-group memory          | MEMORY.md from Lesson 4        | Same concept, but isolated per conversation instead of shared              |
+| Agent Swarms              | Delegation from Lesson 6       | Multiple Claude instances in parallel, each in its own container           |
+| Agent Skills portability  | SKILL.md from Lesson 5         | The format you already learned is an open standard everywhere              |
+| MCP as tool standard      | I/O Adapters from Lesson 4     | Domain tools exposed as standardized interfaces across platforms           |
+| Programmatic Tool Calling | Google Workspace from Lesson 7 | Your data stays in the container instead of flowing through shared process |
+| Agents building agents    | Delegation from Lesson 6       | Claude Code builds the system that runs Claude Code                        |
+
 The security realities from Lesson 5 -- 135,000 exposed instances, malicious skills on ClawHub, the one-click RCE vulnerability -- are real engineering challenges. They are not unique to OpenClaw. They emerge whenever all agent components run in a shared process, which is the most common architecture for good reason: it is simple to build and simple to deploy. But when your threat model includes patient records, financial data, or legal documents, a different architecture earns its complexity.
 
 ## Meet NanoClaw
@@ -126,16 +141,20 @@ On January 31, 2026, a developer named Gavriel Cohen released NanoClaw. Where Op
 
 Here is how the two architectures differ -- not better or worse, but optimized for different threat models:
 
-| Property             | OpenClaw (Your Chapter 7 Experience)               | NanoClaw                                                         |
-| -------------------- | -------------------------------------------------- | ---------------------------------------------------------------- |
-| **Codebase**         | 430,000+ lines, 52+ modules, 45+ dependencies      | ~500 lines core, handful of files, minimal dependencies          |
-| **Isolation model**  | Application-level (allowlists, pairing codes)      | OS-level containers (Apple Containers on macOS, Docker on Linux) |
-| **Auditability**     | Effectively un-auditable by a single person        | Full review in approximately 8 minutes                           |
-| **Agent boundaries** | All agents share memory and filesystem             | Each agent gets its own container with isolated filesystem       |
-| **Security default** | Everything accessible unless explicitly restricted | Nothing accessible unless explicitly granted                     |
-| **Extension model**  | Feature PRs that grow the codebase                 | Claude Code skills that transform your fork                      |
+| Property             | OpenClaw (Your Chapter 7 Experience)               | NanoClaw                                                                          |
+| -------------------- | -------------------------------------------------- | --------------------------------------------------------------------------------- |
+| **Codebase**         | 430,000+ lines, 52+ modules, 45+ dependencies      | ~500 lines core, handful of files, minimal dependencies                           |
+| **Isolation model**  | Application-level (allowlists, pairing codes)      | OS-level containers (Docker by default; Apple Containers as alternative on macOS) |
+| **Auditability**     | Effectively un-auditable by a single person        | Full review in approximately 8 minutes                                            |
+| **Agent boundaries** | All agents share memory and filesystem             | Each agent gets its own container with isolated filesystem                        |
+| **Security default** | Everything accessible unless explicitly restricted | Nothing accessible unless explicitly granted                                      |
+| **Extension model**  | Feature PRs that grow the codebase                 | Claude Code skills that transform your fork                                       |
 
 NanoClaw is not a replacement for OpenClaw -- the 209,000-star project that validated the entire category remains the most feature-complete and community-supported option. NanoClaw is a different architectural answer optimized for a specific constraint: when the data inside the agent boundary is too sensitive for a shared process.
+
+:::warning[Platform Support]
+NanoClaw does not currently support Windows. macOS and Linux are supported. If you are on Windows, you can follow the architectural concepts in this lesson and revisit the hands-on setup when Windows support is added or when using a Linux VM/WSL environment.
+:::
 
 ## Body + Brain: Separating What OpenClaw Combined
 
@@ -226,11 +245,17 @@ This creates a recursive loop: Claude Code builds and configures NanoClaw (the B
 
 ## The Bigger Picture: Why This Book Is Called Agent Factory
 
-Step back from NanoClaw for a moment. Look at what has happened in the market:
+Step back from NanoClaw for a moment. Look at the business maturity path you have walked through this chapter:
 
-Devin proved the AI Employee model for coding -- over $2 billion valuation, one vertical, one AI Employee that writes software. Harvey proved it for law -- $8 billion valuation, in talks at $11 billion. Manus proved horizontal value -- $2 billion Meta acquisition. These are not experiments. They are businesses.
+**Stage 1 -- Personal productivity (Lessons 2-3).** You set up OpenClaw and gave it real work. One person, one employee, immediate value. This is where every AI Employee journey starts.
 
-Medicine does not have its definitive AI Employee. Neither does accounting, finance, HR, or dozens of other regulated professions. Every profession will need its own. And now you have seen the building blocks.
+**Stage 2 -- Business customization (Lessons 5-8).** You created domain-specific skills, connected Google Workspace, configured autonomous scheduling. Your AI Employee became a business tool -- handling client research, managing your inbox, running compound workflows. OpenClaw's feature richness and ecosystem make it the ideal platform for this stage. Most SMBs will thrive here.
+
+**Stage 3 -- Regulated deployment (This lesson and beyond).** Your clients have patient records. Your firm handles financial audits. Your organization operates under SOX or HIPAA. The lethal trifecta from Lesson 5 is no longer a theoretical risk -- it is a compliance violation. NanoClaw's container isolation, Programmatic Tool Calling, and full auditability are not just nice engineering. They are business requirements.
+
+The market validates this progression. Devin proved the AI Employee model for coding -- over $2 billion valuation, one vertical, one AI Employee that writes software. Harvey proved it for law -- $8 billion valuation, in talks at $11 billion. Manus proved horizontal value -- $2 billion Meta acquisition. These are not experiments. They are businesses. And every one of them needed to solve the security architecture problem at scale.
+
+Medicine does not have its definitive AI Employee. Neither does accounting, finance, HR, or dozens of other regulated professions. Every profession will need its own. And now you have seen the building blocks -- from the personal stage (OpenClaw) through the enterprise stage (NanoClaw's architecture).
 
 When you combine Body + Brain separation, portable intelligence standards, and agents building agents, a reference architecture emerges:
 
@@ -261,23 +286,6 @@ In each case, the pattern is identical: domain knowledge encoded as Agent Skills
 
 This is what this book is about. Not just using AI Employees -- building them. An Agent Factory: a system for creating professional-grade AI Employees for every vertical, using portable standards that survive any platform change.
 
-## What Connects
-
-Every concept in this lesson grew from something you already learned:
-
-| This Lesson               | Grew From                      | The Connection                                                             |
-| ------------------------- | ------------------------------ | -------------------------------------------------------------------------- |
-| Container isolation       | Lethal trifecta from Lesson 5  | Inverts the security default: nothing accessible unless granted            |
-| Body + Brain separation   | 7 components from Lesson 4     | Separates what OpenClaw combined into one shared process                   |
-| Per-group memory          | MEMORY.md from Lesson 4        | Same concept, but isolated per conversation instead of shared              |
-| Agent Swarms              | Delegation from Lesson 6       | Multiple Claude instances in parallel, each in its own container           |
-| Agent Skills portability  | SKILL.md from Lesson 5         | The format you already learned is an open standard everywhere              |
-| MCP as tool standard      | I/O Adapters from Lesson 4     | Domain tools exposed as standardized interfaces across platforms           |
-| Programmatic Tool Calling | Google Workspace from Lesson 7 | Your data stays in the container instead of flowing through shared process |
-| Agents building agents    | Delegation from Lesson 6       | Claude Code builds the system that runs Claude Code                        |
-
-Nothing in this lesson is disconnected from what you experienced in Lessons 1 through 8. NanoClaw is not a separate topic. It is a different architecture built from the same patterns -- and it points toward the AI Employees you will learn to build in this book.
-
 ## Try With AI
 
 ### Prompt 1: Connect the Patterns
@@ -294,7 +302,11 @@ Which patterns stayed the same? Which ones changed architecturally?
 
 **What you're learning:** Architectural comparison as a design skill. The patterns are universal -- the six-layer architecture is one way to stack them. Mapping between OpenClaw and NanoClaw reinforces that the patterns matter more than any single implementation. This is what lets you evaluate any new AI Employee framework in minutes.
 
-### Prompt 2: Design Your Domain's Intelligence
+### Prompt 2: Design Your Domain's Intelligence (Required Exercise)
+
+:::warning[Required]
+This is not optional. Every student must complete this exercise before moving on. The Intelligence Layer design for your profession is the foundation for everything you build in later chapters.
+:::
 
 **Setup:** Use Claude Code or any AI assistant.
 
@@ -323,7 +335,6 @@ Which layer requires zero work?
 ```
 
 **What you're learning:** Platform migration as an architectural litmus test. The answer reveals why Layer 3 investment is the most durable -- your Agent Skills and MCP servers transfer with zero changes while infrastructure layers require varying degrees of rework. Understanding this before you build prevents the most expensive mistake in agent development: building expertise that is locked to a single platform.
-
 
 ## Flashcards Study Aid
 
