@@ -196,6 +196,10 @@ def sample_profile_create_full():
             "ai_fluency": {"level": "beginner"},
             "business": {"level": "intermediate"},
         },
+        "delivery": {
+            "native_language": "ur",
+            "preferred_code_language": "Python",
+        },
         "goals": {
             "primary_learning_goal": "Build AI agents for my company",
             "urgency": "high",

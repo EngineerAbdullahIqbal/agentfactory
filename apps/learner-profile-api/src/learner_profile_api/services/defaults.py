@@ -50,6 +50,8 @@ def get_delivery_defaults(programming_level: str = "beginner") -> dict:
         "include_visual_descriptions": False,
         "language": "English",
         "language_proficiency": None,
+        "native_language": None,
+        "preferred_code_language": None,
     }
 
 

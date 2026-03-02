@@ -130,6 +130,8 @@ class DeliverySection(BaseModel):
     include_visual_descriptions: bool | None = None
     language: str = Field("English", max_length=50)
     language_proficiency: Literal["native", "fluent", "intermediate", "basic"] | None = None
+    native_language: str | None = Field(None, max_length=50)
+    preferred_code_language: str | None = Field(None, max_length=50)
 
 
 class AccessibilitySection(BaseModel):

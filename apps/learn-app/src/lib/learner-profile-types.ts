@@ -137,6 +137,8 @@ export interface DeliverySection {
   include_visual_descriptions: boolean | null;
   language: string;
   language_proficiency: LanguageProficiency | null;
+  native_language: string | null;
+  preferred_code_language: string | null;
 }
 
 export interface AccessibilitySection {

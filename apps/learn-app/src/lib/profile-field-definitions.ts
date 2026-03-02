@@ -457,6 +457,39 @@ export const TOOLS_OPTIONS: FieldOption[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// Native language (select dropdown)
+// ---------------------------------------------------------------------------
+
+export const NATIVE_LANGUAGE_OTHER_VALUE = "other";
+
+export const NATIVE_LANGUAGE_OPTIONS: FieldOption[] = [
+  { value: "en", label: "English", hint: "English" },
+  { value: "ur", label: "Urdu", hint: "اردو" },
+  { value: "hi", label: "Hindi", hint: "हिन्दी" },
+  { value: "ar", label: "Arabic", hint: "العربية" },
+  { value: "zh", label: "Chinese", hint: "中文" },
+  { value: "es", label: "Spanish", hint: "Español" },
+  { value: "pt", label: "Portuguese", hint: "Português" },
+  { value: "bn", label: "Bengali", hint: "বাংলা" },
+  { value: "ru", label: "Russian", hint: "Русский" },
+  { value: "ja", label: "Japanese", hint: "日本語" },
+  { value: "fr", label: "French", hint: "Français" },
+  { value: "de", label: "German", hint: "Deutsch" },
+  { value: "ko", label: "Korean", hint: "한국어" },
+  { value: "vi", label: "Vietnamese", hint: "Tiếng Việt" },
+  { value: "tr", label: "Turkish", hint: "Türkçe" },
+  { value: "fa", label: "Persian", hint: "فارسی" },
+  { value: "it", label: "Italian", hint: "Italiano" },
+  { value: "pl", label: "Polish", hint: "Polski" },
+  { value: "id", label: "Indonesian", hint: "Bahasa Indonesia" },
+  {
+    value: NATIVE_LANGUAGE_OTHER_VALUE,
+    label: "Other",
+    hint: "Language not listed above",
+  },
+];
+
+// ---------------------------------------------------------------------------
 // Programming languages (chip select)
 // ---------------------------------------------------------------------------
 

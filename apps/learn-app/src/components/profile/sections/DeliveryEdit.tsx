@@ -1,11 +1,16 @@
 import React from "react";
 import type { DeliverySection } from "@/lib/learner-profile-types";
-import { NULL_SELECT_VALUE } from "@/lib/learner-profile-types";
+import {
+  NULL_SELECT_VALUE,
+  PROGRAMMING_LANGUAGES,
+} from "@/lib/learner-profile-types";
 import {
   OUTPUT_FORMAT_OPTIONS,
   TARGET_LENGTH_OPTIONS,
   CODE_VERBOSITY_OPTIONS,
   LANGUAGE_PROFICIENCY_OPTIONS,
+  NATIVE_LANGUAGE_OPTIONS,
+  NATIVE_LANGUAGE_OTHER_VALUE,
 } from "@/lib/profile-field-definitions";
 import { InferredBadge } from "@/components/profile/fields";
 import { Input } from "@/components/ui/input";
@@ -17,6 +22,82 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+function NativeLanguageField({
+  delivery,
+  update,
+}: {
+  delivery: DeliverySection;
+  update: (field: keyof DeliverySection, value: unknown) => void;
+}) {
+  const currentValue = delivery?.native_language ?? null;
+  const isKnownOption = NATIVE_LANGUAGE_OPTIONS.some(
+    (o) => o.value === currentValue && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
+  );
+  const selectValue =
+    currentValue === null
+      ? NULL_SELECT_VALUE
+      : isKnownOption
+        ? currentValue
+        : NATIVE_LANGUAGE_OTHER_VALUE;
+  const showOtherInput = selectValue === NATIVE_LANGUAGE_OTHER_VALUE;
+  const otherText =
+    showOtherInput && currentValue !== NATIVE_LANGUAGE_OTHER_VALUE
+      ? (currentValue ?? "")
+      : "";
+
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor="native-language" className="text-sm font-medium">
+        Native Language
+      </label>
+      <Select
+        value={selectValue}
+        onValueChange={(val) => {
+          if (val === NULL_SELECT_VALUE) {
+            update("native_language", null);
+          } else if (val === NATIVE_LANGUAGE_OTHER_VALUE) {
+            update("native_language", NATIVE_LANGUAGE_OTHER_VALUE);
+          } else {
+            update("native_language", val);
+          }
+        }}
+      >
+        <SelectTrigger id="native-language" className="w-full">
+          <SelectValue placeholder="Select…" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem
+            value={NULL_SELECT_VALUE}
+            className="italic text-muted-foreground"
+          >
+            Select…
+          </SelectItem>
+          {NATIVE_LANGUAGE_OPTIONS.map((opt) => (
+            <SelectItem key={opt.value} value={opt.value}>
+              {opt.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      {showOtherInput && (
+        <Input
+          id="native-language-other"
+          type="text"
+          value={otherText}
+          onChange={(e) =>
+            update(
+              "native_language",
+              e.target.value || NATIVE_LANGUAGE_OTHER_VALUE,
+            )
+          }
+          placeholder="Enter your language"
+          maxLength={50}
+        />
+      )}
+    </div>
+  );
+}
 
 export function DeliveryEdit({
   data,
@@ -246,6 +327,52 @@ export function DeliveryEdit({
           </Select>
         </div>
       )}
+
+      <NativeLanguageField delivery={delivery} update={update} />
+
+      <div className="space-y-1.5">
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor="preferred-code-language"
+            className="text-sm font-medium"
+          >
+            Preferred Code Language
+          </label>
+          <InferredBadge
+            fieldPath="delivery.preferred_code_language"
+            fieldSources={fieldSources}
+          />
+        </div>
+        <Select
+          value={delivery?.preferred_code_language || NULL_SELECT_VALUE}
+          onValueChange={(val) =>
+            update(
+              "preferred_code_language",
+              val === NULL_SELECT_VALUE ? null : val,
+            )
+          }
+        >
+          <SelectTrigger id="preferred-code-language" className="w-full">
+            <SelectValue placeholder="Select…" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem
+              value={NULL_SELECT_VALUE}
+              className="italic text-muted-foreground"
+            >
+              Select…
+            </SelectItem>
+            {PROGRAMMING_LANGUAGES.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <p className="text-xs text-muted-foreground">
+          Code examples will be shown in this language when possible.
+        </p>
+      </div>
     </div>
   );
 }
