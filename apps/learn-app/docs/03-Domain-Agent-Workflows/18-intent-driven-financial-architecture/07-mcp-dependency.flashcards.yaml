@@ -1,0 +1,30 @@
+cards:
+  - front: "What does Guardrail 4 (MCP Dependency) prohibit a Finance Domain Agent from doing?"
+    back: "Performing calculations internally. The agent must use the Excel MCP Server to write inputs via write_cell and read results via read_cell. All arithmetic is performed by Excel's deterministic calculation engine, never by the agent."
+
+  - front: "What are the three steps of the Write-Calculate-Read workflow?"
+    back: "1. The agent reasons about the correct input and writes it via write_cell. 2. Excel recalculates all dependent cells deterministically. 3. The agent reads back the result via read_cell and reports it. The agent performs zero arithmetic between steps 1 and 3."
+
+  - front: "Why is an agent's internal calculation categorically different from a model's deterministic output in finance?"
+    back: "The agent's internal arithmetic is based on its understanding of the model, which may be incomplete, outdated, or missing conditional overrides. The model's output comes from the actual formulas with the actual current values. Only the model result is audit-valid."
+
+  - front: "What are the four core tools of an Excel MCP Server?"
+    back: "write_cell(name, value) — set a Named Range assumption. read_cell(name) — read a Named Range result. inspect_model() — list all Named Ranges, values, and dependencies. read_formula(name) — return the formula assigned to a Named Range."
+
+  - front: "What is the most dangerous violation of Guardrail 4?"
+    back: "Calculating a result internally and then reporting it as if it came from the model. Internal calculation and model calculation can produce different results because the agent may not account for rounding, conditional overrides, or changed assumptions. Only read_cell results are audit-valid."
+
+  - front: "How does an agent perform goal-seeking under MCP Dependency?"
+    back: "By iterating: write an input value via write_cell, read the target output via read_cell, compare to the goal, adjust the input, and repeat until the output matches the target. The agent uses convergence logic but never solves the equation algebraically."
+
+  - front: "In a what-if scenario, what does the agent contribute versus what does Excel contribute?"
+    back: "The agent contributes reasoning — understanding the business context, selecting the right Named Range, choosing the value to test. Excel contributes the mathematics — recalculating every formula deterministically. The agent reports what Excel calculated."
+
+  - front: "What two Finance Domain Agent capabilities does the MCP Dependency guardrail directly enable?"
+    back: "Capability 2 — Deterministic What-If (change an assumption via write_cell, read back results via read_cell). Capability 4 — Strategic Goal-Seeking (iterate write_cell and read_cell to find the input that produces a target output)."
+
+  - front: "If a CFO asks 'where did these numbers come from?' after an MCP-dependent what-if analysis, what is the correct answer?"
+    back: "The model calculated them. The agent wrote the assumption to a Named Range, Excel recalculated every dependent formula, and the agent read back the results. No number was estimated or computed by the agent."
+
+  - front: "Why is multi-variable sensitivity analysis especially dangerous without MCP Dependency?"
+    back: "When multiple variables change simultaneously, their compounding interactions make mental arithmetic unreliable. Internal calculation cannot reliably account for all cross-variable effects. MCP routes everything through the model, which handles compound effects deterministically."

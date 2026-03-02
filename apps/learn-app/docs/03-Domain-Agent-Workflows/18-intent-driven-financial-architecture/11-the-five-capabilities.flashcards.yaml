@@ -1,0 +1,35 @@
+- front: "What are the five Finance Domain Agent capabilities that IDFA enables?"
+  back: "1. Intent Synthesis — converting plain-English to a full IDFA model specification. 2. Deterministic What-If — modifying assumptions and reading results via MCP. 3. Logic De-compilation — reconstructing business rules from an unfamiliar model. 4. Strategic Goal-Seeking — iterating inputs via MCP to reach a target output. 5. Stochastic Simulation — orchestrating Monte Carlo scenarios through MCP."
+
+- front: "What does the Intent Synthesis capability test validate?"
+  back: "That the agent can convert a plain-English intent statement into a fully structured, three-layer IDFA model specification — with every Named Range, every formula, and correct layer separation — before writing anything to Excel."
+
+- front: "What is the pass criterion for Deterministic What-If?"
+  back: "The agent uses write_cell() to change an assumption, then read_cell() to retrieve results. The reported answer and the verified answer must match exactly. No instance of the agent reporting a number before reading it from the model."
+
+- front: "How does Logic De-compilation work as a capability test?"
+  back: "The Assumptions sheet is hidden. The agent uses inspect_model() on the Calculations sheet only, then reconstructs a complete IDFA Logic Map — every Named Range, its value, and the business rule encoded in its formula. Fewer than 5% of rules may be incorrect or missing."
+
+- front: "What distinguishes Strategic Goal-Seeking from simple what-if analysis?"
+  back: "In what-if analysis, you provide the input and read the output. In goal-seeking, you provide the target output and the agent iterates write_cell()/read_cell() to find the required input. The agent converges on the answer through MCP iteration, not internal calculation."
+
+- front: "What are the four statistics reported in a Stochastic Simulation result?"
+  back: "Mean (expected outcome), Median (middle value), P10 (10th percentile — the pessimistic bound), and P90 (90th percentile — the optimistic bound). Together, P10 and P90 define the range within which 80% of outcomes fall."
+
+- front: "Why must every Monte Carlo iteration go through MCP rather than being simulated internally by the agent?"
+  back: "Internal simulation would bypass the actual model formulas, dependencies, and guardrails. MCP iteration ensures each scenario runs through Excel — honouring every Named Range relationship, every formula dependency, and every guardrail in the model."
+
+- front: "What does a failed Capability 2 test reveal about the deployment?"
+  back: "That the agent is performing internal arithmetic instead of relying on the Excel engine via MCP. This violates Guardrail 4 (MCP Dependency) and means agent-reported numbers are not deterministically verified against the model."
+
+- front: "What new Named Ranges are added when extending the GP Waterfall with OpEx and EBITDA?"
+  back: "Assumptions layer: Inp_OpEx_Y1 (Year 1 operating expenses) and Inp_OpEx_Growth (annual OpEx growth rate). Calculation layer: OpEx_Y1 through OpEx_Y3 and EBITDA_Y1 through EBITDA_Y3. All formulas use only Named Ranges."
+
+- front: "Why is the EBITDA formula written as Gross_Profit_Y1 - OpEx_Y1 rather than Revenue_Y1 - COGS_Y1 - OpEx_Y1?"
+  back: "IDFA formulas reference Named Ranges already defined in the Calculation layer. Gross_Profit is already calculated as Revenue minus COGS, so EBITDA references Gross_Profit directly. This avoids duplicating business logic and maintains a clean dependency chain."
+
+- front: "What does passing all five capability tests prove about an IDFA deployment?"
+  back: "That the deployment is production-ready for agent-assisted financial workflows. Each test validates a specific capability: model generation, deterministic analysis, logic auditing, input discovery, and risk simulation. All five depend on the IDFA architecture to function."
+
+- front: "If Capability 4 (Goal-Seeking) fails, what is the most likely architectural cause?"
+  back: "Missing or inconsistent Named Ranges. If the agent cannot reliably identify which Named Range to iterate (because inputs are not clearly prefixed with Inp_ or the naming is inconsistent), it cannot perform the write_cell()/read_cell() loop that goal-seeking requires."

@@ -1,0 +1,69 @@
+deck:
+  id: "ch18-06-intent-notes"
+  title: "Intent Notes — Guardrail 3"
+  description: "The five-field Intent Note format, divergence detection as an audit trail, AI-generated Intent Notes with human review, and institutional memory in financial models."
+  tags: ["intent-notes", "guardrail-3", "audit-trail", "IDFA", "formula-documentation", "institutional-memory", "Named-Ranges"]
+  version: 1
+
+cards:
+  - id: "ch18-06-intent-note-definition-001"
+    front: "What is an Intent Note in the IDFA framework?"
+    back: "A structured Excel Note (or Comment) attached to a cell containing a Named Range formula. It follows a specific five-field format — INTENT, FORMULA, ASSUMPTIONS, GENERATED, MODIFIED — designed to make the business intent behind a formula permanently visible for audit, handover, and AI readability."
+    tags: ["intent-notes", "definition"]
+    difficulty: "basic"
+
+  - id: "ch18-06-five-fields-002"
+    front: "What are the five fields of an IDFA Intent Note and what does each record?"
+    back: "INTENT: the plain-English business rule the formula encodes. FORMULA: the LaTeX expression verified before writing (Guardrail 2 cross-reference). ASSUMPTIONS: the Named Ranges the formula depends on. GENERATED: the date and session identifier when the formula was first created. MODIFIED: the date and modifier when the formula was last changed."
+    tags: ["intent-notes", "five-fields", "format"]
+    difficulty: "basic"
+
+  - id: "ch18-06-intent-field-003"
+    front: "What is the purpose of the INTENT field in an Intent Note?"
+    back: "It records the plain-English business rule the formula encodes — what the formula is supposed to calculate, not just the arithmetic it performs. An auditor reads this field first to understand the formula's purpose without reading the formula itself."
+    tags: ["intent-notes", "INTENT-field"]
+    difficulty: "basic"
+
+  - id: "ch18-06-assumptions-field-004"
+    front: "Why does the ASSUMPTIONS field list Named Ranges rather than cell addresses?"
+    back: "Named Ranges create a traceable dependency chain. If any assumption changes, every formula listing that Named Range in its ASSUMPTIONS field is flagged for review. Cell addresses would be meaningless after layout changes and would not support automated dependency tracking."
+    tags: ["intent-notes", "ASSUMPTIONS-field", "traceability"]
+    difficulty: "intermediate"
+
+  - id: "ch18-06-divergence-005"
+    front: "What is intent-formula divergence and why is it valuable?"
+    back: "Divergence occurs when a formula is modified but its Intent Note is not updated — the documented intent no longer matches the actual formula. This mismatch is visible to any reader, signaling that something changed and needs investigation. The divergence IS the audit trail — it makes invisible modifications visible."
+    tags: ["divergence", "audit-trail"]
+    difficulty: "intermediate"
+    why: "Tests whether the student understands divergence as a feature (detection mechanism) rather than a flaw"
+
+  - id: "ch18-06-not-prevention-006"
+    front: "Do Intent Notes prevent formula modifications?"
+    back: "No. Intent Notes do not prevent modifications — they make modifications visible. When a formula is changed but the Intent Note is not updated, the mismatch between documented intent and actual formula creates a visible audit signal. In financial modelling, visibility is the audit trail."
+    tags: ["intent-notes", "audit-principle"]
+    difficulty: "intermediate"
+
+  - id: "ch18-06-cowork-pattern-007"
+    front: "What is the cowork pattern for generating Intent Notes?"
+    back: "Claude generates Intent Notes automatically by reading Named Range formulas and inferring business intent from the variable names and formula structure. The analyst then reviews each note for accuracy — checking that the INTENT field captures the business why (not just the arithmetic what), the ASSUMPTIONS field is complete, and the FORMULA field matches the LaTeX verification."
+    tags: ["cowork-pattern", "AI-generation", "human-review"]
+    difficulty: "intermediate"
+
+  - id: "ch18-06-institutional-memory-008"
+    front: "Why are Intent Notes described as 'institutional memory'?"
+    back: "Intent Notes travel with the cell they are attached to — they survive staff turnover, model updates, and layout changes. Unlike external documentation (separate files, emails, analyst memory), Intent Notes are permanently attached to the formula they describe. When an analyst leaves, the business logic stays in the model."
+    tags: ["institutional-memory", "business-case"]
+    difficulty: "basic"
+
+  - id: "ch18-06-vs-latex-009"
+    front: "How do Intent Notes (Guardrail 3) relate to LaTeX Verification (Guardrail 2)?"
+    back: "They complement each other. LaTeX Verification confirms a formula is mathematically correct before writing it to the model. The Intent Note then records that verified LaTeX expression in its FORMULA field and adds the business context (INTENT, ASSUMPTIONS) that LaTeX alone does not capture. LaTeX proves the math is right; the Intent Note records why the math exists."
+    tags: ["guardrail-2", "guardrail-3", "relationship"]
+    difficulty: "intermediate"
+    why: "Tests whether the student understands the guardrails as complementary layers rather than alternatives"
+
+  - id: "ch18-06-logic-decompilation-010"
+    front: "How do Intent Notes enable Capability 3 (Logic De-compilation) in the capstone?"
+    back: "Logic De-compilation is the agent's ability to read an unfamiliar model and reconstruct its complete business logic. With Intent Notes, the agent reads both the formula and its documented business intent, producing a structured narrative that explains the model's logic. Without Intent Notes, the agent can only describe the arithmetic — it cannot infer the business reasoning."
+    tags: ["logic-decompilation", "capability-3", "capstone-preview"]
+    difficulty: "intermediate"

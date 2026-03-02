@@ -1,0 +1,29 @@
+- front: "What are the five phases of the IDFA retrofit process?"
+  back: "Phase 1: Full Inspection (inspect_model()). Phase 2: Input Identification (distinguish raw values from formulas, propose Inp_ Named Ranges). Phase 3: Dependency Ordering (determine rewriting sequence). Phase 4: Formula Rewriting (one formula at a time, seven steps each). Phase 5: Validation (all outputs must match pre-retrofit values)."
+
+- front: "What is the critical principle that governs every IDFA retrofit?"
+  back: "Do not change business logic during a retrofit. The objective is transparency, not improvement. Make the existing logic readable first by converting coordinates to Named Ranges. Improvements happen after the logic is readable and validated."
+
+- front: "Why must formulas be rewritten in dependency order during a retrofit?"
+  back: "If a formula depends on another formula's Named Range, the dependency must be rewritten first. Otherwise, the dependent formula references a Named Range that does not yet exist, causing a broken reference. Rewriting inputs first, then direct calculations, then derived calculations ensures every reference resolves correctly."
+
+- front: "How do you distinguish inputs from calculations during Phase 2?"
+  back: "Inputs are cells containing a raw number with no formula. Calculations are cells containing a formula. Each input gets an Inp_ prefixed Named Range. Each calculation gets a descriptive Named Range that reads as a business variable."
+
+- front: "What are the seven steps for rewriting a single formula in Phase 4?"
+  back: "1. Read original via read_formula(). 2. State the business rule in plain English. 3. Write the IDFA equivalent using Named Ranges. 4. LaTeX-verify if complex. 5. Confirm output matches original. 6. Write to model. 7. Attach Intent Note."
+
+- front: "When a validation discrepancy appears after a retrofit, what are the two possible causes?"
+  back: "Either (1) an original model error surfaced by the retrofit — the coordinate formula had a bug that is now visible because the business rule is written in plain language, or (2) an inference error in the retrofit — the Named Range rewrite does not correctly reproduce the original logic. Original errors are documented and discussed; inference errors are corrected and re-validated."
+
+- front: "Why should you never delete and rebuild a model instead of retrofitting it?"
+  back: "The original model contains embedded business decisions — assumptions, edge cases, conditional logic — that are lost if you rebuild from scratch. Retrofitting extracts and preserves those decisions by converting them to readable Named Range formulas. Rebuilding risks losing institutional knowledge that was encoded in the coordinate formulas."
+
+- front: "What does inspect_model() produce in Phase 1, and why is each piece needed?"
+  back: "It produces: (1) a list of existing Named Ranges (usually zero in legacy models), (2) all formulas with their cell locations, (3) all hardcoded values, and (4) a dependency map. The Named Range list shows what already exists. Formulas vs. hardcoded values distinguish calculations from inputs. The dependency map determines rewriting order."
+
+- front: "Why is the 'one formula at a time' rule essential during a retrofit?"
+  back: "If you rewrite multiple formulas at once and validation fails, you cannot isolate which rewrite caused the failure. Rewriting one at a time and validating after each means any failure can be traced to the single most recent change, making debugging straightforward."
+
+- front: "After completing a retrofit with all outputs matching, what is the correct next step for improving the model?"
+  back: "Review the now-readable logic with stakeholders, then make improvements in a separate, documented change. The retrofit is provably lossless (same outputs). Improvements are informed decisions made on visible logic. Keeping them separate ensures the retrofit's integrity is preserved."

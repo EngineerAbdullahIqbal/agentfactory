@@ -1,0 +1,29 @@
+- front: "What is a SKILL.md file in the context of AI agents?"
+  back: "A structured document following the agentskills.io open standard that packages a methodology as a portable Agent Skill. When installed via a plugin or placed in the correct directory, the agent reads it at session start and applies its contents automatically — without being prompted or reminded."
+
+- front: "How do you install the IDFA plugin in Claude Code?"
+  back: "Two steps: (1) Add the marketplace: /plugin marketplace add panaversity/idfa-financial-architect. (2) Install the plugin: /plugin install idfa-financial-architect@panaversity-idfa. The skill auto-activates on financial modelling tasks. For local testing: git clone the repo and use claude --plugin-dir ./idfa-financial-architect."
+
+- front: "What is the structure of the IDFA plugin?"
+  back: "The plugin contains: .claude-plugin/plugin.json (metadata), skills/financial-architect/SKILL.md (the complete IDFA methodology), skills/financial-architect/references/IDFA-reference.md (enterprise governance, complex formulas, sector naming), README.md, and LICENSE (Apache-2.0)."
+
+- front: "What is the agentskills.io standard?"
+  back: "An open standard for packaging agent skills as portable files. A skill written to this standard works identically across any skills-compatible agent — Claude, GitHub Copilot, Codex, Gemini CLI, VS Code, and others. The IDFA plugin packages the skill for Claude Code; the SKILL.md inside works directly in other agents."
+
+- front: "How do you install IDFA in agents other than Claude Code?"
+  back: "Download the SKILL.md from the panaversity/idfa-financial-architect GitHub repo and place it in the platform's custom instructions path: GitHub Copilot (.github/copilot-instructions.md), VS Code (.vscode/copilot-instructions.md), Codex (project instructions), Cursor (.cursorrules). The content is identical — only the path changes."
+
+- front: "How do trigger phrases work in a SKILL.md?"
+  back: "The description field in the YAML frontmatter lists specific phrases (like 'financial model', 'I inherited this model', 'model audit') that activate the skill. They are not rigid pattern matches — the agent understands the intent behind variations like 'this spreadsheet makes no sense'."
+
+- front: "What does the Agent Decision Table specify?"
+  back: "The correct IDFA action for every category of financial modelling task: building new models, auditing existing ones, retrofitting legacy models, what-if analysis, goal-seeking, explaining formulas, and checking compliance. Each task maps to a specific sequence of IDFA operations."
+
+- front: "How do you verify that the IDFA plugin is working after installation?"
+  back: "Start a fresh session, give the agent a new intent statement (one it has not seen before), and check whether the output includes all four guardrails — Inp_ prefixed Named Ranges, LaTeX verification for complex formulas, Intent Notes, and MCP workflow — without being explicitly asked for any of them."
+
+- front: "What are the five common mistakes the IDFA skill prevents agents from making?"
+  back: "(1) Mixing layers — hardcoded constants in Calculation formulas. (2) Calculating internally instead of using read_cell(). (3) Skipping LaTeX verification for WACC, IRR, NPV, DCF. (4) Retrofitting by deleting and rebuilding instead of one formula at a time. (5) Naming ranges with spaces instead of underscores."
+
+- front: "What is the key pedagogical shift from manual skill creation to plugin installation?"
+  back: "Instead of copy-pasting a 350-line SKILL.md from a textbook, you install a plugin with a single command — the way professionals actually distribute and consume agent skills. You still learn what the skill contains by inspecting it after installation, but the distribution model is real-world."

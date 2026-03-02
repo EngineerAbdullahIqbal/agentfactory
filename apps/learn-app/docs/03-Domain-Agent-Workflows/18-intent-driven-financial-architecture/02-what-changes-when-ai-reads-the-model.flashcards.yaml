@@ -1,0 +1,68 @@
+deck:
+  id: "ch18-02-what-changes-when-ai-reads-the-model"
+  title: "What Changes When AI Reads the Model"
+  description: "The Coordinate-First vs Logic-First distinction, the three dimensions of the AI analysis quality gap, and why model architecture determines agent capability."
+  tags: ["coordinate-first", "logic-first", "named-ranges", "IDFA", "gross-profit", "AI-readability", "what-if-analysis"]
+  version: 1
+
+cards:
+  - id: "ch18-02-coordinate-first-001"
+    front: "What is Coordinate-First modelling?"
+    back: "A modelling approach that defines business logic by cell location. The formula =B14-(C14*$F$8) encodes the calculation in grid positions. The meaning of the formula — what business rule it represents — is not in the formula itself but in column headers, documentation, or the analyst's memory."
+    tags: ["coordinate-first", "definition"]
+    difficulty: "basic"
+
+  - id: "ch18-02-logic-first-002"
+    front: "What is Logic-First modelling?"
+    back: "A modelling approach that defines business logic by name using Named Ranges. The formula =Revenue_Y2 - (Revenue_Y2 * COGS_Pct_Y2) reads as a business rule: Revenue minus COGS. The meaning is encoded in the formula itself, making it readable by humans, auditors, and AI agents without tracing cell references."
+    tags: ["logic-first", "definition", "IDFA"]
+    difficulty: "basic"
+
+  - id: "ch18-02-shorthand-003"
+    front: "What is the shorthand distinction between Coordinate-First and Logic-First modelling?"
+    back: "Coordinate-First asks 'where is this number in the grid?' Logic-First asks 'what does this number mean?'"
+    tags: ["coordinate-first", "logic-first", "shorthand"]
+    difficulty: "basic"
+
+  - id: "ch18-02-confidence-gap-004"
+    front: "How does AI confidence differ between coordinate and Named Range formulas?"
+    back: "On coordinate formulas, the agent hedges: 'appears to contain,' 'may represent,' 'would need to verify.' On Named Range formulas, the agent states definitively: 'is calculated as,' 'the business rule is.' The difference exists because Named Ranges encode intent; coordinates do not."
+    tags: ["confidence", "quality-gap"]
+    difficulty: "intermediate"
+
+  - id: "ch18-02-three-dimensions-005"
+    front: "What are the three dimensions of the AI analysis quality gap between coordinate and Named Range models?"
+    back: "1. Confidence — hedged guesses vs definitive statements. 2. Business context — mechanical cell descriptions vs named business rules and assumptions. 3. Actionability — description of what the formula does vs prescriptive what-if scenarios and quantified impact."
+    tags: ["quality-gap", "three-dimensions"]
+    difficulty: "intermediate"
+
+  - id: "ch18-02-prompt-engineering-006"
+    front: "Can prompt engineering overcome the quality gap caused by coordinate-based formulas?"
+    back: "No. The business intent behind a formula is either encoded in the formula (via Named Ranges) or it is not. No prompt can create intent that was never encoded. The gap is architectural, not a prompting problem."
+    tags: ["prompt-engineering", "architecture"]
+    difficulty: "intermediate"
+    why: "Tests whether student understands that the quality gap is structural, not solvable by better prompts"
+
+  - id: "ch18-02-capability-gap-007"
+    front: "What does 'agent capability gap equals business capability gap' mean?"
+    back: "Every token an agent spends inferring what a formula means (from cell positions) is a token not spent on business analysis. Coordinate models force agents into inference mode; IDFA models put agents into analysis mode. The model architecture determines what the agent can do — and what the agent can do determines what the business gets from its AI investment."
+    tags: ["capability-gap", "business-impact"]
+    difficulty: "intermediate"
+
+  - id: "ch18-02-intent-synthesis-008"
+    front: "What is Intent Synthesis and why does it require Logic-First design?"
+    back: "Intent Synthesis is the agent's ability to describe the purpose of an entire model section — not just individual formulas, but the business story they tell together. It requires Named Range formulas because the agent must read business rules to synthesise intent. Coordinate formulas only provide cell positions, which cannot convey business meaning."
+    tags: ["intent-synthesis", "capability-preview"]
+    difficulty: "intermediate"
+
+  - id: "ch18-02-what-if-009"
+    front: "Why does Deterministic What-If analysis require Named Ranges?"
+    back: "What-If analysis requires the agent to identify which assumptions drive a result and propose changes. Named Ranges isolate assumptions with readable labels (Revenue_Growth_Rate, COGS_Pct_Y1), so the agent knows exactly what to change and what depends on it. Coordinate references hide assumptions in cell positions, forcing the agent to guess which cells control which outcomes."
+    tags: ["what-if", "deterministic", "capability-preview"]
+    difficulty: "intermediate"
+
+  - id: "ch18-02-goal-seeking-010"
+    front: "What is Strategic Goal-Seeking and how does it differ from Excel's built-in Goal Seek?"
+    back: "Strategic Goal-Seeking works backwards from a business target: 'What COGS Percentage achieves 45% Gross Margin?' The agent identifies the assumption to change, the output to target, and the value needed — all from the Named Range structure. Unlike Excel's Goal Seek, it operates on named business concepts, not cell references, making the result auditable and the reasoning transparent."
+    tags: ["goal-seeking", "capability-preview"]
+    difficulty: "intermediate"

@@ -1,0 +1,29 @@
+- front: "What is the Named Range Priority compliance test?"
+  back: "Select any formula in the Calculation layer. If you can understand what it calculates without clicking on any referenced cell, it passes. If you need to navigate to understand it, it fails."
+
+- front: "Rewrite this coordinate formula as a Named Range formula: =B14-(C14*$F$8)"
+  back: "=Revenue_Y2 - (Revenue_Y2 * COGS_Pct_Y2). The formula now reads as a business rule: Revenue Year 2 minus Revenue Year 2 times COGS Percentage Year 2."
+
+- front: "What are the two formula patterns allowed in the Calculation layer?"
+  back: "1. Direct assignment from an Assumptions input (e.g. Revenue_Y1 = Inp_Rev_Y1). 2. Arithmetic on Named Ranges already defined (e.g. Gross_Profit_Y2 = Revenue_Y2 - COGS_Y2). No other pattern should appear."
+
+- front: "Why does =Revenue_Y1 * 0.60 violate IDFA even though it uses a Named Range?"
+  back: "The hardcoded constant 0.60 is an assumption hiding inside the Calculation layer. This violates layer isolation — if someone updates the COGS percentage in the Assumptions layer, this formula will not reflect the change. Move 0.60 to Assumptions as Inp_COGS_Pct_Y1."
+
+- front: "What naming convention does IDFA use for Assumptions layer inputs vs Calculation layer results?"
+  back: "Assumptions inputs use the Inp_ prefix (e.g. Inp_Rev_Y1, Inp_COGS_Pct_Y1). Calculation results use Variable_Dimension format (e.g. Revenue_Y2, Gross_Profit_Y3). This makes it immediately clear which layer a Named Range belongs to."
+
+- front: "Why can't Named Ranges contain spaces?"
+  back: "Excel rejects names with spaces. Use underscores instead: Inp_Rev_Y1 not Inp Rev Y1. Underscores are universal across Excel, Google Sheets, and every AI agent that reads formulas."
+
+- front: "How do Named Range formulas eliminate silent breakage from row insertion?"
+  back: "Named Ranges point to a cell by name, not by position. Revenue_Y2 always resolves to the cell named Revenue_Y2 regardless of where it sits in the grid. Inserting or deleting rows cannot shift the reference to the wrong cell."
+
+- front: "What are the four groups of the twelve GP Waterfall calculation formulas?"
+  back: "Revenue (3 formulas: Y1, Y2, Y3), COGS Percentage (3 formulas: Y1, Y2, Y3), COGS Dollars (3 formulas: Y1, Y2, Y3), and Gross Profit (3 formulas: Y1, Y2, Y3). Each group builds on Named Ranges from the previous group."
+
+- front: "Why is Guardrail 1 the foundation for all other IDFA guardrails?"
+  back: "Guardrails 2 (LaTeX Verification), 3 (Intent Notes), and 4 (MCP Dependency) all assume formulas are already Named Range compliant. LaTeX verification requires readable formulas. Intent Notes document business rules that must be visible. MCP passes Named Ranges to Excel for calculation. Without Guardrail 1, the others cannot function."
+
+- front: "How does an AI agent act as a compliance auditor for Guardrail 1?"
+  back: "Prompt the agent to scan all Calculation layer formulas and report any containing coordinate references (A1-style or R1C1). The agent checks every formula in seconds — a task that would take a human analyst minutes per formula in a large model."
