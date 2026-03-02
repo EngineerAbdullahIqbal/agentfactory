@@ -12,6 +12,10 @@ keywords:
     oauth,
     agent productivity,
     openclaw integration,
+    openclaw secrets,
+    SecretRefs,
+    credential migration,
+    secrets audit,
     real work,
   ]
 chapter: 7
@@ -41,6 +45,13 @@ skills:
     digcomp_area: "Safety"
     measurable_at_this_level: "Student can evaluate the security implications of granting OAuth access to an AI agent and apply the lethal trifecta framework to their own setup"
 
+  - name: "Secrets Management"
+    proficiency_level: "A2"
+    category: "Applied"
+    bloom_level: "Apply"
+    digcomp_area: "Safety"
+    measurable_at_this_level: "Student can run openclaw secrets audit after adding integrations and explain the migration workflow from plaintext to SecretRefs"
+
 learning_objectives:
   - objective: "Install gog and connect your Google account to OpenClaw with appropriate OAuth scopes"
     proficiency_level: "B1"
@@ -57,9 +68,20 @@ learning_objectives:
     bloom_level: "Evaluate"
     assessment_method: "Student can explain how OAuth access makes the lethal trifecta from L05 concrete and identify which scopes are truly necessary"
 
+  - objective: "Run a secrets audit after adding integrations and explain the migration workflow from plaintext to SecretRefs"
+    proficiency_level: "A2"
+    bloom_level: "Apply"
+    assessment_method: "Student runs openclaw secrets audit on their instance after connecting Google Workspace and interprets the findings report"
+
 cognitive_load:
-  new_concepts: 4
-  assessment: "4 concepts (gog CLI, OAuth credential flow, Google Workspace integration, applied security assessment) -- within B1 range. OAuth setup is procedural, not conceptual, reducing cognitive load despite many steps."
+  new_concepts: 5
+  concepts_list:
+    - "gog CLI for Google Workspace integration"
+    - "OAuth credential flow (GCP Console setup)"
+    - "Google Workspace operations via messaging channel"
+    - "Applied lethal trifecta assessment on real data"
+    - "SecretRefs and the secrets audit workflow"
+  assessment: "5 concepts within B1 range. OAuth setup is procedural, not conceptual. Secrets audit builds directly on the just-completed OAuth setup, reducing cognitive load."
 
 differentiation:
   extension_for_advanced: "Set up Gmail Pub/Sub push notifications so your agent proactively summarizes new emails as they arrive, without you asking. This combines autonomous invocation (L03 Task 6) with Google Workspace access."
@@ -425,6 +447,75 @@ exact gog command to reduce scope to the minimum.
 
 **Safety Note:** The OAuth credentials you created grant real access to your Google account. Do not share your `client_secret.json` file, your gog auth tokens, or screenshots showing your email content. If you are working through this lesson in a shared environment, consider using a dedicated test Google account rather than your primary one.
 
+---
+
+## Protecting Your Credentials with the Secrets CLI
+
+You just downloaded a `client_secret.json` file and stored OAuth tokens on disk. Your OpenClaw config now contains references to real Google credentials. The security checklist from L05 says "never store secrets in skill instructions" -- but where DO all these credentials live, and are they safe?
+
+OpenClaw ships a dedicated CLI for this: `openclaw secrets`. The core idea is **SecretRefs** -- references that point to a secrets provider instead of storing credentials as plaintext in configuration files. When your agent needs an API key or OAuth token, it resolves the reference at runtime instead of reading a hardcoded string.
+
+:::note[This Is Operator-Side Tooling]
+The `openclaw secrets` commands run in your terminal, not through your messaging channel. Regardless of whether you use WhatsApp, Telegram, or Discord to talk to your employee, secrets management happens on the machine where OpenClaw runs. You are securing the infrastructure your employee depends on.
+:::
+
+### Audit Your Setup Now
+
+You just connected Google Workspace. Run this in your terminal:
+
+```bash
+openclaw secrets audit
+```
+
+The audit scans your entire configuration for four problems:
+
+| Finding Code      | What It Means                                           | Risk                                                               |
+| ----------------- | ------------------------------------------------------- | ------------------------------------------------------------------ |
+| `PLAINTEXT_FOUND` | A credential stored as raw text in config               | Anyone who reads your config file sees your API key                |
+| `REF_UNRESOLVED`  | A SecretRef points to a provider that cannot resolve it | Your agent will fail at runtime when it needs that credential      |
+| `REF_SHADOWED`    | An auth-profile overrides a config reference            | Confusing precedence -- you think one key is active but another is |
+| `LEGACY_RESIDUE`  | Old `auth.json` files still exist                       | Stale credentials sitting in plaintext on disk                     |
+
+If the audit comes back clean, your secrets are properly managed. If it reports findings -- especially `PLAINTEXT_FOUND` after adding OAuth credentials -- you need to migrate.
+
+### The Migration Workflow
+
+Migration follows a strict loop: **audit → configure → dry-run → apply → audit again → reload**.
+
+```bash
+# 1. See what needs fixing
+openclaw secrets audit --check
+
+# 2. Interactive setup -- maps credentials to SecretRefs
+openclaw secrets configure --plan-out /tmp/secrets-plan.json
+
+# 3. Preview what will change (no files modified)
+openclaw secrets apply --from /tmp/secrets-plan.json --dry-run
+
+# 4. Execute the migration
+openclaw secrets apply --from /tmp/secrets-plan.json
+
+# 5. Verify clean state
+openclaw secrets audit --check
+
+# 6. Hot-swap the runtime with new references
+openclaw secrets reload
+```
+
+The `configure` command walks you through setting up providers and mapping each credential to a SecretRef. The `apply` step modifies `openclaw.json`, `auth-profiles.json`, and your environment file in one atomic operation. It intentionally does **not** create rollback backups containing your plaintext values -- backup files with raw credentials are themselves an attack vector.
+
+### Why This Matters
+
+Every integration you add stores credentials somewhere. You just added Google OAuth. Next you might add GitHub, Slack, or Notion. Each one adds another credential that a compromised skill (from L05's ClawHub section) could exfiltrate. The discipline is universal:
+
+1. **Audit** what credentials exist and where they live
+2. **Migrate** from plaintext to reference-based storage
+3. **Verify** the migration succeeded
+4. **Reload** without restarting the system
+
+Your agent's `SKILL.md` instructions flow through the LLM as plaintext -- any secret embedded in those instructions is visible in conversation history, debug logs, and potentially to other skills. SecretRefs keep credentials out of that flow entirely.
+
+---
 
 ## Flashcards Study Aid
 

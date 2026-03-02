@@ -54,7 +54,7 @@ learning_objectives:
   - objective: "Configure the gateway with a free LLM provider and access the Control UI"
     proficiency_level: "A2"
     bloom_level: "Apply"
-    assessment_method: "Student completes onboarding wizard with free provider, opens Control UI at 127.0.0.1:18789, and sends a test message"
+    assessment_method: "Student completes onboarding wizard with free provider, opens Control UI via openclaw dashboard, and sends a test message"
 
   - objective: "Explain why the gateway binds to localhost and the security implications of changing it"
     proficiency_level: "A2"
@@ -329,15 +329,8 @@ Even with `open` group policy, the bot requires a **mention** to respond -- it w
 
 However, the bot **reads all messages silently**. When you do mention it, the agent receives the recent conversation history as context -- so it knows what the group has been discussing, even though it stayed quiet.
 
-:::tip Chat via a WhatsApp Group
-A dedicated group is the cleanest way to use your AI Employee on WhatsApp. Create a group (even with just you in it), then enable group messaging:
-
-```bash
-openclaw config set channels.whatsapp.accounts.default.groupPolicy open
-openclaw gateway restart
-```
-
-Send a message in the group that @mentions the bot. It responds in the group thread. Plain messages without a mention are read but not answered -- the bot stays out of the way until called.
+:::tip Chat via WhatsApp Groups
+A dedicated group is the cleanest way to use your AI Employee on WhatsApp -- each group gets its own isolated session with separate conversation history. See the **Organizing with Groups** section below for setup steps and use cases.
 :::
 
 :::tip Let Your General Agent Handle Configuration
@@ -397,15 +390,95 @@ OpenClaw supports DM policies (`pairing`, `allowlist`, `open`, `disabled`) and g
 
 ## The Control UI
 
-You also have a browser-based chat at:
+You also have a browser-based chat. Open it with:
 
 ```
-http://127.0.0.1:18789/
+openclaw dashboard
 ```
 
-If the plain URL asks for authentication, use the token URL shown during setup (`#token=...`).
+This launches the Control UI in your default browser with authentication handled automatically. Going to `http://127.0.0.1:18789/` directly will fail with "too many bad/missing token attempts" because the URL requires an authentication token. Always use the command.
 
 Three channels, one agent: TUI, your messaging app, and the Control UI all reach the same AI Employee with the same memory. That is the channel adapter pattern from Lesson 1.
+
+---
+
+## Organizing with Groups: Multiple Conversations, One Employee
+
+You have one agent, but you will not want all your conversations in one thread. A coding question, a personal schedule check, and a research task do not belong in the same conversation history. Groups solve this.
+
+### WhatsApp Groups as Separate Sessions
+
+Every WhatsApp group your employee joins gets its own **isolated session**. The session key looks like `agent:<agentId>:whatsapp:group:<groupId>`. This means:
+
+- Each group has its own conversation history and context
+- Commands like `/verbose on` in one group do not affect other groups
+- Your personal DM session is completely separate from all groups
+
+Create groups by topic to keep conversations focused:
+
+| Group Name            | Purpose                             |
+| --------------------- | ----------------------------------- |
+| "AI Employee - Work"  | Daily tasks, scheduling, email      |
+| "AI Employee - Code"  | ACP delegation, code reviews        |
+| "AI Employee - Learn" | Research, book summaries, questions |
+
+Each group maintains its own memory context. When you ask a question in the Code group, your employee sees the coding conversation history -- not yesterday's scheduling discussion from the Work group.
+
+To set up groups:
+
+**Step 1 -- Enable group messaging (one-time).** The setup wizard does not configure this. The fastest way is to ask your employee in a DM:
+
+::::channel-tabs
+
+::whatsapp
+
+```
+Set my WhatsApp group policy to "open" in the config and restart
+the gateway. Do not use allowlist mode -- just open. Confirm
+when done and tell me the current group policy setting.
+```
+
+::telegram
+
+```
+Set my Telegram group policy to "open" in the config and restart
+the gateway. Do not use allowlist mode -- just open. Confirm
+when done and tell me the current group policy setting.
+```
+
+::::
+
+Your employee edits `~/.openclaw/openclaw.json`, sets `groupPolicy` to `"open"`, and restarts the gateway. The confirmation step matters -- ask "What is your current group policy?" to verify it actually changed.
+
+:::warning[Keep It Open, Not Allowlist]
+Your employee may try to "improve" the setup by switching from `open` to `allowlist` mode with explicit group IDs. Do not let it. Allowlist mode requires exact group ID matching and breaks easily -- messages stop arriving but the employee reports success. If groups stop working after they were working before, the first thing to check is whether the policy was changed. Ask: "What is my current WhatsApp group policy? If it is not open, change it back to open and restart the gateway."
+:::
+
+:::tip Manual Fallback
+If the employee cannot modify its own config, use the CLI directly:
+
+```bash
+# For WhatsApp
+openclaw config set channels.whatsapp.groupPolicy "open"
+
+# For Telegram
+openclaw config set channels.telegram.groupPolicy "open"
+
+# Restart the gateway to apply
+openclaw gateway stop && openclaw gateway start
+```
+
+:::
+
+**Step 2 -- Create a group.** Create a WhatsApp or Telegram group (you can be the only member besides the bot).
+
+**Step 3 -- Mention the bot.** Send a message that **@mentions the bot**. Even with `groupPolicy open`, the bot requires a mention to respond -- this prevents it from replying to every message in a busy group.
+
+**Step 4 -- The bot responds.** This group now has its own isolated session. Every future message in this group stays in this group's context.
+
+:::info[One Employee, Many Contexts]
+This is not multi-agent. You have one employee with one set of skills and one personality. Groups give you **separate conversation threads** -- like having different chat windows open with the same colleague for different projects. Your employee's identity files (`SOUL.md`, `USER.md`, `IDENTITY.md` from hatching) load in every session including groups, so its name and personality are consistent. But `MEMORY.md` (long-term curated memory) only loads in your main private session -- groups do not see it. Conversation history stays fully isolated per group.
+:::
 
 ---
 
@@ -441,6 +514,7 @@ If you change the bind address to `0.0.0.0` (all interfaces), your gateway becom
 | OAuth callback fails                  | Port 8085 in use                             | Kill the process on port 8085, retry setup                     |
 | Bot does not respond on messaging app | Gateway not running or channel misconfigured | Check `~/.openclaw/logs/gateway.log`                           |
 | Gateway won't start                   | Port 18789 in use                            | Run `lsof -i :18789`, then `kill` the PID                      |
+| Control UI rejects with token error   | Opened `127.0.0.1:18789` directly            | Use `openclaw dashboard` instead -- it includes the auth token |
 | Control UI loads but chat fails       | LLM provider unreachable                     | Check internet; re-run setup to refresh OAuth tokens           |
 | Agent stops after closing terminal    | Gateway service not running                  | Run `openclaw gateway start` to restart the background service |
 
@@ -499,7 +573,6 @@ to do if it fails.
 ```
 
 **What you're learning:** Debugging agent systems systematically. Check the simplest things first, verify each layer independently.
-
 
 ## Flashcards Study Aid
 

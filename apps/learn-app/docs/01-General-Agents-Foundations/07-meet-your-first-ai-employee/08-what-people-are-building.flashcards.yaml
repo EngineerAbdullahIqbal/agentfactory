@@ -1,20 +1,18 @@
 deck:
   id: "ch07-08-what-people-build"
   title: "What People Are Building"
-  description: "Flashcards on compound AI Employee workflows, the five use case categories, unsolved challenges like compound risk and memory coherence, and the cross-framework ecosystem."
-  tags: ["composability", "use-cases", "compound-risk", "ecosystem", "unsolved-problems"]
-  version: 1
+  description: "Compound AI Employee workflows, the five use case categories, unsolved challenges, the cross-framework ecosystem, and heartbeat vs cron scheduling mechanisms."
+  tags: ["composability", "use-cases", "compound-risk", "ecosystem", "scheduling", "heartbeat", "cron"]
+  version: 4
 
 cards:
   - id: "ch07-08-what-people-build-001"
-    type: recall
     front: "What does composability mean in the context of AI Employee workflows?"
     back: "Every real-world workflow combines four to five patterns from the chapter as building blocks."
     tags: ["composability"]
     difficulty: "basic"
 
   - id: "ch07-08-what-people-build-002"
-    type: thinking
     front: "Why is compound risk multiplicative rather than additive?"
     back: "BECAUSE each step's reliability multiplies with the others -- THEREFORE a 5-step pipeline at 99% per step delivers only 95% overall (0.99^5), meaning failures compound exponentially with each added integration."
     why: "What happens to the overall reliability of a 10-step pipeline at 99% per step?"
@@ -22,14 +20,12 @@ cards:
     difficulty: "advanced"
 
   - id: "ch07-08-what-people-build-003"
-    type: recall
     front: "What are the five use case categories for compound AI Employee workflows?"
     back: "Personal CRM, Knowledge Management, Business Intelligence, Security and Operations, and Personal Health."
     tags: ["use-cases", "categories"]
     difficulty: "basic"
 
   - id: "ch07-08-what-people-build-004"
-    type: thinking
     front: "Why is memory coherence an unsolved problem in AI Employee systems?"
     back: "BECAUSE real-world context constantly changes -- contacts switch roles, projects get cancelled, priorities shift -- and the agent does not know unless explicitly told, so long-term memory becomes stale and contradictory over time."
     why: "What specific types of real-world changes cause agent memory to degrade?"
@@ -37,14 +33,12 @@ cards:
     difficulty: "intermediate"
 
   - id: "ch07-08-what-people-build-005"
-    type: recall
     front: "What four unsolved challenges separate weekend projects from production AI Employee systems?"
     back: "Security at scale, reliability of autonomous workflows, cost management, and the generalization gap."
     tags: ["unsolved-problems", "hard-problems"]
     difficulty: "intermediate"
 
   - id: "ch07-08-what-people-build-006"
-    type: thinking
     front: "Why does the 'it works for me' problem block AI Employees from becoming products?"
     back: "BECAUSE personal workflows depend on YOUR email patterns, calendar habits, and file naming conventions -- THEREFORE handing the same setup to a colleague breaks it, and the generalization gap keeps most projects as single-user experiments."
     why: "What would need to change for a personal AI Employee to work for a different user?"
@@ -52,14 +46,12 @@ cards:
     difficulty: "advanced"
 
   - id: "ch07-08-what-people-build-007"
-    type: recall
     front: "What language are both OpenClaw and NanoClaw written in?"
     back: "TypeScript."
     tags: ["ecosystem", "frameworks"]
     difficulty: "basic"
 
   - id: "ch07-08-what-people-build-008"
-    type: thinking
     front: "How does a security agent with code access become an attack vector?"
     back: "BECAUSE the agent guarding the system also has the keys to it -- if a malicious skill compromises one specialist, it gains the access needed to read the codebase, exfiltrate secrets, or modify security configurations."
     why: "How does the lethal trifecta compound when multiple security agents are added?"
@@ -67,7 +59,6 @@ cards:
     difficulty: "advanced"
 
   - id: "ch07-08-what-people-build-009"
-    type: thinking
     front: "Why is the Intelligence Layer (Agent Skills plus MCP) considered the moat, not the Body or runtime?"
     back: "BECAUSE the Body is table stakes that different teams rebuild for their threat models, but domain knowledge encoded as Skills and MCP servers is portable across every Body -- THEREFORE your expertise investment survives any platform change."
     why: "What happens to your Intelligence Layer investment if you switch from OpenClaw to NanoClaw?"
@@ -75,30 +66,102 @@ cards:
     difficulty: "intermediate"
 
   - id: "ch07-08-what-people-build-010"
-    type: recall
     front: "What five universal patterns appear in the cross-framework comparison of OpenClaw, AutoGPT, and CrewAI?"
     back: "Scheduling, memory, skills, delegation, and integration."
     tags: ["cross-framework", "universal-patterns"]
     difficulty: "intermediate"
 
   - id: "ch07-08-what-people-build-011"
-    type: recall
     front: "What is nanobot in the AI Employee ecosystem?"
     back: "A Python agent framework (~4,000 lines) for learning agent internals."
     tags: ["nanobot", "ecosystem"]
     difficulty: "basic"
 
   - id: "ch07-08-what-people-build-012"
-    type: recall
     front: "Which chapter building blocks compose a Personal CRM use case?"
     back: "Integrations (L07), scheduling (L03), memory (L04), and skills (L05)."
     tags: ["composability", "personal-crm"]
     difficulty: "intermediate"
 
   - id: "ch07-08-what-people-build-013"
-    type: thinking
     front: "Why is hallucinated analysis especially dangerous in multi-agent business intelligence workflows?"
     back: "BECAUSE when one expert agent fabricates a competitor's pricing change or market trend, the orchestrator weaves that fabrication into its synthesis without question, producing a confident-sounding report containing unverified claims."
     why: "What role does the orchestrator play in amplifying single-agent hallucinations?"
     tags: ["hallucination", "business-intelligence"]
     difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-014"
+    front: "What is a heartbeat in OpenClaw's scheduling model?"
+    back: "A periodic check-in running in the main session at regular intervals (default 30 minutes) that reviews a HEARTBEAT.md checklist."
+    tags: ["heartbeat", "scheduling"]
+    difficulty: "basic"
+
+  - id: "ch07-08-what-people-build-015"
+    front: "Heartbeat timing: approximate intervals. Cron timing?"
+    back: "Exact scheduling via cron expressions with timezone support."
+    tags: ["scheduling", "cron", "heartbeat"]
+    difficulty: "basic"
+
+  - id: "ch07-08-what-people-build-016"
+    front: "Heartbeat context: full conversation history. Cron (isolated) context?"
+    back: "Clean slate — each isolated job starts a fresh session with no prior history."
+    tags: ["scheduling", "cron", "heartbeat"]
+    difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-017"
+    front: "Why is heartbeat more cost-efficient than cron for multiple routine checks?"
+    back: "BECAUSE heartbeat batches multiple checks into one LLM turn regardless of checklist size, THEREFORE five items in HEARTBEAT.md cost the same as two — while five separate cron jobs would consume five full agent turns."
+    why: "When would the cost advantage of heartbeat be outweighed by cron's benefits?"
+    tags: ["heartbeat", "cron", "cost"]
+    difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-018"
+    front: "What does the --at flag do in openclaw cron add?"
+    back: "Creates a one-shot reminder that fires once at the specified time offset and can auto-delete with --delete-after-run."
+    tags: ["cron", "one-shot"]
+    difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-019"
+    front: "Why can isolated cron jobs reduce costs by selecting a different model?"
+    back: "BECAUSE each isolated job runs independently with its own model selection, THEREFORE using a cheaper model (e.g., --model sonnet) for batch summarization work cuts cost without affecting the main session's model."
+    why: "What types of tasks are good candidates for cheaper models in isolated cron jobs?"
+    tags: ["cron", "cost", "model-selection"]
+    difficulty: "advanced"
+
+  - id: "ch07-08-what-people-build-020"
+    front: "What is the optimal scheduling strategy combining both mechanisms?"
+    back: "Heartbeat for routine batched monitoring, cron for precise-timing requirements or jobs needing isolation and dedicated model selection."
+    tags: ["scheduling", "heartbeat", "cron"]
+    difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-021"
+    front: "Heartbeat configuration: operator-side only. Cron job creation?"
+    back: "Both operator CLI and employee via cron.* tool calls in conversation."
+    tags: ["scheduling", "cron", "heartbeat", "configuration"]
+    difficulty: "basic"
+
+  - id: "ch07-08-what-people-build-022"
+    front: "Why can your employee create cron jobs but not change heartbeat timing?"
+    back: "BECAUSE the employee has access to cron.* tools (add, update, remove) through the Gateway tool API, but heartbeat timing is infrastructure config that runs outside the agent loop — the heartbeat wakes the employee, so the employee cannot configure its own wake-up schedule."
+    why: "What part of heartbeat CAN the employee modify through conversation?"
+    tags: ["scheduling", "cron", "heartbeat", "configuration"]
+    difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-023"
+    front: "What are the three cron delivery modes and which is the default?"
+    back: "none (default, silent), announce (visible message to channel), webhook (POST to endpoint)"
+    tags: ["cron", "delivery"]
+    difficulty: "basic"
+
+  - id: "ch07-08-what-people-build-024"
+    front: "Why does a cron reminder run successfully but never reach the user on WhatsApp?"
+    back: "BECAUSE the employee created a main-session system event instead of an isolated job with announce delivery, THEREFORE the job ran but had no channel to route output to — main-session jobs cannot use announce mode."
+    why: "What session type must you use for announce delivery to work?"
+    tags: ["cron", "delivery", "whatsapp"]
+    difficulty: "intermediate"
+
+  - id: "ch07-08-what-people-build-025"
+    front: "Announce delivery mode requires which session type?"
+    back: "Isolated sessions (--session isolated). Main-session jobs cannot route output to a channel."
+    tags: ["cron", "delivery", "sessions"]
+    difficulty: "basic"

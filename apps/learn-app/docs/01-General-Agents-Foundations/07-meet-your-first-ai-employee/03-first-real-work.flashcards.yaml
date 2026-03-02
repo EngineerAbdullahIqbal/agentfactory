@@ -3,7 +3,7 @@ deck:
   title: "Your First Real Work"
   description: "Delegating tasks to an AI Employee, iterating on output, understanding the agent loop phases, and configuring autonomous daily workflows."
   tags: ["agent-loop", "task-delegation", "autonomous-workflow", "morning-briefing"]
-  version: 1
+  version: 2
 
 cards:
   - id: "ch07-03-first-real-work-001"
@@ -94,4 +94,12 @@ cards:
     back: "BECAUSE these tasks have clear patterns the model can follow, structured outputs it can generate reliably, and repetition that justifies the setup cost, THEREFORE they maximize the agent's strengths while minimizing its weaknesses in judgment and originality."
     why: "What characteristic of creative tasks makes them poor candidates for AI Employees?"
     tags: ["strengths", "task-selection"]
+    difficulty: "intermediate"
+
+  - id: "ch07-03-first-real-work-013"
+    type: thinking
+    front: "Why should you tell your AI Employee about your role and preferences before giving it tasks?"
+    back: "BECAUSE the employee writes your context to USER.md and carries it into every future interaction, THEREFORE tasks produce role-specific output instead of generic results -- a marketing manager gets marketing-focused research, not generic analysis."
+    why: "How does this differ from adding context to each individual prompt?"
+    tags: ["customization", "persistent-memory"]
     difficulty: "intermediate"

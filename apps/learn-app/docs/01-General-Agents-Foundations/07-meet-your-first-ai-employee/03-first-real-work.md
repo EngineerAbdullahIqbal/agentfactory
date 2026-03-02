@@ -14,7 +14,7 @@ keywords:
   ]
 chapter: 7
 lesson: 3
-duration_minutes: 30
+duration_minutes: 33
 
 # HIDDEN SKILLS METADATA
 skills:
@@ -110,7 +110,28 @@ In Lesson 2, you installed OpenClaw, connected your messaging channel, and confi
 Over the next 30 minutes, you will build artifacts you keep, iterate on output you disagree with, and configure a daily workflow that runs while you sleep. Four tasks. You walk away with real files on your machine and a working morning briefing on your phone.
 
 :::tip Control UI and Terminal
-You can also use the Control UI at `http://127.0.0.1:18789/` or `openclaw tui` in your terminal. The tasks work identically across all channels.
+You can also use the Control UI (`openclaw dashboard`) or `openclaw tui` in your terminal. The tasks work identically across all channels.
+:::
+
+---
+
+## Shape Your Employee First (3 minutes)
+
+Before you give your first task, tell your employee about your work. Open your messaging channel and send something like:
+
+```
+I'm a [YOUR ROLE] at [TYPE OF COMPANY/TEAM]. My main responsibilities
+are [2-3 KEY THINGS YOU DO]. When I ask for help, I prefer
+[BRIEF/DETAILED] responses. My biggest time sink right now is
+[SOMETHING THAT EATS YOUR TIME]. Update my User Profile as we collaborate and work together.
+```
+
+Watch what happens. Your employee updates its understanding of you -- it writes to `USER.md` in its workspace, adjusting how it handles every future request. The next time you ask for a competitor analysis or a morning briefing, the output reflects your role, your preferences, and your priorities without you repeating them.
+
+This is not a prompt trick. You are configuring persistent memory through conversation. The same message works from WhatsApp, Telegram, or the TUI -- your employee stores the context once and carries it everywhere.
+
+:::tip Iterate Over Days, Not Minutes
+You do not need to get this perfect now. Every conversation teaches your employee more about you. After a week of real use, send a follow-up: "What do you know about me and my work? What's missing?" Review what it says, correct what is wrong, and add what it missed. The best employees learn on the job.
 :::
 
 ---
@@ -302,7 +323,6 @@ What should it do in the morning, during work hours, and at end of day?
 ```
 
 **What you're learning:** Thinking in workflows rather than individual tasks. A daily routine combines research, analysis, and scheduling into automated sequences -- the foundation for building an always-on employee.
-
 
 ## Flashcards Study Aid
 
