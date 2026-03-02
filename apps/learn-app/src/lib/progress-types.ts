@@ -40,6 +40,17 @@ export interface LessonCompleteResponse {
   xp_earned: number;
 }
 
+export interface MilestoneCompleteRequest {
+  milestone_slug: string;
+}
+
+export interface MilestoneCompleteResponse {
+  xp_earned: number;
+  total_xp: number;
+  streak: StreakInfo;
+  already_completed: boolean;
+}
+
 export interface FlashcardCompleteRequest {
   deck_id: string;
   chapter_slug: string;

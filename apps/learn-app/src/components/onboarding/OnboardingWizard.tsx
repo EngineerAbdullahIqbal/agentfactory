@@ -9,11 +9,13 @@ import React, {
   useRef,
 } from "react";
 import useBaseUrl from "@docusaurus/useBaseUrl";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { useHistory } from "@docusaurus/router";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLearnerProfile } from "@/contexts/LearnerProfileContext";
 import { useProgress } from "@/contexts/ProgressContext";
 import { ONBOARDING_PHASES } from "@/lib/learner-profile-types";
+import { completeMilestone } from "@/lib/progress-api";
 import { toast } from "sonner";
 import { motion, AnimatePresence, MotionConfig } from "framer-motion";
 import { WelcomeStep } from "./WelcomeStep";
@@ -120,6 +122,10 @@ export default function OnboardingWizard() {
   } = useLearnerProfile();
 
   const { refreshProgress } = useProgress();
+  const { siteConfig } = useDocusaurusContext();
+  const progressApiUrl =
+    (siteConfig.customFields?.progressApiUrl as string) ||
+    "http://localhost:8002";
 
   const [currentStep, setCurrentStep] = useState(-1);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
@@ -375,12 +381,13 @@ export default function OnboardingWizard() {
         setCompletedSteps((prev) => new Set(prev).add(currentStep));
 
         if (!skip) {
-          // Simulate XP award locally until API natively issues XP for profile events
           toast.success("+20 XP Earned!", {
             description: `You completed the ${step.label} section.`,
             className: "bg-green-500/10 border-green-500/20 text-green-500",
           });
-          void refreshProgress();
+          void completeMilestone(progressApiUrl, {
+            milestone_slug: `onboarding/${step.phase}`,
+          }).finally(() => refreshProgress());
         }
 
         setCurrentStep((prev) => prev + 1);
@@ -402,6 +409,7 @@ export default function OnboardingWizard() {
       communicationData,
       deliveryData,
       completeOnboardingPhase,
+      progressApiUrl,
       refreshProgress,
       syncFromProfile,
     ],
