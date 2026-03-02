@@ -1,13 +1,13 @@
 """Milestone completion service — concurrency-safe via INSERT RETURNING."""
 
 import asyncio
-import logging
 from datetime import date
 
-from sqlalchemy import text
+from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..core.auth import CurrentUser
+from ..models.progress import UserProgress
 from ..schemas.milestone import MilestoneCompleteRequest, MilestoneCompleteResponse
 from ..schemas.quiz import StreakInfo
 from ..services.engine.streaks import calculate_streak
@@ -19,8 +19,6 @@ from .shared import (
     update_user_progress,
     upsert_user_from_jwt,
 )
-
-logger = logging.getLogger(__name__)
 
 MILESTONE_XP = 20
 
@@ -57,15 +55,24 @@ async def complete_milestone(
     row = result.first()
 
     if row is None:
-        # Already completed — no XP awarded
-        xp_earned = 0
-        already_completed = True
-    else:
-        # New completion
-        xp_earned = MILESTONE_XP
-        already_completed = False
+        # Already completed — return without modifying anything
+        # Still calculate current streak for the response
+        activity_dates = await get_activity_dates(session, user.id)
+        current_streak, longest_streak = calculate_streak(activity_dates, today=today)
 
-    # 3. Record activity day (always, for analytics)
+        result_prog = await session.execute(
+            select(UserProgress.total_xp).where(UserProgress.user_id == user.id)
+        )
+        total_xp = result_prog.scalar_one_or_none() or 0
+
+        return MilestoneCompleteResponse(
+            xp_earned=0,
+            total_xp=total_xp,
+            streak=StreakInfo(current=current_streak, longest=longest_streak),
+            already_completed=True,
+        )
+
+    # 3. Record activity day
     await record_activity_day(session, user.id, today, "milestone", request.milestone_slug)
 
     # 4. Calculate streak
@@ -75,10 +82,10 @@ async def complete_milestone(
     current_streak, longest_streak = calculate_streak(activity_dates, today=today)
 
     # 5. Update user progress
-    await update_user_progress(
+    progress = await update_user_progress(
         session,
         user.id,
-        xp_delta=xp_earned,
+        xp_delta=MILESTONE_XP,
         current_streak=current_streak,
         longest_streak=longest_streak,
         last_activity_date=today,
@@ -89,20 +96,11 @@ async def complete_milestone(
 
     # 7. Invalidate cache + refresh leaderboard
     await invalidate_user_cache(user.id)
-    if xp_earned > 0:
-        asyncio.create_task(debounced_refresh_leaderboard())
-
-    # Get updated total_xp
-    total_xp_result = await session.execute(
-        text("SELECT total_xp FROM user_progress WHERE user_id = :user_id"),
-        {"user_id": user.id},
-    )
-    total_xp_row = total_xp_result.first()
-    total_xp = total_xp_row.total_xp if total_xp_row else 0
+    asyncio.create_task(debounced_refresh_leaderboard())
 
     return MilestoneCompleteResponse(
-        xp_earned=xp_earned,
-        total_xp=total_xp,
+        xp_earned=MILESTONE_XP,
+        total_xp=progress.total_xp,
         streak=StreakInfo(current=current_streak, longest=longest_streak),
-        already_completed=already_completed,
+        already_completed=False,
     )
