@@ -18,7 +18,7 @@ keywords:
 
 ## 📚 Teaching Aid
 
-<PDFViewer src="https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-0/chapter-00/why-ai-is-non-negotiable.pdf" title="Why AI Is Non-Negotiable" height={700} />
+<PDFViewer src="https://pub-80f166e40b854371ac7b05053b435162.r2.dev/books/ai-native-dev/static/slides/part-0/chapter-00/the-ai-imperative.pdf" title="Why AI Is Non-Negotiable" height={700} />
 
 Human evolution has never been strictly biological. It has always been technological. Fire extended the day. Agriculture freed us from constant foraging. The printing press democratized knowledge. The steam engine industrialized muscle. The computer industrialized calculation. None of these were optional. The societies that adopted them flourished. The ones that resisted were absorbed by those that didn't.
 
@@ -30,7 +30,7 @@ Yet this rapid technological shift has fractured public opinion. Society is divi
 
 ### The Objections
 
-Critics raise eight core objections. These aren't fringe concerns—they surface in boardrooms, legislative hearings, and prime-time debates alike. The skeptic's position can be summarized in one line: _the risks are obvious, and nobody has explained the upside._
+Critics raise nine core objections. These aren't fringe concerns—they surface in boardrooms, legislative hearings, and prime-time debates alike. The skeptic's position can be summarized in one line: _the risks are obvious, and nobody has explained the upside._
 
 **1. Mass Unemployment.** AI will eliminate millions of jobs—entry-level positions first, then white-collar work like law, accounting, and content creation. The disruption will hit before any safety net is in place, and the people who lose the most will have the least power to adapt.
 
@@ -47,6 +47,8 @@ Critics raise eight core objections. These aren't fringe concerns—they surface
 **7. Environmental Cost.** Training a single frontier AI model can consume as much electricity as a small city uses in a year and requires millions of gallons of water for cooling. As the industry scales, data center demand is projected to double or triple within the decade. Critics argue we are trading one existential crisis for another—burning the planet to build systems whose net benefit remains unproven.
 
 **8. Bias and Discrimination at Scale.** AI systems trained on historical data inherit the biases embedded in that data—and then apply them at unprecedented speed and scale. Hiring algorithms that penalize women, lending models that disadvantage minority applicants, healthcare systems that underdiagnose Black patients—these are not hypothetical risks. They are documented failures already causing real harm. When bias is automated, it becomes invisible, systematic, and nearly impossible for its victims to challenge.
+
+**9. Unprecedented Wealth Concentration.** Every previous technological revolution distributed wealth across geographies. Cars were built in America, Germany, Japan, and Korea. Software was built in India, Germany, and Sweden. Dozens of countries participated as producers, not just consumers. AI is structurally different. Training a single frontier model costs billions of dollars. A single high-end GPU runs $25,000 to $40,000, and frontier labs need tens of thousands of them. The result is that only a handful of organizations—perhaps five or six globally, nearly all American or Chinese—can build the foundation models on which the rest of the world's AI economy will run. In February 2026, Anthropic's valuation reached $380 billion after its Series G round—surpassing the _combined_ market capitalization of India's five largest IT services companies: TCS, Infosys, HCL Technologies, Wipro, and Tech Mahindra. An entire nation's IT services industry, built over four decades and employing millions of people, is now worth less than a single AI company with a few thousand employees. The largest technology companies command a combined market capitalization exceeding $12 trillion—more than the GDP of every nation on earth except the United States and China. If this trajectory continues unchecked, a few thousand people in a handful of companies will capture a disproportionate share of the cognitive value that eight billion people generate.
 
 ---
 
@@ -69,6 +71,10 @@ The institutional-scale evidence is just as concrete. Duolingo reported that AI 
 The problem is not that the benefits don't exist. It's that the industry spent years selling _AGI hype_ to investors instead of explaining _practical value_ to citizens. That hype was exactly what was needed to raise the next round of scale-up capital—but it came at the cost of public trust. The correction is already underway: the most credible AI deployments now measure success in verified outcomes people can see and touch—patients diagnosed, students tutored, families saving money on services they could never previously afford—not in abstract benchmarks. When AI is built around clear specifications, continuous verification, and measurable results, the consumer dividend stops being a promise and becomes a receipt.
 
 And this isn't just an argument critics are making from the outside. In 2026, Anthropic CEO Dario Amodei — one of the people building frontier AI — warned publicly that AI could create trillionaires and ignite severe public backlash if the economic gains concentrate at the top. He told Axios that tech leaders cannot promise massive AI-driven abundance for themselves without risking serious political and social consequences. His argument was blunt: AI should be treated as a civilizational challenge, not just a business opportunity. If everyday people believe the system is rigged — that a small group captures extreme wealth while everyone else watches — the backlash will shape policy through anger rather than thoughtful planning. Amodei called for new tax frameworks designed for an era of unprecedented wealth creation, and warned that delaying the conversation would produce poorly designed solutions later. This matters because it reframes the consumer dividend question. The issue is not whether AI creates value — it demonstrably does. The issue is whether the architects of this technology have the discipline to ensure that value reaches the single mother drafting a lease dispute, the shopkeeper negotiating with a supplier, the student preparing for an exam with no tutor in sight. When the CEO of a leading AI company says concentration is the risk, not capability, the correct response is not to slow down. It is to build the distribution mechanisms — open models, accessible tools, progressive policy — with the same urgency we bring to building the technology itself.
+
+**On Wealth Concentration:** The structural evidence is real, and anyone who dismisses it is not reading the numbers. When a single AI company with a few thousand employees surpasses the combined market value of an entire nation's IT services industry—built over four decades and employing millions—something fundamental has shifted in how wealth is created. The capital barriers to frontier AI are unlike anything in previous technological revolutions: billions per training run, tens of thousands of GPUs at $25,000–$40,000 each, infrastructure investments measured in the tens of billions annually. The default trajectory concentrates an extraordinary share of cognitive-era value in a very small number of hands.
+
+But the correct response is not to cap what can be built. It is to aggressively democratize _who can build_. Open-weight models have already shattered the assumption that only mega-funded labs can participate. A university in Lahore or Lagos can fine-tune a frontier-class model for local needs today—something unimaginable even five years ago. Sovereign AI infrastructure programs, already underway in the EU, India, and the Gulf states, are ensuring that no nation depends entirely on foreign intelligence. And the policy conversation is moving: Anthropic's own CEO has called for new tax frameworks designed for an era where a company of thousands can generate the revenue of a mid-sized nation. The concentration problem is real. The answer is not to slow the technology. It is to match the urgency of building AI with equal urgency in building the institutions—open models, progressive taxation, public AI literacy, sovereign compute—that distribute its gains. Previous revolutions eventually became democratic. This one must be made democratic _by design_, because the capital barriers will not self-correct.
 
 **On Surveillance and Control:** This is the strongest objection—and it demands the most rigorous answer. The concern is not hypothetical. China's social credit experiments, law enforcement misuse of facial recognition in the US and UK, and the Pegasus spyware scandal have all demonstrated that powerful technology in unchecked hands becomes a tool of control. Anyone who dismisses this fear is not paying attention.
 
@@ -156,8 +162,7 @@ questionsPerBatch={30}
 questions={[
 {
 question: "According to the opening argument, what makes AI different from every previous technological revolution?",
-options: [
-"AI augments cognition itself—the ability to reason, synthesize, create, and decide",
+options: ["AI augments cognition itself—the ability to reason, synthesize, create, and decide",
 "AI is the first technology developed by private corporations rather than governments",
 "AI is the first technology that can fully replace human workers in every domain",
 "AI is the first technology to spread globally within a single decade"
@@ -168,20 +173,18 @@ source: "Section: Opening Thesis"
 },
 {
 question: "The text draws a parallel between AI adoption and earlier technologies. Which historical pattern does it emphasize?",
-options: [
-"Societies that adopted foundational technologies flourished; those that resisted were absorbed",
+options: ["New technologies always benefit the wealthy before trickling down to the poor",
 "Every foundational technology was initially banned before becoming mainstream",
-"New technologies always benefit the wealthy before trickling down to the poor",
+"Societies that adopted foundational technologies flourished; those that resisted were absorbed",
 "Technological adoption is always gradual and voluntary across all societies"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The opening paragraph states explicitly that societies that adopted foundational technologies flourished while those that resisted were absorbed by those that didn't. Options B, C, and D are not claims made in the text.",
 source: "Section: Opening Thesis"
 },
 {
 question: "According to the text, how has rapid AI development affected public opinion?",
-options: [
-"Society has fractured into those who see AI as an existential threat and those who see it as the engine of future prosperity",
+options: ["Society has fractured into those who see AI as an existential threat and those who see it as the engine of future prosperity",
 "The majority of people have enthusiastically embraced AI without reservation",
 "Public opinion has remained largely indifferent to AI developments",
 "Only technology professionals have formed strong opinions about AI"
@@ -192,68 +195,62 @@ source: "Section: Opening Thesis"
 },
 {
 question: "What does the text identify as the core stance of AI skeptics?",
-options: [
+options: ["AI technology is fundamentally flawed and will never work reliably",
 "The risks are obvious, and nobody has explained the upside",
-"AI technology is fundamentally flawed and will never work reliably",
 "AI should only be developed by government-regulated laboratories",
 "The technology is too expensive to ever benefit ordinary people"
 ],
-correctOption: 0,
+correctOption: 1,
 explanation: "The text summarizes the skeptic's position in one line: 'the risks are obvious, and nobody has explained the upside.' The other options are not claims attributed to skeptics in the text.",
 source: "Section: The Objections"
 },
 {
-question: "Which of the following is NOT listed as one of the eight core objections to AI?",
-options: [
-"AI will concentrate wealth among a small number of technology billionaires",
+question: "Which of the following is NOT listed as one of the nine core objections to AI?",
+options: ["The erosion of shared reality through AI-generated content",
 "Mass unemployment from job displacement",
-"No clear benefit to ordinary people",
-"The erosion of shared reality through AI-generated content"
+"Unprecedented wealth concentration in a handful of companies",
+"AI will make humans intellectually lazy and unable to think independently"
 ],
-correctOption: 0,
-explanation: "The eight objections listed are: mass unemployment, no clear consumer benefit, surveillance and authoritarian control, geopolitical arms race, and erosion of reality. Wealth concentration, while related, is not listed as one of the eight core objections.",
+correctOption: 3,
+explanation: "The nine objections listed are: mass unemployment, no clear consumer benefit, surveillance and authoritarian control, geopolitical arms race, erosion of reality, existential risk, environmental cost, bias and discrimination, and unprecedented wealth concentration. Intellectual laziness, while a concern some raise, is not one of the nine objections in the text.",
 source: "Section: The Objections"
 },
 {
 question: "The mass unemployment objection argues that AI disruption will hit hardest among which group?",
-options: [
-"People who lose the most will have the least power to adapt",
+options: ["Retired professionals who cannot re-enter the workforce",
 "Senior executives who rely on outdated management practices",
 "Government employees in bureaucratic agencies",
-"Retired professionals who cannot re-enter the workforce"
+"People who lose the most will have the least power to adapt"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The mass unemployment objection specifically states that disruption will hit before any safety net is in place, and the people who lose the most will have the least power to adapt. The other groups are not specifically mentioned in this objection.",
 source: "Section: The Objections — Mass Unemployment"
 },
 {
 question: "What is the surveillance objection's core concern about AI?",
-options: [
-"AI gives governments and corporations an unprecedented toolkit for extracting compliance",
+options: ["AI surveillance concerns are limited to facial recognition technology alone",
 "AI surveillance systems are too expensive for governments to deploy effectively",
 "Surveillance AI only works in authoritarian countries with centralized networks",
-"AI surveillance concerns are limited to facial recognition technology alone"
+"AI gives governments and corporations an unprecedented toolkit for extracting compliance"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The surveillance objection warns that AI hands governments and corporations unprecedented tools for compliance extraction—facial recognition, behavioral prediction, automated censorship—and that the path from productivity tool to social credit system is disturbingly short. The other options understate or misrepresent the concern.",
 source: "Section: The Objections — Surveillance and Authoritarian Control"
 },
 {
 question: "The geopolitical objection warns that nations may fall into which three categories?",
-options: [
+options: ["Democratic nations, authoritarian nations, or failed states",
 "Exporters of AI intelligence, strategic partners, or digital vassal states",
-"Democratic nations, authoritarian nations, or failed states",
 "AI producers, AI consumers, or AI-free zones",
 "Technology leaders, technology followers, or technology deniers"
 ],
-correctOption: 0,
+correctOption: 1,
 explanation: "The text explicitly states that nations will fall into one of three categories: exporters of AI intelligence, strategic partners with sovereign capability, or digital vassal states dependent on foreign infrastructure. The other categorizations are not from the text.",
 source: "Section: The Objections — Geopolitical Arms Race"
 },
 {
 question: "What deeper fear does the 'erosion of reality' objection raise beyond misinformation?",
-options: [
-"What if we build something we cannot control?",
+options: ["What if we build something we cannot control?",
 "What if people stop reading books entirely?",
 "What if AI-generated art replaces all human creativity?",
 "What if children can no longer distinguish teachers from AI tutors?"
@@ -264,8 +261,7 @@ source: "Section: The Objections — The Erosion of Reality"
 },
 {
 question: "According to the rebuttal on mass unemployment, what does AI do to jobs?",
-options: [
-"AI unbundles jobs into tasks—some get automated, many get recombined into new roles",
+options: ["AI unbundles jobs into tasks—some get automated, many get recombined into new roles",
 "AI eliminates all manual labor jobs and creates only white-collar positions",
 "AI replaces human workers entirely within industries it enters",
 "AI only affects entry-level positions while leaving senior roles untouched"
@@ -276,8 +272,7 @@ source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "Which of the following new roles does the text cite as emerging from the AI era?",
-options: [
-"Agent designers, outcome architects, verification specialists, and domain experts",
+options: ["Agent designers, outcome architects, verification specialists, and domain experts",
 "AI ethicists, robot mechanics, data janitors, and algorithm auditors",
 "Prompt marketers, chatbot operators, AI babysitters, and model trainers",
 "Neural network plumbers, algorithm farmers, data miners, and cyber police"
@@ -288,20 +283,18 @@ source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "What distinction does the text draw between 'cost to serve' and 'capacity to serve'?",
-options: [
-"Cost to serve means doing the same work cheaper; capacity to serve means doing work at a scale previously impossible",
+options: ["Cost to serve is about pricing products; capacity to serve is about customer volume",
 "Cost to serve applies to manufacturing; capacity to serve applies to services",
-"Cost to serve is about pricing products; capacity to serve is about customer volume",
+"Cost to serve means doing the same work cheaper; capacity to serve means doing work at a scale previously impossible",
 "Cost to serve is a historical concept; capacity to serve is a future prediction"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text explicitly distinguishes these: historically, technology improved cost to serve (same work at lower price), while AI introduces capacity to serve (work at a scale that was previously impossible). The other options mischaracterize or oversimplify this distinction.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "How does the text use AI diagnostic tools in rural India as evidence?",
-options: [
-"As proof that AI creates capacity to serve populations that never had access to specialists",
+options: ["As proof that AI creates capacity to serve populations that never had access to specialists",
 "As evidence that AI is cheaper than training new doctors",
 "As a case study of AI replacing ophthalmologists in developing nations",
 "As an example of technology companies marketing AI in new regions"
@@ -312,20 +305,18 @@ source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "According to the text, Khan Academy's AI tutor Khanmigo demonstrates which principle?",
-options: [
-"AI can deliver something close to one-on-one instruction to students in large classrooms",
+options: ["AI tutors are primarily useful for standardized test preparation",
 "AI can fully replace human teachers in all educational settings",
 "AI tutoring is only effective for students in developed countries",
-"AI tutors are primarily useful for standardized test preparation"
+"AI can deliver something close to one-on-one instruction to students in large classrooms"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text cites Khanmigo as delivering something close to one-on-one instruction to students who would otherwise sit in classrooms of sixty. The text does not claim AI replaces teachers, nor does it limit the benefit to developed countries or test prep.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "The text states that AI is 'the enemy of mediocrity, not of excellence.' What does this mean in practice?",
-options: [
-"Professionals who combine deep expertise with AI tools become indispensable, while those who coast feel pressure",
+options: ["Professionals who combine deep expertise with AI tools become indispensable, while those who coast feel pressure",
 "AI will punish workers who are not in the top 10% of their field",
 "Only creative professionals will survive because AI cannot replicate creativity",
 "Workers must become AI experts to keep their current jobs"
@@ -336,104 +327,95 @@ source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "What does the text identify as the 'real risk' regarding AI and employment?",
-options: [
-"Refusing to learn the tools that redefine your job",
+options: ["Government regulations preventing workers from using AI tools",
 "AI systems becoming sentient and making independent decisions",
 "Corporations using AI to justify mass layoffs for profit",
-"Government regulations preventing workers from using AI tools"
+"Refusing to learn the tools that redefine your job"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text explicitly states: 'The real risk isn't AI taking your job. It's refusing to learn the tools that redefine your job.' The other options are not presented as the real risk in the text.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "Why does the text argue that halting AI to protect stagnant roles is counterproductive?",
-options: [
-"It only delays the reckoning for those workers while denying billions of underserved people services they need today",
+options: ["It would give authoritarian nations an insurmountable advantage",
 "It would cause the economy to collapse immediately",
-"It would give authoritarian nations an insurmountable advantage",
+"It only delays the reckoning for those workers while denying billions of underserved people services they need today",
 "It would violate international trade agreements"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text argues that halting AI to protect stagnant roles doesn't save those workers—it only delays their reckoning while denying billions of underserved people the services they need today. The other options, while some may be related concerns, are not the specific argument made in this passage.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "According to the text, why has the consumer dividend from AI remained unclear to the public?",
-options: [
+options: ["AI technology genuinely has no benefits for ordinary consumers",
 "The industry sold AGI hype to investors instead of explaining practical value to citizens",
-"AI technology genuinely has no benefits for ordinary consumers",
 "Governments have suppressed information about AI's benefits",
 "AI benefits are too technical for ordinary people to understand"
 ],
-correctOption: 0,
+correctOption: 1,
 explanation: "The text identifies this as a marketing failure, not a technology failure. The industry spent years selling AGI hype to investors to raise capital, but this came at the cost of public trust. The benefits are real but were poorly communicated.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "Which of the following is cited as a concrete example of AI benefiting an ordinary person?",
-options: [
-"A single mother using an AI assistant to draft a lease dispute letter that would have cost $400 at a lawyer's office",
+options: ["A Silicon Valley engineer using AI to automate code reviews",
 "A Fortune 500 CEO using AI to optimize quarterly earnings",
 "A hedge fund manager using AI to beat the stock market",
-"A Silicon Valley engineer using AI to automate code reviews"
+"A single mother using an AI assistant to draft a lease dispute letter that would have cost $400 at a lawyer's office"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text specifically cites a single mother in Ohio using an AI assistant to draft a lease dispute letter as one of several concrete examples of ordinary people benefiting from AI. The other examples describe corporate or elite use cases, not the everyday consumer benefits the text emphasizes.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "The text describes a shopkeeper in Karachi using AI. What does this person use it for?",
-options: [
-"An AI translation tool to negotiate directly with a Chinese supplier without a middleman",
+options: ["Automating customer service responses on social media",
 "Managing inventory across multiple store locations",
-"Automating customer service responses on social media",
+"An AI translation tool to negotiate directly with a Chinese supplier without a middleman",
 "Predicting seasonal demand for products"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text specifically describes a shopkeeper in Karachi using an AI translation tool to negotiate directly with a Chinese supplier—no middleman, no markup. The other use cases are not mentioned in the text.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "How does the text say credible AI deployments now measure success?",
-options: [
-"In verified outcomes people can see and touch—patients diagnosed, students tutored, families saving money",
+options: ["In abstract benchmark scores compared to competing models",
 "In the number of parameters in their language models",
-"In abstract benchmark scores compared to competing models",
+"In verified outcomes people can see and touch—patients diagnosed, students tutored, families saving money",
 "In the number of enterprise contracts signed"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text states that the most credible AI deployments now measure success in verified outcomes—patients diagnosed, students tutored, families saving money—not in abstract benchmarks. This shift from hype to practical measurement is presented as a course correction.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "What example does the text give of AI compressing pharmaceutical timelines?",
-options: [
-"Insilico Medicine moved a drug candidate from target discovery to Phase I trials in under 30 months instead of four to six years",
+options: ["Google DeepMind solved protein folding to accelerate all drug development",
 "Pfizer used AI to develop the COVID-19 vaccine in record time",
-"Google DeepMind solved protein folding to accelerate all drug development",
+"Insilico Medicine moved a drug candidate from target discovery to Phase I trials in under 30 months instead of four to six years",
 "AI eliminated the need for clinical trials entirely"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text specifically cites Insilico Medicine moving a novel drug candidate from target discovery to Phase I clinical trials in under 30 months, a process that traditionally takes four to six years. The other examples are not mentioned in the text.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "When the text says AI's consumer dividend is becoming 'a receipt, not a promise,' what does it mean?",
-options: [
-"The benefits are now measurable verified outcomes rather than vague future projections",
+options: ["Governments are requiring AI companies to provide proof of value",
 "AI companies are now issuing financial receipts to consumers",
 "The technology has become cheap enough for everyone to purchase",
-"Governments are requiring AI companies to provide proof of value"
+"The benefits are now measurable verified outcomes rather than vague future projections"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The metaphor of 'receipt vs. promise' means that when AI is built around clear specifications, continuous verification, and measurable results, the consumer dividend stops being a vague promise and becomes a tangible, documented outcome. The other options take the metaphor too literally.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "The text calls the surveillance objection 'the strongest objection.' What evidence does it cite to support the concern?",
-options: [
-"China's social credit experiments, law enforcement misuse of facial recognition, and the Pegasus spyware scandal",
+options: ["China's social credit experiments, law enforcement misuse of facial recognition, and the Pegasus spyware scandal",
 "Edward Snowden's NSA revelations and Cambridge Analytica",
 "Corporate data breaches at major social media companies",
 "Government surveillance programs revealed by WikiLeaks"
@@ -444,20 +426,18 @@ source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "What does the text identify as the answer to the surveillance concern?",
-options: [
-"Build differently—impose meaningful constraints through regulation and open-source technology",
+options: ["Allow only government agencies to develop AI systems",
 "Stop building AI entirely until perfect safeguards exist",
-"Allow only government agencies to develop AI systems",
+"Build differently—impose meaningful constraints through regulation and open-source technology",
 "Restrict AI development to democratic nations only"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text explicitly states the answer is not to stop building but to build differently, citing San Francisco's ban on real-time facial recognition and the EU's AI Act as evidence that binding legal limits are achievable, alongside open-source AI models that prevent monopoly control.",
 source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "What role does the text assign to open-source AI models in addressing surveillance concerns?",
-options: [
-"They shatter the assumption that AI must be a black box controlled by a few corporations, shifting the balance of power",
+options: ["They shatter the assumption that AI must be a black box controlled by a few corporations, shifting the balance of power",
 "They make surveillance impossible by encrypting all AI operations",
 "They allow governments to monitor AI companies more effectively",
 "They reduce the cost of AI so that surveillance is no longer profitable"
@@ -468,68 +448,62 @@ source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "The text uses the analogy of the printing press and encryption to make what point about powerful technologies?",
-options: [
-"The answer has always been the deliberate construction of countervailing power, not prohibition",
+options: ["Governments have always successfully regulated dangerous technologies",
 "Every powerful technology eventually becomes safe through natural market forces",
-"Governments have always successfully regulated dangerous technologies",
+"The answer has always been the deliberate construction of countervailing power, not prohibition",
 "Dual-use technologies should be banned until their risks are fully understood"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text draws parallels: the printing press enabled both democracy and propaganda, encryption enables both privacy and criminal communication. In every case, the answer was not prohibition but the deliberate construction of countervailing power. The other options do not match the argument.",
 source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "What does the text say is 'non-negotiable' about AI regarding surveillance?",
-options: [
-"Encoding rights-preserving guardrails—open models, transparent audit trails, democratic oversight—into the architecture from the start",
+options: ["Preventing any private company from developing AI surveillance tools",
 "Ensuring that all AI models pass government security certifications",
-"Preventing any private company from developing AI surveillance tools",
+"Encoding rights-preserving guardrails—open models, transparent audit trails, democratic oversight—into the architecture from the start",
 "Creating an international treaty banning AI surveillance globally"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text concludes this section by stating that the non-negotiable part is whether to encode rights-preserving guardrails—open models, transparent audit trails, democratic oversight—into the architecture from the start. Getting this right is not guaranteed, but it is the only option that doesn't end in surrender.",
 source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "The text acknowledges that the EU's AI Act has limitations. What honest caveat does it offer?",
-options: [
-"Regulation written on paper is not the same as regulation enforced in practice, and the history of technology governance includes rules that arrived too late or lacked teeth",
+options: ["The AI Act will be repealed within five years due to industry lobbying",
 "The EU's AI Act only applies to European companies and has no global impact",
 "The EU's AI Act was written by politicians who do not understand technology",
-"The AI Act will be repealed within five years due to industry lobbying"
+"Regulation written on paper is not the same as regulation enforced in practice, and the history of technology governance includes rules that arrived too late or lacked teeth"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text honestly acknowledges that regulation on paper differs from regulation in practice, and that technology governance history is littered with rules that arrived too late or lacked teeth. But it argues the direction is right and having no framework is demonstrably worse.",
 source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "Why does the text argue that retreating from AI is the most dangerous geopolitical option?",
-options: [
+options: ["Retreating would cause an immediate global economic recession",
 "If free societies pause, they guarantee subjugation to nations that don't share their values",
-"Retreating would cause an immediate global economic recession",
 "Other nations would invade countries that stop AI development",
 "International law requires all nations to develop AI capabilities"
 ],
-correctOption: 0,
+correctOption: 1,
 explanation: "The text states that if free societies pause their development out of fear, they don't avoid the risk—they guarantee subjugation to nations that don't share their values. The only defense against authoritarian AI is to aggressively develop and democratize open, ethical AI.",
 source: "Section: Why None of These Are Reasons to Stop — Geopolitical"
 },
 {
 question: "For Global South nations, the text compares the AI choice to which historical parallel?",
-options: [
-"The industrial revolution—build domestic capability or become permanent consumers of someone else's intelligence",
+options: ["The nuclear age—only superpowers can afford to participate",
 "The space race—prestige matters more than practical outcomes",
-"The nuclear age—only superpowers can afford to participate",
+"The industrial revolution—build domestic capability or become permanent consumers of someone else's intelligence",
 "The colonial era—territories that resisted were simply conquered"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text explicitly states that countries across the Global South face a choice that mirrors the industrial revolution: build domestic capability or become permanent consumers of someone else's intelligence. The other parallels are not drawn in the text.",
 source: "Section: Why None of These Are Reasons to Stop — Geopolitical"
 },
 {
 question: "What does the text argue that countries developing 'sovereign AI capacity' would gain?",
-options: [
-"Control over their own economic futures with AI trained on local languages, tailored to local industries, and governed by local institutions",
+options: ["Control over their own economic futures with AI trained on local languages, tailored to local industries, and governed by local institutions",
 "Military superiority over neighboring nations",
 "Membership in exclusive international AI trade agreements",
 "The ability to censor foreign AI models operating in their territory"
@@ -540,56 +514,51 @@ source: "Section: Why None of These Are Reasons to Stop — Geopolitical"
 },
 {
 question: "The text says the real AI arms race is between which types of nations?",
-options: [
-"Nations that cultivate AI talent and infrastructure versus nations that let that talent drain away",
+options: ["Democracies and authoritarian regimes",
 "Nations that build AI and nations that don't",
-"Democracies and authoritarian regimes",
+"Nations that cultivate AI talent and infrastructure versus nations that let that talent drain away",
 "Rich nations and poor nations"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text explicitly corrects the framing: the real arms race is not between nations that build AI and those that don't, but between nations that cultivate AI talent and infrastructure and those that let talent drain away. This reframes it as a human capital issue.",
 source: "Section: Why None of These Are Reasons to Stop — Geopolitical"
 },
 {
 question: "How does the text say open-source AI foundations change the equation for nations like those in the Global South?",
-options: [
-"A university in Lahore or Lagos can fine-tune a frontier-class model for local needs—something unimaginable five years ago",
+options: ["Open-source models guarantee that every nation will achieve AI parity with superpowers",
 "Open-source AI allows developing nations to bypass all licensing requirements",
-"Open-source models guarantee that every nation will achieve AI parity with superpowers",
+"A university in Lahore or Lagos can fine-tune a frontier-class model for local needs—something unimaginable five years ago",
 "Universities in developing nations can now build models from scratch without any resources"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text states that open-source foundations make sovereign AI possible in a way proprietary technology never could, with a university in Lahore or Lagos able to fine-tune a frontier-class model for local needs today. The other options overstate what open-source enables.",
 source: "Section: Why None of These Are Reasons to Stop — Geopolitical"
 },
 {
 question: "The text reframes the 'erosion of reality' as what kind of problem?",
-options: [
-"A content-verification problem, not an AI problem",
+options: ["An unsolvable philosophical dilemma",
 "A social media regulation problem",
 "A fundamental flaw in AI architecture",
-"An unsolvable philosophical dilemma"
+"A content-verification problem, not an AI problem"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text explicitly states that the erosion of reality concern is real but is a content-verification problem, not an AI problem. It then draws the historical parallel to the printing press flooding the world with misinformation.",
 source: "Section: Why None of These Are Reasons to Stop — Erosion of Reality"
 },
 {
 question: "What historical parallel does the text draw to the current AI-generated content crisis?",
-options: [
-"The printing press also flooded the world with misinformation, and society built verification institutions in response",
+options: ["Television news created the first concerns about manufactured reality",
 "Radio propaganda during World War II led to international broadcasting standards",
 "The invention of photography raised similar questions about authentic evidence",
-"Television news created the first concerns about manufactured reality"
+"The printing press also flooded the world with misinformation, and society built verification institutions in response"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text explicitly compares AI-generated content to the printing press era: pamphlets, propaganda, conspiracy tracts—and notes the answer was not to ban printing but to build institutions of verification like journalism, peer review, the scientific method, and libel law.",
 source: "Section: Why None of These Are Reasons to Stop — Erosion of Reality"
 },
 {
 question: "How does the text argue AI is both the problem and the solution regarding truth verification?",
-options: [
-"Just as AI can generate a deepfake, it can detect one—AI systems already outperform human reviewers in identifying synthetic media",
+options: ["Just as AI can generate a deepfake, it can detect one—AI systems already outperform human reviewers in identifying synthetic media",
 "AI will eventually become so advanced that it will refuse to generate false content",
 "AI companies have voluntarily agreed to watermark all AI-generated content",
 "Governments will use AI to monitor and remove all misinformation automatically"
@@ -600,32 +569,29 @@ source: "Section: Why None of These Are Reasons to Stop — Erosion of Reality"
 },
 {
 question: "What architecture does the text say makes AI outputs trustworthy?",
-options: [
-"Clear specifications defining intent, verification loops catching errors, and human-in-the-loop supervision",
+options: ["Neural networks trained exclusively on verified factual data",
 "Blockchain-based immutable records of all AI operations",
 "Government-issued AI certification stamps on approved content",
-"Neural networks trained exclusively on verified factual data"
+"Clear specifications defining intent, verification loops catching errors, and human-in-the-loop supervision"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text states that the architecture for trustworthy AI is the same as for any engineering system: clear specifications that define intent, verification loops that catch errors before they propagate, and human-in-the-loop supervision keeping final judgment with people.",
 source: "Section: Why None of These Are Reasons to Stop — Erosion of Reality"
 },
 {
 question: "The bottom line section states that every fear about AI is an argument for what?",
-options: [
-"Building AI better—not building less of it",
+options: ["Creating an international moratorium on AI research",
 "Slowing AI development until regulations catch up",
 "Restricting AI to only beneficial applications",
-"Creating an international moratorium on AI research"
+"Building AI better—not building less of it"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text's core synthesis is that every single fear deserves serious engagement, not dismissal, but every single one is an argument for building AI better—not for building less of it. The frameworks emerging are engineered around the risks.",
 source: "Section: The Bottom Line"
 },
 {
 question: "According to the bottom line, what has history shown about societies that reject foundational technologies?",
-options: [
-"No society has ever prospered by rejecting a foundational technology—those that thrived mastered it on their own terms",
+options: ["No society has ever prospered by rejecting a foundational technology—those that thrived mastered it on their own terms",
 "Societies that rejected technology eventually adopted it a decade later",
 "Some societies successfully rejected technology and found alternative paths to prosperity",
 "History provides no clear guidance on technology adoption patterns"
@@ -636,80 +602,73 @@ source: "Section: The Bottom Line"
 },
 {
 question: "A country discovers that its healthcare, education, and defense systems all run on foreign AI models subject to foreign licensing terms. According to the text, what has this country become?",
-options: [
-"A digital vassal state dependent on foreign infrastructure for its most critical systems",
+options: ["A technology-neutral nation with diversified AI sources",
 "A strategic partner with sovereign AI capability",
 "An exporter of AI intelligence with strong trade relationships",
-"A technology-neutral nation with diversified AI sources"
+"A digital vassal state dependent on foreign infrastructure for its most critical systems"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text warns that countries without sovereign AI will find their critical systems running on foreign models, subject to foreign licensing terms, and vulnerable to foreign policy leverage—making them digital vassal states. This is one of the three categories nations will fall into.",
 source: "Section: Why None of These Are Reasons to Stop — Geopolitical"
 },
 {
 question: "A radiologist who simply reads standard scans without integrating AI tools represents which concept from the text?",
-options: [
-"Someone who 'coasts' rather than grows—the dividing line is not job type but attitude toward growth",
+options: ["A worker who will be immediately replaced by AI in the next five years",
 "A professional whose job is inherently safe from AI disruption",
 "An expert whose deep specialization makes AI tools unnecessary",
-"A worker who will be immediately replaced by AI in the next five years"
+"Someone who 'coasts' rather than grows—the dividing line is not job type but attitude toward growth"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text uses the radiologist example to illustrate that the dividing line is not blue-collar versus white-collar, but those who coast versus those who grow. The radiologist who merely reads standard scans will feel pressure, while the one who combines judgment with AI assistance becomes indispensable.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "A first-generation college student in rural Mexico uses AI to prepare for university entrance exams because no test-prep center exists nearby. This scenario illustrates which concept?",
-options: [
-"Capacity to serve—AI making services accessible where they were previously unavailable",
+options: ["The geopolitical risk of educational dependence on foreign AI",
 "Cost to serve—AI reducing the price of existing educational services",
 "The marketing failure of AI companies to reach rural markets",
-"The geopolitical risk of educational dependence on foreign AI"
+"Capacity to serve—AI making services accessible where they were previously unavailable"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "This scenario illustrates capacity to serve—AI making educational services available where there were none before. The student has no test-prep center within a hundred kilometers. This is not about reducing cost of existing services (cost to serve) but about creating access where none existed.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "The text mentions LinkedIn's 2024 data about AI job growth. What did it show?",
-options: [
-"Job postings requiring AI skills grew 3.5 times faster than the overall market, spanning healthcare, logistics, education, and finance",
+options: ["LinkedIn itself replaced 3.5 times more employees with AI than other companies",
 "AI eliminated 3.5 million jobs in the technology sector alone",
-"LinkedIn itself replaced 3.5 times more employees with AI than other companies",
+"Job postings requiring AI skills grew 3.5 times faster than the overall market, spanning healthcare, logistics, education, and finance",
 "Only technology companies posted jobs requiring AI skills"
 ],
-correctOption: 0,
+correctOption: 2,
 explanation: "The text cites LinkedIn's 2024 data showing that job postings requiring AI skills grew 3.5x faster than the overall market, spanning not just tech but healthcare, logistics, education, and finance. This supports the argument that AI creates new roles across many sectors.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "The SaaS era created roles nobody predicted. Which roles does the text list as examples?",
-options: [
-"Cloud architects, growth hackers, DevOps engineers, UX researchers",
+options: ["Cybersecurity analysts, blockchain developers, virtual reality designers",
 "Data scientists, machine learning engineers, AI ethicists, prompt engineers",
 "Social media managers, content creators, influencers, community managers",
-"Cybersecurity analysts, blockchain developers, virtual reality designers"
+"Cloud architects, growth hackers, DevOps engineers, UX researchers"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text specifically lists cloud architects, growth hackers, DevOps engineers, and UX researchers as examples of jobs the SaaS era created that nobody predicted. This is used to argue that the AI era will similarly create unpredictable new roles.",
 source: "Section: Why None of These Are Reasons to Stop — Mass Unemployment"
 },
 {
 question: "The text describes the 'no consumer benefit' objection as what kind of failure?",
-options: [
-"A marketing failure, not a technology failure",
+options: ["A failure of AI companies to invest in consumer products",
 "A regulatory failure by governments to mandate AI benefits",
 "A fundamental limitation of current AI technology",
-"A failure of AI companies to invest in consumer products"
+"A marketing failure, not a technology failure"
 ],
-correctOption: 0,
+correctOption: 3,
 explanation: "The text explicitly states that the missing consumer dividend is a marketing failure, not a technology failure. The dividend is real and already showing up, but the industry spent years selling AGI hype to investors instead of explaining practical value to citizens.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "What does the text say about Duolingo's use of AI?",
-options: [
-"AI enabled Duolingo to produce new course content at a fraction of its previous cost",
+options: ["AI enabled Duolingo to produce new course content at a fraction of its previous cost",
 "Duolingo replaced all human instructors with AI tutors",
 "AI helped Duolingo expand to every language in the world",
 "Duolingo's AI features led to a decline in user engagement"
@@ -720,32 +679,29 @@ source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "According to the text, autonomous logistics pilots by companies like Waymo and Nuro could achieve what?",
-options: [
+options: ["Complete elimination of all human delivery drivers within two years",
 "Delivery cost reductions that could cut last-mile expenses by 40% or more",
-"Complete elimination of all human delivery drivers within two years",
 "Same-day delivery to every address in the United States",
 "Zero-emission transportation across all supply chains"
 ],
-correctOption: 0,
+correctOption: 1,
 explanation: "The text cites Waymo and Nuro demonstrating delivery cost reductions that could cut last-mile expenses by 40% or more. The other options exaggerate or misrepresent the claims made in the text.",
 source: "Section: Why None of These Are Reasons to Stop — Consumer Dividend"
 },
 {
 question: "The text mentions San Francisco's action on facial recognition. What was it?",
-options: [
+options: ["San Francisco mandated facial recognition for all public buildings",
 "San Francisco, along with other US cities and the EU, moved to ban or heavily regulate real-time facial recognition by law enforcement",
-"San Francisco mandated facial recognition for all public buildings",
 "San Francisco funded a public facial recognition database for citizen safety",
 "San Francisco became the first city to deploy AI-powered surveillance cameras citywide"
 ],
-correctOption: 0,
+correctOption: 1,
 explanation: "The text cites San Francisco and other cities as demonstrating that binding legal limits on AI deployment are achievable by banning or heavily regulating real-time facial recognition by law enforcement. This is used as evidence that democratic societies can impose meaningful constraints.",
 source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "The text describes the EU's AI Act as classifying surveillance applications in what way?",
-options: [
-"As high-risk, subject to mandatory transparency and audit requirements",
+options: ["As high-risk, subject to mandatory transparency and audit requirements",
 "As completely banned with no exceptions",
 "As low-risk, requiring only voluntary guidelines",
 "As exempt from regulation when used by law enforcement"
@@ -756,87 +712,170 @@ source: "Section: Why None of These Are Reasons to Stop — Surveillance"
 },
 {
 question: "What is the core concern behind the 'Existential Risk' objection to AI development?",
-options: ["AI systems at sufficient capability could become impossible to control and pose a threat to human survival due to misaligned goals", "AI will become conscious and demand rights, creating legal chaos across nations", "AI development costs will bankrupt governments that invest in frontier research", "AI models will eventually refuse to follow instructions due to emergent self-preservation"],
+options: ["AI systems at sufficient capability could become impossible to control and pose a threat to human survival due to misaligned goals",
+"AI will become conscious and demand rights, creating legal chaos across nations",
+"AI development costs will bankrupt governments that invest in frontier research",
+"AI models will eventually refuse to follow instructions due to emergent self-preservation"
+],
 correctOption: 0,
 explanation: "The existential risk concern is specifically about the alignment problem: systems optimizing for goals misaligned with human values could, at scale, produce catastrophic and irreversible outcomes. This is a serious scientific concern raised by researchers like Stuart Russell, Yoshua Bengio, and Geoffrey Hinton.",
 source: "Section: The Objections — Existential Risk"
 },
 {
 question: "Which researchers are cited as having warned about the existential risk of AI systems with misaligned goals?",
-options: ["Stuart Russell, Yoshua Bengio, and Geoffrey Hinton", "Elon Musk, Sam Altman, and Mark Zuckerberg", "Andrew Ng, Yann LeCun, and Fei-Fei Li", "Tim Berners-Lee, Vint Cerf, and Alan Turing"],
-correctOption: 0,
+options: ["Tim Berners-Lee, Vint Cerf, and Alan Turing",
+"Elon Musk, Sam Altman, and Mark Zuckerberg",
+"Andrew Ng, Yann LeCun, and Fei-Fei Li",
+"Stuart Russell, Yoshua Bengio, and Geoffrey Hinton"
+],
+correctOption: 3,
 explanation: "The text specifically names Stuart Russell, Yoshua Bengio, and Geoffrey Hinton as serious researchers who have warned that systems optimizing for goals misaligned with human values could produce catastrophic and irreversible outcomes at scale.",
 source: "Section: The Objections — Existential Risk"
 },
 {
 question: "According to the rebuttal on existential risk, why does a moratorium on AI development actually increase danger rather than reduce it?",
-options: ["A pause relocates the frontier to actors with fewer safety commitments, less transparency, and no democratic accountability", "A moratorium would cause existing AI systems to degrade and become unstable over time", "Pausing research would eliminate all safety researchers' jobs, losing critical expertise permanently", "Countries that pause would face immediate economic collapse from AI-dependent industries shutting down"],
-correctOption: 0,
+options: ["Countries that pause would face immediate economic collapse from AI-dependent industries shutting down",
+"A moratorium would cause existing AI systems to degrade and become unstable over time",
+"Pausing research would eliminate all safety researchers' jobs, losing critical expertise permanently",
+"A pause relocates the frontier to actors with fewer safety commitments, less transparency, and no democratic accountability"
+],
+correctOption: 3,
 explanation: "AI development is a global, distributed endeavor. A pause by safety-conscious democratic institutions doesn't stop development — it simply moves the frontier to actors with fewer safety commitments. The countries most likely to respect a moratorium are precisely the ones you want at the frontier.",
 source: "Section: Why None of These Are Reasons to Stop — Existential Risk"
 },
 {
 question: "What do serious alignment researchers actually advocate, according to the text?",
-options: ["Massively increase investment in safety research, interpretability, and alignment alongside capability development", "Impose an immediate global moratorium on all frontier AI training runs above a certain compute threshold", "Restrict AI development exclusively to government-funded academic labs with full public oversight", "Open-source all frontier models immediately so everyone can inspect them for misalignment"],
-correctOption: 0,
+options: ["Impose an immediate global moratorium on all frontier AI training runs above a certain compute threshold",
+"Massively increase investment in safety research, interpretability, and alignment alongside capability development",
+"Restrict AI development exclusively to government-funded academic labs with full public oversight",
+"Open-source all frontier models immediately so everyone can inspect them for misalignment"
+],
+correctOption: 1,
 explanation: "The text states that the productive path is not to stop building but to massively increase investment in safety, interpretability, and alignment alongside capability. Organizations like Anthropic and DeepMind are developing techniques to understand models internally and build controllable systems.",
 source: "Section: Why None of These Are Reasons to Stop — Existential Risk"
 },
 {
 question: "The text draws parallels between AI existential risk and other dangerous technologies humanity has faced. Which pattern does it identify?",
-options: ["Societies that engage with dangerous capabilities develop the expertise to govern them; those that disengage forfeit their seat at the table", "Every dangerous technology has eventually been banned after causing sufficient harm to civilian populations", "International treaties have always successfully prevented the misuse of every dangerous technology", "The private sector has always self-regulated dangerous technologies without government intervention needed"],
-correctOption: 0,
+options: ["The private sector has always self-regulated dangerous technologies without government intervention needed",
+"Every dangerous technology has eventually been banned after causing sufficient harm to civilian populations",
+"International treaties have always successfully prevented the misuse of every dangerous technology",
+"Societies that engage with dangerous capabilities develop the expertise to govern them; those that disengage forfeit their seat at the table"
+],
+correctOption: 3,
 explanation: "The text cites nuclear weapons, engineered pathogens, and climate change as examples managed not by abandoning the science but by building institutions of oversight, norms of restraint, and technical safeguards. The societies that engage develop governance expertise.",
 source: "Section: Why None of These Are Reasons to Stop — Existential Risk"
 },
 {
 question: "A policy advisor argues that democratic nations should halt AI development until the alignment problem is solved. Based on the text's reasoning, what is the strongest counter-argument?",
-options: ["Halting ensures that less safety-conscious actors lead the frontier, making the alignment problem harder to solve, not easier", "The alignment problem is already solved and the advisor is misinformed about current research progress", "Democratic nations have no competitive advantage in AI safety research compared to authoritarian regimes", "Existential risk from AI is purely theoretical and has no basis in current scientific understanding"],
-correctOption: 0,
+options: ["The alignment problem is already solved and the advisor is misinformed about current research progress",
+"Halting ensures that less safety-conscious actors lead the frontier, making the alignment problem harder to solve, not easier",
+"Democratic nations have no competitive advantage in AI safety research compared to authoritarian regimes",
+"Existential risk from AI is purely theoretical and has no basis in current scientific understanding"
+],
+correctOption: 1,
 explanation: "The core counter-argument is that AI development is global and distributed. A democratic pause doesn't stop development — it hands the frontier to actors with fewer safety commitments. The existential risk argument is the strongest reason to ensure safety-committed builders stay at the frontier, supported by democratic accountability.",
 source: "Section: Why None of These Are Reasons to Stop — Existential Risk"
 },
 {
 question: "What is the environmental objection to AI development?",
-options: ["Training frontier AI models consumes enormous electricity and water, potentially trading one existential crisis for another", "AI-generated code is less energy-efficient than human-written code in production deployments", "Data centers produce toxic waste that contaminates local water supplies near server farms", "AI models require rare earth minerals that can only be mined in environmentally destructive ways"],
+options: ["Training frontier AI models consumes enormous electricity and water, potentially trading one existential crisis for another",
+"AI-generated code is less energy-efficient than human-written code in production deployments",
+"Data centers produce toxic waste that contaminates local water supplies near server farms",
+"AI models require rare earth minerals that can only be mined in environmentally destructive ways"
+],
 correctOption: 0,
 explanation: "The environmental objection is that training a single frontier model can consume as much electricity as a small city uses in a year, requiring millions of gallons of cooling water. With data center demand projected to double or triple, critics argue we are burning the planet for systems whose benefit remains unproven.",
 source: "Section: The Objections — Environmental Cost"
 },
 {
 question: "How does the text contextualize AI's energy consumption relative to other industries?",
-options: ["Global data centers account for roughly 1-2% of electricity; residential air conditioning alone consumes more than all data centers combined", "AI consumes 25% of global electricity, making it the single largest industrial consumer worldwide", "Data centers use less energy than a single large hospital but more than the entire retail sector", "AI energy use is negligible compared to all other industries and the concern is overblown"],
-correctOption: 0,
+options: ["AI energy use is negligible compared to all other industries and the concern is overblown",
+"AI consumes 25% of global electricity, making it the single largest industrial consumer worldwide",
+"Data centers use less energy than a single large hospital but more than the entire retail sector",
+"Global data centers account for roughly 1-2% of electricity; residential air conditioning alone consumes more than all data centers combined"
+],
+correctOption: 3,
 explanation: "The text provides perspective: all data centers (not just AI) account for 1-2% of global electricity. The fashion industry produces 2-8% of carbon emissions. Residential air conditioning consumes more than all data centers. We don't ban clothing or cooling — we invest in cleaner methods.",
 source: "Section: Why None of These Are Reasons to Stop — Environmental Cost"
 },
 {
 question: "According to the text, what is AI's role in solving environmental problems?",
-options: ["AI is one of the most powerful tools for reducing environmental damage — from data center cooling optimization to precision agriculture and climate modeling", "AI has no meaningful environmental applications and is purely a consumer of energy resources", "AI can only help with environmental issues if it is run exclusively on renewable energy sources", "AI environmental benefits are limited to optimizing recycling processes in manufacturing plants"],
-correctOption: 0,
+options: ["AI environmental benefits are limited to optimizing recycling processes in manufacturing plants",
+"AI has no meaningful environmental applications and is purely a consumer of energy resources",
+"AI can only help with environmental issues if it is run exclusively on renewable energy sources",
+"AI is one of the most powerful tools for reducing environmental damage — from data center cooling optimization to precision agriculture and climate modeling"
+],
+correctOption: 3,
 explanation: "The text cites concrete examples: DeepMind's AI cut Google's cooling energy by 40%, AI-driven grid management enables renewable integration, precision agriculture reduces water and pesticide use, and climate modeling depends on large-scale computation. The question is whether AI accelerates clean energy faster than it consumes dirty energy.",
 source: "Section: Why None of These Are Reasons to Stop — Environmental Cost"
 },
 {
 question: "What is the 'Bias and Discrimination at Scale' objection?",
-options: ["AI systems trained on historical data inherit and apply biases at unprecedented speed and scale — hiring, lending, and healthcare algorithms have already caused documented harm", "AI systems are intentionally programmed with biased rules by developers who want discriminatory outcomes", "Bias only affects AI image generation tools and has no impact on consequential decisions like hiring or healthcare", "AI bias is a theoretical concern that has not yet been observed in any deployed production system"],
-correctOption: 0,
+options: ["Bias only affects AI image generation tools and has no impact on consequential decisions like hiring or healthcare",
+"AI systems are intentionally programmed with biased rules by developers who want discriminatory outcomes",
+"AI systems trained on historical data inherit and apply biases at unprecedented speed and scale — hiring, lending, and healthcare algorithms have already caused documented harm",
+"AI bias is a theoretical concern that has not yet been observed in any deployed production system"
+],
+correctOption: 2,
 explanation: "The objection cites documented failures: Amazon scrapped a hiring tool that downgraded women's resumes, and a healthcare algorithm directed resources away from Black patients. When bias is automated, it becomes invisible, systematic, and nearly impossible for victims to challenge.",
 source: "Section: The Objections — Bias and Discrimination"
 },
 {
 question: "What is the 'crucial inversion' the text identifies about AI bias that critics miss?",
-options: ["AI doesn't introduce bias into fair systems — it makes existing bias visible in systems that were never fair, and visibility is the prerequisite for correction", "AI eliminates all human bias automatically through objective mathematical processing of data", "Bias in AI is actually a feature that helps systems make more nuanced contextual decisions", "AI bias is always worse than human bias because machines cannot understand social context"],
-correctOption: 0,
+options: ["AI bias is always worse than human bias because machines cannot understand social context",
+"AI eliminates all human bias automatically through objective mathematical processing of data",
+"Bias in AI is actually a feature that helps systems make more nuanced contextual decisions",
+"AI doesn't introduce bias into fair systems — it makes existing bias visible in systems that were never fair, and visibility is the prerequisite for correction"
+],
+correctOption: 3,
 explanation: "The key insight: human biased decisions are invisible, unrepeatable, and unauditable. AI biased decisions are logged, measurable, and fixable. AI makes existing bias visible — and you cannot fix what you cannot measure. A biased algorithm can be audited and retrained; a biased human decision-maker cannot.",
 source: "Section: Why None of These Are Reasons to Stop — Bias and Discrimination"
 },
 {
 question: "A company discovers its AI hiring tool scores female candidates lower than male candidates with identical qualifications. According to the text's argument, what is the correct response?",
-options: ["Audit the algorithm, retrain on balanced data, run demographic impact assessments, and mandate independent review — making the AI measurably less biased than the human process it replaced", "Immediately shut down all AI hiring tools permanently and return to fully manual human screening processes", "Accept the bias as an unavoidable consequence of using historical training data and continue deploying", "Replace the AI with a different AI model and hope the new one happens to be less biased by chance"],
-correctOption: 0,
+options: ["Accept the bias as an unavoidable consequence of using historical training data and continue deploying",
+"Immediately shut down all AI hiring tools permanently and return to fully manual human screening processes",
+"Audit the algorithm, retrain on balanced data, run demographic impact assessments, and mandate independent review — making the AI measurably less biased than the human process it replaced",
+"Replace the AI with a different AI model and hope the new one happens to be less biased by chance"
+],
+correctOption: 2,
 explanation: "The text argues the answer is to mandate checks: bias audits, demographic impact assessments, transparent training data documentation, and independent review. The goal is AI that is measurably less biased than any human — achievable through build, deploy, measure, and correct cycles. Not achievable from the sidelines.",
 source: "Section: Why None of These Are Reasons to Stop — Bias and Discrimination"
+},
+{
+question: "What makes AI wealth concentration structurally different from previous technological revolutions, according to the text?",
+options: ["Previous technologies were cheaper to develop and therefore accessible to smaller companies worldwide", "Previous revolutions distributed gains across geographies — cars in multiple countries, software in dozens — but AI's capital barriers mean only a handful of organizations can build foundation models", "Government regulations in previous eras forced companies to distribute production across countries", "AI companies deliberately restrict access to maximize profits, unlike open manufacturing industries"],
+correctOption: 1,
+explanation: "The text draws a historical contrast: manufacturing was geographically democratic (cars built in America, Germany, Japan, Korea), software spread further (India, Germany, Sweden). But AI requires billions per training run and tens of thousands of GPUs, concentrating capability in perhaps five or six organizations globally.",
+source: "Section: The Objections — Unprecedented Wealth Concentration"
+},
+{
+question: "The text cites Anthropic's $380 billion valuation to illustrate which point?",
+options: ["AI startups are overvalued compared to established technology companies", "A single AI company with a few thousand employees surpassed the combined market value of India's five largest IT services companies, built over four decades and employing millions", "India's IT services industry is in decline due to AI competition", "Anthropic is the most profitable technology company in history"],
+correctOption: 1,
+explanation: "The text uses Anthropic's valuation surpassing TCS, Infosys, HCL Technologies, Wipro, and Tech Mahindra combined to illustrate the structural break in how wealth is created — an entire nation's IT industry worth less than one AI company with a fraction of the workforce.",
+source: "Section: The Objections — Unprecedented Wealth Concentration"
+},
+{
+question: "According to the rebuttal on wealth concentration, what is the correct response to AI's extreme concentration of value?",
+options: ["Halt AI development until wealth distribution mechanisms are fully in place", "Nationalize all frontier AI companies to ensure public ownership of the technology", "Aggressive democratization: open-weight models, sovereign AI infrastructure, progressive taxation, and public AI literacy", "Impose strict caps on AI company valuations and revenue through antitrust enforcement"],
+correctOption: 2,
+explanation: "The text argues the corrective is not to cap what can be built but to democratize who can build. This includes open-weight models, sovereign AI programs (EU, India, Gulf states), tax frameworks for the cognitive era, and public AI literacy. Previous revolutions eventually became democratic; this one must be made democratic by design.",
+source: "Section: Why None of These Are Reasons to Stop — Wealth Concentration"
+},
+{
+question: "The text argues that previous technological revolutions 'eventually became democratic' but AI 'must be made democratic by design.' Why?",
+options: ["The free market will naturally distribute AI capabilities once initial development costs are recovered", "AI's capital barriers — billions per training run, tens of thousands of expensive GPUs — will not self-correct without deliberate intervention", "AI companies have voluntarily committed to open-sourcing all their models within five years", "Governments have already passed laws requiring AI democratization in every country"],
+correctOption: 1,
+explanation: "The text concludes that capital barriers in AI are so high they will not self-correct — unlike manufacturing or software, where lower barriers allowed organic geographic distribution. Deliberate intervention through open models, sovereign compute, and policy is required.",
+source: "Section: Why None of These Are Reasons to Stop — Wealth Concentration"
+},
+{
+question: "How does the text use open-weight models as evidence that wealth concentration can be countered?",
+options: ["Open-weight models have eliminated the need for expensive GPUs entirely", "Open-weight models prove that AI development does not actually require significant capital investment", "Open-weight models have already equalized AI capability between all nations worldwide", "Open-weight models have shattered the assumption that only mega-funded labs can participate — a university in Lahore or Lagos can fine-tune a frontier-class model for local needs today"],
+correctOption: 3,
+explanation: "The text argues that open-weight models break the monopoly by enabling institutions in the Global South to fine-tune frontier models for local needs — something unimaginable five years ago. This doesn't eliminate the capital barrier but creates a viable path for broader participation.",
+source: "Section: Why None of These Are Reasons to Stop — Wealth Concentration"
 }
 ]}
 />
