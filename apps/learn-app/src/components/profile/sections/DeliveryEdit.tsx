@@ -11,7 +11,10 @@ import {
   LANGUAGE_PROFICIENCY_OPTIONS,
   NATIVE_LANGUAGE_OPTIONS,
   NATIVE_LANGUAGE_OTHER_VALUE,
+  RESPONSE_LANGUAGE_OPTIONS,
+  RESPONSE_LANGUAGE_OTHER_VALUE,
   resolveNativeLanguageSelectState,
+  resolveResponseLanguageSelectState,
 } from "@/lib/profile-field-definitions";
 import { InferredBadge } from "@/components/profile/fields";
 import { Input } from "@/components/ui/input";
@@ -117,6 +120,15 @@ export function DeliveryEdit({
   const language = delivery?.language || "English";
   const showLanguageProficiency = language.trim().toLowerCase() !== "english";
   const includeCode = delivery?.include_code_samples ?? true;
+
+  const {
+    selectValue: langSelectValue,
+    showOtherInput: showLangOtherInput,
+    otherText: langOtherText,
+  } = resolveResponseLanguageSelectState(
+    delivery?.language ?? null,
+    NULL_SELECT_VALUE,
+  );
 
   return (
     <div className="space-y-4">
@@ -267,16 +279,44 @@ export function DeliveryEdit({
         <label htmlFor="delivery-language" className="text-sm font-medium">
           Language
         </label>
-        <Input
-          id="delivery-language"
-          type="text"
-          value={language}
-          onChange={(e) =>
-            update("language", e.target.value.substring(0, 50) || "English")
-          }
-          placeholder="English"
-          maxLength={50}
-        />
+        <Select
+          value={langSelectValue}
+          onValueChange={(val) => {
+            if (val === NULL_SELECT_VALUE) {
+              update("language", "English");
+            } else if (val === RESPONSE_LANGUAGE_OTHER_VALUE) {
+              update("language", RESPONSE_LANGUAGE_OTHER_VALUE);
+            } else {
+              update("language", val);
+            }
+          }}
+        >
+          <SelectTrigger id="delivery-language" className="w-full">
+            <SelectValue placeholder="Select…" />
+          </SelectTrigger>
+          <SelectContent>
+            {RESPONSE_LANGUAGE_OPTIONS.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {showLangOtherInput && (
+          <Input
+            id="delivery-language-other"
+            type="text"
+            value={langOtherText}
+            onChange={(e) =>
+              update(
+                "language",
+                e.target.value || RESPONSE_LANGUAGE_OTHER_VALUE,
+              )
+            }
+            placeholder="Enter your preferred language"
+            maxLength={50}
+          />
+        )}
       </div>
 
       {showLanguageProficiency && (

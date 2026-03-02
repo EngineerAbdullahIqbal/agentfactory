@@ -457,7 +457,70 @@ export const TOOLS_OPTIONS: FieldOption[] = [
 ];
 
 // ---------------------------------------------------------------------------
-// Native language (select dropdown)
+// Response language — delivery.language (stores full name, e.g. "English")
+// ---------------------------------------------------------------------------
+
+export const RESPONSE_LANGUAGE_OTHER_VALUE = "__other__";
+
+export const RESPONSE_LANGUAGE_OPTIONS: FieldOption[] = [
+  { value: "English", label: "English", hint: "English" },
+  { value: "Urdu", label: "Urdu", hint: "اردو" },
+  { value: "Hindi", label: "Hindi", hint: "हिन्दी" },
+  { value: "Arabic", label: "Arabic", hint: "العربية" },
+  { value: "Chinese", label: "Chinese", hint: "中文" },
+  { value: "Spanish", label: "Spanish", hint: "Español" },
+  { value: "Portuguese", label: "Portuguese", hint: "Português" },
+  { value: "Bengali", label: "Bengali", hint: "বাংলা" },
+  { value: "Russian", label: "Russian", hint: "Русский" },
+  { value: "Japanese", label: "Japanese", hint: "日本語" },
+  { value: "French", label: "French", hint: "Français" },
+  { value: "German", label: "German", hint: "Deutsch" },
+  { value: "Korean", label: "Korean", hint: "한국어" },
+  { value: "Vietnamese", label: "Vietnamese", hint: "Tiếng Việt" },
+  { value: "Turkish", label: "Turkish", hint: "Türkçe" },
+  { value: "Persian", label: "Persian", hint: "فارسی" },
+  { value: "Italian", label: "Italian", hint: "Italiano" },
+  { value: "Polish", label: "Polish", hint: "Polski" },
+  { value: "Indonesian", label: "Indonesian", hint: "Bahasa Indonesia" },
+  {
+    value: RESPONSE_LANGUAGE_OTHER_VALUE,
+    label: "Other",
+    hint: "Type your preferred language",
+  },
+];
+
+/**
+ * Resolve a stored delivery.language value into select + freetext state.
+ * delivery.language stores full names ("English", "Urdu"), not ISO codes.
+ */
+export function resolveResponseLanguageSelectState(
+  storedValue: string | null,
+  nullSentinel: string,
+): {
+  selectValue: string;
+  showOtherInput: boolean;
+  otherText: string;
+} {
+  if (!storedValue) {
+    return { selectValue: nullSentinel, showOtherInput: false, otherText: "" };
+  }
+  const isKnown = RESPONSE_LANGUAGE_OPTIONS.some(
+    (o) =>
+      o.value === storedValue && o.value !== RESPONSE_LANGUAGE_OTHER_VALUE,
+  );
+  if (isKnown) {
+    return { selectValue: storedValue, showOtherInput: false, otherText: "" };
+  }
+  // Freetext "other" — stored value doesn't match any known option
+  return {
+    selectValue: RESPONSE_LANGUAGE_OTHER_VALUE,
+    showOtherInput: true,
+    otherText: storedValue === RESPONSE_LANGUAGE_OTHER_VALUE ? "" : storedValue,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Native language — delivery.native_language (stores ISO 639-1 codes)
 // ---------------------------------------------------------------------------
 
 export const NATIVE_LANGUAGE_OTHER_VALUE = "other";

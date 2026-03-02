@@ -11,7 +11,10 @@ import {
   LANGUAGE_PROFICIENCY_OPTIONS,
   NATIVE_LANGUAGE_OPTIONS,
   NATIVE_LANGUAGE_OTHER_VALUE,
+  RESPONSE_LANGUAGE_OPTIONS,
+  RESPONSE_LANGUAGE_OTHER_VALUE,
   resolveNativeLanguageSelectState,
+  resolveResponseLanguageSelectState,
 } from "@/lib/profile-field-definitions";
 import { motion } from "framer-motion";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -75,8 +78,6 @@ export function QuickPreferencesStep({
   onChangeCommunication,
   onChangeDelivery,
 }: QuickPreferencesStepProps) {
-  const currentLanguage = delivery.language ?? "English";
-  const showProficiency = currentLanguage.toLowerCase() !== "english";
   const wantsSummaries = communication.wants_summaries ?? true;
   const wantsCheckIns = communication.wants_check_in_questions ?? true;
 
@@ -86,6 +87,15 @@ export function QuickPreferencesStep({
     showOtherInput: showNativeOtherInput,
     otherText: nativeOtherText,
   } = resolveNativeLanguageSelectState(delivery.native_language ?? null, "");
+
+  // Determine response language select state (stores full names like "English")
+  const {
+    selectValue: langSelectValue,
+    showOtherInput: showLangOtherInput,
+    otherText: langOtherText,
+  } = resolveResponseLanguageSelectState(delivery.language ?? null, "");
+  const currentLanguage = delivery.language ?? "English";
+  const showProficiency = currentLanguage.toLowerCase() !== "english";
 
   return (
     <motion.div
@@ -252,7 +262,7 @@ export function QuickPreferencesStep({
             >
               <SelectValue placeholder="Select your native language" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="z-[200]">
               {NATIVE_LANGUAGE_OPTIONS.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}
@@ -290,20 +300,52 @@ export function QuickPreferencesStep({
           >
             Preferred Language
           </Label>
-          <Input
-            id="onboarding-language"
-            type="text"
-            value={currentLanguage}
-            onChange={(e) =>
-              onChangeDelivery({
-                ...delivery,
-                language: e.target.value || "English",
-              })
-            }
-            placeholder="English"
-            className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
-            maxLength={50}
-          />
+          <Select
+            value={langSelectValue}
+            onValueChange={(val: string) => {
+              if (val === RESPONSE_LANGUAGE_OTHER_VALUE) {
+                onChangeDelivery({
+                  ...delivery,
+                  language: RESPONSE_LANGUAGE_OTHER_VALUE,
+                });
+              } else {
+                onChangeDelivery({
+                  ...delivery,
+                  language: val || "English",
+                });
+              }
+            }}
+          >
+            <SelectTrigger
+              id="onboarding-language"
+              className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
+            >
+              <SelectValue placeholder="Select your preferred language" />
+            </SelectTrigger>
+            <SelectContent className="z-[200]">
+              {RESPONSE_LANGUAGE_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {showLangOtherInput && (
+            <Input
+              id="onboarding-language-other"
+              type="text"
+              value={langOtherText}
+              onChange={(e) =>
+                onChangeDelivery({
+                  ...delivery,
+                  language: e.target.value || RESPONSE_LANGUAGE_OTHER_VALUE,
+                })
+              }
+              placeholder="Enter your preferred language"
+              className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground placeholder:text-muted-foreground/50 shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
+              maxLength={50}
+            />
+          )}
           <p className="text-xs text-muted-foreground/70 pl-1">
             Your AI tutor will respond in this language.
           </p>
@@ -387,7 +429,7 @@ export function QuickPreferencesStep({
             >
               <SelectValue placeholder="Select your preferred language for code examples" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="z-[200]">
               {PROGRAMMING_LANGUAGES.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
                   {option.label}

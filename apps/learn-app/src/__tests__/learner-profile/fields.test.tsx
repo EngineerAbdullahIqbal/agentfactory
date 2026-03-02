@@ -9,6 +9,10 @@ import type { AccessibilitySection } from "@/lib/learner-profile-types";
 import {
   NATIVE_LANGUAGE_OPTIONS,
   NATIVE_LANGUAGE_OTHER_VALUE,
+  RESPONSE_LANGUAGE_OPTIONS,
+  RESPONSE_LANGUAGE_OTHER_VALUE,
+  resolveNativeLanguageSelectState,
+  resolveResponseLanguageSelectState,
 } from "@/lib/profile-field-definitions";
 
 // ---------- ExpertiseLevelSelect ----------
@@ -293,5 +297,120 @@ describe("NATIVE_LANGUAGE_OPTIONS", () => {
   it("all values are unique", () => {
     const values = NATIVE_LANGUAGE_OPTIONS.map((o) => o.value);
     expect(new Set(values).size).toBe(values.length);
+  });
+});
+
+// ---------- RESPONSE_LANGUAGE_OPTIONS ----------
+describe("RESPONSE_LANGUAGE_OPTIONS", () => {
+  it("has 20 options (19 languages + Other)", () => {
+    expect(RESPONSE_LANGUAGE_OPTIONS).toHaveLength(20);
+  });
+
+  it("every option has value, label, and hint", () => {
+    for (const option of RESPONSE_LANGUAGE_OPTIONS) {
+      expect(option.value).toBeTruthy();
+      expect(option.label).toBeTruthy();
+      expect(option.hint).toBeTruthy();
+    }
+  });
+
+  it("uses full language names as values (not ISO codes)", () => {
+    const values = RESPONSE_LANGUAGE_OPTIONS.map((o) => o.value);
+    expect(values).toContain("English");
+    expect(values).toContain("Urdu");
+    expect(values).toContain("Hindi");
+    expect(values).toContain("Arabic");
+    expect(values).toContain("Chinese");
+    expect(values).toContain("Spanish");
+  });
+
+  it("has 'Other' as last option", () => {
+    const last =
+      RESPONSE_LANGUAGE_OPTIONS[RESPONSE_LANGUAGE_OPTIONS.length - 1];
+    expect(last.value).toBe(RESPONSE_LANGUAGE_OTHER_VALUE);
+    expect(last.label).toBe("Other");
+  });
+
+  it("all values are unique", () => {
+    const values = RESPONSE_LANGUAGE_OPTIONS.map((o) => o.value);
+    expect(new Set(values).size).toBe(values.length);
+  });
+});
+
+// ---------- resolveNativeLanguageSelectState ----------
+describe("resolveNativeLanguageSelectState", () => {
+  it("returns null sentinel for null value", () => {
+    const result = resolveNativeLanguageSelectState(null, "__null__");
+    expect(result).toEqual({
+      selectValue: "__null__",
+      showOtherInput: false,
+      otherText: "",
+    });
+  });
+
+  it("returns known option as-is", () => {
+    const result = resolveNativeLanguageSelectState("en", "__null__");
+    expect(result).toEqual({
+      selectValue: "en",
+      showOtherInput: false,
+      otherText: "",
+    });
+  });
+
+  it("shows other input for 'other' sentinel", () => {
+    const result = resolveNativeLanguageSelectState("other", "__null__");
+    expect(result).toEqual({
+      selectValue: "other",
+      showOtherInput: true,
+      otherText: "",
+    });
+  });
+
+  it("shows other input with prefilled text for unknown value", () => {
+    const result = resolveNativeLanguageSelectState("Tagalog", "__null__");
+    expect(result).toEqual({
+      selectValue: "other",
+      showOtherInput: true,
+      otherText: "Tagalog",
+    });
+  });
+});
+
+// ---------- resolveResponseLanguageSelectState ----------
+describe("resolveResponseLanguageSelectState", () => {
+  it("returns null sentinel for null value", () => {
+    const result = resolveResponseLanguageSelectState(null, "__null__");
+    expect(result).toEqual({
+      selectValue: "__null__",
+      showOtherInput: false,
+      otherText: "",
+    });
+  });
+
+  it("returns known option as-is", () => {
+    const result = resolveResponseLanguageSelectState("French", "__null__");
+    expect(result).toEqual({
+      selectValue: "French",
+      showOtherInput: false,
+      otherText: "",
+    });
+  });
+
+  it("shows other input for '__other__' sentinel", () => {
+    const result = resolveResponseLanguageSelectState("__other__", "__null__");
+    expect(result).toEqual({
+      selectValue: "__other__",
+      showOtherInput: true,
+      otherText: "",
+    });
+  });
+
+  it("shows other input with prefilled text for unknown language", () => {
+    const result = resolveResponseLanguageSelectState("Swahili", "__null__");
+    expect(result).toEqual({
+      selectValue: "__other__",
+      showOtherInput: true,
+      otherText: "Swahili",
+    });
   });
 });

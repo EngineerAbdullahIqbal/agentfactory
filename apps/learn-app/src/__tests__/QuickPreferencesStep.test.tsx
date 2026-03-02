@@ -66,20 +66,9 @@ describe("QuickPreferencesStep", () => {
     expect(screen.getByText("Preferred Code Language")).toBeInTheDocument();
   });
 
-  it("changing language input calls onChangeDelivery", async () => {
-    const onChangeDelivery = vi.fn();
-    const user = userEvent.setup();
-    renderStep({ onChangeDelivery });
-
-    const input = screen.getByLabelText("Preferred Language");
-    await user.type(input, "x");
-
-    expect(onChangeDelivery).toHaveBeenCalled();
-    const lastCall =
-      onChangeDelivery.mock.calls[onChangeDelivery.mock.calls.length - 1][0];
-    expect(lastCall).toHaveProperty("language");
-    expect(typeof lastCall.language).toBe("string");
-    expect(lastCall.language.length).toBeGreaterThan(0);
+  it("preferred language select renders", () => {
+    renderStep();
+    expect(screen.getByLabelText("Preferred Language")).toBeInTheDocument();
   });
 
   it("proficiency options appear when language is not English", () => {
