@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import type {
   CommunicationSection,
   DeliverySection,
@@ -11,6 +11,7 @@ import {
   LANGUAGE_PROFICIENCY_OPTIONS,
   NATIVE_LANGUAGE_OPTIONS,
   NATIVE_LANGUAGE_OTHER_VALUE,
+  resolveNativeLanguageSelectState,
 } from "@/lib/profile-field-definitions";
 import { motion } from "framer-motion";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -80,25 +81,11 @@ export function QuickPreferencesStep({
   const wantsCheckIns = communication.wants_check_in_questions ?? true;
 
   // Determine if native_language stored value is a known option or freetext "other"
-  const currentNativeLanguage = delivery.native_language ?? null;
-  const isKnownNativeLanguage = NATIVE_LANGUAGE_OPTIONS.some(
-    (o) =>
-      o.value === currentNativeLanguage &&
-      o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
-  );
-  const nativeSelectValue =
-    currentNativeLanguage === null
-      ? ""
-      : isKnownNativeLanguage
-        ? currentNativeLanguage
-        : NATIVE_LANGUAGE_OTHER_VALUE;
-  const showNativeOtherInput =
-    nativeSelectValue === NATIVE_LANGUAGE_OTHER_VALUE;
-  const nativeOtherText =
-    showNativeOtherInput &&
-    currentNativeLanguage !== NATIVE_LANGUAGE_OTHER_VALUE
-      ? (currentNativeLanguage ?? "")
-      : "";
+  const {
+    selectValue: nativeSelectValue,
+    showOtherInput: showNativeOtherInput,
+    otherText: nativeOtherText,
+  } = resolveNativeLanguageSelectState(delivery.native_language ?? null, "");
 
   return (
     <motion.div

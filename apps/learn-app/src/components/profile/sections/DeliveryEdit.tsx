@@ -11,6 +11,7 @@ import {
   LANGUAGE_PROFICIENCY_OPTIONS,
   NATIVE_LANGUAGE_OPTIONS,
   NATIVE_LANGUAGE_OTHER_VALUE,
+  resolveNativeLanguageSelectState,
 } from "@/lib/profile-field-definitions";
 import { InferredBadge } from "@/components/profile/fields";
 import { Input } from "@/components/ui/input";
@@ -30,21 +31,11 @@ function NativeLanguageField({
   delivery: DeliverySection;
   update: (field: keyof DeliverySection, value: unknown) => void;
 }) {
-  const currentValue = delivery?.native_language ?? null;
-  const isKnownOption = NATIVE_LANGUAGE_OPTIONS.some(
-    (o) => o.value === currentValue && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
-  );
-  const selectValue =
-    currentValue === null
-      ? NULL_SELECT_VALUE
-      : isKnownOption
-        ? currentValue
-        : NATIVE_LANGUAGE_OTHER_VALUE;
-  const showOtherInput = selectValue === NATIVE_LANGUAGE_OTHER_VALUE;
-  const otherText =
-    showOtherInput && currentValue !== NATIVE_LANGUAGE_OTHER_VALUE
-      ? (currentValue ?? "")
-      : "";
+  const { selectValue, showOtherInput, otherText } =
+    resolveNativeLanguageSelectState(
+      delivery?.native_language ?? null,
+      NULL_SELECT_VALUE,
+    );
 
   return (
     <div className="space-y-1.5">

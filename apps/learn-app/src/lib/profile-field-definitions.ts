@@ -489,6 +489,51 @@ export const NATIVE_LANGUAGE_OPTIONS: FieldOption[] = [
   },
 ];
 
+/**
+ * Resolve a stored native_language value into select + freetext state.
+ *
+ * @param storedValue - The raw `delivery.native_language` value (null when unset)
+ * @param nullSentinel - What the Select uses for "no selection" ("" in onboarding, NULL_SELECT_VALUE in edit forms)
+ */
+export function resolveNativeLanguageSelectState(
+  storedValue: string | null,
+  nullSentinel: string,
+): {
+  selectValue: string;
+  showOtherInput: boolean;
+  otherText: string;
+} {
+  if (storedValue === null) {
+    return { selectValue: nullSentinel, showOtherInput: false, otherText: "" };
+  }
+  const isKnown = NATIVE_LANGUAGE_OPTIONS.some(
+    (o) => o.value === storedValue && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
+  );
+  if (isKnown) {
+    return { selectValue: storedValue, showOtherInput: false, otherText: "" };
+  }
+  // Freetext "other" — show the Other option selected, prefill with stored value
+  const otherText =
+    storedValue === NATIVE_LANGUAGE_OTHER_VALUE ? "" : storedValue;
+  return {
+    selectValue: NATIVE_LANGUAGE_OTHER_VALUE,
+    showOtherInput: true,
+    otherText,
+  };
+}
+
+/**
+ * Resolve a stored native_language ISO code to a human-readable label.
+ * Returns the raw value as fallback for freetext entries.
+ */
+export function resolveNativeLanguageLabel(value: string | null): string {
+  if (!value) return "Not set";
+  const option = NATIVE_LANGUAGE_OPTIONS.find(
+    (o) => o.value === value && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
+  );
+  return option ? option.label : value;
+}
+
 // ---------------------------------------------------------------------------
 // Programming languages (chip select)
 // ---------------------------------------------------------------------------

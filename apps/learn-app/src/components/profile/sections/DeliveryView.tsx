@@ -1,18 +1,7 @@
 import React from "react";
 import type { DeliverySection } from "@/lib/learner-profile-types";
-import {
-  NATIVE_LANGUAGE_OPTIONS,
-  NATIVE_LANGUAGE_OTHER_VALUE,
-} from "@/lib/profile-field-definitions";
+import { resolveNativeLanguageLabel } from "@/lib/profile-field-definitions";
 import { Badge } from "@/components/ui/badge";
-
-function resolveNativeLanguageLabel(value: string | null): string {
-  if (!value) return "Not set";
-  const option = NATIVE_LANGUAGE_OPTIONS.find(
-    (o) => o.value === value && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
-  );
-  return option ? option.label : value;
-}
 
 export function DeliveryView({ data }: { data: unknown }) {
   const delivery = data as DeliverySection;
