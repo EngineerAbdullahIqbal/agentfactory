@@ -14,7 +14,7 @@ cards:
 
   - id: "ch18-05-latex-not-software-002"
     front: "Do you need to install LaTeX software to use IDFA's LaTeX Verification guardrail?"
-    back: "No. LaTeX Verification means expressing a formula in standard mathematical notation to verify its structure. You can write it by hand, type it in Markdown, or ask Claude to express the formula in LaTeX. The verification is yours; the typesetting method is optional."
+    back: "LaTeX Verification means expressing a formula in standard mathematical notation to verify its structure — it does not require installing LaTeX software. You can write it by hand, type it in Markdown, or ask Claude to express the formula in LaTeX. The verification is yours; the typesetting method is optional."
     tags: ["latex-verification", "practical"]
     difficulty: "basic"
 

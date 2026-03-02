@@ -1,29 +1,68 @@
-- front: "What are the three layers in an IDFA-compliant financial model?"
-  back: "Layer 1 — Assumptions (inputs only, no calculations), Layer 2 — Calculations (logic only, Named Range formulas, no cell addresses), Layer 3 — Output (presentation only, reads from Layer 2, no calculations)."
+deck:
+  id: "ch18-03-the-three-layers"
+  title: "The Three Layers"
+  description: "IDFA's three-layer model structure (Assumptions, Calculations, Output), layer isolation, Named Range creation, and intent statement decomposition."
+  tags: ["three-layers", "assumptions", "calculations", "output", "named-ranges", "IDFA", "layer-isolation"]
+  version: 2
 
-- front: "What is the isolation rule in IDFA?"
-  back: "Changing a Layer 1 input can never break a Layer 2 formula, because Layer 2 reads Named Ranges (names), not cell positions. Structural changes like inserting rows cannot break formulas that reference names."
+cards:
+  - id: "ch18-03-the-three-layers-001"
+    front: "What are the three layers in an IDFA-compliant financial model?"
+    back: "Layer 1 — Assumptions (inputs only, no calculations)\nLayer 2 — Calculations (logic only, Named Range formulas, no cell addresses)\nLayer 3 — Output (presentation only, reads from Layer 2, no calculations)"
+    tags: ["three-layers", "definition"]
+    difficulty: "basic"
 
-- front: "How do you create a Named Range in Excel?"
-  back: "Select the cell, click the Name Box (top-left field showing the cell address), type the name (e.g., Inp_Rev_Y1), and press Enter. Alternatively, go to the Formulas tab and click Define Name."
+  - id: "ch18-03-the-three-layers-002"
+    front: "What is the isolation rule in IDFA?"
+    back: "Changing a Layer 1 input can never break a Layer 2 formula, because Layer 2 reads Named Ranges (names), not cell positions."
+    tags: ["layer-isolation", "named-ranges"]
+    difficulty: "basic"
 
-- front: "What naming prefix do IDFA input assumptions use?"
-  back: "All input assumptions use the Inp_ prefix (e.g., Inp_Rev_Y1, Inp_COGS_Pct_Y1, Inp_Rev_Growth). This lets any reader — human or AI — immediately identify which values are user-modifiable."
+  - id: "ch18-03-the-three-layers-003"
+    front: "How do you create a Named Range in Excel?"
+    back: "Select the cell, click the Name Box (top-left), type the name (e.g. Inp_Rev_Y1), press Enter."
+    tags: ["named-ranges", "excel", "practical"]
+    difficulty: "basic"
 
-- front: "What naming pattern do IDFA annual calculations use?"
-  back: "Annual calculations use the pattern Variable_Yn (e.g., Revenue_Y1, COGS_Y2, Gross_Profit_Y3). The variable name describes the business concept, and the Yn suffix identifies the year."
+  - id: "ch18-03-the-three-layers-004"
+    front: "What naming prefix do IDFA input assumptions use?"
+    back: "All input assumptions use the Inp_ prefix (e.g. Inp_Rev_Y1, Inp_COGS_Pct_Y1)."
+    tags: ["naming-convention", "assumptions"]
+    difficulty: "basic"
 
-- front: "What is intent statement decomposition?"
-  back: "The process of reading a plain-English description of a financial model and extracting every assumption as a Named Range before writing any formula. It is the first step of every IDFA model build."
+  - id: "ch18-03-the-three-layers-005"
+    front: "What naming pattern do IDFA annual calculations use?"
+    back: "Variable_Yn format (e.g. Revenue_Y1, COGS_Y2, Gross_Profit_Y3)."
+    tags: ["naming-convention", "calculations"]
+    difficulty: "basic"
 
-- front: "What are the four assumptions extracted from the GP Waterfall intent statement?"
-  back: "Inp_Rev_Y1 = 10,000,000 (Year 1 Revenue), Inp_Rev_Growth = 0.10 (annual growth rate), Inp_COGS_Pct_Y1 = 0.60 (Year 1 COGS percentage), Inp_COGS_Efficiency = 0.01 (annual COGS improvement)."
+  - id: "ch18-03-the-three-layers-006"
+    front: "What is intent statement decomposition?"
+    back: "Reading a plain-English model description and extracting every assumption as a Named Range before writing any formula."
+    tags: ["intent-statement", "decomposition"]
+    difficulty: "intermediate"
 
-- front: "Why do Named Ranges survive model changes when cell references do not?"
-  back: "A Named Range is stored as a definition (e.g., Inp_Rev_Y1 = Sheet1!$B$4). When rows are inserted or cells move, Excel updates the definition automatically. The name itself never changes, so every formula referencing that name continues to work."
+  - id: "ch18-03-the-three-layers-007"
+    front: "What are the four assumptions extracted from the GP Waterfall intent statement?"
+    back: "Inp_Rev_Y1 = 10,000,000\nInp_Rev_Growth = 0.10\nInp_COGS_Pct_Y1 = 0.60\nInp_COGS_Efficiency = 0.01"
+    tags: ["GP-waterfall", "assumptions", "intent-statement"]
+    difficulty: "intermediate"
 
-- front: "What belongs in Layer 3 (Output) and what does NOT?"
-  back: "Layer 3 contains display and formatting only — charts, dashboards, report-ready tables. It reads from Layer 2 only (never directly from Layer 1). It performs no calculations. Any arithmetic in Layer 3 should be moved to Layer 2."
+  - id: "ch18-03-the-three-layers-008"
+    front: "Why do Named Ranges survive model changes when cell references do not?"
+    back: "A Named Range is stored as a definition (e.g. Inp_Rev_Y1 = Sheet1!$B$4). When cells move, Excel updates the definition automatically — the name itself never changes, so formulas referencing it keep working."
+    tags: ["named-ranges", "resilience"]
+    difficulty: "intermediate"
+    why: "What type of model change would still break a Named Range formula?"
 
-- front: "What is the IDFA naming convention for ratios and multi-period aggregates?"
-  back: "Ratios use Variable_Pct (e.g., Gross_Margin_Pct_Y2, EBITDA_Margin_Pct). Multi-period aggregates use Variable_Total (e.g., Revenue_Total, EBITDA_Total)."
+  - id: "ch18-03-the-three-layers-009"
+    front: "What belongs in Layer 3 (Output) and what does NOT?"
+    back: "Charts, dashboards, report-ready tables that read from Layer 2 only. Layer 3 performs no calculations — any arithmetic belongs in Layer 2."
+    tags: ["output-layer", "layer-isolation"]
+    difficulty: "intermediate"
+
+  - id: "ch18-03-the-three-layers-010"
+    front: "What is the IDFA naming convention for ratios and multi-period aggregates?"
+    back: "Ratios use Variable_Pct (e.g. Gross_Margin_Pct_Y2). Multi-period aggregates use Variable_Total (e.g. Revenue_Total)."
+    tags: ["naming-convention", "ratios", "aggregates"]
+    difficulty: "intermediate"

@@ -39,7 +39,7 @@ cards:
 
   - id: "ch18-06-not-prevention-006"
     front: "Do Intent Notes prevent formula modifications?"
-    back: "No. Intent Notes do not prevent modifications — they make modifications visible. When a formula is changed but the Intent Note is not updated, the mismatch between documented intent and actual formula creates a visible audit signal. In financial modelling, visibility is the audit trail."
+    back: "Intent Notes do not prevent modifications — they make modifications visible. When a formula is changed but the Intent Note is not updated, the mismatch between documented intent and actual formula creates a visible audit signal. In financial modelling, visibility is the audit trail."
     tags: ["intent-notes", "audit-principle"]
     difficulty: "intermediate"
 

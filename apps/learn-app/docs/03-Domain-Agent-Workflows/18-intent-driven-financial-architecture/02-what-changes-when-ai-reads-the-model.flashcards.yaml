@@ -38,7 +38,7 @@ cards:
 
   - id: "ch18-02-prompt-engineering-006"
     front: "Can prompt engineering overcome the quality gap caused by coordinate-based formulas?"
-    back: "No. The business intent behind a formula is either encoded in the formula (via Named Ranges) or it is not. No prompt can create intent that was never encoded. The gap is architectural, not a prompting problem."
+    back: "The business intent behind a formula is either encoded in the formula (via Named Ranges) or it is not. Prompt engineering cannot create intent that was never encoded — the gap is architectural, not a prompting problem."
     tags: ["prompt-engineering", "architecture"]
     difficulty: "intermediate"
     why: "Tests whether student understands that the quality gap is structural, not solvable by better prompts"

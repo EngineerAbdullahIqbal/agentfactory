@@ -123,7 +123,9 @@ LaTeX (pronounced "lah-tech") is a mathematical typesetting system. For IDFA pur
 
 **The same formula in LaTeX notation:**
 
-$$WACC = \frac{E}{E+D} \times K_e + \frac{D}{E+D} \times K_d \times (1-T)$$
+```
+WACC = (E / (E+D)) × Kₑ + (D / (E+D)) × K_d × (1 − T)
+```
 
 In the Excel version, every component runs together on one line. Parentheses nest inside parentheses. The structure is correct but hard to inspect. In the LaTeX version, the fractions are visually separated. The weights are stacked. The tax shield is isolated. You can verify each component independently in seconds.
 
@@ -138,7 +140,9 @@ You can write the LaTeX by hand, type it in Markdown, or -- most practically -- 
 
 ### WACC -- Weighted Average Cost of Capital
 
-$$WACC = \frac{E}{E+D} \times K_e + \frac{D}{E+D} \times K_d \times (1-T)$$
+```
+WACC = (E / (E+D)) × Kₑ + (D / (E+D)) × K_d × (1 − T)
+```
 
 **In IDFA Named Range notation:**
 
@@ -149,9 +153,9 @@ WACC = (Equity_Value / (Equity_Value + Debt_Value)) * Cost_of_Equity
 
 **Three things LaTeX makes verifiable:**
 
-1. **Weights sum to 1.0.** The equity weight $\frac{E}{E+D}$ and the debt weight $\frac{D}{E+D}$ must add up to exactly 1.0. If someone accidentally writes `E / D` instead of `E / (E+D)`, the LaTeX makes the error visible immediately.
+1. **Weights sum to 1.0.** The equity weight `E/(E+D)` and the debt weight `D/(E+D)` must add up to exactly 1.0. If someone accidentally writes `E / D` instead of `E / (E+D)`, the LaTeX makes the error visible immediately.
 
-2. **Tax shield on debt only.** The $(1-T)$ factor multiplies only the debt term. Interest on debt is tax-deductible; returns to equity holders are not. If $(1-T)$ is missing, the formula overstates the after-tax cost of debt, which overstates WACC, which understates the valuation in any DCF that uses it.
+2. **Tax shield on debt only.** The `(1-T)` factor multiplies only the debt term. Interest on debt is tax-deductible; returns to equity holders are not. If `(1-T)` is missing, the formula overstates the after-tax cost of debt, which overstates WACC, which understates the valuation in any DCF that uses it.
 
 3. **Consistent units.** Cost of equity and cost of debt must both be expressed as percentages or both as decimals. Mixing 12% with 0.05 produces a WACC that is mathematically valid but financially meaningless.
 
@@ -159,13 +163,15 @@ WACC = (Equity_Value / (Equity_Value + Debt_Value)) * Cost_of_Equity
 
 | Error                       | What happens                                             | Financial impact                                       |
 | --------------------------- | -------------------------------------------------------- | ------------------------------------------------------ |
-| Missing $(1-T)$ on debt     | Overstates cost of debt                                  | WACC too high, DCF undervalues the company             |
+| Missing `(1-T)` on debt     | Overstates cost of debt                                  | WACC too high, DCF undervalues the company             |
 | Weights not summing to 1.0  | Formula produces a number that is not a weighted average | Entire WACC is wrong -- no reliable valuation possible |
 | Mixed units (% and decimal) | One component dominates incorrectly                      | WACC could be off by several percentage points         |
 
 ### NPV -- Net Present Value
 
-$$NPV = \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} - Initial\_Investment$$
+```
+NPV = Σ(t=1 to n) [ CF_t / (1+r)^t ] − Initial_Investment
+```
 
 **In IDFA Named Range notation:**
 
@@ -176,13 +182,15 @@ NPV_Result = NPV(Inp_Discount_Rate, CF_Y1, CF_Y2, CF_Y3, CF_Y4, CF_Y5)
 
 **What LaTeX makes verifiable:**
 
-The summation starts at $t=1$, not $t=0$. This is the single most important thing to verify. Excel's `NPV()` function assumes cash flows begin at period 1. The initial investment -- which occurs at period 0 -- must be subtracted separately. If the initial investment is included inside the `NPV()` function, it gets discounted by one period, understating the true cost and overstating the project's value.
+The summation starts at t=1, not t=0. This is the single most important thing to verify. Excel's `NPV()` function assumes cash flows begin at period 1. The initial investment -- which occurs at period 0 -- must be subtracted separately. If the initial investment is included inside the `NPV()` function, it gets discounted by one period, understating the true cost and overstating the project's value.
 
 **The period-0 trap:** A $10M initial investment discounted at 10% for one period becomes $9.09M inside the `NPV()` function. That $910K difference is not a rounding error -- it is a structural mistake that makes unprofitable projects appear profitable.
 
 ### Terminal Value -- Gordon Growth Model
 
-$$TV = \frac{FCF_n \times (1+g)}{WACC - g}$$
+```
+TV = [ FCF_n × (1+g) ] / (WACC − g)
+```
 
 **In IDFA Named Range notation:**
 
@@ -193,17 +201,19 @@ Terminal_Value = (FCF_Final * (1 + Inp_Terminal_Growth))
 
 **What LaTeX makes verifiable:**
 
-The numerator is $FCF_n \times (1+g)$, not $FCF_n$ alone. The Gordon Growth Model values a perpetuity starting one period after the final projection year. That means the first cash flow of the perpetuity is the final projected cash flow grown by one year at the terminal growth rate. Using $FCF_n$ directly -- without the $(1+g)$ factor -- understates the terminal value.
+The numerator is `FCF_n × (1+g)`, not `FCF_n` alone. The Gordon Growth Model values a perpetuity starting one period after the final projection year. That means the first cash flow of the perpetuity is the final projected cash flow grown by one year at the terminal growth rate. Using `FCF_n` directly -- without the `(1+g)` factor -- understates the terminal value.
 
 **The growth factor trap:** On a $50M final-year free cash flow with 2% terminal growth, the correct numerator is $51M. Using $50M directly understates terminal value by roughly 2%, which can move an enterprise valuation by tens of millions on a large deal.
 
-**Additional check:** The denominator $(WACC - g)$ must be positive. If the terminal growth rate equals or exceeds WACC, the formula produces a negative or infinite terminal value -- which is mathematically valid but economically meaningless. This is a constraint check, not just a structural check.
+**Additional check:** The denominator `(WACC - g)` must be positive. If the terminal growth rate equals or exceeds WACC, the formula produces a negative or infinite terminal value -- which is mathematically valid but economically meaningless. This is a constraint check, not just a structural check.
 
 ### IRR -- Internal Rate of Return
 
-IRR has no closed-form LaTeX expression. It is defined as the discount rate $r$ at which:
+IRR has no closed-form LaTeX expression. It is defined as the discount rate `r` at which:
 
-$$NPV = \sum_{t=0}^{n} \frac{CF_t}{(1+r)^t} = 0$$
+```
+NPV = Σ(t=0 to n) [ CF_t / (1+r)^t ] = 0
+```
 
 Excel solves this iteratively. You cannot verify IRR by inspecting a LaTeX formula. Instead, verify it by confirming that NPV equals zero at the computed IRR:
 
@@ -224,15 +234,17 @@ LaTeX Verification is not something you do alone with pen and paper -- though yo
 **Claude's response:**
 "Here is the WACC formula from your model expressed in LaTeX:
 
-$$WACC = \frac{E}{E+D} \times K_e + \frac{D}{E+D} \times K_d \times (1-T)$$
+```
+WACC = (E / (E+D)) × Kₑ + (D / (E+D)) × K_d × (1 − T)
+```
 
 Verification checklist:
 
-- Equity weight: $\frac{E}{E+D}$ -- uses total capital in denominator. Correct.
-- Debt weight: $\frac{D}{E+D}$ -- uses total capital in denominator. Correct.
-- Weights sum: $\frac{E}{E+D} + \frac{D}{E+D} = 1.0$. Confirmed.
-- Tax shield: $(1-T)$ applied to debt term only. Correct.
-- Units: Both $K_e$ and $K_d$ should be in the same format (both decimal or both percentage)."
+- Equity weight: E/(E+D) -- uses total capital in denominator. Correct.
+- Debt weight: D/(E+D) -- uses total capital in denominator. Correct.
+- Weights sum: E/(E+D) + D/(E+D) = 1.0. Confirmed.
+- Tax shield: (1-T) applied to debt term only. Correct.
+- Units: Both Kₑ and K_d should be in the same format (both decimal or both percentage)."
 
 **Your refinement:**
 "Now check this version -- I think there might be an error."
@@ -245,9 +257,11 @@ WACC = (Equity_Value / (Equity_Value + Debt_Value)) * Cost_of_Equity
 ```
 
 **Claude's catch:**
-"The $(1-T)$ factor is missing from the debt component. Without the tax shield:
+"The `(1-T)` factor is missing from the debt component. Without the tax shield:
 
-$$WACC_{wrong} = \frac{E}{E+D} \times K_e + \frac{D}{E+D} \times K_d$$
+```
+WACC_wrong = (E / (E+D)) × Kₑ + (D / (E+D)) × K_d
+```
 
 This overstates the after-tax cost of debt. With a 5% cost of debt and 25% tax rate, the correct after-tax cost is 3.75%, but this formula uses 5%. For a company with 40% debt, that adds approximately 50 basis points to WACC."
 
@@ -347,7 +361,7 @@ Express the correct NPV formula in LaTeX, then check:
 3. Show the corrected formula in both LaTeX and Named Range notation.
 ```
 
-**What you're learning:** The period-0 trap -- Excel's `NPV()` function discounts all arguments starting at period 1. If an initial investment (period 0) is included inside the function, it is incorrectly discounted, understating the cost and making unprofitable projects appear profitable. LaTeX makes the summation bounds explicit: $\sum_{t=1}^{n}$, which immediately reveals whether the initial investment belongs inside or outside the function.
+**What you're learning:** The period-0 trap -- Excel's `NPV()` function discounts all arguments starting at period 1. If an initial investment (period 0) is included inside the function, it is incorrectly discounted, understating the cost and making unprofitable projects appear profitable. LaTeX makes the summation bounds explicit: `Σ(t=1 to n)`, which immediately reveals whether the initial investment belongs inside or outside the function.
 
 ### Prompt 3: Spot the Error
 
@@ -366,7 +380,7 @@ in LaTeX. Compare it to the colleague's formula. What is missing?
 Calculate the Terminal Value both ways and show the dollar difference.
 ```
 
-**What you're learning:** The growth factor trap in the Gordon Growth Model. The correct numerator is $FCF_n \times (1+g)$, not $FCF_n$ alone. The perpetuity starts one period after the final projection year, so the first terminal cash flow must be the final-year FCF grown by one year. Missing the $(1+g)$ factor understates terminal value by approximately the growth rate percentage -- a seemingly small error that compounds to tens of millions on large deals.
+**What you're learning:** The growth factor trap in the Gordon Growth Model. The correct numerator is `FCF_n × (1+g)`, not `FCF_n` alone. The perpetuity starts one period after the final projection year, so the first terminal cash flow must be the final-year FCF grown by one year. Missing the `(1+g)` factor understates terminal value by approximately the growth rate percentage -- a seemingly small error that compounds to tens of millions on large deals.
 
 ## Flashcards Study Aid
 
