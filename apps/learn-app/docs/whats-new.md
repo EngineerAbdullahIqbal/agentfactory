@@ -17,6 +17,10 @@ Track meaningful updates to the book. This page is automatically updated when do
 
 <!-- CHANGELOG_START - Do not remove this marker -->
 
+### 2026-03-02
+
+- update OpenClaw chapter ([#800](https://github.com/panaversity/agentfactory/pull/800))
+
 ### 2026-03-01
 
 - docs: add Chapter 17 — Finance Domain Agents ([#795](https://github.com/panaversity/agentfactory/pull/795))
