@@ -70,6 +70,8 @@ SECTION_FIELDS: dict[str, list[str]] = {
         "delivery.output_format",
         "delivery.code_verbosity",
         "delivery.language",
+        "delivery.native_language",
+        "delivery.preferred_code_language",
     ],
     "accessibility": [
         # Controls content density and alt-text inclusion
@@ -92,6 +94,7 @@ IMPACT_PRIORITY: list[str] = [
     "communication.verbosity",
     "communication.tone",
     "delivery.code_verbosity",
+    "delivery.native_language",
     "professional_context.tools_in_use",
     "accessibility.cognitive_load_preference",
     "accessibility.screen_reader",

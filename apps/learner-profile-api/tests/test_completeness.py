@@ -92,16 +92,27 @@ class TestProfileCompleteness:
         assert set(per_section.keys()) == set(SECTION_WEIGHTS.keys())
         assert len(per_section) == 6
 
+    def test_new_delivery_fields_in_section_fields(self):
+        """native_language and preferred_code_language are in SECTION_FIELDS['delivery']."""
+        assert "delivery.native_language" in SECTION_FIELDS["delivery"]
+        assert "delivery.preferred_code_language" in SECTION_FIELDS["delivery"]
+
+    def test_native_language_in_impact_priority(self):
+        """native_language is in IMPACT_PRIORITY for nudges."""
+        from learner_profile_api.services.completeness import IMPACT_PRIORITY
+        assert "delivery.native_language" in IMPACT_PRIORITY
+
     def test_post_onboarding_completeness_reasonable(self):
-        """After completing onboarding, completeness should be 45-65%.
+        """After completing onboarding, completeness should be 40-65%.
 
         A user who completes all 6 onboarding phases typically sets:
         - ~8 fields as 'user' (goal, expertise levels, role, tools)
         - ~5 fields as 'inferred' (communication/delivery fields)
         - remaining fields stay 'default'
 
-        The old 41-field metric gave 26% which felt deflating.
-        With 20 high-signal fields, this should land in the 45-65% range.
+        With 22 high-signal fields (delivery grew from 3 to 5 with
+        native_language and preferred_code_language), the range adjusts
+        slightly downward.
         """
         # Simulate typical post-onboarding field_sources
         field_sources = {
@@ -121,8 +132,8 @@ class TestProfileCompleteness:
             "delivery.code_verbosity": "inferred",
         }
         overall, _ = compute_profile_completeness(field_sources)
-        assert 0.45 <= overall <= 0.65, (
-            f"Post-onboarding completeness {overall:.2f} outside expected 45-65% range"
+        assert 0.40 <= overall <= 0.65, (
+            f"Post-onboarding completeness {overall:.2f} outside expected 40-65% range"
         )
 
 

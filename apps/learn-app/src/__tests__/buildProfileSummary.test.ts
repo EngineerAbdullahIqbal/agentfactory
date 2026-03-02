@@ -68,6 +68,8 @@ function makeProfile(
       include_visual_descriptions: false,
       language: "English",
       language_proficiency: "native",
+      native_language: "ur",
+      preferred_code_language: "Python",
     },
     accessibility: {
       screen_reader: false,
@@ -148,7 +150,29 @@ describe("buildProfileSummary", () => {
       language: "English",
       language_proficiency: "native",
       code_verbosity: "annotated",
+      native_language: "ur",
+      preferred_code_language: "Python",
     });
+  });
+
+  it("maps delivery fields with null native_language and preferred_code_language", () => {
+    const result = buildProfileSummary(
+      makeProfile({
+        delivery: {
+          output_format: "structured-with-headers",
+          target_length: "medium",
+          include_code_samples: true,
+          code_verbosity: "annotated",
+          include_visual_descriptions: false,
+          language: "English",
+          language_proficiency: "native",
+          native_language: null,
+          preferred_code_language: null,
+        },
+      }),
+    );
+    expect(result?.delivery?.native_language).toBeNull();
+    expect(result?.delivery?.preferred_code_language).toBeNull();
   });
 
   it("handles missing nested objects gracefully (no crash on undefined sections)", () => {

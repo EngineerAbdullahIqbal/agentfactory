@@ -6,6 +6,10 @@ import { ExpertiseLevelSelect } from "@/components/profile/fields/ExpertiseLevel
 import { UrgencyRadio } from "@/components/profile/fields/UrgencyRadio";
 import { AccessibilityToggles } from "@/components/profile/fields/AccessibilityToggles";
 import type { AccessibilitySection } from "@/lib/learner-profile-types";
+import {
+  NATIVE_LANGUAGE_OPTIONS,
+  NATIVE_LANGUAGE_OTHER_VALUE,
+} from "@/lib/profile-field-definitions";
 
 // ---------- ExpertiseLevelSelect ----------
 describe("ExpertiseLevelSelect", () => {
@@ -68,7 +72,11 @@ describe("ExpertiseLevelSelect", () => {
 
   it("has accessible label linked to select via id/htmlFor", () => {
     render(
-      <ExpertiseLevelSelect value="none" onChange={vi.fn()} label="Domain Knowledge" />
+      <ExpertiseLevelSelect
+        value="none"
+        onChange={vi.fn()}
+        label="Domain Knowledge"
+      />,
     );
     const label = screen.getByText("Domain Knowledge");
     const trigger = screen.getByLabelText("Domain Knowledge");
@@ -83,7 +91,7 @@ describe("ExpertiseLevelSelect", () => {
         onChange={vi.fn()}
         label="Custom"
         id="my-custom-id"
-      />
+      />,
     );
     const trigger = screen.getByLabelText("Custom");
     expect(trigger.id).toBe("my-custom-id");
@@ -116,7 +124,9 @@ describe("UrgencyRadio", () => {
   });
 
   it("has proper fieldset/legend structure", () => {
-    const { container } = render(<UrgencyRadio value={null} onChange={vi.fn()} />);
+    const { container } = render(
+      <UrgencyRadio value={null} onChange={vi.fn()} />,
+    );
     const fieldset = container.querySelector("fieldset");
     expect(fieldset).toBeInTheDocument();
     const legend = container.querySelector("legend");
@@ -127,7 +137,9 @@ describe("UrgencyRadio", () => {
   it("shows descriptions for each option", () => {
     render(<UrgencyRadio value={null} onChange={vi.fn()} />);
     expect(screen.getByText("Learning at my own pace")).toBeInTheDocument();
-    expect(screen.getByText("Want to make steady progress")).toBeInTheDocument();
+    expect(
+      screen.getByText("Want to make steady progress"),
+    ).toBeInTheDocument();
     expect(screen.getByText("Need to learn quickly")).toBeInTheDocument();
   });
 
@@ -162,9 +174,15 @@ describe("AccessibilityToggles", () => {
 
   it("renders descriptions for each toggle", () => {
     render(<AccessibilityToggles value={defaultValue} onChange={vi.fn()} />);
-    expect(screen.getByText("Optimize content for screen reader users")).toBeInTheDocument();
-    expect(screen.getByText("Use dyslexia-friendly formatting")).toBeInTheDocument();
-    expect(screen.getByText("Avoid relying on color alone for information")).toBeInTheDocument();
+    expect(
+      screen.getByText("Optimize content for screen reader users"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Use dyslexia-friendly formatting"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Avoid relying on color alone for information"),
+    ).toBeInTheDocument();
   });
 
   it("calls onChange with updated object when a toggle is clicked", () => {
@@ -215,7 +233,7 @@ describe("AccessibilityToggles", () => {
 
   it("has fieldset/legend structure", () => {
     const { container } = render(
-      <AccessibilityToggles value={defaultValue} onChange={vi.fn()} />
+      <AccessibilityToggles value={defaultValue} onChange={vi.fn()} />,
     );
     const fieldset = container.querySelector("fieldset");
     expect(fieldset).toBeInTheDocument();
@@ -239,5 +257,41 @@ describe("AccessibilityToggles", () => {
       ...valueWithNotes,
       color_blind_safe: true,
     });
+  });
+});
+
+// ---------- NATIVE_LANGUAGE_OPTIONS ----------
+describe("NATIVE_LANGUAGE_OPTIONS", () => {
+  it("has 20 options (19 languages + Other)", () => {
+    expect(NATIVE_LANGUAGE_OPTIONS).toHaveLength(20);
+  });
+
+  it("every option has value, label, and hint", () => {
+    for (const option of NATIVE_LANGUAGE_OPTIONS) {
+      expect(option.value).toBeTruthy();
+      expect(option.label).toBeTruthy();
+      expect(option.hint).toBeTruthy();
+    }
+  });
+
+  it("includes common ISO 639-1 codes", () => {
+    const values = NATIVE_LANGUAGE_OPTIONS.map((o) => o.value);
+    expect(values).toContain("en");
+    expect(values).toContain("ur");
+    expect(values).toContain("hi");
+    expect(values).toContain("ar");
+    expect(values).toContain("zh");
+    expect(values).toContain("es");
+  });
+
+  it("has 'other' as last option", () => {
+    const last = NATIVE_LANGUAGE_OPTIONS[NATIVE_LANGUAGE_OPTIONS.length - 1];
+    expect(last.value).toBe(NATIVE_LANGUAGE_OTHER_VALUE);
+    expect(last.label).toBe("Other");
+  });
+
+  it("all values are unique", () => {
+    const values = NATIVE_LANGUAGE_OPTIONS.map((o) => o.value);
+    expect(new Set(values).size).toBe(values.length);
   });
 });

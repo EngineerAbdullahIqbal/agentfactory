@@ -33,6 +33,8 @@ export interface LearnerProfileSummary {
     language?: string;
     language_proficiency?: string | null;
     code_verbosity?: string | null;
+    native_language?: string | null;
+    preferred_code_language?: string | null;
   };
 }
 
@@ -77,6 +79,9 @@ export function buildProfileSummary(
       language: profile.delivery?.language,
       language_proficiency: profile.delivery?.language_proficiency,
       code_verbosity: profile.delivery?.code_verbosity,
+      native_language: profile.delivery?.native_language ?? null,
+      preferred_code_language:
+        profile.delivery?.preferred_code_language ?? null,
     },
   };
 }
