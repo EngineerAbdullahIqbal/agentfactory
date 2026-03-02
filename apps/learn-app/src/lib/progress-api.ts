@@ -3,6 +3,8 @@ import type {
   QuizSubmitResponse,
   LessonCompleteRequest,
   LessonCompleteResponse,
+  MilestoneCompleteRequest,
+  MilestoneCompleteResponse,
   FlashcardCompleteRequest,
   FlashcardCompleteResponse,
   ProgressResponse,
@@ -42,6 +44,24 @@ export async function completeLesson(
   });
   if (!response.ok) {
     throw new Error(`Lesson complete failed: ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function completeMilestone(
+  baseUrl: string,
+  data: MilestoneCompleteRequest,
+): Promise<MilestoneCompleteResponse> {
+  const response = await fetch(`${baseUrl}/api/v1/milestone/complete`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(),
+    },
+    body: JSON.stringify(data),
+  });
+  if (!response.ok) {
+    throw new Error(`Milestone complete failed: ${response.status}`);
   }
   return response.json();
 }
