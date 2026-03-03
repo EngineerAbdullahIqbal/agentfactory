@@ -26,14 +26,6 @@ The tools in Chapter 17 are powerful. But they are working on a foundation with 
 
 The same Claude in Excel. The same MCP connectors. A fundamentally different architecture underneath. That is what changes everything.
 
-### See It in Action
-
-Before reading a single lesson, try the interactive model below. Change any input — revenue growth, COGS percentage, operating expenses — and watch the calculations flow through Named Ranges exactly the way an IDFA-compliant model works.
-
-<iframe src="https://claude.site/public/artifacts/74d6d784-1029-481d-991f-aec7f298f45a/embed" title="IDFA Interactive Model — Startup Valuation" width="100%" height="600" frameBorder="0" allow="clipboard-write" allowFullScreen></iframe>
-
-Every formula in that model reads as a business rule. Every input is a Named Range. That is what the rest of this chapter teaches you to build.
-
 ## What You'll Learn
 
 By the end of this chapter, you will be able to:
@@ -84,5 +76,3 @@ When you finish this chapter, your perspective shifts:
 2. **You understand why architecture matters more than tools.** The same Claude in Excel gives categorically different results when the model underneath is IDFA-compliant. Architecture is the multiplier.
 3. **You can build audit-proof models.** Every formula carries its business intent in an Intent Note. Every complex calculation has LaTeX verification. Every agent result comes from the model, not from estimation.
 4. **You have a portable methodology.** The IDFA SKILL.md works across Claude, GitHub Copilot, Codex, and any skills-compatible agent. One investment in model architecture, every agent benefits.
-
-Start with [Lesson 1: The Coordinate Trap](./01-the-coordinate-trap.md).
