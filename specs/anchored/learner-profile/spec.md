@@ -260,8 +260,8 @@ This is the evolved schema incorporating all Phase 1 research findings and user 
     "include_visual_descriptions": "boolean",
     "language": "string — default 'English'",
     "language_proficiency": "native | fluent | intermediate | basic",
-    "native_language": "string | null — ISO 639-1 code or freetext, max 50 chars",
-    "preferred_code_language": "string | null — max 50 chars"
+    "native_language": "string | null — default 'en' (English). ISO 639-1 code or freetext, max 50 chars",
+    "preferred_code_language": "string | null — default 'Python', max 50 chars"
   }
 }
 ```
@@ -272,7 +272,7 @@ This is the evolved schema incorporating all Phase 1 research findings and user 
 | `visual_description_notes`     | `[REMOVED]`  | Absorbed into accessibility section                                       |
 | `language_proficiency`         | `[NEW]`      | Separates "what language" from "how well they know it"                    |
 | `native_language`              | `[NEW v1.4]` | Mother tongue — ISO 639-1 code from dropdown or freetext via "Other"      |
-| `preferred_code_language`      | `[NEW v1.4]` | Language for code examples — single-select from PROGRAMMING_LANGUAGES     |
+| `preferred_code_language`      | `[NEW v1.4]` | Language for code examples — single-select (Python / TypeScript)          |
 | `include_code_samples` default | MODIFIED     | Conditional: `false` when `programming.level == none`, `true` otherwise   |
 | `code_verbosity`               | MODIFIED     | Only relevant when `include_code_samples == true` (documented dependency) |
 
@@ -416,7 +416,7 @@ Structured form for fields with clear answer spaces (dropdowns, selects) + optio
 25. Optional: `communication.wants_check_in_questions` — toggle
 26. `delivery.native_language` — select dropdown (ISO 639-1 + "Other" freetext) `[NEW v1.4]`
 27. `delivery.language` + `delivery.language_proficiency` — always visible (locale gate removed v1.4)
-28. `delivery.preferred_code_language` — select dropdown from PROGRAMMING_LANGUAGES `[NEW v1.4]`
+28. `delivery.preferred_code_language` — select dropdown (Python / TypeScript) `[NEW v1.4]`
 
 **Phase 4: AI Enrichment (optional, 0-5 minutes)**
 
@@ -1306,8 +1306,8 @@ Every field has an explicit default. This is the full baseline for a brand-new p
 | `delivery.include_visual_descriptions` | `false`                   | `true` when `accessibility.screen_reader = true`                                                                                                                                            |
 | `delivery.language`                    | `"English"`               |                                                                                                                                                                                             |
 | `delivery.language_proficiency`        | `null`                    |                                                                                                                                                                                             |
-| `delivery.native_language`             | `null`                    | `[NEW v1.4]` ISO 639-1 code or freetext. No default — explicitly collected in onboarding.                                                                                                   |
-| `delivery.preferred_code_language`     | `null`                    | `[NEW v1.4]` No default — explicitly collected in onboarding.                                                                                                                               |
+| `delivery.native_language`             | `"en"`                    | `[NEW v1.4]` ISO 639-1 code or freetext via "Other"                                                                                                                                          |
+| `delivery.preferred_code_language`     | `"Python"`                | `[NEW v1.4]` Curated select (Python / TypeScript)                                                                                                                                            |
 
 **Accessibility (Section 7):**
 
@@ -1426,10 +1426,10 @@ These additions have the highest personalization impact per second of user time 
 | `communication.preferred_structure` | "Show me examples first" / "Explain the theory first" / "Start with the problem" | 3 sec |
 | `communication.verbosity`           | "Keep it brief" / "Balanced" / "Give me all the details"                         | 3 sec |
 | `communication.tone`                | "Casual & friendly" / "Professional" / "Peer-to-peer (skip the basics)"          | 3 sec |
-| `delivery.native_language`          | Select: 20 ISO 639-1 languages + "Other" (freetext input) `[NEW v1.4]`           | 3 sec |
-| `delivery.language`                 | Text input, default "English" — **always visible** (locale gate removed v1.4)    | 3 sec |
+| `delivery.native_language`          | Select: ISO 639-1 dropdown + "Other" (freetext), default `"en"` (English) `[NEW v1.4]` | 3 sec |
+| `delivery.language`                 | Select: language dropdown + "Other" (freetext), default "English" — **always visible** (locale gate removed v1.4) | 3 sec |
 | `delivery.language_proficiency`     | Radio: native / fluent / intermediate / basic (shown when language ≠ English)    | 3 sec |
-| `delivery.preferred_code_language`  | Select: PROGRAMMING_LANGUAGES options `[NEW v1.4]`                               | 3 sec |
+| `delivery.preferred_code_language`  | Select: Python / TypeScript (default Python) `[NEW v1.4]`                        | 3 sec |
 
 **Why:** These fields control 60%+ of how the AI tutor communicates. The two new fields (native language, preferred code language) were identified as high-signal missing dimensions from user feedback: "Meri mother language Urdu hai" and "Kis programming language mein example dekhna pasand karta hoon."
 **Time cost:** ~20 seconds total. One screen, 3 radio groups + 2 selects + 1 text input.
@@ -1603,10 +1603,10 @@ interface LearnerProfileSummary {
 - `communication.preferred_structure` — 3-option radio
 - `communication.verbosity` — 3-option radio
 - `communication.tone` — 3-option radio
-- `delivery.native_language` — select (20 ISO 639-1 + "Other" freetext) `[NEW v1.4]`
-- `delivery.language` — text input, always visible (locale gate removed v1.4)
+- `delivery.native_language` — select (ISO 639-1 + "Other" freetext), default `"en"` (English) `[NEW v1.4]`
+- `delivery.language` — select (with "Other" freetext), default "English" — always visible (locale gate removed v1.4)
 - `delivery.language_proficiency` — radio (shown when language ≠ English)
-- `delivery.preferred_code_language` — select from PROGRAMMING_LANGUAGES `[NEW v1.4]`
+- `delivery.preferred_code_language` — select (Python / TypeScript), default "Python" `[NEW v1.4]`
 
 **Phase 4: AI Enrichment (optional, 0-5 minutes)** — unchanged
 

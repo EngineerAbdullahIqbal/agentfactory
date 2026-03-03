@@ -29,8 +29,8 @@ class TestDeliveryDefaults:
         assert defaults["code_verbosity"] == "fully-explained"
         assert defaults["include_visual_descriptions"] is False
         assert defaults["language"] == "English"
-        assert defaults["native_language"] is None
-        assert defaults["preferred_code_language"] is None
+        assert defaults["native_language"] == "en"
+        assert defaults["preferred_code_language"] == "Python"
 
     def test_delivery_defaults_none(self):
         defaults = get_delivery_defaults("none")

@@ -3,7 +3,6 @@ import type {
   CommunicationSection,
   DeliverySection,
 } from "@/lib/learner-profile-types";
-import { PROGRAMMING_LANGUAGES } from "@/lib/learner-profile-types";
 import {
   PREFERRED_STRUCTURE_OPTIONS,
   VERBOSITY_OPTIONS,
@@ -13,6 +12,7 @@ import {
   NATIVE_LANGUAGE_OTHER_VALUE,
   RESPONSE_LANGUAGE_OPTIONS,
   RESPONSE_LANGUAGE_OTHER_VALUE,
+  PREFERRED_CODE_LANGUAGE_OPTIONS,
   resolveNativeLanguageSelectState,
   resolveResponseLanguageSelectState,
 } from "@/lib/profile-field-definitions";
@@ -80,14 +80,14 @@ export function QuickPreferencesStep({
     selectValue: nativeSelectValue,
     showOtherInput: showNativeOtherInput,
     otherText: nativeOtherText,
-  } = resolveNativeLanguageSelectState(delivery.native_language ?? null, "");
+  } = resolveNativeLanguageSelectState(delivery.native_language ?? "en", "");
 
   // Determine response language select state (stores full names like "English")
   const {
     selectValue: langSelectValue,
     showOtherInput: showLangOtherInput,
     otherText: langOtherText,
-  } = resolveResponseLanguageSelectState(delivery.language ?? null, "");
+  } = resolveResponseLanguageSelectState(delivery.language ?? "English", "");
   const currentLanguage = delivery.language ?? "English";
   const showProficiency = currentLanguage.toLowerCase() !== "english";
 
@@ -253,8 +253,6 @@ export function QuickPreferencesStep({
             options={NATIVE_LANGUAGE_OPTIONS}
             placeholder="Select your native language"
             searchPlaceholder="Search languages…"
-            allowOther
-            otherValue={NATIVE_LANGUAGE_OTHER_VALUE}
             triggerClassName="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
           />
           {showNativeOtherInput && (
@@ -306,8 +304,6 @@ export function QuickPreferencesStep({
             options={RESPONSE_LANGUAGE_OPTIONS}
             placeholder="Select your preferred language"
             searchPlaceholder="Search languages…"
-            allowOther
-            otherValue={RESPONSE_LANGUAGE_OTHER_VALUE}
             triggerClassName="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
           />
           {showLangOtherInput && (
@@ -396,14 +392,14 @@ export function QuickPreferencesStep({
           </Label>
           <SearchableSelect
             id="onboarding-preferred-code-language"
-            value={delivery.preferred_code_language ?? ""}
+            value={delivery.preferred_code_language ?? "Python"}
             onValueChange={(val: string) =>
               onChangeDelivery({
                 ...delivery,
                 preferred_code_language: val || null,
               })
             }
-            options={PROGRAMMING_LANGUAGES}
+            options={PREFERRED_CODE_LANGUAGE_OPTIONS}
             placeholder="Select your preferred language for code examples"
             searchPlaceholder="Search languages…"
             triggerClassName="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"

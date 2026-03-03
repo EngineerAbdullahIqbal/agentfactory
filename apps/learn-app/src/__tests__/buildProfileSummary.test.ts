@@ -79,6 +79,7 @@ function makeProfile(
       notes: null,
     },
     onboarding_completed: true,
+    onboarding_sections_completed: {},
     onboarding_progress: 100,
     profile_completeness: 90,
     created_at: "2026-01-01T00:00:00Z",

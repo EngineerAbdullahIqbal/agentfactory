@@ -601,4 +601,14 @@ export function resolveNativeLanguageLabel(value: string | null): string {
 // Programming languages (chip select)
 // ---------------------------------------------------------------------------
 
+/** delivery.preferred_code_language is a curated subset (code examples only). */
+export const PREFERRED_CODE_LANGUAGE_OPTIONS: FieldOption[] = [
+  { value: "Python", label: "Python", hint: "Show code examples in Python" },
+  {
+    value: "TypeScript",
+    label: "TypeScript",
+    hint: "Show code examples in TypeScript",
+  },
+];
+
 export { PROGRAMMING_LANGUAGES } from "./learner-profile-types";

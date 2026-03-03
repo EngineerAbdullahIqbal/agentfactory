@@ -41,7 +41,7 @@ export function DeliveryView({ data }: { data: unknown }) {
           </div>
           <div className="flex items-center gap-2 mt-1">
             <span className="text-sm font-medium">
-              {delivery?.language || "Not set"}
+              {delivery?.language || "English"}
             </span>
             {delivery?.language_proficiency && (
               <Badge variant="secondary" className="text-xs capitalize">
@@ -58,7 +58,7 @@ export function DeliveryView({ data }: { data: unknown }) {
             Native Language
           </div>
           <div className="text-sm font-medium">
-            {resolveNativeLanguageLabel(delivery?.native_language ?? null)}
+            {resolveNativeLanguageLabel(delivery?.native_language ?? "en")}
           </div>
         </div>
         <div className="space-y-2 border border-border/50 rounded-xl p-4 bg-background/50">
@@ -66,7 +66,7 @@ export function DeliveryView({ data }: { data: unknown }) {
             Preferred Code Language
           </div>
           <div className="text-sm font-medium">
-            {delivery?.preferred_code_language || "Not set"}
+            {delivery?.preferred_code_language || "Python"}
           </div>
         </div>
       </div>
