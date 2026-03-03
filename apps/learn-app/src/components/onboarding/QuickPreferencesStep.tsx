@@ -21,13 +21,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 import { itemVariants, staggerContainerVariants } from "./variants";
 
 interface QuickPreferencesStepProps {
@@ -243,7 +237,8 @@ export function QuickPreferencesStep({
           >
             Native Language
           </Label>
-          <Select
+          <SearchableSelect
+            id="onboarding-native-language"
             value={nativeSelectValue}
             onValueChange={(val: string) => {
               if (val === NATIVE_LANGUAGE_OTHER_VALUE) {
@@ -255,21 +250,13 @@ export function QuickPreferencesStep({
                 onChangeDelivery({ ...delivery, native_language: val || null });
               }
             }}
-          >
-            <SelectTrigger
-              id="onboarding-native-language"
-              className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
-            >
-              <SelectValue placeholder="Select your native language" />
-            </SelectTrigger>
-            <SelectContent className="z-[200]">
-              {NATIVE_LANGUAGE_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={NATIVE_LANGUAGE_OPTIONS}
+            placeholder="Select your native language"
+            searchPlaceholder="Search languages…"
+            allowOther
+            otherValue={NATIVE_LANGUAGE_OTHER_VALUE}
+            triggerClassName="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
+          />
           {showNativeOtherInput && (
             <Input
               id="onboarding-native-language-other"
@@ -300,7 +287,8 @@ export function QuickPreferencesStep({
           >
             Preferred Language
           </Label>
-          <Select
+          <SearchableSelect
+            id="onboarding-language"
             value={langSelectValue}
             onValueChange={(val: string) => {
               if (val === RESPONSE_LANGUAGE_OTHER_VALUE) {
@@ -315,21 +303,13 @@ export function QuickPreferencesStep({
                 });
               }
             }}
-          >
-            <SelectTrigger
-              id="onboarding-language"
-              className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
-            >
-              <SelectValue placeholder="Select your preferred language" />
-            </SelectTrigger>
-            <SelectContent className="z-[200]">
-              {RESPONSE_LANGUAGE_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={RESPONSE_LANGUAGE_OPTIONS}
+            placeholder="Select your preferred language"
+            searchPlaceholder="Search languages…"
+            allowOther
+            otherValue={RESPONSE_LANGUAGE_OTHER_VALUE}
+            triggerClassName="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
+          />
           {showLangOtherInput && (
             <Input
               id="onboarding-language-other"
@@ -414,7 +394,8 @@ export function QuickPreferencesStep({
           >
             Preferred Code Language
           </Label>
-          <Select
+          <SearchableSelect
+            id="onboarding-preferred-code-language"
             value={delivery.preferred_code_language ?? ""}
             onValueChange={(val: string) =>
               onChangeDelivery({
@@ -422,21 +403,11 @@ export function QuickPreferencesStep({
                 preferred_code_language: val || null,
               })
             }
-          >
-            <SelectTrigger
-              id="onboarding-preferred-code-language"
-              className="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
-            >
-              <SelectValue placeholder="Select your preferred language for code examples" />
-            </SelectTrigger>
-            <SelectContent className="z-[200]">
-              {PROGRAMMING_LANGUAGES.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            options={PROGRAMMING_LANGUAGES}
+            placeholder="Select your preferred language for code examples"
+            searchPlaceholder="Search languages…"
+            triggerClassName="w-full text-lg h-auto rounded-xl border border-border/50 bg-background/50 px-5 py-4 text-foreground shadow-sm focus-visible:ring-2 focus-visible:ring-primary/20 transition-colors font-medium"
+          />
           <p className="text-xs text-muted-foreground/70 pl-1">
             Code examples will be shown in this language when possible.
           </p>

@@ -26,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 
 function NativeLanguageField({
   delivery,
@@ -45,7 +46,8 @@ function NativeLanguageField({
       <label htmlFor="native-language" className="text-sm font-medium">
         Native Language
       </label>
-      <Select
+      <SearchableSelect
+        id="native-language"
         value={selectValue}
         onValueChange={(val) => {
           if (val === NULL_SELECT_VALUE) {
@@ -56,24 +58,12 @@ function NativeLanguageField({
             update("native_language", val);
           }
         }}
-      >
-        <SelectTrigger id="native-language" className="w-full">
-          <SelectValue placeholder="Select…" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem
-            value={NULL_SELECT_VALUE}
-            className="italic text-muted-foreground"
-          >
-            Select…
-          </SelectItem>
-          {NATIVE_LANGUAGE_OPTIONS.map((opt) => (
-            <SelectItem key={opt.value} value={opt.value}>
-              {opt.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        options={NATIVE_LANGUAGE_OPTIONS}
+        placeholder="Select…"
+        searchPlaceholder="Search languages…"
+        allowOther
+        otherValue={NATIVE_LANGUAGE_OTHER_VALUE}
+      />
       {showOtherInput && (
         <Input
           id="native-language-other"
@@ -279,7 +269,8 @@ export function DeliveryEdit({
         <label htmlFor="delivery-language" className="text-sm font-medium">
           Language
         </label>
-        <Select
+        <SearchableSelect
+          id="delivery-language"
           value={langSelectValue}
           onValueChange={(val) => {
             if (val === NULL_SELECT_VALUE) {
@@ -290,18 +281,12 @@ export function DeliveryEdit({
               update("language", val);
             }
           }}
-        >
-          <SelectTrigger id="delivery-language" className="w-full">
-            <SelectValue placeholder="Select…" />
-          </SelectTrigger>
-          <SelectContent>
-            {RESPONSE_LANGUAGE_OPTIONS.map((opt) => (
-              <SelectItem key={opt.value} value={opt.value}>
-                {opt.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={RESPONSE_LANGUAGE_OPTIONS}
+          placeholder="Select…"
+          searchPlaceholder="Search languages…"
+          allowOther
+          otherValue={RESPONSE_LANGUAGE_OTHER_VALUE}
+        />
         {showLangOtherInput && (
           <Input
             id="delivery-language-other"
@@ -374,7 +359,8 @@ export function DeliveryEdit({
             fieldSources={fieldSources}
           />
         </div>
-        <Select
+        <SearchableSelect
+          id="preferred-code-language"
           value={delivery?.preferred_code_language || NULL_SELECT_VALUE}
           onValueChange={(val) =>
             update(
@@ -382,24 +368,10 @@ export function DeliveryEdit({
               val === NULL_SELECT_VALUE ? null : val,
             )
           }
-        >
-          <SelectTrigger id="preferred-code-language" className="w-full">
-            <SelectValue placeholder="Select…" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem
-              value={NULL_SELECT_VALUE}
-              className="italic text-muted-foreground"
-            >
-              Select…
-            </SelectItem>
-            {PROGRAMMING_LANGUAGES.map((opt) => (
-              <SelectItem key={opt.value} value={opt.value}>
-                {opt.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          options={PROGRAMMING_LANGUAGES}
+          placeholder="Select…"
+          searchPlaceholder="Search languages…"
+        />
         <p className="text-xs text-muted-foreground">
           Code examples will be shown in this language when possible.
         </p>
