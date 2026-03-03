@@ -2,7 +2,6 @@ import React from "react";
 import type { DeliverySection } from "@/lib/learner-profile-types";
 import {
   NULL_SELECT_VALUE,
-  PROGRAMMING_LANGUAGES,
 } from "@/lib/learner-profile-types";
 import {
   OUTPUT_FORMAT_OPTIONS,
@@ -13,6 +12,7 @@ import {
   NATIVE_LANGUAGE_OTHER_VALUE,
   RESPONSE_LANGUAGE_OPTIONS,
   RESPONSE_LANGUAGE_OTHER_VALUE,
+  PREFERRED_CODE_LANGUAGE_OPTIONS,
   resolveNativeLanguageSelectState,
   resolveResponseLanguageSelectState,
 } from "@/lib/profile-field-definitions";
@@ -37,7 +37,7 @@ function NativeLanguageField({
 }) {
   const { selectValue, showOtherInput, otherText } =
     resolveNativeLanguageSelectState(
-      delivery?.native_language ?? null,
+      delivery?.native_language ?? "en",
       NULL_SELECT_VALUE,
     );
 
@@ -61,8 +61,6 @@ function NativeLanguageField({
         options={NATIVE_LANGUAGE_OPTIONS}
         placeholder="Select…"
         searchPlaceholder="Search languages…"
-        allowOther
-        otherValue={NATIVE_LANGUAGE_OTHER_VALUE}
       />
       {showOtherInput && (
         <Input
@@ -116,7 +114,7 @@ export function DeliveryEdit({
     showOtherInput: showLangOtherInput,
     otherText: langOtherText,
   } = resolveResponseLanguageSelectState(
-    delivery?.language ?? null,
+    delivery?.language ?? "English",
     NULL_SELECT_VALUE,
   );
 
@@ -284,8 +282,6 @@ export function DeliveryEdit({
           options={RESPONSE_LANGUAGE_OPTIONS}
           placeholder="Select…"
           searchPlaceholder="Search languages…"
-          allowOther
-          otherValue={RESPONSE_LANGUAGE_OTHER_VALUE}
         />
         {showLangOtherInput && (
           <Input
@@ -361,14 +357,14 @@ export function DeliveryEdit({
         </div>
         <SearchableSelect
           id="preferred-code-language"
-          value={delivery?.preferred_code_language || NULL_SELECT_VALUE}
+          value={delivery?.preferred_code_language || "Python"}
           onValueChange={(val) =>
             update(
               "preferred_code_language",
               val === NULL_SELECT_VALUE ? null : val,
             )
           }
-          options={PROGRAMMING_LANGUAGES}
+          options={PREFERRED_CODE_LANGUAGE_OPTIONS}
           placeholder="Select…"
           searchPlaceholder="Search languages…"
         />

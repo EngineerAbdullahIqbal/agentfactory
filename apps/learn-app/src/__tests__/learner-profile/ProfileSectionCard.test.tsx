@@ -75,6 +75,8 @@ const mockProfile: ProfileResponse = {
     include_visual_descriptions: null,
     language: "en",
     language_proficiency: null,
+    native_language: null,
+    preferred_code_language: null,
   },
   accessibility: {
     screen_reader: false,
@@ -84,6 +86,7 @@ const mockProfile: ProfileResponse = {
     notes: null,
   },
   onboarding_completed: true,
+  onboarding_sections_completed: {},
   onboarding_progress: 100,
   profile_completeness: 65,
   created_at: "2026-01-01T00:00:00Z",
