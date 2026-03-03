@@ -1,8 +1,6 @@
 import React from "react";
 import type { DeliverySection } from "@/lib/learner-profile-types";
-import {
-  NULL_SELECT_VALUE,
-} from "@/lib/learner-profile-types";
+import { NULL_SELECT_VALUE } from "@/lib/learner-profile-types";
 import {
   OUTPUT_FORMAT_OPTIONS,
   TARGET_LENGTH_OPTIONS,
@@ -265,7 +263,7 @@ export function DeliveryEdit({
 
       <div className="space-y-1.5">
         <label htmlFor="delivery-language" className="text-sm font-medium">
-          Language
+          Preferred Content Delivery Language
         </label>
         <SearchableSelect
           id="delivery-language"

@@ -37,7 +37,7 @@ export function DeliveryView({ data }: { data: unknown }) {
         </div>
         <div className="space-y-2 border border-border/50 rounded-xl p-4 bg-background/50">
           <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Language Protocol
+            Preferred Content Delivery Language
           </div>
           <div className="flex items-center gap-2 mt-1">
             <span className="text-sm font-medium">
