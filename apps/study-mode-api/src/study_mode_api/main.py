@@ -234,40 +234,13 @@ async def chatkit_endpoint(request: Request):
 
 
 @app.get("/health")
-async def health_check(request: Request):
-    """Health check endpoint with database and Redis status."""
-    status = {"status": "healthy", "version": "5.1.0", "services": {}}
+async def health_check():
+    """Lightweight health check — no DB or Redis hits.
 
-    # Check PostgreSQL
-    postgres_store = getattr(request.app.state, "postgres_store", None)
-    if postgres_store:
-        try:
-            from sqlalchemy import text
-
-            async with postgres_store.engine.connect() as conn:
-                await conn.execute(text("SELECT 1"))
-            status["services"]["database"] = "ok"
-        except Exception as e:
-            status["services"]["database"] = f"error: {str(e)}"
-            status["status"] = "degraded"
-    else:
-        status["services"]["database"] = "not_initialized"
-        status["status"] = "degraded"
-
-    # Check Redis
-    from api_infra.core.redis_cache import get_redis
-
-    redis_client = get_redis()
-    if redis_client:
-        try:
-            await redis_client.ping()
-            status["services"]["redis"] = "ok"
-        except Exception as e:
-            status["services"]["redis"] = f"error: {str(e)}"
-    else:
-        status["services"]["redis"] = "not_initialized"
-
-    return status
+    Cloud Run uses TCP probes for liveness. This endpoint exists
+    for manual checks and uptime monitors only.
+    """
+    return {"status": "healthy", "version": "5.1.0"}
 
 
 @app.post("/admin/invalidate-cache")

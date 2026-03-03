@@ -200,9 +200,13 @@ Same connectors. Different scope. Your knowledge on top.
 
 ## What Comes Next
 
-Chapter 18 turns to the legal and compliance domain, where the governance requirements are stricter, the domain knowledge is even more specific to jurisdiction and practice area, and the stakes for systematic error are highest. The Knowledge Extraction Method transfers directly — the same five questions, the same document extraction framework, the same validation loop — but the legal domain adds constraints that the finance domain does not require: citation verification, jurisdictional specificity, and the absolute boundary between legal information and legal advice.
+Every tool you used in this chapter — Claude in Excel, the Cowork finance plugins, the six Agent Skills, the MCP connectors — operated on an assumption that went unexamined: that the spreadsheets those tools read are designed the way spreadsheets have always been designed. Cell addresses encode the logic. Formulas reference coordinates. The model's meaning lives in the analyst's head, not in the workbook.
 
-The methodology you learned in Chapter 16 and applied in Chapter 17 is now your permanent toolkit. What changes in each subsequent domain chapter is not the method but the professional context in which you apply it.
+What if that foundation is the bottleneck?
+
+Chapter 18 introduces the **Intent-Driven Financial Architecture (IDFA)** — Panaversity original research that replaces coordinate-based formulas with Named Range business rules, making every model human-readable, AI-operable, and mathematically audit-proof. IDFA does not replace the tools from Chapter 17. It transforms the foundation those tools operate on — and the result is a categorical improvement in what your finance domain agents can do.
+
+The same Claude in Excel. The same MCP connectors. A fundamentally different architecture underneath. That is what changes everything.
 
 ## Try With AI
 
@@ -252,28 +256,30 @@ to the enterprise extension layer.
 
 **What you're learning:** How to see the chapter's content as a connected architecture rather than a list of features. The synthesis exercise forces you to articulate the relationship between layers — understanding this relationship is what distinguishes someone who can use the tools from someone who can design extension strategies for an organisation.
 
-### Prompt 3: Cross-Domain Transfer
+### Prompt 3: Architectural Foundation Analysis
 
 ```
-I am about to start Chapter 18 (Legal and Compliance Domain Agents).
-Before I do, help me identify what transfers from Chapter 17 and
-what will be different.
+I have just completed Chapter 17 on Finance Domain Agents — Claude in
+Excel, Cowork plugins, MCP connectors, and enterprise extensions.
 
-Based on what you know about the legal domain:
-1. Which of the eleven finance extension areas have direct legal
-   analogues? (e.g., regulatory reporting in finance maps to what
-   in legal?)
-2. What new constraints does the legal domain add that finance did not
-   require?
-3. How would the Knowledge Extraction Method need to adapt — same
-   methodology, different application?
-4. What would a "same connectors, different scope" insight look like
-   in the legal domain?
+Chapter 18 introduces the Intent-Driven Financial Architecture (IDFA),
+which replaces coordinate-based formulas with Named Range business rules.
 
-Help me build a mental bridge between the two chapters.
+Before I start, help me understand the gap:
+1. Take any moderately complex Excel formula (e.g., =B14-(C14*$F$8)).
+   What can an AI agent infer about its business purpose from the
+   coordinates alone?
+2. Now rewrite it as =Revenue_Y2 - (Revenue_Y2 * COGS_Pct_Y2).
+   What can the same agent infer now?
+3. What capabilities become possible when every formula in a model
+   reads as a business rule rather than a coordinate reference?
+4. How would this change the quality of the tools I learned in
+   Chapter 17 — scenario testing, error debugging, model comprehension?
+
+Help me see why architecture transforms the tools I already have.
 ```
 
-**What you're learning:** How to transfer methodology across domains. The Knowledge Extraction Method is domain-agnostic, but its application is domain-specific. This prompt makes the transfer explicit — by mapping finance concepts to legal analogues, you build the mental model that each domain chapter is an application of the same methodology, not a new methodology to learn.
+**What you're learning:** How the foundation underneath your tools determines their ceiling. The same Claude in Excel reading `=B14-(C14*$F$8)` versus `=Revenue_Y2 - (Revenue_Y2 * COGS_Pct_Y2)` gives categorically different answers — not because the agent changed, but because the model became readable. This prompt builds the mental bridge to Chapter 18's central argument: architecture is the multiplier.
 
 ## Flashcards Study Aid
 

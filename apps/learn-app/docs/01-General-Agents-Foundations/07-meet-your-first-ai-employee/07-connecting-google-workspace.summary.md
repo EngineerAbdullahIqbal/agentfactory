@@ -41,3 +41,11 @@ sidebar_position: 7.5
 - Every security rule from L05 applies with higher stakes after connecting Google Workspace
 - A malicious skill with gog access could read email, send messages from your account, or exfiltrate documents
 - Consider using a dedicated test Google account rather than your primary one when learning
+
+## Secrets Management
+
+- **SecretRefs**: References that point to a secrets provider instead of storing credentials as plaintext in config files
+- Run `openclaw secrets audit` after connecting integrations to detect plaintext credentials, unresolved refs, shadowed refs, and legacy residue
+- Migration workflow: **audit → configure → dry-run → apply → audit again → reload**
+- No rollback backups by design -- backup files with raw credentials are themselves an attack vector
+- This is operator-side tooling (run in your terminal, not through your messaging channel)

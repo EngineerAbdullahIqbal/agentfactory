@@ -87,9 +87,7 @@ USER app
 
 EXPOSE 8004
 
-# Health check using Python stdlib (no curl needed)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8004/health', timeout=3)" || exit 1
+# Note: No HEALTHCHECK — Cloud Run uses TCP startup probes, not Docker HEALTHCHECK
 
 STOPSIGNAL SIGTERM
 

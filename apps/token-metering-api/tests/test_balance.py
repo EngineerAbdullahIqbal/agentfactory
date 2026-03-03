@@ -82,12 +82,15 @@ async def test_get_balance_missing_user_header(client: AsyncClient):
     """Test that missing X-User-ID header falls back to dev_user_id.
 
     In dev mode, missing X-User-ID falls back to settings.dev_user_id.
-    Since that user doesn't exist in test DB, returns 404.
+    Auto-provisioning creates an account with starter credits.
     """
     response = await client.get("/api/v1/balance")
 
-    # Dev mode falls back to dev_user_id which doesn't exist in test DB
-    assert response.status_code == 404
+    # Dev mode falls back to dev_user_id; auto-provisioning creates the account
+    assert response.status_code == 200
+    data = response.json()
+    assert data["balance"] == STARTER_TOKENS
+    assert data["effective_balance"] == STARTER_TOKENS
 
 
 async def test_get_allocations_returns_audit_records(client: AsyncClient, test_session):
@@ -145,11 +148,11 @@ async def test_get_allocations_returns_audit_records(client: AsyncClient, test_s
     assert amounts["Test topup"] == 500
 
 
-async def test_get_balance_returns_404_for_nonexistent_user(client: AsyncClient):
-    """Test that getting balance for a non-existent user returns 404.
+async def test_get_balance_auto_provisions_for_new_user(client: AsyncClient):
+    """Test that getting balance for a non-existent user auto-provisions account.
 
-    BalanceService.get_balance returns None for non-existent users.
-    Account creation happens via MeteringService.check_balance (on first request).
+    BalanceService.get_balance now calls AccountService.get_or_create()
+    when no account exists, returning 200 with STARTER_TOKENS.
     """
     new_user_id = "brand-new-user-999"
 
@@ -158,8 +161,12 @@ async def test_get_balance_returns_404_for_nonexistent_user(client: AsyncClient)
         headers={"X-User-ID": new_user_id},
     )
 
-    # Balance endpoint does NOT auto-create accounts
-    assert response.status_code == 404
+    assert response.status_code == 200
+    data = response.json()
+    assert data["user_id"] == new_user_id
+    assert data["balance"] == STARTER_TOKENS
+    assert data["effective_balance"] == STARTER_TOKENS
+    assert data["is_expired"] is False
 
 
 async def test_get_transactions_filter_by_thread_id(

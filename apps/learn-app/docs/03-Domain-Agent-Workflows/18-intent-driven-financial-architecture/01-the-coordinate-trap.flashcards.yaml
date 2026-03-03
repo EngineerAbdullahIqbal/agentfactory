@@ -1,0 +1,67 @@
+deck:
+  id: "ch18-01-the-coordinate-trap"
+  title: "The Coordinate Trap"
+  description: "Formula Rot, its four symptoms, the Coordinate-First paradigm, and why AI agents struggle to interpret coordinate-based financial models."
+  tags: ["formula-rot", "coordinate-trap", "financial-modelling", "AI-opacity", "IDFA"]
+  version: 1
+
+cards:
+  - id: "ch18-01-formula-rot-001"
+    front: "What is Formula Rot?"
+    back: "The progressive degradation of a financial model's integrity and comprehensibility as it ages, is modified by multiple people, and is adapted for purposes beyond its original design. It is caused by the coordinate-first design of spreadsheets — not by individual analyst mistakes."
+    tags: ["formula-rot", "definition"]
+    difficulty: "basic"
+
+  - id: "ch18-01-silent-breakage-002"
+    front: "What is silent breakage in the context of Formula Rot?"
+    back: "When a row or column is inserted, coordinate-based formulas may continue to calculate but now reference different cells than intended. Excel does not warn you. The model produces a wrong answer with the same confidence as a correct one."
+    tags: ["formula-rot", "silent-breakage"]
+    difficulty: "basic"
+
+  - id: "ch18-01-logic-diffusion-003"
+    front: "What is logic diffusion?"
+    back: "A business assumption that should be encoded in one place is scattered across multiple cells, often across multiple tabs. When the assumption changes, some cells get updated and others do not — producing silent discrepancies that may not surface for months."
+    tags: ["formula-rot", "logic-diffusion"]
+    difficulty: "basic"
+
+  - id: "ch18-01-audit-burden-004"
+    front: "What is audit burden in the context of Formula Rot?"
+    back: "Every new user of a coordinate-based model must independently reconstruct the business logic by clicking through cell references. In complex models this takes hours; in models inherited from departed colleagues it may be impossible to complete with full confidence."
+    tags: ["formula-rot", "audit-burden"]
+    difficulty: "basic"
+
+  - id: "ch18-01-ai-opacity-005"
+    front: "What is AI opacity and why does it affect financial models?"
+    back: "AI opacity is the inability of an AI agent to infer business intent from coordinate-based formulas. The agent can read all cells simultaneously and describe the arithmetic, but it cannot determine what business rule a formula like =B14-(C14*$F$8+D$3) was meant to encode — because coordinates carry position, not meaning."
+    tags: ["formula-rot", "AI-opacity"]
+    difficulty: "intermediate"
+
+  - id: "ch18-01-structural-cause-006"
+    front: "Why is Formula Rot structural rather than caused by individual mistakes?"
+    back: "Formula Rot arises from the coordinate-first design of spreadsheets — the fundamental decision to encode business logic as cell addresses. Even an expert analyst building a perfect model produces formulas that exhibit all four symptoms, because the medium (coordinates) does not carry business meaning."
+    tags: ["formula-rot", "coordinate-first"]
+    difficulty: "intermediate"
+
+  - id: "ch18-01-coordinate-first-007"
+    front: "What does 'coordinate-first modelling' mean?"
+    back: "A design paradigm where business logic is defined by cell location. The formula =B14-C14 means 'the value in B14 minus the value in C14.' The meaning of that subtraction is not in the formula — it is in the column headers, which may or may not accurately describe the cells."
+    tags: ["coordinate-first", "paradigm"]
+    difficulty: "basic"
+
+  - id: "ch18-01-business-cost-008"
+    front: "Name three measurable business costs of Formula Rot."
+    back: "1. Increased audit hours — every formula must be manually traced through cell references. 2. Restatement risk — silent breakage produces incorrect numbers that pass through review cycles. 3. Model handover failure — when the original builder leaves, replacements cannot reconstruct business logic with confidence."
+    tags: ["business-cost", "formula-rot"]
+    difficulty: "intermediate"
+
+  - id: "ch18-01-documentation-009"
+    front: "Why doesn't better documentation solve Formula Rot?"
+    back: "Documentation that exists outside the formula drifts from the formula over time. The formula changes; the documentation does not. Within months, the documentation describes a model that no longer exists. The structural solution is formulas that document themselves — where the business rule is visible in the formula text."
+    tags: ["documentation", "formula-rot"]
+    difficulty: "intermediate"
+
+  - id: "ch18-01-compounding-010"
+    front: "How do the four symptoms of Formula Rot compound each other?"
+    back: "Silent breakage goes undetected because audit burden makes verification impractical. Logic diffusion creates inconsistencies that AI agents cannot flag because AI opacity prevents them from distinguishing intentional variation from accidental drift. The model degrades, and nobody has the tools to notice."
+    tags: ["formula-rot", "compounding"]
+    difficulty: "intermediate"

@@ -1,0 +1,67 @@
+deck:
+  id: "ch18-10-enterprise-governance"
+  title: "Enterprise Governance"
+  description: "Plugin enforcement vs organisational governance — the four IDFA governance artefacts that handle what the plugin cannot: accountability, tracking, approval workflows, and compliance metrics."
+  tags: ["IDFA", "governance", "plugin", "standards-document", "model-registry", "validation-protocol", "agent-policy", "sector-naming"]
+  version: 2
+
+cards:
+  - id: "ch18-10-enforcement-vs-governance-001"
+    front: "What is the difference between plugin enforcement and organisational governance in IDFA?"
+    back: "The plugin enforces technical guardrails automatically (naming conventions, layer isolation, LaTeX verification, Intent Notes, MCP dependency). Governance handles what the plugin cannot: accountability (who approves exceptions), tracking (which models exist, who owns them), approval workflows (Named Range modifications, production gating), and compliance metrics (Intent Note coverage %)."
+    tags: ["governance", "plugin", "enforcement"]
+    difficulty: "basic"
+
+  - id: "ch18-10-four-artefacts-002"
+    front: "What are the four governance artefacts required for enterprise IDFA deployment?"
+    back: "1. Standards Document — addendum covering what the plugin doesn't enforce (sector prefixes, exceptions, version policy). 2. Model Registry — centralised record of every IDFA-compliant model. 3. Validation Protocol — formal gate before production use. 4. Agent Standards Policy — approval workflows, session log retention, production gating, plugin version management."
+    tags: ["governance", "artefacts"]
+    difficulty: "basic"
+
+  - id: "ch18-10-standards-addendum-003"
+    front: "What does the Standards Document cover that the IDFA plugin does not?"
+    back: "Four things: (1) Sector extensions — which domain prefix (IB_, PE_, FP_, TR_, CR_) your team uses. (2) Exception process — who approves exceptions, how documented, when they expire. (3) Organisation-specific LaTeX additions beyond WACC/NPV/DCF/IRR. (4) Plugin version policy — which version is approved for production, who evaluates updates."
+    tags: ["standards-document", "plugin-gaps"]
+    difficulty: "intermediate"
+
+  - id: "ch18-10-model-registry-004"
+    front: "What are the five required fields in an IDFA Model Registry?"
+    back: "Model Name, Owner (analyst responsible), Last Validation Date, Intent Note Coverage % (AI-generated formulas with Intent Notes / total AI-generated formulas), and Model Link (file path or URL). The Controller reviews the registry quarterly."
+    tags: ["model-registry", "fields"]
+    difficulty: "basic"
+
+  - id: "ch18-10-intent-coverage-005"
+    front: "What does Intent Note Coverage % measure and why is it the key compliance metric?"
+    back: "Intent Note Coverage % = number of AI-generated formulas with Intent Notes divided by total AI-generated formulas. It quantifies the audit trail completeness for AI-generated content. A model at 100% has every AI formula documented; a model at 60% has undocumented formulas whose business intent is unknown."
+    tags: ["model-registry", "compliance-metric"]
+    difficulty: "intermediate"
+
+  - id: "ch18-10-validation-protocol-006"
+    front: "What are the four checks in the IDFA Validation Protocol?"
+    back: "1. Named Range compliance — zero coordinate references (plugin enforces during building; Protocol confirms across the complete model). 2. LaTeX verification — documented for all complex formulas. 3. Intent Note completeness — coverage % meets team threshold. 4. Output accuracy — model produces correct results on standard test inputs."
+    tags: ["validation-protocol", "checks"]
+    difficulty: "intermediate"
+
+  - id: "ch18-10-agent-policy-007"
+    front: "What four organisational controls does the Agent Standards Policy specify beyond what the plugin enforces?"
+    back: "1. Named Range modification approval — who signs off on structural changes (not value changes). 2. Session log retention — 90-day minimum, specifying storage location and access. 3. Production deployment gating — what counts as 'production' and Validation Protocol must pass first. 4. Plugin version management — who evaluates updates, rollout timeline."
+    tags: ["agent-policy", "requirements"]
+    difficulty: "intermediate"
+
+  - id: "ch18-10-named-range-mod-008"
+    front: "Why can agents write to Named Range values but not modify Named Range definitions?"
+    back: "Writing values is normal What-If analysis — changing Inp_Rev_Y1 from $10M to $12M. Modifying definitions means renaming a range, deleting it, or changing which cell it points to. Definitions are the structural skeleton of the model; changing them changes the model's meaning and can break every formula that references the range."
+    tags: ["agent-policy", "named-ranges"]
+    difficulty: "intermediate"
+
+  - id: "ch18-10-sector-naming-009"
+    front: "Why do multi-domain organisations need sector-specific naming prefixes?"
+    back: "Different financial domains may use the same variable name for different concepts. 'Entry_Multiple' means EV/EBITDA entry multiple in investment banking but purchase price multiple in private equity. Domain prefixes (IB_, PE_, FP_, TR_, CR_) prevent collisions in multi-domain models and consolidated reports."
+    tags: ["sector-naming", "collision-prevention"]
+    difficulty: "intermediate"
+
+  - id: "ch18-10-business-roi-010"
+    front: "What four measurable business returns does IDFA governance deliver?"
+    back: "1. Audit duration compresses — auditors read formulas instead of tracing cell references (weeks to days). 2. Analyst onboarding drops — new analysts understand models immediately via naming conventions and Intent Notes. 3. Regulatory confidence increases — documented compliance evidence. 4. Institutional memory compounds — Intent Notes survive staff turnover."
+    tags: ["business-case", "ROI"]
+    difficulty: "intermediate"

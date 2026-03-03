@@ -6,7 +6,7 @@ interface ChipSelectProps {
   label: string;
   value: string[];
   onChange: (value: string[]) => void;
-  options: { value: string; label: string }[];
+  options: ReadonlyArray<{ value: string; label: string }>;
   maxSelect?: number;
   maxItemLength?: number;
   allowCustom?: boolean;

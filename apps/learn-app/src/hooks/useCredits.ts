@@ -14,6 +14,14 @@ interface UseCreditsResult {
 
 const LOW_BALANCE_THRESHOLD_USD = 0.01;
 const CREDITS_TO_USD_DIVISOR = 10000;
+const CACHE_KEY_PREFIX = "ainative_balance_cache_";
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+interface CachedBalance {
+  balanceUsd: number;
+  isExpired: boolean;
+  fetchedAt: number;
+}
 
 function formatUsd(usd: number): string {
   if (usd === 0) return "$0.00";
@@ -34,42 +42,69 @@ export function useCredits(): UseCreditsResult {
   const [isExpired, setIsExpired] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchBalance = useCallback(async () => {
-    if (typeof window === "undefined") return;
+  const userId = session?.user?.id;
+  const cacheKey = userId ? `${CACHE_KEY_PREFIX}${userId}` : null;
 
-    const token = localStorage.getItem("ainative_id_token");
-    if (!token) return;
+  const fetchBalance = useCallback(
+    async (bypassCache = false) => {
+      if (typeof window === "undefined") return;
 
-    setIsLoading(true);
-    setError(null);
+      const token = localStorage.getItem("ainative_id_token");
+      if (!token || !cacheKey) return;
 
-    try {
-      const response = await fetch(`${meteringApiUrl}/api/v1/balance`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // Check localStorage cache (unless bypassing)
+      if (!bypassCache) {
+        try {
+          const raw = localStorage.getItem(cacheKey);
+          if (raw) {
+            const cached: CachedBalance = JSON.parse(raw);
+            if (Date.now() - cached.fetchedAt < CACHE_TTL_MS) {
+              setBalanceUsd(cached.balanceUsd);
+              setIsExpired(cached.isExpired);
+              return;
+            }
+          }
+        } catch {
+          localStorage.removeItem(cacheKey);
+        }
+      }
 
-      if (response.status === 404) {
-        // Account not yet created — don't show balance
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(`${meteringApiUrl}/api/v1/balance`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Balance fetch failed (${response.status})`);
+        }
+
+        const data = await response.json();
+        const usd = (data.effective_balance ?? 0) / CREDITS_TO_USD_DIVISOR;
+        setBalanceUsd(usd);
+        setIsExpired(data.is_expired ?? false);
+
+        // Cache successful response scoped to this user
+        const cached: CachedBalance = {
+          balanceUsd: usd,
+          isExpired: data.is_expired ?? false,
+          fetchedAt: Date.now(),
+        };
+        localStorage.setItem(cacheKey, JSON.stringify(cached));
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch balance",
+        );
         setBalanceUsd(null);
-        setIsExpired(false);
-        return;
+        localStorage.removeItem(cacheKey);
+      } finally {
+        setIsLoading(false);
       }
-
-      if (!response.ok) {
-        throw new Error(`Balance fetch failed (${response.status})`);
-      }
-
-      const data = await response.json();
-      const usd = (data.effective_balance ?? 0) / CREDITS_TO_USD_DIVISOR;
-      setBalanceUsd(usd);
-      setIsExpired(data.is_expired ?? false);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch balance");
-      setBalanceUsd(null);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [meteringApiUrl]);
+    },
+    [meteringApiUrl, cacheKey],
+  );
 
   // Fetch on mount when authenticated
   useEffect(() => {
@@ -85,6 +120,6 @@ export function useCredits(): UseCreditsResult {
     isExpired,
     isLowBalance: balanceUsd !== null && balanceUsd < LOW_BALANCE_THRESHOLD_USD,
     error,
-    refresh: fetchBalance,
+    refresh: () => fetchBalance(true),
   };
 }

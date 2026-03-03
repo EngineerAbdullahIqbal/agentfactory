@@ -22,7 +22,7 @@ sidebar_position: 5.5
 3. **Use Gateway authentication token** -- prevents unauthorized WebSocket connections
 4. **Keep OpenClaw updated** -- security patches ship for known vulnerabilities
 5. **Enable sandboxing for untrusted skills** -- isolates tool execution from your host
-6. **Never store secrets in skill instructions** -- skill text passes through LLM context in plaintext
+6. **Never store secrets in skill instructions** -- skill text passes through LLM context in plaintext (see L07 for the Secrets CLI)
 
 ## Common Mistakes
 
@@ -30,7 +30,7 @@ sidebar_position: 5.5
 - Binding to `0.0.0.0` for remote access convenience (135,000+ instances were exposed)
 - Trusting marketplace rankings as a proxy for safety (the #1 ranked skill was malware)
 - Accepting AI-generated skills without reviewing activation, instructions, output, and error handling
-- Skipping iteration after the first test (ambiguous instructions only show up at runtime)
+- Storing API keys in SKILL.md instructions (they flow through the LLM as plaintext)
 
 ## Quick Reference
 

@@ -161,7 +161,13 @@ class MeteringHooks(RunHooks[AgentContext]):
 
             user_id = req_ctx.user_id
             request_id = req_ctx.metadata.get("request_id")
-            thread_id = agent_ctx.thread.id if agent_ctx.thread else None
+            # AgentContext has .thread (Thread object), TeachContext has .thread_id (str)
+            thread = getattr(agent_ctx, "thread", None)
+            thread_id = (
+                thread.id
+                if thread
+                else getattr(agent_ctx, "thread_id", None) or None
+            )
             lesson_path = req_ctx.metadata.get("lesson_path")
             auth_token = req_ctx.metadata.get("auth_token")
 

@@ -1,9 +1,9 @@
 deck:
   id: "why-ai-is-non-negotiable"
   title: "Why AI Is Non-Negotiable"
-  description: "Eight objections to AI, eight rebuttals, and the case that every fear is an argument for building better — not building less."
-  tags: ["ai-debate", "objections", "capacity-to-serve", "geopolitics", "ethics"]
-  version: 2
+  description: "Nine objections to AI, nine rebuttals, and the case that every fear is an argument for building better — not building less."
+  tags: ["ai-debate", "objections", "capacity-to-serve", "geopolitics", "ethics", "wealth-concentration"]
+  version: 3
 
 cards:
   # RECALL — AI augments cognition
@@ -21,10 +21,10 @@ cards:
     difficulty: "intermediate"
     why: "What other professional services have zero presence in underserved regions that AI could unlock?"
 
-  # RECALL — eight objections (lightened)
+  # RECALL — nine objections (lightened)
   - id: "why-ai-is-non-negotiable-003"
-    front: "Name any four of the eight core objections to AI from the lesson."
-    back: "Mass unemployment, no consumer benefit, surveillance, geopolitical arms race, erosion of reality, existential risk, environmental cost, bias/discrimination."
+    front: "Name any five of the nine core objections to AI from the lesson."
+    back: "Mass unemployment, no consumer benefit, surveillance, geopolitical arms race, erosion of reality, existential risk, environmental cost, bias/discrimination, unprecedented wealth concentration."
     tags: ["objections", "framework"]
     difficulty: "basic"
 
@@ -178,3 +178,26 @@ cards:
     tags: ["wealth-concentration", "policy", "distribution"]
     difficulty: "advanced"
     why: "What distribution mechanisms does the lesson specifically recommend?"
+
+  # RECALL — wealth concentration structural difference
+  - id: "why-ai-is-non-negotiable-024"
+    front: "Why is AI wealth concentration structurally different from manufacturing and software?"
+    back: "Manufacturing and software were geographically democratic — cars built in many countries, software in dozens. AI requires billions per training run and tens of thousands of GPUs, concentrating capability in ~5-6 organizations globally."
+    tags: ["wealth-concentration", "history", "capital-barriers"]
+    difficulty: "intermediate"
+
+  # THINKING — Anthropic vs India IT
+  - id: "why-ai-is-non-negotiable-025"
+    front: "Anthropic's $380B valuation surpassed India's five largest IT companies combined. What structural point does this illustrate?"
+    back: "A single AI company with a few thousand employees is worth more than an entire nation's IT industry built over four decades employing millions — a structural break in how wealth is created."
+    tags: ["wealth-concentration", "anthropic", "india-it"]
+    difficulty: "intermediate"
+    why: "What does this imply about employment-to-value ratios in the AI era versus the services era?"
+
+  # THINKING — democratic by design
+  - id: "why-ai-is-non-negotiable-026"
+    front: "The lesson says previous revolutions 'eventually became democratic' but AI 'must be made democratic by design.' Why?"
+    back: "AI's capital barriers — billions per training run, $25K-$40K per GPU — will not self-correct. Deliberate intervention is required: open-weight models, sovereign compute, progressive taxation, public AI literacy."
+    tags: ["wealth-concentration", "democratization", "policy"]
+    difficulty: "advanced"
+    why: "Which of these interventions is furthest along, and which is most behind?"

@@ -12,7 +12,9 @@ sidebar_position: 8.5
 - Compound workflows are not just additive -- they are multiplicatively more capable AND multiplicatively more dangerous when any component fails
 - Five use case categories demonstrate composability: Personal Productivity (CRM), Knowledge Management, Business Intelligence, Security and Operations, and Personal Health
 - The patterns transfer across all agent frameworks (OpenClaw, AutoGPT, CrewAI) -- names change, architecture does not
-- The "Your Own" column stays blank until you design your own implementation of each pattern later in this book
+- **Heartbeat**: Periodic batched check-in running in the main session (default 30 min), processing a HEARTBEAT.md checklist, suppressing output when nothing is urgent
+- **Cron**: Exact-time scheduling with isolated or main session modes, per-job model selection, and one-shot reminders via `--at`
+- **Cron delivery modes**: `none` (silent), `announce` (sends visible message to channel, default for isolated jobs), `webhook` (POSTs to endpoint). Announce requires `--session isolated`. Main-session cron jobs cannot use announce -- they run silently as system events
 
 ## The Composability Map
 
@@ -24,6 +26,16 @@ sidebar_position: 8.5
 | Scheduling + Delegation + Skills  | Orchestrated operations      | Daily pipeline: monitor, analyze, generate briefing              |
 | All five combined                 | Compound AI Employee systems | Full productivity system spanning email, calendar, files, agents |
 
+## Scheduling: Heartbeat vs Cron
+
+| Aspect   | Heartbeat                                        | Cron                                              |
+| -------- | ------------------------------------------------ | ------------------------------------------------- |
+| Timing   | Approximate intervals (queue-based)              | Exact cron expressions with timezone support      |
+| Context  | Full conversation history                        | Isolated sessions start clean                     |
+| Cost     | One turn per interval (batched)                  | Full turn per job (but can use cheaper model)     |
+| Best for | Multiple routine checks, context-aware           | Exact timing, standalone work, per-job model      |
+| Config   | Operator-side (timing); employee edits checklist | Both operator CLI and employee via `cron.*` tools |
+
 ## What Remains Unsolved
 
 - **Security at scale** -- the lethal trifecta from L05 multiplies with every integration added; one compromised skill can read email AND modify code
@@ -34,7 +46,8 @@ sidebar_position: 8.5
 ## Common Mistakes
 
 - Treating compound workflows as simply additive rather than recognizing that risk compounds with each integration
-- Assuming memory stays accurate over time -- after thousands of emails, context grows stale, contradictory, or bloated
+- Using cron for multiple routine checks that could be batched into one heartbeat turn (wastes cost)
+- Using heartbeat when exact timing is required (heartbeat timing is approximate, not precise)
 - Trusting multi-agent synthesis without fact-checking -- hallucinated analysis from one expert agent gets woven into final reports without question
-- Ignoring that security agents with code access ARE attack vectors -- the agent guarding the castle also has the keys
 - Building for yourself only without considering the generalization gap between personal setup and reproducible system
+- Scheduling a cron reminder without `--announce` delivery mode -- the job runs silently and the student wonders why the employee "never came back"

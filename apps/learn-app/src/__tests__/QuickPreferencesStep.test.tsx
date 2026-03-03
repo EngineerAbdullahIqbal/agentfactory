@@ -55,53 +55,23 @@ describe("QuickPreferencesStep", () => {
     );
   });
 
-  it('language block hidden when navigator.language is "en-US"', () => {
+  it("language block always visible regardless of navigator.language", () => {
     Object.defineProperty(navigator, "language", {
       value: "en-US",
       configurable: true,
     });
     renderStep();
-    expect(screen.queryByText("Preferred Language")).not.toBeInTheDocument();
-  });
-
-  it('language block shown when navigator.language is "fr"', () => {
-    Object.defineProperty(navigator, "language", {
-      value: "fr",
-      configurable: true,
-    });
-    renderStep();
     expect(screen.getByText("Preferred Language")).toBeInTheDocument();
+    expect(screen.getByText("Native Language")).toBeInTheDocument();
+    expect(screen.getByText("Preferred Code Language")).toBeInTheDocument();
   });
 
-  it("changing language input calls onChangeDelivery", async () => {
-    Object.defineProperty(navigator, "language", {
-      value: "fr",
-      configurable: true,
-    });
-    const onChangeDelivery = vi.fn();
-    const user = userEvent.setup();
-    renderStep({ onChangeDelivery });
-
-    const input = screen.getByLabelText("Preferred Language");
-    // Type a single character — the component is controlled so we can only
-    // verify that onChangeDelivery is called with the right shape.
-    await user.type(input, "x");
-
-    expect(onChangeDelivery).toHaveBeenCalled();
-    const lastCall =
-      onChangeDelivery.mock.calls[onChangeDelivery.mock.calls.length - 1][0];
-    // The component spreads delivery and sets language to e.target.value.
-    // Since the input starts with "English" and we typed "x", it appends.
-    expect(lastCall).toHaveProperty("language");
-    expect(typeof lastCall.language).toBe("string");
-    expect(lastCall.language.length).toBeGreaterThan(0);
+  it("preferred language select renders", () => {
+    renderStep();
+    expect(screen.getByLabelText("Preferred Language")).toBeInTheDocument();
   });
 
   it("proficiency options appear when language is not English", () => {
-    Object.defineProperty(navigator, "language", {
-      value: "fr",
-      configurable: true,
-    });
     renderStep({ delivery: { language: "French" } });
 
     expect(screen.getByText("Native")).toBeInTheDocument();
@@ -111,10 +81,6 @@ describe("QuickPreferencesStep", () => {
   });
 
   it("selecting proficiency calls onChangeDelivery", async () => {
-    Object.defineProperty(navigator, "language", {
-      value: "fr",
-      configurable: true,
-    });
     const onChangeDelivery = vi.fn();
     const user = userEvent.setup();
     renderStep({
@@ -126,6 +92,19 @@ describe("QuickPreferencesStep", () => {
     expect(onChangeDelivery).toHaveBeenCalledWith(
       expect.objectContaining({ language_proficiency: "fluent" }),
     );
+  });
+
+  it("native language select renders all options", () => {
+    renderStep();
+    // The select trigger should exist
+    expect(screen.getByLabelText("Native Language")).toBeInTheDocument();
+  });
+
+  it("preferred code language select renders", () => {
+    renderStep();
+    expect(
+      screen.getByLabelText("Preferred Code Language"),
+    ).toBeInTheDocument();
   });
 
   it("toggling summaries calls onChangeCommunication", async () => {

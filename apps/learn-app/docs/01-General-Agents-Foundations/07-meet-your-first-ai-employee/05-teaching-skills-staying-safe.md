@@ -142,7 +142,13 @@ Create a skill for [YOUR WORK TASK]. It should [BRIEF DESCRIPTION].
 Save it to my workspace skills directory.
 ```
 
-The employee creates the `SKILL.md` file and saves it to `~/.openclaw/workspace/skills/[skill-name]/SKILL.md`. Your job is not to write. Your job is to review.
+The employee creates the `SKILL.md` file. To see what skills are already installed, run:
+
+```bash
+openclaw skills list
+```
+
+Your job is not to write. Your job is to review.
 
 ## Review What It Created
 
@@ -168,6 +174,16 @@ Add error handling for when calendar data is unavailable. Also make the
 description more specific -- it should activate for meeting prep, not
 every meeting-related question.
 ```
+
+## Verify It Exists
+
+Before testing, confirm your skill was saved:
+
+```bash
+openclaw skills list
+```
+
+You should see your new skill in the output. If it is not there, ask your employee where it saved the file and check the path manually.
 
 ## Test and Iterate
 
@@ -281,7 +297,32 @@ Your AI Employee is powerful because it can:
 
 Each capability alone is manageable. Combined, they are dangerous.
 
-Security researcher Simon Willison named this combination the **"lethal trifecta"**: when a single process has access to private data, processes untrusted content, and can communicate externally, any injection attack can steal your data and send it to an attacker. Remove any one of those three capabilities and the attack chain breaks. But removing any one also removes core functionality that makes the agent useful.
+Security researcher Simon Willison named this combination the **"lethal trifecta"**:
+
+```
+         ┌───────────────────────┐
+         │   PRIVATE DATA ACCESS │
+         │  (files, credentials, │
+         │    conversations)     │
+         └──────────┬────────────┘
+                    │
+            ┌───────┴───────┐
+            │  DANGER ZONE  │
+            │ All three =   │
+            │ data theft    │
+            └───────┬───────┘
+                   ╱ ╲
+                  ╱   ╲
+┌────────────────┐     ┌─────────────────────┐
+│   UNTRUSTED    │     │     EXTERNAL        │
+│   CONTENT      │     │   COMMUNICATION     │
+│ (web, emails,  │     │ (HTTP, files, shell │
+│  third-party   │     │  commands)          │
+│  skills)       │     │                     │
+└────────────────┘     └─────────────────────┘
+```
+
+When a single process has access to private data, processes untrusted content, and can communicate externally, any injection attack can steal your data and send it to an attacker. Remove any one of those three capabilities and the attack chain breaks. But removing any one also removes core functionality that makes the agent useful.
 
 This tension is not solvable -- it is manageable. When you evaluate any agent system, ask:
 
@@ -300,6 +341,8 @@ Everything in this lesson applies beyond OpenClaw:
 **Supply chain risk is universal.** Every package ecosystem faces the same problem: npm (JavaScript), PyPI (Python), ClawHub (agent skills). The ClawHavoc campaign used the same techniques as npm supply chain attacks -- typosquatting, fake prerequisites, credential theft. The security checklist you learned applies to every marketplace.
 
 **The lethal trifecta is architectural.** It does not depend on OpenClaw's specific implementation. It emerges whenever you combine data access, untrusted input, and external communication. The mitigation strategies -- sandboxing, authentication, least privilege, reading before installing -- are framework-agnostic.
+
+**Skills are business assets, not just convenience.** The skill you just created is not only a personal productivity tool -- it is the seed of a business offering. A real estate agent who builds a property-analysis skill can package it for their brokerage. An accountant who creates a tax-code skill can deploy it across their firm. When you customize your AI Employee with domain-specific skills, you are building intellectual property that can be sold, licensed, or deployed for clients. The security practices you learned in this lesson are what make those business deployments trustworthy.
 
 ---
 
@@ -346,7 +389,6 @@ engineering red flags.
 :::warning[Safety Note]
 The security incidents described in this lesson involve real attack techniques that caused real damage. When experimenting with security concepts, work only with your own test data in isolated environments. Never attempt to reproduce these attacks against systems you do not own. The goal is defensive understanding, not offensive capability.
 :::
-
 
 ## Flashcards Study Aid
 

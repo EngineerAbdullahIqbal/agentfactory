@@ -276,16 +276,19 @@ class TestBalanceEndpoint:
         assert data["effective_balance"] == 60000
         assert data["is_expired"] is False
 
-    async def test_get_balance_returns_404_for_unknown_user(
+    async def test_get_balance_auto_provisions_for_unknown_user(
         self, client: AsyncClient, test_session
     ):
-        """Balance endpoint returns 404 for non-existent user."""
+        """Balance endpoint auto-provisions account for non-existent user."""
         response = await client.get(
             "/api/v1/balance",
             headers={"X-User-ID": "nonexistent-user"},
         )
 
-        assert response.status_code == 404
+        assert response.status_code == 200
+        data = response.json()
+        assert data["user_id"] == "nonexistent-user"
+        assert data["balance"] > 0  # STARTER_TOKENS
 
 
 class TestAdminEndpoints:

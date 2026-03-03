@@ -1,0 +1,83 @@
+deck:
+  id: "ch18-11-the-five-capabilities"
+  title: "The Five Capabilities — Capstone"
+  description: "The five Finance Domain Agent capabilities (Intent Synthesis, Deterministic What-If, Logic De-compilation, Strategic Goal-Seeking, Stochastic Simulation) and their validation tests."
+  tags: ["five-capabilities", "capstone", "IDFA", "intent-synthesis", "what-if", "logic-decompilation", "goal-seeking", "stochastic-simulation"]
+  version: 2
+
+cards:
+  - id: "ch18-11-the-five-capabilities-001"
+    front: "What are the five Finance Domain Agent capabilities that IDFA enables?"
+    back: "1. Intent Synthesis\n2. Deterministic What-If\n3. Logic De-compilation\n4. Strategic Goal-Seeking\n5. Stochastic Simulation"
+    tags: ["five-capabilities", "enumeration"]
+    difficulty: "basic"
+
+  - id: "ch18-11-the-five-capabilities-002"
+    front: "What does the Intent Synthesis capability test validate?"
+    back: "That the agent can convert a plain-English intent statement into a fully structured, three-layer IDFA model specification — with every Named Range, every formula, and correct layer separation."
+    tags: ["intent-synthesis", "capability-1"]
+    difficulty: "intermediate"
+
+  - id: "ch18-11-the-five-capabilities-003"
+    front: "What is the pass criterion for Deterministic What-If?"
+    back: "The agent uses write_cell() then read_cell(). The reported answer and verified answer must match exactly — no instance of reporting a number before reading it from the model."
+    tags: ["what-if", "capability-2", "pass-criterion"]
+    difficulty: "intermediate"
+
+  - id: "ch18-11-the-five-capabilities-004"
+    front: "How does Logic De-compilation work as a capability test?"
+    back: "The Assumptions sheet is hidden. The agent uses inspect_model() on Calculations only, then reconstructs a complete IDFA Logic Map. Fewer than 5% of business rules may be incorrect or missing."
+    tags: ["logic-decompilation", "capability-3"]
+    difficulty: "intermediate"
+
+  - id: "ch18-11-the-five-capabilities-005"
+    front: "What distinguishes Strategic Goal-Seeking from simple what-if analysis?"
+    back: "In what-if, you provide the input and read the output. In goal-seeking, you provide the target output and the agent iterates write_cell()/read_cell() to find the required input."
+    tags: ["goal-seeking", "capability-4", "what-if"]
+    difficulty: "intermediate"
+    why: "Why must the agent iterate via MCP rather than solving the equation algebraically?"
+
+  - id: "ch18-11-the-five-capabilities-006"
+    front: "What four statistics does a Stochastic Simulation result report?"
+    back: "Mean, Median, P10 (pessimistic), and P90 (optimistic). P10 and P90 define the range within which 80% of outcomes fall."
+    tags: ["stochastic-simulation", "capability-5", "statistics"]
+    difficulty: "basic"
+
+  - id: "ch18-11-the-five-capabilities-007"
+    front: "Why must every Monte Carlo iteration go through MCP rather than being simulated internally?"
+    back: "Internal simulation bypasses actual model formulas, dependencies, and guardrails. MCP iteration ensures each scenario runs through Excel, honouring every Named Range relationship and formula dependency."
+    tags: ["monte-carlo", "mcp-dependency", "capability-5"]
+    difficulty: "intermediate"
+    why: "What would happen to simulation accuracy if the model contained conditional overrides that the agent didn't know about?"
+
+  - id: "ch18-11-the-five-capabilities-008"
+    front: "What does a failed Capability 2 test reveal about the deployment?"
+    back: "The agent is performing internal arithmetic instead of using MCP. This violates Guardrail 4 and means agent-reported numbers are not deterministically verified."
+    tags: ["capability-2", "failure", "guardrail-4"]
+    difficulty: "intermediate"
+
+  - id: "ch18-11-the-five-capabilities-009"
+    front: "What new Named Ranges are added when extending the GP Waterfall with OpEx and EBITDA?"
+    back: "Assumptions: Inp_OpEx_Y1, Inp_OpEx_Growth\nCalculations: OpEx_Y1-Y3, EBITDA_Y1-Y3\nAll formulas use only Named Ranges."
+    tags: ["EBITDA", "extension", "named-ranges"]
+    difficulty: "intermediate"
+
+  - id: "ch18-11-the-five-capabilities-010"
+    front: "Why is EBITDA written as Gross_Profit_Y1 - OpEx_Y1 rather than Revenue_Y1 - COGS_Y1 - OpEx_Y1?"
+    back: "IDFA formulas reference existing Named Ranges in the Calculation layer. Gross_Profit already encodes Revenue minus COGS, so EBITDA references it directly — avoiding duplicate logic and maintaining a clean dependency chain."
+    tags: ["EBITDA", "dependency-chain", "formula-design"]
+    difficulty: "intermediate"
+    why: "What problem would arise if EBITDA duplicated the Revenue minus COGS calculation?"
+
+  - id: "ch18-11-the-five-capabilities-011"
+    front: "What does passing all five capability tests prove about an IDFA deployment?"
+    back: "The deployment is production-ready for agent-assisted financial workflows. Each test validates a specific capability, and all five depend on the IDFA architecture."
+    tags: ["production-ready", "validation"]
+    difficulty: "basic"
+
+  - id: "ch18-11-the-five-capabilities-012"
+    front: "If Capability 4 (Goal-Seeking) fails, what is the most likely architectural cause?"
+    back: "Missing or inconsistent Named Ranges. If inputs lack clear Inp_ prefixes or naming is inconsistent, the agent cannot identify which Named Range to iterate in the write_cell()/read_cell() loop."
+    tags: ["goal-seeking", "failure", "naming"]
+    difficulty: "advanced"
+    why: "How would you diagnose whether the failure is in naming conventions or in the agent's iteration logic?"

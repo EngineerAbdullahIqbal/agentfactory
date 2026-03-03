@@ -46,9 +46,7 @@ ENV PORT=8000
 # Expose port
 EXPOSE 8000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import httpx; httpx.get('http://localhost:${PORT}/health')" || exit 1
+# Note: No HEALTHCHECK — Cloud Run uses TCP startup probes, not Docker HEALTHCHECK
 
 # Run with uvicorn (shell form so $PORT is expanded at runtime)
 CMD uvicorn token_metering_api.main:app --host 0.0.0.0 --port $PORT

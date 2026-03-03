@@ -231,12 +231,63 @@ class TestValidDeliverySection:
             include_visual_descriptions=False,
             language="Urdu",
             language_proficiency="native",
+            native_language="ur",
+            preferred_code_language="Python",
         )
         assert ds.output_format == "structured-with-headers"
         assert ds.target_length == "medium"
         assert ds.include_code_samples is True
         assert ds.language == "Urdu"
         assert ds.language_proficiency == "native"
+        assert ds.native_language == "ur"
+        assert ds.preferred_code_language == "Python"
+
+
+# ---------------------------------------------------------------------------
+# 10b. Native language and preferred code language
+# ---------------------------------------------------------------------------
+class TestNativeLanguageAndCodeLanguage:
+    def test_native_language_default_none(self):
+        """native_language defaults to None."""
+        ds = DeliverySection()
+        assert ds.native_language is None
+
+    def test_preferred_code_language_default_none(self):
+        """preferred_code_language defaults to None."""
+        ds = DeliverySection()
+        assert ds.preferred_code_language is None
+
+    def test_native_language_max_length(self):
+        """native_language exceeding 50 chars must raise ValidationError."""
+        with pytest.raises(ValidationError) as exc_info:
+            DeliverySection(native_language="x" * 51)
+        assert "native_language" in str(exc_info.value)
+
+    def test_native_language_at_boundary(self):
+        """native_language of exactly 50 chars must be accepted."""
+        ds = DeliverySection(native_language="a" * 50)
+        assert len(ds.native_language) == 50
+
+    def test_preferred_code_language_max_length(self):
+        """preferred_code_language exceeding 50 chars must raise ValidationError."""
+        with pytest.raises(ValidationError) as exc_info:
+            DeliverySection(preferred_code_language="x" * 51)
+        assert "preferred_code_language" in str(exc_info.value)
+
+    def test_preferred_code_language_at_boundary(self):
+        """preferred_code_language of exactly 50 chars must be accepted."""
+        ds = DeliverySection(preferred_code_language="a" * 50)
+        assert len(ds.preferred_code_language) == 50
+
+    def test_valid_iso_code(self):
+        """ISO 639-1 codes must be accepted."""
+        ds = DeliverySection(native_language="ur")
+        assert ds.native_language == "ur"
+
+    def test_valid_programming_language(self):
+        """Common programming language names must be accepted."""
+        ds = DeliverySection(preferred_code_language="Python")
+        assert ds.preferred_code_language == "Python"
 
 
 # ---------------------------------------------------------------------------

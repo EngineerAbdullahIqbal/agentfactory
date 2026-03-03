@@ -100,6 +100,8 @@ function makeProfile(
       include_visual_descriptions: null,
       language: "English",
       language_proficiency: null,
+      native_language: null,
+      preferred_code_language: null,
     },
     accessibility: {
       screen_reader: false,

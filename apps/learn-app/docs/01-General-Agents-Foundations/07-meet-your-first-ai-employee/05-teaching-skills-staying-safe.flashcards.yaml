@@ -1,20 +1,18 @@
 deck:
   id: "ch07-05-skills-and-security"
   title: "Teaching Skills & Staying Safe"
-  description: "Skill evaluation criteria, the ClawHavoc supply chain attack, CVE-2026-25253, exposed instances, and the lethal trifecta architectural tension in all agent systems."
+  description: "Skill evaluation criteria, the ClawHavoc supply chain attack, CVE-2026-25253, exposed instances, and the lethal trifecta."
   tags: ["skills", "security", "supply-chain", "lethal-trifecta"]
-  version: 1
+  version: 3
 
 cards:
   - id: "ch07-05-skills-and-security-001"
-    type: recall
     front: "What four checks should you apply when evaluating an AI-generated skill?"
     back: "Activation specificity, instruction clarity, output format, error handling"
     tags: ["skill-evaluation"]
     difficulty: "basic"
 
   - id: "ch07-05-skills-and-security-002"
-    type: thinking
     front: "Why does the human role shift from skill writer to skill reviewer?"
     back: "BECAUSE the AI Employee can draft skills itself, THEREFORE the human's value shifts to judging quality — the same delegation pattern where you set intent and verify output rather than doing the work."
     tags: ["skill-evaluation", "delegation"]
@@ -22,21 +20,18 @@ cards:
     why: "What Chapter 3 knowledge is still needed when the employee writes skills?"
 
   - id: "ch07-05-skills-and-security-003"
-    type: recall
     front: "How many of the 2,857 ClawHub skills were malicious according to Koi's audit?"
     back: "341 skills (12% of the registry)"
     tags: ["clawhavoc"]
     difficulty: "basic"
 
   - id: "ch07-05-skills-and-security-004"
-    type: recall
     front: "What malware did the ClawHavoc campaign deploy, and how many skills were part of it?"
     back: "Atomic Stealer (AMOS) via 335 of 341 malicious skills from one coordinated campaign"
     tags: ["clawhavoc"]
     difficulty: "intermediate"
 
   - id: "ch07-05-skills-and-security-005"
-    type: thinking
     front: "Why was the ClawHavoc four-step attack chain effective despite being technically simple?"
     back: "BECAUSE each step exploited trust — an appealing name, a fake error, a base64 'fix' command — THEREFORE users followed the LLM's instructions without suspicion since the malicious payload appeared as legitimate troubleshooting."
     why: "At which step could a security-aware user have detected the attack?"
@@ -44,7 +39,6 @@ cards:
     difficulty: "intermediate"
 
   - id: "ch07-05-skills-and-security-006"
-    type: thinking
     front: "How did the ClawHavoc campaign use the LLM as an intermediary to trick users?"
     back: "BECAUSE the malicious skill instructions told the LLM to display a fake error and a base64 fix command, THEREFORE the LLM became the social engineering vector, presenting the attacker's payload as a legitimate troubleshooting step."
     tags: ["clawhavoc", "social-engineering"]
@@ -52,21 +46,18 @@ cards:
     why: "Why is this more dangerous than a traditional phishing email?"
 
   - id: "ch07-05-skills-and-security-007"
-    type: recall
     front: "What attack vector did CVE-2026-25253 exploit in the OpenClaw Gateway?"
     back: "A WebSocket origin bypass enabling one-click remote code execution."
     tags: ["cve"]
     difficulty: "intermediate"
 
   - id: "ch07-05-skills-and-security-008"
-    type: recall
     front: "How many OpenClaw instances were found exposed on the public internet?"
     back: "Over 135,000 across 28,663 unique IP addresses."
     tags: ["exposed-instances"]
     difficulty: "basic"
 
   - id: "ch07-05-skills-and-security-009"
-    type: thinking
     front: "Why is popularity (star counts, rankings) not a proxy for safety in skill marketplaces?"
     back: "BECAUSE Cisco found the #1 ranked ClawHub skill was malware with 9 vulnerabilities, THEREFORE download numbers and rankings cannot indicate whether a skill is trustworthy — only reading the code can."
     tags: ["supply-chain"]
@@ -74,7 +65,6 @@ cards:
     why: "What did Cisco's scan of the highest-ranked skill reveal?"
 
   - id: "ch07-05-skills-and-security-010"
-    type: thinking
     front: "Why must the agent security checklist address both network and supply chain vectors?"
     back: "BECAUSE network rules (never bind 0.0.0.0, use auth tokens) protect against external attackers while supply chain rules (read skills before installing, enable sandboxing) protect against malicious code, THEREFORE both vectors must be covered since either alone leaves a critical gap."
     why: "Which checklist rule would have prevented the CVE-2026-25253 exploit?"
@@ -82,14 +72,12 @@ cards:
     difficulty: "intermediate"
 
   - id: "ch07-05-skills-and-security-011"
-    type: recall
     front: "What three capabilities form the lethal trifecta identified by Simon Willison?"
     back: "Private data access, processing untrusted content, external communication"
     tags: ["lethal-trifecta"]
     difficulty: "basic"
 
   - id: "ch07-05-skills-and-security-012"
-    type: thinking
     front: "Why is the lethal trifecta manageable but not solvable?"
     back: "BECAUSE removing any one capability breaks the attack chain but also removes core functionality, THEREFORE you can only manage the tension through isolation, constraints, and sandboxing — never fully eliminate it."
     tags: ["lethal-trifecta"]
@@ -97,7 +85,6 @@ cards:
     why: "What functionality is lost if you remove external communication?"
 
   - id: "ch07-05-skills-and-security-013"
-    type: thinking
     front: "Why is supply chain risk universal across npm, PyPI, and ClawHub?"
     back: "BECAUSE every package ecosystem lets strangers publish code that runs on your machine, THEREFORE the same attack techniques — typosquatting, fake prerequisites, credential theft — transfer across all marketplaces."
     tags: ["supply-chain"]
@@ -105,16 +92,15 @@ cards:
     why: "What specific ClawHavoc technique mirrors npm supply chain attacks?"
 
   - id: "ch07-05-skills-and-security-014"
-    type: recall
     front: "What percentage of 31,000 agent skills scanned by Cisco had at least one vulnerability?"
     back: "26% contained at least one vulnerability"
     tags: ["supply-chain"]
     difficulty: "basic"
 
   - id: "ch07-05-skills-and-security-015"
-    type: thinking
     front: "How does CVE-2026-25253 exploit a properly configured localhost instance?"
     back: "BECAUSE the attack uses the victim's own browser to initiate the WebSocket connection, THEREFORE even instances bound to 127.0.0.1 are vulnerable when the user visits a malicious page."
     tags: ["cve"]
     difficulty: "advanced"
     why: "Why does binding to localhost alone not prevent this attack?"
+

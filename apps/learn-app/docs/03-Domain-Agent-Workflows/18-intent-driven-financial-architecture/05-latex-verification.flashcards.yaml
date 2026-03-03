@@ -1,0 +1,73 @@
+deck:
+  id: "ch18-05-latex-verification"
+  title: "LaTeX Verification -- Guardrail 2"
+  description: "Verifying complex financial formulas (WACC, NPV, Terminal Value, IRR) in LaTeX notation before committing them to a model -- catching errors invisible in Excel's coordinate form."
+  tags: ["latex-verification", "wacc", "npv", "terminal-value", "irr", "idfa", "guardrail-2", "formula-verification"]
+  version: 1
+
+cards:
+  - id: "ch18-05-latex-purpose-001"
+    front: "What is the purpose of LaTeX Verification (Guardrail 2) in IDFA?"
+    back: "Before any complex formula (WACC, NPV, Terminal Value, IRR) is written to the model, express it in mathematical notation to confirm structural correctness. Named Ranges make formulas readable; LaTeX makes their mathematical structure verifiable. Errors invisible in a single line of Excel notation become immediately obvious in LaTeX."
+    tags: ["latex-verification", "guardrail-2", "definition"]
+    difficulty: "basic"
+
+  - id: "ch18-05-latex-not-software-002"
+    front: "Do you need to install LaTeX software to use IDFA's LaTeX Verification guardrail?"
+    back: "LaTeX Verification means expressing a formula in standard mathematical notation to verify its structure — it does not require installing LaTeX software. You can write it by hand, type it in Markdown, or ask Claude to express the formula in LaTeX. The verification is yours; the typesetting method is optional."
+    tags: ["latex-verification", "practical"]
+    difficulty: "basic"
+
+  - id: "ch18-05-wacc-three-checks-003"
+    front: "What three things does LaTeX make verifiable in a WACC formula?"
+    back: "1. Equity weight plus debt weight must equal 1.0 (E/(E+D) + D/(E+D) = 1). 2. Only the debt term is multiplied by (1-T) -- the tax shield. 3. Cost of equity and cost of debt must be in consistent units (both percentage or both decimal)."
+    tags: ["wacc", "verification-checklist"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the three structural checks that prevent the most common WACC errors"
+
+  - id: "ch18-05-missing-tax-shield-004"
+    front: "What happens financially when the tax shield (1-T) is missing from the debt component of WACC?"
+    back: "The formula overstates the after-tax cost of debt (e.g., uses 5% instead of 3.75% at a 25% tax rate). This raises WACC, which lowers DCF valuations. For a company with 40% debt, the error adds approximately 50 basis points to WACC. On a $100M deal, that moves the valuation by $5M-$8M."
+    tags: ["wacc", "tax-shield", "common-error"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the single most consequential formula error in financial modelling"
+
+  - id: "ch18-05-npv-period-zero-005"
+    front: "What is the period-0 trap in Excel's NPV function, and how does LaTeX reveal it?"
+    back: "Excel's NPV() function assumes cash flows start at period 1. If the initial investment (period 0) is included inside NPV(), it gets discounted by one period, understating the true cost. LaTeX reveals it because the summation notation shows bounds explicitly: the sum runs from t=1 to n, making it clear that the period-0 investment must be subtracted separately."
+    tags: ["npv", "period-zero", "common-error"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the structural difference between Excel's NPV function and the mathematical definition"
+
+  - id: "ch18-05-terminal-value-growth-006"
+    front: "What is the growth factor trap in the Gordon Growth Model terminal value formula?"
+    back: "The correct numerator is FCF_n x (1+g), not FCF_n alone. The perpetuity starts one period after the final projection year, so the first terminal cash flow must be the final-year FCF grown by one year. Missing (1+g) understates terminal value by approximately the growth rate percentage -- seemingly small but millions of dollars on large deals."
+    tags: ["terminal-value", "gordon-growth", "common-error"]
+    difficulty: "intermediate"
+    why: "Tests understanding of why the growth factor is necessary in the Gordon Growth Model numerator"
+
+  - id: "ch18-05-terminal-value-constraint-007"
+    front: "What constraint must hold in the Terminal Value denominator (WACC - g), and what happens if it is violated?"
+    back: "The terminal growth rate (g) must be less than WACC, so the denominator (WACC - g) is positive. If g equals or exceeds WACC, the formula produces a negative or infinite terminal value -- mathematically valid but economically meaningless. This is a constraint check, not just a structural check."
+    tags: ["terminal-value", "constraint", "denominator"]
+    difficulty: "intermediate"
+
+  - id: "ch18-05-irr-verification-008"
+    front: "How do you verify IRR when it cannot be expressed in closed-form LaTeX?"
+    back: "Compute the IRR, then calculate NPV using that IRR as the discount rate. If NPV equals zero (within floating-point tolerance), the IRR is correct. In IDFA notation: IRR_Validation = NPV(IRR_Result, CF_Y1..CF_Y5) + CF_Y0. IRR_Validation should equal zero."
+    tags: ["irr", "verification", "npv-zero"]
+    difficulty: "intermediate"
+    why: "Tests understanding of the definition of IRR (the rate at which NPV equals zero) and how to operationalise that definition as a verification step"
+
+  - id: "ch18-05-four-formulas-009"
+    front: "Which four formula types always require LaTeX Verification under IDFA Guardrail 2?"
+    back: "WACC, NPV, Terminal Value (Gordon Growth Model), and IRR (verified via NPV=0 confirmation). These are the formulas where structural errors are most common and most consequential in financial modelling."
+    tags: ["guardrail-2", "formula-types", "verification-scope"]
+    difficulty: "basic"
+
+  - id: "ch18-05-wacc-impact-quantified-010"
+    front: "What is the approximate financial impact of a 50 basis point WACC error on a $100M acquisition DCF?"
+    back: "A 50bp WACC difference changes the discount rate applied to every future cash flow and the terminal value. In a typical 5-year DCF, this moves enterprise value by 5-8%. On a $100M deal, that is $5M-$8M of valuation difference -- enough to change whether the deal is accretive or dilutive."
+    tags: ["wacc", "impact", "quantified"]
+    difficulty: "intermediate"
+    why: "Tests ability to connect a seemingly small formula error to a material financial consequence"

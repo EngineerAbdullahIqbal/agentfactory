@@ -11,6 +11,11 @@ keywords:
     knowledge base,
     advisory council,
     agent patterns,
+    cron jobs,
+    heartbeat,
+    agent scheduling,
+    autonomous automation,
+    HEARTBEAT.md,
   ]
 chapter: 7
 lesson: 8
@@ -32,6 +37,13 @@ skills:
     digcomp_area: "Critical Thinking"
     measurable_at_this_level: "Student can assess a proposed AI Employee use case for feasibility, identify which building blocks it requires, and name the security/reliability risks"
 
+  - name: "Scheduling Mechanism Selection"
+    proficiency_level: "A2"
+    category: "Technical"
+    bloom_level: "Understand"
+    digcomp_area: "Computational Thinking"
+    measurable_at_this_level: "Student can explain the difference between heartbeat and cron scheduling, identify when each is appropriate, and configure a basic cron job or heartbeat checklist"
+
 learning_objectives:
   - objective: "Decompose compound AI Employee workflows into constituent patterns learned in L03-L07"
     proficiency_level: "B1"
@@ -47,6 +59,11 @@ learning_objectives:
     proficiency_level: "B1"
     bloom_level: "Evaluate"
     assessment_method: "Student can name at least 3 validated capabilities and 3 unsolved challenges with specific examples"
+
+  - objective: "Explain the difference between heartbeat and cron scheduling and choose the right mechanism for a given automation scenario"
+    proficiency_level: "A2"
+    bloom_level: "Understand"
+    assessment_method: "Given three scheduling scenarios, student correctly identifies whether each requires heartbeat, cron (main), or cron (isolated) and explains why"
 
 cognitive_load:
   new_concepts: 4
@@ -110,7 +127,11 @@ Each lesson in this chapter gave you one pattern. Here is what happens when you 
 | Scheduling (L03) + Delegation (L06) + Skills (L05) | Orchestrated operations      | Daily pipeline: monitor competitors, analyze changes, generate briefing, deliver before standup                                              |
 | All five combined                                  | Compound AI Employee systems | Full personal productivity system: reads email, manages calendar, searches files, delegates research, remembers everything, runs on schedule |
 
-The compound case is not five times harder than the single case. It is five times more capable -- and five times more dangerous if any component fails. That tension defines everything below.
+The compound case is not five times harder than the single case. It is five times more capable -- and five times more dangerous if any component fails. Here is the math: if each step in a 5-step pipeline is 99% reliable, the whole chain delivers correct results only 0.99^5 ≈ 95% of the time. Add a tenth step and you are down to 90%. Reliability is not additive -- it is multiplicative. That tension defines everything below.
+
+:::tip[Career Reference: Bookmark This Map]
+The Composability Map above is one you will return to throughout this book. Save it, print it, or screenshot it -- whenever you design a compound workflow, start by mapping your use case to these pattern combinations. It is the fastest way to identify which building blocks you need and which lessons to revisit.
+:::
 
 ## Five Use Case Categories
 
@@ -154,6 +175,134 @@ A food journal with image recognition. Photograph your meals and your agent logs
 
 **The Hard Part:** Medical-adjacent AI advice and liability. Your agent might identify a correlation between dairy intake and your afternoon headaches. That observation could be genuinely useful -- or it could be a spurious pattern from noisy data that leads you to make dietary changes you should discuss with a doctor. No skill can replace professional medical judgment, and no agent framework includes liability safeguards for health recommendations.
 
+## How Scheduling Actually Works: Cron vs Heartbeat
+
+Every compound workflow above references "scheduling" as a building block. The composability map treats it as a single pattern, but OpenClaw actually provides two distinct scheduling mechanisms -- and choosing the wrong one creates either wasted cost or missed timing.
+
+### Heartbeat: Your Employee's Pulse
+
+A heartbeat is a periodic check-in that runs in your employee's main session. Every 30 minutes (by default), your employee wakes up, reviews a checklist, and decides whether anything needs your attention.
+
+You define the checklist in a `HEARTBEAT.md` file:
+
+```md
+# Heartbeat checklist
+
+- Check email for urgent messages
+- Review calendar for events in next 2 hours
+- If a background task finished, summarize results
+- If idle for 8+ hours, send a brief check-in
+```
+
+Your employee reads this checklist every cycle, processes each item, and only surfaces what matters. If nothing is urgent, it stays quiet -- no notification, no interruption. The heartbeat runs in the main session, which means your employee has full context from your recent conversations when deciding what to report.
+
+The heartbeat runs every 30 minutes by default, but the checklist starts empty -- so your employee wakes up, finds nothing to do, and goes back to sleep. The real setup is giving it a checklist. Ask your employee:
+
+```
+What is my current heartbeat interval? And show me what's in HEARTBEAT.md.
+```
+
+It will confirm the 30-minute default and show an empty (or comment-only) checklist. Now give it work:
+
+```
+Add these to my heartbeat checklist: remind me of my goals, check email for urgent messages,
+review calendar for events in the next 2 hours, and if a background
+task finished, summarize results.
+```
+
+Your employee updates `HEARTBEAT.md` directly. Next cycle, it processes each item and only surfaces what matters. If nothing is urgent, it stays quiet -- no notification, no interruption.
+
+:::note[Who Configures What?]
+Heartbeat **timing** (how often, active hours) is operator-side configuration. The heartbeat **checklist** (`HEARTBEAT.md`) is a workspace file your employee reads and edits through conversation.
+
+Cron is different: your employee has access to the `cron.*` tools and can create, update, and remove cron jobs through conversation. "Remind me in 20 minutes" works -- the employee calls the cron tool API to schedule it.
+:::
+
+To change the timing or active hours, ask your employee or use the CLI:
+
+```bash
+openclaw config set agents.defaults.heartbeat.every "15m"
+openclaw config set agents.defaults.heartbeat.activeHours.start "08:00"
+openclaw config set agents.defaults.heartbeat.activeHours.end "22:00"
+openclaw gateway stop && openclaw gateway start
+```
+
+The `activeHours` setting prevents middle-of-the-night notifications. The timing is approximate -- heartbeats are queue-based, so a "30m" heartbeat might fire at 28 or 33 minutes. That flexibility is intentional: batching multiple checks into one turn is cheaper than running each separately.
+
+### Cron: Precise, Independent Jobs
+
+Cron jobs fire at exact times and can run in isolated sessions -- completely independent of your main conversation. Unlike heartbeat timing, your employee can create cron jobs itself through conversation -- it has access to the Gateway's `cron.*` tools (add, update, remove, run).
+
+#### Delivery Mode Matters
+
+Every cron job has a **delivery mode** that controls what happens with the output:
+
+| Mode       | What Happens                                                                          |
+| ---------- | ------------------------------------------------------------------------------------- |
+| `none`     | Runs silently. Output only in the job log. No outbound message.                       |
+| `announce` | Sends the output as a visible message to your channel. **Default for isolated jobs.** |
+| `webhook`  | POSTs the output to an HTTP endpoint                                                  |
+
+Isolated jobs (`--session isolated`) default to `announce` delivery. But when your employee creates a cron job through conversation without specifying delivery, the result depends on how it configures the job. If the job ends up as a main-session system event instead of an isolated job, there is no delivery at all -- main-session jobs cannot use announce.
+
+:::warning[The Silent Reminder Trap]
+If you ask your employee "remind me in 20 minutes" and it creates the job as a main-session event (not an isolated job), the job **runs** but you **never see the reminder**. The job log shows `deliveryStatus: not-requested` and you wonder why your employee never came back. Always be explicit: "remind me in 20 minutes **and send me the message**" -- this helps the employee create an isolated job with announce delivery instead of a silent main-session event.
+:::
+
+**Through conversation**: Tell your employee "remind me in 20 minutes to check on the deployment **and send me the reminder**." The explicit "send me" phrasing helps the employee set delivery mode to `announce`. For recurring jobs: "set up a daily briefing at 7 AM and announce it to this channel." Both methods write to the same persistent store (`~/.openclaw/cron/jobs.json`).
+
+If the employee confirms "reminder is scheduled" but you do not get a message when it fires, check the delivery mode. Ask your employee: "show me the delivery config for that cron job."
+
+**Through operator CLI**: You can also create jobs directly from your terminal:
+
+```bash
+openclaw cron add \
+  --name "Morning briefing" \
+  --cron "0 7 * * *" \
+  --session isolated \
+  --announce
+```
+
+The `--announce` flag is what makes the output visible. Without it, the job runs but you see nothing. The isolated session starts clean -- no conversation history from your main session -- which means the job produces the same output regardless of what you and your employee discussed yesterday.
+
+:::info[Announce requires isolated sessions]
+Announce delivery only works with `--session isolated`. A main-session cron job cannot route output to your channel -- it just enqueues a system event for the next heartbeat. If you need the output pushed to you, use an isolated session.
+:::
+
+For a one-shot reminder via CLI:
+
+```bash
+openclaw cron add \
+  --at "20m" \
+  --session isolated \
+  --announce \
+  --message "Time to check on the deployment" \
+  --delete-after-run
+```
+
+This fires once in 20 minutes, sends you the reminder, and deletes itself. The `--delete-after-run` flag prevents forgotten one-shot reminders from cluttering your job list.
+
+### When to Use Which
+
+| Scenario                                  | Use                       | Why                                                                         |
+| ----------------------------------------- | ------------------------- | --------------------------------------------------------------------------- |
+| Check inbox + calendar + notifications    | **Heartbeat**             | Multiple routine checks batch into one turn, saving cost                    |
+| 9 AM sharp daily briefing                 | **Cron (isolated)**       | Exact timing required; standalone work that should not clutter main history |
+| Reminder in 20 minutes                    | **Cron (main, one-shot)** | `--at "20m"` with `--delete-after-run` is built for this                    |
+| Nightly code review with different model  | **Cron (isolated)**       | `--model` flag lets you pick a cheaper model for batch work                 |
+| Context-aware priority triage             | **Heartbeat**             | Needs recent conversation context to decide what is urgent                  |
+| Hourly metric check that is usually quiet | **Heartbeat**             | Suppresses output when nothing is notable; cron would notify every time     |
+
+### The Cost Dimension
+
+Heartbeat costs one LLM turn per interval regardless of how many items it checks. A heartbeat with five checklist items costs the same as one with two -- batching is free.
+
+Cron (isolated) costs a full agent turn per job. Five isolated cron jobs at 9 AM means five separate LLM turns. But isolated jobs can use cheaper models: `--model sonnet` for a summarization job instead of the default model cuts cost without affecting your main session's capabilities.
+
+The optimal setup combines both: heartbeat for routine batched monitoring, cron for precise-timing requirements or jobs that benefit from isolation and dedicated model selection.
+
+---
+
 ## What Remains Unsolved
 
 The use cases above are real -- people are building every one of them. But the honest assessment matters more than the excitement.
@@ -183,19 +332,29 @@ Other implementations exist in Rust and Go, proving the patterns are language-ag
 
 The insight that matters: **the moat is not which Body you choose. It is the Intelligence Layer -- Agent Skills that encode domain knowledge, MCP servers that connect to domain systems.** That layer is portable across every Body in the table above. Your investment in domain expertise survives any platform change.
 
+## From Personal to Business Operations
+
+Everything you have built so far -- morning briefings, scheduled reports, Google Workspace integration, compound workflows -- works for you personally. But the same patterns scale to a team or a business. A morning briefing that checks your inbox becomes a daily client-update digest for your entire firm. A research workflow that generates competitor tables becomes a weekly market intelligence report for your sales team. A scheduled cron job that audits your files becomes an automated compliance check across your organization.
+
+OpenClaw excels at this stage: one person or a small team customizing an AI Employee for daily business operations. Its rich ecosystem, 209,000-star community, and feature completeness make it the fastest path from "I want an AI Employee" to "my business runs on one." But as the data gets more sensitive and the stakes get higher -- client records, financial data, regulated industries -- the architectural tension from Lesson 5 becomes a business risk, not just a technical one. That is where a different architecture earns its complexity. You will see that architecture in Lesson 9.
+
 ## What Transfers
 
 These patterns appear in every agent framework, not just OpenClaw. The names change. The architecture does not.
 
-| Chapter 7 Pattern | OpenClaw                          | AutoGPT               | CrewAI                    | Your Own (Later) |
-| ----------------- | --------------------------------- | --------------------- | ------------------------- | ---------------- |
-| Scheduling (L03)  | Cron jobs + autonomous invocation | Continuous mode loop  | Task scheduling           | Your design      |
-| Memory (L04)      | MEMORY.md + conversation history  | JSON file persistence | Shared memory object      | Your design      |
-| Skills (L05)      | SKILL.md files on ClawHub         | Plugins in registry   | Tool definitions          | Your design      |
-| Delegation (L06)  | Claude Code integration           | Sub-agent spawning    | Agent-to-agent delegation | Your design      |
-| Integration (L07) | gog + OAuth connectors            | Plugin API calls      | Tool integrations         | Your design      |
+| Chapter 7 Pattern | OpenClaw                         | AutoGPT               | CrewAI                    | Your Own (Later) |
+| ----------------- | -------------------------------- | --------------------- | ------------------------- | ---------------- |
+| Scheduling (L03)  | Heartbeat + cron (see above)     | Continuous mode loop  | Task scheduling           | Your design      |
+| Memory (L04)      | MEMORY.md + conversation history | JSON file persistence | Shared memory object      | Your design      |
+| Skills (L05)      | SKILL.md files on ClawHub        | Plugins in registry   | Tool definitions          | Your design      |
+| Delegation (L06)  | ACP + Claude Code integration    | Sub-agent spawning    | Agent-to-agent delegation | Your design      |
+| Integration (L07) | gog + OAuth connectors           | Plugin API calls      | Tool integrations         | Your design      |
 
 The "Your Own" column is intentionally blank. When you build your own AI Employee, you fill it in -- choosing how to implement each pattern based on what you learned here.
+
+:::note[Revisit Your Morning Briefing]
+By now, the morning briefing you configured in Lesson 3 has been running for weeks. Take a moment to review it: is it still useful? Are the checklist items still relevant, or have your priorities shifted? What would you add or remove? The best compound workflows are not set-and-forget -- they evolve as you learn what actually matters to your daily routine.
+:::
 
 ## Try With AI
 
@@ -238,7 +397,6 @@ failure mode.
 You have now seen what OpenClaw proved, what it left unsolved, and how the ecosystem responded. Individual patterns are powerful. Composed patterns are transformative. And choosing the right Body for your threat model is an engineering decision, not a popularity contest.
 
 In the next lesson, you will look closely at NanoClaw -- the implementation optimized for container isolation and regulated data -- and see how it connects to the Agent Factory blueprint for building AI Employees for every profession.
-
 
 ## Flashcards Study Aid
 

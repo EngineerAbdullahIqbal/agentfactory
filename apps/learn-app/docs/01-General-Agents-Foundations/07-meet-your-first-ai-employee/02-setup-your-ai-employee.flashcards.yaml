@@ -3,7 +3,7 @@ deck:
   title: "Setup Your AI Employee (Free)"
   description: "Installing OpenClaw, connecting messaging channels, understanding gateway security, and recognizing the universal setup pattern for any agent framework."
   tags: ["openclaw-setup", "gateway", "security", "messaging-channels"]
-  version: 1
+  version: 2
 
 cards:
   - id: "ch07-02-setup-ai-employee-001"
@@ -95,3 +95,18 @@ cards:
     why: "In what scenario would allowlist be safer than pairing?"
     tags: ["dm-policies", "discrimination"]
     difficulty: "advanced"
+
+  - id: "ch07-02-setup-ai-employee-013"
+    type: recall
+    front: "What session isolation do WhatsApp and Telegram groups provide?"
+    back: "Each group gets its own isolated session with separate conversation history, independent of DMs and other groups."
+    tags: ["groups", "session-isolation"]
+    difficulty: "basic"
+
+  - id: "ch07-02-setup-ai-employee-014"
+    type: thinking
+    front: "Why would you create separate WhatsApp groups for coding, scheduling, and research instead of using one DM thread?"
+    back: "BECAUSE each group gets an isolated session with its own conversation history, THEREFORE context stays focused — a coding question sees coding history, not yesterday's scheduling discussion."
+    why: "What carries across all groups despite session isolation?"
+    tags: ["groups", "session-isolation", "organization"]
+    difficulty: "intermediate"

@@ -1,9 +1,9 @@
 deck:
   id: "ch07-07-google-workspace"
   title: "Connecting Google Workspace"
-  description: "Flashcards covering gog CLI integration with Google Workspace, OAuth setup, least privilege scoping, and the security implications of granting an AI Employee access to real productivity data."
-  tags: ["google-workspace", "gog", "oauth", "security", "integrations"]
-  version: 1
+  description: "Flashcards covering gog CLI integration with Google Workspace, OAuth setup, least privilege scoping, security implications of granting an AI Employee access to real productivity data, and secrets management with SecretRefs."
+  tags: ["google-workspace", "gog", "oauth", "security", "integrations", "secrets"]
+  version: 2
 
 cards:
   - id: "ch07-07-google-workspace-001"
@@ -87,3 +87,35 @@ cards:
     back: "Read email to extract sensitive info, send emails from your account, access confidential Drive documents, and exfiltrate contacts to an external server."
     tags: ["security", "attack-vectors"]
     difficulty: "intermediate"
+
+  - id: "ch07-07-google-workspace-012"
+    front: "What are SecretRefs in OpenClaw's secrets management?"
+    back: "References that point to a secrets provider instead of storing credentials as plaintext in configuration files."
+    tags: ["secrets", "secretrefs"]
+    difficulty: "basic"
+
+  - id: "ch07-07-google-workspace-013"
+    front: "What four finding codes does openclaw secrets audit report?"
+    back: "PLAINTEXT_FOUND, REF_UNRESOLVED, REF_SHADOWED, LEGACY_RESIDUE"
+    tags: ["secrets", "audit"]
+    difficulty: "intermediate"
+
+  - id: "ch07-07-google-workspace-014"
+    front: "Why does the secrets migration intentionally avoid creating rollback backups?"
+    back: "BECAUSE backup files containing plaintext credentials are themselves an attack vector, THEREFORE the system relies on preflight validation and atomic apply rather than storing raw secrets in rollback files."
+    tags: ["secrets", "security"]
+    difficulty: "intermediate"
+    why: "What security risk would a plaintext rollback backup introduce?"
+
+  - id: "ch07-07-google-workspace-015"
+    front: "What are the six steps in the secrets migration workflow?"
+    back: "1. Audit\n2. Configure\n3. Dry-run apply\n4. Apply\n5. Audit again\n6. Reload"
+    tags: ["secrets", "workflow"]
+    difficulty: "intermediate"
+
+  - id: "ch07-07-google-workspace-016"
+    front: "Why are secrets embedded in SKILL.md instructions visible beyond the skill itself?"
+    back: "BECAUSE skill instructions flow through the LLM as plaintext, THEREFORE any embedded secret is visible in conversation history, debug logs, and potentially to other skills running in the same session."
+    tags: ["secrets", "lethal-trifecta"]
+    difficulty: "intermediate"
+    why: "How does the LLM context window create a different exposure risk than a config file?"

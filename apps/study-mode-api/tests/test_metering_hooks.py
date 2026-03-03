@@ -208,6 +208,82 @@ class TestMeteringHooksOnAgentEnd:
         client.deduct.assert_not_called()
 
 
+class MockTeachContext:
+    """Mock TeachContext (no .thread, has .thread_id)."""
+
+    def __init__(self, user_id="test-user", thread_id="teach-thread-456"):
+        self.request_context = MockRequestContext(user_id)
+        self.thread_id = thread_id
+
+
+class MockTeachHookContext:
+    """Mock AgentHookContext wrapping TeachContext."""
+
+    def __init__(self, user_id="test-user", thread_id="teach-thread-456"):
+        self.context = MockTeachContext(user_id, thread_id)
+        self.usage = MockUsage()
+
+
+class TestMeteringHooksTeachContext:
+    """Test hooks work with TeachContext (no .thread attribute)."""
+
+    @pytest.mark.asyncio
+    async def test_on_agent_start_works_with_teach_context(self):
+        """TeachContext has request_context, so on_agent_start should work."""
+        client = MagicMock(spec=MeteringClient)
+        client.check = AsyncMock(
+            return_value={"allowed": True, "reservation_id": "res_teach"}
+        )
+
+        hooks = MeteringHooks(client)
+        context = MockTeachHookContext(user_id="teach-user")
+        agent = MockAgent()
+
+        await hooks.on_agent_start(context, agent)
+
+        client.check.assert_called_once()
+        assert client.check.call_args.kwargs["user_id"] == "teach-user"
+
+    @pytest.mark.asyncio
+    async def test_on_agent_end_uses_thread_id_from_teach_context(self):
+        """TeachContext has .thread_id (str), not .thread (object)."""
+        client = MagicMock(spec=MeteringClient)
+        client.check = AsyncMock(
+            return_value={"allowed": True, "reservation_id": "res_teach"}
+        )
+        client.deduct = AsyncMock(
+            return_value={"status": "finalized", "transaction_id": 99}
+        )
+
+        hooks = MeteringHooks(client)
+        context = MockTeachHookContext(user_id="teach-user", thread_id="teach-thread-789")
+        agent = MockAgent()
+
+        await hooks.on_agent_start(context, agent)
+        await hooks.on_agent_end(context, agent, output="teach output")
+
+        client.deduct.assert_called_once()
+        assert client.deduct.call_args.kwargs["thread_id"] == "teach-thread-789"
+
+    @pytest.mark.asyncio
+    async def test_release_on_error_works_with_teach_context(self):
+        """Release should work with TeachContext."""
+        client = MagicMock(spec=MeteringClient)
+        client.check = AsyncMock(
+            return_value={"allowed": True, "reservation_id": "res_teach_err"}
+        )
+        client.release = AsyncMock(return_value={"status": "released"})
+
+        hooks = MeteringHooks(client)
+        context = MockTeachHookContext(user_id="teach-user")
+        agent = MockAgent()
+
+        await hooks.on_agent_start(context, agent)
+        await hooks.release_on_error(context)
+
+        client.release.assert_called_once()
+
+
 class TestMeteringHooksReleaseOnError:
     """Test release_on_error method."""
 

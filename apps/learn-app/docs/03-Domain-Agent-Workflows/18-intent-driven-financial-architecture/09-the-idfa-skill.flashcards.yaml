@@ -1,0 +1,68 @@
+deck:
+  id: "ch18-09-the-idfa-skill"
+  title: "The IDFA Skill"
+  description: "The IDFA plugin for Claude Code, the agentskills.io standard, installation via marketplace, cross-platform portability, and skill activation via trigger phrases."
+  tags: ["IDFA-plugin", "SKILL-md", "agentskills-io", "claude-code", "marketplace", "cross-platform", "trigger-phrases"]
+  version: 2
+
+cards:
+  - id: "ch18-09-the-idfa-skill-001"
+    front: "What is a SKILL.md file in the context of AI agents?"
+    back: "A structured document following the agentskills.io open standard that packages a methodology as a portable Agent Skill. The agent reads it at session start and applies its contents automatically."
+    tags: ["SKILL-md", "definition", "agentskills-io"]
+    difficulty: "basic"
+
+  - id: "ch18-09-the-idfa-skill-002"
+    front: "How do you install the IDFA plugin in Claude Code?"
+    back: "Two steps:\n1. /plugin marketplace add panaversity/idfa-financial-architect\n2. /plugin install idfa-financial-architect@panaversity-idfa"
+    tags: ["installation", "claude-code", "marketplace"]
+    difficulty: "basic"
+
+  - id: "ch18-09-the-idfa-skill-003"
+    front: "What is the structure of the IDFA plugin?"
+    back: ".claude-plugin/plugin.json (metadata)\n.claude-plugin/marketplace.json (catalog)\nskills/financial-architect/SKILL.md (methodology)\nskills/financial-architect/references/IDFA-reference.md\nREADME.md and LICENSE"
+    tags: ["plugin-structure", "files"]
+    difficulty: "intermediate"
+
+  - id: "ch18-09-the-idfa-skill-004"
+    front: "What is the agentskills.io standard?"
+    back: "An open standard for packaging agent skills as portable files. A skill written to this standard works across any skills-compatible agent — Claude, Copilot, Codex, Gemini CLI, VS Code."
+    tags: ["agentskills-io", "portability", "standard"]
+    difficulty: "basic"
+
+  - id: "ch18-09-the-idfa-skill-005"
+    front: "How do you install IDFA in agents other than Claude Code?"
+    back: "Download the SKILL.md from the GitHub repo and place it in the platform's custom instructions path: .github/copilot-instructions.md (Copilot), .vscode/copilot-instructions.md (VS Code), .cursorrules (Cursor)."
+    tags: ["cross-platform", "installation"]
+    difficulty: "intermediate"
+
+  - id: "ch18-09-the-idfa-skill-006"
+    front: "How do trigger phrases work in a SKILL.md?"
+    back: "The description field lists phrases (like 'financial model', 'model audit') that activate the skill. The agent understands intent behind variations — 'this spreadsheet makes no sense' also triggers."
+    tags: ["trigger-phrases", "activation"]
+    difficulty: "intermediate"
+
+  - id: "ch18-09-the-idfa-skill-007"
+    front: "What does the Agent Decision Table specify?"
+    back: "The correct IDFA action for every category of financial modelling task: building, auditing, retrofitting, what-if, goal-seeking, explaining, and compliance checking."
+    tags: ["agent-decision-table", "task-mapping"]
+    difficulty: "intermediate"
+
+  - id: "ch18-09-the-idfa-skill-008"
+    front: "How do you verify that the IDFA plugin is working after installation?"
+    back: "Start a fresh session, give a new intent statement, and check whether the output includes all four guardrails — Inp_ Named Ranges, LaTeX verification, Intent Notes, and MCP workflow — without being asked."
+    tags: ["verification", "four-guardrails"]
+    difficulty: "intermediate"
+
+  - id: "ch18-09-the-idfa-skill-009"
+    front: "What are the five common mistakes the IDFA skill prevents agents from making?"
+    back: "1. Mixing layers (hardcoded constants in formulas)\n2. Calculating internally instead of using read_cell()\n3. Skipping LaTeX for WACC/IRR/NPV/DCF\n4. Retrofitting by delete-and-rebuild\n5. Naming ranges with spaces"
+    tags: ["common-mistakes", "guardrails"]
+    difficulty: "intermediate"
+
+  - id: "ch18-09-the-idfa-skill-010"
+    front: "Why is installing a plugin pedagogically stronger than copy-pasting a SKILL.md from a textbook?"
+    back: "Real professionals install plugins, not copy-paste from textbooks. Students still learn what the skill contains by inspecting it after installation, but the distribution model matches real-world practice."
+    tags: ["pedagogy", "plugin-vs-copy"]
+    difficulty: "intermediate"
+    why: "How would you inspect an installed plugin to understand what methodology it encodes?"

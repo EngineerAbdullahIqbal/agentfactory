@@ -26,16 +26,16 @@ class StoreConfig(BaseSettings):
         description="PostgreSQL connection URL (postgresql+asyncpg://user:pass@host:port/db)",
     )
 
-    # Connection pool settings - optimized for 50K concurrent users
+    # Connection pool settings — Cloud Run scales horizontally, keep per-instance pools small
     pool_size: int = Field(
-        default=20,
+        default=5,
         description="Maximum number of connections in the pool",
         ge=1,
         le=100,
     )
 
     max_overflow: int = Field(
-        default=10,
+        default=5,
         description="Maximum overflow connections beyond pool_size",
         ge=0,
         le=50,
@@ -48,7 +48,7 @@ class StoreConfig(BaseSettings):
     )
 
     pool_recycle: int = Field(
-        default=3600,
+        default=1800,
         description="Seconds after which connections are recycled",
         ge=300,
     )

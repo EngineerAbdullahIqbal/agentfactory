@@ -8,8 +8,8 @@ from fastapi import FastAPI
 import api_infra
 from api_infra.core.redis_cache import get_redis, start_redis, stop_redis
 
-from .database import close_db, init_db
 from ..services.phm_client import close_client as close_phm_client
+from .database import close_db, init_db
 
 logger = logging.getLogger(__name__)
 

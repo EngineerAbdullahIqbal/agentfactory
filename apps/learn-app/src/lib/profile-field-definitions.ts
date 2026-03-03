@@ -457,7 +457,158 @@ export const TOOLS_OPTIONS: FieldOption[] = [
 ];
 
 // ---------------------------------------------------------------------------
+// Response language — delivery.language (stores full name, e.g. "English")
+// ---------------------------------------------------------------------------
+
+export const RESPONSE_LANGUAGE_OTHER_VALUE = "__other__";
+
+export const RESPONSE_LANGUAGE_OPTIONS: FieldOption[] = [
+  { value: "English", label: "English", hint: "English" },
+  { value: "Urdu", label: "Urdu", hint: "اردو" },
+  { value: "Hindi", label: "Hindi", hint: "हिन्दी" },
+  { value: "Arabic", label: "Arabic", hint: "العربية" },
+  { value: "Chinese", label: "Chinese", hint: "中文" },
+  { value: "Spanish", label: "Spanish", hint: "Español" },
+  { value: "Portuguese", label: "Portuguese", hint: "Português" },
+  { value: "Bengali", label: "Bengali", hint: "বাংলা" },
+  { value: "Russian", label: "Russian", hint: "Русский" },
+  { value: "Japanese", label: "Japanese", hint: "日本語" },
+  { value: "French", label: "French", hint: "Français" },
+  { value: "German", label: "German", hint: "Deutsch" },
+  { value: "Korean", label: "Korean", hint: "한국어" },
+  { value: "Vietnamese", label: "Vietnamese", hint: "Tiếng Việt" },
+  { value: "Turkish", label: "Turkish", hint: "Türkçe" },
+  { value: "Persian", label: "Persian", hint: "فارسی" },
+  { value: "Italian", label: "Italian", hint: "Italiano" },
+  { value: "Polish", label: "Polish", hint: "Polski" },
+  { value: "Indonesian", label: "Indonesian", hint: "Bahasa Indonesia" },
+  {
+    value: RESPONSE_LANGUAGE_OTHER_VALUE,
+    label: "Other",
+    hint: "Type your preferred language",
+  },
+];
+
+/**
+ * Resolve a stored delivery.language value into select + freetext state.
+ * delivery.language stores full names ("English", "Urdu"), not ISO codes.
+ */
+export function resolveResponseLanguageSelectState(
+  storedValue: string | null,
+  nullSentinel: string,
+): {
+  selectValue: string;
+  showOtherInput: boolean;
+  otherText: string;
+} {
+  if (!storedValue) {
+    return { selectValue: nullSentinel, showOtherInput: false, otherText: "" };
+  }
+  const isKnown = RESPONSE_LANGUAGE_OPTIONS.some(
+    (o) =>
+      o.value === storedValue && o.value !== RESPONSE_LANGUAGE_OTHER_VALUE,
+  );
+  if (isKnown) {
+    return { selectValue: storedValue, showOtherInput: false, otherText: "" };
+  }
+  // Freetext "other" — stored value doesn't match any known option
+  return {
+    selectValue: RESPONSE_LANGUAGE_OTHER_VALUE,
+    showOtherInput: true,
+    otherText: storedValue === RESPONSE_LANGUAGE_OTHER_VALUE ? "" : storedValue,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Native language — delivery.native_language (stores ISO 639-1 codes)
+// ---------------------------------------------------------------------------
+
+export const NATIVE_LANGUAGE_OTHER_VALUE = "other";
+
+export const NATIVE_LANGUAGE_OPTIONS: FieldOption[] = [
+  { value: "en", label: "English", hint: "English" },
+  { value: "ur", label: "Urdu", hint: "اردو" },
+  { value: "hi", label: "Hindi", hint: "हिन्दी" },
+  { value: "ar", label: "Arabic", hint: "العربية" },
+  { value: "zh", label: "Chinese", hint: "中文" },
+  { value: "es", label: "Spanish", hint: "Español" },
+  { value: "pt", label: "Portuguese", hint: "Português" },
+  { value: "bn", label: "Bengali", hint: "বাংলা" },
+  { value: "ru", label: "Russian", hint: "Русский" },
+  { value: "ja", label: "Japanese", hint: "日本語" },
+  { value: "fr", label: "French", hint: "Français" },
+  { value: "de", label: "German", hint: "Deutsch" },
+  { value: "ko", label: "Korean", hint: "한국어" },
+  { value: "vi", label: "Vietnamese", hint: "Tiếng Việt" },
+  { value: "tr", label: "Turkish", hint: "Türkçe" },
+  { value: "fa", label: "Persian", hint: "فارسی" },
+  { value: "it", label: "Italian", hint: "Italiano" },
+  { value: "pl", label: "Polish", hint: "Polski" },
+  { value: "id", label: "Indonesian", hint: "Bahasa Indonesia" },
+  {
+    value: NATIVE_LANGUAGE_OTHER_VALUE,
+    label: "Other",
+    hint: "Language not listed above",
+  },
+];
+
+/**
+ * Resolve a stored native_language value into select + freetext state.
+ *
+ * @param storedValue - The raw `delivery.native_language` value (null when unset)
+ * @param nullSentinel - What the Select uses for "no selection" ("" in onboarding, NULL_SELECT_VALUE in edit forms)
+ */
+export function resolveNativeLanguageSelectState(
+  storedValue: string | null,
+  nullSentinel: string,
+): {
+  selectValue: string;
+  showOtherInput: boolean;
+  otherText: string;
+} {
+  if (storedValue === null) {
+    return { selectValue: nullSentinel, showOtherInput: false, otherText: "" };
+  }
+  const isKnown = NATIVE_LANGUAGE_OPTIONS.some(
+    (o) => o.value === storedValue && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
+  );
+  if (isKnown) {
+    return { selectValue: storedValue, showOtherInput: false, otherText: "" };
+  }
+  // Freetext "other" — show the Other option selected, prefill with stored value
+  const otherText =
+    storedValue === NATIVE_LANGUAGE_OTHER_VALUE ? "" : storedValue;
+  return {
+    selectValue: NATIVE_LANGUAGE_OTHER_VALUE,
+    showOtherInput: true,
+    otherText,
+  };
+}
+
+/**
+ * Resolve a stored native_language ISO code to a human-readable label.
+ * Returns the raw value as fallback for freetext entries.
+ */
+export function resolveNativeLanguageLabel(value: string | null): string {
+  if (!value) return "Not set";
+  const option = NATIVE_LANGUAGE_OPTIONS.find(
+    (o) => o.value === value && o.value !== NATIVE_LANGUAGE_OTHER_VALUE,
+  );
+  return option ? option.label : value;
+}
+
+// ---------------------------------------------------------------------------
 // Programming languages (chip select)
 // ---------------------------------------------------------------------------
+
+/** delivery.preferred_code_language is a curated subset (code examples only). */
+export const PREFERRED_CODE_LANGUAGE_OPTIONS: FieldOption[] = [
+  { value: "Python", label: "Python", hint: "Show code examples in Python" },
+  {
+    value: "TypeScript",
+    label: "TypeScript",
+    hint: "Show code examples in TypeScript",
+  },
+];
 
 export { PROGRAMMING_LANGUAGES } from "./learner-profile-types";

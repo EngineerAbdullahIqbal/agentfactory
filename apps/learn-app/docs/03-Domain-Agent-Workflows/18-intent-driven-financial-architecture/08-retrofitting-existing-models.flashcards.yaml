@@ -1,0 +1,70 @@
+deck:
+  id: "ch18-08-retrofitting-existing-models"
+  title: "Retrofitting Existing Models"
+  description: "The five-phase retrofit process, dependency ordering, one-formula-at-a-time principle, and validation of lossless conversion."
+  tags: ["retrofitting", "IDFA", "five-phases", "dependency-ordering", "validation", "legacy-models"]
+  version: 2
+
+cards:
+  - id: "ch18-08-retrofitting-existing-models-001"
+    front: "What are the five phases of the IDFA retrofit process?"
+    back: "Phase 1: Full Inspection (inspect_model())\nPhase 2: Input Identification\nPhase 3: Dependency Ordering\nPhase 4: Formula Rewriting\nPhase 5: Validation"
+    tags: ["five-phases", "retrofit"]
+    difficulty: "basic"
+
+  - id: "ch18-08-retrofitting-existing-models-002"
+    front: "What is the critical principle that governs every IDFA retrofit?"
+    back: "Do not change business logic during a retrofit. The objective is transparency, not improvement. Make existing logic readable first."
+    tags: ["critical-principle", "transparency"]
+    difficulty: "basic"
+
+  - id: "ch18-08-retrofitting-existing-models-003"
+    front: "Why must formulas be rewritten in dependency order during a retrofit?"
+    back: "If a formula depends on another formula's Named Range, the dependency must exist first. Otherwise the dependent formula references a non-existent range, causing a broken reference."
+    tags: ["dependency-ordering", "phase-3"]
+    difficulty: "intermediate"
+    why: "How would you determine the correct dependency order for a model with circular references?"
+
+  - id: "ch18-08-retrofitting-existing-models-004"
+    front: "How do you distinguish inputs from calculations during Phase 2?"
+    back: "Inputs are cells with a raw number (no formula) — each gets an Inp_ Named Range. Calculations are cells with a formula — each gets a descriptive Named Range."
+    tags: ["input-identification", "phase-2"]
+    difficulty: "basic"
+
+  - id: "ch18-08-retrofitting-existing-models-005"
+    front: "What are the seven steps for rewriting a single formula in Phase 4?"
+    back: "1. Read original via read_formula()\n2. State business rule in plain English\n3. Write IDFA equivalent using Named Ranges\n4. LaTeX-verify if complex\n5. Confirm output matches original\n6. Write to model\n7. Attach Intent Note"
+    tags: ["formula-rewriting", "phase-4", "seven-steps"]
+    difficulty: "intermediate"
+
+  - id: "ch18-08-retrofitting-existing-models-006"
+    front: "When a validation discrepancy appears after a retrofit, what are the two possible causes?"
+    back: "1. An original model error surfaced by the retrofit (the coordinate formula had a bug now visible)\n2. An inference error in the retrofit (the Named Range rewrite doesn't reproduce the original logic)"
+    tags: ["validation", "discrepancy", "phase-5"]
+    difficulty: "intermediate"
+    why: "How would you determine which cause applies when a discrepancy is found?"
+
+  - id: "ch18-08-retrofitting-existing-models-007"
+    front: "Why should you never delete and rebuild a model instead of retrofitting it?"
+    back: "The original model contains embedded business decisions — assumptions, edge cases, conditional logic — that are lost if rebuilt from scratch. Retrofitting preserves institutional knowledge."
+    tags: ["retrofit-vs-rebuild", "institutional-knowledge"]
+    difficulty: "intermediate"
+
+  - id: "ch18-08-retrofitting-existing-models-008"
+    front: "What does inspect_model() produce in Phase 1?"
+    back: "1. Existing Named Ranges (usually zero in legacy models)\n2. All formulas with cell locations\n3. All hardcoded values\n4. A dependency map"
+    tags: ["inspect-model", "phase-1"]
+    difficulty: "intermediate"
+
+  - id: "ch18-08-retrofitting-existing-models-009"
+    front: "Why is the 'one formula at a time' rule essential during a retrofit?"
+    back: "If multiple formulas are rewritten at once and validation fails, you cannot isolate which rewrite caused the failure. One at a time means any failure traces to the single most recent change."
+    tags: ["one-formula", "isolation", "debugging"]
+    difficulty: "intermediate"
+    why: "What would you do if validating after every single formula made the retrofit prohibitively slow?"
+
+  - id: "ch18-08-retrofitting-existing-models-010"
+    front: "After completing a retrofit with all outputs matching, what is the correct next step?"
+    back: "Review the now-readable logic with stakeholders, then make improvements in a separate, documented change. Keeping retrofit and improvement separate preserves the retrofit's integrity."
+    tags: ["post-retrofit", "improvement", "separation"]
+    difficulty: "intermediate"

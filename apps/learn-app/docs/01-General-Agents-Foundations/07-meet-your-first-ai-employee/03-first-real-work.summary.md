@@ -8,6 +8,7 @@ sidebar_position: 3.5
 
 ## Key Concepts
 
+- **Shape Your Employee Through Conversation**: Before your first task, tell your employee about your role, priorities, and preferences through your messaging channel -- it writes to `USER.md` and carries that context into every future interaction
 - **Task Delegation with Iteration**: Delegate a task, review the output, then iterate -- request explanations, challenge rankings, edit the result
 - **Agent Loop**: The 4-phase cycle (parse, plan, execute, report) that powers every task your agent runs
 - **Output Judgment**: The value is not what the agent produces -- it is what YOU produce by editing agent output
@@ -23,6 +24,7 @@ sidebar_position: 3.5
 
 ## Common Mistakes
 
+- Skipping the "shape your employee" step and jumping straight to tasks (the agent produces generic output without knowing your role)
 - Accepting agent output without reviewing it (first drafts are cheap; your judgment is expensive)
 - Giving vague iteration feedback ("make it better") instead of specific feedback ("add X, remove Y")
 - Skipping the morning briefing configuration (this is the lesson's lasting value)

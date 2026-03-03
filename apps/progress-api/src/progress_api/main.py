@@ -19,6 +19,7 @@ from .routes import (  # noqa: E402
     health,
     leaderboard,
     lesson,
+    milestone,
     preferences,
     progress,
     quiz,
@@ -104,6 +105,7 @@ app.include_router(flashcard.router, prefix="/api/v1", tags=["Flashcard"])
 app.include_router(lesson.router, prefix="/api/v1", tags=["Lesson"])
 app.include_router(progress.router, prefix="/api/v1", tags=["Progress"])
 app.include_router(leaderboard.router, prefix="/api/v1", tags=["Leaderboard"])
+app.include_router(milestone.router, prefix="/api/v1", tags=["Milestone"])
 app.include_router(preferences.router, prefix="/api/v1", tags=["Preferences"])
 
 

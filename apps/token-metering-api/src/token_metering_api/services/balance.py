@@ -32,7 +32,10 @@ class BalanceService:
         self.session = session
 
     async def get_balance(
-        self, user_id: str, redis: Redis | None = None
+        self,
+        user_id: str,
+        redis: Redis | None = None,
+        auto_provision: bool = False,
     ) -> dict[str, Any] | None:
         """
         Get user's balance and usage information (v5 - O(1) read).
@@ -61,7 +64,12 @@ class BalanceService:
         account = result.scalar_one_or_none()
 
         if not account:
-            return None
+            if not auto_provision:
+                return None
+            from .account import AccountService
+
+            account_service = AccountService(self.session, redis=redis)
+            account = await account_service.get_or_create(user_id)
 
         # v6: Use effective_balance (respects inactivity expiry)
         effective_balance = account.effective_balance

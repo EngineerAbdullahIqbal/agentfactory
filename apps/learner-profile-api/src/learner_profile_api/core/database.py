@@ -75,9 +75,9 @@ def _create_engine():
         clean_url,
         poolclass=AsyncAdaptedQueuePool,
         pool_size=settings.db_pool_size,
-        max_overflow=10,
+        max_overflow=5,
         pool_pre_ping=True,
-        pool_recycle=300,
+        pool_recycle=1800,
         echo=settings.debug,
         connect_args=connect_args,
     )
@@ -106,7 +106,17 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
 
 
 async def init_db() -> None:
-    """Initialize database schema using create_all."""
+    """Initialize database schema using create_all.
+
+    Guarded by AUTO_CREATE_SCHEMA env var (default: False).
+    Production uses Alembic migrations. Tests set AUTO_CREATE_SCHEMA=true via conftest.
+    """
+    from ..config import settings
+
+    if not settings.auto_create_schema:
+        logger.info("[DB] Schema auto-creation disabled (set AUTO_CREATE_SCHEMA=true to enable)")
+        return
+
     from sqlmodel import SQLModel
 
     from ..models.profile import LearnerProfile, ProfileAuditLog  # noqa: F401

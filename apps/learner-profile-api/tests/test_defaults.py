@@ -29,6 +29,8 @@ class TestDeliveryDefaults:
         assert defaults["code_verbosity"] == "fully-explained"
         assert defaults["include_visual_descriptions"] is False
         assert defaults["language"] == "English"
+        assert defaults["native_language"] == "en"
+        assert defaults["preferred_code_language"] == "Python"
 
     def test_delivery_defaults_none(self):
         defaults = get_delivery_defaults("none")
@@ -61,7 +63,12 @@ class TestApplyDefaultsToProfileData:
 
     def test_does_not_overwrite_explicit_values(self):
         comm = {"language_complexity": "expert", "tone": "formal"}
-        delivery = {"output_format": "prose", "include_code_samples": False}
+        delivery = {
+            "output_format": "prose",
+            "include_code_samples": False,
+            "native_language": "ur",
+            "preferred_code_language": "Python",
+        }
         expertise = {"programming": {"level": "advanced"}}
 
         comm, delivery = apply_defaults_to_profile_data(comm, delivery, expertise)
@@ -71,6 +78,8 @@ class TestApplyDefaultsToProfileData:
         assert comm["tone"] == "formal"
         assert delivery["output_format"] == "prose"
         assert delivery["include_code_samples"] is False
+        assert delivery["native_language"] == "ur"
+        assert delivery["preferred_code_language"] == "Python"
 
     def test_screen_reader_enables_visual_descriptions(self):
         """Spec Appendix B: screen_reader=true -> include_visual_descriptions=true."""

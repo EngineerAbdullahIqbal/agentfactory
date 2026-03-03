@@ -305,8 +305,9 @@ class MeteringService:
                 "pricing_version": existing.pricing_version or "v1",
             }
 
-        # Ensure account exists - delegated to AccountService
-        await self._account_service.get_or_create(user_id)
+        # Account guaranteed to exist: check_balance (always called first) creates it,
+        # and the idempotent path above also calls get_or_create. If somehow missing,
+        # the UPDATE.returning().scalar_one() below raises NoResultFound — correct behavior.
 
         # v6: Convert actual tokens to credits via pricing
         pricing = await self._get_pricing(model)

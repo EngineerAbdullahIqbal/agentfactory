@@ -20,6 +20,7 @@ class Settings(BaseSettings):
 
     # Database pool
     db_pool_size: int = 5
+    auto_create_schema: bool = False
 
     # Redis (optional - caching degrades gracefully without it)
     redis_url: str = ""

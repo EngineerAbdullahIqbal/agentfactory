@@ -1,7 +1,7 @@
-# Learner Profile System — Specification v1.3
+# Learner Profile System — Specification v1.4
 
-**Status:** Phase 4 — Implementation Review (v1.3 onboarding polish + field definitions canonical file; remaining gaps tracked in §9)
-**Date:** 2026-02-28
+**Status:** Phase 4 — Implementation Review (v1.4 native language + preferred code language dimensions; remaining gaps tracked in §9)
+**Date:** 2026-03-03
 **Scope:** Profile CRUD, onboarding, storage, PHM sync, progressive profiling
 **Out of Scope:** Personalization engine (LLM calls, content transformation) — separate build
 
@@ -259,18 +259,22 @@ This is the evolved schema incorporating all Phase 1 research findings and user 
     "code_verbosity": "minimal | annotated | fully-explained",
     "include_visual_descriptions": "boolean",
     "language": "string — default 'English'",
-    "language_proficiency": "native | fluent | intermediate | basic"
+    "language_proficiency": "native | fluent | intermediate | basic",
+    "native_language": "string | null — default 'en' (English). ISO 639-1 code or freetext, max 50 chars",
+    "preferred_code_language": "string | null — default 'Python', max 50 chars"
   }
 }
 ```
 
-| Field                          | Status      | Notes                                                                     |
-| ------------------------------ | ----------- | ------------------------------------------------------------------------- |
-| `target_length`                | MODIFIED    | Clean enum values (word count ranges moved to documentation, not stored)  |
-| `visual_description_notes`     | `[REMOVED]` | Absorbed into accessibility section                                       |
-| `language_proficiency`         | `[NEW]`     | Separates "what language" from "how well they know it"                    |
-| `include_code_samples` default | MODIFIED    | Conditional: `false` when `programming.level == none`, `true` otherwise   |
-| `code_verbosity`               | MODIFIED    | Only relevant when `include_code_samples == true` (documented dependency) |
+| Field                          | Status       | Notes                                                                     |
+| ------------------------------ | ------------ | ------------------------------------------------------------------------- |
+| `target_length`                | MODIFIED     | Clean enum values (word count ranges moved to documentation, not stored)  |
+| `visual_description_notes`     | `[REMOVED]`  | Absorbed into accessibility section                                       |
+| `language_proficiency`         | `[NEW]`      | Separates "what language" from "how well they know it"                    |
+| `native_language`              | `[NEW v1.4]` | Mother tongue — ISO 639-1 code from dropdown or freetext via "Other"      |
+| `preferred_code_language`      | `[NEW v1.4]` | Language for code examples — single-select (Python / TypeScript)          |
+| `include_code_samples` default | MODIFIED     | Conditional: `false` when `programming.level == none`, `true` otherwise   |
+| `code_verbosity`               | MODIFIED     | Only relevant when `include_code_samples == true` (documented dependency) |
 
 ### SECTION 7 — Accessibility `[NEW SECTION]`
 
@@ -338,15 +342,17 @@ All freetext fields (`notes`, `misconception`, `description`, `constraints`, `an
 
 This section documents what the schema must support for the future personalization engine. The engine is out of scope for this build, but schema design decisions were informed by these requirements.
 
-### Five Personalization Dimensions
+### Seven Personalization Dimensions `[Updated v1.4 — was Five]`
 
-| Dimension      | What Changes                                 | Primary Schema Fields                                                                   |
-| -------------- | -------------------------------------------- | --------------------------------------------------------------------------------------- |
-| **Vocabulary** | Word choice, jargon level, term definitions  | `communication.language_complexity`, `expertise.*`                                      |
-| **Examples**   | Analogies, case studies, illustration domain | `professional_context.*`, `communication.analogy_domain`, `expertise.domain`            |
-| **Depth**      | Expansion vs compression of sections         | `expertise.subject_specific.*`, `goals.*`, `communication.verbosity`                    |
-| **Structure**  | Organization, flow, formatting               | `communication.preferred_structure`, `delivery.output_format`, `delivery.target_length` |
-| **Tone**       | Voice, register, interpersonal style         | `communication.tone`, `communication.language_complexity`                               |
+| Dimension         | What Changes                                          | Primary Schema Fields                                                                   |
+| ----------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **Vocabulary**    | Word choice, jargon level, term definitions           | `communication.language_complexity`, `expertise.*`                                      |
+| **Examples**      | Analogies, case studies, illustration domain          | `professional_context.*`, `communication.analogy_domain`, `expertise.domain`            |
+| **Depth**         | Expansion vs compression of sections                  | `expertise.subject_specific.*`, `goals.*`, `communication.verbosity`                    |
+| **Structure**     | Organization, flow, formatting                        | `communication.preferred_structure`, `delivery.output_format`, `delivery.target_length` |
+| **Tone**          | Voice, register, interpersonal style                  | `communication.tone`, `communication.language_complexity`                               |
+| **Language**      | Response language, vocabulary localization, analogies | `delivery.language`, `delivery.native_language`, `delivery.language_proficiency`        |
+| **Code Language** | Programming language used in code examples            | `delivery.preferred_code_language`, `expertise.programming.languages`                   |
 
 ### Engine Invariants (Schema Must Support)
 
@@ -408,7 +414,9 @@ Structured form for fields with clear answer spaces (dropdowns, selects) + optio
 23. `communication.tone` — radio group
 24. Optional: `communication.wants_summaries` — toggle
 25. Optional: `communication.wants_check_in_questions` — toggle
-26. Optional (locale-gated): `delivery.language` + `delivery.language_proficiency`
+26. `delivery.native_language` — select dropdown (ISO 639-1 + "Other" freetext) `[NEW v1.4]`
+27. `delivery.language` + `delivery.language_proficiency` — always visible (locale gate removed v1.4)
+28. `delivery.preferred_code_language` — select dropdown (Python / TypeScript) `[NEW v1.4]`
 
 **Phase 4: AI Enrichment (optional, 0-5 minutes)**
 
@@ -427,7 +435,9 @@ Structured form for fields with clear answer spaces (dropdowns, selects) + optio
 | `communication.tone`                  | Inferred from `language_complexity` | **`[v1.2 FIX]`** Collected in Quick Preferences step (§9.2.2)     |
 | `communication.language_complexity`   | Inferred from expertise levels      | Inferred (improved two-axis engine §9.3)                          |
 | `communication.analogy_domain`        | Inferred from `industry`            | Inferred (unchanged)                                              |
-| `delivery.language`                   | Default "English"                   | **`[v1.2 FIX]`** Collected when locale ≠ en (§9.2.2)              |
+| `delivery.language`                   | Default "English"                   | **`[v1.4 FIX]`** Always collected — locale gate removed (§9.2.2)  |
+| `delivery.native_language`            | Did not exist                       | **`[v1.4 NEW]`** Select dropdown in Quick Preferences (§9.2.2)    |
+| `delivery.preferred_code_language`    | Did not exist                       | **`[v1.4 NEW]`** Select dropdown in Quick Preferences (§9.2.2)    |
 | `delivery.*` (other fields)           | All defaults or inferred            | Defaults/inferred (unchanged)                                     |
 | `expertise.programming.languages[]`   | Never collected                     | **`[v1.2 FIX]`** Multi-select in Expertise step (§9.2.1)          |
 | `goals.immediate_application`         | Never collected                     | **`[v1.2 FIX]`** Optional text in Goals step (§9.2.3)             |
@@ -1213,7 +1223,7 @@ For the full “ship to 50k users” verification protocol (frontend + backend +
 
 ---
 
-## Appendix B — Complete Defaults Table (v1.1) `[Updated P2-R3-2]`
+## Appendix B — Complete Defaults Table (v1.4) `[Updated v1.4 — added native_language, preferred_code_language]`
 
 Every field has an explicit default. This is the full baseline for a brand-new profile with zero user input.
 
@@ -1296,6 +1306,8 @@ Every field has an explicit default. This is the full baseline for a brand-new p
 | `delivery.include_visual_descriptions` | `false`                   | `true` when `accessibility.screen_reader = true`                                                                                                                                            |
 | `delivery.language`                    | `"English"`               |                                                                                                                                                                                             |
 | `delivery.language_proficiency`        | `null`                    |                                                                                                                                                                                             |
+| `delivery.native_language`             | `"en"`                    | `[NEW v1.4]` ISO 639-1 code or freetext via "Other"                                                                                                                                          |
+| `delivery.preferred_code_language`     | `"Python"`                | `[NEW v1.4]` Curated select (Python / TypeScript)                                                                                                                                            |
 
 **Accessibility (Section 7):**
 
@@ -1407,17 +1419,20 @@ These additions have the highest personalization impact per second of user time 
 
 #### 9.2.2 Step 3.75: Quick Preferences (between Accessibility and AI Enrichment)
 
-**What:** 3-4 radio groups collecting core communication/delivery preferences:
+**What:** Radio groups + selects collecting core communication/delivery preferences: `[Updated v1.4]`
 
 | Field                               | Options                                                                          | Time  |
 | ----------------------------------- | -------------------------------------------------------------------------------- | ----- |
 | `communication.preferred_structure` | "Show me examples first" / "Explain the theory first" / "Start with the problem" | 3 sec |
 | `communication.verbosity`           | "Keep it brief" / "Balanced" / "Give me all the details"                         | 3 sec |
 | `communication.tone`                | "Casual & friendly" / "Professional" / "Peer-to-peer (skip the basics)"          | 3 sec |
-| `delivery.language`                 | Text input, default "English" (only show if browser locale ≠ en)                 | 3 sec |
+| `delivery.native_language`          | Select: ISO 639-1 dropdown + "Other" (freetext), default `"en"` (English) `[NEW v1.4]` | 3 sec |
+| `delivery.language`                 | Select: language dropdown + "Other" (freetext), default "English" — **always visible** (locale gate removed v1.4) | 3 sec |
+| `delivery.language_proficiency`     | Radio: native / fluent / intermediate / basic (shown when language ≠ English)    | 3 sec |
+| `delivery.preferred_code_language`  | Select: Python / TypeScript (default Python) `[NEW v1.4]`                        | 3 sec |
 
-**Why:** These 4 fields control 60%+ of how the AI tutor communicates. Currently all inferred from expertise — a blunt heuristic that conflates "knows programming" with "wants terse responses."
-**Time cost:** ~12 seconds total. One screen, 4 radio groups.
+**Why:** These fields control 60%+ of how the AI tutor communicates. The two new fields (native language, preferred code language) were identified as high-signal missing dimensions from user feedback: "Meri mother language Urdu hai" and "Kis programming language mein example dekhna pasand karta hoon."
+**Time cost:** ~20 seconds total. One screen, 3 radio groups + 2 selects + 1 text input.
 **Inference interaction:** User-set values via this step get `field_sources = "user"` (priority 4). Inference engine never overwrites them.
 
 **Onboarding phase key:** `communication_preferences` (new 6th phase)
@@ -1583,12 +1598,15 @@ interface LearnerProfileSummary {
 - `professional_context.team_context` — single-select `[NEW v1.2]`
 - `professional_context.tools_in_use[]` — multi-select chips `[NEW v1.2]`
 
-**Phase 3.5: Quick Preferences (10-15 seconds)** `[NEW v1.2]`
+**Phase 3.5: Quick Preferences (10-20 seconds)** `[NEW v1.2, Updated v1.4]`
 
-- `communication.preferred_structure` — 3-option
-- `communication.verbosity` — 3-option
-- `communication.tone` — 3-option
-- Locale-gated: `delivery.language` (+ optional `delivery.language_proficiency`)
+- `communication.preferred_structure` — 3-option radio
+- `communication.verbosity` — 3-option radio
+- `communication.tone` — 3-option radio
+- `delivery.native_language` — select (ISO 639-1 + "Other" freetext), default `"en"` (English) `[NEW v1.4]`
+- `delivery.language` — select (with "Other" freetext), default "English" — always visible (locale gate removed v1.4)
+- `delivery.language_proficiency` — radio (shown when language ≠ English)
+- `delivery.preferred_code_language` — select (Python / TypeScript), default "Python" `[NEW v1.4]`
 
 **Phase 4: AI Enrichment (optional, 0-5 minutes)** — unchanged
 

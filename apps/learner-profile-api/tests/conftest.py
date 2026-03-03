@@ -22,6 +22,7 @@ os.environ["REDIS_URL"] = ""
 os.environ["DATABASE_URL"] = "sqlite+aiosqlite://"
 os.environ["ALLOWED_ORIGINS"] = "http://localhost:3000,http://test.com"
 os.environ["GDPR_HASH_SALT"] = "test-salt-must-be-at-least-32-chars-long"
+os.environ["AUTO_CREATE_SCHEMA"] = "true"  # Tests need schema auto-creation
 
 
 @pytest.fixture(scope="session")
@@ -194,6 +195,10 @@ def sample_profile_create_full():
             "programming": {"level": "advanced", "languages": ["Python", "JavaScript"]},
             "ai_fluency": {"level": "beginner"},
             "business": {"level": "intermediate"},
+        },
+        "delivery": {
+            "native_language": "ur",
+            "preferred_code_language": "Python",
         },
         "goals": {
             "primary_learning_goal": "Build AI agents for my company",

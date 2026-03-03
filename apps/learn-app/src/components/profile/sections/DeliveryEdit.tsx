@@ -6,6 +6,13 @@ import {
   TARGET_LENGTH_OPTIONS,
   CODE_VERBOSITY_OPTIONS,
   LANGUAGE_PROFICIENCY_OPTIONS,
+  NATIVE_LANGUAGE_OPTIONS,
+  NATIVE_LANGUAGE_OTHER_VALUE,
+  RESPONSE_LANGUAGE_OPTIONS,
+  RESPONSE_LANGUAGE_OTHER_VALUE,
+  PREFERRED_CODE_LANGUAGE_OPTIONS,
+  resolveNativeLanguageSelectState,
+  resolveResponseLanguageSelectState,
 } from "@/lib/profile-field-definitions";
 import { InferredBadge } from "@/components/profile/fields";
 import { Input } from "@/components/ui/input";
@@ -17,6 +24,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
+
+function NativeLanguageField({
+  delivery,
+  update,
+}: {
+  delivery: DeliverySection;
+  update: (field: keyof DeliverySection, value: unknown) => void;
+}) {
+  const { selectValue, showOtherInput, otherText } =
+    resolveNativeLanguageSelectState(
+      delivery?.native_language ?? "en",
+      NULL_SELECT_VALUE,
+    );
+
+  return (
+    <div className="space-y-1.5">
+      <label htmlFor="native-language" className="text-sm font-medium">
+        Native Language
+      </label>
+      <SearchableSelect
+        id="native-language"
+        value={selectValue}
+        onValueChange={(val) => {
+          if (val === NULL_SELECT_VALUE) {
+            update("native_language", null);
+          } else if (val === NATIVE_LANGUAGE_OTHER_VALUE) {
+            update("native_language", NATIVE_LANGUAGE_OTHER_VALUE);
+          } else {
+            update("native_language", val);
+          }
+        }}
+        options={NATIVE_LANGUAGE_OPTIONS}
+        placeholder="Select…"
+        searchPlaceholder="Search languages…"
+      />
+      {showOtherInput && (
+        <Input
+          id="native-language-other"
+          type="text"
+          value={otherText}
+          onChange={(e) =>
+            update(
+              "native_language",
+              e.target.value || NATIVE_LANGUAGE_OTHER_VALUE,
+            )
+          }
+          placeholder="Enter your language"
+          maxLength={50}
+        />
+      )}
+    </div>
+  );
+}
 
 export function DeliveryEdit({
   data,
@@ -45,6 +106,15 @@ export function DeliveryEdit({
   const language = delivery?.language || "English";
   const showLanguageProficiency = language.trim().toLowerCase() !== "english";
   const includeCode = delivery?.include_code_samples ?? true;
+
+  const {
+    selectValue: langSelectValue,
+    showOtherInput: showLangOtherInput,
+    otherText: langOtherText,
+  } = resolveResponseLanguageSelectState(
+    delivery?.language ?? "English",
+    NULL_SELECT_VALUE,
+  );
 
   return (
     <div className="space-y-4">
@@ -193,18 +263,39 @@ export function DeliveryEdit({
 
       <div className="space-y-1.5">
         <label htmlFor="delivery-language" className="text-sm font-medium">
-          Language
+          Preferred Content Delivery Language
         </label>
-        <Input
+        <SearchableSelect
           id="delivery-language"
-          type="text"
-          value={language}
-          onChange={(e) =>
-            update("language", e.target.value.substring(0, 50) || "English")
-          }
-          placeholder="English"
-          maxLength={50}
+          value={langSelectValue}
+          onValueChange={(val) => {
+            if (val === NULL_SELECT_VALUE) {
+              update("language", "English");
+            } else if (val === RESPONSE_LANGUAGE_OTHER_VALUE) {
+              update("language", RESPONSE_LANGUAGE_OTHER_VALUE);
+            } else {
+              update("language", val);
+            }
+          }}
+          options={RESPONSE_LANGUAGE_OPTIONS}
+          placeholder="Select…"
+          searchPlaceholder="Search languages…"
         />
+        {showLangOtherInput && (
+          <Input
+            id="delivery-language-other"
+            type="text"
+            value={langOtherText}
+            onChange={(e) =>
+              update(
+                "language",
+                e.target.value || RESPONSE_LANGUAGE_OTHER_VALUE,
+              )
+            }
+            placeholder="Enter your preferred language"
+            maxLength={50}
+          />
+        )}
       </div>
 
       {showLanguageProficiency && (
@@ -246,6 +337,39 @@ export function DeliveryEdit({
           </Select>
         </div>
       )}
+
+      <NativeLanguageField delivery={delivery} update={update} />
+
+      <div className="space-y-1.5">
+        <div className="flex items-center gap-2">
+          <label
+            htmlFor="preferred-code-language"
+            className="text-sm font-medium"
+          >
+            Preferred Code Language
+          </label>
+          <InferredBadge
+            fieldPath="delivery.preferred_code_language"
+            fieldSources={fieldSources}
+          />
+        </div>
+        <SearchableSelect
+          id="preferred-code-language"
+          value={delivery?.preferred_code_language || "Python"}
+          onValueChange={(val) =>
+            update(
+              "preferred_code_language",
+              val === NULL_SELECT_VALUE ? null : val,
+            )
+          }
+          options={PREFERRED_CODE_LANGUAGE_OPTIONS}
+          placeholder="Select…"
+          searchPlaceholder="Search languages…"
+        />
+        <p className="text-xs text-muted-foreground">
+          Code examples will be shown in this language when possible.
+        </p>
+      </div>
     </div>
   );
 }

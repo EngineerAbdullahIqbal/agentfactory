@@ -7,6 +7,7 @@ from .badge import UserBadge
 from .chapter import Chapter, ChapterAlias
 from .flashcard import FlashcardCompletion
 from .lesson import LessonCompletion
+from .milestone import MilestoneCompletion
 from .progress import UserProgress
 from .quiz import QuizAttempt
 from .user import User
@@ -18,6 +19,7 @@ __all__ = [
     "ChapterAlias",
     "FlashcardCompletion",
     "LessonCompletion",
+    "MilestoneCompletion",
     "QuizAttempt",
     "User",
     "UserBadge",
