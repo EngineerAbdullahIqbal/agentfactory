@@ -1,14 +1,15 @@
 # Feature: Bookmarks
 
 **Spec**: `specs/anchored/bookmarks/spec.md`
-**Status**: Specification Complete — Ready for Implementation
+**Status**: Ready for Implementation (Skill Created)
 **Created**: 2026-03-03
+**Last Updated**: 2026-03-03 (Skill v2)
 
 ---
 
 ## Current Phase
 
-**[Specification]** ✓ Complete → **[Implementation]** Pending
+**[Specification]** ✓ Complete → **[Skill Creation]** ✓ Complete → **[Implementation]** Ready
 
 ---
 
@@ -20,7 +21,8 @@
 | 2026-03-03 | Research       | codebase-analysis.md completed (10 key findings) | Update spec with research |
 | 2026-03-03 | Specification  | spec.md updated with research findings | Create implementation plan |
 | 2026-03-03 | Planning       | plan.md created (10 tasks, 1-2 days effort) | Align tasks.md with plan |
-| 2026-03-03 | Alignment      | tasks.md updated: 13→10 tasks, aligned with research | Begin Task 0.1 |
+| 2026-03-03 | Alignment      | tasks.md updated: 13→10 tasks, aligned with research | Create foundational skill |
+| 2026-03-03 | Skills v2      | Created unified skill using skill-creator framework | Ready for Task 0.1 |
 
 ---
 
@@ -53,92 +55,86 @@
 
 ---
 
-## Task Alignment Summary
+## Foundational Skill Created
 
-**tasks.md Updated** (2026-03-03):
+### `bookmarks-implementation` Skill
 
-| Change | Before | After | Rationale |
-|--------|--------|-------|-----------|
-| **Total Tasks** | 13 | 10 | Consolidated per plan.md |
-| **Time Estimate** | 3-4 days | 1-2 days | Research-validated (copy patterns) |
-| **Task 4 (BookmarkIndicator)** | Included | Removed | Research: skip for MVP |
-| **Task Numbering** | 1-13 | 0.1-3.2 | Phased structure from plan |
-| **Tests** | 3 separate tasks | 1 task (3.2) | Consolidated |
-| **Integration** | Not explicit | Task 3.1 | Added explicit wiring step |
-| **File Paths** | Mixed | Verified `apps/learn-app/src/` | Codebase-verified |
+**Location**: `.agents/skills/bookmarks-implementation/SKILL.md`
 
----
+**Type**: Foundational implementation skill (unified, comprehensive)
 
-## Implementation Plan Reference
+**Created Using**: `skill-creator` framework from `.agents/skills/skill-creator/`
 
-See `plan.md` for detailed implementation plan generated from Plan Mode.
+**Structure**:
+```
+.agents/skills/bookmarks-implementation/
+├── SKILL.md                    # Main skill (comprehensive guide)
+├── references/
+│   ├── useBookmarks-template.ts    # Hook template
+│   └── export-utils.ts             # Export functions
+├── scripts/
+│   └── validate.ts                 # Validation script
+└── evals/
+    └── evals.json                  # 7 test cases
+```
 
----
+**Capabilities**:
+- ✅ Complete task implementation (0.1 through 3.2)
+- ✅ TypeScript types + Zod schemas generation
+- ✅ localStorage adapters with cloud-sync abstraction
+- ✅ React components (Dock, Panel, Dashboard)
+- ✅ Custom hooks (useBookmarks)
+- ✅ Export utilities (Markdown/JSON)
+- ✅ Test generation
+- ✅ Validation commands
+- ✅ Pattern matching from existing components
 
-## Task Status
+**Key Features**:
+1. **Research-Validated**: All patterns from Flashcards, VoiceControlDock, ProgressDashboard
+2. **Template-Driven**: Pre-built templates for hook, export utils
+3. **Self-Validating**: Includes validation script for TypeScript + linting
+4. **Test-Ready**: 7 evals defined in evals.json
+5. **Comprehensive**: Single skill executes entire feature
 
-### Phase 0 (MVP)
+**Usage**:
+```bash
+# Start implementation
+"Implement Task 0.1 from bookmarks plan using bookmarks-implementation skill"
 
-- [ ] **Task 1**: TypeScript types and Zod schemas
-- [ ] **Task 2**: localStorage adapter with cloud-sync abstraction
-- [ ] **Task 3**: `useBookmarks` hook implementation
-- [ ] **Task 4**: `<BookmarkIndicator />` component
-- [ ] **Task 5**: `<BookmarkDock />` component
-- [ ] **Task 6**: `<BookmarkPanel />` component
-- [ ] **Task 7**: `/bookmarks` dashboard page
-- [ ] **Task 8**: Export functionality (Markdown/JSON)
-- [ ] **Task 9**: Unit tests (hooks, utils)
-- [ ] **Task 10**: Component tests
-- [ ] **Task 11**: Integration tests
-- [ ] **Task 12**: Accessibility audit
-- [ ] **Task 13**: Documentation (README, comments)
+# Validate after task
+"Run validation script for bookmarks implementation"
+```
 
----
+### Skill vs Previous Approach
 
-## Blocked Items
+| Aspect | 2 Separate Skills | 1 Unified Skill |
+|--------|------------------|-----------------|
+| **Context Switching** | High (2 skills to manage) | Low (single source) |
+| **Pattern Consistency** | Medium (potential drift) | High (single template set) |
+| **Validation** | Fragmented | Unified script |
+| **Test Coverage** | Separate evals | Integrated evals |
+| **Maintenance** | 2 files to update | 1 file to update |
+| **User Experience** | Choose right skill | One skill for all |
 
-None currently.
-
----
-
-## Decisions Made
-
-| Decision | Rationale | Date |
-|----------|-----------|------|
-| Local-first with adapter pattern | Enables Phase 2 cloud-sync without refactoring | 2026-03-03 |
-| Content addressing with reconciliation | Handles lesson moves/renames gracefully | 2026-03-03 |
-| Bookmark at section level (h2/h3) | Balance between granularity and usability | 2026-03-03 |
-
----
-
-## Open Questions
-
-| Question | Status | Owner |
-|----------|--------|-------|
-| Should bookmarks support nested sections (h3, h4) or only h2? | Pending | TBD |
-| Should export include lesson context? | Pending | TBD |
+**Decision**: Unified skill is stronger — single source of truth for entire feature implementation.
 
 ---
 
-## Notes
+## Implementation Readiness
 
-### Research Findings
+**Status**: ✅ READY FOR TASK 0.1
 
-- Flashcards spec provides excellent localStorage pattern to follow
-- Learner Profile spec shows Zod validation approach
-- Existing components (VoiceControlDock) provide dock UI reference
+**Artifacts Complete**:
+- [x] spec.md (research-validated)
+- [x] plan.md (10 tasks, phased)
+- [x] tasks.md (aligned with plan)
+- [x] progress.md (this file)
+- [x] research/codebase-analysis.md
+- [x] bookmarks-implementation skill
 
-### Architecture Decisions
+**Next Command**:
+```
+Implement Task 0.1 from bookmarks plan using bookmarks-implementation skill
+```
 
-See `adrs/` directory for formal Architecture Decision Records.
-
----
-
-## Metrics
-
-| Metric | Target | Current |
-|--------|--------|---------|
-| Test Coverage | >85% | - |
-| Component Count | 8 | 0 |
-| Hook Count | 1 | 0 |
-| Utils Count | 4 | 0 |
+**Estimated Time**: 6-8 hours (with skill acceleration)

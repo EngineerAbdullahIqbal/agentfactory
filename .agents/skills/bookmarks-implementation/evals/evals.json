@@ -1,0 +1,89 @@
+{
+  "skill_name": "bookmarks-implementation",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Implement Task 0.1 from the bookmarks plan - create TypeScript types and Zod schemas",
+      "expected_output": "Two files created: apps/learn-app/src/types/bookmarks.ts with Bookmark and BookmarksState interfaces, and apps/learn-app/src/utils/bookmarks/validation.ts with BookmarkSchema and BookmarksStateSchema Zod schemas",
+      "expectations": [
+        "Bookmark interface has all required fields (id, createdAt, lessonSlug, chapterId, sectionId, sectionTitle, contentPreview, etc.)",
+        "Zod schemas include regex validation for ID formats",
+        "Types compile with no TypeScript errors",
+        "File paths use apps/learn-app/src/ prefix"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Implement Task 0.2 - create localStorage adapter with cloud-sync abstraction",
+      "expected_output": "Two files: storage.ts with loadBookmarks/saveBookmarks/clearBookmarks functions, and storage-adapter.ts with BookmarkStorageAdapter interface and LocalStorageAdapter class",
+      "expectations": [
+        "BookmarkStorageAdapter interface defines load(), save(), and optional sync() methods",
+        "LocalStorageAdapter implements the interface",
+        "loadBookmarks handles empty state and corrupted JSON gracefully",
+        "saveBookmarks validates with Zod before saving",
+        "Storage key is 'bookmarks:v1'"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Implement Task 0.3 - create useBookmarks hook",
+      "expected_output": "Hook file at apps/learn-app/src/hooks/useBookmarks.ts that follows useFSRS pattern with load on mount, save on change, and returns queries + mutations",
+      "expectations": [
+        "Hook loads from localStorage on mount",
+        "Hook saves to localStorage on change",
+        "Returns addBookmark, removeBookmark functions",
+        "Returns isBookmarked, getBookmarksByLesson, searchBookmarks queries",
+        "Returns isLoading and error state",
+        "Uses adapter pattern (not direct localStorage calls)"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Implement Task 1.1 - create BookmarkDock component",
+      "expected_output": "Component at apps/learn-app/src/components/bookmarks/BookmarkDock.tsx with CSS module, following VoiceControlDock pattern",
+      "expectations": [
+        "Fixed position bottom-right (CSS)",
+        "Shows bookmark count badge",
+        "Click opens BookmarkPanel",
+        "Uses BrowserOnly wrapper for SSR safety",
+        "Uses Lucide React Bookmark icon"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Implement Task 1.2 - create BookmarkPanel component with slide-out animation",
+      "expected_output": "Panel component with focus trap, Escape key close, and accessibility features",
+      "expectations": [
+        "Slide-out animation (200ms)",
+        "Focus trap implemented",
+        "Closes on Escape key",
+        "Has role='dialog' and aria-modal='true'",
+        "Lists bookmarks for current lesson",
+        "Delete button per bookmark"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Implement Task 2.1 - create /bookmarks dashboard page",
+      "expected_output": "Page component at apps/learn-app/src/pages/bookmarks.tsx showing all bookmarks grouped by chapter",
+      "expectations": [
+        "Uses Docusaurus Layout wrapper",
+        "Groups bookmarks by chapter → lesson",
+        "Has Export All button",
+        "Shows empty state when no bookmarks",
+        "Follows ProgressDashboard layout pattern"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "Implement Task 3.1 - integrate BookmarkDock into Docusaurus theme",
+      "expected_output": "Modified Layout component that includes BookmarkDock with BrowserOnly wrapper",
+      "expectations": [
+        "Dock appears on all doc pages",
+        "No SSR errors in console",
+        "Uses BrowserOnly wrapper",
+        "Panel opens/closes correctly"
+      ]
+    }
+  ]
+}
